@@ -1,11 +1,8 @@
-ausiaxBroth
-===========
+ausiasContent
+=============
 
-ausiaxBroth
+ausiasContent
 
-IMPORTANT - this program is unstable
 
-working in progress
-
-Client - jquery routed
-Server - generic DAO & generic control
+* unstable
+* work in progress
