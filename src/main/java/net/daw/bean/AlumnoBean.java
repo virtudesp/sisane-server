@@ -9,9 +9,9 @@ package net.daw.bean;
  *
  * @author Sergio
  */
-public class AlumnoBean {
+public class AlumnoBean extends GenericBeanImplementation implements GenericBeanInterface {
 
-    private Integer id = 0;
+
     private Integer id_usuario = 0;
     private String dni = "";
     private String numexpediente = "";
@@ -27,26 +27,7 @@ public class AlumnoBean {
     private String email = "";
     private String validado = "";
 
-    public AlumnoBean() {
-    }
 
-    public AlumnoBean(Integer id) {
-        this.id = id;
-    }
-
-    /**
-     * @return the id
-     */
-    public Integer getId() {
-        return id;
-    }
-
-    /**
-     * @param id the id to set
-     */
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
     /**
      * @return the id_usuario

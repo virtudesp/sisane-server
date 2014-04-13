@@ -9,9 +9,9 @@ package net.daw.bean;
  *
  * @author Pedro Benito
  */
-public class ProfesorBean {
+public class ProfesorBean  extends GenericBeanImplementation implements GenericBeanInterface {
 
-    private Integer id = 0;
+
     private Integer id_usuario = 0;
     private String nombre = "";
     private String ape1 = "";
@@ -21,27 +21,7 @@ public class ProfesorBean {
     private String email = "";
     private String dni = "";
 
-    public ProfesorBean() {
-    }
-
-    public ProfesorBean(Integer id) {
-        this.id = id;
-    }
-
-    /**
-     * @return the id
-     */
-    public int getId() {
-        return id;
-    }
-
-    /**
-     * @param id the id to set
-     */
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
+   
     /**
      * @return the id_usuario
      */

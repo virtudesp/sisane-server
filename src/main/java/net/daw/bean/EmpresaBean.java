@@ -9,29 +9,15 @@ package net.daw.bean;
  *
  * @author al037665
  */
-public class EmpresaBean {
+public class EmpresaBean  extends GenericBeanImplementation implements GenericBeanInterface {
 
-    private Integer id = 0;
+
     private Integer id_usuario = 0;
     private String nombre = "", cif = "", direccion = "", 
             localidad = "", provincia = "", pais = "", telefono = "", 
             fax = "", actividad = "", nombrecontacto = "", emailcontacto = "", validada = "";
 
-    public EmpresaBean() {
 
-    }
-
-    public EmpresaBean(Integer id) {
-        this.id = id;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
     public Integer getId_usuario() {
         return id_usuario;

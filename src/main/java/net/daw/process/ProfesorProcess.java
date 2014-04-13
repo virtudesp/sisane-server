@@ -3,16 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package net.daw.process;
 
-import javax.servlet.ServletException;
-import net.daw.bean.DocumentoBean;
-import net.daw.dao.DocumentoDao;
+import net.daw.bean.ProfesorBean;
+import net.daw.dao.ProfesorDao;
 
 /**
  *
  * @author rafa
  */
-public class DocumentoProcess extends GenericProcessImplementation<DocumentoBean, DocumentoDao> {
-
+public class ProfesorProcess extends GenericProcessImplementation<ProfesorBean, ProfesorDao>{
+    
 }

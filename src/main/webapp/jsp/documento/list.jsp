@@ -8,7 +8,7 @@
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.Iterator"%>
 <%
-    DocumentoDao oDocumentoDao_Mysql = new DocumentoDao(Conexion.getConection());
+    DocumentoDao oDocumentoDao_Mysql = new DocumentoDao();
     ArrayList<String> alColumnsNames = (ArrayList<String>) oDocumentoDao_Mysql.getColumnsNames();
     Iterator<String> oIterador = alColumnsNames.listIterator();
     String strNombreMantenimiento = "documento";

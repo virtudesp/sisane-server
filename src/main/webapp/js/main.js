@@ -207,7 +207,7 @@ var vista = function(objeto, ContextPath) {
                     tabla += '<td><div class="btn-toolbar"><div class="btn-group">';
 
                     $.each(botonera, function(indice, valor) {
-                        tabla += '<a class="' + valor.class + '" id=' + value.id + ' href="#/' + objeto.getName() + '/' + valor.accion + '/' + value.id + '"><i class="' + valor.icon + '"></i> ' + valor.text + '</a>';
+                        tabla += '<a class="' + valor.class + '" id=' + value.id + ' href="#"><i class="' + valor.icon + '"></i> ' + valor.text + '</a>';
                     });
                     tabla += '</div></div></td>';
                     tabla += '</tr>';

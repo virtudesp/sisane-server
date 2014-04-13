@@ -8,20 +8,11 @@ package net.daw.bean;
  *
  * @author rafa
  */
-public class UsuarioBean {
+public class UsuarioBean extends GenericBeanImplementation implements GenericBeanInterface {
 
-    private Integer id = 0;
     private String login = "";
     private String password = "";
     private Enum tipoUsuario = null;
-
-    public UsuarioBean() {
-
-    }
-
-    public UsuarioBean(Integer id) {
-        this.id = id;
-    }
 
     /**
      * @return the tipoUsuario
@@ -35,20 +26,6 @@ public class UsuarioBean {
      */
     public void setTipoUsuario(Enum tipoUsuario) {
         this.tipoUsuario = tipoUsuario;
-   }
-
-    /**
-     * @return the id
-     */
-    public Integer getId() {
-        return id;
-    }
-
-    /**
-     * @param id the id to set
-     */
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     /**
