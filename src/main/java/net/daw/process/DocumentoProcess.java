@@ -28,45 +28,45 @@ public class DocumentoProcess extends GenericProcessImplementation<DocumentoBean
     //http://web-tec.info/WikiParser/
     //http://jscreole.sourceforge.net/
     
-        @Override
-    public String get(DocumentoBean oBean, DocumentoDao oDao) throws Exception {
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        String data;
-        try {
-        
-            oBean = (DocumentoBean) (GenericBeanInterface) oDao.get(oBean);
-            GsonBuilder gsonBuilder = new GsonBuilder();
-            gsonBuilder.setDateFormat("dd/MM/yyyy");
-            Gson gson = gsonBuilder.create();
-            oBean.setPresentacion(TextParser.textDecode(oBean.getPresentacion()));
-            data = gson.toJson(oBean);
-            return data;
-
-        } catch (Exception e) {
-            throw new ServletException("GetJson: View Error: " + e.getMessage());
-        }
-
-    }
-    
-     @Override
-    public String save(String jason, DocumentoBean oBean, DocumentoDao oDao) throws Exception {     
-        try {
-            Gson gson = new Gson();
-            Map<String, String> data = new HashMap<>();
-            if (oBean != null) {
-                oBean.setPresentacion(TextParser.textEncode(TextParser.toHtml(oBean.getContenido(), "")));
-                oBean = (DocumentoBean) (GenericBeanInterface) oDao.set(oBean);
-                data.put("status", "200");
-                data.put("message", Integer.toString(oBean.getId()));
-            } else {
-                data.put("status", "error");
-                data.put("message", "error");
-            }
-            String resultado = gson.toJson(data);
-            return resultado;
-        } catch (Exception e) {
-            throw new ServletException("SaveJson: View Error: " + e.getMessage());
-        }
-    }
+//        @Override
+//    public String get(DocumentoBean oBean, DocumentoDao oDao) throws Exception {
+//        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+//        String data;
+//        try {
+//        
+//            oBean = (DocumentoBean) (GenericBeanInterface) oDao.get(oBean);
+//            GsonBuilder gsonBuilder = new GsonBuilder();
+//            gsonBuilder.setDateFormat("dd/MM/yyyy");
+//            Gson gson = gsonBuilder.create();
+//            oBean.setPresentacion(TextParser.textDecode(oBean.getPresentacion()));
+//            data = gson.toJson(oBean);
+//            return data;
+//
+//        } catch (Exception e) {
+//            throw new ServletException("GetJson: View Error: " + e.getMessage());
+//        }
+//
+//    }
+//    
+//     @Override
+//    public String save(String jason, DocumentoBean oBean, DocumentoDao oDao) throws Exception {     
+//        try {
+//            Gson gson = new Gson();
+//            Map<String, String> data = new HashMap<>();
+//            if (oBean != null) {
+//                oBean.setPresentacion(TextParser.textEncode(TextParser.toHtml(oBean.getContenido(), "")));
+//                oBean = (DocumentoBean) (GenericBeanInterface) oDao.set(oBean);
+//                data.put("status", "200");
+//                data.put("message", Integer.toString(oBean.getId()));
+//            } else {
+//                data.put("status", "error");
+//                data.put("message", "error");
+//            }
+//            String resultado = gson.toJson(data);
+//            return resultado;
+//        } catch (Exception e) {
+//            throw new ServletException("SaveJson: View Error: " + e.getMessage());
+//        }
+//    }
     
 }

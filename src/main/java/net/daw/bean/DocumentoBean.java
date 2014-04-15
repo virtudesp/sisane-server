@@ -14,7 +14,7 @@ public class DocumentoBean extends GenericBeanImplementation implements GenericB
 
     
     private String titulo = "";
-    private String presentacion = "";
+    //private String presentacion = "";
     private String contenido = "";   
     private Date fecha = new Date();
     private Integer nota = 0;
@@ -38,13 +38,13 @@ public class DocumentoBean extends GenericBeanImplementation implements GenericB
         this.contenido = contenido;
     }
 
-     public String getPresentacion() {
-        return presentacion;
-    }
-
-    public void setPresentacion(String contenidoParseado) {
-        this.presentacion = contenidoParseado;
-    }
+//     public String getPresentacion() {
+//        return presentacion;
+//    }
+//
+//    public void setPresentacion(String contenidoParseado) {
+//        this.presentacion = contenidoParseado;
+//    }
     
     public Date getFecha() {
         return fecha;

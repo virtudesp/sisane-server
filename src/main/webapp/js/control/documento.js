@@ -96,7 +96,76 @@ var control_documento_list = function(path) {
             return false;
 
         });
-        
+
+
+        $(prefijo_div + '#contenido_button').unbind('click');
+        $(prefijo_div + '#contenido_button').click(function() {
+            cabecera = '<button id="full-width" type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>' + '<h3 id="myModalLabel">Edición de contenidos</h3>';
+            pie = '<button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Cerrar</button>';
+            contenido = '<div class="row-fluid"><div class="span6">';
+            contenido += ' <textarea type="text" id="contenidomodal" name="contenido" size="15" placeholder="contenido"></textarea>';
+            contenido += '</div><div class="span6"><div id="textoparseado"></div></div>';
+            contenido += '</div>';
+
+
+            loadForm('#modal02', cabecera, contenido, pie, true);
+
+            $(prefijo_div + '#modal02').css({
+                'right': '20px',
+                'left': '20px',
+                'width': 'auto',
+                'margin': '0',
+                'display': 'block'
+            });
+
+
+            $('#contenidomodal').val($('#contenido').val());
+
+
+            var creole = new Parse.Simple.Creole({
+                forIE: document.all,
+                interwiki: {
+                    WikiCreole: 'http://www.wikicreole.org/wiki/',
+                    Wikipedia: 'http://en.wikipedia.org/wiki/'
+                },
+                linkFormat: ''
+            });
+
+            var output = $('#textoparseado');
+
+            var div = document.createElement('div');
+
+            $('#contenidomodal').keyup(function() {
+                div.innerHTML="";
+                creole.parse(div, $('#contenidomodal').val());
+                output.empty().html(div);
+                $('#contenido').val($('#contenidomodal').val());     
+                        
+                        
+                //creole.parse(div, $('#contenidomodal').val());
+                //$('#textoparseado').empty().append(resultado);
+            });
+
+
+            /*
+             var input = $(prefijo_div + '#contenidomodal');
+             var output = $(prefijo_div + '#textoparseado');
+             
+             var render = function() {
+             output.innerHTML = '';
+             creole.parse(output, input.value);
+             };
+             
+             input.onkeyup = function() {
+             render();
+             };
+             */
+
+
+
+        });
+
+
         //http://jqueryvalidation.org/documentation/
         $('#formulario').validate({
             rules: {
@@ -115,7 +184,7 @@ var control_documento_list = function(path) {
                     maxlength: 6,
                     digits: true
                 },
-                id_usuario:{
+                id_usuario: {
                     required: true,
                     digits: true
                 },
@@ -140,7 +209,7 @@ var control_documento_list = function(path) {
                     maxlength: "Tiene que ser menos de 6 caracteres",
                     digits: "Tiene que ser un numero entero"
                 },
-                id_usuario:{
+                id_usuario: {
                     required: "Introduce un usuario",
                     digits: "El id del usuario tiene que ser un entero"
                 },
@@ -148,7 +217,7 @@ var control_documento_list = function(path) {
                     required: "Introduce una/s etiqueta/s",
                     maxlength: "Tiene que ser menos de 255 caracteres"
                 }
-                
+
             },
             highlight: function(element) {
                 $(element).closest('.control-group').removeClass('success').addClass('error');
@@ -169,8 +238,8 @@ var control_documento_list = function(path) {
             return false;
         });
     }
-        
-        
+
+
 
     function removeConfirmationModalForm(view, place, id) {
         cabecera = "<button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-hidden=\"true\">×</button>" +

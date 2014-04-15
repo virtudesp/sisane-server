@@ -21,6 +21,7 @@
         <label class="control-label"  for="inputNombre">Contenido:</label>
         <div class="controls">
             <textarea type="text" id="contenido" name="contenido" size="15" placeholder="contenido"></textarea>
+            <a class="btn btn-mini" id="contenido_button" href="#"><i class="icon-pencil"></i></a>
         </div>
     </div>
     <div class="control-group">

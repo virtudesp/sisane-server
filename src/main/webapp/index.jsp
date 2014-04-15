@@ -28,7 +28,7 @@
         <script src="js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
         <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css" />
         <script src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
-        <script src="./js/vendor/jquery.validate.min.js"></script>
+       
 
     </head>
     <body>
@@ -104,7 +104,9 @@
         <script src="js/vendor/bootstrap-carousel.js"></script>
         <script src="js/vendor/bootstrap-typeahead.js"></script>    
 
-        <script src="js/vendor/path.min.js"></script> 
+        <script src="./js/vendor/path.min.js"></script> 
+        <script src="./js/vendor/jquery.validate.min.js"></script>
+        <script src="./js/vendor/creole-parser.js"></script>
 
         <script src="js/util.js" charset="UTF-8"></script>
         <script src="js/main.js" charset="UTF-8"></script>
