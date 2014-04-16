@@ -14,7 +14,7 @@
         <label class="control-label" for="inputId_usuario">ID Usuario:</label>
         <div class="controls">
             <input type="text" id="id_usuario" name="id_usuario" placeholder="Id usuario" />
-            <a class="btn btn-mini" id="id_usuario_button" href="#"><i class="icon-search"></i></a>
+            <a class="btn btn-mini" id="id_usuario_button" href="#"><i class="glyphicon-search"></i></a>
         </div>
     </div>
     <div class="control-group">

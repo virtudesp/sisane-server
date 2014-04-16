@@ -21,7 +21,7 @@
         <label class="control-label"  for="inputNombre">Contenido:</label>
         <div class="controls">
             <textarea type="text" id="contenido" name="contenido" size="15" placeholder="contenido"></textarea>
-            <a class="btn btn-mini" id="contenido_button" href="#"><i class="icon-pencil"></i></a>
+            <a class="btn btn-mini" id="contenido_button" href="#"><i class="glyphicon-pencil"></i></a>
         </div>
     </div>
     <div class="control-group">
@@ -47,7 +47,7 @@
         <div class="controls">                
             <input readonly="true" id="id_usuario" class="input-mini"
                    name="id_usuario" type="text" size="5" maxlength="5" />  
-            <a class="btn btn-mini" id="id_usuario_button" href="#"><i class="icon-search"></i></a>
+            <a class="btn btn-mini" id="id_usuario_button" href="#"><i class="glyphicon-search"></i></a>
         </div>
     </div>
     <div class="control-group">

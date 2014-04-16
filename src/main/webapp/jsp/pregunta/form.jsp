@@ -24,7 +24,7 @@
                 <!-- <span id="id_cuestionario" class="alert alert-info"></span> -->
                 <input readonly="true" id="id_cuestionario" class="input-mini"
                        name="id_cuestionario" type="text" size="5" maxlength="5" />  
-                <a class="btn btn-mini" id="id_cuestionario_button" href="#"><i class="icon-search"></i></a>
+                <a class="btn btn-mini" id="id_cuestionario_button" href="#"><i class="glyphicon-search"></i></a>
             </div>
             </div>
             <div class="control-group">

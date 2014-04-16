@@ -65,10 +65,10 @@ function buildDataTable(cabecera, campos, datos) {
             tabla += '<td>' + value[valor] + '</td>';
         })
         tabla += '<td><div class="btn-toolbar"><div class="btn-group">';
-        tabla += '<a class="btn btn-mini action01" id=' + value.id + ' href="#"><i class="icon-eye-open"></i></a>';
-        tabla += '<a class="btn btn-mini action02" id=' + value.id + ' href="#"><i class="icon-zoom-in"></i></a>';
-        tabla += '<a class="btn btn-mini action03" id=' + value.id + ' href="#"><i class="icon-pencil"></i></a>';
-        tabla += '<a class="btn btn-mini action04" id=' + value.id + ' href="#"><i class="icon-remove"></i></a>';
+        tabla += '<a class="btn btn-mini action01" id=' + value.id + ' href="#"><i class="glyphicon-eye-open"></i></a>';
+        tabla += '<a class="btn btn-mini action02" id=' + value.id + ' href="#"><i class="glyphicon-zoom-in"></i></a>';
+        tabla += '<a class="btn btn-mini action03" id=' + value.id + ' href="#"><i class="glyphicon-pencil"></i></a>';
+        tabla += '<a class="btn btn-mini action04" id=' + value.id + ' href="#"><i class="glyphicon-remove"></i></a>';
         tabla += '</div></div></td>';
         tabla += '</tr>';
     });

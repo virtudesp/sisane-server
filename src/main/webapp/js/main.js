@@ -16,7 +16,7 @@ var objeto = function(clase, ContextPath) {
         getPrettyFieldNamesAcciones: function() {
             $.when(ajaxCallSync(urlDatos + '&op=getcolumns', 'GET', '')).done(function(data) {
                 prettyFieldNames = data['data'];
-                prettyFieldNames.push("acciones");
+                prettyFieldNames.push("botonera===>");
 
             });
             return prettyFieldNames;
@@ -159,8 +159,8 @@ var vista = function(objeto, ContextPath) {
                     if (value === "acciones") {
                         tabla += '</th>';
                     } else {
-                        tabla += '<a class="orderAsc' + index + '" href="#"><i class="icon-arrow-up"></i></a>';
-                        tabla += '<a class="orderDesc' + index + '" href="#"><i class="icon-arrow-down"></i></a>';
+                        tabla += '<a class="orderAsc' + index + '" href="#"><i class="glyphicon-arrow-up"></i></a>';
+                        tabla += '<a class="orderDesc' + index + '" href="#"><i class="glyphicon-arrow-down"></i></a>';
                         tabla += '</th>';
                     }
 
@@ -194,17 +194,17 @@ var vista = function(objeto, ContextPath) {
                         } else {
                             switch (value[valor]) {
                                 case true:
-                                    tabla += '<td><i class="icon-ok"></i></td>';
+                                    tabla += '<td><i class="glyphicon-ok"></i></td>';
                                     break;
                                 case false:
-                                    tabla += '<td><i class="icon-remove"></i></td>';
+                                    tabla += '<td><i class="glyphicon-remove"></i></td>';
                                     break;
                                 default:
                                     tabla += '<td>' + value[valor] + '</td>';
                             }
                         }
                     });
-                    tabla += '<td><div class="btn-toolbar"><div class="btn-group">';
+                    tabla += '<td><div class="btn-toolbar" role="toolbar"><div class="btn-group btn-group-xs">';
 
                     $.each(botonera, function(indice, valor) {
                         tabla += '<a class="' + valor.class + '" id=' + value.id + ' href="#"><i class="' + valor.icon + '"></i> ' + valor.text + '</a>';
@@ -246,10 +246,10 @@ var vista = function(objeto, ContextPath) {
                 } else {
                     switch (datos[valor]) {
                         case true:
-                            tabla += '<i class="icon-ok"></i>';
+                            tabla += '<i class="glyphicon-ok"></i>';
                             break;
                         case false:
-                            tabla += '<i class="icon-remove"></i>';
+                            tabla += '<i class="glyphicon-remove"></i>';
                             break;
                         default:
                             tabla += datos[valor];

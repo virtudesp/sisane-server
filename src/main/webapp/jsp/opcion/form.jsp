@@ -29,7 +29,7 @@
             <div class="controls">                
                 <input readonly="true" id="id_pregunta" class="input-mini"
                        name="id_pregunta" type="text" size="5" maxlength="5" />  
-                <a class="btn btn-mini" id="id_pregunta_button" href="#"><i class="icon-search"></i></a>
+                <a class="btn btn-mini" id="id_pregunta_button" href="#"><i class="glyphicon-search"></i></a>
             </div>
         </div>
         <div class="control-group">

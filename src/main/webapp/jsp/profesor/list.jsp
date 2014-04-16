@@ -13,16 +13,16 @@
     String strNombreMantenimiento = "profesor";
 %>
 <div id="<%=strNombreMantenimiento%>_list">
-    <div class="span12">
-        <div class="row-fluid">
-            <div class="span7">       
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-md-7">       
                 <h2><%=strNombreMantenimiento%></h2>
                 <div id="order"></div>
                 <div id="filter"></div>            
                 <div id="registers"></div>
                 <div id="pagination"></div>
             </div>
-            <div class="span5">
+            <div class="col-md-5">
                 <div class="text-right">
                     <legend>Filtro</legend> 
                     <form class="navbar-form pull-right" action="Controller" method="post" id="profesorForm">

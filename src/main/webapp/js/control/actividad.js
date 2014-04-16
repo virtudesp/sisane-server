@@ -11,17 +11,17 @@ var control_actividad_list = function(path) {
 
     function cargaBotoneraMantenimiento() {
         var botonera = [
-            {"accion": "viewmodal", "class": "btn btn-mini action01", "icon": "icon-eye-open", "text": ""},
-            {"accion": "view", "class": "btn btn-mini action02", "icon": "icon-zoom-in", "text": ""},
-            {"accion": "edit", "class": "btn btn-mini action03", "icon": "icon-pencil", "text": ""},
-            {"accion": "remove", "class": "btn btn-mini action04", "icon": "icon-remove", "text": ""}
+            {"accion": "viewmodal", "class": "btn btn-mini action01", "icon": "glyphicon-eye-open", "text": ""},
+            {"accion": "view", "class": "btn btn-mini action02", "icon": "glyphicon-zoom-in", "text": ""},
+            {"accion": "edit", "class": "btn btn-mini action03", "icon": "glyphicon-pencil", "text": ""},
+            {"accion": "remove", "class": "btn btn-mini action04", "icon": "glyphicon-remove", "text": ""}
         ];
         return botonera;
     }
 
     function cargaBotoneraBuscando() {
         var botonera = [
-            {"class": "btn btn-mini action01", "icon": "icon-ok", "text": ""}
+            {"class": "btn btn-mini action01", "icon": "glyphicon-ok", "text": ""}
         ];
         return botonera;
     }

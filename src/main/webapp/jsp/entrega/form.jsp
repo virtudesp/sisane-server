@@ -16,7 +16,7 @@
         <div class="controls">
             <input readonly="true" id="id_documento" class="input-mini"
                        name="id_documento" type="text" size="5" maxlength="5" />  
-            <a class="btn btn-mini" id="id_documento_button" href="#"><i class="icon-search"></i></a>
+            <a class="btn btn-mini" id="id_documento_button" href="#"><i class="glyphicon-search"></i></a>
         </div>
     </div>
     
@@ -31,7 +31,7 @@
         <div class="controls">
              <input readonly="true" id="id_actividad" class="input-mini"
                        name="id_actividad" type="text" size="5" maxlength="5" />  
-            <a class="btn btn-mini" id="id_actividad_button" href="#"><i class="icon-search"></i></a>
+            <a class="btn btn-mini" id="id_actividad_button" href="#"><i class="glyphicon-search"></i></a>
         </div>
     </div>
     

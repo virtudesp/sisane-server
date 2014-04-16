@@ -79,9 +79,9 @@ public class ParserConverter {
                     String[] split = spl[0].split("\\|");
                     if (split[0].length() >= 7 && split[0].substring(0, 7).equals("http://")) {
                         if (spl.length == 1) {
-                            tag = "<a href='" + split[0] + "'>" + split[1] + "&nbsp<i class='icon-globe'></i></a>";
+                            tag = "<a href='" + split[0] + "'>" + split[1] + "&nbsp<i class='glyphicon-globe'></i></a>";
                         } else {
-                            tag = "<a href='" + split[0] + "'>" + split[1] + "&nbsp<i class='icon-globe'></i></a>" + spl[1];
+                            tag = "<a href='" + split[0] + "'>" + split[1] + "&nbsp<i class='glyphicon-globe'></i></a>" + spl[1];
                         }
                     } else {
                         String ulrSplit[] = url.split("&");
@@ -102,9 +102,9 @@ public class ParserConverter {
                             }
                         }
                         if (spl.length == 1) {
-                            tag = "<a href='Controller?" + strUrl + "&id=" + split[0] + "'>" + split[1] + "&nbsp<i class='icon-globe'></i></a>";
+                            tag = "<a href='Controller?" + strUrl + "&id=" + split[0] + "'>" + split[1] + "&nbsp<i class='glyphicon-globe'></i></a>";
                         } else {
-                            tag = "<a href='Controller?" + strUrl + "&id=" + split[0] + "'>" + split[1] + "&nbsp<i class='icon-globe'></i></a>" + spl[1];
+                            tag = "<a href='Controller?" + strUrl + "&id=" + split[0] + "'>" + split[1] + "&nbsp<i class='glyphicon-globe'></i></a>" + spl[1];
                         }
                     }
 

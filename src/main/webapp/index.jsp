@@ -21,14 +21,14 @@
                 padding-bottom: 40px;
             }
         </style>
-        <link rel="stylesheet" href="css/bootstrap-responsive.min.css">
+        
         <link rel="stylesheet" href="css/main.css">
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
         <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.10.2.min.js"><\/script>')</script>
         <script src="js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
         <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css" />
         <script src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
-       
+
 
     </head>
     <body>
@@ -36,31 +36,44 @@
         <p class="chromeframe">You are using an outdated browser. <a href="http://browsehappy.com/">Upgrade your browser today</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to better experience this site.</p>
         <![endif]-->
 
-
-        <div class="navbar navbar-inverse navbar-fixed-top">
-            <div class="navbar-inner">
-                <div class="container-fluid">
-                    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"> 
-                        <span class="icon-bar"></span> 
-                        <span class="icon-bar"></span> 
+        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                        <span class="sr-only">Toggle navigation</span>
                         <span class="icon-bar"></span>
-                    </a> 
-                    <a class="brand" href="jsp">Ajax Stock</a>                   
-                    <div class="nav-collapse collapse">
-                        <%if (user != null) {%>
-                        <jsp:include page="jsp/menuSuperior.jsp" />   
-                        <% }%>
-                        <jsp:include page="jsp/usuario/infologin.jsp" />                        
-                    </div>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="index.php">ausiàsContent</a>
                 </div>
-            </div>
-        </div>
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse navbar-ex1-collapse">
+                    <%if (user != null) {%>
+                    <jsp:include page="jsp/menuSuperior.jsp" /> 
+                    <% }%>
+                    <ul class="nav navbar-nav navbar-right">
+                        <jsp:include page="jsp/usuario/infologin.jsp" />
+                    </ul>
+                </div><!-- /.navbar-collapse -->
+            </div><!-- /.container -->
+        </nav>
 
-        <div class="container-fluid">
-            <div class="row-fluid">
+
+
+
+
+
+
+
+
+
+
+        <div class="container">
+            <div class="row">
                 <%
                     if (user != null) {
-                        out.print("<div class=\"span2\">");
+                        out.print("<div class=\"col-md-2\">");
                 %>
                 <jsp:include page="jsp/menuLateral.jsp" />
                 <%
@@ -69,10 +82,10 @@
                 %>
                 <%
                     if (user != null) {
-                        out.print("<div class=\"span10\">");
+                        out.print("<div class=\"col-md-10\">");
                         out.print("<div id=\"indexContenido\"></div>");
                     } else {
-                        out.print("<div class=\"span12\">");
+                        out.print("<div class=\"col-md-12\">");
                     }
                 %>
                 <div id="indexContenidoJsp">
@@ -81,8 +94,8 @@
                 <%
                     out.print("</div>");
                 %>    
-                <div class="row-fluid">
-                    <div class="span12"><hr><footer><p>&copy; Rafael Aznar (2013)</p></footer></div>   
+                <div class="row">
+                    <div class="col-md-12"><hr><footer><p>&copy; Rafael Aznar (2013)</p></footer></div>   
                 </div>
             </div>
         </div>                    
@@ -91,18 +104,7 @@
 
         <script src="js/vendor/bootstrap.min.js"></script>
 
-        <script src="js/vendor/bootstrap-transition.js"></script>
-        <script src="js/vendor/bootstrap-alert.js"></script>
-        <script src="js/vendor/bootstrap-modal.js"></script>
-        <script src="js/vendor/bootstrap-dropdown.js"></script>
-        <script src="js/vendor/bootstrap-scrollspy.js"></script>
-        <script src="js/vendor/bootstrap-tab.js"></script>
-        <script src="js/vendor/bootstrap-tooltip.js"></script>
-        <script src="js/vendor/bootstrap-popover.js"></script>
-        <script src="js/vendor/bootstrap-button.js"></script>
-        <script src="js/vendor/bootstrap-collapse.js"></script>
-        <script src="js/vendor/bootstrap-carousel.js"></script>
-        <script src="js/vendor/bootstrap-typeahead.js"></script>    
+
 
         <script src="./js/vendor/path.min.js"></script> 
         <script src="./js/vendor/jquery.validate.min.js"></script>

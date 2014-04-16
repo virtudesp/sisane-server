@@ -11,17 +11,17 @@ var control_incidencias_list = function(path) {
 
     function cargaBotoneraMantenimiento() {
         var botonera = [
-            {"class": "btn btn-mini action01", "icon": "icon-eye-open", "text": ""},
-            {"class": "btn btn-mini action02", "icon": "icon-zoom-in", "text": ""},
-            {"class": "btn btn-mini action03", "icon": "icon-pencil", "text": ""},
-            {"class": "btn btn-mini action04", "icon": "icon-remove", "text": ""}
+            {"class": "btn btn-mini action01", "icon": "glyphicon-eye-open", "text": ""},
+            {"class": "btn btn-mini action02", "icon": "glyphicon-zoom-in", "text": ""},
+            {"class": "btn btn-mini action03", "icon": "glyphicon-pencil", "text": ""},
+            {"class": "btn btn-mini action04", "icon": "glyphicon-remove", "text": ""}
         ];
         return botonera;
     }
 
     function cargaBotoneraBuscando() {
         var botonera = [
-            {"class": "btn btn-mini action01", "icon": "icon-ok", "text": ""}
+            {"class": "btn btn-mini action01", "icon": "glyphicon-ok", "text": ""}
         ];
         return botonera;
     }

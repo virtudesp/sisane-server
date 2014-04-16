@@ -10,17 +10,17 @@ var control_documento_list = function(path) {
 
     function cargaBotoneraMantenimiento() {
         var botonera = [
-            {"class": "btn btn-mini action01", "icon": "icon-eye-open", "text": ""},
-            {"class": "btn btn-mini action02", "icon": "icon-zoom-in", "text": ""},
-            {"class": "btn btn-mini action03", "icon": "icon-pencil", "text": ""},
-            {"class": "btn btn-mini action04", "icon": "icon-remove", "text": ""}
+            {"class": "btn btn-default action01", "icon": "glyphicon glyphicon-eye-open", "text": ""},
+            {"class": "btn btn-default action02", "icon": "glyphicon glyphicon-zoom-in", "text": ""},
+            {"class": "btn btn-default action03", "icon": "glyphicon glyphicon-pencil", "text": ""},
+            {"class": "btn btn-default action04", "icon": "glyphicon glyphicon-remove", "text": ""}
         ];
         return botonera;
     }
 
     function cargaBotoneraBuscando() {
         var botonera = [
-            {"class": "btn btn-mini action01", "icon": "icon-ok", "text": ""}
+            {"class": "btn btn-mini action01", "icon": "glyphicon-ok", "text": ""}
         ];
         return botonera;
     }
@@ -102,9 +102,9 @@ var control_documento_list = function(path) {
         $(prefijo_div + '#contenido_button').click(function() {
             cabecera = '<button id="full-width" type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>' + '<h3 id="myModalLabel">Edición de contenidos</h3>';
             pie = '<button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Cerrar</button>';
-            contenido = '<div class="row-fluid"><div class="span6">';
+            contenido = '<div class="row"><div class="col-md-6">';
             contenido += ' <textarea type="text" id="contenidomodal" name="contenido" size="15" placeholder="contenido"></textarea>';
-            contenido += '</div><div class="span6"><div id="textoparseado"></div></div>';
+            contenido += '</div><div class="col-md-6"><div id="textoparseado"></div></div>';
             contenido += '</div>';
 
 
