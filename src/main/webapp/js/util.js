@@ -102,7 +102,7 @@ function loadForm(modalName, headerData, bodyData, footerData, keyb) {
 
 function startSpinner(place, ContextPath) {
     $(place).empty();
-    $(place).html('<img src="' + ContextPath + '/img/ajax-loading.gif" alt="cargando..." />');
+    $(place).html('<img src="' + ContextPath + '/fonts/ajax-loading.gif" alt="cargando..." />');
 
 }
 ;

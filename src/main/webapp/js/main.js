@@ -16,7 +16,7 @@ var objeto = function(clase, ContextPath) {
         getPrettyFieldNamesAcciones: function() {
             $.when(ajaxCallSync(urlDatos + '&op=getcolumns', 'GET', '')).done(function(data) {
                 prettyFieldNames = data['data'];
-                prettyFieldNames.push("botonera===>");
+                prettyFieldNames.push("acciones");
 
             });
             return prettyFieldNames;
@@ -118,7 +118,7 @@ var vista = function(objeto, ContextPath) {
             return objeto;
         },
         getLoading: function() {
-            return '<img src="img/ajax-loading.gif" alt="cargando..." />';
+            return '<img src="fonts/ajax-loading.gif" alt="cargando..." />';
         },
         getPageLinks: function(page_number, rpp, filter, filteroperator, filtervalue, systemfilter, systemfilteroperator, systemfiltervalue) {
             page_number = parseInt(page_number);
@@ -159,8 +159,8 @@ var vista = function(objeto, ContextPath) {
                     if (value === "acciones") {
                         tabla += '</th>';
                     } else {
-                        tabla += '<a class="orderAsc' + index + '" href="#"><i class="glyphicon-arrow-up"></i></a>';
-                        tabla += '<a class="orderDesc' + index + '" href="#"><i class="glyphicon-arrow-down"></i></a>';
+                        tabla += '<a class="orderAsc' + index + '" href="#"><i class="glyphicon glyphicon-arrow-up"></i></a>';
+                        tabla += '<a class="orderDesc' + index + '" href="#"><i class="glyphicon glyphicon-arrow-down"></i></a>';
                         tabla += '</th>';
                     }
 
