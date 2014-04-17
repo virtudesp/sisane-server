@@ -16,7 +16,7 @@ var objeto = function(clase, ContextPath) {
         getPrettyFieldNamesAcciones: function() {
             $.when(ajaxCallSync(urlDatos + '&op=getcolumns', 'GET', '')).done(function(data) {
                 prettyFieldNames = data['data'];
-                prettyFieldNames.push("botonera===>");
+                prettyFieldNames.push("acciones");
 
             });
             return prettyFieldNames;
@@ -118,13 +118,13 @@ var vista = function(objeto, ContextPath) {
             return objeto;
         },
         getLoading: function() {
-            return '<img src="img/ajax-loading.gif" alt="cargando..." />';
+            return '<img src="fonts/ajax-loading.gif" alt="cargando..." />';
         },
         getPageLinks: function(page_number, rpp, filter, filteroperator, filtervalue, systemfilter, systemfilteroperator, systemfiltervalue) {
             page_number = parseInt(page_number);
             total_pages = parseInt(objeto.getPages(rpp, filter, filteroperator, filtervalue, systemfilter, systemfilteroperator, systemfiltervalue));
             neighborhood = parseInt(neighborhood);
-            vector = "<div class=\"pagination\"><ul>";
+            vector = "<ul class=\"pagination\">";
             if (page_number > 1)
                 vector += ("<li><a class=\"pagination_link\" id=\"" + (page_number - 1) + "\" href=\"" + link + (page_number - 1) + "\">prev</a></li>");
             if (page_number > neighborhood + 1)
@@ -146,22 +146,30 @@ var vista = function(objeto, ContextPath) {
                 vector += ("<li><a class=\"pagination_link\" id=\"" + total_pages + "\" href=\"" + link + total_pages + "\">" + total_pages + "</a></li>");
             if (page_number < total_pages)
                 vector += ("<li><a class=\"pagination_link\"  id=\"" + (page_number + 1) + "\" href=\"" + link + (page_number + 1) + "\">next</a></li>");
-            vector += "</ul></div>";
+            vector += "</ul>";
             return vector;
         },
         getPageTable: function(pag, order, ordervalue, rpp, filter, filteroperator, filtervalue, systemfilter, systemfilteroperator, systemfiltervalue, botonera) {
-            var tabla = "<table class=\"table table table-striped table-condensed\">";
+            var tabla = "<table class=\"table table table-responsive table-hover table-striped table-condensed\">";
             if (objeto.getPrettyFieldNamesAcciones() !== null) {
                 tabla += '<tr>';
 
                 $.each(objeto.getPrettyFieldNamesAcciones(), function(index, value) {
-                    tabla += '<th>' + value;
                     if (value === "acciones") {
+                        tabla += '<th class="col-md-2">' + value;
                         tabla += '</th>';
                     } else {
-                        tabla += '<a class="orderAsc' + index + '" href="#"><i class="glyphicon-arrow-up"></i></a>';
-                        tabla += '<a class="orderDesc' + index + '" href="#"><i class="glyphicon-arrow-down"></i></a>';
-                        tabla += '</th>';
+                        if (value === "id") {
+                            tabla += '<th class="col-md-1">' + value;
+                            tabla += '<br /><a class="orderAsc' + index + '" href="#"><i class="glyphicon glyphicon-arrow-up"></i></a>';
+                            tabla += '<a class="orderDesc' + index + '" href="#"><i class="glyphicon glyphicon-arrow-down"></i></a>';
+                            tabla += '</th>';
+                        } else {
+                            tabla += '<th>' + value;
+                            tabla += '<br /><a class="orderAsc' + index + '" href="#"><i class="glyphicon glyphicon-arrow-up"></i></a>';
+                            tabla += '<a class="orderDesc' + index + '" href="#"><i class="glyphicon glyphicon-arrow-down"></i></a>';
+                            tabla += '</th>';
+                        }
                     }
 
                 });

@@ -302,26 +302,26 @@ var control_documento_list = function(path) {
             //asignación eventos de la botonera de cada línea del listado principal
 
             if (callback) {
-                $(prefijo_div + '.btn.btn-mini.action01').unbind('click');
-                $(prefijo_div + '.btn.btn-mini.action01').click(callback);
+                $(prefijo_div + '.btn.btn-default.action01').unbind('click');
+                $(prefijo_div + '.btn.btn-default.action01').click(callback);
             } else {
-                $(prefijo_div + '.btn.btn-mini.action01').unbind('click');
-                $(prefijo_div + '.btn.btn-mini.action01').click(function() {
+                $(prefijo_div + '.btn.btn-default.action01').unbind('click');
+                $(prefijo_div + '.btn.btn-default.action01').click(function() {
                     loadDivView(view, '#datos2', $(this).attr('id'));
                 });
 
-                $(prefijo_div + '.btn.btn-mini.action02').unbind('click');
-                $(prefijo_div + '.btn.btn-mini.action02').click(function() {
+                $(prefijo_div + '.btn.btn-default.action02').unbind('click');
+                $(prefijo_div + '.btn.btn-default.action02').click(function() {
                     loadModalView(view, '#modal01', $(this).attr('id'));
                 });
 
-                $(prefijo_div + '.btn.btn-mini.action03').unbind('click');
-                $(prefijo_div + '.btn.btn-mini.action03').click(function() {
+                $(prefijo_div + '.btn.btn-default.action03').unbind('click');
+                $(prefijo_div + '.btn.btn-default.action03').click(function() {
                     loadModalForm(view, '#modal01', $(this).attr('id'), "edit");
                 });
 
-                $(prefijo_div + '.btn.btn-mini.action04').unbind('click');
-                $(prefijo_div + '.btn.btn-mini.action04').click(function() {
+                $(prefijo_div + '.btn.btn-default.action04').unbind('click');
+                $(prefijo_div + '.btn.btn-default.action04').click(function() {
                     removeConfirmationModalForm(view, '#modal01', $(this).attr('id'));
                 });
 

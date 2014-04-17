@@ -102,7 +102,7 @@ function loadForm(modalName, headerData, bodyData, footerData, keyb) {
 
 function startSpinner(place, ContextPath) {
     $(place).empty();
-    $(place).html('<img src="' + ContextPath + '/img/ajax-loading.gif" alt="cargando..." />');
+    $(place).html('<img src="' + ContextPath + '/fonts/ajax-loading.gif" alt="cargando..." />');
 
 }
 ;
@@ -161,7 +161,7 @@ function inicializacion() {
     jQuery(function($) {
         $.datepicker.regional['es'] = {
             closeText: 'Cerrar',
-            buttonImage: 'img/calendar.png',
+            buttonImage: 'fonts/calendar.png',
             prevText: '<Ant',
             nextText: 'Sig>',
             currentText: 'Hoy',
