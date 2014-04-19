@@ -22,7 +22,7 @@ public class Conexion {
     }
 
     public static String getDatabaseName() {
-        return "ausiasyield";
+        return "ausiaxContent";
     }
 
     public static String getDatabaseLogin() {

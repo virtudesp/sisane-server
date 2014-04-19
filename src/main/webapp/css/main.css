@@ -8,3 +8,8 @@ and open the template in the editor.
     Author     : raznara
 */
 
+
+body {
+    padding-top: 60px;
+    padding-bottom: 40px;
+}

@@ -12,15 +12,16 @@ import java.util.Date;
  */
 public class DocumentoBean extends GenericBeanImplementation implements GenericBeanInterface {
 
-    
     private String titulo = "";
     //private String presentacion = "";
-    private String contenido = "";   
-    private Date fecha = new Date();
-    private Integer nota = 0;
+    private String contenido = "";
+    private Date alta = new Date();
+    private Date cambio = new Date();
+    private Integer hits = 0;
     private Integer id_usuario = null;
     private String etiquetas = "";
-
+    private Boolean publicado = false;
+    private Boolean portada = false;
 
     public String getTitulo() {
         return titulo;
@@ -45,21 +46,28 @@ public class DocumentoBean extends GenericBeanImplementation implements GenericB
 //    public void setPresentacion(String contenidoParseado) {
 //        this.presentacion = contenidoParseado;
 //    }
-    
-    public Date getFecha() {
-        return fecha;
+    public Date getAlta() {
+        return alta;
     }
 
-    public void setFecha(Date fecha) {
-        this.fecha = fecha;
+    public void setAlta(Date fecha) {
+        this.alta = fecha;
     }
 
-    public Integer getNota() {
-        return nota;
+    public Date getCambio() {
+        return cambio;
     }
 
-    public void setNota(Integer nota) {
-        this.nota = nota;
+    public void setCambio(Date fecha) {
+        this.cambio = fecha;
+    }
+
+    public Integer getHits() {
+        return hits;
+    }
+
+    public void setHits(Integer hits) {
+        this.hits = hits;
     }
 
     public Integer getId_usuario() {
@@ -69,7 +77,7 @@ public class DocumentoBean extends GenericBeanImplementation implements GenericB
     public void setId_usuario(Integer id_usuario) {
         this.id_usuario = id_usuario;
     }
-    
+
     public String getEtiquetas() {
         return etiquetas;
     }
@@ -78,6 +86,19 @@ public class DocumentoBean extends GenericBeanImplementation implements GenericB
         this.etiquetas = etiquetas;
     }
 
-    
+    public Boolean getPublicado() {
+        return publicado;
+    }
 
+    public void setPublicado(Boolean publicado) {
+        this.publicado = publicado;
+    }
+
+    public Boolean getPortada() {
+        return portada;
+    }
+
+    public void setPortada(Boolean portada) {
+        this.portada = portada;
+    }
 }

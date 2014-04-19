@@ -5,16 +5,10 @@
  */
 package net.daw.process;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import java.util.HashMap;
-import java.util.Map;
 import javax.servlet.ServletException;
 import net.daw.bean.DocumentoBean;
 import net.daw.bean.GenericBeanInterface;
 import net.daw.dao.DocumentoDao;
-import net.daw.dao.GenericDaoInterface;
-import net.daw.helper.TextParser;
 
 /**
  *
@@ -22,6 +16,16 @@ import net.daw.helper.TextParser;
  */
 public class DocumentoProcess extends GenericProcessImplementation<DocumentoBean, DocumentoDao> {
 
+    public String getContenido(DocumentoBean oBean, DocumentoDao oDao) throws Exception{        
+        String data;
+        try {        
+            oBean = (DocumentoBean) (GenericBeanInterface) oDao.get(oBean);                                    
+            return "{\"data\":\"" + oBean.getContenido() + "\"}";            
+        } catch (Exception e) {
+            throw new ServletException("GetContenido: View Error: " + e.getMessage());
+        }
+    }
+    
     //pte: http://remysharp.com/2008/04/01/wiki-to-html-using-javascript/
     //http://randomactsofcoding.blogspot.com.es/2009/08/parsewikijs-javascript-wiki-parsing.html
     //http://www.ivan.fomichev.name/2008/04/javascript-creole-10-wiki-markup-parser.html

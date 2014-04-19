@@ -14,28 +14,11 @@
         <title>Ajax Yield</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width">
-        <link rel="stylesheet" href="css/bootstrap.min.css">
-        <style>
-            body {
-                padding-top: 60px;
-                padding-bottom: 40px;
-            }
-        </style>
-        
-        <link rel="stylesheet" href="css/main.css">
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-        <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.10.2.min.js"><\/script>')</script>
-        <script src="js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
-        <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css" />
-        <script src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
-
-
     </head>
     <body>
         <!--[if lt IE 7]>
         <p class="chromeframe">You are using an outdated browser. <a href="http://browsehappy.com/">Upgrade your browser today</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to better experience this site.</p>
         <![endif]-->
-
         <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
             <div class="container">
                 <div class="navbar-header">
@@ -86,6 +69,9 @@
                     out.print("</div>");
                 %>    
                 <div class="row">
+                    <div class="col-md-12" id="contenidoParseado"></div>   
+                </div>
+                <div class="row">
                     <div class="col-md-12"><hr><footer><p>&copy; Rafael Aznar (2013)</p></footer></div>   
                 </div>
             </div>
@@ -93,13 +79,30 @@
 
         <!-- carga de javascript -->
 
+        <script src="js/vendor/jquery-1.10.2.min.js"></script>
         <script src="js/vendor/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/main.css">
 
 
+        <!--
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+        <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.10.2.min.js"><\/script>')</script>
+        <script src="js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+        <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css" />
+        <script src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
+        -->
+
+
+
+        <script src="js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+        <link rel="stylesheet" href="css/jquery-ui.css">
+        <script src="js/vendor/jquery-ui.js"></script>
 
         <script src="./js/vendor/path.min.js"></script> 
         <script src="./js/vendor/jquery.validate.min.js"></script>
         <script src="./js/vendor/creole-parser.js"></script>
+
 
         <script src="js/util.js" charset="UTF-8"></script>
         <script src="js/main.js" charset="UTF-8"></script>
@@ -183,6 +186,19 @@
                     documentoControl.inicia(documentoView, 1, null, null, 10, null, null, null, null);
                     return false;
                 });
+
+               
+                function showContent() {
+                    var documento = objeto('documento', '<%=request.getContextPath()%>');
+                    var content = decodeURIComponent(documento.getOne(1)['contenido']);
+
+                    creoleParse(content, $('#contenidoParseado'));
+
+                    return false;
+                }
+                ;
+
+                showContent();
 
                 Path.map("#/empresa").to(function() {
                     var empresa = objeto('empresa', '<%=request.getContextPath()%>');

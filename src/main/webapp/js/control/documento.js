@@ -34,6 +34,9 @@ var control_documento_list = function(path) {
     }
 
     function loadModalForm(view, place, id, action) {
+
+        //set head & foot of modal view. Get empty form to be loaded into the content. Show modal.
+
         cabecera = '<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>';
         if (action == "edit") {
             cabecera += '<h3 id="myModalLabel">Edición de ' + view.getObject().getName() + "</h3>";
@@ -41,110 +44,90 @@ var control_documento_list = function(path) {
             cabecera += '<h3 id="myModalLabel">Alta de ' + view.getObject().getName() + "</h3>";
         }
         pie = '<button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Cerrar</button>';
-
         loadForm(place, cabecera, view.getEmptyForm(), pie, false);
+
+        //deal with date fields in order datepicker to be shown
+
+
+
+        //if we're editing, fill values into the form. 
+        //if we're newing, disable id
+
         if (action == "edit") {
             view.doFillForm(id);
+            //when editing load the foreighn keys
+            cargaClaveAjena(prefijo_div + '#id_usuario', prefijo_div + '#id_usuario_desc', 'usuario')
         } else {
             $(prefijo_div + '#id').val('0').attr("disabled", true);
-            $(prefijo_div + '#codigo').focus();
+            $(prefijo_div + '#titulo').focus();
         }
-        $(prefijo_div + '#id_usuario_desc').empty().html(objeto('usuario', path).getOne($(prefijo_div + '#id_usuario').val()).descripcion);
-//pte incorporar librería https://github.com/jschr/bootstrap-modal
-//ejemplos en http://jschr.github.io/bootstrap-modal/        
-//            $(prefijo_div + '#modal01').css({
-//                'right': '20%',
-//                'left': '20%',
-//                'width': 'auto',
-//                'margin': '0'                
-//            });
 
-//        $(prefijo_div + '#modal01').css({
-//            'width': '612px'
-//        });
-        //en desarrollo: tratamiento de las claves ajenas ...
+        //foreign key actions in form
+
         $(prefijo_div + '#id_usuario_button').unbind('click');
         $(prefijo_div + '#id_usuario_button').click(function() {
-
-            var usuario = objeto('usuario', path);
-            var usuarioView = vista(usuario, path);
-
-            cabecera = '<button id="full-width" type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>' + '<h3 id="myModalLabel">Elección</h3>';
-            pie = '<button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Cerrar</button>';
-            listado = usuarioView.getEmptyList();
-            loadForm('#modal02', cabecera, listado, pie, true);
-
-            $(prefijo_div + '#modal02').css({
-                'right': '20px',
-                'left': '20px',
-                'width': 'auto',
-                'margin': '0',
-                'display': 'block'
-            });
-
-            var usuarioControl = control_usuario_list(path);
-            usuarioControl.inicia(usuarioView, 1, null, null, 10, null, null, null, callbackSearchTipodocumento, null, null, null);
-
-            function callbackSearchTipodocumento(id) {
+            loadForeign('usuario', '#modal02', control_usuario_list, callbackSearchUsuario);
+            function callbackSearchUsuario(id) {
                 $(prefijo_div + '#modal02').modal('hide');
                 $(prefijo_div + '#modal02').data('modal', null);
                 $(prefijo_div + '#id_usuario').val($(this).attr('id'));
-                $(prefijo_div + '#id_usuario_desc').empty().html(objeto('usuario', path).getOne($(prefijo_div + '#id_usuario').val()).descripcion);
+                cargaClaveAjena('#id_usuario', '#id_usuario_desc', 'usuario');
                 return false;
             }
-
             return false;
-
         });
 
+        //preview parser of the content
 
         $(prefijo_div + '#contenido_button').unbind('click');
         $(prefijo_div + '#contenido_button').click(function() {
             cabecera = '<button id="full-width" type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>' + '<h3 id="myModalLabel">Edición de contenidos</h3>';
-            pie = '<button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Cerrar</button>';
+            pie = '<button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="true">Cerrar</button>';
             contenido = '<div class="row"><div class="col-md-6">';
-            contenido += ' <textarea type="text" id="contenidomodal" name="contenido" size="15" placeholder="contenido"></textarea>';
+            contenido += '<textarea type="text" id="contenidomodal" name="contenido" rows="20" cols="70" placeholder="contenido"></textarea>';
             contenido += '</div><div class="col-md-6"><div id="textoparseado"></div></div>';
             contenido += '</div>';
 
 
             loadForm('#modal02', cabecera, contenido, pie, true);
 
-            $(prefijo_div + '#modal02').css({
-                'right': '20px',
-                'left': '20px',
-                'width': 'auto',
-                'margin': '0',
-                'display': 'block'
-            });
+            //$(prefijo_div + "#contenidomodal").expanding();
+//
+//            $(prefijo_div + '#modal02').css({
+//                'right': '20px',
+//                'left': '20px',
+//                'width': 'auto',
+//                'margin': '0',
+//                'display': 'block'
+//            });
 
 
             $('#contenidomodal').val($('#contenido').val());
+            
+
+            creoleParse($('#contenidomodal').val(), $('#textoparseado'));
 
 
-            var creole = new Parse.Simple.Creole({
-                forIE: document.all,
-                interwiki: {
-                    WikiCreole: 'http://www.wikicreole.org/wiki/',
-                    Wikipedia: 'http://en.wikipedia.org/wiki/'
-                },
-                linkFormat: ''
-            });
+//            var output = $('#textoparseado');
+//
+//            var div = document.createElement('div');
+//            div.innerHTML = "";
+//            creole.parse(div, $('#contenidomodal').val());
+//
+//            var tablas = div.getElementsByTagName('table');
+//            for (var i = 0; i < tablas.length; i++) {
+//                tablas[i].className = 'table table-bordered';
+//            }
+//
+//            output.empty().html(div);
 
-            var output = $('#textoparseado');
-
-            var div = document.createElement('div');
+            $('#contenido').val($('#contenidomodal').val());
 
             $('#contenidomodal').keyup(function() {
-                div.innerHTML="";
-                creole.parse(div, $('#contenidomodal').val());
-                output.empty().html(div);
-                $('#contenido').val($('#contenidomodal').val());     
-                        
-                        
-                //creole.parse(div, $('#contenidomodal').val());
-                //$('#textoparseado').empty().append(resultado);
+                creoleParse($('#contenidomodal').val(), $('#textoparseado'));
+                $('#contenido').val($('#contenidomodal').val());
             });
+
 
 
             /*
@@ -166,68 +149,7 @@ var control_documento_list = function(path) {
         });
 
 
-        //http://jqueryvalidation.org/documentation/
-        $('#formulario').validate({
-            rules: {
-                titulo: {
-                    required: true,
-                    maxlength: 255
-                },
-                contenido: {
-                    required: true
-                },
-                fecha: {
-                    required: true
-                },
-                nota: {
-                    required: true,
-                    maxlength: 6,
-                    digits: true
-                },
-                id_usuario: {
-                    required: true,
-                    digits: true
-                },
-                etiquetas: {
-                    required: true,
-                    maxlength: 255
-                }
-            },
-            messages: {
-                titulo: {
-                    required: "Introduce un titulo",
-                    maxlength: "Tiene que ser menos de 255 caracteres"
-                },
-                contenido: {
-                    required: "Introduce contenido"
-                },
-                fecha: {
-                    required: "Introduce una fecha"
-                },
-                nota: {
-                    required: "Introduce una nota",
-                    maxlength: "Tiene que ser menos de 6 caracteres",
-                    digits: "Tiene que ser un numero entero"
-                },
-                id_usuario: {
-                    required: "Introduce un usuario",
-                    digits: "El id del usuario tiene que ser un entero"
-                },
-                etiquetas: {
-                    required: "Introduce una/s etiqueta/s",
-                    maxlength: "Tiene que ser menos de 255 caracteres"
-                }
 
-            },
-            highlight: function(element) {
-                $(element).closest('.control-group').removeClass('success').addClass('error');
-            },
-            success: function(element) {
-                element
-                        .text('OK!').addClass('valid')
-                        .closest('.control-group').removeClass('error').addClass('success');
-            }
-        });
 
 
         $(prefijo_div + '#submitForm').unbind('click');
@@ -239,7 +161,36 @@ var control_documento_list = function(path) {
         });
     }
 
+    function cargaClaveAjena(lugarID, lugarDesc, objetoClaveAjena) {
+        if ($(lugarID).val() != "") {
+            objInfo = objeto(objetoClaveAjena, path).getOne($(lugarID).val());
+            props = Object.getOwnPropertyNames(objInfo);
+            //$(lugarDesc).empty().val(objInfo[props[1]]);
+            $(lugarDesc).text(objInfo[props[1]]);
+        }
+    }
 
+    function loadForeign(strObjetoForeign, strPlace, control, functionCallback) {
+        var objConsulta = objeto(strObjetoForeign, path);
+        var consultaView = vista(objConsulta, path);
+
+        cabecera = '<button id="full-width" type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>' + '<h3 id="myModalLabel">Elección</h3>';
+        pie = '<button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Cerrar</button>';
+        listado = consultaView.getEmptyList();
+        loadForm(strPlace, cabecera, listado, pie, true);
+
+        $(prefijo_div + strPlace).css({
+            'right': '20px',
+            'left': '20px',
+            'width': 'auto',
+            'margin': '0',
+            'display': 'block'
+        });
+
+        var consultaControl = control(path);
+        consultaControl.inicia(consultaView, 1, null, null, 10, null, null, null, functionCallback, null, null, null);
+
+    }
 
     function removeConfirmationModalForm(view, place, id) {
         cabecera = "<button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-hidden=\"true\">×</button>" +
@@ -262,7 +213,14 @@ var control_documento_list = function(path) {
                 "<h3 id=\"myModalLabel\">Detalle de " + view.getObject().getName() + "</h3>";
         pie = "<button class=\"btn btn-primary\" data-dismiss=\"modal\" aria-hidden=\"true\">Cerrar</button>";
         loadForm(place, cabecera, view.getObjectTable(id), pie, true);
-    }
+    }  //asigación de evento de refresco de la tabla cuando volvemos de una operación en ventana modal
+
+            $(prefijo_div + '#modal01').unbind('hidden');
+            $(prefijo_div + '#modal01').on('hidden', function() {
+
+                rpp = $(prefijo_div + "#rpp option:selected").text();
+                thisObject.inicia(view, pag, order, ordervalue, rpp, filter, filteroperator, filtervalue, callback, systemfilter, systemfilteroperator, systemfiltervalue);
+            });
 
     return {
         inicia: function(view, pag, order, ordervalue, rpp, filter, filteroperator, filtervalue, callback, systemfilter, systemfilteroperator, systemfiltervalue) {
@@ -394,8 +352,8 @@ var control_documento_list = function(path) {
 
             //asigación de evento de refresco de la tabla cuando volvemos de una operación en ventana modal
 
-            $(prefijo_div + '#modal01').unbind('hidden');
-            $(prefijo_div + '#modal01').on('hidden', function() {
+            $(prefijo_div + '#modal01').unbind('hidden.bs.modal');
+            $(prefijo_div + '#modal01').on('hidden.bs.modal', function() {
                 rpp = $(prefijo_div + "#rpp option:selected").text();
                 thisObject.inicia(view, pag, order, ordervalue, rpp, filter, filteroperator, filtervalue, callback, systemfilter, systemfilteroperator, systemfiltervalue);
 
@@ -403,8 +361,8 @@ var control_documento_list = function(path) {
 
             //asignación del evento de cambio del numero de regs por página
 
-            $(prefijo_div + '#rpp').unbind('change');
-            $(prefijo_div + '#rpp').on('change', function() {
+            $(prefijo_div + '#rpp').unbind('hidden.bs.modal');
+            $(prefijo_div + '#rpp').on('hidden.bs.modal', function() {
                 rpp = $(prefijo_div + "#rpp option:selected").text();
                 thisObject.inicia(view, pag, order, ordervalue, rpp, filter, filteroperator, filtervalue, callback, systemfilter, systemfilteroperator, systemfiltervalue);
             });

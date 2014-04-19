@@ -19,6 +19,26 @@ function ajaxCallASync(url, type, data, callBackFunction) {
     });
 }
 
+function creoleParse(content, lugar) {
+    var div = document.createElement('div');
+    div.innerHTML = "";
+    creole.parse(div, content);
+
+    //var tablas = div.getElementsByTagName('table');
+    //for (var i = 0; i < tablas.length; i++) {
+    //    tablas[i].className = 'table table-bordered';
+    //}                    
+
+    lugar.empty().html(div);
+
+    var codigo = lugar.html();
+    codigo = codigo.replace("<table>", '<table class="table table-bordered"><tbody>');
+    codigo = codigo.replace("</table>", '</tbody></table>');
+
+    lugar.empty().append(codigo);
+
+}
+
 function getNeighborhood(link, page_number, total_pages, neighborhood) {
     page_number = parseInt(page_number);
     total_pages = parseInt(total_pages);
@@ -156,6 +176,15 @@ function replaceAll(str, search, rpl) {
 
 function inicializacion() {
 
+    creole = new Parse.Simple.Creole({
+        forIE: document.all,
+        interwiki: {
+            WikiCreole: 'http://www.wikicreole.org/wiki/',
+            Wikipedia: 'http://en.wikipedia.org/wiki/'
+        },
+        linkFormat: ''
+    });
+
     /* Inicialización en español para la extensión 'UI date picker' para jQuery. */
     /* Traducido por Vester (xvester [en] gmail [punto] com). */
     jQuery(function($) {
@@ -206,10 +235,21 @@ function inicializacion() {
     };
 }
 
+function htmlEncode(value) {
+    //create a in-memory div, set it's inner text(which jQuery automatically encodes)
+    //then grab the encoded contents back out.  The div never exists on the page.
+    return $('<div/>').text(value).html();
+}
+
+function htmlDecode(value) {
+    return $('<div/>').html(value).text();
+}
 
 function enviarDatosUpdateForm(view, prefijo_div) {
     var jsonObj = [];
     jsonObj = $(prefijo_div + '#formulario').serializeObject();
+    //json is sent encoded. be careful of the dates. Dates must be decoded at server side before fill the bean
+    //jsonfile = {json: htmlEncode(JSON.stringify(jsonObj))};
     jsonfile = {json: JSON.stringify(jsonObj)};
     cabecera = "<button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-hidden=\"true\">×</button>" + "<h3 id=\"myModalLabel\">Respuesta del servidor</h3>";
     pie = "<button class=\"btn btn-primary\" data-dismiss=\"modal\" aria-hidden=\"true\">Cerrar</button>";

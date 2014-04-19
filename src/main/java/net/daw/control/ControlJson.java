@@ -7,6 +7,8 @@ package net.daw.control;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import java.io.IOException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -20,6 +22,7 @@ import net.daw.bean.GenericBeanImplementation;
 import net.daw.dao.GenericDaoImplementation;
 import net.daw.helper.EncodingUtil;
 import net.daw.helper.FilterBean;
+import net.daw.helper.TextParser;
 import net.daw.process.GenericProcessInterface;
 
 /**
@@ -52,91 +55,7 @@ public class ControlJson extends HttpServlet {
         GenericBeanImplementation oBean = (GenericBeanImplementation) Class.forName("net.daw.bean." + objeto + "Bean").newInstance();
         GenericDaoImplementation oDao = (GenericDaoImplementation) Class.forName("net.daw.dao." + objeto + "Dao").newInstance();
 
-        if (request.getSession().getAttribute("usuarioBean") == null) {
-
-            if (ob == "documento") {
-                switch (operacion) {
-                    case "get":
-                        oBean.setId(Integer.parseInt(request.getParameter("id")));
-                        //oBean = (GenericBeanImplementation) oDao.get(oBean);
-                        datos = process.get(oBean, oDao);
-                        break;
-                    case "getcolumns":
-                        //oBean = (GenericBeanImplementation) oDao.get(oBean);
-                        datos = process.getColumns(oBean, oDao);
-                        break;
-                    case "getpage":
-                    case "getpages":
-                    case "getregisters":
-                        int intRegsPerPag;
-                        if (request.getParameter("rpp") == null) {
-                            intRegsPerPag = 10;
-                        } else {
-                            intRegsPerPag = Integer.parseInt(request.getParameter("rpp"));
-                        }
-                        int intPage;
-                        if (request.getParameter("page") == null) {
-                            intPage = 1;
-                        } else {
-                            intPage = Integer.parseInt(request.getParameter("page"));
-                        }
-                        ArrayList<FilterBean> alFilter = new ArrayList<>();
-                        if (request.getParameter("filter") != null) {
-                            if (request.getParameter("filteroperator") != null) {
-                                if (request.getParameter("filtervalue") != null) {
-                                    FilterBean oFilterBean = new FilterBean();
-                                    oFilterBean.setFilter(request.getParameter("filter"));
-                                    oFilterBean.setFilterOperator(request.getParameter("filteroperator"));
-                                    oFilterBean.setFilterValue(request.getParameter("filtervalue"));
-                                    oFilterBean.setFilterOrigin("user");
-                                    alFilter.add(oFilterBean);
-                                }
-                            }
-                        }
-                        if (request.getParameter("systemfilter") != null) {
-                            if (request.getParameter("systemfilteroperator") != null) {
-                                if (request.getParameter("systemfiltervalue") != null) {
-                                    FilterBean oFilterBean = new FilterBean();
-                                    oFilterBean.setFilter(request.getParameter("systemfilter"));
-                                    oFilterBean.setFilterOperator(request.getParameter("systemfilteroperator"));
-                                    oFilterBean.setFilterValue(request.getParameter("systemfiltervalue"));
-                                    oFilterBean.setFilterOrigin("system");
-                                    alFilter.add(oFilterBean);
-                                }
-                            }
-                        }
-                        if ("getpage".equals(operacion)) {
-                            HashMap<String, String> hmOrder = new HashMap<>();
-                            if (request.getParameter("order") != null) {
-                                if (request.getParameter("ordervalue") != null) {
-                                    hmOrder.put(request.getParameter("order"), request.getParameter("ordervalue"));
-                                } else {
-                                    hmOrder = null;
-                                }
-                            } else {
-                                hmOrder = null;
-                            }
-                            datos = process.getPage(intRegsPerPag, intPage, alFilter, hmOrder, oBean, oDao);
-                        } else {
-                            if ("getpages".equals(operacion)) {
-                                datos = process.getPages(intRegsPerPag, alFilter, oDao);
-                            } else {
-                                if ("getregisters".equals(operacion)) {
-                                    datos = process.getRegisters(alFilter, oDao);
-                                }
-                            }
-                        }
-                        break;
-                }
-            } else {
-
-                Map<String, String> data = new HashMap<>();
-                data.put("status", "401");
-                data.put("message", "error de autenticación");
-                String resultado = gson.toJson(data);
-            }
-
-        } else {
+        if (request.getSession().getAttribute("usuarioBean") != null || ("documento".equals(ob))) {
 
             switch (operacion) {
                 case "get":
@@ -211,15 +130,22 @@ public class ControlJson extends HttpServlet {
                     }
                     break;
                 case "remove":
-                    oBean.setId(Integer.parseInt(request.getParameter("id")));
-                    datos = process.remove(oBean, oDao);
+                    if (request.getSession().getAttribute("usuarioBean") != null) {
+                        oBean.setId(Integer.parseInt(request.getParameter("id")));
+                        datos = process.remove(oBean, oDao);
+                    }
                     break;
                 case "save":
-                    String jason = request.getParameter("json");
-                    jason = EncodingUtil.decodeURIComponent(jason);
+                    if (request.getSession().getAttribute("usuarioBean") != null) {
+                        //String jason = TextParser.textDecode(request.getParameter("json"));
 
-                    oBean = gson.fromJson(jason, oBean.getClass());
-                    datos = process.save(jason, oBean, oDao);
+                        String jason = request.getParameter("json").replaceAll("%2F", "/");
+
+                      
+                        
+                        oBean = gson.fromJson(jason, oBean.getClass());
+                        datos = process.save(jason, oBean, oDao);
+                    }
                     break;
                 default:
 

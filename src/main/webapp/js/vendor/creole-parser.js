@@ -331,7 +331,7 @@ Parse.Simple.Creole = function(options) {
             
             node.appendChild(link);
         }
-    };
+    }; 0
     g.unnamedInterwikiLink.build = function(node, r, options) {
         g.namedInterwikiLink.build.call(this, node, Array(r[0], r[1], r[1]), options);
     };

@@ -7,6 +7,12 @@ var objeto = function(clase, ContextPath) {
         getName: function() {
             return clase;
         },
+        getGenericOperation: function(operation, id) {
+            $.when(ajaxCallSync(urlDatos + '&op=' + operation + "&id=" + id, 'GET', '')).done(function(data) {
+                resultado = data['data'];
+            });
+            return resultado;
+        },
         getPrettyFieldNames: function() {
             $.when(ajaxCallSync(urlDatos + '&op=getcolumns', 'GET', '')).done(function(data) {
                 prettyFieldNames = data['data'];
@@ -50,7 +56,7 @@ var objeto = function(clase, ContextPath) {
                 systemfilterParams = "";
             }
             $.when(ajaxCallSync(urlDatos + '&op=getpage' + filterParams + '&rpp=' + rpp + orderParams + '&page=' + pagina + systemfilterParams, 'GET', '')).done(function(data) {
-                pagina_objs = data;
+                pagina_objs = data; //decodeURI htmlDecode
             });
             return pagina_objs;
         },
@@ -150,7 +156,7 @@ var vista = function(objeto, ContextPath) {
             return vector;
         },
         getPageTable: function(pag, order, ordervalue, rpp, filter, filteroperator, filtervalue, systemfilter, systemfilteroperator, systemfiltervalue, botonera) {
-            var tabla = "<table class=\"table table table-responsive table-hover table-striped table-condensed\">";
+            var tabla = "<table class=\"table table-responsive table-hover table-striped table-condensed\">";
             if (objeto.getPrettyFieldNamesAcciones() !== null) {
                 tabla += '<tr>';
 
@@ -202,13 +208,20 @@ var vista = function(objeto, ContextPath) {
                         } else {
                             switch (value[valor]) {
                                 case true:
-                                    tabla += '<td><i class="glyphicon-ok"></i></td>';
+                                    tabla += '<td><i class="glyphicon glyphicon-ok"></i></td>';
                                     break;
                                 case false:
-                                    tabla += '<td><i class="glyphicon-remove"></i></td>';
+                                    tabla += '<td><i class="glyphicon glyphicon-remove"></i></td>';
                                     break;
                                 default:
-                                    tabla += '<td>' + value[valor] + '</td>';
+                                    var fieldContent = decodeURIComponent(value[valor]);
+                                    if (typeof fieldContent == "string") {
+                                        
+                                        if (value[valor].length > 50)
+                                            fieldContent = decodeURIComponent(value[valor]).substr(0, 20) + " ...";
+                                      
+                                    }
+                                    tabla += '<td>' + fieldContent + '</td>';
                             }
                         }
                     });
@@ -254,13 +267,13 @@ var vista = function(objeto, ContextPath) {
                 } else {
                     switch (datos[valor]) {
                         case true:
-                            tabla += '<i class="glyphicon-ok"></i>';
+                            tabla += '<i class="glyphicon glyphicon-ok"></i>';
                             break;
                         case false:
-                            tabla += '<i class="glyphicon-remove"></i>';
+                            tabla += '<i class="glyphicon glyphicon-remove"></i>';
                             break;
                         default:
-                            tabla += datos[valor];
+                            tabla += decodeURIComponent(datos[valor]);
                     }
                     tabla += '</td></tr>';
                 }
@@ -294,7 +307,7 @@ var vista = function(objeto, ContextPath) {
                     case false:
                         break;
                     default:
-                        $('#' + campos[index]).val(datos[campos[index]]);
+                        $('#' + campos[index]).val(decodeURIComponent(datos[campos[index]]));
                 }
 
             });
