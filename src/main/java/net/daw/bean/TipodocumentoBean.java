@@ -8,26 +8,10 @@ package net.daw.bean;
  *
  * @author al037877
  */
-public class TipodocumentoBean {
-    private Integer id = 0;
+public class TipodocumentoBean  extends GenericBeanImplementation implements GenericBeanInterface {
+  
     private String descripcion = "";
     private Boolean privado = false;
-
-    public TipodocumentoBean() {
-        
-    }
-
-    public TipodocumentoBean(Integer id) {
-        this.id = id;
-    }
-    
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
     public String getDescripcion() {
         return descripcion;

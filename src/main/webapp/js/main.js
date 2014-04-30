@@ -157,25 +157,32 @@ var vista = function(objeto, ContextPath) {
         },
         getPageTable: function(pag, order, ordervalue, rpp, filter, filteroperator, filtervalue, systemfilter, systemfilteroperator, systemfiltervalue, botonera) {
             var tabla = "<table class=\"table table-responsive table-hover table-striped table-condensed\">";
+            var visibleFields = 5;
+            var numField = 0; //visible field counter
             if (objeto.getPrettyFieldNamesAcciones() !== null) {
                 tabla += '<tr>';
-
                 $.each(objeto.getPrettyFieldNamesAcciones(), function(index, value) {
-                    if (value === "acciones") {
-                        tabla += '<th class="col-md-2">' + value;
-                        tabla += '</th>';
-                    } else {
-                        if (value === "id") {
-                            tabla += '<th class="col-md-1">' + value;
-                            tabla += '<br /><a class="orderAsc' + index + '" href="#"><i class="glyphicon glyphicon-arrow-up"></i></a>';
-                            tabla += '<a class="orderDesc' + index + '" href="#"><i class="glyphicon glyphicon-arrow-down"></i></a>';
+                    numField++; //field counter
+                    if (numField <= visibleFields) {
+                        if (value === "acciones") {
+                            tabla += '<th class="col-md-2">' + value;
                             tabla += '</th>';
                         } else {
-                            tabla += '<th>' + value;
-                            tabla += '<br /><a class="orderAsc' + index + '" href="#"><i class="glyphicon glyphicon-arrow-up"></i></a>';
-                            tabla += '<a class="orderDesc' + index + '" href="#"><i class="glyphicon glyphicon-arrow-down"></i></a>';
-                            tabla += '</th>';
+                            if (value === "id") {
+                                tabla += '<th class="col-md-1">' + value;
+                                tabla += '<br /><a class="orderAsc' + index + '" href="#"><i class="glyphicon glyphicon-arrow-up"></i></a>';
+                                tabla += '<a class="orderDesc' + index + '" href="#"><i class="glyphicon glyphicon-arrow-down"></i></a>';
+                                tabla += '</th>';
+                            } else {
+                                tabla += '<th>' + value;
+                                tabla += '<br /><a class="orderAsc' + index + '" href="#"><i class="glyphicon glyphicon-arrow-up"></i></a>';
+                                tabla += '<a class="orderDesc' + index + '" href="#"><i class="glyphicon glyphicon-arrow-down"></i></a>';
+                                tabla += '</th>';
+                            }
                         }
+                    }
+                    if (numField == visibleFields + 1) {
+                        tabla += '<th class="col-md-2">acciones</th>';
                     }
 
                 });
@@ -184,47 +191,50 @@ var vista = function(objeto, ContextPath) {
 
             page = objeto.getPage(pag, order, ordervalue, rpp, filter, filteroperator, filtervalue, systemfilter, systemfilteroperator, systemfiltervalue)['list'];
             if (page != 0) {
-
                 $.each(page, function(index, value) {
                     tabla += '<tr>';
-
+                    numField = 0;
                     $.each(objeto.getFieldNames(), function(index, valor) {
-                        if (/id_/.test(valor)) {
-                            $.when(ajaxCallSync(ContextPath + '/json?ob=' + valor.split("_")[1].replace(/[0-9]*$/, "") + '&op=get&id=' + value[valor], 'GET', '')).done(function(data) {
-                                contador = 0;
-                                add_tabla = "";
-                                for (key in data) {
-                                    if (contador == 0)
-                                        add_tabla = '<td>id=' + data[key] + '(no existe)</td>';
-                                    if (contador == 1)
-                                        add_tabla = '<td>' + data[key] + '</td>';
-                                    contador++;
-                                }
-                                if (contador == 0) {
-                                    add_tabla = '<td>' + value[valor] + ' #error</td>';
-                                }
-                                tabla += add_tabla;
-                            });
-                        } else {
-                            switch (value[valor]) {
-                                case true:
-                                    tabla += '<td><i class="glyphicon glyphicon-ok"></i></td>';
-                                    break;
-                                case false:
-                                    tabla += '<td><i class="glyphicon glyphicon-remove"></i></td>';
-                                    break;
-                                default:
-                                    var fieldContent = decodeURIComponent(value[valor]);
-                                    if (typeof fieldContent == "string") {
-                                        
-                                        if (value[valor].length > 50)
-                                            fieldContent = decodeURIComponent(value[valor]).substr(0, 20) + " ...";
-                                      
+                        numField++;
+                        if (numField <= visibleFields) {
+                            if (/id_/.test(valor)) {
+                                $.when(ajaxCallSync(ContextPath + '/json?ob=' + valor.split("_")[1].replace(/[0-9]*$/, "") + '&op=get&id=' + value[valor], 'GET', '')).done(function(data) {
+                                    contador = 0;
+                                    add_tabla = "";
+                                    for (key in data) {
+                                        if (contador == 0)
+                                            add_tabla = '<td>id=' + data[key] + '(no existe)</td>';
+                                        if (contador == 1)
+                                            add_tabla = '<td>' + data[key] + '</td>';
+                                        contador++;
                                     }
-                                    tabla += '<td>' + fieldContent + '</td>';
+                                    if (contador == 0) {
+                                        add_tabla = '<td>' + value[valor] + ' #error</td>';
+                                    }
+                                    tabla += add_tabla;
+                                });
+                            } else {
+                                switch (value[valor]) {
+                                    case true:
+                                        tabla += '<td><i class="glyphicon glyphicon-ok"></i></td>';
+                                        break;
+                                    case false:
+                                        tabla += '<td><i class="glyphicon glyphicon-remove"></i></td>';
+                                        break;
+                                    default:
+                                        var fieldContent = decodeURIComponent(value[valor]);
+                                        if (typeof fieldContent == "string") {
+                                            
+                                            if (value[valor].length > 50) //don't show too long fields
+                                                fieldContent = decodeURIComponent(value[valor]).substr(0, 20) + " ...";
+
+                                        }
+                                        tabla += '<td>' + fieldContent + '</td>';
+                                }
                             }
                         }
                     });
+
                     tabla += '<td><div class="btn-toolbar" role="toolbar"><div class="btn-group btn-group-xs">';
 
                     $.each(botonera, function(indice, valor) {

@@ -1,7 +1,7 @@
-
 package net.daw.control;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -10,14 +10,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import net.daw.bean.UsuarioBean;
 import net.daw.dao.UsuarioDao;
-import net.daw.helper.Conexion;
+import net.daw.helper.Estado;
+import net.daw.helper.Estado.Tipo_estado;
 
 /**
  *
  * @author rafael aznar
- * 
+ *
  */
-
 public class ControlJsp extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
@@ -71,7 +71,7 @@ public class ControlJsp extends HttpServlet {
                     oUsuario.setPassword(pass);
                     UsuarioDao oUsuarioDao = new UsuarioDao();
                     oUsuario = oUsuarioDao.getFromLogin(oUsuario);
-                    if (oUsuario.getId() != 0) {                        
+                    if (oUsuario.getId() != 0) {
                         oUsuario = oUsuarioDao.type(oUsuario); //fill user level
                         request.getSession().setAttribute("usuarioBean", oUsuario);
                     }
@@ -101,13 +101,16 @@ public class ControlJsp extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             processRequest(request, response);
-
         } catch (Exception ex) {
-            Logger.getLogger(ControlJsp.class.getName()).log(Level.SEVERE, null, ex);
+             if (Estado.getTipo_estado() == Tipo_estado.Debug) {
+                PrintWriter out = response.getWriter();
+                out.println("<html><body><h1>Application error</h1><strong>Message:</strong> " + ex + "<body></html>");
+            } else {
+                Logger.getLogger(ControlJsp.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
 
@@ -120,12 +123,16 @@ public class ControlJsp extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             processRequest(request, response);
         } catch (Exception ex) {
-            Logger.getLogger(ControlJsp.class.getName()).log(Level.SEVERE, null, ex);
+             if (Estado.getTipo_estado() == Tipo_estado.Debug) {
+                PrintWriter out = response.getWriter();
+                out.println("<html><body><h1>Application error</h1><strong>Message:</strong> " + ex + "<body></html>");
+            } else {
+                Logger.getLogger(ControlJsp.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
 
@@ -137,5 +144,6 @@ public class ControlJsp extends HttpServlet {
     @Override
     public String getServletInfo() {
         return "jsp controller";
-    }// </editor-fold>
+    }
+// </editor-fold>
 }

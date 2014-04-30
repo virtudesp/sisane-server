@@ -19,9 +19,11 @@ public class DocumentoBean extends GenericBeanImplementation implements GenericB
     private Date cambio = new Date();
     private Integer hits = 0;
     private Integer id_usuario = null;
+    private Integer id_tipodocumento = null;
     private String etiquetas = "";
     private Boolean publicado = false;
     private Boolean portada = false;
+    private Boolean destacado = false;
 
     public String getTitulo() {
         return titulo;
@@ -78,6 +80,14 @@ public class DocumentoBean extends GenericBeanImplementation implements GenericB
         this.id_usuario = id_usuario;
     }
 
+    public Integer getId_tipodocumento() {
+        return id_tipodocumento;
+    }
+
+    public void setId_tipodocumento(Integer id_tipodocumento) {
+        this.id_tipodocumento = id_tipodocumento;
+    }
+
     public String getEtiquetas() {
         return etiquetas;
     }
@@ -101,4 +111,13 @@ public class DocumentoBean extends GenericBeanImplementation implements GenericB
     public void setPortada(Boolean portada) {
         this.portada = portada;
     }
+
+    public Boolean getDestacado() {
+        return destacado;
+    }
+
+    public void setDestacado(Boolean destacado) {
+        this.destacado = destacado;
+    }
+
 }

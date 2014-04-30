@@ -53,6 +53,25 @@
         </div>        
         <label class="col-sm-8" for="id_usuario" id="id_usuario_desc"></label>                     
     </div>
+    
+    
+    
+    
+    <div class="form-group">
+        <label class="col-sm-2 control-label" for="id_tipodocumento">Tipo de documento: </label> 
+        <div class="col-sm-1">              
+            <input readonly="true"  class="form-control"  id="id_tipodocumento" class="input-mini" name="id_tipodocumento" type="text" size="5" maxlength="5" />  
+        </div>
+        <div class="col-sm-1">              
+            <a class="btn btn-primary btn-sm" id="id_tipodocumento_button" href="#"><i class="glyphicon glyphicon-search"></i></a>
+        </div>        
+        <label class="col-sm-8" for="id_usuario" id="id_tipodocumento_desc"></label>                     
+    </div>
+    
+    
+    
+    
+    
     <div class="form-group">
         <label class="col-sm-2 control-label"  for="etiquetas">Etiquetas:</label>
         <div class="col-sm-10">
@@ -72,6 +91,12 @@
             <input type="checkbox" id="portada" name="portada" value="true" />
         </div>
     </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label"  for="destacado">Destacado:</label>
+        <div class="col-sm-1">
+            <input type="checkbox" id="portada" name="destacado" value="true" />
+        </div>
+    </div>           
     <div class="form-group">
         <div class="col-sm-offset-2 col-sm-10">
             <button type="submit"  class="btn btn-primary"  id="submitForm" >Submit</button>

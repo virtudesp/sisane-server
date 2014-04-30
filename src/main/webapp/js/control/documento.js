@@ -77,6 +77,22 @@ var control_documento_list = function(path) {
             return false;
         });
 
+        //tipodocumento
+
+        $(prefijo_div + '#id_tipodocumento_button').unbind('click');
+        $(prefijo_div + '#id_tipodocumento_button').click(function() {
+            loadForeign('tipodocumento', '#modal02', control_tipodocumento_list, callbackSearchTipodocumento);
+            function callbackSearchTipodocumento(id) {
+                $(prefijo_div + '#modal02').modal('hide');
+                $(prefijo_div + '#modal02').data('modal', null);
+                $(prefijo_div + '#id_tipodocumento').val($(this).attr('id'));
+                cargaClaveAjena('#id_tipodocumento', '#id_tipodocumento_desc', 'tipodocumento');
+                return false;
+            }
+            return false;
+        });
+
+
         //preview parser of the content
 
         $(prefijo_div + '#contenido_button').unbind('click');
@@ -103,7 +119,7 @@ var control_documento_list = function(path) {
 
 
             $('#contenidomodal').val($('#contenido').val());
-            
+
 
             creoleParse($('#contenidomodal').val(), $('#textoparseado'));
 
@@ -179,13 +195,13 @@ var control_documento_list = function(path) {
         listado = consultaView.getEmptyList();
         loadForm(strPlace, cabecera, listado, pie, true);
 
-        $(prefijo_div + strPlace).css({
-            'right': '20px',
-            'left': '20px',
-            'width': 'auto',
-            'margin': '0',
-            'display': 'block'
-        });
+//        $(prefijo_div + strPlace).css({
+//            'right': '20px',
+//            'left': '20px',
+//            'width': 'auto',
+//            'margin': '0',
+//            'display': 'block'
+//        });
 
         var consultaControl = control(path);
         consultaControl.inicia(consultaView, 1, null, null, 10, null, null, null, functionCallback, null, null, null);
@@ -215,12 +231,12 @@ var control_documento_list = function(path) {
         loadForm(place, cabecera, view.getObjectTable(id), pie, true);
     }  //asigación de evento de refresco de la tabla cuando volvemos de una operación en ventana modal
 
-            $(prefijo_div + '#modal01').unbind('hidden');
-            $(prefijo_div + '#modal01').on('hidden', function() {
+    $(prefijo_div + '#modal01').unbind('hidden');
+    $(prefijo_div + '#modal01').on('hidden', function() {
 
-                rpp = $(prefijo_div + "#rpp option:selected").text();
-                thisObject.inicia(view, pag, order, ordervalue, rpp, filter, filteroperator, filtervalue, callback, systemfilter, systemfilteroperator, systemfiltervalue);
-            });
+        rpp = $(prefijo_div + "#rpp option:selected").text();
+        thisObject.inicia(view, pag, order, ordervalue, rpp, filter, filteroperator, filtervalue, callback, systemfilter, systemfilteroperator, systemfiltervalue);
+    });
 
     return {
         inicia: function(view, pag, order, ordervalue, rpp, filter, filteroperator, filtervalue, callback, systemfilter, systemfilteroperator, systemfiltervalue) {
