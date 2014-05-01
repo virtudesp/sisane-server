@@ -19,7 +19,7 @@ function ajaxCallASync(url, type, data, callBackFunction) {
     });
 }
 
-function cargaDescripcionClaveAjenaEnFormulario(lugarID, lugarDesc, objetoClaveAjena) {
+function cargaDescripcionClaveAjenaEnFormulario(lugarID, lugarDesc, objetoClaveAjena, path) {
     if ($(lugarID).val() != "") {
         objInfo = objeto(objetoClaveAjena, path).getOne($(lugarID).val());
         if (objInfo != "" && $(lugarID).val() != 0) {
@@ -31,7 +31,7 @@ function cargaDescripcionClaveAjenaEnFormulario(lugarID, lugarDesc, objetoClaveA
     }
 }
 
-function cargaModalBuscarClaveAjena(strObjetoForeign, strPlace, control, functionCallback) {
+function cargaModalBuscarClaveAjena(strObjetoForeign, strPlace, control, functionCallback, path) {
     var objConsulta = objeto(strObjetoForeign, path);
     var consultaView = vista(objConsulta, path);
     cabecera = '<button id="full-width" type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>' + '<h3 id="myModalLabel">Elección</h3>';

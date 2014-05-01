@@ -60,8 +60,8 @@ var control_documento_list = function(path) {
             $(prefijo_div + '#id').val('0').attr("disabled", true);
         }
 //            //when editing load the foreighn keys
-        cargaDescripcionClaveAjenaEnFormulario(prefijo_div + '#id_usuario', prefijo_div + '#id_usuario_desc', 'usuario')
-        cargaDescripcionClaveAjenaEnFormulario(prefijo_div + '#id_tipodocumento', prefijo_div + '#id_tipodocumento_desc', 'tipodocumento')
+        cargaDescripcionClaveAjenaEnFormulario(prefijo_div + '#id_usuario', prefijo_div + '#id_usuario_desc', 'usuario',path);
+        cargaDescripcionClaveAjenaEnFormulario(prefijo_div + '#id_tipodocumento', prefijo_div + '#id_tipodocumento_desc', 'tipodocumento',path);
 //        } else {
 
         //$(prefijo_div + '#titulo').focus();
@@ -71,13 +71,13 @@ var control_documento_list = function(path) {
 
         $(prefijo_div + '#id_usuario_button').unbind('click');
         $(prefijo_div + '#id_usuario_button').click(function() {
-            cargaModalBuscarClaveAjena('usuario', '#modal02', control_usuario_list, callbackSearchUsuario);
+            cargaModalBuscarClaveAjena('usuario', '#modal02', control_usuario_list, callbackSearchUsuario,path);
             function callbackSearchUsuario(id) {
                 $(prefijo_div + '#modal02').modal('hide');
                 $(prefijo_div + '#modal02').data('modal', null);
                 $(prefijo_div + '#id_usuario').val($(this).attr('id'));
-                cargaDescripcionClaveAjenaEnFormulario
-                cargaDescripcionClaveAjenaEnFormulario('#id_usuario', '#id_usuario_desc', 'usuario');
+                
+                cargaDescripcionClaveAjenaEnFormulario('#id_usuario', '#id_usuario_desc', 'usuario',path);
                 return false;
             }
             return false;
@@ -87,12 +87,12 @@ var control_documento_list = function(path) {
 
         $(prefijo_div + '#id_tipodocumento_button').unbind('click');
         $(prefijo_div + '#id_tipodocumento_button').click(function() {
-            cargaModalBuscarClaveAjena('tipodocumento', '#modal02', control_tipodocumento_list, callbackSearchTipodocumento);
+            cargaModalBuscarClaveAjena('tipodocumento', '#modal02', control_tipodocumento_list, callbackSearchTipodocumento,path);
             function callbackSearchTipodocumento(id) {
                 $(prefijo_div + '#modal02').modal('hide');
                 $(prefijo_div + '#modal02').data('modal', null);
                 $(prefijo_div + '#id_tipodocumento').val($(this).attr('id'));
-                cargaDescripcionClaveAjenaEnFormulario('#id_tipodocumento', '#id_tipodocumento_desc', 'tipodocumento');
+                cargaDescripcionClaveAjenaEnFormulario('#id_tipodocumento', '#id_tipodocumento_desc', 'tipodocumento',path);
                 return false;
             }
             return false;
