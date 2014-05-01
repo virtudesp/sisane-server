@@ -270,6 +270,8 @@ var vista = function(objeto, ContextPath) {
                                     add_tabla = data[key];
                                 if (contador === 1)
                                     add_tabla = data[key] + ', <strong> id: </strong>' + datos[valor];
+                                //if (contador > 1)
+                                    //add_tabla = ", " + data[key].substr(0, 8)  + "... ";  
                                 contador++;
                             }
                             if (contador === 0) {

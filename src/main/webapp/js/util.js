@@ -269,8 +269,11 @@ function htmlDecode(value) {
 }
 
 function enviarDatosUpdateForm(view, prefijo_div) {
+    var disabled = $(prefijo_div + '#formulario').find(':input:disabled').removeAttr('disabled');
     var jsonObj = [];
     jsonObj = $(prefijo_div + '#formulario').serializeObject();
+    disabled.attr('disabled','disabled');
+   
     //json is sent encoded. be careful of the dates. Dates must be decoded at server side before fill the bean
     //jsonfile = {json: htmlEncode(JSON.stringify(jsonObj))};
     jsonfile = {json: JSON.stringify(jsonObj)};
