@@ -18,8 +18,8 @@ public class DocumentoBean extends GenericBeanImplementation implements GenericB
     private Date alta = new Date();
     private Date cambio = new Date();
     private Integer hits = 0;
-    private Integer id_usuario = null;
-    private Integer id_tipodocumento = null;
+    private Integer id_usuario = 0; //importante inicializar a 0 las claves ajenas
+    private Integer id_tipodocumento = 0; //importante inicializar a 0 las claves ajenas
     private String etiquetas = "";
     private Boolean publicado = false;
     private Boolean portada = false;

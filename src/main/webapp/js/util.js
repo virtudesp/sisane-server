@@ -19,6 +19,29 @@ function ajaxCallASync(url, type, data, callBackFunction) {
     });
 }
 
+function cargaDescripcionClaveAjenaEnFormulario(lugarID, lugarDesc, objetoClaveAjena) {
+    if ($(lugarID).val() != "") {
+        objInfo = objeto(objetoClaveAjena, path).getOne($(lugarID).val());
+        if (objInfo != "" && $(lugarID).val() != 0) {
+            props = Object.getOwnPropertyNames(objInfo);
+            $(lugarDesc).text(objInfo[props[0]]); //muestra el primer campo
+        } else {
+            $(lugarDesc).text("???");
+        }
+    }
+}
+
+function cargaModalBuscarClaveAjena(strObjetoForeign, strPlace, control, functionCallback) {
+    var objConsulta = objeto(strObjetoForeign, path);
+    var consultaView = vista(objConsulta, path);
+    cabecera = '<button id="full-width" type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>' + '<h3 id="myModalLabel">Elección</h3>';
+    pie = '<button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Cerrar</button>';
+    listado = consultaView.getEmptyList();
+    loadForm(strPlace, cabecera, listado, pie, true);
+    var consultaControl = control(path);
+    consultaControl.inicia(consultaView, 1, null, null, 10, null, null, null, functionCallback, null, null, null);
+}
+
 function creoleParse(content, lugar) {
     var div = document.createElement('div');
     div.innerHTML = "";

@@ -50,28 +50,34 @@ var control_documento_list = function(path) {
 
 
 
-        //if we're editing, fill values into the form. 
-        //if we're newing, disable id
+ 
 
         if (action == "edit") {
             view.doFillForm(id);
-            //when editing load the foreighn keys
-            cargaClaveAjena(prefijo_div + '#id_usuario', prefijo_div + '#id_usuario_desc', 'usuario')
-        } else {
-            $(prefijo_div + '#id').val('0').attr("disabled", true);
-            $(prefijo_div + '#titulo').focus();
+            $(prefijo_div + '#id').attr("disabled", true);
         }
+        else {
+            $(prefijo_div + '#id').val('0').attr("disabled", true);
+        }
+//            //when editing load the foreighn keys
+        cargaDescripcionClaveAjenaEnFormulario(prefijo_div + '#id_usuario', prefijo_div + '#id_usuario_desc', 'usuario')
+        cargaDescripcionClaveAjenaEnFormulario(prefijo_div + '#id_tipodocumento', prefijo_div + '#id_tipodocumento_desc', 'tipodocumento')
+//        } else {
+
+        //$(prefijo_div + '#titulo').focus();
+//        }
 
         //foreign key actions in form
 
         $(prefijo_div + '#id_usuario_button').unbind('click');
         $(prefijo_div + '#id_usuario_button').click(function() {
-            loadForeign('usuario', '#modal02', control_usuario_list, callbackSearchUsuario);
+            cargaModalBuscarClaveAjena('usuario', '#modal02', control_usuario_list, callbackSearchUsuario);
             function callbackSearchUsuario(id) {
                 $(prefijo_div + '#modal02').modal('hide');
                 $(prefijo_div + '#modal02').data('modal', null);
                 $(prefijo_div + '#id_usuario').val($(this).attr('id'));
-                cargaClaveAjena('#id_usuario', '#id_usuario_desc', 'usuario');
+                cargaDescripcionClaveAjenaEnFormulario
+                cargaDescripcionClaveAjenaEnFormulario('#id_usuario', '#id_usuario_desc', 'usuario');
                 return false;
             }
             return false;
@@ -81,17 +87,16 @@ var control_documento_list = function(path) {
 
         $(prefijo_div + '#id_tipodocumento_button').unbind('click');
         $(prefijo_div + '#id_tipodocumento_button').click(function() {
-            loadForeign('tipodocumento', '#modal02', control_tipodocumento_list, callbackSearchTipodocumento);
+            cargaModalBuscarClaveAjena('tipodocumento', '#modal02', control_tipodocumento_list, callbackSearchTipodocumento);
             function callbackSearchTipodocumento(id) {
                 $(prefijo_div + '#modal02').modal('hide');
                 $(prefijo_div + '#modal02').data('modal', null);
                 $(prefijo_div + '#id_tipodocumento').val($(this).attr('id'));
-                cargaClaveAjena('#id_tipodocumento', '#id_tipodocumento_desc', 'tipodocumento');
+                cargaDescripcionClaveAjenaEnFormulario('#id_tipodocumento', '#id_tipodocumento_desc', 'tipodocumento');
                 return false;
             }
             return false;
         });
-
 
         //preview parser of the content
 
@@ -103,70 +108,17 @@ var control_documento_list = function(path) {
             contenido += '<textarea type="text" id="contenidomodal" name="contenido" rows="20" cols="70" placeholder="contenido"></textarea>';
             contenido += '</div><div class="col-md-6"><div id="textoparseado"></div></div>';
             contenido += '</div>';
-
-
             loadForm('#modal02', cabecera, contenido, pie, true);
-
-            //$(prefijo_div + "#contenidomodal").expanding();
-//
-//            $(prefijo_div + '#modal02').css({
-//                'right': '20px',
-//                'left': '20px',
-//                'width': 'auto',
-//                'margin': '0',
-//                'display': 'block'
-//            });
-
-
             $('#contenidomodal').val($('#contenido').val());
-
-
             creoleParse($('#contenidomodal').val(), $('#textoparseado'));
-
-
-//            var output = $('#textoparseado');
-//
-//            var div = document.createElement('div');
-//            div.innerHTML = "";
-//            creole.parse(div, $('#contenidomodal').val());
-//
-//            var tablas = div.getElementsByTagName('table');
-//            for (var i = 0; i < tablas.length; i++) {
-//                tablas[i].className = 'table table-bordered';
-//            }
-//
-//            output.empty().html(div);
-
             $('#contenido').val($('#contenidomodal').val());
-
             $('#contenidomodal').keyup(function() {
                 creoleParse($('#contenidomodal').val(), $('#textoparseado'));
                 $('#contenido').val($('#contenidomodal').val());
             });
-
-
-
-            /*
-             var input = $(prefijo_div + '#contenidomodal');
-             var output = $(prefijo_div + '#textoparseado');
-             
-             var render = function() {
-             output.innerHTML = '';
-             creole.parse(output, input.value);
-             };
-             
-             input.onkeyup = function() {
-             render();
-             };
-             */
-
-
-
         });
 
-
-
-
+        //guardar datos
 
         $(prefijo_div + '#submitForm').unbind('click');
         $(prefijo_div + '#submitForm').click(function() {
@@ -175,37 +127,6 @@ var control_documento_list = function(path) {
             }
             return false;
         });
-    }
-
-    function cargaClaveAjena(lugarID, lugarDesc, objetoClaveAjena) {
-        if ($(lugarID).val() != "") {
-            objInfo = objeto(objetoClaveAjena, path).getOne($(lugarID).val());
-            props = Object.getOwnPropertyNames(objInfo);
-            //$(lugarDesc).empty().val(objInfo[props[1]]);
-            $(lugarDesc).text(objInfo[props[1]]);
-        }
-    }
-
-    function loadForeign(strObjetoForeign, strPlace, control, functionCallback) {
-        var objConsulta = objeto(strObjetoForeign, path);
-        var consultaView = vista(objConsulta, path);
-
-        cabecera = '<button id="full-width" type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>' + '<h3 id="myModalLabel">Elección</h3>';
-        pie = '<button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Cerrar</button>';
-        listado = consultaView.getEmptyList();
-        loadForm(strPlace, cabecera, listado, pie, true);
-
-//        $(prefijo_div + strPlace).css({
-//            'right': '20px',
-//            'left': '20px',
-//            'width': 'auto',
-//            'margin': '0',
-//            'display': 'block'
-//        });
-
-        var consultaControl = control(path);
-        consultaControl.inicia(consultaView, 1, null, null, 10, null, null, null, functionCallback, null, null, null);
-
     }
 
     function removeConfirmationModalForm(view, place, id) {

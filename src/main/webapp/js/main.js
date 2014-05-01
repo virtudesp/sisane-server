@@ -224,7 +224,7 @@ var vista = function(objeto, ContextPath) {
                                     default:
                                         var fieldContent = decodeURIComponent(value[valor]);
                                         if (typeof fieldContent == "string") {
-                                            
+
                                             if (value[valor].length > 50) //don't show too long fields
                                                 fieldContent = decodeURIComponent(value[valor]).substr(0, 20) + " ...";
 
@@ -259,22 +259,27 @@ var vista = function(objeto, ContextPath) {
                 tabla += '<tr><td><strong>' + cabecera[index] + '</strong></td>';
                 tabla += '<td>';
                 if (/id_/.test(valor)) {
-                    $.when(ajaxCallSync(ContextPath + '/json?ob=' + valor.split("_")[1].replace(/[0-9]*$/, "") + '&op=get&id=' + datos[valor], 'GET', '')).done(function(data) {
-                        contador = 0;
-                        add_tabla = "";
-                        for (key in data) {
-                            if (contador === 0)
-                                add_tabla = data[key];
-                            if (contador === 1)
-                                add_tabla = data[key] + ', <strong> id: </strong>' + datos[valor];
-                            contador++;
-                        }
-                        if (contador === 0) {
-                            add_tabla = datos[valor] + ' #error';
-                        }
-                        tabla += add_tabla;
-                    });
-                } else {
+                    if (datos[valor] == 0) {
+                        tabla += "nulo" + ', <strong> id:0 </strong>';
+                    } else {
+                        $.when(ajaxCallSync(ContextPath + '/json?ob=' + valor.split("_")[1].replace(/[0-9]*$/, "") + '&op=get&id=' + datos[valor], 'GET', '')).done(function(data) {
+                            contador = 0;
+                            add_tabla = "";
+                            for (key in data) {
+                                if (contador === 0)
+                                    add_tabla = data[key];
+                                if (contador === 1)
+                                    add_tabla = data[key] + ', <strong> id: </strong>' + datos[valor];
+                                contador++;
+                            }
+                            if (contador === 0) {
+                                add_tabla = datos[valor] + ' #error';
+                            }
+                            tabla += add_tabla;
+                        });
+                    }
+                }
+                else {
                     switch (datos[valor]) {
                         case true:
                             tabla += '<i class="glyphicon glyphicon-ok"></i>';
@@ -287,9 +292,7 @@ var vista = function(objeto, ContextPath) {
                     }
                     tabla += '</td></tr>';
                 }
-            });
-
-
+            });            
             tabla += '</table>';
             return tabla;
         },
