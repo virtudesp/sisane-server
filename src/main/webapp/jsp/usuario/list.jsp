@@ -14,7 +14,7 @@
     String strNombreMantenimiento = "usuario";
 %>
 <div id="<%=strNombreMantenimiento%>_list">
-    <div class="col-md-12">
+    <div>
         <div class="row">
             <div class="col-md-7">       
                 <h2><%=strNombreMantenimiento%></h2>
