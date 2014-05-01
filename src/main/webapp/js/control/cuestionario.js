@@ -71,7 +71,7 @@ var control_cuestionario_list = function(path) {
             $(prefijo_div + '#id').val('0').attr("disabled", true);
             $(prefijo_div + '#descripcion').focus();
         }
-        
+
 
         //http://jqueryvalidation.org/documentation/
         $('#formulario').validate({
@@ -103,7 +103,7 @@ var control_cuestionario_list = function(path) {
                     required: "Introduce una evaluación",
                     maxlength: "Tiene que ser menos de 1 digito",
                     digits: "Tiene que ser un numero entero"
-                },                
+                },
             },
             highlight: function(element) {
                 $(element).closest('.control-group').removeClass('success').addClass('error');
@@ -287,8 +287,7 @@ var control_cuestionario_list = function(path) {
                 thisObject.inicia(view, pag, order, ordervalue, rpp, filter, filteroperator, filtervalue, callback, systemfilter, systemfilteroperator, systemfiltervalue);
             });
 
-            //asignación del evento de cambio del numero de regs por página
-
+            //asignación del evento de cambio del numero de regs por página            
             $(prefijo_div + '#rpp').unbind('change');
             $(prefijo_div + '#rpp').on('change', function() {
                 rpp = $(prefijo_div + "#rpp option:selected").text();
