@@ -175,6 +175,9 @@
                     return false;
                 });
 
+
+
+
                 Path.map("#/documento").to(function() {
                     var documento = objeto('documento', '<%=request.getContextPath()%>');
                     var documentoView = vista(documento, '<%=request.getContextPath()%>');
@@ -187,7 +190,20 @@
                     return false;
                 });
 
-               
+                Path.map("#/documento/view/:id").to(function() {
+                    var documento = objeto('documento', '<%=request.getContextPath()%>');
+                    var documentoView = vista(documento, '<%=request.getContextPath()%>');
+
+                    $('#indexContenidoJsp').empty();
+                    $('#indexContenido').empty().append(documentoView.getEmptyDiv());
+                    $('#indexContenido').empty().append(documentoView.getRegisterTableView());
+
+                    var documentoControl = control_documento_list('<%=request.getContextPath()%>');
+                    documentoControl.viewRegister(documentoView, this.params['id']);
+                    return false;
+                });
+
+                /*
                 function showContent() {
                     var documento = objeto('documento', '<%=request.getContextPath()%>');
                     var content = decodeURIComponent(documento.getOne(1)['contenido']);
@@ -197,8 +213,9 @@
                     return false;
                 }
                 ;
+                */
 
-                showContent();
+                //showContent();
 
                 Path.map("#/empresa").to(function() {
                     var empresa = objeto('empresa', '<%=request.getContextPath()%>');

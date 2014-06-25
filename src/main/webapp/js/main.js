@@ -92,6 +92,12 @@ var objeto = function(clase, ContextPath) {
             });
             return regs;
         },
+        getAll: function() {
+            $.when(ajaxCallSync(urlDatos + '&op=getall', 'GET', '')).done(function(data) {
+                one = data;
+            });
+            return one;
+        },
         getOne: function(id1) {
             $.when(ajaxCallSync(urlDatos + '&op=get&id=' + id1, 'GET', '')).done(function(data) {
                 one = data;
@@ -120,11 +126,21 @@ var vista = function(objeto, ContextPath) {
     var urlDatos = ContextPath + '/jsp?ob=' + objeto.getName();
     return {
         //contexto público (interface)
+        getName: function() {
+            return objeto.getName();
+        },
         getObject: function() {
             return objeto;
         },
         getLoading: function() {
             return '<img src="fonts/ajax-loading.gif" alt="cargando..." />';
+        },
+        getRegisterTableView: function(place, id) {
+            $(place).empty().append("<h1>Vista de " + this.getName() + "</h1>");
+            $(place).append((this.getObjectTable(id)));
+            $(place).append('<a class="btn btn-primary" href="jsp#/' + this.getName() + '/edit/' + id + '">Editar</a>');
+            $(place).append('<a class="btn btn-primary" href="jsp#/' + this.getName() + '/remove/"' + id + '">Borrar</a>');
+            $(place).append('<a class="btn btn-primary" href="jsp#/' + this.getName() + '/list/"' + id + '">Volver</a>');
         },
         getPageLinks: function(page_number, rpp, filter, filteroperator, filtervalue, systemfilter, systemfilteroperator, systemfiltervalue) {
             page_number = parseInt(page_number);
@@ -271,7 +287,7 @@ var vista = function(objeto, ContextPath) {
                                 if (contador === 1)
                                     add_tabla = data[key] + ', <strong> id: </strong>' + datos[valor];
                                 //if (contador > 1)
-                                    //add_tabla = ", " + data[key].substr(0, 8)  + "... ";  
+                                //add_tabla = ", " + data[key].substr(0, 8)  + "... ";  
                                 contador++;
                             }
                             if (contador === 0) {
@@ -294,7 +310,7 @@ var vista = function(objeto, ContextPath) {
                     }
                     tabla += '</td></tr>';
                 }
-            });            
+            });
             tabla += '</table>';
             return tabla;
         },
@@ -303,6 +319,9 @@ var vista = function(objeto, ContextPath) {
                 form = data;
             });
             return form;
+        },
+        getEmptyDiv: function() {
+            return '<div id="content"></div>';
         },
         getEmptyForm: function() {
             $.when(ajaxCallSync(urlDatos + '&op=form&mode=1', 'GET', '')).done(function(data) {

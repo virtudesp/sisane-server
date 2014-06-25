@@ -33,6 +33,9 @@ var control_documento_list = function(path) {
         });
     }
 
+
+
+
     function loadModalForm(view, place, id, action) {
 
         //set head & foot of modal view. Get empty form to be loaded into the content. Show modal.
@@ -160,6 +163,10 @@ var control_documento_list = function(path) {
     });
 
     return {
+        viewRegister: function(view, id) {
+            loadDivView2(view, '#content', id);        
+        },
+        
         inicia: function(view, pag, order, ordervalue, rpp, filter, filteroperator, filtervalue, callback, systemfilter, systemfilteroperator, systemfiltervalue) {
 
             var thisObject = this;
@@ -185,6 +192,7 @@ var control_documento_list = function(path) {
             //muestra la frase con el número de registros de la consulta
 
             $(prefijo_div + "#registers").empty().append(view.getLoading()).html(view.getRegistersInfo(filter, filteroperator, filtervalue, systemfilter, systemfilteroperator, systemfiltervalue));
+            $(prefijo_div + "#registers").empty().append(view.getLoading()).html('<a href="jsp#/documento/view/1">Ver documento 1</a>');
 
             //muestra la frase de estado de la ordenación de la tabla
 
