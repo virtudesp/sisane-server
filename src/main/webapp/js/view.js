@@ -1,129 +1,8 @@
-//MODELO
-var objeto = function(clase, ContextPath) {
-    //contexto privado
-    var urlDatos = ContextPath + '/json?ob=' + clase;
-    return {
-        //contexto público (interface)
-        getName: function() {
-            return clase;
-        },
-        getGenericOperation: function(operation, id) {
-            $.when(ajaxCallSync(urlDatos + '&op=' + operation + "&id=" + id, 'GET', '')).done(function(data) {
-                resultado = data['data'];
-            });
-            return resultado;
-        },
-        getPrettyFieldNames: function() {
-            $.when(ajaxCallSync(urlDatos + '&op=getcolumns', 'GET', '')).done(function(data) {
-                prettyFieldNames = data['data'];
-            });
-            return prettyFieldNames;
-        },
-        getPrettyFieldNamesAcciones: function() {
-            $.when(ajaxCallSync(urlDatos + '&op=getcolumns', 'GET', '')).done(function(data) {
-                prettyFieldNames = data['data'];
-                prettyFieldNames.push("acciones");
-
-            });
-            return prettyFieldNames;
-        },
-        getCountFields: function() {
-            $.when(ajaxCallSync(urlDatos + '&op=getcolumns', 'GET', '')).done(function(data) {
-                countFields = data['data'].length;
-            });
-            return countFields;
-        },
-        getFieldNames: function() {
-            $.when(ajaxCallSync(urlDatos + '&op=getcolumns', 'GET', '')).done(function(data) {
-                fieldNames = data['data'];
-            });
-            return fieldNames;
-        },
-        getPage: function(pagina, order, ordervalue, rpp, filter, filteroperator, filtervalue, systemfilter, systemfilteroperator, systemfiltervalue) {
-            if (order) {
-                orderParams = '&order=' + order + '&ordervalue=' + ordervalue;
-            } else {
-                orderParams = "";
-            }
-            if (filter) {
-                filterParams = "&filter=" + filter + "&filteroperator=" + filteroperator + "&filtervalue=" + filtervalue;
-            } else {
-                filterParams = "";
-            }
-            if (systemfilter) {
-                systemfilterParams = "&systemfilter=" + systemfilter + "&systemfilteroperator=" + systemfilteroperator + "&systemfiltervalue=" + systemfiltervalue;
-            } else {
-                systemfilterParams = "";
-            }
-            $.when(ajaxCallSync(urlDatos + '&op=getpage' + filterParams + '&rpp=' + rpp + orderParams + '&page=' + pagina + systemfilterParams, 'GET', '')).done(function(data) {
-                pagina_objs = data; //decodeURI htmlDecode
-            });
-            return pagina_objs;
-        },
-        getPages: function(rpp, filter, filteroperator, filtervalue, systemfilter, systemfilteroperator, systemfiltervalue) {
-            if (filter) {
-                filterParams = "&filter=" + filter + "&filteroperator=" + filteroperator + "&filtervalue=" + filtervalue;
-            } else {
-                filterParams = "";
-            }
-            if (systemfilter) {
-                systemfilterParams = "&systemfilter=" + systemfilter + "&systemfilteroperator=" + systemfilteroperator + "&systemfiltervalue=" + systemfiltervalue;
-            } else {
-                systemfilterParams = "";
-            }
-            $.when(ajaxCallSync(urlDatos + '&op=getpages' + filterParams + '&rpp=' + rpp + systemfilterParams, 'GET', '')).done(function(data) {
-                pages = data['data'];
-            });
-            return pages;
-        },
-        getRegisters: function(filter, filteroperator, filtervalue, systemfilter, systemfilteroperator, systemfiltervalue) {
-            if (filter) {
-                filterParams = "&filter=" + filter + "&filteroperator=" + filteroperator + "&filtervalue=" + filtervalue;
-            } else {
-                filterParams = "";
-            }
-            if (systemfilter) {
-                systemfilterParams = "&systemfilter=" + systemfilter + "&systemfilteroperator=" + systemfilteroperator + "&systemfiltervalue=" + systemfiltervalue;
-            } else {
-                systemfilterParams = "";
-            }
-            $.when(ajaxCallSync(urlDatos + '&op=getregisters' + filterParams + systemfilterParams, 'GET', '')).done(function(data) {
-                regs = data['data'];
-            });
-            return regs;
-        },
-        getAll: function() {
-            $.when(ajaxCallSync(urlDatos + '&op=getall', 'GET', '')).done(function(data) {
-                one = data;
-            });
-            return one;
-        },
-        getOne: function(id1) {
-            $.when(ajaxCallSync(urlDatos + '&op=get&id=' + id1, 'GET', '')).done(function(data) {
-                one = data;
-            });
-            return one;
-        },
-        saveOne: function(jsonfile) {
-            $.when(ajaxCallSync(urlDatos + '&op=save', 'GET', jsonfile)).done(function(data) {
-                feedback = data;
-            });
-            return feedback;
-        },
-        removeOne: function(id) {
-            $.when(ajaxCallSync(urlDatos + '&op=remove&id=' + id, 'GET', '')).done(function(data) {
-                feedback = data;
-            });
-            return feedback;
-        }
-    };
-};
 //VISTA
-var vista = function(objeto, ContextPath) {
+var vista = function(objeto) {
     //contexto privado
     var link = "#";
     var neighborhood = 2;
-    var urlDatos = ContextPath + '/jsp?ob=' + objeto.getName();
     return {
         //contexto público (interface)
         getName: function() {
@@ -214,7 +93,7 @@ var vista = function(objeto, ContextPath) {
                         numField++;
                         if (numField <= visibleFields) {
                             if (/id_/.test(valor)) {
-                                $.when(ajaxCallSync(ContextPath + '/json?ob=' + valor.split("_")[1].replace(/[0-9]*$/, "") + '&op=get&id=' + value[valor], 'GET', '')).done(function(data) {
+                                $.when(ajaxCallSync(objeto.getPath() + '/json?ob=' + valor.split("_")[1].replace(/[0-9]*$/, "") + '&op=get&id=' + value[valor], 'GET', '')).done(function(data) {
                                     contador = 0;
                                     add_tabla = "";
                                     for (key in data) {
@@ -278,7 +157,7 @@ var vista = function(objeto, ContextPath) {
                     if (datos[valor] == 0) {
                         tabla += "nulo" + ', <strong> id:0 </strong>';
                     } else {
-                        $.when(ajaxCallSync(ContextPath + '/json?ob=' + valor.split("_")[1].replace(/[0-9]*$/, "") + '&op=get&id=' + datos[valor], 'GET', '')).done(function(data) {
+                        $.when(ajaxCallSync(objeto.getPath() + '/json?ob=' + valor.split("_")[1].replace(/[0-9]*$/, "") + '&op=get&id=' + datos[valor], 'GET', '')).done(function(data) {
                             contador = 0;
                             add_tabla = "";
                             for (key in data) {
@@ -314,20 +193,26 @@ var vista = function(objeto, ContextPath) {
             tabla += '</table>';
             return tabla;
         },
-        getEmptyList: function() {
-            $.when(ajaxCallSync(urlDatos + '&op=list&mode=1', 'GET', '')).done(function(data) {
+        getEmptyForm: function() {
+            $.when(ajaxCallSync(objeto.getUrlJsp() + '&op=form&mode=1', 'GET', '')).done(function(data) {
                 form = data;
             });
             return form;
-        },
+        },      
+        getEmptyList: function() {
+            $.when(ajaxCallSync(objeto.getUrlJsp() + '&op=list&mode=1', 'GET', '')).done(function(data) {
+                form = data;
+            });
+            return form;
+        },                
+//        getEmptyList: function() {
+//            $.when(ajaxCallSync(objeto.getUrlJsp() + '&op=list&mode=1', 'GET', '')).done(function(data) {
+//                forma = data;
+//            });
+//            return forma;
+//        },
         getEmptyDiv: function() {
             return '<div id="content"></div>';
-        },
-        getEmptyForm: function() {
-            $.when(ajaxCallSync(urlDatos + '&op=form&mode=1', 'GET', '')).done(function(data) {
-                form = data;
-            });
-            return form;
         },
         doFillForm: function(id) {
             campos = objeto.getFieldNames();
@@ -369,5 +254,6 @@ var vista = function(objeto, ContextPath) {
     };
 
 };
+
 
 

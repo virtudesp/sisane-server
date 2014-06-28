@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-var control_documento_list = function(path) {
+var control_documento_list = function(documentoView) {
     //contexto privado
 
     var prefijo_div = "#documento_list ";
@@ -25,29 +25,36 @@ var control_documento_list = function(path) {
         return botonera;
     }
 
-    function loadDivView(view, place, id) {
-        $(prefijo_div + place).empty().append((view.getObjectTable(id))
+    function loadDivView(place, id) {
+        $(prefijo_div + place).empty().append((documentoView.getObjectTable(id))
                 + '<button class="btn btn-primary" id="limpiar">Limpiar</button>');
         $(prefijo_div + '#limpiar').click(function() {
             $(prefijo_div + place).empty();
         });
     }
 
+    function loadDivViewInPageContent(place, id) {
+        $(place).empty().append("<h1>Vista de " + documentoView.getName() + "</h1>");
+        $(place).append((documentoView.getObjectTable(id)));
+        $(place).append('<a class="btn btn-primary" href="jsp#/documento/edit/' + id + '">Editar</a>');
+        $(place).append('<a class="btn btn-primary" href="jsp#/usuario/remove/"' + id + '">Borrar</a>');
+        $(place).append('<a class="btn btn-primary" href="jsp#/usuario/list/"' + id + '">Volver</a>');
+    }
 
 
 
-    function loadModalForm(view, place, id, action) {
+    function loadModalForm(place, id, action) {
 
         //set head & foot of modal view. Get empty form to be loaded into the content. Show modal.
 
         cabecera = '<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>';
         if (action == "edit") {
-            cabecera += '<h3 id="myModalLabel">Edición de ' + view.getObject().getName() + "</h3>";
+            cabecera += '<h3 id="myModalLabel">Edición de ' + documentoView.getObject().getName() + "</h3>";
         } else {
-            cabecera += '<h3 id="myModalLabel">Alta de ' + view.getObject().getName() + "</h3>";
+            cabecera += '<h3 id="myModalLabel">Alta de ' + documentoView.getObject().getName() + "</h3>";
         }
         pie = '<button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Cerrar</button>';
-        loadForm(place, cabecera, view.getEmptyForm(), pie, false);
+        loadForm(place, cabecera, documentoView.getEmptyForm(), pie, false);
 
         //deal with date fields in order datepicker to be shown
 
@@ -56,15 +63,15 @@ var control_documento_list = function(path) {
 
 
         if (action == "edit") {
-            view.doFillForm(id);
+            documentoView.doFillForm(id);
             $(prefijo_div + '#id').attr("disabled", true);
         }
         else {
             $(prefijo_div + '#id').val('0').attr("disabled", true);
         }
 //            //when editing load the foreighn keys
-        cargaDescripcionClaveAjenaEnFormulario(prefijo_div + '#id_usuario', prefijo_div + '#id_usuario_desc', 'usuario', path);
-        cargaDescripcionClaveAjenaEnFormulario(prefijo_div + '#id_tipodocumento', prefijo_div + '#id_tipodocumento_desc', 'tipodocumento', path);
+        cargaDescripcionClaveAjenaEnFormulario(prefijo_div + '#id_usuario', prefijo_div + '#id_usuario_desc', 'usuario', documentoView.getObject().getPath());
+        cargaDescripcionClaveAjenaEnFormulario(prefijo_div + '#id_tipodocumento', prefijo_div + '#id_tipodocumento_desc', 'tipodocumento', documentoView.getObject().getPath());
 //        } else {
 
         //$(prefijo_div + '#titulo').focus();
@@ -74,13 +81,13 @@ var control_documento_list = function(path) {
 
         $(prefijo_div + '#id_usuario_button').unbind('click');
         $(prefijo_div + '#id_usuario_button').click(function() {
-            cargaModalBuscarClaveAjena('usuario', '#modal02', control_usuario_list, callbackSearchUsuario, path);
+            cargaModalBuscarClaveAjena('usuario', '#modal02', control_usuario_list, callbackSearchUsuario, documentoView.getObject().getPath());
             function callbackSearchUsuario(id) {
                 $(prefijo_div + '#modal02').modal('hide');
                 $(prefijo_div + '#modal02').data('modal', null);
                 $(prefijo_div + '#id_usuario').val($(this).attr('id'));
 
-                cargaDescripcionClaveAjenaEnFormulario('#id_usuario', '#id_usuario_desc', 'usuario', path);
+                cargaDescripcionClaveAjenaEnFormulario('#id_usuario', '#id_usuario_desc', 'usuario', documentoView.getObject().getPath());
                 return false;
             }
             return false;
@@ -90,12 +97,12 @@ var control_documento_list = function(path) {
 
         $(prefijo_div + '#id_tipodocumento_button').unbind('click');
         $(prefijo_div + '#id_tipodocumento_button').click(function() {
-            cargaModalBuscarClaveAjena('tipodocumento', '#modal02', control_tipodocumento_list, callbackSearchTipodocumento, path);
+            cargaModalBuscarClaveAjena('tipodocumento', '#modal02', control_tipodocumento_list, callbackSearchTipodocumento, documentoView.getObject().getPath());
             function callbackSearchTipodocumento(id) {
                 $(prefijo_div + '#modal02').modal('hide');
                 $(prefijo_div + '#modal02').data('modal', null);
                 $(prefijo_div + '#id_tipodocumento').val($(this).attr('id'));
-                cargaDescripcionClaveAjenaEnFormulario('#id_tipodocumento', '#id_tipodocumento_desc', 'tipodocumento', path);
+                cargaDescripcionClaveAjenaEnFormulario('#id_tipodocumento', '#id_tipodocumento_desc', 'tipodocumento', documentoView.getObject().getPath());
                 return false;
             }
             return false;
@@ -126,81 +133,83 @@ var control_documento_list = function(path) {
         $(prefijo_div + '#submitForm').unbind('click');
         $(prefijo_div + '#submitForm').click(function() {
             if ($('#formulario').valid()) {
-                enviarDatosUpdateForm(view, prefijo_div);
+                enviarDatosUpdateForm(documentoView, prefijo_div);
             }
             return false;
         });
     }
 
-    function removeConfirmationModalForm(view, place, id) {
+    function removeConfirmationModalForm(place, id) {
         cabecera = "<button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-hidden=\"true\">×</button>" +
-                "<h3 id=\"myModalLabel\">Borrado de " + view.getObject().getName() + "</h3>";
+                "<h3 id=\"myModalLabel\">Borrado de " + documentoView.getObject().getName() + "</h3>";
         pie = "<div id=\"result\">¿Seguro que desea borrar el registro?</div>" +
                 '<button id="btnBorrarSi" class="btn btn-danger" data-dismiss="modal" aria-hidden="true">Sí</button>' +
                 '<button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">No</button>';
-        loadForm(place, cabecera, view.getObjectTable(id), pie, false);
+        loadForm(place, cabecera, documentoView.getObjectTable(id), pie, false);
         $(prefijo_div + '#btnBorrarSi').unbind('click');
         $(prefijo_div + '#btnBorrarSi').click(function() {
-            resultado = view.getObject().removeOne(id);
+            resultado = documentoView.getObject().removeOne(id);
             cabecera = "<button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-hidden=\"true\">×</button>" + "<h3 id=\"myModalLabel\">Respuesta del servidor</h3>";
             pie = "<button class=\"btn btn-primary\" data-dismiss=\"modal\" aria-hidden=\"true\">Cerrar</button>";
             loadForm('#modal02', cabecera, "Código: " + resultado["status"] + "<br />" + resultado["message"] + "<br />", pie, true);
         });
     }
 
-    function loadModalView(view, place, id) {
+    function loadModalView(place, id) {
         cabecera = "<button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-hidden=\"true\">×</button>" +
-                "<h3 id=\"myModalLabel\">Detalle de " + view.getObject().getName() + "</h3>";
+                "<h3 id=\"myModalLabel\">Detalle de " + documentoView.getObject().getName() + "</h3>";
         pie = "<button class=\"btn btn-primary\" data-dismiss=\"modal\" aria-hidden=\"true\">Cerrar</button>";
-        loadForm(place, cabecera, view.getObjectTable(id), pie, true);
+        loadForm(place, cabecera, documentoView.getObjectTable(id), pie, true);
     }  //asigación de evento de refresco de la tabla cuando volvemos de una operación en ventana modal
 
     $(prefijo_div + '#modal01').unbind('hidden');
     $(prefijo_div + '#modal01').on('hidden', function() {
 
         rpp = $(prefijo_div + "#rpp option:selected").text();
-        thisObject.inicia(view, pag, order, ordervalue, rpp, filter, filteroperator, filtervalue, callback, systemfilter, systemfilteroperator, systemfiltervalue);
+        thisObject.inicia(pag, order, ordervalue, rpp, filter, filteroperator, filtervalue, callback, systemfilter, systemfilteroperator, systemfiltervalue);
     });
 
     return {
-        viewRegister: function(view, id) {
-            loadDivView2(view, '#content', id);        
+        viewRegister: function(id) {
+            loadDivViewInPageContent('#content', id);
         },
-        
-        inicia: function(view, pag, order, ordervalue, rpp, filter, filteroperator, filtervalue, callback, systemfilter, systemfilteroperator, systemfiltervalue) {
+        editRegister: function(id) {
+            loadDivEditInPageContent('#content', id);
+        },
+        inicia: function(pag, order, ordervalue, rpp, filter, filteroperator, filtervalue, callback, systemfilter, systemfilteroperator, systemfiltervalue) {
 
             var thisObject = this;
 
             //controlar que no estemos en una página fuera de órbita
 
-            if (parseInt(pag) > parseInt(view.getObject().getPages(rpp, filter, filteroperator, filtervalue))) {
-                pag = view.getObject().getPages(rpp, filter, filteroperator, filtervalue);
+            if (parseInt(pag) > parseInt(documentoView.getObject().getPages(rpp, filter, filteroperator, filtervalue))) {
+                pag = documentoView.getObject().getPages(rpp, filter, filteroperator, filtervalue);
             }
 
             //muestra la botonera de páginas
 
-            $(prefijo_div + "#pagination").empty().append(view.getLoading()).html(view.getPageLinks(pag, rpp, filter, filteroperator, filtervalue, systemfilter, systemfilteroperator, systemfiltervalue));
+            $(prefijo_div + "#pagination").empty().append(documentoView.getLoading()).html(documentoView.getPageLinks(pag, rpp, filter, filteroperator, filtervalue, systemfilter, systemfilteroperator, systemfiltervalue));
 
             //muestra el listado principal
 
             if (callback) {
-                $(prefijo_div + "#datos").empty().append(view.getLoading()).html(view.getPageTable(pag, order, ordervalue, rpp, filter, filteroperator, filtervalue, systemfilter, systemfilteroperator, systemfiltervalue, cargaBotoneraBuscando()));
+                $(prefijo_div + "#datos").empty().append(documentoView.getLoading()).html(documentoView.getPageTable(pag, order, ordervalue, rpp, filter, filteroperator, filtervalue, systemfilter, systemfilteroperator, systemfiltervalue, cargaBotoneraBuscando()));
             } else {
-                $(prefijo_div + "#datos").empty().append(view.getLoading()).html(view.getPageTable(pag, order, ordervalue, rpp, filter, filteroperator, filtervalue, systemfilter, systemfilteroperator, systemfiltervalue, cargaBotoneraMantenimiento()));
+                $(prefijo_div + "#datos").empty().append(documentoView.getLoading()).html(documentoView.getPageTable(pag, order, ordervalue, rpp, filter, filteroperator, filtervalue, systemfilter, systemfilteroperator, systemfiltervalue, cargaBotoneraMantenimiento()));
             }
 
             //muestra la frase con el número de registros de la consulta
 
-            $(prefijo_div + "#registers").empty().append(view.getLoading()).html(view.getRegistersInfo(filter, filteroperator, filtervalue, systemfilter, systemfilteroperator, systemfiltervalue));
-            $(prefijo_div + "#registers").empty().append(view.getLoading()).html('<a href="jsp#/documento/view/1">Ver documento 1</a>');
+            $(prefijo_div + "#registers").empty().append(documentoView.getLoading()).html(documentoView.getRegistersInfo(filter, filteroperator, filtervalue, systemfilter, systemfilteroperator, systemfiltervalue));
+            $(prefijo_div + "#registers").empty().append(documentoView.getLoading()).html('<a href="jsp#/documento/view/1">Ver documento 1</a>');
 
             //muestra la frase de estado de la ordenación de la tabla
 
-            $(prefijo_div + "#order").empty().append(view.getLoading()).html(view.getOrderInfo(order, ordervalue));
+            $(prefijo_div + "#order").empty().append(documentoView.getLoading()).html(documentoView.getOrderInfo(order, ordervalue));
 
             //muestra la frase de estado del filtro de la tabla aplicado
 
-            $(prefijo_div + "#filter").empty().append(view.getLoading()).html(view.getFilterInfo(filter, filteroperator, filtervalue));
+            $(prefijo_div + "#filter").empty().append(documentoView.getLoading()).html(documentoView.getFilterInfo(filter, filteroperator, filtervalue));
 
             //asignación eventos de la botonera de cada línea del listado principal
 
@@ -210,22 +219,22 @@ var control_documento_list = function(path) {
             } else {
                 $(prefijo_div + '.btn.btn-default.action01').unbind('click');
                 $(prefijo_div + '.btn.btn-default.action01').click(function() {
-                    loadDivView(view, '#datos2', $(this).attr('id'));
+                    loadDivView('#datos2', $(this).attr('id'));
                 });
 
                 $(prefijo_div + '.btn.btn-default.action02').unbind('click');
                 $(prefijo_div + '.btn.btn-default.action02').click(function() {
-                    loadModalView(view, '#modal01', $(this).attr('id'));
+                    loadModalView('#modal01', $(this).attr('id'));
                 });
 
                 $(prefijo_div + '.btn.btn-default.action03').unbind('click');
                 $(prefijo_div + '.btn.btn-default.action03').click(function() {
-                    loadModalForm(view, '#modal01', $(this).attr('id'), "edit");
+                    loadModalForm('#modal01', $(this).attr('id'), "edit");
                 });
 
                 $(prefijo_div + '.btn.btn-default.action04').unbind('click');
                 $(prefijo_div + '.btn.btn-default.action04').click(function() {
-                    removeConfirmationModalForm(view, '#modal01', $(this).attr('id'));
+                    removeConfirmationModalForm('#modal01', $(this).attr('id'));
                 });
 
             }
@@ -234,28 +243,28 @@ var control_documento_list = function(path) {
 
             $(prefijo_div + '#linkQuitarOrden').unbind('click');
             $(prefijo_div + '#linkQuitarOrden').click(function() {
-                thisObject.inicia(view, pag, null, null, rpp, filter, filteroperator, filtervalue, callback, systemfilter, systemfilteroperator, systemfiltervalue);
+                thisObject.inicia(pag, null, null, rpp, filter, filteroperator, filtervalue, callback, systemfilter, systemfilteroperator, systemfiltervalue);
             });
 
             //asignación de evento del enlace para quitar el filtro en el listado principal
 
             $(prefijo_div + '#linkQuitarFiltro').unbind('click');
             $(prefijo_div + '#linkQuitarFiltro').click(function() {
-                thisObject.inicia(view, pag, order, ordervalue, rpp, null, null, null, callback, systemfilter, systemfilteroperator, systemfiltervalue);
+                thisObject.inicia(pag, order, ordervalue, rpp, null, null, null, callback, systemfilter, systemfilteroperator, systemfiltervalue);
             });
 
             //asignación de eventos de la ordenación por columnas del listado principal
 
-            $.each(view.getObject().getFieldNames(), function(index, valor) {
+            $.each(documentoView.getObject().getFieldNames(), function(index, valor) {
                 $(prefijo_div + '.orderAsc').unbind('click');
                 $(prefijo_div + '.orderAsc' + index).click(function() {
                     rpp = $(prefijo_div + "#rpp option:selected").text();
-                    thisObject.inicia(view, pag, valor, "asc", rpp, filter, filteroperator, filtervalue, callback, systemfilter, systemfilteroperator, systemfiltervalue);
+                    thisObject.inicia(pag, valor, "asc", rpp, filter, filteroperator, filtervalue, callback, systemfilter, systemfilteroperator, systemfiltervalue);
                 });
                 $(prefijo_div + '.orderDesc').unbind('click');
                 $(prefijo_div + '.orderDesc' + index).click(function() {
                     rpp = $(prefijo_div + "#rpp option:selected").text();
-                    thisObject.inicia(view, pag, valor, "desc", rpp, filter, filteroperator, filtervalue, callback, systemfilter, systemfilteroperator, systemfiltervalue);
+                    thisObject.inicia(pag, valor, "desc", rpp, filter, filteroperator, filtervalue, callback, systemfilter, systemfilteroperator, systemfiltervalue);
                 });
 
             });
@@ -266,7 +275,7 @@ var control_documento_list = function(path) {
             $(prefijo_div + '.pagination_link').click(function(event) {
                 var id = $(this).attr('id');
                 rpp = $(prefijo_div + "#rpp option:selected").text();
-                thisObject.inicia(view, id, order, ordervalue, rpp, filter, filteroperator, filtervalue, callback, systemfilter, systemfilteroperator, systemfiltervalue);
+                thisObject.inicia(id, order, ordervalue, rpp, filter, filteroperator, filtervalue, callback, systemfilter, systemfilteroperator, systemfiltervalue);
                 return false;
 
             });
@@ -277,7 +286,7 @@ var control_documento_list = function(path) {
             } else {
                 $(prefijo_div + '#crear').unbind('click');
                 $(prefijo_div + '#crear').click(function() {
-                    loadModalForm(view, prefijo_div + '#modal01', $(this).attr('id'));
+                    loadModalForm(prefijo_div + '#modal01', $(this).attr('id'));
                 });
             }
 
@@ -291,7 +300,7 @@ var control_documento_list = function(path) {
                 filter = $(prefijo_div + "#selectFilter option:selected").text();
                 filteroperator = $(prefijo_div + "#selectFilteroperator option:selected").text();
                 filtervalue = $(prefijo_div + "#inputFiltervalue").val();
-                thisObject.inicia(view, pag, order, ordervalue, rpp, filter, filteroperator, filtervalue, callback, systemfilter, systemfilteroperator, systemfiltervalue);
+                thisObject.inicia(pag, order, ordervalue, rpp, filter, filteroperator, filtervalue, callback, systemfilter, systemfilteroperator, systemfiltervalue);
                 return false;
             });
 
@@ -300,7 +309,7 @@ var control_documento_list = function(path) {
             $(prefijo_div + '#modal01').unbind('hidden.bs.modal');
             $(prefijo_div + '#modal01').on('hidden.bs.modal', function() {
                 rpp = $(prefijo_div + "#rpp option:selected").text();
-                thisObject.inicia(view, pag, order, ordervalue, rpp, filter, filteroperator, filtervalue, callback, systemfilter, systemfilteroperator, systemfiltervalue);
+                thisObject.inicia(pag, order, ordervalue, rpp, filter, filteroperator, filtervalue, callback, systemfilter, systemfilteroperator, systemfiltervalue);
 
             });
 
@@ -309,7 +318,7 @@ var control_documento_list = function(path) {
             $(prefijo_div + '#rpp').unbind('change');
             $(prefijo_div + '#rpp').on('change', function() {
                 rpp = $(prefijo_div + "#rpp option:selected").text();
-                thisObject.inicia(view, pag, order, ordervalue, rpp, filter, filteroperator, filtervalue, callback, systemfilter, systemfilteroperator, systemfiltervalue);
+                thisObject.inicia(pag, order, ordervalue, rpp, filter, filteroperator, filtervalue, callback, systemfilter, systemfilteroperator, systemfiltervalue);
             });
         }
     };
