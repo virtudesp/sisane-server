@@ -157,6 +157,8 @@
             <jsp:include page="js/routes.js" />
                 
             <jsp:include page="js/control/documento.js" />
+            
+         
 
             $(document).ready(function() {
                 $('#indexContenidoJsp').addClass('animated slideInDown');
@@ -164,6 +166,7 @@
                 $('#menuLateral').addClass('animated slideInRight');
                 inicializacion();
                 do_routes('<%=request.getContextPath()%>');
+                
             });
 
         </script>

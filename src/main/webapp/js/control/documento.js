@@ -188,7 +188,7 @@ var control_documento_list = function(documentoView) {
 
             //muestra la botonera de páginas
 
-            $(prefijo_div + "#pagination").empty().append(documentoView.getLoading()).html(documentoView.getPageLinks(pag, rpp, filter, filteroperator, filtervalue, systemfilter, systemfilteroperator, systemfiltervalue));
+            $(prefijo_div + "#pagination").empty().append(documentoView.getLoading()).html(documentoView.getPageLinks(pag, order, ordervalue, rpp, filter, filteroperator, filtervalue, systemfilter, systemfilteroperator, systemfiltervalue));
 
             //muestra el listado principal
 
@@ -271,14 +271,14 @@ var control_documento_list = function(documentoView) {
 
             //asignación del evento de click para cambiar de página en la botonera de paginación
 
-            $(prefijo_div + '.pagination_link').unbind('click');
-            $(prefijo_div + '.pagination_link').click(function(event) {
-                var id = $(this).attr('id');
-                rpp = $(prefijo_div + "#rpp option:selected").text();
-                thisObject.inicia(id, order, ordervalue, rpp, filter, filteroperator, filtervalue, callback, systemfilter, systemfilteroperator, systemfiltervalue);
-                return false;
-
-            });
+//            $(prefijo_div + '.pagination_link').unbind('click');
+//            $(prefijo_div + '.pagination_link').click(function(event) {
+//                var id = $(this).attr('id');
+//                rpp = $(prefijo_div + "#rpp option:selected").text();
+//                thisObject.inicia(id, order, ordervalue, rpp, filter, filteroperator, filtervalue, callback, systemfilter, systemfilteroperator, systemfiltervalue);
+//                return false;
+//
+//            });
 
             //boton de crear un nuevo elemento
             if (callback) {

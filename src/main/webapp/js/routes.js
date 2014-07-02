@@ -1,24 +1,38 @@
-function do_routes(path) {
-        /* pedir un canvas
-         * izquierda: infos
-         * nuevo
-         * filtro
-         * nrpp
-         * ncpp
-         * centro: titulo
-         * botonera
-         */
 
-    
-     Path.map("#/documento").to(function() {
+
+function do_routes(path) {
+    /* pedir un canvas
+     * izquierda: infos
+     * nuevo
+     * filtro
+     * nrpp
+     * ncpp
+     * centro: titulo
+     * botonera
+     */
+
+
+    Path.map("#/documento").to(function() {
         var documentoObject = objeto('documento', path);
         var documentoView = vista(documentoObject);
         var documentoControl = control_documento_list(documentoView);
 
         $('#indexContenidoJsp').empty();
         $('#indexContenido').empty().append(documentoView.getEmptyList());
-        
+
         documentoControl.inicia(1, null, null, 10, null, null, null, null);
+        return false;
+    });
+
+    Path.map("#/documento/list/:url").to(function() {
+        var documentoObject = objeto('documento', path);
+        var documentoView = vista(documentoObject);
+        var documentoControl = control_documento_list(documentoView);
+
+        $('#indexContenidoJsp').empty();
+        $('#indexContenido').empty().append(documentoView.getEmptyList());
+        qs = parameters(this.params['url']);
+        documentoControl.inicia(qs["page"], qs["order"], qs["ordervalue"], qs["rpp"], qs["filter"], qs["filteroperator"], qs["filtervalue"], null);
         return false;
     });
 
@@ -29,26 +43,26 @@ function do_routes(path) {
 
         $('#indexContenidoJsp').empty();
         $('#indexContenido').empty().append(documentoView.getEmptyDiv());
-        
-        documentoControl.viewRegister( this.params['id']);
+
+        documentoControl.viewRegister(this.params['id']);
         return false;
     });
-    
+
     Path.map("#/documento/edit/:id").to(function() {
         var documentoObject = objeto('documento', path);
         var documentoView = vista(documentoObject);
         var documentoControl = control_documento_list(documentoView);
 
         $('#indexContenidoJsp').empty();
-        $('#indexContenido').empty().append(documentoView.getEmptyForm());
-        
-        documentoControl.editRegister( this.params['id']);
+        $('#indexContenido').empty().append(documentoForm);
+
+        documentoControl.editRegister(this.params['id']);
         return false;
-    });       
-    
-    
-    
-    
+    });
+
+
+
+
     Path.map("#/actividad").to(function() {
 
         var actividad = objeto('actividad', path);
@@ -90,7 +104,7 @@ function do_routes(path) {
 
 
 
-   
+
 
     /*
      function showContent() {
@@ -446,4 +460,5 @@ function do_routes(path) {
         return false;
     });
 
-};
+}
+;
