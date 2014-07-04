@@ -120,10 +120,22 @@
         -->
 
 
+   
+  
+        
+        <script src="js/util.js" charset="UTF-8"></script>
+        <script src="js/model.js" charset="UTF-8"></script>
+        <script src="js/view.js" charset="UTF-8"></script>
+        <script src="js/routes.js" charset="UTF-8"></script>
+        
+        <script src="js/control/documento.js" charset="UTF-8"></script> 
+        
+
+
         <script src="js/control/alumno.js" charset="UTF-8"></script>
         <script src="js/control/usuario.js" charset="UTF-8"></script>
         <script src="js/control/lenguaje.js" charset="UTF-8"></script>
-       
+
         <script src="js/control/entrada.js" charset="UTF-8"></script>
         <script src="js/control/actividad.js" charset="UTF-8"></script>
         <script src="js/control/empresa.js" charset="UTF-8"></script>
@@ -148,25 +160,18 @@
 
         <script>
 
-            <jsp:include page="js/util.js" />
 
-            <jsp:include page="js/model.js" />
 
-            <jsp:include page="js/view.js" />
 
-            <jsp:include page="js/routes.js" />
-                
-            <jsp:include page="js/control/documento.js" />
-            
-         
 
             $(document).ready(function() {
-                $('#indexContenidoJsp').addClass('animated slideInDown');
-                $('#menuSuperior').addClass('animated slideInLeft');
-                $('#menuLateral').addClass('animated slideInRight');
+              
+                //$('#indexContenidoJsp').addClass('animated slideInDown');
+                //$('#menuSuperior').addClass('animated slideInLeft');
+                //$('#menuLateral').addClass('animated slideInRight');
                 inicializacion();
                 do_routes('<%=request.getContextPath()%>');
-                
+
             });
 
         </script>

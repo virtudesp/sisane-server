@@ -141,11 +141,11 @@ var vista = function(objeto) {
         },
         getRegistersInfo: function(filter, filteroperator, filtervalue, systemfilter, systemfilteroperator, systemfiltervalue) {
             regs = this.getObject().getRegisters(filter, filteroperator, filtervalue, systemfilter, systemfilteroperator, systemfiltervalue);
-            return "<p>Mostrando una consulta de " + regs + " registros.</p>";
+            return "<p><small>Mostrando una consulta de " + regs + " registros.</small></p>";
         },
         getOrderInfo: function(order, ordervalue) {
             if (order) {
-                strOrder = "<p>Contenido ordenado por " + order + " (" + ordervalue + ') <a href="#" id="linkQuitarOrden">(Quitar orden)</a></p>';
+                strOrder = "<p><small>Contenido ordenado por " + order + " (" + ordervalue + ') <a href="#" id="linkQuitarOrden">(Quitar orden)</a></small></p>';
             } else {
                 strOrder = "<p>Contenido no ordenado</p>";
             }
@@ -153,7 +153,7 @@ var vista = function(objeto) {
         },
         getFilterInfo: function(filter, filteroperator, filtervalue) {
             if (filter) {
-                strFilter = "<p>Contenido filtrado (" + filter + " " + filteroperator + " " + filtervalue + ') <a href="#" id="linkQuitarFiltro">(Quitar filtro)</a></p>';
+                strFilter = "<p><small>Contenido filtrado (" + filter + " " + filteroperator + " " + filtervalue + ') <a href="#" id="linkQuitarFiltro">(Quitar filtro)</small></a></p>';
             } else {
                 strFilter = "<p>Contenido no filtrado</p>";
             }
@@ -163,7 +163,6 @@ var vista = function(objeto) {
             var url = '';
             if (pag)
                 url += "page=" + pag;
-            //url += "&order=" + order + "&ordervalue=" + ordervalue;
             if (rpp)
                 url += "&rpp=" + rpp;
             if (filter)
@@ -182,12 +181,12 @@ var vista = function(objeto) {
         },
         getUrlFromParamsWithoutPage: function(pag, order, ordervalue, rpp, filter, filteroperator, filtervalue, systemfilter, systemfilteroperator, systemfiltervalue) {
             var url = '';
-            if (order)
-                url += "order=" + order;
-            if (ordervalue)
-                url += "&ordervalue=" + ordervalue;
             if (rpp)
-                url += "&rpp=" + rpp;
+                url += "rpp=" + rpp;
+            if (order)
+                url += "&order=" + order;
+            if (ordervalue)
+                url += "&ordervalue=" + ordervalue;            
             if (filter)
                 url += "&filter=" + filter;
             if (filteroperator)
@@ -202,8 +201,81 @@ var vista = function(objeto) {
                 url += "&systemfiltervalue=" + systemfiltervalue;
             return url;
         },
+        getUrlFromParamsWithoutFilter: function(pag, order, ordervalue, rpp, filter, filteroperator, filtervalue, systemfilter, systemfilteroperator, systemfiltervalue) {
+            var url = '';
+            if (pag)
+                url += "page=" + pag;
+            if (rpp)
+                url += "&rpp=" + rpp;
+            if (order)
+                url += "&order=" + order;
+            if (ordervalue)
+                url += "&ordervalue=" + ordervalue;           
+            if (systemfilter)
+                url += "&systemfilter=" + systemfilter;
+            if (systemfilteroperator)
+                url += "&systemfilteroperator=" + systemfilteroperator;
+            if (systemfiltervalue)
+                url += "&systemfiltervalue=" + systemfiltervalue;
+            return url;
+        },
+        getUrlFromParamsWithoutRpp: function(pag, order, ordervalue, rpp, filter, filteroperator, filtervalue, systemfilter, systemfilteroperator, systemfiltervalue) {
+            var url = '';
+            if (pag)
+                url += "page=" + pag;
+            if (order)
+                url += "&order=" + order;
+            if (ordervalue)
+                url += "&ordervalue=" + ordervalue;
+            if (filter)
+                url += "&filter=" + filter;
+            if (filteroperator)
+                url += "&filteroperator=" + filteroperator;
+            if (filtervalue)
+                url += "&filtervalue=" + filtervalue;
+            if (systemfilter)
+                url += "&systemfilter=" + systemfilter;
+            if (systemfilteroperator)
+                url += "&systemfilteroperator=" + systemfilteroperator;
+            if (systemfiltervalue)
+                url += "&systemfiltervalue=" + systemfiltervalue;
+            return url;
+        },
+        getRppLinks: function(pag, order, ordervalue, rpp, filter, filteroperator, filtervalue, systemfilter, systemfilteroperator, systemfiltervalue, botonera) {
+            var UrlFromParamsWithoutRpp = this.getUrlFromParamsWithoutRpp(pag, order, ordervalue, rpp, filter, filteroperator, filtervalue, systemfilter, systemfilteroperator, systemfiltervalue);
+            var botonera = '<div id="pagination"><ul class="pagination">';
+            if (rpp == 5)
+                botonera += '<li class="active">';
+            else
+                botonera += '<li>';
+            botonera += '<a class="pagination_link" id="1" href="jsp#/' + objeto.getName() + '/list/' + UrlFromParamsWithoutRpp + '&rpp=5">5</a></li>';
+            if (rpp == 10)
+                botonera += '<li class="active">';
+            else
+                botonera += '<li>';
+            botonera += '<a class="pagination_link" id="2" href="jsp#/' + objeto.getName() + '/list/' + UrlFromParamsWithoutRpp + '&rpp=10">10</a></li>';
+            if (rpp == 20)
+                botonera += '<li class="active">';
+            else
+                botonera += '<li>';
+            botonera += '<a class="pagination_link" id="3" href="jsp#/' + objeto.getName() + '/list/' + UrlFromParamsWithoutRpp + '&rpp=20">20</a></li>';
+            if (rpp == 50)
+                botonera += '<li class="active">';
+            else
+                botonera += '<li>';
+            botonera += '<a class="pagination_link" id="4" href="jsp#/' + objeto.getName() + '/list/' + UrlFromParamsWithoutRpp + '&rpp=50">50</a></li>';
+            /* 
+             if (rpp == 100)
+             botonera += '<li class="active">';
+             else
+             botonera += '<li>';
+             botonera += '<a class="pagination_link" id="4" href="jsp#/' + objeto.getName() + '/list/' + UrlFromParamsWithoutRpp + '&rpp=100">100</a></li>';
+             */
+            botonera += '</ul></div>';
+            return botonera;
+        },
         getPageTable: function(pag, order, ordervalue, rpp, filter, filteroperator, filtervalue, systemfilter, systemfilteroperator, systemfiltervalue, botonera) {
-            var tabla = this.getUrlFromParamsWithoutOrder(pag, order, ordervalue, rpp, filter, filteroperator, filtervalue, systemfilter, systemfilteroperator, systemfiltervalue) + "<br>";
+            var tabla = '';
             UrlFromParamsWithoutOrder = this.getUrlFromParamsWithoutOrder(pag, order, ordervalue, rpp, filter, filteroperator, filtervalue, systemfilter, systemfilteroperator, systemfiltervalue);
             tabla += "<table class=\"table table-responsive table-hover table-striped table-condensed\">";
             var visibleFields = 5;

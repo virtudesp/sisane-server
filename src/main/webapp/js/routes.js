@@ -19,7 +19,7 @@ function do_routes(path) {
 
         $('#indexContenidoJsp').empty();
         $('#indexContenido').empty().append(documentoView.getEmptyList());
-
+        
         documentoControl.inicia(1, null, null, 10, null, null, null, null);
         return false;
     });

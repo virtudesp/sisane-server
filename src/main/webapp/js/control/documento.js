@@ -201,7 +201,7 @@ var control_documento_list = function(documentoView) {
             //muestra la frase con el número de registros de la consulta
 
             $(prefijo_div + "#registers").empty().append(documentoView.getLoading()).html(documentoView.getRegistersInfo(filter, filteroperator, filtervalue, systemfilter, systemfilteroperator, systemfiltervalue));
-            $(prefijo_div + "#registers").empty().append(documentoView.getLoading()).html('<a href="jsp#/documento/view/1">Ver documento 1</a>');
+            //$(prefijo_div + "#registers").empty().append(documentoView.getLoading()).html('<a href="jsp#/documento/view/1">Ver documento 1</a>');
 
             //muestra la frase de estado de la ordenación de la tabla
 
@@ -238,6 +238,8 @@ var control_documento_list = function(documentoView) {
                 });
 
             }
+
+            $(prefijo_div + '#rpp1').empty().append(documentoView.getRppLinks(pag, order, ordervalue, rpp, filter, filteroperator, filtervalue, systemfilter, systemfilteroperator, systemfiltervalue));
 
             //asignación de evento del enlace para quitar el orden en el listado principal
 
@@ -297,10 +299,13 @@ var control_documento_list = function(documentoView) {
 
             $(prefijo_div + '#btnFiltrar').unbind('click');
             $(prefijo_div + "#btnFiltrar").click(function(event) {
-                filter = $(prefijo_div + "#selectFilter option:selected").text();
-                filteroperator = $(prefijo_div + "#selectFilteroperator option:selected").text();
+                filter = $(prefijo_div + "#selectFilter option:selected").val();
+                filteroperator = $(prefijo_div + "#selectFilteroperator option:selected").val();
                 filtervalue = $(prefijo_div + "#inputFiltervalue").val();
-                thisObject.inicia(pag, order, ordervalue, rpp, filter, filteroperator, filtervalue, callback, systemfilter, systemfilteroperator, systemfiltervalue);
+                
+                window.location.href = "jsp#/documento/list/" + documentoView.getUrlFromParamsWithoutFilter(pag, order, ordervalue, rpp, filter, filteroperator, filtervalue, systemfilter, systemfilteroperator, systemfiltervalue) + "&filter=" + filter + "&filteroperator=" + filteroperator + "&filtervalue=" + filtervalue; 
+                
+                //thisObject.inicia(pag, order, ordervalue, rpp, filter, filteroperator, filtervalue, callback, systemfilter, systemfilteroperator, systemfiltervalue);
                 return false;
             });
 
