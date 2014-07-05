@@ -54,7 +54,7 @@ function do_routes(path) {
         var documentoControl = control_documento_list(documentoView);
 
         $('#indexContenidoJsp').empty();
-        $('#indexContenido').empty().append(documentoForm);
+        $('#indexContenido').empty().append(documentoView.getEmptyForm());
 
         documentoControl.editRegister(this.params['id']);
         return false;

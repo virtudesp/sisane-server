@@ -41,7 +41,12 @@ var control_documento_list = function(documentoView) {
         $(place).append('<a class="btn btn-primary" href="jsp#/usuario/list/"' + id + '">Volver</a>');
     }
 
-
+    function loadDivEditInPageContent() {
+        $(place).empty().append("<h1>Edición de " + documentoView.getName() + "</h1>");
+        $(place).append((documentoView.getEmptyForm()));
+        $(place).append('<a class="btn btn-primary" href="jsp#/documento/edit/' + id + '">Guardar</a>');
+        $(place).append('<a class="btn btn-primary" href="jsp#/usuario/list/"' + id + '">Volver</a>');
+    }
 
     function loadModalForm(place, id, action) {
 
@@ -302,9 +307,9 @@ var control_documento_list = function(documentoView) {
                 filter = $(prefijo_div + "#selectFilter option:selected").val();
                 filteroperator = $(prefijo_div + "#selectFilteroperator option:selected").val();
                 filtervalue = $(prefijo_div + "#inputFiltervalue").val();
-                
-                window.location.href = "jsp#/documento/list/" + documentoView.getUrlFromParamsWithoutFilter(pag, order, ordervalue, rpp, filter, filteroperator, filtervalue, systemfilter, systemfilteroperator, systemfiltervalue) + "&filter=" + filter + "&filteroperator=" + filteroperator + "&filtervalue=" + filtervalue; 
-                
+
+                window.location.href = "jsp#/documento/list/" + documentoView.getUrlFromParamsWithoutFilter(pag, order, ordervalue, rpp, filter, filteroperator, filtervalue, systemfilter, systemfilteroperator, systemfiltervalue) + "&filter=" + filter + "&filteroperator=" + filteroperator + "&filtervalue=" + filtervalue;
+
                 //thisObject.inicia(pag, order, ordervalue, rpp, filter, filteroperator, filtervalue, callback, systemfilter, systemfilteroperator, systemfiltervalue);
                 return false;
             });
