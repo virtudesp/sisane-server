@@ -230,10 +230,6 @@ var control_documento = function(documentoView) {
                                 }
                         );
 
-
-
-
-
                         $("#tableBody").empty().append(documentoView.getLoading()).html(function() {
                             page = documentoView.getObject().getPage(pag, order, ordervalue, rpp, filter, filteroperator, filtervalue, systemfilter, systemfilteroperator, systemfiltervalue)['list'];
 
@@ -252,12 +248,14 @@ var control_documento = function(documentoView) {
                                     //if (numField <= visibleFields) {
                                     if (/obj_tipodocumento/.test(valor)) {
                                         strClaveAjena = value[valor].id + ": " + value[valor].descripcion;
+                                        strClaveAjena = '<a href="jsp#/tipodocumento/view/' + value[valor].id +'">' + strClaveAjena + '</a>';
                                         tabla += '<td>' + strClaveAjena + '</td>';
                                     }
                                     if (/obj_usuario/.test(valor)) {
                                         strClaveAjena = value[valor].id + ": " + value[valor].login;
+                                        strClaveAjena = '<a href="jsp#/usuario/view/' + value[valor].id +'">' + strClaveAjena + '</a>';
                                         tabla += '<td>' + strClaveAjena + '</td>';
-                                    }                                    
+                                    }
                                     if (!(/obj_/.test(valor))) {
                                         switch (value[valor]) {
                                             case true:
