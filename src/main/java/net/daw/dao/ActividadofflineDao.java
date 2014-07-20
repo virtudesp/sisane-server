@@ -4,6 +4,7 @@
  */
 package net.daw.dao;
 
+import java.util.ArrayList;
 import net.daw.bean.ActividadofflineBean;
 import net.daw.helper.Conexion;
 
@@ -16,6 +17,14 @@ public class ActividadofflineDao extends GenericDaoImplementation<Actividadoffli
     public ActividadofflineDao() throws Exception {
         super("actividadoffline");
     }
+
+ 
+    @Override
+    public String getDescription(int id) throws Exception {
+        return "Descripcion de actividadoffline";
+    }
+
+
    
     
 }

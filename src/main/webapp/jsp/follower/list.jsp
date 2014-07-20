@@ -9,7 +9,7 @@
 <%@page import="java.util.Iterator"%>
 <%
     FollowerDao oFollowerDao = new FollowerDao(Conexion.getConection());
-    ArrayList<String> alColumnsNames = (ArrayList<String>) oFollowerDao.getColumnsNames();
+    ArrayList<String> alColumnsNames = (ArrayList<String>) oFollowerDao.getColumnsNames(false);
     Iterator<String> oIterador = alColumnsNames.listIterator();
     String strNombreMantenimiento = "follower";
 %>

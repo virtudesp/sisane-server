@@ -4,6 +4,7 @@
  */
 package net.daw.dao;
 
+import java.util.ArrayList;
 import net.daw.bean.AlumnoBean;
 import net.daw.bean.UsuarioBean;
 import net.daw.helper.Conexion;
@@ -36,4 +37,11 @@ public class AlumnoDao extends GenericDaoImplementation<AlumnoBean> {
         }
         return oAlumnoBean;
     }
+
+    @Override
+    public String getDescription(int id) throws Exception {
+        return "Descripcion de alumno";
+    }
+
+
 }

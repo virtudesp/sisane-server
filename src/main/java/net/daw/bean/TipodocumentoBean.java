@@ -4,13 +4,16 @@
  */
 package net.daw.bean;
 
+import com.google.gson.annotations.Expose;
+
 /**
  *
  * @author al037877
  */
 public class TipodocumentoBean  extends GenericBeanImplementation implements GenericBeanInterface {
-  
+  @Expose
     private String descripcion = "";
+  @Expose
     private Boolean privado = false;
 
     public String getDescripcion() {

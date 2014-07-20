@@ -10,13 +10,19 @@ var objeto = function(clase, ContextPath) {
         },
         getPath: function() {
             return ContextPath;
-        },         
+        },
         getUrlJson: function() {
             return urlJson;
-        },   
+        },
         getUrlJsp: function() {
             return urlJsp;
-        },          
+        },
+        validateUser: function(user, password) {
+            $.when(ajaxCallSync(urlJson + '&op=validate&user=' + user + "&password=" + password, 'GET', '')).done(function(data) {
+                resultado = data['data'];
+            });
+            return resultado;
+        },
         getGenericOperation: function(operation, id) {
             $.when(ajaxCallSync(urlJson + '&op=' + operation + "&id=" + id, 'GET', '')).done(function(data) {
                 resultado = data['data'];
@@ -24,30 +30,64 @@ var objeto = function(clase, ContextPath) {
             return resultado;
         },
         getPrettyFieldNames: function() {
-            $.when(ajaxCallSync(urlJson + '&op=getcolumns', 'GET', '')).done(function(data) {
-                prettyFieldNames = data['data'];
+            $.when(ajaxCallSync(urlJson + '&op=getprettycolumns', 'GET', '')).done(function(data) {
+                prettyFieldNames = data;
             });
             return prettyFieldNames;
         },
         getPrettyFieldNamesAcciones: function() {
-            $.when(ajaxCallSync(urlJson + '&op=getcolumns', 'GET', '')).done(function(data) {
-                prettyFieldNames = data['data'];
-                prettyFieldNames.push("acciones");
+            $.when(ajaxCallSync(urlJson + '&op=getprettycolumns', 'GET', '')).done(function(data) {
+                prettyFieldNames = data;
+                data.push("acciones");
+                //prettyFieldNames = data['data'];
+                //prettyFieldNames.push("acciones");
 
             });
             return prettyFieldNames;
         },
         getCountFields: function() {
             $.when(ajaxCallSync(urlJson + '&op=getcolumns', 'GET', '')).done(function(data) {
-                countFields = data['data'].length;
+                //countFields = data['data'].length;
+                countFields = data.length;
             });
             return countFields;
         },
         getFieldNames: function() {
             $.when(ajaxCallSync(urlJson + '&op=getcolumns', 'GET', '')).done(function(data) {
-                fieldNames = data['data'];
+                //fieldNames = data['data'];
+                fieldNames = data;
             });
             return fieldNames;
+        },
+        getForeignKey: function(id, campo) {
+//            //pte
+//            //con la id sacamos el registro
+//            //con el campo sacamos la id de la clave ajena
+            registro = this.getOne(id);
+            idAjena = registro[campo];
+            //hay que obtener el nombre del campo
+            var objetoForeign = campo.split("_")[1].replace(/[0-9]*$/, "");
+            var foreignObject = objeto(objetoForeign, ContextPath);
+            var registroForeign = foreignObject.getOne(idAjena);
+            return registroForeign;
+//            
+//            //falta comprobaciones
+//            
+//            $.when(ajaxCallSync(ContextPath + '/json?ob=' + objetoForeign + '&op=get&id=' + value[valor], 'GET', '')).done(function(data) {
+//                var contador = 0;
+//                var add_tabla = "";
+//                for (key in data) {
+//                    if (contador == 0)
+//                        add_tabla = '<td>id=' + data[key] + '(no existe)</td>';
+//                    if (contador == 1)
+//                        add_tabla = '<td>' + data[key] + '</td>';
+//                    contador++;
+//                }
+//                if (contador == 0) {
+//                    add_tabla = '<td>' + value[valor] + ' #error</td>';
+//                }
+//                tabla += add_tabla;
+//            });
         },
         getPage: function(pagina, order, ordervalue, rpp, filter, filteroperator, filtervalue, systemfilter, systemfilteroperator, systemfiltervalue) {
             if (order) {

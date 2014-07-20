@@ -7,6 +7,7 @@
 package net.daw.dao;
 
 
+import java.util.ArrayList;
 import net.daw.bean.ProfesorBean;
 import net.daw.bean.UsuarioBean;
 import net.daw.helper.Conexion;
@@ -38,5 +39,10 @@ public class ProfesorDao extends GenericDaoImplementation<ProfesorBean>{
             oProfesorBean.setId(0);
         }
         return oProfesorBean;
+    }
+
+    @Override
+    public String getDescription(int id) throws Exception {
+        return "Descripcion de profesor";
     }
 }

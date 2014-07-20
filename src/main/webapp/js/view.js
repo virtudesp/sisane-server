@@ -22,10 +22,12 @@ var vista = function(objeto) {
             $(place).append('<a class="btn btn-primary" href="jsp#/' + this.getName() + '/list/"' + id + '">Volver</a>');
         },
         getPageLinks: function(page_number, order, ordervalue, rpp, filter, filteroperator, filtervalue, systemfilter, systemfilteroperator, systemfiltervalue) {
-            page_number = parseInt(page_number);
             total_pages = parseInt(objeto.getPages(rpp, filter, filteroperator, filtervalue, systemfilter, systemfilteroperator, systemfiltervalue));
+            page_number = parseInt(page_number);
             neighborhood = parseInt(neighborhood);
-
+            if (page_number > total_pages) {
+                page_number = total_pages;
+            }
             UrlFromParamsWithoutPage = this.getUrlFromParamsWithoutPage(page_number, order, ordervalue, rpp, filter, filteroperator, filtervalue, systemfilter, systemfilteroperator, systemfiltervalue);
             url = 'jsp#/' + objeto.getName() + '/list/' + UrlFromParamsWithoutPage;
             vector = "<ul class=\"pagination\">";
@@ -56,9 +58,9 @@ var vista = function(objeto) {
         getObjectTable: function(id) {
             cabecera = objeto.getPrettyFieldNames();
             datos = objeto.getOne(id);
+            nombres = objeto.getFieldNames();
             var tabla = "<table class=\"table table table-bordered table-condensed\">";
-            $.each(objeto.getFieldNames(), function(index, valor) {
-
+            $.each(nombres, function(index, valor) {
                 tabla += '<tr><td><strong>' + cabecera[index] + '</strong></td>';
                 tabla += '<td>';
                 if (/id_/.test(valor)) {
@@ -100,6 +102,15 @@ var vista = function(objeto) {
             });
             tabla += '</table>';
             return tabla;
+        },
+        getTemplate: function() {
+            $.when(ajaxCallSync(objeto.getUrlJsp() + '&op=' + template, 'GET', '')).done(function(data) {
+                form = data;
+            });
+            return form;
+        },
+        getPanel: function(titulo, contenido) {
+            return '<div class="panel panel-default"><div class="panel-heading"><h1>' + titulo + '</h1></div><div class="panel-body">' + contenido + '</div></div>';
         },
         getEmptyForm: function() {
             $.when(ajaxCallSync(objeto.getUrlJsp() + '&op=form&mode=1', 'GET', '')).done(function(data) {
@@ -186,7 +197,7 @@ var vista = function(objeto) {
             if (order)
                 url += "&order=" + order;
             if (ordervalue)
-                url += "&ordervalue=" + ordervalue;            
+                url += "&ordervalue=" + ordervalue;
             if (filter)
                 url += "&filter=" + filter;
             if (filteroperator)
@@ -210,7 +221,7 @@ var vista = function(objeto) {
             if (order)
                 url += "&order=" + order;
             if (ordervalue)
-                url += "&ordervalue=" + ordervalue;           
+                url += "&ordervalue=" + ordervalue;
             if (systemfilter)
                 url += "&systemfilter=" + systemfilter;
             if (systemfilteroperator)
@@ -274,15 +285,12 @@ var vista = function(objeto) {
             botonera += '</ul></div>';
             return botonera;
         },
-        getPageTable: function(pag, order, ordervalue, rpp, filter, filteroperator, filtervalue, systemfilter, systemfilteroperator, systemfiltervalue, botonera) {
-            var tabla = '';
-            UrlFromParamsWithoutOrder = this.getUrlFromParamsWithoutOrder(pag, order, ordervalue, rpp, filter, filteroperator, filtervalue, systemfilter, systemfilteroperator, systemfiltervalue);
-            tabla += "<table class=\"table table-responsive table-hover table-striped table-condensed\">";
-            var visibleFields = 5;
+        getHeaderPageTable: function(prettyFieldNames, visibleFields, operationName, UrlFromParamsWithoutOrder) {
             var numField = 0; //visible field counter
-            if (objeto.getPrettyFieldNamesAcciones() !== null) {
+            var tabla = "";
+            if (prettyFieldNames !== null) {
                 tabla += '<tr>';
-                $.each(objeto.getPrettyFieldNamesAcciones(), function(index, value) {
+                $.each(prettyFieldNames, function(index, value) {
                     numField++; //field counter
                     if (numField <= visibleFields) {
                         if (value === "acciones") {
@@ -295,8 +303,8 @@ var vista = function(objeto) {
                                 tabla += '<th>' + value;
                             }
                             tabla += '<br />';
-                            tabla += '<a class="orderAsc' + index + '" href="jsp#/' + objeto.getName() + '/list/' + UrlFromParamsWithoutOrder + '&order=' + value + '&ordervalue=asc"><i class="glyphicon glyphicon-arrow-up"></i></a>';
-                            tabla += '<a class="orderDesc' + index + '" href="jsp#/' + objeto.getName() + '/list/' + UrlFromParamsWithoutOrder + '&order=' + value + '&ordervalue=desc"><i class="glyphicon glyphicon-arrow-down"></i></a>';
+                            tabla += '<a class="orderAsc' + index + '" href="jsp#/' + operationName + '/list/' + UrlFromParamsWithoutOrder + '&order=' + value + '&ordervalue=asc"><i class="glyphicon glyphicon-arrow-up"></i></a>';
+                            tabla += '<a class="orderDesc' + index + '" href="jsp#/' + operationName + '/list/' + UrlFromParamsWithoutOrder + '&order=' + value + '&ordervalue=desc"><i class="glyphicon glyphicon-arrow-down"></i></a>';
                             tabla += '</th>';
                         }
                     }
@@ -307,67 +315,91 @@ var vista = function(objeto) {
                 });
                 tabla += '</tr>';
             }
+            return tabla;
+        },
+        getBodyPageTable: function(page, fieldNames, visibleFields, operationName, path) {
+            var tabla = "";
+            $.each(page, function(index, value) {
+                tabla += '<tr>';
+                var numField = 0;
+                var id;
+                $.each(fieldNames, function(index, valor) {
+                    if ("id" == valor) {
+                        id = value[valor];
+                    }
+                    numField++;
+                    if (numField <= visibleFields) {
+                        if (/id_/.test(valor)) {
+                            //falta codificar un método dame clave ajena en el modelo ...
+
+                            //falta sacar esto como un callback
+
+                            foreignRegister = objeto.getForeignKey(value[valor], valor);
+                            tabla += '<td>' + foreignRegister["id"] + '</td>';
+
+
+
+//                            $.when(ajaxCallSync(path + '/json?ob=' + valor.split("_")[1].replace(/[0-9]*$/, "") + '&op=get&id=' + value[valor], 'GET', '')).done(function(data) {
+//                                var contador = 0;
+//                                var add_tabla = "";
+//                                for (key in data) {
+//                                    if (contador == 0)
+//                                        add_tabla = '<td>id=' + data[key] + '(no existe)</td>';
+//                                    if (contador == 1)
+//                                        add_tabla = '<td>' + data[key] + '</td>';
+//                                    contador++;
+//                                }
+//                                if (contador == 0) {
+//                                    add_tabla = '<td>' + value[valor] + ' #error</td>';
+//                                }
+//                                tabla += add_tabla;
+//                            });
+                        } else {
+                            switch (value[valor]) {
+                                case true:
+                                    tabla += '<td><i class="glyphicon glyphicon-ok"></i></td>';
+                                    break;
+                                case false:
+                                    tabla += '<td><i class="glyphicon glyphicon-remove"></i></td>';
+                                    break;
+                                default:
+                                    var fieldContent = decodeURIComponent(value[valor]);
+                                    if (typeof fieldContent == "string") {
+                                        if (value[valor].length > 50) //don't show too long fields
+                                            fieldContent = decodeURIComponent(value[valor]).substr(0, 20) + " ...";
+                                    }
+                                    tabla += '<td>' + fieldContent + '</td>';
+                            }
+                        }
+                    }
+                });
+                tabla += '<td><div class="btn-toolbar" role="toolbar"><div class="btn-group btn-group-xs">';
+                tabla += '<a class="btn btn-default" href="jsp#/' + operationName + '/view/' + id + '"><i class="glyphicon glyphicon-eye-open"></i></a>';
+                tabla += '<a class="btn btn-default" href="jsp#/' + operationName + '/edit/' + id + '"><i class="glyphicon glyphicon-pencil"></i></a>';
+                tabla += '<a class="btn btn-default" href="jsp#/' + operationName + '/remove/' + id + '"><i class="glyphicon glyphicon-remove"></i></a>';
+                tabla += '</div></div></td>';
+                tabla += '</tr>';
+            });
+            return tabla;
+        },
+        getPageTable: function(pag, order, ordervalue, rpp, filter, filteroperator, filtervalue, systemfilter, systemfilteroperator, systemfiltervalue, botonera) {
+            var tabla = '';
+            var visibleFields = 7;
+            var fieldNames = objeto.getFieldNames();
+            var prettyFieldNames = objeto.getPrettyFieldNamesAcciones();
+            var UrlFromParamsWithoutOrder = this.getUrlFromParamsWithoutOrder(pag, order, ordervalue, rpp, filter, filteroperator, filtervalue, systemfilter, systemfilteroperator, systemfiltervalue);
+
+            tabla += "<table class=\"table table-responsive table-hover table-striped table-condensed\">";
+
+            tabla += this.getHeaderPageTable(prettyFieldNames, visibleFields, objeto.getName(), UrlFromParamsWithoutOrder);
 
             page = objeto.getPage(pag, order, ordervalue, rpp, filter, filteroperator, filtervalue, systemfilter, systemfilteroperator, systemfiltervalue)['list'];
             if (page != 0) {
-                $.each(page, function(index, value) {
-                    tabla += '<tr>';
-                    numField = 0;
-                    $.each(objeto.getFieldNames(), function(index, valor) {
-                        if ("id" == valor) {
-                            id = value[valor];
-                        }
-                        numField++;
-                        if (numField <= visibleFields) {
-                            if (/id_/.test(valor)) {
-                                $.when(ajaxCallSync(objeto.getPath() + '/json?ob=' + valor.split("_")[1].replace(/[0-9]*$/, "") + '&op=get&id=' + value[valor], 'GET', '')).done(function(data) {
-                                    contador = 0;
-                                    add_tabla = "";
-                                    for (key in data) {
-                                        if (contador == 0)
-                                            add_tabla = '<td>id=' + data[key] + '(no existe)</td>';
-                                        if (contador == 1)
-                                            add_tabla = '<td>' + data[key] + '</td>';
-                                        contador++;
-                                    }
-                                    if (contador == 0) {
-                                        add_tabla = '<td>' + value[valor] + ' #error</td>';
-                                    }
-                                    tabla += add_tabla;
-                                });
-                            } else {
-                                switch (value[valor]) {
-                                    case true:
-                                        tabla += '<td><i class="glyphicon glyphicon-ok"></i></td>';
-                                        break;
-                                    case false:
-                                        tabla += '<td><i class="glyphicon glyphicon-remove"></i></td>';
-                                        break;
-                                    default:
-                                        var fieldContent = decodeURIComponent(value[valor]);
-                                        if (typeof fieldContent == "string") {
-
-                                            if (value[valor].length > 50) //don't show too long fields
-                                                fieldContent = decodeURIComponent(value[valor]).substr(0, 20) + " ...";
-
-                                        }
-                                        tabla += '<td>' + fieldContent + '</td>';
-                                }
-                            }
-                        }
-                    });
-                    tabla += '<td><div class="btn-toolbar" role="toolbar"><div class="btn-group btn-group-xs">';
-                    tabla += '<a class="btn btn-default" href="jsp#/' + objeto.getName() + '/view/' + id + '"><i class="glyphicon glyphicon-eye-open"></i></a>';
-                    tabla += '<a class="btn btn-default" href="jsp#/' + objeto.getName() + '/edit/' + id + '"><i class="glyphicon glyphicon-pencil"></i></a>';
-                    tabla += '<a class="btn btn-default" href="jsp#/' + objeto.getName() + '/remove/' + id + '"><i class="glyphicon glyphicon-remove"></i></a>';
-                    tabla += '</div></div></td>';
-                    tabla += '</tr>';
-                });
+                tabla += this.getBodyPageTable(page, fieldNames, visibleFields, objeto.getName(), objeto.getPath());
                 tabla += "</table>";
             } else {
                 tabla = "<div class=\"alert alert-info\"><h4>Ha habido un problema con la base de datos</h4><br/>El probema puede ser:<ul><li>La tabla está vacia.</li><li>Tu busqueda no tubo resultados.</li></ul></div>";
             }
-
             return tabla;
         }
 //        getPageTable: function(pag, order, ordervalue, rpp, filter, filteroperator, filtervalue, systemfilter, systemfilteroperator, systemfiltervalue, botonera) {

@@ -14,7 +14,14 @@ import net.daw.dao.ActividadDao;
  * @author rafa
  */
 public class ActividadProcess extends GenericProcessImplementation<ActividadBean, ActividadDao>{
-    
+
+    @Override
+    public String getPrettyColumns() throws Exception {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+        public String getColumns() throws Exception {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
      
     
 }

@@ -5,6 +5,7 @@
  */
 
 package net.daw.dao;
+import java.util.ArrayList;
 import net.daw.bean.BacklogBean;
 import net.daw.helper.Conexion;
 
@@ -17,5 +18,14 @@ public class BacklogDao extends GenericDaoImplementation<BacklogBean> {
         public BacklogDao( ) throws Exception {
         super( "backlog");
     }
+
+    @Override
+    public String getDescription(int id) throws Exception {
+        return "Descripcion de backlog";
+    }
+
+
+
+
     
 }

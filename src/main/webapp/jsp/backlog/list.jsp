@@ -10,7 +10,7 @@
 <%@page import="java.util.Iterator"%>
 <%
     BacklogDao oBacklogDao = new BacklogDao(Conexion.getConection());
-    ArrayList<String> alColumnsNames = (ArrayList<String>) oBacklogDao.getColumnsNames();
+    ArrayList<String> alColumnsNames = (ArrayList<String>) oBacklogDao.getColumnsNames(false);
     Iterator<String> oIterador = alColumnsNames.listIterator();
     String strNombreMantenimiento = "backlog";
 %>

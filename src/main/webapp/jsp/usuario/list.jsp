@@ -9,7 +9,7 @@
 <%@page import="java.util.Iterator"%>
 <%
     UsuarioDao oUsuarioDao = new UsuarioDao();
-    ArrayList<String> alColumnsNames = (ArrayList<String>) oUsuarioDao.getColumnsNames();
+    ArrayList<String> alColumnsNames = (ArrayList<String>) oUsuarioDao.getColumnsNames(false);
     Iterator<String> oIterador = alColumnsNames.listIterator();
     String strNombreMantenimiento = "usuario";
 %>

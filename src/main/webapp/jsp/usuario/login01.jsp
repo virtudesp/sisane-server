@@ -37,9 +37,9 @@
                 <input type="hidden" name="ob" value="usuario" />
                 <input type="hidden" name="op" value="login02" />                
                 <label class="control-label" for="inputLogin" style="margin-top: 15px">Usuario:</label>
-                <input class="form-control"  id="inputLogin" type="text" placeholder="nombre de usuario"  required="" autofocus="" name="login" />                                                    
+                <input value="rafael" class="form-control"  id="inputLogin" type="text" placeholder="nombre de usuario" required="" autofocus="" name="login" />                                                    
                 <label class="control-label" for="password" style="margin-top: 15px">Password:</label>
-                <input class="form-control" type="password" id="inputPassword" placeholder="contraseña"  required="" name="password" />                                                               
+                <input value="rafael" class="form-control" type="password" id="inputPassword" placeholder="contraseña"  required="" name="password" />                                                               
                 <button class="btn btn-lg btn-primary btn-block" type="submit"  style="margin-top: 15px">Acceder</button>   
                 <button class="btn btn-lg btn-danger btn-block" type="reset" style="margin-top: 5px">Reset</button>
             </form>

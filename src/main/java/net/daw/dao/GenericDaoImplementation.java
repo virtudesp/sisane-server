@@ -7,14 +7,16 @@ package net.daw.dao;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Locale;
+import net.daw.bean.GenericBeanImplementation;
+import net.daw.bean.GenericBeanInterface;
 import net.daw.data.MysqlData;
 import net.daw.helper.Conexion;
 import net.daw.helper.FilterBean;
-import java.text.SimpleDateFormat;
 
 /**
  *
@@ -22,12 +24,12 @@ import java.text.SimpleDateFormat;
  * @param <TIPO_OBJETO>
  *
  */
-public class GenericDaoImplementation<TIPO_OBJETO> implements GenericDaoInterface<TIPO_OBJETO> {
+public abstract class GenericDaoImplementation<TIPO_OBJETO> implements GenericDaoInterface<TIPO_OBJETO> {
 
     protected final MysqlData oMysql;
     protected final Conexion.Tipo_conexion enumTipoConexion;
     protected final String strTabla;
-    
+
     public GenericDaoImplementation(String tabla) throws Exception {
         oMysql = new MysqlData();
         enumTipoConexion = Conexion.getConection();
@@ -84,6 +86,31 @@ public class GenericDaoImplementation<TIPO_OBJETO> implements GenericDaoInterfac
 
     }
 
+    private void parseValue(TIPO_OBJETO oBean, Method method, String strTipoParamMetodoSet, String strValor) throws Exception {
+        switch (strTipoParamMetodoSet) {
+            case "java.lang.Double":
+                method.invoke(oBean, Double.parseDouble(strValor));
+                break;
+            case "java.lang.Integer":
+                method.invoke(oBean, Integer.parseInt(strValor));
+                break;
+            case "java.lang.Boolean":
+                if (Integer.parseInt(strValor) == 1) {
+                    method.invoke(oBean, true);
+                } else {
+                    method.invoke(oBean, false);
+                }
+                break;
+            case "java.util.Date":
+                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+                method.invoke(oBean, format.parse(strValor));
+                break;
+            default:
+                method.invoke(oBean, strValor);
+                break;
+        }
+    }
+
     @Override
     public TIPO_OBJETO get(TIPO_OBJETO oBean) throws Exception {
         Class<TIPO_OBJETO> tipo = (Class<TIPO_OBJETO>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
@@ -98,32 +125,36 @@ public class GenericDaoImplementation<TIPO_OBJETO> implements GenericDaoInterfac
                     for (Method method : tipo.getMethods()) {
                         if (!method.getName().substring(3).equalsIgnoreCase("id")) {
                             if (method.getName().substring(0, 3).equalsIgnoreCase("set")) {
-                                final Class<?> strTipoParamMetodoSet = method.getParameterTypes()[0];
-                                String strValor = oMysql.getOne(strTabla, method.getName().substring(3).toLowerCase(Locale.ENGLISH), (Integer) metodo_getId.invoke(oBean));
-                                if (strValor != null) {
-                                    switch (strTipoParamMetodoSet.getName()) {
-                                        case "java.lang.Double":
-                                            method.invoke(oBean, Double.parseDouble(strValor));
-                                            break;
-                                        case "java.lang.Integer":
-                                            method.invoke(oBean, Integer.parseInt(strValor));
-                                            break;
-                                        case "java.lang.Boolean":
-                                            if (Integer.parseInt(strValor) == 1) {
-                                                method.invoke(oBean, true);
-                                            } else {
-                                                method.invoke(oBean, false);
-                                            }
-                                            break;
-                                        case "java.util.Date":
-                                            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-                                            method.invoke(oBean, format.parse(strValor));
-                                            break;
-                                        default:
-                                            method.invoke(oBean, strValor);
-                                            break;
+                                final Class<?> classTipoParamMetodoSet = method.getParameterTypes()[0];
+                                if (method.getName().length() >= 5) {
+                                    if (method.getName().substring(3).toLowerCase(Locale.ENGLISH).substring(0, 4).equalsIgnoreCase("obj_")) {
+
+                                        //ojo: en los pojos, los id_ deben preceder a los obj_ del mismo objeto siempre!
+                                        String strAjena = method.getName().substring(3).toLowerCase(Locale.ENGLISH).substring(4);
+                                        Method metodo_getId_Ajena = tipo.getMethod("getId_" + strAjena);
+                                        strAjena = strAjena.substring(0, 1).toUpperCase(Locale.ENGLISH) + strAjena.substring(1);
+                                        GenericDaoImplementation oAjenaDao = (GenericDaoImplementation) Class.forName("net.daw.dao." + strAjena + "Dao").newInstance();
+
+                                        GenericBeanImplementation oAjenaBean = (GenericBeanImplementation) Class.forName("net.daw.bean." + strAjena + "Bean").newInstance();
+                                        int intIdAjena = (Integer) metodo_getId_Ajena.invoke(oBean);
+                                        oAjenaBean.setId(intIdAjena);
+                                        oAjenaBean = (GenericBeanImplementation) oAjenaDao.get(oAjenaBean);
+                                        //String strDescription = oAjenaDao.getDescription((Integer) metodo_getId_Ajena.invoke(oBean));
+                                        method.invoke(oBean, oAjenaBean);
+
+                                    } else {
+                                        String strValor = oMysql.getOne(strTabla, method.getName().substring(3).toLowerCase(Locale.ENGLISH), (Integer) metodo_getId.invoke(oBean));
+                                        if (strValor != null) {
+                                            parseValue(oBean, method, classTipoParamMetodoSet.getName(), strValor);
+                                        }
+                                    }
+                                } else {
+                                    String strValor = oMysql.getOne(strTabla, method.getName().substring(3).toLowerCase(Locale.ENGLISH), (Integer) metodo_getId.invoke(oBean));
+                                    if (strValor != null) {
+                                        parseValue(oBean, method, classTipoParamMetodoSet.getName(), strValor);
                                     }
                                 }
+
                             }
                         }
                     }
@@ -155,9 +186,9 @@ public class GenericDaoImplementation<TIPO_OBJETO> implements GenericDaoInterfac
                 if (!method.getName().substring(3).equalsIgnoreCase("id")) {
                     if (method.getName().substring(0, 3).equalsIgnoreCase("get")) {
                         if (!method.getName().equals("getClass")) {
-                            final Class<?> strTipoDevueltoMetodoGet = method.getReturnType();
-                            String value = (String) method.invoke(oBean).toString();
-                            switch (strTipoDevueltoMetodoGet.getName()) {
+                            final Class<?> classTipoDevueltoMetodoGet = method.getReturnType();
+                            String value = method.invoke(oBean).toString();
+                            switch (classTipoDevueltoMetodoGet.getName()) {
                                 case "java.util.Date":
                                     SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
                                     value = format.format(method.invoke(oBean));
@@ -184,7 +215,7 @@ public class GenericDaoImplementation<TIPO_OBJETO> implements GenericDaoInterfac
         } finally {
             oMysql.desconexion();
         }
-            return oBean;
+        return oBean;
     }
 
     @Override
@@ -208,13 +239,30 @@ public class GenericDaoImplementation<TIPO_OBJETO> implements GenericDaoInterfac
         try {
             oMysql.conexion(enumTipoConexion);
             alColumns = oMysql.getColumnsName(strTabla, Conexion.getDatabaseName());
+
             oMysql.desconexion();
 
         } catch (Exception e) {
-            throw new Exception("GenericDao.remove: Error: " + e.getMessage());
+            throw new Exception("GenericDao.getColumnsNames: Error: " + e.getMessage());
         } finally {
             oMysql.desconexion();
         }
         return alColumns;
     }
+
+    @Override
+    public ArrayList<String> getPrettyColumnsNames() throws Exception {
+        ArrayList<String> alColumns = null;
+        try {
+            oMysql.conexion(enumTipoConexion);
+            alColumns = oMysql.getPrettyColumns(strTabla);
+            oMysql.desconexion();
+        } catch (Exception e) {
+            throw new Exception("GenericDao.getPrettyColumnsNames: Error: " + e.getMessage());
+        } finally {
+            oMysql.desconexion();
+        }
+        return alColumns;
+    }
+
 }

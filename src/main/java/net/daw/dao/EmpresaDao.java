@@ -6,6 +6,7 @@
 
 package net.daw.dao;
 
+import java.util.ArrayList;
 import net.daw.bean.EmpresaBean;
 import net.daw.bean.UsuarioBean;
 import net.daw.helper.Conexion;
@@ -38,4 +39,12 @@ public class EmpresaDao extends GenericDaoImplementation<EmpresaBean>{
         }
         return oEmpresaBean;
     }
+
+    @Override
+    public String getDescription(int id) throws Exception {
+        return "Descripcion de empresa";
+    }
+
+
+
 }

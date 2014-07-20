@@ -4,6 +4,7 @@
  */
 package net.daw.bean;
 
+import com.google.gson.annotations.Expose;
 import java.util.Date;
 
 /**
@@ -12,17 +13,32 @@ import java.util.Date;
  */
 public class DocumentoBean extends GenericBeanImplementation implements GenericBeanInterface {
 
+    @Expose
     private String titulo = "";
     //private String presentacion = "";
+    @Expose
     private String contenido = "";
+    @Expose
     private Date alta = new Date();
+    @Expose
     private Date cambio = new Date();
+    @Expose
     private Integer hits = 0;
+    @Expose(serialize = false)
     private Integer id_usuario = 0; //importante inicializar a 0 las claves ajenas
+    @Expose(deserialize = false)
+    private UsuarioBean obj_usuario = null;
+    @Expose(serialize = false)
     private Integer id_tipodocumento = 0; //importante inicializar a 0 las claves ajenas
+    @Expose(deserialize = false)
+    private TipodocumentoBean obj_tipodocumento = null;
+    @Expose
     private String etiquetas = "";
+    @Expose
     private Boolean publicado = false;
+    @Expose
     private Boolean portada = false;
+    @Expose
     private Boolean destacado = false;
 
     public String getTitulo() {
@@ -118,6 +134,22 @@ public class DocumentoBean extends GenericBeanImplementation implements GenericB
 
     public void setDestacado(Boolean destacado) {
         this.destacado = destacado;
+    }
+
+    public UsuarioBean getObj_usuario() {
+        return obj_usuario;
+    }
+
+    public void setObj_usuario(UsuarioBean obj_usuario) {
+        this.obj_usuario = obj_usuario;
+    }
+
+    public TipodocumentoBean getObj_tipodocumento() {
+        return obj_tipodocumento;
+    }
+
+    public void setObj_tipodocumento(TipodocumentoBean obj_tipodocumento) {
+        this.obj_tipodocumento = obj_tipodocumento;
     }
 
 }

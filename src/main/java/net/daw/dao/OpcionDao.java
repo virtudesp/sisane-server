@@ -6,6 +6,7 @@
 
 package net.daw.dao;
 
+import java.util.ArrayList;
 import net.daw.bean.OpcionBean;
 import net.daw.helper.Conexion;
 
@@ -17,6 +18,11 @@ public class OpcionDao extends GenericDaoImplementation<OpcionBean> {
   
     public OpcionDao() throws Exception {
         super("opcion");
+    }
+
+    @Override
+    public String getDescription(int id) throws Exception {
+        return "Descripcion de opcion";
     }
     
 }

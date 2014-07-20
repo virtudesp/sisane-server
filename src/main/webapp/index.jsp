@@ -70,36 +70,49 @@
             </div><!-- /.container -->
         </nav>
 
+        <% if (user != null) {%>
 
         <div class="container">
             <div class="row">
-                <% if (user != null) { %>
                 <div class="col-md-2" id="menuLateral">
                     <jsp:include page="jsp/menuLateral.jsp" />
                 </div>
-                <% } %>
-                <%
-                    if (user != null) {
-                        out.print("<div class=\"col-md-10\">");
-                        out.print("<div id=\"indexContenido\"></div>");
-                    } else {
-                        out.print("<div class=\"col-md-12\">");
-                    }
-                %>
-                <div id="indexContenidoJsp">
-                    <jsp:include page='<%=(String) request.getAttribute("contenido")%>' />                
-                </div>
-                <%
-                    out.print("</div>");
-                %>    
-                <div class="row">
-                    <div class="col-md-12" id="contenidoParseado"></div>   
-                </div>
-                <div class="row">
-                    <div class="col-md-12"><hr><footer><p>&copy; Rafael Aznar (2013)</p></footer></div>   
+                <div class="col-md-10">
+                    <div id="indexContenido"></div>
+                    <div id="indexContenidoJsp">
+                        <jsp:include page='<%=(String) request.getAttribute("contenido")%>' />                
+                    </div>
+
                 </div>
             </div>
-        </div>                    
+            <div class="row">
+                <div class="col-md-12" id="contenidoParseado"></div>   
+            </div>
+            <div class="row">
+                <div class="col-md-12"><hr><footer><p>&copy; Rafael Aznar (2014)</p></footer></div>   
+            </div>
+        </div>            
+
+        <% } else {%>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div id="indexContenidoJsp">
+                        <jsp:include page='<%=(String) request.getAttribute("contenido")%>' />                
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12" id="contenidoParseado"></div>   
+            </div>
+            <div class="row">
+                <div class="col-md-12"><hr><footer><p>&copy; Rafael Aznar (2014)</p></footer></div>   
+            </div>
+        </div>  
+
+
+        <% }%>
 
         <!-- carga de javascript   -->
 
@@ -120,16 +133,16 @@
         -->
 
 
-   
-  
-        
+
+
+
         <script src="js/util.js" charset="UTF-8"></script>
         <script src="js/model.js" charset="UTF-8"></script>
         <script src="js/view.js" charset="UTF-8"></script>
         <script src="js/routes.js" charset="UTF-8"></script>
-        
+
         <script src="js/control/documento.js" charset="UTF-8"></script> 
-        
+
 
 
         <script src="js/control/alumno.js" charset="UTF-8"></script>
@@ -165,7 +178,7 @@
 
 
             $(document).ready(function() {
-              
+
                 //$('#indexContenidoJsp').addClass('animated slideInDown');
                 //$('#menuSuperior').addClass('animated slideInLeft');
                 //$('#menuLateral').addClass('animated slideInRight');

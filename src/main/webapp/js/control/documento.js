@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-var control_documento_list = function(documentoView) {
+var control_documento = function(documentoView) {
     //contexto privado
 
     var prefijo_div = "#documento_list ";
@@ -26,27 +26,14 @@ var control_documento_list = function(documentoView) {
     }
 
     function loadDivView(place, id) {
-        $(prefijo_div + place).empty().append((documentoView.getObjectTable(id))
+        $(place).empty().append((documentoView.getObjectTable(id))
                 + '<button class="btn btn-primary" id="limpiar">Limpiar</button>');
-        $(prefijo_div + '#limpiar').click(function() {
-            $(prefijo_div + place).empty();
+        $('#limpiar').click(function() {
+            $(place).empty();
         });
     }
 
-    function loadDivViewInPageContent(place, id) {
-        $(place).empty().append("<h1>Vista de " + documentoView.getName() + "</h1>");
-        $(place).append((documentoView.getObjectTable(id)));
-        $(place).append('<a class="btn btn-primary" href="jsp#/documento/edit/' + id + '">Editar</a>');
-        $(place).append('<a class="btn btn-primary" href="jsp#/usuario/remove/"' + id + '">Borrar</a>');
-        $(place).append('<a class="btn btn-primary" href="jsp#/usuario/list/"' + id + '">Volver</a>');
-    }
 
-    function loadDivEditInPageContent() {
-        $(place).empty().append("<h1>Edición de " + documentoView.getName() + "</h1>");
-        $(place).append((documentoView.getEmptyForm()));
-        $(place).append('<a class="btn btn-primary" href="jsp#/documento/edit/' + id + '">Guardar</a>');
-        $(place).append('<a class="btn btn-primary" href="jsp#/usuario/list/"' + id + '">Volver</a>');
-    }
 
     function loadModalForm(place, id, action) {
 
@@ -69,28 +56,28 @@ var control_documento_list = function(documentoView) {
 
         if (action == "edit") {
             documentoView.doFillForm(id);
-            $(prefijo_div + '#id').attr("disabled", true);
+            $('#id').attr("disabled", true);
         }
         else {
-            $(prefijo_div + '#id').val('0').attr("disabled", true);
+            $('#id').val('0').attr("disabled", true);
         }
 //            //when editing load the foreighn keys
-        cargaDescripcionClaveAjenaEnFormulario(prefijo_div + '#id_usuario', prefijo_div + '#id_usuario_desc', 'usuario', documentoView.getObject().getPath());
-        cargaDescripcionClaveAjenaEnFormulario(prefijo_div + '#id_tipodocumento', prefijo_div + '#id_tipodocumento_desc', 'tipodocumento', documentoView.getObject().getPath());
+        cargaDescripcionClaveAjenaEnFormulario('#id_usuario', '#id_usuario_desc', 'usuario', documentoView.getObject().getPath());
+        cargaDescripcionClaveAjenaEnFormulario('#id_tipodocumento', '#id_tipodocumento_desc', 'tipodocumento', documentoView.getObject().getPath());
 //        } else {
 
-        //$(prefijo_div + '#titulo').focus();
+        //$( '#titulo').focus();
 //        }
 
         //foreign key actions in form
 
-        $(prefijo_div + '#id_usuario_button').unbind('click');
-        $(prefijo_div + '#id_usuario_button').click(function() {
+        $('#id_usuario_button').unbind('click');
+        $('#id_usuario_button').click(function() {
             cargaModalBuscarClaveAjena('usuario', '#modal02', control_usuario_list, callbackSearchUsuario, documentoView.getObject().getPath());
             function callbackSearchUsuario(id) {
-                $(prefijo_div + '#modal02').modal('hide');
-                $(prefijo_div + '#modal02').data('modal', null);
-                $(prefijo_div + '#id_usuario').val($(this).attr('id'));
+                $('#modal02').modal('hide');
+                $('#modal02').data('modal', null);
+                $('#id_usuario').val($(this).attr('id'));
 
                 cargaDescripcionClaveAjenaEnFormulario('#id_usuario', '#id_usuario_desc', 'usuario', documentoView.getObject().getPath());
                 return false;
@@ -100,13 +87,13 @@ var control_documento_list = function(documentoView) {
 
         //tipodocumento
 
-        $(prefijo_div + '#id_tipodocumento_button').unbind('click');
-        $(prefijo_div + '#id_tipodocumento_button').click(function() {
+        $('#id_tipodocumento_button').unbind('click');
+        $('#id_tipodocumento_button').click(function() {
             cargaModalBuscarClaveAjena('tipodocumento', '#modal02', control_tipodocumento_list, callbackSearchTipodocumento, documentoView.getObject().getPath());
             function callbackSearchTipodocumento(id) {
-                $(prefijo_div + '#modal02').modal('hide');
-                $(prefijo_div + '#modal02').data('modal', null);
-                $(prefijo_div + '#id_tipodocumento').val($(this).attr('id'));
+                $('#modal02').modal('hide');
+                $('#modal02').data('modal', null);
+                $('#id_tipodocumento').val($(this).attr('id'));
                 cargaDescripcionClaveAjenaEnFormulario('#id_tipodocumento', '#id_tipodocumento_desc', 'tipodocumento', documentoView.getObject().getPath());
                 return false;
             }
@@ -115,8 +102,8 @@ var control_documento_list = function(documentoView) {
 
         //preview parser of the content
 
-        $(prefijo_div + '#contenido_button').unbind('click');
-        $(prefijo_div + '#contenido_button').click(function() {
+        $('#contenido_button').unbind('click');
+        $('#contenido_button').click(function() {
             cabecera = '<button id="full-width" type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>' + '<h3 id="myModalLabel">Edición de contenidos</h3>';
             pie = '<button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="true">Cerrar</button>';
             contenido = '<div class="row"><div class="col-md-6">';
@@ -135,8 +122,8 @@ var control_documento_list = function(documentoView) {
 
         //guardar datos
 
-        $(prefijo_div + '#submitForm').unbind('click');
-        $(prefijo_div + '#submitForm').click(function() {
+        $('#submitForm').unbind('click');
+        $('#submitForm').click(function() {
             if ($('#formulario').valid()) {
                 enviarDatosUpdateForm(documentoView, prefijo_div);
             }
@@ -151,8 +138,8 @@ var control_documento_list = function(documentoView) {
                 '<button id="btnBorrarSi" class="btn btn-danger" data-dismiss="modal" aria-hidden="true">Sí</button>' +
                 '<button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">No</button>';
         loadForm(place, cabecera, documentoView.getObjectTable(id), pie, false);
-        $(prefijo_div + '#btnBorrarSi').unbind('click');
-        $(prefijo_div + '#btnBorrarSi').click(function() {
+        $('#btnBorrarSi').unbind('click');
+        $('#btnBorrarSi').click(function() {
             resultado = documentoView.getObject().removeOne(id);
             cabecera = "<button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-hidden=\"true\">×</button>" + "<h3 id=\"myModalLabel\">Respuesta del servidor</h3>";
             pie = "<button class=\"btn btn-primary\" data-dismiss=\"modal\" aria-hidden=\"true\">Cerrar</button>";
@@ -167,21 +154,191 @@ var control_documento_list = function(documentoView) {
         loadForm(place, cabecera, documentoView.getObjectTable(id), pie, true);
     }  //asigación de evento de refresco de la tabla cuando volvemos de una operación en ventana modal
 
-    $(prefijo_div + '#modal01').unbind('hidden');
-    $(prefijo_div + '#modal01').on('hidden', function() {
 
-        rpp = $(prefijo_div + "#rpp option:selected").text();
-        thisObject.inicia(pag, order, ordervalue, rpp, filter, filteroperator, filtervalue, callback, systemfilter, systemfilteroperator, systemfiltervalue);
-    });
 
     return {
-        viewRegister: function(id) {
-            loadDivViewInPageContent('#content', id);
+        new : function(place) {
+            //$(place).empty().append("<h1>Alta de " + documentoView.getName() + "</h1>");
+            $(place).append(documentoView.getPanel("Alta de documento", documentoView.getEmptyForm()));
+            $(place).append('<a class="btn btn-primary" href="jsp#/documento/edit/' + id + '">Guardar</a>');
+            $(place).append('<a class="btn btn-primary" href="jsp#/usuario/list/"' + id + '">Volver</a>');
         },
-        editRegister: function(id) {
-            loadDivEditInPageContent('#content', id);
+        view: function(place, id) {
+            //$(place).empty().append("<h1>Vista de " + documentoView.getName() + "</h1>");
+            $(place).append(documentoView.getPanel("Vista de documento", documentoView.getObjectTable(id)));
+            $(place).append('<a class="btn btn-primary" href="jsp#/documento/edit/' + id + '">Editar</a>');
+            $(place).append('<a class="btn btn-primary" href="jsp#/usuario/remove/"' + id + '">Borrar</a>');
+            $(place).append('<a class="btn btn-primary" href="jsp#/usuario/list/"' + id + '">Volver</a>');
         },
-        inicia: function(pag, order, ordervalue, rpp, filter, filteroperator, filtervalue, callback, systemfilter, systemfilteroperator, systemfiltervalue) {
+        edit: function(place, id) {
+            //$(place).empty().append("<h1>Edición de " + documentoView.getName() + "</h1>");
+            $(place).append(documentoView.getPanel("Edición de documento", documentoView.getEmptyForm()));
+
+            //documentoForm_load
+
+            $(place).append('<a class="btn btn-primary" href="jsp#/documento/edit/' + id + '">Guardar</a>');
+            $(place).append('<a class="btn btn-primary" href="jsp#/usuario/list/"' + id + '">Volver</a>');
+        },
+        list: function(pag, order, ordervalue, rpp, filter, filteroperator, filtervalue, callback, systemfilter, systemfilteroperator, systemfiltervalue) {
+            $('#indexContenido').empty().append(documentoView.getPanel("Listado de documento", documentoView.getEmptyList()));
+            //muestra la botonera de páginas
+            $("#pagination").empty().append(documentoView.getLoading()).html(documentoView.getPageLinks(pag, order, ordervalue, rpp, filter, filteroperator, filtervalue, systemfilter, systemfilteroperator, systemfiltervalue));
+            //muestra el listado principal
+            if (callback) {
+                $("#datos").empty().append(documentoView.getLoading()).html(documentoView.getPageTable(pag, order, ordervalue, rpp, filter, filteroperator, filtervalue, systemfilter, systemfilteroperator, systemfiltervalue, cargaBotoneraBuscando()));
+            } else {
+                //$("#datos").empty().append(documentoView.getLoading()).html(documentoView.getPageTable(pag, order, ordervalue, rpp, filter, filteroperator, filtervalue, systemfilter, systemfilteroperator, systemfiltervalue, cargaBotoneraMantenimiento()));
+                //var visibleFields = 13;
+                var fieldNames = documentoView.getObject().getFieldNames();
+                var prettyFieldNames = documentoView.getObject().getPrettyFieldNamesAcciones();
+                var UrlFromParamsWithoutOrder = documentoView.getUrlFromParamsWithoutOrder(pag, order, ordervalue, rpp, filter, filteroperator, filtervalue, systemfilter, systemfilteroperator, systemfiltervalue);
+
+                $("#tableHeaders").empty().append(documentoView.getLoading()).html(
+                        //documentoView.getHeaderPageTable(prettyFieldNames, visibleFields, documentoView.getObject().getName(), UrlFromParamsWithoutOrder)
+                                function() {
+                                    //var numField = 0; //visible field counter
+                                    var tabla = "";
+                                    if (prettyFieldNames !== null) {
+                                        tabla += '<tr>';
+                                        //for(var i=0;i<prettyFieldNames.length;i++){
+                                        $.each(prettyFieldNames, function(index, value) {
+                                            //numField++; //field counter
+                                            //if (numField <= visibleFields) {
+                                            if (value === "acciones") {
+                                                tabla += '<th class="col-md-2">' + value;
+                                                tabla += '</th>';
+                                            } else {
+                                                if (value === "id") {
+                                                    tabla += '<th class="col-md-1">' + value;
+                                                } else {
+                                                    tabla += '<th>' + value;
+                                                }
+                                                tabla += '<br />';
+                                                tabla += '<a class="orderAsc' + index + '" href="jsp#/documento/list/' + UrlFromParamsWithoutOrder + '&order=' + value + '&ordervalue=asc"><i class="glyphicon glyphicon-arrow-up"></i></a>';
+                                                tabla += '<a class="orderDesc' + index + '" href="jsp#/documento/list/' + UrlFromParamsWithoutOrder + '&order=' + value + '&ordervalue=desc"><i class="glyphicon glyphicon-arrow-down"></i></a>';
+                                                tabla += '</th>';
+                                            }
+                                            //}
+                                            //if (numField == visibleFields + 1) {
+                                            //    tabla += '<th class="col-md-2">acciones</th>';
+                                            //}
+
+                                        });
+                                        tabla += '</tr>';
+                                    }
+                                    return tabla;
+                                }
+                        );
+
+
+
+
+
+                        $("#tableBody").empty().append(documentoView.getLoading()).html(function() {
+                            page = documentoView.getObject().getPage(pag, order, ordervalue, rpp, filter, filteroperator, filtervalue, systemfilter, systemfilteroperator, systemfiltervalue)['list'];
+
+
+                            var tabla = "";
+                            $.each(page, function(index, value) {
+                                tabla += '<tr>';
+                                //var numField = 0;
+                                var id;
+                                var strClaveAjena;
+                                $.each(fieldNames, function(index, valor) {
+//                                    if ("id" == valor) {
+//                                        id = value[valor];
+//                                    }
+                                    //numField++;
+                                    //if (numField <= visibleFields) {
+                                    if (/obj_tipodocumento/.test(valor)) {
+                                        strClaveAjena = value[valor].id + ": " + value[valor].descripcion;
+                                        tabla += '<td>' + strClaveAjena + '</td>';
+                                    }
+                                    if (/obj_usuario/.test(valor)) {
+                                        strClaveAjena = value[valor].id + ": " + value[valor].login;
+                                        tabla += '<td>' + strClaveAjena + '</td>';
+                                    }                                    
+                                    if (!(/obj_/.test(valor))) {
+                                        switch (value[valor]) {
+                                            case true:
+                                                tabla += '<td><i class="glyphicon glyphicon-ok"></i></td>';
+                                                break;
+                                            case false:
+                                                tabla += '<td><i class="glyphicon glyphicon-remove"></i></td>';
+                                                break;
+                                            default:
+                                                var fieldContent = decodeURIComponent(value[valor]);
+                                                if (typeof fieldContent == "string") {
+                                                    if (value[valor].length > 50) //don't show too long fields
+                                                        fieldContent = decodeURIComponent(value[valor]).substr(0, 20) + " ...";
+                                                }
+                                                tabla += '<td>' + fieldContent + '</td>';
+                                        }
+                                    }
+                                    //}
+                                });
+                                tabla += '<td><div class="btn-toolbar" role="toolbar"><div class="btn-group btn-group-xs">';
+                                tabla += '<a class="btn btn-default" href="jsp#/documento/view/' + id + '"><i class="glyphicon glyphicon-eye-open"></i></a>';
+                                tabla += '<a class="btn btn-default" href="jsp#/documento/edit/' + id + '"><i class="glyphicon glyphicon-pencil"></i></a>';
+                                tabla += '<a class="btn btn-default" href="jsp#/documento/remove/' + id + '"><i class="glyphicon glyphicon-remove"></i></a>';
+                                tabla += '</div></div></td>';
+                                tabla += '</tr>';
+                            });
+                            return tabla;
+
+
+
+
+
+
+
+
+
+
+
+
+                            //return documentoView.getBodyPageTable(page, fieldNames, visibleFields, documentoView.getObject().getName(), documentoView.getObject().getPath());
+                        });
+                    }
+            //muestra la frase con el número de registros de la consulta
+            $("#registers").empty().append(documentoView.getLoading()).html(documentoView.getRegistersInfo(filter, filteroperator, filtervalue, systemfilter, systemfilteroperator, systemfiltervalue));
+            //muestra la frase de estado de la ordenación de la tabla
+            $("#order").empty().append(documentoView.getLoading()).html(documentoView.getOrderInfo(order, ordervalue));
+            //muestra la frase de estado del filtro de la tabla aplicado
+            $("#filter").empty().append(documentoView.getLoading()).html(documentoView.getFilterInfo(filter, filteroperator, filtervalue));
+            $('#rpp1').empty().append(documentoView.getRppLinks(pag, order, ordervalue, rpp, filter, filteroperator, filtervalue, systemfilter, systemfilteroperator, systemfiltervalue));
+            //asignación del evento de filtrado al boton
+            $('#btnFiltrar').unbind('click');
+            $("#btnFiltrar").click(function(event) {
+                filter = $("#selectFilter option:selected").val();
+                filteroperator = $("#selectFilteroperator option:selected").val();
+                filtervalue = $("#inputFiltervalue").val();
+
+                window.location.href = "jsp#/documento/list/" + documentoView.getUrlFromParamsWithoutFilter(pag, order, ordervalue, rpp, filter, filteroperator, filtervalue, systemfilter, systemfilteroperator, systemfiltervalue) + "&filter=" + filter + "&filteroperator=" + filteroperator + "&filtervalue=" + filtervalue;
+
+                //thisObject.inicia(pag, order, ordervalue, rpp, filter, filteroperator, filtervalue, callback, systemfilter, systemfilteroperator, systemfiltervalue);
+                return false;
+            });
+            $('#btnDisplayedFields').unbind('click');
+            $('#btnDisplayedFields').click(function() {
+                $(modalDisplayedFields).modal({
+                    keyboard: false
+                })
+                $('#btnDefaultDisplayedFields').unbind('click');
+                $('#btnDefaultDisplayedFields').click(function() {
+
+                });
+                $('#btnCloseModalDisplayedFields').unbind('click');
+                $('#btnCloseModalDisplayedFields').click(function() {
+
+                });
+
+
+
+            });
+
+        },
+        modalList: function(pag, order, ordervalue, rpp, filter, filteroperator, filtervalue, callback, systemfilter, systemfilteroperator, systemfiltervalue) {
 
             var thisObject = this;
 
@@ -191,86 +348,88 @@ var control_documento_list = function(documentoView) {
                 pag = documentoView.getObject().getPages(rpp, filter, filteroperator, filtervalue);
             }
 
+
+
             //muestra la botonera de páginas
 
-            $(prefijo_div + "#pagination").empty().append(documentoView.getLoading()).html(documentoView.getPageLinks(pag, order, ordervalue, rpp, filter, filteroperator, filtervalue, systemfilter, systemfilteroperator, systemfiltervalue));
+            $("#pagination").empty().append(documentoView.getLoading()).html(documentoView.getPageLinks(pag, order, ordervalue, rpp, filter, filteroperator, filtervalue, systemfilter, systemfilteroperator, systemfiltervalue));
 
             //muestra el listado principal
 
             if (callback) {
-                $(prefijo_div + "#datos").empty().append(documentoView.getLoading()).html(documentoView.getPageTable(pag, order, ordervalue, rpp, filter, filteroperator, filtervalue, systemfilter, systemfilteroperator, systemfiltervalue, cargaBotoneraBuscando()));
+                $("#datos").empty().append(documentoView.getLoading()).html(documentoView.getPageTable(pag, order, ordervalue, rpp, filter, filteroperator, filtervalue, systemfilter, systemfilteroperator, systemfiltervalue, cargaBotoneraBuscando()));
             } else {
-                $(prefijo_div + "#datos").empty().append(documentoView.getLoading()).html(documentoView.getPageTable(pag, order, ordervalue, rpp, filter, filteroperator, filtervalue, systemfilter, systemfilteroperator, systemfiltervalue, cargaBotoneraMantenimiento()));
+                $("#datos").empty().append(documentoView.getLoading()).html(documentoView.getPageTable(pag, order, ordervalue, rpp, filter, filteroperator, filtervalue, systemfilter, systemfilteroperator, systemfiltervalue, cargaBotoneraMantenimiento()));
             }
 
             //muestra la frase con el número de registros de la consulta
 
-            $(prefijo_div + "#registers").empty().append(documentoView.getLoading()).html(documentoView.getRegistersInfo(filter, filteroperator, filtervalue, systemfilter, systemfilteroperator, systemfiltervalue));
-            //$(prefijo_div + "#registers").empty().append(documentoView.getLoading()).html('<a href="jsp#/documento/view/1">Ver documento 1</a>');
+            $("#registers").empty().append(documentoView.getLoading()).html(documentoView.getRegistersInfo(filter, filteroperator, filtervalue, systemfilter, systemfilteroperator, systemfiltervalue));
+            //$( "#registers").empty().append(documentoView.getLoading()).html('<a href="jsp#/documento/view/1">Ver documento 1</a>');
 
             //muestra la frase de estado de la ordenación de la tabla
 
-            $(prefijo_div + "#order").empty().append(documentoView.getLoading()).html(documentoView.getOrderInfo(order, ordervalue));
+            $("#order").empty().append(documentoView.getLoading()).html(documentoView.getOrderInfo(order, ordervalue));
 
             //muestra la frase de estado del filtro de la tabla aplicado
 
-            $(prefijo_div + "#filter").empty().append(documentoView.getLoading()).html(documentoView.getFilterInfo(filter, filteroperator, filtervalue));
+            $("#filter").empty().append(documentoView.getLoading()).html(documentoView.getFilterInfo(filter, filteroperator, filtervalue));
 
             //asignación eventos de la botonera de cada línea del listado principal
 
             if (callback) {
-                $(prefijo_div + '.btn.btn-default.action01').unbind('click');
-                $(prefijo_div + '.btn.btn-default.action01').click(callback);
+                $('.btn.btn-default.action01').unbind('click');
+                $('.btn.btn-default.action01').click(callback);
             } else {
-                $(prefijo_div + '.btn.btn-default.action01').unbind('click');
-                $(prefijo_div + '.btn.btn-default.action01').click(function() {
+                $('.btn.btn-default.action01').unbind('click');
+                $('.btn.btn-default.action01').click(function() {
                     loadDivView('#datos2', $(this).attr('id'));
                 });
 
-                $(prefijo_div + '.btn.btn-default.action02').unbind('click');
-                $(prefijo_div + '.btn.btn-default.action02').click(function() {
+                $('.btn.btn-default.action02').unbind('click');
+                $('.btn.btn-default.action02').click(function() {
                     loadModalView('#modal01', $(this).attr('id'));
                 });
 
-                $(prefijo_div + '.btn.btn-default.action03').unbind('click');
-                $(prefijo_div + '.btn.btn-default.action03').click(function() {
+                $('.btn.btn-default.action03').unbind('click');
+                $('.btn.btn-default.action03').click(function() {
                     loadModalForm('#modal01', $(this).attr('id'), "edit");
                 });
 
-                $(prefijo_div + '.btn.btn-default.action04').unbind('click');
-                $(prefijo_div + '.btn.btn-default.action04').click(function() {
+                $('.btn.btn-default.action04').unbind('click');
+                $('.btn.btn-default.action04').click(function() {
                     removeConfirmationModalForm('#modal01', $(this).attr('id'));
                 });
 
             }
 
-            $(prefijo_div + '#rpp1').empty().append(documentoView.getRppLinks(pag, order, ordervalue, rpp, filter, filteroperator, filtervalue, systemfilter, systemfilteroperator, systemfiltervalue));
+            $('#rpp1').empty().append(documentoView.getRppLinks(pag, order, ordervalue, rpp, filter, filteroperator, filtervalue, systemfilter, systemfilteroperator, systemfiltervalue));
 
             //asignación de evento del enlace para quitar el orden en el listado principal
 
-            $(prefijo_div + '#linkQuitarOrden').unbind('click');
-            $(prefijo_div + '#linkQuitarOrden').click(function() {
+            $('#linkQuitarOrden').unbind('click');
+            $('#linkQuitarOrden').click(function() {
                 thisObject.inicia(pag, null, null, rpp, filter, filteroperator, filtervalue, callback, systemfilter, systemfilteroperator, systemfiltervalue);
             });
 
             //asignación de evento del enlace para quitar el filtro en el listado principal
 
-            $(prefijo_div + '#linkQuitarFiltro').unbind('click');
-            $(prefijo_div + '#linkQuitarFiltro').click(function() {
+            $('#linkQuitarFiltro').unbind('click');
+            $('#linkQuitarFiltro').click(function() {
                 thisObject.inicia(pag, order, ordervalue, rpp, null, null, null, callback, systemfilter, systemfilteroperator, systemfiltervalue);
             });
 
             //asignación de eventos de la ordenación por columnas del listado principal
 
             $.each(documentoView.getObject().getFieldNames(), function(index, valor) {
-                $(prefijo_div + '.orderAsc').unbind('click');
-                $(prefijo_div + '.orderAsc' + index).click(function() {
-                    rpp = $(prefijo_div + "#rpp option:selected").text();
+                $('.orderAsc').unbind('click');
+                $('.orderAsc' + index).click(function() {
+                    rpp = $("#rpp option:selected").text();
                     thisObject.inicia(pag, valor, "asc", rpp, filter, filteroperator, filtervalue, callback, systemfilter, systemfilteroperator, systemfiltervalue);
                 });
-                $(prefijo_div + '.orderDesc').unbind('click');
-                $(prefijo_div + '.orderDesc' + index).click(function() {
-                    rpp = $(prefijo_div + "#rpp option:selected").text();
+                $('.orderDesc').unbind('click');
+                $('.orderDesc' + index).click(function() {
+                    rpp = $("#rpp option:selected").text();
                     thisObject.inicia(pag, valor, "desc", rpp, filter, filteroperator, filtervalue, callback, systemfilter, systemfilteroperator, systemfiltervalue);
                 });
 
@@ -278,10 +437,10 @@ var control_documento_list = function(documentoView) {
 
             //asignación del evento de click para cambiar de página en la botonera de paginación
 
-//            $(prefijo_div + '.pagination_link').unbind('click');
-//            $(prefijo_div + '.pagination_link').click(function(event) {
+//            $( '.pagination_link').unbind('click');
+//            $( '.pagination_link').click(function(event) {
 //                var id = $(this).attr('id');
-//                rpp = $(prefijo_div + "#rpp option:selected").text();
+//                rpp = $( "#rpp option:selected").text();
 //                thisObject.inicia(id, order, ordervalue, rpp, filter, filteroperator, filtervalue, callback, systemfilter, systemfilteroperator, systemfiltervalue);
 //                return false;
 //
@@ -289,11 +448,11 @@ var control_documento_list = function(documentoView) {
 
             //boton de crear un nuevo elemento
             if (callback) {
-                $(prefijo_div + '#crear').css("display", "none");
+                $('#crear').css("display", "none");
             } else {
-                $(prefijo_div + '#crear').unbind('click');
-                $(prefijo_div + '#crear').click(function() {
-                    loadModalForm(prefijo_div + '#modal01', $(this).attr('id'));
+                $('#crear').unbind('click');
+                $('#crear').click(function() {
+                    loadModalForm('#modal01', $(this).attr('id'));
                 });
             }
 
@@ -302,11 +461,11 @@ var control_documento_list = function(documentoView) {
 
             //asignación del evento de filtrado al boton
 
-            $(prefijo_div + '#btnFiltrar').unbind('click');
-            $(prefijo_div + "#btnFiltrar").click(function(event) {
-                filter = $(prefijo_div + "#selectFilter option:selected").val();
-                filteroperator = $(prefijo_div + "#selectFilteroperator option:selected").val();
-                filtervalue = $(prefijo_div + "#inputFiltervalue").val();
+            $('#btnFiltrar').unbind('click');
+            $("#btnFiltrar").click(function(event) {
+                filter = $("#selectFilter option:selected").val();
+                filteroperator = $("#selectFilteroperator option:selected").val();
+                filtervalue = $("#inputFiltervalue").val();
 
                 window.location.href = "jsp#/documento/list/" + documentoView.getUrlFromParamsWithoutFilter(pag, order, ordervalue, rpp, filter, filteroperator, filtervalue, systemfilter, systemfilteroperator, systemfiltervalue) + "&filter=" + filter + "&filteroperator=" + filteroperator + "&filtervalue=" + filtervalue;
 
@@ -316,18 +475,18 @@ var control_documento_list = function(documentoView) {
 
             //asigación de evento de refresco de la tabla cuando volvemos de una operación en ventana modal
 
-            $(prefijo_div + '#modal01').unbind('hidden.bs.modal');
-            $(prefijo_div + '#modal01').on('hidden.bs.modal', function() {
-                rpp = $(prefijo_div + "#rpp option:selected").text();
+            $('#modal01').unbind('hidden.bs.modal');
+            $('#modal01').on('hidden.bs.modal', function() {
+                rpp = $("#rpp option:selected").text();
                 thisObject.inicia(pag, order, ordervalue, rpp, filter, filteroperator, filtervalue, callback, systemfilter, systemfilteroperator, systemfiltervalue);
 
             });
 
             //asignación del evento de cambio del numero de regs por página
 
-            $(prefijo_div + '#rpp').unbind('change');
-            $(prefijo_div + '#rpp').on('change', function() {
-                rpp = $(prefijo_div + "#rpp option:selected").text();
+            $('#rpp').unbind('change');
+            $('#rpp').on('change', function() {
+                rpp = $("#rpp option:selected").text();
                 thisObject.inicia(pag, order, ordervalue, rpp, filter, filteroperator, filtervalue, callback, systemfilter, systemfilteroperator, systemfiltervalue);
             });
         }

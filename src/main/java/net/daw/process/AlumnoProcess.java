@@ -17,7 +17,15 @@ import net.daw.dao.AlumnoDao;
  * @author rafa
  */
 public class AlumnoProcess extends GenericProcessImplementation<AlumnoBean, AlumnoDao>{
-    
+
+    @Override
+    public String getPrettyColumns() throws Exception {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+        @Override
+    public String getColumns() throws Exception {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
      
     
 }

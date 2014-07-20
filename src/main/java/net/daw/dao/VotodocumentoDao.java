@@ -4,6 +4,7 @@
  */
 package net.daw.dao;
 
+import java.util.ArrayList;
 import net.daw.bean.VotodocumentoBean;
 import net.daw.helper.Conexion;
 
@@ -15,5 +16,10 @@ public class VotodocumentoDao extends GenericDaoImplementation<VotodocumentoBean
 
     public VotodocumentoDao() throws Exception {
         super( "votodocumento");
+    }
+
+    @Override
+    public String getDescription(int id) throws Exception {
+        return "Descripcion de votodocumento";
     }
 }

@@ -9,7 +9,7 @@
 <%@page import="java.util.Iterator"%>
 <%
     RequerimientoDao oRequerimientoDao_Mysql = new RequerimientoDao(Conexion.getConection());
-    ArrayList<String> alColumnsNames = (ArrayList<String>) oRequerimientoDao_Mysql.getColumnsNames();
+    ArrayList<String> alColumnsNames = (ArrayList<String>) oRequerimientoDao_Mysql.getColumnsNames(false);
     Iterator<String> oIterador = alColumnsNames.listIterator();
     String strNombreMantenimiento = "requerimiento";
 %>

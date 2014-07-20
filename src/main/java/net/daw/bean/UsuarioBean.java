@@ -4,14 +4,18 @@
  */
 package net.daw.bean;
 
+import com.google.gson.annotations.Expose;
+
 /**
  *
  * @author rafa
  */
 public class UsuarioBean extends GenericBeanImplementation implements GenericBeanInterface {
-
+@Expose
     private String login = "";
+@Expose
     private String password = "";
+@Expose
     private Enum tipoUsuario = null;
 
     /**

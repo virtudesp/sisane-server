@@ -11,7 +11,7 @@
 <%@page import="java.util.Iterator"%>
 <%
     ComentarioDao oComentarioDao = new ComentarioDao(Conexion.getConection());
-    ArrayList<String> alColumnsNames = (ArrayList<String>) oComentarioDao.getColumnsNames();
+    ArrayList<String> alColumnsNames = (ArrayList<String>) oComentarioDao.getColumnsNames(false);
     Iterator<String> oIterador = alColumnsNames.listIterator();
     String strNombreMantenimiento = "comentario";
 %>

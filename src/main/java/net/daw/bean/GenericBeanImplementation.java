@@ -5,12 +5,14 @@
  */
 package net.daw.bean;
 
+import com.google.gson.annotations.Expose;
+
 /**
  *
  * @author rafa
  */
 public class GenericBeanImplementation implements GenericBeanInterface {
-
+@Expose
     private Integer id;
 
     public GenericBeanImplementation() {

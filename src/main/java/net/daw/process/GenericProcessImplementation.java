@@ -12,11 +12,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.servlet.ServletException;
-import net.daw.bean.FollowerBean;
 import net.daw.bean.GenericBeanInterface;
-import net.daw.dao.FollowerDao;
 import net.daw.dao.GenericDaoInterface;
-import net.daw.helper.EncodingUtil;
 import net.daw.helper.FilterBean;
 
 /**
@@ -26,7 +23,7 @@ import net.daw.helper.FilterBean;
  * @param <OPERATION_BEAN>
  * @param <OPERATION_DAO>
  */
-public class GenericProcessImplementation<OPERATION_BEAN, OPERATION_DAO> implements GenericProcessInterface<OPERATION_BEAN, OPERATION_DAO> {
+public abstract class GenericProcessImplementation<OPERATION_BEAN, OPERATION_DAO> implements GenericProcessInterface<OPERATION_BEAN, OPERATION_DAO> {
 
     @Override
     public String get(OPERATION_BEAN oBean, OPERATION_DAO oDao) throws Exception {
@@ -53,7 +50,9 @@ public class GenericProcessImplementation<OPERATION_BEAN, OPERATION_DAO> impleme
             //oBean = (GenericBeanImplementation) oDao.get(oBean);
             GsonBuilder gsonBuilder = new GsonBuilder();
             gsonBuilder.setDateFormat("dd/MM/yyyy");
-            Gson gson = gsonBuilder.create();
+
+            Gson gson = gsonBuilder.excludeFieldsWithoutExposeAnnotation().create();
+            //Gson gson = gsonBuilder.create();
             data = gson.toJson(oGenericBean);
             return data;
 
@@ -63,25 +62,24 @@ public class GenericProcessImplementation<OPERATION_BEAN, OPERATION_DAO> impleme
 
     }
 
-    @Override
-    public String getColumns(OPERATION_BEAN oBean, OPERATION_DAO oDao) throws Exception {
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-
-        try {
-            GenericBeanInterface oGenericBean = (GenericBeanInterface) oBean;
-            GenericDaoInterface oGenericDao = (GenericDaoInterface) oDao;
-
-            // oGenericBean = (GenericBeanInterface) oGenericDao.get(oGenericBean);
-            ArrayList<String> alColumns = oGenericDao.getColumnsNames();
-            String data = new Gson().toJson(alColumns);
-            data = "{\"data\":" + data + "}";
-            return data;
-        } catch (Exception e) {
-            throw new ServletException("GetcolumnsJson: View Error: " + e.getMessage());
-        }
-
-    }
-
+//    @Override
+//    public String getColumns(OPERATION_BEAN oBean, OPERATION_DAO oDao) throws Exception {
+//        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+//
+//        try {
+//            GenericBeanInterface oGenericBean = (GenericBeanInterface) oBean;
+//            GenericDaoInterface oGenericDao = (GenericDaoInterface) oDao;
+//
+//            // oGenericBean = (GenericBeanInterface) oGenericDao.get(oGenericBean);
+//            ArrayList<String> alColumns = oGenericDao.getColumnsNames();
+//            String data = new Gson().toJson(alColumns);
+//            data = "{\"data\":" + data + "}";
+//            return data;
+//        } catch (Exception e) {
+//            throw new ServletException("GetcolumnsJson: View Error: " + e.getMessage());
+//        }
+//
+//    }
     @Override
     public String getPage(int intRegsPerPag, int intPage, ArrayList<FilterBean> alFilter, HashMap<String, String> hmOrder, OPERATION_BEAN oBean, OPERATION_DAO oDao) throws Exception {
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -92,7 +90,7 @@ public class GenericProcessImplementation<OPERATION_BEAN, OPERATION_DAO> impleme
             List<GenericBeanInterface> loGenericBean = oGenericDao.getPage(intRegsPerPag, intPage, alFilter, hmOrder);
             GsonBuilder gsonBuilder = new GsonBuilder();
             gsonBuilder.setDateFormat("dd/MM/yyyy");
-            Gson gson = gsonBuilder.create();
+            Gson gson = gsonBuilder.excludeFieldsWithoutExposeAnnotation().create();
             String data = gson.toJson(loGenericBean);
             data = "{\"list\":" + data + "}";
             return data;
@@ -146,10 +144,10 @@ public class GenericProcessImplementation<OPERATION_BEAN, OPERATION_DAO> impleme
             GenericBeanInterface oGenericBean = (GenericBeanInterface) oBean;
             GenericDaoInterface oGenericDao = (GenericDaoInterface) oDao;
 //
-            Gson gson = new Gson();
+            Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
 //
 //            oGenericBean = gson.fromJson(jason, oGenericBean.getClass());
-            
+
             Map<String, String> data = new HashMap<>();
             if (oGenericBean != null) {
                 oGenericBean = (GenericBeanInterface) oGenericDao.set(oGenericBean);
@@ -176,6 +174,32 @@ public class GenericProcessImplementation<OPERATION_BEAN, OPERATION_DAO> impleme
             return data;
         } catch (Exception e) {
             throw new ServletException("GetregistersJson: View Error: " + e.getMessage());
+        }
+    }
+
+    @Override
+    //no se utiliza por ahora
+    public String getList(int intRegsPerPag, int intPage, ArrayList<FilterBean> alFilter, HashMap<String, String> hmOrder, OPERATION_BEAN oBean, OPERATION_DAO oDao) throws Exception {
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            //falta controlar la transacción a esta altura
+            String columns = this.getColumns();
+            String prettyColumns = this.getPrettyColumns();
+            //String types = this.getTypes();
+            String page = this.getPage(intRegsPerPag, intPage, alFilter, hmOrder, oBean, oDao);
+            String pages = this.getPages(intRegsPerPag, alFilter, oDao);
+            String registers = this.getRegisters(alFilter, oDao);
+            String data = "{\"data\":{"
+                    + "\"columns\":" + columns
+                    + ",\"prettyColumns\":" + prettyColumns
+                    // + ",\"types\":" + types
+                    + ",\"page\":" + page
+                    + ",\"pages\":" + pages
+                    + ",\"registers\":" + registers
+                    + "}}";
+            return data;
+        } catch (Exception e) {
+            throw new ServletException("GetpageJson: View Error: " + e.getMessage());
         }
     }
 

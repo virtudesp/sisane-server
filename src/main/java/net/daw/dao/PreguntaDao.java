@@ -4,6 +4,7 @@
  */
 package net.daw.dao;
 
+import java.util.ArrayList;
 import net.daw.bean.PreguntaBean;
 import net.daw.helper.Conexion;
 
@@ -15,6 +16,11 @@ public class PreguntaDao extends GenericDaoImplementation<PreguntaBean> {
   
     public PreguntaDao() throws Exception {
         super("pregunta");
+    }
+
+    @Override
+    public String getDescription(int id) throws Exception {
+        return "Descripcion de pregunta";
     }
     
 }

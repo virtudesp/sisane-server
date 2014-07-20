@@ -10,7 +10,7 @@
 <%@page import="java.util.Iterator"%>
 <%
     RepositorioDao oRepositorioDao = new RepositorioDao(Conexion.getConection());
-    ArrayList<String> alColumnsNames = (ArrayList<String>) oRepositorioDao.getColumnsNames();
+    ArrayList<String> alColumnsNames = (ArrayList<String>) oRepositorioDao.getColumnsNames(false);
     Iterator<String> oIterador = alColumnsNames.listIterator();
     String strNombreMantenimiento = "repositorio";
 %>

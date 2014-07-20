@@ -1,11 +1,12 @@
+
 <%@page import="net.daw.dao.CuestionarioDao"%>
 <%@page import="net.daw.dao.GenericDaoImplementation"%>
 <%@page import="net.daw.helper.Conexion"%>
-<%@page import="net.daw.dao.GenericDao"%>
+
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.Iterator"%>
 <%
-    CuestionarioDao oCuestionarioDao = new CuestionarioDao(Conexion.getConection());
+    CuestionarioDao oCuestionarioDao = new CuestionarioDao();
     ArrayList<String> alColumnsNames = (ArrayList<String>) oCuestionarioDao.getColumnsNames();
     Iterator<String> oIterador = alColumnsNames.listIterator();
     String strNombreMantenimiento = "cuestionario";

@@ -63,9 +63,14 @@ public class ControlJson extends HttpServlet {
                     //oBean = (GenericBeanImplementation) oDao.get(oBean);
                     datos = process.get(oBean, oDao);
                     break;
+                case "getprettycolumns":
+                    //oBean = (GenericBeanImplementation) oDao.get(oBean);
+                    datos = process.getPrettyColumns();
+                    break;
                 case "getcolumns":
                     //oBean = (GenericBeanImplementation) oDao.get(oBean);
-                    datos = process.getColumns(oBean, oDao);
+                    //datos = process.getColumns(oBean, oDao);
+                    datos = process.getColumns();
                     break;
                 case "getpage":
                 case "getpages":
@@ -141,8 +146,6 @@ public class ControlJson extends HttpServlet {
 
                         String jason = request.getParameter("json").replaceAll("%2F", "/");
 
-                      
-                        
                         oBean = gson.fromJson(jason, oBean.getClass());
                         datos = process.save(jason, oBean, oDao);
                     }

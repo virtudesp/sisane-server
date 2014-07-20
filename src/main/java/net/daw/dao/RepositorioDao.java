@@ -4,6 +4,7 @@
  */
 package net.daw.dao;
 
+import java.util.ArrayList;
 import net.daw.bean.RepositorioBean;
 import net.daw.helper.Conexion;
 
@@ -16,5 +17,9 @@ public class RepositorioDao extends GenericDaoImplementation<RepositorioBean> {
     public RepositorioDao() throws Exception {
         super("repositorio");
     }
-    
+
+    @Override
+    public String getDescription(int id) throws Exception {
+        return "Descripcion de repositorio";
+    }
 }

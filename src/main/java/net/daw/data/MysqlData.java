@@ -298,24 +298,60 @@ public class MysqlData implements GenericData {
         }
     }
 
+    //select column_name, column_comment from information_schema.columns where table_name='documento';
+    //SHOW FULL COLUMNS FROM documento
     @Override
     public ArrayList<String> getColumnsName(String strTabla, String strDatabase) throws Exception {
         try {
             ArrayList<String> vector = new ArrayList<>();
-            
+
             Statement oStatement;
-            oStatement = (Statement) oConexionMySQL.createStatement();
+            oStatement = oConexionMySQL.createStatement();
             //String strSQL = "SELECT id FROM " + strTabla + " WHERE 1=1 ";
             String strSQL = "SELECT `COLUMN_NAME` FROM `INFORMATION_SCHEMA`.`COLUMNS` ";
             strSQL += "WHERE `TABLE_SCHEMA`='" + strDatabase + "' ";
             strSQL += "AND `TABLE_NAME`='" + strTabla + "' ";
             ResultSet oResultSet = oStatement.executeQuery(strSQL);
             while (oResultSet.next()) {
-                vector.add(oResultSet.getString("COLUMN_NAME"));
+                if (oResultSet.getString("COLUMN_NAME").length() >= 4) {
+                    if (oResultSet.getString("COLUMN_NAME").substring(0, 3).equalsIgnoreCase("id_")) {
+                        vector.add("obj_" + oResultSet.getString("COLUMN_NAME").substring(3));
+                    } else {
+                        vector.add(oResultSet.getString("COLUMN_NAME"));
+                    }
+                } else {
+                    vector.add(oResultSet.getString("COLUMN_NAME"));
+                }
             }
             return vector;
         } catch (SQLException e) {
             throw new Exception("mysql.getColumnsName: Error en la consulta: " + e.getMessage());
+        }
+    }
+
+    @Override
+    public ArrayList<String> getPrettyColumns(String strTabla) throws Exception {
+        try {
+            ArrayList<String> vector = new ArrayList<>();
+
+            Statement oStatement;
+            oStatement = oConexionMySQL.createStatement();
+            //String strSQL = "SELECT id FROM " + strTabla + " WHERE 1=1 ";
+            String strSQL = "SHOW FULL COLUMNS FROM " + strTabla;
+            ResultSet oResultSet = oStatement.executeQuery(strSQL);
+            while (oResultSet.next()) {
+                vector.add(oResultSet.getString("Comment")); //COLUMNS.Comment COLUMN_COMMENT
+//                if (desc) {
+//                    if (oResultSet.getString("COLUMN_NAME").length() >= 4) {
+//                        if (oResultSet.getString("COLUMN_NAME").substring(0, 3).equalsIgnoreCase("id_")) {
+//                            vector.add("desc_" + oResultSet.getString("COLUMN_NAME").substring(3));
+//                        }
+//                    }
+//                }
+            }
+            return vector;
+        } catch (SQLException e) {
+            throw new Exception("mysql.getPrettyColumns: Error en la consulta: " + e.getMessage());
         }
     }
 

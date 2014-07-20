@@ -4,7 +4,9 @@
  */
 package net.daw.dao;
 
+import java.util.ArrayList;
 import net.daw.bean.AlumnoBean;
+import net.daw.bean.DocumentoBean;
 import net.daw.bean.EmpresaBean;
 import net.daw.bean.ProfesorBean;
 import net.daw.bean.UsuarioBean;
@@ -90,5 +92,19 @@ public class UsuarioDao extends GenericDaoImplementation<UsuarioBean> {
         return oUsuarioBean;
     }
 
+
+    @Override
+    public String getDescription(int id) throws Exception {
+        UsuarioBean oUsuarioBean = new UsuarioBean();
+        oUsuarioBean.setId(id);
+        oUsuarioBean = this.get(oUsuarioBean);
+        String description;
+        if (oUsuarioBean.getLogin().length() > 20) {
+            description = oUsuarioBean.getLogin().substring(0, 19) + "...";
+        } else {
+            description = oUsuarioBean.getLogin();
+        }
+        return description;
+    }
     
 }

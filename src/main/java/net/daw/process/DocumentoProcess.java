@@ -5,6 +5,9 @@
  */
 package net.daw.process;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import java.util.ArrayList;
 import javax.servlet.ServletException;
 import net.daw.bean.DocumentoBean;
 import net.daw.bean.GenericBeanInterface;
@@ -16,22 +19,21 @@ import net.daw.dao.DocumentoDao;
  */
 public class DocumentoProcess extends GenericProcessImplementation<DocumentoBean, DocumentoDao> {
 
-    public String getContenido(DocumentoBean oBean, DocumentoDao oDao) throws Exception{        
+    public String getContenido(DocumentoBean oBean, DocumentoDao oDao) throws Exception {
         String data;
-        try {        
-            oBean = (DocumentoBean) (GenericBeanInterface) oDao.get(oBean);                                    
-            return "{\"data\":\"" + oBean.getContenido() + "\"}";            
+        try {
+            oBean = (DocumentoBean) (GenericBeanInterface) oDao.get(oBean);
+            return "{\"data\":\"" + oBean.getContenido() + "\"}";
         } catch (Exception e) {
             throw new ServletException("GetContenido: View Error: " + e.getMessage());
         }
     }
-    
+
     //pte: http://remysharp.com/2008/04/01/wiki-to-html-using-javascript/
     //http://randomactsofcoding.blogspot.com.es/2009/08/parsewikijs-javascript-wiki-parsing.html
     //http://www.ivan.fomichev.name/2008/04/javascript-creole-10-wiki-markup-parser.html
     //http://web-tec.info/WikiParser/
     //http://jscreole.sourceforge.net/
-    
 //        @Override
 //    public String get(DocumentoBean oBean, DocumentoDao oDao) throws Exception {
 //        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -72,5 +74,38 @@ public class DocumentoProcess extends GenericProcessImplementation<DocumentoBean
 //            throw new ServletException("SaveJson: View Error: " + e.getMessage());
 //        }
 //    }
-    
+    @Override
+    public String getPrettyColumns() throws Exception {
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        ArrayList<String> alColumns = null;
+        String data;
+        DocumentoDao oDocumentoDAO = new DocumentoDao();
+        DocumentoBean oDocumento = new DocumentoBean();
+
+        alColumns = oDocumentoDAO.getPrettyColumnsNames();
+
+        GsonBuilder gsonBuilder = new GsonBuilder();
+
+        Gson gson = gsonBuilder.create();
+        data = gson.toJson(alColumns);
+        return data;
+    }
+
+    @Override
+    public String getColumns() throws Exception {
+        ArrayList<String> alColumns = null;
+        String data;
+        DocumentoDao oDocumentoDAO = new DocumentoDao();
+        DocumentoBean oDocumento = new DocumentoBean();
+
+        alColumns = oDocumentoDAO.getColumnsNames();
+
+        GsonBuilder gsonBuilder = new GsonBuilder();
+
+        Gson gson = gsonBuilder.create();
+        data = gson.toJson(alColumns);
+
+        return data;
+    }
+
 }

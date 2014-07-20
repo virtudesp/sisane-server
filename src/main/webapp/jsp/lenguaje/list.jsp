@@ -9,7 +9,7 @@
 <%@page import="java.util.Iterator"%>
 <%
     LenguajeDao oLenguajeDao_Mysql = new LenguajeDao(Conexion.getConection());
-    ArrayList<String> alColumnsNames = (ArrayList<String>) oLenguajeDao_Mysql.getColumnsNames();
+    ArrayList<String> alColumnsNames = (ArrayList<String>) oLenguajeDao_Mysql.getColumnsNames(false);
     Iterator<String> oIterador = alColumnsNames.listIterator();
     String strNombreMantenimiento = "lenguaje";
 %>

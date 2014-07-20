@@ -19,4 +19,8 @@ public interface GenericDaoInterface<GenericBeanImplementation> {
     public void remove(GenericBeanImplementation oBean) throws Exception;
 
     public ArrayList<String> getColumnsNames() throws Exception;
+
+    public ArrayList<String> getPrettyColumnsNames() throws Exception;
+
+    public String getDescription(int id) throws Exception;
 }

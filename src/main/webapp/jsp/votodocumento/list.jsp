@@ -10,7 +10,7 @@
 <%@page import="java.util.Iterator"%>
 <%
     VotodocumentoDao oVotodocumentoDao = new VotodocumentoDao(Conexion.getConection());
-    ArrayList<String> alColumnsNames = (ArrayList<String>) oVotodocumentoDao.getColumnsNames();
+    ArrayList<String> alColumnsNames = (ArrayList<String>) oVotodocumentoDao.getColumnsNames(false);
     Iterator<String> oIterador = alColumnsNames.listIterator();
     String strNombreMantenimiento = "votodocumento";
 %>

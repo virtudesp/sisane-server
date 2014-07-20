@@ -4,6 +4,7 @@
  */
 package net.daw.dao;
 
+import java.util.ArrayList;
 import net.daw.bean.HiloBean;
 import net.daw.helper.Conexion;
 
@@ -15,6 +16,11 @@ public class HiloDao extends GenericDaoImplementation<HiloBean> {
 
     public HiloDao() throws Exception {
         super( "hilo");
+    }
+
+    @Override
+    public String getDescription(int id) throws Exception {
+        return "Descripcion de hilo";
     }
 
 }

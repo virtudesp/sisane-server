@@ -4,6 +4,7 @@
  */
 package net.daw.dao;
 
+import java.util.ArrayList;
 import net.daw.bean.EstadoBean;
 import net.daw.helper.Conexion;
 
@@ -15,6 +16,11 @@ public class EstadoDao extends GenericDaoImplementation<EstadoBean> {
     
      public EstadoDao() throws Exception {
         super("estado");
+    }
+
+    @Override
+    public String getDescription(int id) throws Exception {
+        return "Descripcion de estado";
     }
     
 }

@@ -9,7 +9,7 @@
 <%@page import="java.util.Iterator"%>
 <%
     ActividadofflineDao oActividadofflineDao = new ActividadofflineDao(Conexion.getConection());
-    ArrayList<String> alColumnsNames = (ArrayList<String>) oActividadofflineDao.getColumnsNames();
+    ArrayList<String> alColumnsNames = (ArrayList<String>) oActividadofflineDao.getColumnsNames(false);
     Iterator<String> oIterador = alColumnsNames.listIterator();
     String strNombreMantenimiento = "actividadoffline";
 %>

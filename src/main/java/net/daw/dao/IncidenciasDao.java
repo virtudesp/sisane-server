@@ -6,6 +6,7 @@
 
 package net.daw.dao;
 
+import java.util.ArrayList;
 import net.daw.bean.IncidenciasBean;
 
 /**
@@ -16,6 +17,11 @@ public class IncidenciasDao extends GenericDaoImplementation<IncidenciasBean> {
 
     public IncidenciasDao() throws Exception {
         super( "incidencias");
+    }
+
+    @Override
+    public String getDescription(int id) throws Exception {
+        return "Descripcion de incidencias";
     }
 
 }

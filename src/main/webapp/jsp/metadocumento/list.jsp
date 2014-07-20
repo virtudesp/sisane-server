@@ -10,7 +10,7 @@
 <%@page import="java.util.Iterator"%>
 <%
     MetadocumentoDao oMetadocumentoDao_Mysql = new MetadocumentoDao(Conexion.getConection());
-    ArrayList<String> alColumnsNames = (ArrayList<String>) oMetadocumentoDao_Mysql.getColumnsNames();
+    ArrayList<String> alColumnsNames = (ArrayList<String>) oMetadocumentoDao_Mysql.getColumnsNames(false);
     Iterator<String> oIterador = alColumnsNames.listIterator();
     String strNombreMantenimiento = "metadocumento";
 %>

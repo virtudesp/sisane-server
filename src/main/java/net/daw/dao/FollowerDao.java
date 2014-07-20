@@ -4,6 +4,7 @@
  */
 package net.daw.dao;
 
+import java.util.ArrayList;
 import net.daw.bean.FollowerBean;
 import net.daw.helper.Conexion;
 
@@ -15,6 +16,11 @@ public class FollowerDao extends GenericDaoImplementation<FollowerBean> {
 
     public FollowerDao() throws Exception {
         super( "follower");
+    }
+
+    @Override
+    public String getDescription(int id) throws Exception {
+        return "Descripcion de follower";
     }
 
 }

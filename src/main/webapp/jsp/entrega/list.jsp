@@ -9,7 +9,7 @@
 <%@page import="java.util.Iterator"%>
 <%
     EntregaDao oEntregaDao_Mysql = new EntregaDao(Conexion.getConection());
-    ArrayList<String> alColumnsNames = (ArrayList<String>) oEntregaDao_Mysql.getColumnsNames();
+    ArrayList<String> alColumnsNames = (ArrayList<String>) oEntregaDao_Mysql.getColumnsNames(false);
     Iterator<String> oIterador = alColumnsNames.listIterator();
     String strNombreMantenimiento = "entrega";
 %>

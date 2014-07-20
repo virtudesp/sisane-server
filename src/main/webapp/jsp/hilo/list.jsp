@@ -9,7 +9,7 @@
 <%@page import="java.util.Iterator"%>
 <%
     HiloDao oHiloDao = new HiloDao(Conexion.getConection());
-    ArrayList<String> alColumnsNames = (ArrayList<String>) oHiloDao.getColumnsNames();
+    ArrayList<String> alColumnsNames = (ArrayList<String>) oHiloDao.getColumnsNames(false);
     Iterator<String> oIterador = alColumnsNames.listIterator();
     String strNombreMantenimiento = "hilo";
 %>

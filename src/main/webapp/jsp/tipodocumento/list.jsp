@@ -9,7 +9,7 @@
 <%@page import="java.util.Iterator"%>
 <%
     DocumentoDao oDocumentoDao_Mysql = new DocumentoDao();
-    ArrayList<String> alColumnsNames = (ArrayList<String>) oDocumentoDao_Mysql.getColumnsNames();
+    ArrayList<String> alColumnsNames = (ArrayList<String>) oDocumentoDao_Mysql.getColumnsNames(false);
     Iterator<String> oIterador = alColumnsNames.listIterator();
     String strNombreMantenimiento = "tipodocumento";
 %>
