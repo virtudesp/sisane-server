@@ -5,6 +5,7 @@
  */
 package net.daw.dao;
 
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.text.SimpleDateFormat;
@@ -111,6 +112,60 @@ public abstract class GenericDaoImplementation<TIPO_OBJETO> implements GenericDa
         }
     }
 
+    private TIPO_OBJETO fillForeign(TIPO_OBJETO oBean, Class<TIPO_OBJETO> tipo) throws NoSuchMethodException, ClassNotFoundException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, Exception {
+        for (Method method : tipo.getMethods()) {
+            if (!method.getName().substring(3).equalsIgnoreCase("id")) {
+                if (method.getName().substring(0, 3).equalsIgnoreCase("set")) {
+                    final Class<?> classTipoParamMetodoSet = method.getParameterTypes()[0];
+                    if (method.getName().length() >= 5) {
+                        if (method.getName().substring(3).toLowerCase(Locale.ENGLISH).substring(0, 4).equalsIgnoreCase("obj_")) {
+
+                            //ojo: en los pojos, los id_ deben preceder a los obj_ del mismo objeto siempre!
+                            String strAjena = method.getName().substring(3).toLowerCase(Locale.ENGLISH).substring(4);
+                            Method metodo_getId_Ajena = tipo.getMethod("getId_" + strAjena);
+                            strAjena = strAjena.substring(0, 1).toUpperCase(Locale.ENGLISH) + strAjena.substring(1);
+                            GenericDaoImplementation oAjenaDao = (GenericDaoImplementation) Class.forName("net.daw.dao." + strAjena + "Dao").newInstance();
+
+                            GenericBeanImplementation oAjenaBean = (GenericBeanImplementation) Class.forName("net.daw.bean." + strAjena + "Bean").newInstance();
+                            int intIdAjena = (Integer) metodo_getId_Ajena.invoke(oBean);
+                            oAjenaBean.setId(intIdAjena);
+                            oAjenaBean = (GenericBeanImplementation) oAjenaDao.get(oAjenaBean);
+                            //String strDescription = oAjenaDao.getDescription((Integer) metodo_getId_Ajena.invoke(oBean));
+                            method.invoke(oBean, oAjenaBean);
+
+                        }
+                    }
+                }
+            }
+        }
+        return oBean;
+    }
+
+    private TIPO_OBJETO fill(TIPO_OBJETO oBean, Class<TIPO_OBJETO> tipo, Method metodo_getId) throws NoSuchMethodException, ClassNotFoundException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, Exception {
+        for (Method method : tipo.getMethods()) {
+            if (!method.getName().substring(3).equalsIgnoreCase("id")) {
+                if (method.getName().substring(0, 3).equalsIgnoreCase("set")) {
+                    final Class<?> classTipoParamMetodoSet = method.getParameterTypes()[0];
+                    if (method.getName().length() >= 5) {
+                        if (!method.getName().substring(3).toLowerCase(Locale.ENGLISH).substring(0, 4).equalsIgnoreCase("obj_")) {
+                            String strValor = oMysql.getOne(strTabla, method.getName().substring(3).toLowerCase(Locale.ENGLISH), (Integer) metodo_getId.invoke(oBean));
+                            if (strValor != null) {
+                                parseValue(oBean, method, classTipoParamMetodoSet.getName(), strValor);
+                            }
+                        }
+                    } else {
+                        String strValor = oMysql.getOne(strTabla, method.getName().substring(3).toLowerCase(Locale.ENGLISH), (Integer) metodo_getId.invoke(oBean));
+                        if (strValor != null) {
+                            parseValue(oBean, method, classTipoParamMetodoSet.getName(), strValor);
+                        }
+                    }
+
+                }
+            }
+        }
+        return oBean;
+    }
+
     @Override
     public TIPO_OBJETO get(TIPO_OBJETO oBean) throws Exception {
         Class<TIPO_OBJETO> tipo = (Class<TIPO_OBJETO>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
@@ -122,42 +177,8 @@ public abstract class GenericDaoImplementation<TIPO_OBJETO> implements GenericDa
                 if (!oMysql.existsOne(strTabla, (Integer) metodo_getId.invoke(oBean))) {
                     metodo_setId.invoke(oBean, 0);
                 } else {
-                    for (Method method : tipo.getMethods()) {
-                        if (!method.getName().substring(3).equalsIgnoreCase("id")) {
-                            if (method.getName().substring(0, 3).equalsIgnoreCase("set")) {
-                                final Class<?> classTipoParamMetodoSet = method.getParameterTypes()[0];
-                                if (method.getName().length() >= 5) {
-                                    if (method.getName().substring(3).toLowerCase(Locale.ENGLISH).substring(0, 4).equalsIgnoreCase("obj_")) {
-
-                                        //ojo: en los pojos, los id_ deben preceder a los obj_ del mismo objeto siempre!
-                                        String strAjena = method.getName().substring(3).toLowerCase(Locale.ENGLISH).substring(4);
-                                        Method metodo_getId_Ajena = tipo.getMethod("getId_" + strAjena);
-                                        strAjena = strAjena.substring(0, 1).toUpperCase(Locale.ENGLISH) + strAjena.substring(1);
-                                        GenericDaoImplementation oAjenaDao = (GenericDaoImplementation) Class.forName("net.daw.dao." + strAjena + "Dao").newInstance();
-
-                                        GenericBeanImplementation oAjenaBean = (GenericBeanImplementation) Class.forName("net.daw.bean." + strAjena + "Bean").newInstance();
-                                        int intIdAjena = (Integer) metodo_getId_Ajena.invoke(oBean);
-                                        oAjenaBean.setId(intIdAjena);
-                                        oAjenaBean = (GenericBeanImplementation) oAjenaDao.get(oAjenaBean);
-                                        //String strDescription = oAjenaDao.getDescription((Integer) metodo_getId_Ajena.invoke(oBean));
-                                        method.invoke(oBean, oAjenaBean);
-
-                                    } else {
-                                        String strValor = oMysql.getOne(strTabla, method.getName().substring(3).toLowerCase(Locale.ENGLISH), (Integer) metodo_getId.invoke(oBean));
-                                        if (strValor != null) {
-                                            parseValue(oBean, method, classTipoParamMetodoSet.getName(), strValor);
-                                        }
-                                    }
-                                } else {
-                                    String strValor = oMysql.getOne(strTabla, method.getName().substring(3).toLowerCase(Locale.ENGLISH), (Integer) metodo_getId.invoke(oBean));
-                                    if (strValor != null) {
-                                        parseValue(oBean, method, classTipoParamMetodoSet.getName(), strValor);
-                                    }
-                                }
-
-                            }
-                        }
-                    }
+                    oBean = fill(oBean, tipo, metodo_getId);
+                    oBean = fillForeign(oBean, tipo);
                 }
             } catch (Exception e) {
                 throw new Exception("GenericDao.get: Error: " + e.getMessage());

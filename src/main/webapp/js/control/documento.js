@@ -214,8 +214,8 @@ var control_documento = function(documentoView) {
                                                     tabla += '<th>' + value;
                                                 }
                                                 tabla += '<br />';
-                                                tabla += '<a class="orderAsc' + index + '" href="jsp#/documento/list/' + UrlFromParamsWithoutOrder + '&order=' + value + '&ordervalue=asc"><i class="glyphicon glyphicon-arrow-up"></i></a>';
-                                                tabla += '<a class="orderDesc' + index + '" href="jsp#/documento/list/' + UrlFromParamsWithoutOrder + '&order=' + value + '&ordervalue=desc"><i class="glyphicon glyphicon-arrow-down"></i></a>';
+                                                tabla += '<a class="orderAsc' + index + '" href="jsp#/documento/list/' + UrlFromParamsWithoutOrder + '&order=' + fieldNames[index] + '&ordervalue=asc"><i class="glyphicon glyphicon-arrow-up"></i></a>';
+                                                tabla += '<a class="orderDesc' + index + '" href="jsp#/documento/list/' + UrlFromParamsWithoutOrder + '&order=' + fieldNames[index] + '&ordervalue=desc"><i class="glyphicon glyphicon-arrow-down"></i></a>';
                                                 tabla += '</th>';
                                             }
                                             //}
@@ -247,14 +247,22 @@ var control_documento = function(documentoView) {
                                     //numField++;
                                     //if (numField <= visibleFields) {
                                     if (/obj_tipodocumento/.test(valor)) {
-                                        strClaveAjena = value[valor].id + ": " + value[valor].descripcion;
-                                        strClaveAjena = '<a href="jsp#/tipodocumento/view/' + value[valor].id +'">' + strClaveAjena + '</a>';
-                                        tabla += '<td>' + strClaveAjena + '</td>';
+                                        if (value[valor].id > 0) {
+                                            strClaveAjena = value[valor].id + ": " + value[valor].descripcion;
+                                            strClaveAjena = '<a href="jsp#/tipodocumento/view/' + value[valor].id + '">' + strClaveAjena + '</a>';
+                                            tabla += '<td>' + strClaveAjena + '</td>';
+                                        } else {
+                                            tabla += '<td>sin tipo</td>';
+                                        }
                                     }
                                     if (/obj_usuario/.test(valor)) {
-                                        strClaveAjena = value[valor].id + ": " + value[valor].login;
-                                        strClaveAjena = '<a href="jsp#/usuario/view/' + value[valor].id +'">' + strClaveAjena + '</a>';
-                                        tabla += '<td>' + strClaveAjena + '</td>';
+                                        if (value[valor].id > 0) {
+                                            strClaveAjena = value[valor].id + ": " + value[valor].login;
+                                            strClaveAjena = '<a href="jsp#/usuario/view/' + value[valor].id + '">' + strClaveAjena + '</a>';
+                                            tabla += '<td>' + strClaveAjena + '</td>';
+                                        } else {
+                                            tabla += '<td>sin usuario</td>';
+                                        }
                                     }
                                     if (!(/obj_/.test(valor))) {
                                         switch (value[valor]) {
