@@ -7,13 +7,18 @@ package net.daw.process;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.servlet.ServletException;
+import net.daw.bean.DocumentoBean;
 import net.daw.bean.GenericBeanInterface;
+import net.daw.dao.DocumentoDao;
+import net.daw.dao.GenericDaoImplementation;
 import net.daw.dao.GenericDaoInterface;
+
 import net.daw.helper.FilterBean;
 
 /**
@@ -24,6 +29,44 @@ import net.daw.helper.FilterBean;
  * @param <OPERATION_DAO>
  */
 public abstract class GenericProcessImplementation<OPERATION_BEAN, OPERATION_DAO> implements GenericProcessInterface<OPERATION_BEAN, OPERATION_DAO> {
+
+    @Override
+    public String getPrettyColumns(String objeto) throws Exception {
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
+        Constructor c = Class.forName("net.daw.dao." + objeto + "Dao").getConstructor();
+        GenericDaoImplementation oDao = (GenericDaoImplementation) c.newInstance();
+
+        ArrayList<String> alColumns = null;
+        String data;
+
+        alColumns = oDao.getPrettyColumnsNames();
+
+        GsonBuilder gsonBuilder = new GsonBuilder();
+
+        Gson gson = gsonBuilder.create();
+        data = gson.toJson(alColumns);
+        return data;
+    }
+
+    @Override
+    public String getColumns(String objeto) throws Exception {
+
+        Constructor c = Class.forName("net.daw.dao." + objeto + "Dao").getConstructor();
+        GenericDaoImplementation oDao = (GenericDaoImplementation) c.newInstance();
+
+        ArrayList<String> alColumns = null;
+        String data;
+
+        alColumns = oDao.getColumnsNames();
+
+        GsonBuilder gsonBuilder = new GsonBuilder();
+
+        Gson gson = gsonBuilder.create();
+        data = gson.toJson(alColumns);
+
+        return data;
+    }
 
     @Override
     public String get(OPERATION_BEAN oBean, OPERATION_DAO oDao) throws Exception {
@@ -177,30 +220,30 @@ public abstract class GenericProcessImplementation<OPERATION_BEAN, OPERATION_DAO
         }
     }
 
-    @Override
-    //no se utiliza por ahora
-    public String getList(int intRegsPerPag, int intPage, ArrayList<FilterBean> alFilter, HashMap<String, String> hmOrder, OPERATION_BEAN oBean, OPERATION_DAO oDao) throws Exception {
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        try {
-            //falta controlar la transacción a esta altura
-            String columns = this.getColumns();
-            String prettyColumns = this.getPrettyColumns();
-            //String types = this.getTypes();
-            String page = this.getPage(intRegsPerPag, intPage, alFilter, hmOrder, oBean, oDao);
-            String pages = this.getPages(intRegsPerPag, alFilter, oDao);
-            String registers = this.getRegisters(alFilter, oDao);
-            String data = "{\"data\":{"
-                    + "\"columns\":" + columns
-                    + ",\"prettyColumns\":" + prettyColumns
-                    // + ",\"types\":" + types
-                    + ",\"page\":" + page
-                    + ",\"pages\":" + pages
-                    + ",\"registers\":" + registers
-                    + "}}";
-            return data;
-        } catch (Exception e) {
-            throw new ServletException("GetpageJson: View Error: " + e.getMessage());
-        }
-    }
+//    @Override
+//    //no se utiliza por ahora
+//    public String getList(int intRegsPerPag, int intPage, ArrayList<FilterBean> alFilter, HashMap<String, String> hmOrder, OPERATION_BEAN oBean, OPERATION_DAO oDao) throws Exception {
+//        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+//        try {
+//            //falta controlar la transacción a esta altura
+//            String columns = this.getColumns();
+//            String prettyColumns = this.getPrettyColumns();
+//            //String types = this.getTypes();
+//            String page = this.getPage(intRegsPerPag, intPage, alFilter, hmOrder, oBean, oDao);
+//            String pages = this.getPages(intRegsPerPag, alFilter, oDao);
+//            String registers = this.getRegisters(alFilter, oDao);
+//            String data = "{\"data\":{"
+//                    + "\"columns\":" + columns
+//                    + ",\"prettyColumns\":" + prettyColumns
+//                    // + ",\"types\":" + types
+//                    + ",\"page\":" + page
+//                    + ",\"pages\":" + pages
+//                    + ",\"registers\":" + registers
+//                    + "}}";
+//            return data;
+//        } catch (Exception e) {
+//            throw new ServletException("GetpageJson: View Error: " + e.getMessage());
+//        }
+//    }
 
 }

@@ -8,6 +8,7 @@ package net.daw.dao;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
+import java.sql.Connection;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -15,8 +16,8 @@ import java.util.Iterator;
 import java.util.Locale;
 import net.daw.bean.GenericBeanImplementation;
 import net.daw.bean.GenericBeanInterface;
-import net.daw.data.MysqlData;
-import net.daw.helper.Conexion;
+import net.daw.data.MysqlDataImplementation;
+
 import net.daw.helper.FilterBean;
 
 /**
@@ -27,23 +28,25 @@ import net.daw.helper.FilterBean;
  */
 public abstract class GenericDaoImplementation<TIPO_OBJETO> implements GenericDaoInterface<TIPO_OBJETO> {
 
-    protected final MysqlData oMysql;
-    protected final Conexion.Tipo_conexion enumTipoConexion;
+    protected final MysqlDataImplementation oMysql;
+    //protected final Conexion.Tipo_conexion enumTipoConexion;
     protected final String strTabla;
 
-    public GenericDaoImplementation(String tabla) throws Exception {
-        oMysql = new MysqlData();
-        enumTipoConexion = Conexion.getConection();
+
+
+
+    public GenericDaoImplementation(String tabla ) throws Exception {        
         strTabla = tabla;
+        oMysql = new MysqlDataImplementation();                
     }
 
     @Override
     public int getPages(int intRegsPerPag, ArrayList<FilterBean> hmFilter) throws Exception {
         int pages;
         try {
-            oMysql.conexion(enumTipoConexion);
+            //oMysql.conexion(enumTipoConexion);
             pages = oMysql.getPages(strTabla, intRegsPerPag, hmFilter);
-            oMysql.desconexion();
+            //oMysql.desconexion();
             return pages;
         } catch (Exception e) {
             throw new Exception("GenericDao.getPages: Error: " + e.getMessage());
@@ -54,9 +57,9 @@ public abstract class GenericDaoImplementation<TIPO_OBJETO> implements GenericDa
     public int getCount(ArrayList<FilterBean> hmFilter) throws Exception {
         int pages;
         try {
-            oMysql.conexion(enumTipoConexion);
+            //oMysql.conexion(enumTipoConexion);
             pages = oMysql.getCount(strTabla, hmFilter);
-            oMysql.desconexion();
+            //oMysql.desconexion();
             return pages;
         } catch (Exception e) {
             throw new Exception("GenericDao.getCount: Error: " + e.getMessage());
@@ -71,7 +74,7 @@ public abstract class GenericDaoImplementation<TIPO_OBJETO> implements GenericDa
         ArrayList<Integer> arrId;
         ArrayList<TIPO_OBJETO> arrCliente = new ArrayList<>();
         try {
-            oMysql.conexion(enumTipoConexion);
+            //oMysql.conexion(enumTipoConexion);
             arrId = oMysql.getPage(strTabla, intRegsPerPag, intPage, hmFilter, hmOrder);
             Iterator<Integer> iterador = arrId.listIterator();
             while (iterador.hasNext()) {
@@ -79,7 +82,7 @@ public abstract class GenericDaoImplementation<TIPO_OBJETO> implements GenericDa
                 metodo_setId.invoke(oBean, iterador.next());
                 arrCliente.add(this.get((TIPO_OBJETO) oBean));
             }
-            oMysql.desconexion();
+            //oMysql.desconexion();
             return arrCliente;
         } catch (Exception e) {
             throw new Exception("GenericDao.getPage: Error: " + e.getMessage());
@@ -132,7 +135,6 @@ public abstract class GenericDaoImplementation<TIPO_OBJETO> implements GenericDa
                             oAjenaBean = (GenericBeanImplementation) oAjenaDao.get(oAjenaBean);
                             //String strDescription = oAjenaDao.getDescription((Integer) metodo_getId_Ajena.invoke(oBean));
                             method.invoke(oBean, oAjenaBean);
-
                         }
                     }
                 }
@@ -173,7 +175,7 @@ public abstract class GenericDaoImplementation<TIPO_OBJETO> implements GenericDa
         Method metodo_setId = tipo.getMethod("setId", Integer.class);
         if ((Integer) metodo_getId.invoke(oBean) > 0) {
             try {
-                oMysql.conexion(enumTipoConexion);
+                //oMysql.conexion(enumTipoConexion);
                 if (!oMysql.existsOne(strTabla, (Integer) metodo_getId.invoke(oBean))) {
                     metodo_setId.invoke(oBean, 0);
                 } else {
@@ -183,7 +185,7 @@ public abstract class GenericDaoImplementation<TIPO_OBJETO> implements GenericDa
             } catch (Exception e) {
                 throw new Exception("GenericDao.get: Error: " + e.getMessage());
             } finally {
-                oMysql.desconexion();
+                //oMysql.desconexion();
             }
         } else {
             metodo_setId.invoke(oBean, 0);
@@ -198,8 +200,8 @@ public abstract class GenericDaoImplementation<TIPO_OBJETO> implements GenericDa
         Method metodo_getId = tipo.getMethod("getId");
         Method metodo_setId = tipo.getMethod("setId", Integer.class);
         try {
-            oMysql.conexion(enumTipoConexion);
-            oMysql.initTrans();
+            //oMysql.conexion(enumTipoConexion);
+            //oMysql.initTrans();
             if ((Integer) metodo_getId.invoke(oBean) == 0) {
                 metodo_setId.invoke(oBean, oMysql.insertOne(strTabla));
             }
@@ -229,12 +231,12 @@ public abstract class GenericDaoImplementation<TIPO_OBJETO> implements GenericDa
                     }
                 }
             }
-            oMysql.commitTrans();
+            //oMysql.commitTrans();
         } catch (Exception e) {
-            oMysql.rollbackTrans();
+            //oMysql.rollbackTrans();
             throw new Exception("GenericDao.set: Error: " + e.getMessage());
         } finally {
-            oMysql.desconexion();
+            //oMysql.desconexion();
         }
         return oBean;
     }
@@ -244,13 +246,13 @@ public abstract class GenericDaoImplementation<TIPO_OBJETO> implements GenericDa
         Class<TIPO_OBJETO> tipo = (Class<TIPO_OBJETO>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
         Method metodo_getId = tipo.getMethod("getId");
         try {
-            oMysql.conexion(enumTipoConexion);
+            //oMysql.conexion(enumTipoConexion);
             oMysql.removeOne((Integer) metodo_getId.invoke(oBean), strTabla);
-            oMysql.desconexion();
+            //oMysql.desconexion();
         } catch (Exception e) {
             throw new Exception("GenericDao.remove: Error: " + e.getMessage());
         } finally {
-            oMysql.desconexion();
+            //oMysql.desconexion();
         }
     }
 
@@ -258,15 +260,14 @@ public abstract class GenericDaoImplementation<TIPO_OBJETO> implements GenericDa
     public ArrayList<String> getColumnsNames() throws Exception {
         ArrayList<String> alColumns = null;
         try {
-            oMysql.conexion(enumTipoConexion);
-            alColumns = oMysql.getColumnsName(strTabla, Conexion.getDatabaseName());
+            //oMysql.conexion(enumTipoConexion);
+            alColumns = oMysql.getColumnsName(strTabla);
 
-            oMysql.desconexion();
-
+            //oMysql.desconexion();
         } catch (Exception e) {
             throw new Exception("GenericDao.getColumnsNames: Error: " + e.getMessage());
         } finally {
-            oMysql.desconexion();
+            //oMysql.desconexion();
         }
         return alColumns;
     }
@@ -275,13 +276,13 @@ public abstract class GenericDaoImplementation<TIPO_OBJETO> implements GenericDa
     public ArrayList<String> getPrettyColumnsNames() throws Exception {
         ArrayList<String> alColumns = null;
         try {
-            oMysql.conexion(enumTipoConexion);
+            //oMysql.conexion(enumTipoConexion);
             alColumns = oMysql.getPrettyColumns(strTabla);
-            oMysql.desconexion();
+            //oMysql.desconexion();
         } catch (Exception e) {
             throw new Exception("GenericDao.getPrettyColumnsNames: Error: " + e.getMessage());
         } finally {
-            oMysql.desconexion();
+            //oMysql.desconexion();
         }
         return alColumns;
     }

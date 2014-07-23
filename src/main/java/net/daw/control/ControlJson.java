@@ -7,8 +7,7 @@ package net.daw.control;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import java.io.IOException;
-import java.net.URLDecoder;
-import java.net.URLEncoder;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -18,12 +17,13 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.sql.DataSource;
 import net.daw.bean.GenericBeanImplementation;
 import net.daw.dao.GenericDaoImplementation;
-import net.daw.helper.EncodingUtil;
+import net.daw.helper.ConnectionSource;
 import net.daw.helper.FilterBean;
-import net.daw.helper.TextParser;
 import net.daw.process.GenericProcessInterface;
+import org.apache.commons.dbcp.BasicDataSource;
 
 /**
  *
@@ -41,6 +41,9 @@ public class ControlJson extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, Exception {
+
+        ConnectionSource.setupDataSource();
+        //----------------------------------------------------------------------
         //debug delay
         retardo(0);
 
@@ -51,6 +54,7 @@ public class ControlJson extends HttpServlet {
         String operacion = op;
         String datos = "";
         Gson gson = new GsonBuilder().setDateFormat("dd/MM/yyyy").create();
+
         GenericProcessInterface process = (GenericProcessInterface) Class.forName("net.daw.process." + objeto + "Process").newInstance();
         GenericBeanImplementation oBean = (GenericBeanImplementation) Class.forName("net.daw.bean." + objeto + "Bean").newInstance();
         GenericDaoImplementation oDao = (GenericDaoImplementation) Class.forName("net.daw.dao." + objeto + "Dao").newInstance();
@@ -65,12 +69,12 @@ public class ControlJson extends HttpServlet {
                     break;
                 case "getprettycolumns":
                     //oBean = (GenericBeanImplementation) oDao.get(oBean);
-                    datos = process.getPrettyColumns();
+                    datos = process.getPrettyColumns(objeto);
                     break;
                 case "getcolumns":
                     //oBean = (GenericBeanImplementation) oDao.get(oBean);
                     //datos = process.getColumns(oBean, oDao);
-                    datos = process.getColumns();
+                    datos = process.getColumns(objeto);
                     break;
                 case "getpage":
                 case "getpages":
@@ -163,7 +167,7 @@ public class ControlJson extends HttpServlet {
 
         request.setAttribute("contenido", datos);
         getServletContext().getRequestDispatcher("/jsp/messageAjax.jsp").forward(request, response);
-
+        
     }
 
 // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -183,6 +187,12 @@ public class ControlJson extends HttpServlet {
 
         } catch (Exception ex) {
             Logger.getLogger(ControlJson.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                ConnectionSource.shutdownDataSource();
+            } catch (SQLException ex) {
+                Logger.getLogger(ControlJson.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
 
     }
@@ -202,8 +212,13 @@ public class ControlJson extends HttpServlet {
             processRequest(request, response);
 
         } catch (Exception ex) {
-            Logger.getLogger(ControlJson.class
-                    .getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ControlJson.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                ConnectionSource.shutdownDataSource();
+            } catch (SQLException ex) {
+                Logger.getLogger(ControlJson.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
 

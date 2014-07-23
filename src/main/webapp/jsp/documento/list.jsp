@@ -3,7 +3,8 @@
     Created on : Julio de 2014
     Author     : Rafa
 --%>
-<%@page import="net.daw.helper.Conexion"%>
+
+
 <%@page import="net.daw.dao.DocumentoDao"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.Iterator"%>
@@ -147,7 +148,7 @@
                     while (oIterador.hasNext()) {
                         String strNombreColumna = oIterador.next();
                         //String strNombreColumnaPretty = strNombreColumna.charAt(0) + strNombreColumna.substring(1);
-                %>
+%>
                 <label class="checkbox-inline">
                     <input type="checkbox" id="inlineCheckbox1"><%=strNombreColumna%></input>
                 </label>
@@ -160,5 +161,4 @@
             </div>
         </div>                
     </div>
-</div>
-
+</div>        

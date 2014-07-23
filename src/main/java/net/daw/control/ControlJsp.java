@@ -2,6 +2,7 @@ package net.daw.control;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -10,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import net.daw.bean.UsuarioBean;
 import net.daw.dao.UsuarioDao;
+import net.daw.helper.ConnectionSource;
 import net.daw.helper.Estado;
 import net.daw.helper.Estado.Tipo_estado;
 
@@ -33,11 +35,18 @@ public class ControlJsp extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, Exception {
+
+       ConnectionSource.setupDataSource();
+
+       
+        //----------------------------------------------------------------------
+
         //HTTP headers
         response.setHeader("page language", "java");
         response.setHeader("contentType", "text/html");
         response.setHeader("pageEncoding", "UTF-8");
         response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+
         //parameter loading
         String op = request.getParameter("op");
         String ob = request.getParameter("ob");
@@ -72,7 +81,7 @@ public class ControlJsp extends HttpServlet {
                     UsuarioDao oUsuarioDao = new UsuarioDao();
                     oUsuario = oUsuarioDao.getFromLogin(oUsuario);
                     if (oUsuario.getId() != 0) {
-                        oUsuario = oUsuarioDao.type(oUsuario); //fill user level
+                        //oUsuario = oUsuarioDao.type(oUsuario); //fill user level
                         request.getSession().setAttribute("usuarioBean", oUsuario);
                     }
                 }
@@ -89,6 +98,8 @@ public class ControlJsp extends HttpServlet {
             response.setContentType("text/html; charset=UTF-8");
             getServletContext().getRequestDispatcher("/jsp/" + ob + "/" + op + ".jsp").forward(request, response);
         }
+        
+
     }
 
 // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -105,11 +116,18 @@ public class ControlJsp extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (Exception ex) {
-             if (Estado.getTipo_estado() == Tipo_estado.Debug) {
+            if (Estado.getTipo_estado() == Tipo_estado.Debug) {
                 PrintWriter out = response.getWriter();
                 out.println("<html><body><h1>Application error</h1><strong>Message:</strong> " + ex + "<body></html>");
             } else {
                 Logger.getLogger(ControlJsp.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        } finally {
+            try {
+                ConnectionSource.shutdownDataSource();
+            } catch (SQLException ex) {
+                Logger.getLogger(ControlJson.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
@@ -127,11 +145,17 @@ public class ControlJsp extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (Exception ex) {
-             if (Estado.getTipo_estado() == Tipo_estado.Debug) {
+            if (Estado.getTipo_estado() == Tipo_estado.Debug) {
                 PrintWriter out = response.getWriter();
                 out.println("<html><body><h1>Application error</h1><strong>Message:</strong> " + ex + "<body></html>");
             } else {
                 Logger.getLogger(ControlJsp.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } finally {
+            try {
+                ConnectionSource.shutdownDataSource();
+            } catch (SQLException ex) {
+                Logger.getLogger(ControlJson.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }

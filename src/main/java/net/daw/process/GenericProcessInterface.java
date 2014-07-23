@@ -21,7 +21,7 @@ public interface GenericProcessInterface<OPERATION_BEAN, OPERATION_DAO> {
     //public String get(GenericBeanImplementation oBean, GenericDaoImplementation<GenericBeanImplementation> oDao) throws Exception;
 
     //public String getColumns(OPERATION_BEAN oBean, OPERATION_DAO oDao) throws Exception;
-    public String getColumns() throws Exception;
+    public String getColumns(String objeto) throws Exception;
 
     public String getRegisters(ArrayList<FilterBean> alFilter, OPERATION_DAO oDao) throws Exception;
 
@@ -35,9 +35,11 @@ public interface GenericProcessInterface<OPERATION_BEAN, OPERATION_DAO> {
 
     public String save(String jason, OPERATION_BEAN oBean, OPERATION_DAO oDao) throws Exception;
 
-    public String getList(int intRegsPerPag, int intPage, ArrayList<FilterBean> alFilter, HashMap<String, String> hmOrder, OPERATION_BEAN oBean, OPERATION_DAO oDao) throws Exception;
+//    public String getList(int intRegsPerPag, int intPage, ArrayList<FilterBean> alFilter, HashMap<String, String> hmOrder, OPERATION_BEAN oBean, OPERATION_DAO oDao) throws Exception;
 
-    public String getPrettyColumns() throws Exception;
+    public String getPrettyColumns(String objeto) throws Exception;
 
     //public String getTypes() throws Exception;
+
+    //public void setConnection(ConnectionClass oConexion);
 }

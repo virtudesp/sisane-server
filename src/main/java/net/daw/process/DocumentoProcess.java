@@ -5,9 +5,6 @@
  */
 package net.daw.process;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import java.util.ArrayList;
 import javax.servlet.ServletException;
 import net.daw.bean.DocumentoBean;
 import net.daw.bean.GenericBeanInterface;
@@ -18,6 +15,8 @@ import net.daw.dao.DocumentoDao;
  * @author rafa
  */
 public class DocumentoProcess extends GenericProcessImplementation<DocumentoBean, DocumentoDao> {
+
+
 
     public String getContenido(DocumentoBean oBean, DocumentoDao oDao) throws Exception {
         String data;
@@ -74,38 +73,8 @@ public class DocumentoProcess extends GenericProcessImplementation<DocumentoBean
 //            throw new ServletException("SaveJson: View Error: " + e.getMessage());
 //        }
 //    }
-    @Override
-    public String getPrettyColumns() throws Exception {
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        ArrayList<String> alColumns = null;
-        String data;
-        DocumentoDao oDocumentoDAO = new DocumentoDao();
-        DocumentoBean oDocumento = new DocumentoBean();
 
-        alColumns = oDocumentoDAO.getPrettyColumnsNames();
 
-        GsonBuilder gsonBuilder = new GsonBuilder();
 
-        Gson gson = gsonBuilder.create();
-        data = gson.toJson(alColumns);
-        return data;
-    }
-
-    @Override
-    public String getColumns() throws Exception {
-        ArrayList<String> alColumns = null;
-        String data;
-        DocumentoDao oDocumentoDAO = new DocumentoDao();
-        DocumentoBean oDocumento = new DocumentoBean();
-
-        alColumns = oDocumentoDAO.getColumnsNames();
-
-        GsonBuilder gsonBuilder = new GsonBuilder();
-
-        Gson gson = gsonBuilder.create();
-        data = gson.toJson(alColumns);
-
-        return data;
-    }
 
 }

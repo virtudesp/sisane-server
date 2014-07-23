@@ -15,22 +15,22 @@ public class UsuarioBean extends GenericBeanImplementation implements GenericBea
     private String login = "";
 @Expose
     private String password = "";
-@Expose
-    private Enum tipoUsuario = null;
+//@Expose
+//    private Enum tipoUsuario = null;
 
-    /**
-     * @return the tipoUsuario
-     */
-    public Enum getTipoUsuario() {
-        return tipoUsuario;
-    }
-
-    /**
-     * @param tipoUsuario the tipoUsuario to set
-     */
-    public void setTipoUsuario(Enum tipoUsuario) {
-        this.tipoUsuario = tipoUsuario;
-    }
+//    /**
+//     * @return the tipoUsuario
+//     */
+//    public Enum getTipoUsuario() {
+//        return tipoUsuario;
+//    }
+//
+//    /**
+//     * @param tipoUsuario the tipoUsuario to set
+//     */
+//    public void setTipoUsuario(Enum tipoUsuario) {
+//        this.tipoUsuario = tipoUsuario;
+//    }
 
     /**
      * @return the login
