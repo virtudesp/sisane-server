@@ -5,6 +5,8 @@
  */
 package net.daw.dao;
 
+import com.jolbox.bonecp.BoneCP;
+import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
@@ -32,12 +34,13 @@ public abstract class GenericDaoImplementation<TIPO_OBJETO> implements GenericDa
     //protected final Conexion.Tipo_conexion enumTipoConexion;
     protected final String strTabla;
 
+    Connection connection = null;
 
-
-
-    public GenericDaoImplementation(String tabla ) throws Exception {        
+    public GenericDaoImplementation(String tabla, Connection pooledConnection) throws Exception {
+        connection = pooledConnection;
         strTabla = tabla;
-        oMysql = new MysqlDataImplementation();                
+        oMysql = new MysqlDataImplementation();
+        oMysql.setPooledConnection(connection);
     }
 
     @Override
@@ -127,7 +130,10 @@ public abstract class GenericDaoImplementation<TIPO_OBJETO> implements GenericDa
                             String strAjena = method.getName().substring(3).toLowerCase(Locale.ENGLISH).substring(4);
                             Method metodo_getId_Ajena = tipo.getMethod("getId_" + strAjena);
                             strAjena = strAjena.substring(0, 1).toUpperCase(Locale.ENGLISH) + strAjena.substring(1);
-                            GenericDaoImplementation oAjenaDao = (GenericDaoImplementation) Class.forName("net.daw.dao." + strAjena + "Dao").newInstance();
+                            //GenericDaoImplementation oAjenaDao = (GenericDaoImplementation) Class.forName("net.daw.dao." + strAjena + "Dao").newInstance();
+
+                            Constructor c = Class.forName("net.daw.dao." + strAjena + "Dao").getConstructor(Connection.class);
+                            GenericDaoImplementation oAjenaDao = (GenericDaoImplementation) c.newInstance(connection);
 
                             GenericBeanImplementation oAjenaBean = (GenericBeanImplementation) Class.forName("net.daw.bean." + strAjena + "Bean").newInstance();
                             int intIdAjena = (Integer) metodo_getId_Ajena.invoke(oBean);

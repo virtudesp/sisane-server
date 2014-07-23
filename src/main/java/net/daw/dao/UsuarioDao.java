@@ -4,13 +4,8 @@
  */
 package net.daw.dao;
 
-import java.util.ArrayList;
-import net.daw.bean.AlumnoBean;
-import net.daw.bean.DocumentoBean;
-import net.daw.bean.EmpresaBean;
-import net.daw.bean.ProfesorBean;
+import java.sql.Connection;
 import net.daw.bean.UsuarioBean;
-import net.daw.helper.Enum;
 
 /**
  *
@@ -18,18 +13,18 @@ import net.daw.helper.Enum;
  */
 public class UsuarioDao extends GenericDaoImplementation<UsuarioBean> {
 
-    public UsuarioDao( ) throws Exception {
-        super("usuario");
+    public UsuarioDao(Connection pooledConnection) throws Exception {
+        super("usuario", pooledConnection);
     }
 
     public UsuarioBean getFromLogin(UsuarioBean oUsuario) throws Exception {
         try {
-            
+
             String strId = oMysql.getId("usuario", "login", oUsuario.getLogin());
             if (strId == null) {
                 oUsuario.setId(0);
             } else {
-                Integer intId= Integer.parseInt(strId);
+                Integer intId = Integer.parseInt(strId);
                 oUsuario.setId(intId);
                 String pass = oUsuario.getPassword();
                 oUsuario.setPassword(oMysql.getOne("usuario", "password", oUsuario.getId()));
@@ -37,7 +32,7 @@ public class UsuarioDao extends GenericDaoImplementation<UsuarioBean> {
                     oUsuario.setId(0);
                 }
             }
-           
+
             return oUsuario;
         } catch (Exception e) {
             throw new Exception("UsuarioDao.getFromLogin: Error: " + e.getMessage());
@@ -69,7 +64,6 @@ public class UsuarioDao extends GenericDaoImplementation<UsuarioBean> {
 //        }
 //        return oUsuarioBean;
 //    }
- 
 //    @Override
 //    public UsuarioBean get(UsuarioBean oUsuarioBean) throws Exception {
 //        if (oUsuarioBean.getId() > 0) {
@@ -106,5 +100,4 @@ public class UsuarioDao extends GenericDaoImplementation<UsuarioBean> {
 //        }
 //        return description;
 //    }
-    
 }

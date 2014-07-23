@@ -4,8 +4,8 @@
  */
 package net.daw.dao;
 
+import java.sql.Connection;
 import net.daw.bean.DocumentoBean;
-
 
 /**
  *
@@ -13,8 +13,8 @@ import net.daw.bean.DocumentoBean;
  */
 public class DocumentoDao extends GenericDaoImplementation<DocumentoBean> {
 
-    public DocumentoDao() throws Exception {
-        super("documento");
+    public DocumentoDao(Connection pooledConnection) throws Exception {
+        super("documento", pooledConnection);
     }
 
 //    @Override
@@ -31,7 +31,4 @@ public class DocumentoDao extends GenericDaoImplementation<DocumentoBean> {
 //        description += " (" + oDocumentoBean.getHits().toString() + " hits)";
 //        return description;
 //    }
-
-
-
 }

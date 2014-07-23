@@ -19,35 +19,37 @@ import net.daw.helper.FilterBean;
 
 public class MysqlDataImplementation implements GenericDataInterface {
 
-    
+    Connection connection = null;
 
-
+    @Override
+    public void setPooledConnection(Connection pooledConnection) throws Exception {
+        connection = pooledConnection;
+    }
 
     @Override
     public void removeOne(int intId, String strTabla) throws Exception {
-        Connection conexion = ConnectionSource.getDataSource().getConnection();
+
         Statement oStatement = null;
         try {
-            oStatement = (Statement) conexion.createStatement();
+            oStatement = (Statement) connection.createStatement();
             String strSQL = "DELETE FROM " + strTabla + " WHERE id = " + intId;
             oStatement.executeUpdate(strSQL);
         } catch (SQLException e) {
             throw new Exception("mysql.deleteOne: Error al eliminar el registro: " + e.getMessage());
-        }finally {
+        } finally {
             oStatement.close();
-            conexion.close();
         }
     }
 
     @Override
     public int insertOne(String strTabla) throws Exception {
-        Connection conexion = ConnectionSource.getDataSource().getConnection();
+
         ResultSet oResultSet;
         java.sql.PreparedStatement oPreparedStatement = null;
         int id = 0;
         try {
             String strSQL = "INSERT INTO " + strTabla + " (id) VALUES (null) ";
-            oPreparedStatement = conexion.prepareStatement(strSQL, Statement.RETURN_GENERATED_KEYS);
+            oPreparedStatement = connection.prepareStatement(strSQL, Statement.RETURN_GENERATED_KEYS);
             int returnLastInsertId = oPreparedStatement.executeUpdate();
             if (returnLastInsertId != -1) {
                 oResultSet = oPreparedStatement.getGeneratedKeys();
@@ -57,51 +59,51 @@ public class MysqlDataImplementation implements GenericDataInterface {
             return id;
         } catch (SQLException e) {
             throw new Exception("mysql.insertOne: Error al insertar el registro: " + e.getMessage());
-        }finally {
+        } finally {
             oPreparedStatement.close();
-            conexion.close();
+
         }
     }
 
     @Override
     public void setNull(int intId, String strTabla, String strCampo) throws Exception {
-        Connection conexion = ConnectionSource.getDataSource().getConnection();
+
         Statement oStatement = null;
         try {
-            oStatement = (Statement) conexion.createStatement();
+            oStatement = (Statement) connection.createStatement();
             String strSQL = "UPDATE " + strTabla + " SET " + strCampo + " = null WHERE id = " + Integer.toString(intId);
             oStatement.executeUpdate(strSQL);
         } catch (SQLException e) {
             throw new Exception("mysql.setNull: Error al modificar el registro: " + e.getMessage());
-        }finally {
+        } finally {
             oStatement.close();
-            conexion.close();
+
         }
     }
 
     @Override
     public void updateOne(int intId, String strTabla, String strCampo, String strValor) throws Exception {
-        Connection conexion = ConnectionSource.getDataSource().getConnection();
+
         Statement oStatement = null;
         try {
-            oStatement = (Statement) conexion.createStatement();
+            oStatement = (Statement) connection.createStatement();
             String strSQL = "UPDATE " + strTabla + " SET " + strCampo + " = '" + strValor + "' WHERE id = " + Integer.toString(intId);
             oStatement.executeUpdate(strSQL);
         } catch (SQLException e) {
             throw new Exception("mysql.updateOne: Error al modificar el registro: " + e.getMessage());
-        }finally {
+        } finally {
             oStatement.close();
-            conexion.close();
+
         }
     }
 
     @Override
     public String getId(String strTabla, String strCampo, String strValor) throws Exception {
-        Connection conexion = ConnectionSource.getDataSource().getConnection();
+
         Statement oStatement = null;
         ResultSet oResultSet;
         try {
-            oStatement = (Statement) conexion.createStatement();
+            oStatement = (Statement) connection.createStatement();
             String strSQL = "SELECT id FROM " + strTabla + " WHERE " + strCampo + "='" + strValor + "'";
             oResultSet = oStatement.executeQuery(strSQL);
             if (oResultSet.next()) {
@@ -111,19 +113,19 @@ public class MysqlDataImplementation implements GenericDataInterface {
             }
         } catch (SQLException ex) {
             throw new Exception("mysql.getId: No se ha podido realizar la consulta: " + ex.getMessage());
-        }finally {
+        } finally {
             oStatement.close();
-            conexion.close();
+
         }
     }
 
     @Override
     public String getOne(String strTabla, String strCampo, int id) throws Exception {
-        Connection conexion = ConnectionSource.getDataSource().getConnection();
+
         Statement oStatement = null;
         ResultSet oResultSet;
         try {
-            oStatement = (Statement) conexion.createStatement();
+            oStatement = (Statement) connection.createStatement();
             String strSQL = "SELECT " + strCampo + " FROM " + strTabla + " WHERE id=" + Integer.toString(id);
             oResultSet = oStatement.executeQuery(strSQL);
             if (oResultSet.next()) {
@@ -134,19 +136,19 @@ public class MysqlDataImplementation implements GenericDataInterface {
 
         } catch (SQLException ex) {
             throw new Exception("mysql.getOne: No se ha podido realizar la consulta: " + ex.getMessage());
-        }finally {
+        } finally {
             oStatement.close();
-            conexion.close();
+
         }
     }
 
     @Override
     public Boolean existsOne(String strTabla, int id) throws Exception {
-        Connection conexion = ConnectionSource.getDataSource().getConnection();
+
         int result = 0;
         Statement oStatement = null;
         try {
-            oStatement = (Statement) conexion.createStatement();
+            oStatement = (Statement) connection.createStatement();
             String strSQL = "SELECT count(*) FROM " + strTabla + " WHERE 1=1";
             ResultSet rs = oStatement.executeQuery(strSQL);
             while (rs.next()) {
@@ -155,19 +157,19 @@ public class MysqlDataImplementation implements GenericDataInterface {
             return (result > 0);
         } catch (SQLException e) {
             throw new Exception("mysql.existsOne: Error en la consulta: " + e.getMessage());
-        }finally {
+        } finally {
             oStatement.close();
-            conexion.close();
+
         }
     }
 
     @Override
     public int getPages(String strTabla, int intRegsPerPage, ArrayList<FilterBean> alFilter) throws Exception {
-        Connection conexion = ConnectionSource.getDataSource().getConnection();
+
         int intResult = 0;
         Statement oStatement = null;
         try {
-            oStatement = (Statement) conexion.createStatement();
+            oStatement = (Statement) connection.createStatement();
             String strSQL = "SELECT count(*) FROM " + strTabla + " WHERE 1=1";
             if (alFilter != null) {
                 Iterator iterator = alFilter.iterator();
@@ -221,19 +223,19 @@ public class MysqlDataImplementation implements GenericDataInterface {
             return intResult;
         } catch (SQLException e) {
             throw new Exception("mysql.getPages: Error en la consulta: " + e.getMessage());
-        }finally {
+        } finally {
             oStatement.close();
-            conexion.close();
+
         }
     }
 
     @Override
     public int getCount(String strTabla, ArrayList<FilterBean> alFilter) throws Exception {
-        Connection conexion = ConnectionSource.getDataSource().getConnection();
+
         int intResult = 0;
         Statement oStatement = null;
         try {
-            oStatement = (Statement) conexion.createStatement();
+            oStatement = (Statement) connection.createStatement();
             String strSQL = "SELECT count(*) FROM " + strTabla + " WHERE 1=1";
             if (alFilter != null) {
                 Iterator iterator = alFilter.iterator();
@@ -274,9 +276,9 @@ public class MysqlDataImplementation implements GenericDataInterface {
             return intResult;
         } catch (SQLException e) {
             throw new Exception("mysql.getCount: Error en la consulta: " + e.getMessage());
-        }finally {
+        } finally {
             oStatement.close();
-            conexion.close();
+
         }
     }
 
@@ -315,21 +317,19 @@ public class MysqlDataImplementation implements GenericDataInterface {
 //            conexion.close();
 //        }
 //    }
-
     @Override
 
     public ArrayList<String> getColumnsName(String strTabla) throws Exception {
-        Connection conexion = ConnectionSource.getDataSource().getConnection();
+
         Statement oStatement = null;
         try {
             ArrayList<String> vector = new ArrayList<>();
 
-     
-            oStatement = conexion.createStatement();
+            oStatement = connection.createStatement();
             //String strSQL = "SELECT id FROM " + strTabla + " WHERE 1=1 ";
             String strSQL = "SHOW FULL COLUMNS FROM " + strTabla;
             ResultSet oResultSet = oStatement.executeQuery(strSQL);
-            while (oResultSet.next()) {                                
+            while (oResultSet.next()) {
                 if (oResultSet.getString("Field").length() >= 4) {
                     if (oResultSet.getString("Field").substring(0, 3).equalsIgnoreCase("id_")) {
                         vector.add("obj_" + oResultSet.getString("Field").substring(3));
@@ -338,28 +338,25 @@ public class MysqlDataImplementation implements GenericDataInterface {
                     }
                 } else {
                     vector.add(oResultSet.getString("Field"));
-                }                               
+                }
             }
             return vector;
         } catch (SQLException e) {
             throw new Exception("mysql.getColumnsName: Error en la consulta: " + e.getMessage());
-        }finally {
+        } finally {
             oStatement.close();
-            conexion.close();
+
         }
     }
-    
-    
-    
+
     @Override
     public ArrayList<String> getPrettyColumns(String strTabla) throws Exception {
-        Connection conexion = ConnectionSource.getDataSource().getConnection();
+
         Statement oStatement = null;
         try {
             ArrayList<String> vector = new ArrayList<>();
 
-     
-            oStatement = conexion.createStatement();
+            oStatement = connection.createStatement();
             //String strSQL = "SELECT id FROM " + strTabla + " WHERE 1=1 ";
             String strSQL = "SHOW FULL COLUMNS FROM " + strTabla;
             ResultSet oResultSet = oStatement.executeQuery(strSQL);
@@ -376,21 +373,21 @@ public class MysqlDataImplementation implements GenericDataInterface {
             return vector;
         } catch (SQLException e) {
             throw new Exception("mysql.getPrettyColumns: Error en la consulta: " + e.getMessage());
-        }finally {
+        } finally {
             oStatement.close();
-            conexion.close();
+
         }
     }
 
     @Override
     public ArrayList<Integer> getPage(String strTabla, int intRegsPerPage, int intPagina, ArrayList<FilterBean> alFilter, HashMap<String, String> hmOrder) throws Exception {
-        Connection conexion = ConnectionSource.getDataSource().getConnection();
+
         Statement oStatement = null;
         try {
             ArrayList<Integer> vector = new ArrayList<>();
             int intOffset;
-           
-            oStatement = (Statement) conexion.createStatement();
+
+            oStatement = (Statement) connection.createStatement();
             intOffset = Math.max(((intPagina - 1) * intRegsPerPage), 0);
             String strSQL = "SELECT id FROM " + strTabla + " WHERE 1=1 ";
             if (alFilter != null) {
@@ -440,9 +437,9 @@ public class MysqlDataImplementation implements GenericDataInterface {
             return vector;
         } catch (SQLException e) {
             throw new Exception("mysql.getPage: Error en la consulta: " + e.getMessage());
-        }finally {
+        } finally {
             oStatement.close();
-            conexion.close();
+
         }
     }
 }

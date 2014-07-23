@@ -1,5 +1,7 @@
 package net.daw.control;
 
+import com.jolbox.bonecp.BoneCP;
+import com.jolbox.bonecp.BoneCPConfig;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -36,69 +38,92 @@ public class ControlJsp extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, Exception {
 
-       ConnectionSource.setupDataSource();
+        BoneCP connectionPool = null;
+        try {
 
-       
-        //----------------------------------------------------------------------
+            try {
+                Class.forName("com.mysql.jdbc.Driver");
+            } catch (Exception e) {
+                e.printStackTrace();
+                return;
+            }
+            BoneCPConfig config = new BoneCPConfig();
+            config.setJdbcUrl("jdbc:mysql://127.0.0.1:3306/ausiaxContent");
+            config.setUsername("root");
+            config.setPassword("bitnami");
+            config.setMinConnectionsPerPartition(5);
+            config.setMaxConnectionsPerPartition(10);
+            config.setPartitionCount(1);
+            connectionPool = new BoneCP(config); // setup the connection pool
 
-        //HTTP headers
-        response.setHeader("page language", "java");
-        response.setHeader("contentType", "text/html");
-        response.setHeader("pageEncoding", "UTF-8");
-        response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+            //----------------------------------------------------------------------
+            //HTTP headers
+            response.setHeader("page language", "java");
+            response.setHeader("contentType", "text/html");
+            response.setHeader("pageEncoding", "UTF-8");
+            response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
 
-        //parameter loading
-        String op = request.getParameter("op");
-        String ob = request.getParameter("ob");
-        String mode = request.getParameter("mode");
-        //load default values
-        if (op == null) {
-            op = "inicio";
-        }
-        if (ob == null) {
-            ob = "usuario";
-        }
-        if (mode == null) {
-            mode = "wrappered";
-        }
-        //security check
-        if (request.getSession().getAttribute("usuarioBean") == null) {
-            ob = "usuario";
-            if (!op.equals("inicio") && !op.equals("login02")) {
-                op = "login01";
+            //parameter loading
+            String op = request.getParameter("op");
+            String ob = request.getParameter("ob");
+            String mode = request.getParameter("mode");
+            //load default values
+            if (op == null) {
+                op = "inicio";
+            }
+            if (ob == null) {
+                ob = "usuario";
+            }
+            if (mode == null) {
                 mode = "wrappered";
             }
-        }
-        //login & logout management
-        if (ob.equalsIgnoreCase("usuario")) {
-            if (op.equalsIgnoreCase("login02")) {
-                UsuarioBean oUsuario = new UsuarioBean();
-                String login = request.getParameter("login");
-                String pass = request.getParameter("password");
-                if (!login.equals("") && !pass.equals("")) {
-                    oUsuario.setLogin(login);
-                    oUsuario.setPassword(pass);
-                    UsuarioDao oUsuarioDao = new UsuarioDao();
-                    oUsuario = oUsuarioDao.getFromLogin(oUsuario);
-                    if (oUsuario.getId() != 0) {
-                        //oUsuario = oUsuarioDao.type(oUsuario); //fill user level
-                        request.getSession().setAttribute("usuarioBean", oUsuario);
-                    }
+            //security check
+            if (request.getSession().getAttribute("usuarioBean") == null) {
+                ob = "usuario";
+                if (!op.equals("inicio") && !op.equals("login02")) {
+                    op = "login01";
+                    mode = "wrappered";
                 }
             }
-            if (op.equalsIgnoreCase("logout")) {
-                request.getSession().invalidate();
+            //login & logout management
+            if (ob.equalsIgnoreCase("usuario")) {
+                if (op.equalsIgnoreCase("login02")) {
+                    UsuarioBean oUsuario = new UsuarioBean();
+                    String login = request.getParameter("login");
+                    String pass = request.getParameter("password");
+                    if (!login.equals("") && !pass.equals("")) {
+                        oUsuario.setLogin(login);
+                        oUsuario.setPassword(pass);
+                        UsuarioDao oUsuarioDao = new UsuarioDao(connectionPool.getConnection());
+
+                
+
+                        oUsuario = oUsuarioDao.getFromLogin(oUsuario);
+                        if (oUsuario.getId() != 0) {
+                            //oUsuario = oUsuarioDao.type(oUsuario); //fill user level
+                            request.getSession().setAttribute("usuarioBean", oUsuario);
+                        }
+                    }
+                }
+                if (op.equalsIgnoreCase("logout")) {
+                    request.getSession().invalidate();
+                }
             }
+            //delivering jsp page
+            if ("wrappered".equals(mode)) {
+                request.setAttribute("contenido", "jsp/" + ob + "/" + op + ".jsp");
+                request.setAttribute("connection", connectionPool.getConnection());
+                getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
+            } else {
+                response.setContentType("text/html; charset=UTF-8");
+                request.setAttribute("connection", connectionPool.getConnection());
+                getServletContext().getRequestDispatcher("/jsp/" + ob + "/" + op + ".jsp").forward(request, response);
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(ControlJson.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            connectionPool.close();
         }
-        //delivering jsp page
-        if ("wrappered".equals(mode)) {
-            request.setAttribute("contenido", "jsp/" + ob + "/" + op + ".jsp");
-            getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
-        } else {
-            response.setContentType("text/html; charset=UTF-8");
-            getServletContext().getRequestDispatcher("/jsp/" + ob + "/" + op + ".jsp").forward(request, response);
-        }
-        
 
     }
 
@@ -123,13 +148,7 @@ public class ControlJsp extends HttpServlet {
                 Logger.getLogger(ControlJsp.class.getName()).log(Level.SEVERE, null, ex);
             }
 
-        } finally {
-            try {
-                ConnectionSource.shutdownDataSource();
-            } catch (SQLException ex) {
-                Logger.getLogger(ControlJson.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
+        } 
     }
 
     /**
@@ -151,13 +170,7 @@ public class ControlJsp extends HttpServlet {
             } else {
                 Logger.getLogger(ControlJsp.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } finally {
-            try {
-                ConnectionSource.shutdownDataSource();
-            } catch (SQLException ex) {
-                Logger.getLogger(ControlJson.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
+        } 
     }
 
     /**

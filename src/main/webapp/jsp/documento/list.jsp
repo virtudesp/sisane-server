@@ -5,14 +5,17 @@
 --%>
 
 
+<%@page import="java.sql.Connection"%>
 <%@page import="net.daw.dao.DocumentoDao"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.Iterator"%>
 <%
-    DocumentoDao oDocumentoDao_Mysql = new DocumentoDao();
+    
     ArrayList<String> alColumnsNames;
     Iterator<String> oIterador;
     String strNombreMantenimiento = "documento";
+    Connection connection = (Connection) request.getAttribute("connection");
+    DocumentoDao oDocumentoDao = new DocumentoDao(connection);
 %>
 
 <div class="row">
@@ -29,7 +32,7 @@
                     <form class="navbar-form navbar-right" role="form" action="Controller" method="post" id="empresaForm">
                         <select style="width:160px;" id="selectFilter" class="form-control" name="filter" width="80" style="width: 100px">
                             <%
-                                alColumnsNames = oDocumentoDao_Mysql.getColumnsNames();
+                                alColumnsNames = oDocumentoDao.getColumnsNames();
                                 oIterador = alColumnsNames.listIterator();
                                 while (oIterador.hasNext()) {
                                     String strNombreColumna = oIterador.next();
@@ -143,12 +146,12 @@
             </div>
             <div class="modal-body">
                 <%
-                    alColumnsNames = oDocumentoDao_Mysql.getPrettyColumnsNames();
+                    alColumnsNames = oDocumentoDao.getPrettyColumnsNames();
                     oIterador = alColumnsNames.listIterator();
                     while (oIterador.hasNext()) {
                         String strNombreColumna = oIterador.next();
                         //String strNombreColumnaPretty = strNombreColumna.charAt(0) + strNombreColumna.substring(1);
-%>
+                %>
                 <label class="checkbox-inline">
                     <input type="checkbox" id="inlineCheckbox1"><%=strNombreColumna%></input>
                 </label>

@@ -4,6 +4,7 @@
  */
 package net.daw.data;
 
+import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.HashMap;
 import net.daw.helper.FilterBean;
@@ -13,6 +14,8 @@ import net.daw.helper.FilterBean;
  * @author rafa
  */
 public interface GenericDataInterface {
+
+    public void setPooledConnection(Connection pooledConnection) throws Exception;
 
     public void removeOne(int intId, String strTabla) throws Exception;
 
@@ -35,7 +38,7 @@ public interface GenericDataInterface {
     public ArrayList<Integer> getPage(String strTabla, int intRegsPerPage, int intPagina, ArrayList<FilterBean> alFilter, HashMap<String, String> hmOrder) throws Exception;
 
     public ArrayList<String> getColumnsName(String strTabla) throws Exception;
-    
+
     public ArrayList<String> getPrettyColumns(String strTabla) throws Exception;
 
 }

@@ -18,7 +18,7 @@
 package net.daw.helper;
 
 import java.sql.SQLException;
-import org.apache.commons.dbcp.BasicDataSource;
+
 
 /**
  *
@@ -26,35 +26,35 @@ import org.apache.commons.dbcp.BasicDataSource;
  */
 public class ConnectionSource {
 
-    private static BasicDataSource dataSource;
-
-    public static BasicDataSource getDataSource() {
-        return dataSource;
-    }
-
-    public static void setupDataSource() {
-        BasicDataSource basicDataSource = new BasicDataSource();
-        basicDataSource.setDriverClassName("com.mysql.jdbc.Driver");
-        basicDataSource.setUsername("root");
-        basicDataSource.setPassword("bitnami");
-        basicDataSource.setUrl("jdbc:mysql://localhost:3306/ausiaxContent");
-        basicDataSource.setValidationQuery("select 1");
-        basicDataSource.setMaxActive(100);
-        basicDataSource.setMaxWait(10000);
-        basicDataSource.setMaxIdle(10);
-        dataSource = basicDataSource;
-    }
-
-
-
-    public static void printDataSourceStats() {
-
-        System.out.println("NumActive: " + dataSource.getNumActive());
-        System.out.println("NumIdle: " + dataSource.getNumIdle());
-    }
-
-    public static void shutdownDataSource() throws SQLException {
-
-        dataSource.close();
-    }
+//    private static BasicDataSource dataSource;
+//
+//    public static BasicDataSource getDataSource() {
+//        return dataSource;
+//    }
+//
+//    public static void setupDataSource() {
+//        BasicDataSource basicDataSource = new BasicDataSource();
+//        basicDataSource.setDriverClassName("com.mysql.jdbc.Driver");
+//        basicDataSource.setUsername("root");
+//        basicDataSource.setPassword("bitnami");
+//        basicDataSource.setUrl("jdbc:mysql://localhost:3306/ausiaxContent");
+//        basicDataSource.setValidationQuery("select 1");
+//        basicDataSource.setMaxActive(100);
+//        basicDataSource.setMaxWait(10000);
+//        basicDataSource.setMaxIdle(10);
+//        dataSource = basicDataSource;
+//    }
+//
+//
+//
+//    public static void printDataSourceStats() {
+//
+//        System.out.println("NumActive: " + dataSource.getNumActive());
+//        System.out.println("NumIdle: " + dataSource.getNumIdle());
+//    }
+//
+//    public static void shutdownDataSource() throws SQLException {
+//
+//        dataSource.close();
+//    }
 }

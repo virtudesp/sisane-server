@@ -7,15 +7,15 @@ package net.daw.process;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.jolbox.bonecp.BoneCP;
 import java.lang.reflect.Constructor;
+import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.servlet.ServletException;
-import net.daw.bean.DocumentoBean;
 import net.daw.bean.GenericBeanInterface;
-import net.daw.dao.DocumentoDao;
 import net.daw.dao.GenericDaoImplementation;
 import net.daw.dao.GenericDaoInterface;
 
@@ -30,13 +30,24 @@ import net.daw.helper.FilterBean;
  */
 public abstract class GenericProcessImplementation<OPERATION_BEAN, OPERATION_DAO> implements GenericProcessInterface<OPERATION_BEAN, OPERATION_DAO> {
 
+    BoneCP connectionPool =null;
+    
+    @Override
+    public void setConnectionPool(BoneCP pool)throws Exception {
+        connectionPool=pool;
+    }
+    
     @Override
     public String getPrettyColumns(String objeto) throws Exception {
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
 
-        Constructor c = Class.forName("net.daw.dao." + objeto + "Dao").getConstructor();
-        GenericDaoImplementation oDao = (GenericDaoImplementation) c.newInstance();
+     
+        
+        Constructor c = Class.forName("net.daw.dao." + objeto + "Dao").getConstructor(Connection.class);
+        GenericDaoImplementation oDao = (GenericDaoImplementation) c.newInstance(connectionPool.getConnection());
 
+        
+        
         ArrayList<String> alColumns = null;
         String data;
 
@@ -52,9 +63,11 @@ public abstract class GenericProcessImplementation<OPERATION_BEAN, OPERATION_DAO
     @Override
     public String getColumns(String objeto) throws Exception {
 
-        Constructor c = Class.forName("net.daw.dao." + objeto + "Dao").getConstructor();
-        GenericDaoImplementation oDao = (GenericDaoImplementation) c.newInstance();
+        Constructor c = Class.forName("net.daw.dao." + objeto + "Dao").getConstructor(Connection.class);
+        GenericDaoImplementation oDao = (GenericDaoImplementation) c.newInstance(connectionPool.getConnection());
 
+      
+        
         ArrayList<String> alColumns = null;
         String data;
 
@@ -76,6 +89,8 @@ public abstract class GenericProcessImplementation<OPERATION_BEAN, OPERATION_DAO
             GenericBeanInterface oGenericBean = (GenericBeanInterface) oBean;
             GenericDaoInterface oGenericDao = (GenericDaoInterface) oDao;
 
+            
+            
             oGenericBean = (GenericBeanInterface) oGenericDao.get(oGenericBean);
 
 //            Class<OPERATION_BEAN> tipoBean = (Class<OPERATION_BEAN>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
@@ -130,6 +145,9 @@ public abstract class GenericProcessImplementation<OPERATION_BEAN, OPERATION_DAO
         try {
             GenericBeanInterface oGenericBean = (GenericBeanInterface) oBean;
             GenericDaoInterface oGenericDao = (GenericDaoInterface) oDao;
+            
+          
+            
             List<GenericBeanInterface> loGenericBean = oGenericDao.getPage(intRegsPerPag, intPage, alFilter, hmOrder);
             GsonBuilder gsonBuilder = new GsonBuilder();
             gsonBuilder.setDateFormat("dd/MM/yyyy");
@@ -147,6 +165,9 @@ public abstract class GenericProcessImplementation<OPERATION_BEAN, OPERATION_DAO
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         try {
             GenericDaoInterface oGenericDao = (GenericDaoInterface) oDao;
+            
+         
+            
             int pages = oGenericDao.getPages(intRegsPerPag, alFilter);
             String data = "{\"data\":\"" + Integer.toString(pages) + "\"}";
             return data;
@@ -161,6 +182,9 @@ public abstract class GenericProcessImplementation<OPERATION_BEAN, OPERATION_DAO
         try {
             GenericBeanInterface oGenericBean = (GenericBeanInterface) oBean;
             GenericDaoInterface oGenericDao = (GenericDaoInterface) oDao;
+            
+          
+            
             Map<String, String> data = new HashMap<>();
             if (oGenericBean != null) {
                 oGenericDao.remove(oGenericBean);
@@ -187,6 +211,8 @@ public abstract class GenericProcessImplementation<OPERATION_BEAN, OPERATION_DAO
             GenericBeanInterface oGenericBean = (GenericBeanInterface) oBean;
             GenericDaoInterface oGenericDao = (GenericDaoInterface) oDao;
 //
+           
+            
             Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
 //
 //            oGenericBean = gson.fromJson(jason, oGenericBean.getClass());
@@ -212,6 +238,9 @@ public abstract class GenericProcessImplementation<OPERATION_BEAN, OPERATION_DAO
     public String getRegisters(ArrayList<FilterBean> alFilter, OPERATION_DAO oDao) throws Exception {
         try {
             GenericDaoInterface oGenericDao = (GenericDaoInterface) oDao;
+            
+          
+            
             int registers = oGenericDao.getCount(alFilter);
             String data = "{\"data\":\"" + Integer.toString(registers) + "\"}";
             return data;

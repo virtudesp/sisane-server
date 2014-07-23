@@ -1,11 +1,13 @@
 package net.daw.dao;
 
+import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import net.daw.helper.FilterBean;
 
 public interface GenericDaoInterface<GenericBeanImplementation> {
+
 
     public int getPages(int intRegsPerPag, ArrayList<FilterBean> hmFilter) throws Exception;
 
@@ -24,6 +26,5 @@ public interface GenericDaoInterface<GenericBeanImplementation> {
     public ArrayList<String> getPrettyColumnsNames() throws Exception;
 
     //public String getDescription(int id) throws Exception;
-    
     //public void setConnection(ConnectionClass oConexion);
 }

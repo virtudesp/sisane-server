@@ -4,10 +4,8 @@
  */
 package net.daw.dao;
 
-import java.util.ArrayList;
-import net.daw.bean.DocumentoBean;
+import java.sql.Connection;
 import net.daw.bean.TipodocumentoBean;
-
 
 /**
  *
@@ -15,8 +13,8 @@ import net.daw.bean.TipodocumentoBean;
  */
 public class TipodocumentoDao extends GenericDaoImplementation<TipodocumentoBean> {
 
-    public TipodocumentoDao() throws Exception {
-        super("tipodocumento");
+    public TipodocumentoDao(Connection pooledConnection) throws Exception {
+        super("tipodocumento", pooledConnection);
     }
 
 }

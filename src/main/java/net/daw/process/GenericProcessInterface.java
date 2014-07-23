@@ -5,6 +5,7 @@
  */
 package net.daw.process;
 
+import com.jolbox.bonecp.BoneCP;
 import java.util.ArrayList;
 import java.util.HashMap;
 import net.daw.helper.FilterBean;
@@ -17,6 +18,9 @@ import net.daw.helper.FilterBean;
  */
 public interface GenericProcessInterface<OPERATION_BEAN, OPERATION_DAO> {
 
+    public void setConnectionPool(BoneCP pool)throws Exception;
+    
+    
     public String get(OPERATION_BEAN oBean, OPERATION_DAO oDao) throws Exception;
     //public String get(GenericBeanImplementation oBean, GenericDaoImplementation<GenericBeanImplementation> oDao) throws Exception;
 
