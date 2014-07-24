@@ -1,36 +1,31 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Copyright (C) July 2014 Rafael Aznar
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-package net.daw.operation;
 
+package net.daw.operation;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import net.daw.helper.FilterBean;
 
-/**
- *
- * @author raznara
- * @param <OPERATION_BEAN>
- * @param <OPERATION_DAO>
- */
 public interface GenericOperationInterface {
 
-    //public void setConnectionPool(Connection c)throws Exception;
-    
-    
     public String get(Integer id) throws Exception;
-    //public String get(GenericBeanImplementation oBean, GenericDaoImplementation<GenericBeanImplementation> oDao) throws Exception;
 
-    //public String getColumns(OPERATION_BEAN oBean, OPERATION_DAO oDao) throws Exception;
-    public String getColumns() throws Exception;
-
-    public String getRegisters(ArrayList<FilterBean> alFilter) throws Exception;
-
-    //el columns va a llevar además el pretty columns y las validaciones de cliente    
-    //pte utilizar objeto bean page
     public String getPage(int intRegsPerPag, int intPage, ArrayList<FilterBean> alFilter, HashMap<String, String> hmOrder) throws Exception;
 
     public String getPages(int intRegsPerPag, ArrayList<FilterBean> alFilter) throws Exception;
@@ -39,11 +34,10 @@ public interface GenericOperationInterface {
 
     public String save(String jason) throws Exception;
 
-//    public String getList(int intRegsPerPag, int intPage, ArrayList<FilterBean> alFilter, HashMap<String, String> hmOrder, OPERATION_BEAN oBean, OPERATION_DAO oDao) throws Exception;
+    public String getColumns() throws Exception;
+
+    public String getCount(ArrayList<FilterBean> alFilter) throws Exception;
 
     public String getPrettyColumns() throws Exception;
 
-    //public String getTypes() throws Exception;
-
-    //public void setConnection(ConnectionClass oConexion);
 }

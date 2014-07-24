@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 rafa
+ * Copyright (C) July 2014 Rafael Aznar
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -25,10 +25,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import net.daw.helper.ConnectionClass;
 
-/**
- *
- * @author rafa
- */
 public class BoneConectionPoolImpl implements GenericConnectionInterface {
 
     private BoneCP connectionPool = null;
@@ -48,9 +44,8 @@ public class BoneConectionPoolImpl implements GenericConnectionInterface {
         } catch (SQLException ex) {
             Logger.getLogger(BoneConectionPoolImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
-
         try {
-            c= connectionPool.getConnection();
+            c = connectionPool.getConnection();
         } catch (SQLException ex) {
             Logger.getLogger(BoneConectionPoolImpl.class.getName()).log(Level.SEVERE, null, ex);
         }

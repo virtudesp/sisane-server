@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 rafa
+ * Copyright (C) July 2014 Rafael Aznar
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -19,10 +19,6 @@ package net.daw.bean;
 
 import com.google.gson.annotations.Expose;
 
-/**
- *
- * @author rafa
- */
 public class GenericBeanImpl implements GenericBeanInterface {
 
     @Expose

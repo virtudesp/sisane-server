@@ -1,10 +1,22 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Copyright (C) July 2014 Rafael Aznar
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-package net.daw.dao;
 
+package net.daw.dao;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -21,16 +33,9 @@ import net.daw.data.MysqlDataImpl;
 
 import net.daw.helper.FilterBean;
 
-/**
- *
- * @author rafa
- * @param <TIPO_OBJETO>
- *
- */
 public abstract class GenericDaoImpl<TIPO_OBJETO> implements GenericDaoInterface<TIPO_OBJETO> {
 
     protected final MysqlDataImpl oMysql;
-    //protected final Conexion.Tipo_conexion enumTipoConexion;
     protected final String strTabla;
     protected Connection connection = null;
 
@@ -45,9 +50,7 @@ public abstract class GenericDaoImpl<TIPO_OBJETO> implements GenericDaoInterface
     public int getPages(int intRegsPerPag, ArrayList<FilterBean> hmFilter) throws Exception {
         int pages;
         try {
-            //oMysql.conexion(enumTipoConexion);
             pages = oMysql.getPages(strTabla, intRegsPerPag, hmFilter);
-            //oMysql.desconexion();
             return pages;
         } catch (Exception e) {
             throw new Exception("GenericDao.getPages: Error: " + e.getMessage());
@@ -58,9 +61,7 @@ public abstract class GenericDaoImpl<TIPO_OBJETO> implements GenericDaoInterface
     public int getCount(ArrayList<FilterBean> hmFilter) throws Exception {
         int pages;
         try {
-            //oMysql.conexion(enumTipoConexion);
             pages = oMysql.getCount(strTabla, hmFilter);
-            //oMysql.desconexion();
             return pages;
         } catch (Exception e) {
             throw new Exception("GenericDao.getCount: Error: " + e.getMessage());
@@ -75,7 +76,6 @@ public abstract class GenericDaoImpl<TIPO_OBJETO> implements GenericDaoInterface
         ArrayList<Integer> arrId;
         ArrayList<TIPO_OBJETO> arrCliente = new ArrayList<>();
         try {
-            //oMysql.conexion(enumTipoConexion);
             arrId = oMysql.getPage(strTabla, intRegsPerPag, intPage, hmFilter, hmOrder);
             Iterator<Integer> iterador = arrId.listIterator();
             while (iterador.hasNext()) {
@@ -83,7 +83,6 @@ public abstract class GenericDaoImpl<TIPO_OBJETO> implements GenericDaoInterface
                 metodo_setId.invoke(oBean, iterador.next());
                 arrCliente.add(this.get((TIPO_OBJETO) oBean));
             }
-            //oMysql.desconexion();
             return arrCliente;
         } catch (Exception e) {
             throw new Exception("GenericDao.getPage: Error: " + e.getMessage());
@@ -179,7 +178,6 @@ public abstract class GenericDaoImpl<TIPO_OBJETO> implements GenericDaoInterface
         Method metodo_setId = tipo.getMethod("setId", Integer.class);
         if ((Integer) metodo_getId.invoke(oBean) > 0) {
             try {
-                //oMysql.conexion(enumTipoConexion);
                 if (!oMysql.existsOne(strTabla, (Integer) metodo_getId.invoke(oBean))) {
                     metodo_setId.invoke(oBean, 0);
                 } else {
@@ -188,8 +186,6 @@ public abstract class GenericDaoImpl<TIPO_OBJETO> implements GenericDaoInterface
                 }
             } catch (Exception e) {
                 throw new Exception("GenericDao.get: Error: " + e.getMessage());
-            } finally {
-                //oMysql.desconexion();
             }
         } else {
             metodo_setId.invoke(oBean, 0);
@@ -204,8 +200,6 @@ public abstract class GenericDaoImpl<TIPO_OBJETO> implements GenericDaoInterface
         Method metodo_getId = tipo.getMethod("getId");
         Method metodo_setId = tipo.getMethod("setId", Integer.class);
         try {
-            //oMysql.conexion(enumTipoConexion);
-            //oMysql.initTrans();
             if ((Integer) metodo_getId.invoke(oBean) == 0) {
                 metodo_setId.invoke(oBean, oMysql.insertOne(strTabla));
             }
@@ -230,17 +224,12 @@ public abstract class GenericDaoImpl<TIPO_OBJETO> implements GenericDaoInterface
                             }
                             String strCampo = method.getName().substring(3).toLowerCase(Locale.ENGLISH);
                             oMysql.updateOne((Integer) metodo_getId.invoke(oBean), strTabla, strCampo, value);
-
                         }
                     }
                 }
             }
-            //oMysql.commitTrans();
         } catch (Exception e) {
-            //oMysql.rollbackTrans();
             throw new Exception("GenericDao.set: Error: " + e.getMessage());
-        } finally {
-            //oMysql.desconexion();
         }
         return oBean;
     }
@@ -250,13 +239,9 @@ public abstract class GenericDaoImpl<TIPO_OBJETO> implements GenericDaoInterface
         Class<TIPO_OBJETO> tipo = (Class<TIPO_OBJETO>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
         Method metodo_getId = tipo.getMethod("getId");
         try {
-            //oMysql.conexion(enumTipoConexion);
             oMysql.removeOne((Integer) metodo_getId.invoke(oBean), strTabla);
-            //oMysql.desconexion();
         } catch (Exception e) {
             throw new Exception("GenericDao.remove: Error: " + e.getMessage());
-        } finally {
-            //oMysql.desconexion();
         }
     }
 
@@ -264,14 +249,9 @@ public abstract class GenericDaoImpl<TIPO_OBJETO> implements GenericDaoInterface
     public ArrayList<String> getColumnsNames() throws Exception {
         ArrayList<String> alColumns = null;
         try {
-            //oMysql.conexion(enumTipoConexion);
             alColumns = oMysql.getColumnsName(strTabla);
-
-            //oMysql.desconexion();
         } catch (Exception e) {
             throw new Exception("GenericDao.getColumnsNames: Error: " + e.getMessage());
-        } finally {
-            //oMysql.desconexion();
         }
         return alColumns;
     }
@@ -280,13 +260,9 @@ public abstract class GenericDaoImpl<TIPO_OBJETO> implements GenericDaoInterface
     public ArrayList<String> getPrettyColumnsNames() throws Exception {
         ArrayList<String> alColumns = null;
         try {
-            //oMysql.conexion(enumTipoConexion);
             alColumns = oMysql.getPrettyColumns(strTabla);
-            //oMysql.desconexion();
         } catch (Exception e) {
             throw new Exception("GenericDao.getPrettyColumnsNames: Error: " + e.getMessage());
-        } finally {
-            //oMysql.desconexion();
         }
         return alColumns;
     }

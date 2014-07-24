@@ -1,8 +1,21 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Copyright (C) July 2014 Rafael Aznar
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
+
 package net.daw.operation;
 
 import com.google.gson.Gson;
@@ -19,11 +32,6 @@ import net.daw.bean.GenericBeanInterface;
 import net.daw.dao.GenericDaoImpl;
 import net.daw.helper.FilterBean;
 
-/**
- *
- *
- * @author raznara
- */
 public abstract class GenericOperationImpl implements GenericOperationInterface {
 
     protected Connection oConnection = null;
@@ -36,116 +44,73 @@ public abstract class GenericOperationImpl implements GenericOperationInterface 
 
     @Override
     public String getPrettyColumns() throws Exception {
-
-        Constructor c = Class.forName("net.daw.dao." + strObjectName + "Dao").getConstructor(Connection.class);
-        GenericDaoImpl oDao = (GenericDaoImpl) c.newInstance(oConnection);
-
-        ArrayList<String> alColumns = null;
-        String data;
-
-        alColumns = oDao.getPrettyColumnsNames();
-
-        GsonBuilder gsonBuilder = new GsonBuilder();
-
-        Gson gson = gsonBuilder.create();
-        data = gson.toJson(alColumns);
-
-        return data;
+        try {
+            oConnection.setAutoCommit(false);
+            Constructor c = Class.forName("net.daw.dao." + strObjectName + "Dao").getConstructor(Connection.class);
+            GenericDaoImpl oDao = (GenericDaoImpl) c.newInstance(oConnection);
+            ArrayList<String> alColumns = null;
+            String data;
+            alColumns = oDao.getPrettyColumnsNames();
+            GsonBuilder gsonBuilder = new GsonBuilder();
+            Gson gson = gsonBuilder.create();
+            data = gson.toJson(alColumns);
+            return data;
+        } catch (Exception e) {
+            throw new ServletException("GetJson: View Error: " + e.getMessage());
+        } finally {
+            oConnection.commit();
+        }
     }
 
     @Override
     public String getColumns() throws Exception {
-
-        Constructor c = Class.forName("net.daw.dao." + strObjectName + "Dao").getConstructor(Connection.class);
-        GenericDaoImpl oDao = (GenericDaoImpl) c.newInstance(oConnection);
-
-        ArrayList<String> alColumns = null;
-        String data;
-
-        alColumns = oDao.getColumnsNames();
-
-        GsonBuilder gsonBuilder = new GsonBuilder();
-
-        Gson gson = gsonBuilder.create();
-        data = gson.toJson(alColumns);
-
-        return data;
+        try {
+            oConnection.setAutoCommit(false);
+            Constructor c = Class.forName("net.daw.dao." + strObjectName + "Dao").getConstructor(Connection.class);
+            GenericDaoImpl oDao = (GenericDaoImpl) c.newInstance(oConnection);
+            ArrayList<String> alColumns = null;
+            String data;
+            alColumns = oDao.getColumnsNames();
+            GsonBuilder gsonBuilder = new GsonBuilder();
+            Gson gson = gsonBuilder.create();
+            data = gson.toJson(alColumns);
+            return data;
+        } catch (Exception e) {
+            throw new ServletException("GetJson: View Error: " + e.getMessage());
+        } finally {
+            oConnection.commit();
+        }
     }
 
     @Override
     public String get(Integer id) throws Exception {
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        String data;
         try {
-            //GenericBeanInterface oGenericBean = (GenericBeanInterface) oBean;
-            //GenericDaoInterface oGenericDao = (GenericDaoInterface) oDao;
-
+            String data;
+            oConnection.setAutoCommit(false);
             GenericBeanImpl oGenericBean = (GenericBeanImpl) Class.forName("net.daw.bean." + strObjectName + "Bean").newInstance();
-
             Constructor c = Class.forName("net.daw.dao." + strObjectName + "Dao").getConstructor(Connection.class);
             GenericDaoImpl oGenericDao = (GenericDaoImpl) c.newInstance(oConnection);
             oGenericBean.setId(id);
             oGenericBean = (GenericBeanImpl) (GenericBeanInterface) oGenericDao.get(oGenericBean);
-
-//            Class<OPERATION_BEAN> tipoBean = (Class<OPERATION_BEAN>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
-//            Class<OPERATION_DAO> tipoDao = (Class<OPERATION_DAO>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[1];
-//
-//            //ClassDemo cls = new ClassDemo();
-//            Class oBeanClass = oBean.getClass();
-//            
-//            
-//            //Method metodo_get2 = tipoDao.getMethod("dd" );
-//            Method metodo_get = tipoDao.getDeclaredMethod("get",new Class[]{oBeanClass});
-//            
-//            
-//            oBean = (OPERATION_BEAN) metodo_get.invoke(oDao, oBean);
-            //oBean = (GenericBeanImplementation) oDao.get(oBean);
             GsonBuilder gsonBuilder = new GsonBuilder();
             gsonBuilder.setDateFormat("dd/MM/yyyy");
-
             Gson gson = gsonBuilder.excludeFieldsWithoutExposeAnnotation().create();
-            //Gson gson = gsonBuilder.create();
             data = gson.toJson(oGenericBean);
-
             return data;
-
         } catch (Exception e) {
             throw new ServletException("GetJson: View Error: " + e.getMessage());
+        } finally {
+            oConnection.commit();
         }
-
     }
 
-//    @Override
-//    public String getColumns(OPERATION_BEAN oBean, OPERATION_DAO oDao) throws Exception {
-//        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-//
-//        try {
-//            GenericBeanInterface oGenericBean = (GenericBeanInterface) oBean;
-//            GenericDaoInterface oGenericDao = (GenericDaoInterface) oDao;
-//
-//            // oGenericBean = (GenericBeanInterface) oGenericDao.get(oGenericBean);
-//            ArrayList<String> alColumns = oGenericDao.getColumnsNames();
-//            String data = new Gson().toJson(alColumns);
-//            data = "{\"data\":" + data + "}";
-//            return data;
-//        } catch (Exception e) {
-//            throw new ServletException("GetcolumnsJson: View Error: " + e.getMessage());
-//        }
-//
-//    }
     @Override
     public String getPage(int intRegsPerPag, int intPage, ArrayList<FilterBean> alFilter, HashMap<String, String> hmOrder) throws Exception {
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-
         try {
-
+            oConnection.setAutoCommit(false);
             GenericBeanImpl oGenericBean = (GenericBeanImpl) Class.forName("net.daw.bean." + strObjectName + "Bean").newInstance();
-
             Constructor c = Class.forName("net.daw.dao." + strObjectName + "Dao").getConstructor(Connection.class);
             GenericDaoImpl oGenericDao = (GenericDaoImpl) c.newInstance(oConnection);
-
-//            GenericBeanInterface oGenericBean = (GenericBeanInterface) oBean;
-//            GenericDaoInterface oGenericDao = (GenericDaoInterface) oDao;
             List<GenericBeanInterface> loGenericBean = oGenericDao.getPage(intRegsPerPag, intPage, alFilter, hmOrder);
             GsonBuilder gsonBuilder = new GsonBuilder();
             gsonBuilder.setDateFormat("dd/MM/yyyy");
@@ -155,38 +120,35 @@ public abstract class GenericOperationImpl implements GenericOperationInterface 
             return data;
         } catch (Exception e) {
             throw new ServletException("GetpageJson: View Error: " + e.getMessage());
+        } finally {
+            oConnection.commit();
         }
     }
 
     @Override
     public String getPages(int intRegsPerPag, ArrayList<FilterBean> alFilter) throws Exception {
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         try {
-            //GenericDaoInterface oGenericDao = (GenericDaoInterface) oDao;
+            oConnection.setAutoCommit(false);
             Constructor c = Class.forName("net.daw.dao." + strObjectName + "Dao").getConstructor(Connection.class);
             GenericDaoImpl oGenericDao = (GenericDaoImpl) c.newInstance(oConnection);
-
             int pages = oGenericDao.getPages(intRegsPerPag, alFilter);
             String data = "{\"data\":\"" + Integer.toString(pages) + "\"}";
             return data;
         } catch (Exception e) {
             throw new ServletException("FollowerGetpagesJson: View Error: " + e.getMessage());
+        } finally {
+            oConnection.commit();
         }
     }
 
     @Override
     public String remove(Integer id) throws Exception {
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         try {
-//            GenericBeanInterface oGenericBean = (GenericBeanInterface) oBean;
-//            GenericDaoInterface oGenericDao = (GenericDaoInterface) oDao;
-
+            oConnection.setAutoCommit(false);
             GenericBeanImpl oGenericBean = (GenericBeanImpl) Class.forName("net.daw.bean." + strObjectName + "Bean").newInstance();
-
             Constructor c = Class.forName("net.daw.dao." + strObjectName + "Dao").getConstructor(Connection.class);
             GenericDaoImpl oGenericDao = (GenericDaoImpl) c.newInstance(oConnection);
             oGenericBean.setId(id);
-
             Map<String, String> data = new HashMap<>();
             if (oGenericBean != null) {
                 oGenericDao.remove(oGenericBean);
@@ -201,29 +163,20 @@ public abstract class GenericOperationImpl implements GenericOperationInterface 
             return resultado;
         } catch (Exception e) {
             throw new ServletException("RemoveJson: View Error: " + e.getMessage());
+        } finally {
+            oConnection.commit();
         }
-
     }
 
     @Override
     public String save(String jason) throws Exception {
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-
         try {
-//            GenericBeanInterface oGenericBean = (GenericBeanInterface) oBean;
-//            GenericDaoInterface oGenericDao = (GenericDaoInterface) oDao;
-//
-
+            oConnection.setAutoCommit(false);
             GenericBeanImpl oGenericBean = (GenericBeanImpl) Class.forName("net.daw.bean." + strObjectName + "Bean").newInstance();
-
             Constructor c = Class.forName("net.daw.dao." + strObjectName + "Dao").getConstructor(Connection.class);
             GenericDaoImpl oGenericDao = (GenericDaoImpl) c.newInstance(oConnection);
             Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
-
             oGenericBean = gson.fromJson(jason, oGenericBean.getClass());
-
-//
-//            oGenericBean = gson.fromJson(jason, oGenericBean.getClass());
             Map<String, String> data = new HashMap<>();
             if (oGenericBean != null) {
                 oGenericBean = (GenericBeanImpl) (GenericBeanInterface) oGenericDao.set(oGenericBean);
@@ -237,23 +190,25 @@ public abstract class GenericOperationImpl implements GenericOperationInterface 
             return resultado;
         } catch (Exception e) {
             throw new ServletException("SaveJson: View Error: " + e.getMessage());
+        } finally {
+            oConnection.commit();
         }
 
     }
 
     @Override
-    public String getRegisters(ArrayList<FilterBean> alFilter) throws Exception {
+    public String getCount(ArrayList<FilterBean> alFilter) throws Exception {
         try {
-            //GenericDaoInterface oGenericDao = (GenericDaoInterface) oDao;
-
+            oConnection.setAutoCommit(false);
             Constructor c = Class.forName("net.daw.dao." + strObjectName + "Dao").getConstructor(Connection.class);
             GenericDaoImpl oGenericDao = (GenericDaoImpl) c.newInstance(oConnection);
-
             int registers = oGenericDao.getCount(alFilter);
             String data = "{\"data\":\"" + Integer.toString(registers) + "\"}";
             return data;
         } catch (Exception e) {
             throw new ServletException("GetregistersJson: View Error: " + e.getMessage());
+        } finally {
+            oConnection.commit();
         }
     }
 

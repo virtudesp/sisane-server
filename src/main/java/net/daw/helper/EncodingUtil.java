@@ -1,23 +1,17 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-package net.daw.helper;
-
-
-
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
-import java.net.URLEncoder;
-
 /**
  * Utility class for JavaScript compatible UTF-8 encoding and decoding.
  * 
  * @see http://stackoverflow.com/questions/607176/java-equivalent-to-javascripts-encodeuricomponent-that-produces-identical-output
  * @author John Topley 
  */
+
+package net.daw.helper;
+
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
+
+
 public class EncodingUtil
 {
   /**

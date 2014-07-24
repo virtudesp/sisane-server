@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 rafa
+ * Copyright (C) July 2014 Rafael Aznar
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -24,10 +24,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.apache.commons.dbcp.BasicDataSource;
 
-/**
- *
- * @author rafa
- */
 public class DbcpConnectionPoolImpl implements GenericConnectionInterface {
 
     BasicDataSource basicDataSource = null;

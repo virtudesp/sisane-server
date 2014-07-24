@@ -1,7 +1,21 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * Copyright (C) July 2014 Rafael Aznar
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
+
 package net.daw.control;
 
 import com.google.gson.Gson;
@@ -21,7 +35,6 @@ import javax.servlet.http.HttpServletResponse;
 import net.daw.conexion.BoneConectionPoolImpl;
 import net.daw.conexion.GenericConnectionInterface;
 import net.daw.helper.FilterBean;
-import net.daw.operation.DocumentoOperation;
 import net.daw.operation.GenericOperationImpl;
 
 /**
@@ -29,6 +42,7 @@ import net.daw.operation.GenericOperationImpl;
  * @author rafa
  */
 public class ControlJson extends HttpServlet {
+    private static final long serialVersionUID = 1L;
 
     private void retardo(Integer iLast) {
         try {
@@ -138,7 +152,7 @@ public class ControlJson extends HttpServlet {
                                 jsonResult = process.getPages(intRegsPerPag, alFilter);
                             } else {
                                 if ("getregisters".equals(operation)) {
-                                    jsonResult = process.getRegisters(alFilter);
+                                    jsonResult = process.getCount(alFilter);
                                 }
                             }
                         }

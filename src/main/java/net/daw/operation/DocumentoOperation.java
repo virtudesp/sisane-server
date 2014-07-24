@@ -1,8 +1,21 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Copyright (C) July 2014 Rafael Aznar
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
+
 package net.daw.operation;
 
 import java.sql.Connection;
@@ -10,10 +23,6 @@ import javax.servlet.ServletException;
 import net.daw.bean.DocumentoBean;
 import net.daw.dao.DocumentoDao;
 
-/**
- *
- * @author rafa
- */
 public class DocumentoOperation extends GenericOperationImpl {
 
     public DocumentoOperation(Connection con) {
@@ -32,50 +41,4 @@ public class DocumentoOperation extends GenericOperationImpl {
             throw new ServletException("GetContenido: View Error: " + e.getMessage());
         }
     }
-
-    //pte: http://remysharp.com/2008/04/01/wiki-to-html-using-javascript/
-    //http://randomactsofcoding.blogspot.com.es/2009/08/parsewikijs-javascript-wiki-parsing.html
-    //http://www.ivan.fomichev.name/2008/04/javascript-creole-10-wiki-markup-parser.html
-    //http://web-tec.info/WikiParser/
-    //http://jscreole.sourceforge.net/
-//        @Override
-//    public String get(DocumentoBean oBean, DocumentoDao oDao) throws Exception {
-//        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-//        String data;
-//        try {
-//        
-//            oBean = (DocumentoBean) (GenericBeanInterface) oDao.get(oBean);
-//            GsonBuilder gsonBuilder = new GsonBuilder();
-//            gsonBuilder.setDateFormat("dd/MM/yyyy");
-//            Gson gson = gsonBuilder.create();
-//            oBean.setPresentacion(TextParser.textDecode(oBean.getPresentacion()));
-//            data = gson.toJson(oBean);
-//            return data;
-//
-//        } catch (Exception e) {
-//            throw new ServletException("GetJson: View Error: " + e.getMessage());
-//        }
-//
-//    }
-//    
-//     @Override
-//    public String save(String jason, DocumentoBean oBean, DocumentoDao oDao) throws Exception {     
-//        try {
-//            Gson gson = new Gson();
-//            Map<String, String> data = new HashMap<>();
-//            if (oBean != null) {
-//                oBean.setPresentacion(TextParser.textEncode(TextParser.toHtml(oBean.getContenido(), "")));
-//                oBean = (DocumentoBean) (GenericBeanInterface) oDao.set(oBean);
-//                data.put("status", "200");
-//                data.put("message", Integer.toString(oBean.getId()));
-//            } else {
-//                data.put("status", "error");
-//                data.put("message", "error");
-//            }
-//            String resultado = gson.toJson(data);
-//            return resultado;
-//        } catch (Exception e) {
-//            throw new ServletException("SaveJson: View Error: " + e.getMessage());
-//        }
-//    }
 }

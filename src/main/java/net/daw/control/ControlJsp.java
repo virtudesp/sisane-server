@@ -1,7 +1,23 @@
+/*
+ * Copyright (C) July 2014 Rafael Aznar
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+ */
+
 package net.daw.control;
 
-import com.jolbox.bonecp.BoneCP;
-import com.jolbox.bonecp.BoneCPConfig;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -17,33 +33,17 @@ import net.daw.conexion.GenericConnectionInterface;
 import net.daw.dao.UsuarioDao;
 import net.daw.helper.Estado;
 import net.daw.helper.Estado.Tipo_estado;
-//import org.apache.commons.dbcp.BasicDataSource;
 
-/**
- *
- * @author rafael aznar
- *
- */
 public class ControlJsp extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, Exception {
 
         GenericConnectionInterface DataConnectionSource = null;
         Connection connection = null;
         try {
-
             try {
                 Class.forName("com.mysql.jdbc.Driver");
             } catch (Exception e) {
@@ -52,16 +52,11 @@ public class ControlJsp extends HttpServlet {
             }
             DataConnectionSource = new BoneConectionPoolImpl();
             connection = DataConnectionSource.newConnection();
-            
-            
-            
-            //----------------------------------------------------------------------
             //HTTP headers
             response.setHeader("page language", "java");
             response.setHeader("contentType", "text/html");
             response.setHeader("pageEncoding", "UTF-8");
             response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
-
             //parameter loading
             String op = request.getParameter("op");
             String ob = request.getParameter("ob");
@@ -93,12 +88,10 @@ public class ControlJsp extends HttpServlet {
                     if (!login.equals("") && !pass.equals("")) {
                         oUsuario.setLogin(login);
                         oUsuario.setPassword(pass);
-
                         UsuarioDao oUsuarioDao = new UsuarioDao(connection);
-
                         oUsuario = oUsuarioDao.getFromLogin(oUsuario);
                         if (oUsuario.getId() != 0) {
-                            //oUsuario = oUsuarioDao.type(oUsuario); //fill user level
+                            //oUsuario = oUsuarioDao.type(oUsuario); //fill user level -> pending
                             request.getSession().setAttribute("usuarioBean", oUsuario);
                         }
                     }
@@ -124,7 +117,6 @@ public class ControlJsp extends HttpServlet {
             connection.close();
             DataConnectionSource.disposeConnection();            
         }
-
     }
 
 // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
