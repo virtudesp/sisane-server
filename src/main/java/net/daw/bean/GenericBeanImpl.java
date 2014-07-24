@@ -15,17 +15,35 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-
 package net.daw.bean;
+
+import com.google.gson.annotations.Expose;
 
 /**
  *
  * @author rafa
  */
-public interface GenericBeanInterface {
+public class GenericBeanImpl implements GenericBeanInterface {
 
-    public Integer getId();
+    @Expose
+    private Integer id;
 
-    public void setId(Integer id);
+    public GenericBeanImpl() {
+        this.id = 0;
+    }
+
+    public GenericBeanImpl(Integer id) {
+        this.id = id;
+    }
+
+    @Override
+    public Integer getId() {
+        return id;
+    }
+
+    @Override
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
 }

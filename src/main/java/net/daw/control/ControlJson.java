@@ -6,8 +6,6 @@ package net.daw.control;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.jolbox.bonecp.BoneCP;
-import com.jolbox.bonecp.BoneCPConfig;
 import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.sql.Connection;
@@ -20,10 +18,11 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import net.daw.bean.GenericBeanImplementation;
-import net.daw.dao.GenericDaoImplementation;
+import net.daw.conexion.BoneConectionPoolImpl;
+import net.daw.conexion.GenericConnectionInterface;
 import net.daw.helper.FilterBean;
-import net.daw.process.GenericProcessInterface;
+import net.daw.operation.DocumentoOperation;
+import net.daw.operation.GenericOperationImpl;
 
 /**
  *
@@ -41,7 +40,9 @@ public class ControlJson extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, Exception {
-        BoneCP connectionPool = null;
+        GenericConnectionInterface DataConnectionSource = null;
+        Connection connection = null;
+
         try {
             try {
                 Class.forName("com.mysql.jdbc.Driver");
@@ -49,52 +50,36 @@ public class ControlJson extends HttpServlet {
                 e.printStackTrace();
                 return;
             }
-            BoneCPConfig config = new BoneCPConfig();
-            config.setJdbcUrl("jdbc:mysql://127.0.0.1:3306/ausiaxContent");
-            config.setUsername("root");
-            config.setPassword("bitnami");
-            config.setMinConnectionsPerPartition(5);
-            config.setMaxConnectionsPerPartition(10);
-            config.setPartitionCount(1);
-            connectionPool = new BoneCP(config); // setup the connection pool
-            //----------------------------------------------------------------------
-            //debug delay
-            retardo(0);
 
-            String op = request.getParameter("op");
-            String ob = request.getParameter("ob");
+            DataConnectionSource = new BoneConectionPoolImpl();
+            connection = DataConnectionSource.newConnection();
 
-            String objeto = Character.toUpperCase(ob.charAt(0)) + ob.substring(1);
-            String operacion = op;
-            String datos = "";
-            Gson gson = new GsonBuilder().setDateFormat("dd/MM/yyyy").create();
-
-            GenericProcessInterface process = (GenericProcessInterface) Class.forName("net.daw.process." + objeto + "Process").newInstance();
-
-            process.setConnectionPool(connectionPool);
-
-            GenericBeanImplementation oBean = (GenericBeanImplementation) Class.forName("net.daw.bean." + objeto + "Bean").newInstance();
-
-            //GenericDaoImplementation oDao = (GenericDaoImplementation) Class.forName("net.daw.dao." + objeto + "Dao").newInstance();
-            Constructor c = Class.forName("net.daw.dao." + objeto + "Dao").getConstructor(Connection.class);
-            GenericDaoImplementation oDao = (GenericDaoImplementation) c.newInstance(connectionPool.getConnection());
-
-            if (request.getSession().getAttribute("usuarioBean") != null || ("documento".equals(ob))) {
-
-                switch (operacion) {
+            //----------------------------------------------------------------------          
+            retardo(0); //debug delay
+            // get parameters
+            String operation = request.getParameter("op");
+            String object = request.getParameter("ob");
+            // prepare parameters
+            
+            //DocumentoProcess p=new DocumentoProcess("ff",connection);
+            
+            
+            
+            String jsonResult = "";
+            // create generic class to serve the request
+            Constructor oConstructor = Class.forName("net.daw.operation." + Character.toUpperCase(object.charAt(0)) + object.substring(1) + "Operation").getConstructor(Connection.class);
+            GenericOperationImpl process = (GenericOperationImpl) oConstructor.newInstance(connection);
+            // serve the request and get json result into datos
+            if (request.getSession().getAttribute("usuarioBean") != null || ("documento".equals(object))) {
+                switch (operation) {
                     case "get":
-                        oBean.setId(Integer.parseInt(request.getParameter("id")));
-                        //oBean = (GenericBeanImplementation) oDao.get(oBean);
-                        datos = process.get(oBean, oDao);
+                        jsonResult = process.get(Integer.parseInt(request.getParameter("id")));
                         break;
-                    case "getprettycolumns":
-                        //oBean = (GenericBeanImplementation) oDao.get(oBean);
-                        datos = process.getPrettyColumns(objeto);
+                    case "getprettycolumns":                        
+                        jsonResult = process.getPrettyColumns();
                         break;
                     case "getcolumns":
-                        //oBean = (GenericBeanImplementation) oDao.get(oBean);
-                        //datos = process.getColumns(oBean, oDao);
-                        datos = process.getColumns(objeto);
+                        jsonResult = process.getColumns();
                         break;
                     case "getpage":
                     case "getpages":
@@ -136,7 +121,7 @@ public class ControlJson extends HttpServlet {
                                 }
                             }
                         }
-                        if ("getpage".equals(operacion)) {
+                        if ("getpage".equals(operation)) {
                             HashMap<String, String> hmOrder = new HashMap<>();
                             if (request.getParameter("order") != null) {
                                 if (request.getParameter("ordervalue") != null) {
@@ -147,50 +132,47 @@ public class ControlJson extends HttpServlet {
                             } else {
                                 hmOrder = null;
                             }
-                            datos = process.getPage(intRegsPerPag, intPage, alFilter, hmOrder, oBean, oDao);
+                            jsonResult = process.getPage(intRegsPerPag, intPage, alFilter, hmOrder);
                         } else {
-                            if ("getpages".equals(operacion)) {
-                                datos = process.getPages(intRegsPerPag, alFilter, oDao);
+                            if ("getpages".equals(operation)) {
+                                jsonResult = process.getPages(intRegsPerPag, alFilter);
                             } else {
-                                if ("getregisters".equals(operacion)) {
-                                    datos = process.getRegisters(alFilter, oDao);
+                                if ("getregisters".equals(operation)) {
+                                    jsonResult = process.getRegisters(alFilter);
                                 }
                             }
                         }
                         break;
                     case "remove":
                         if (request.getSession().getAttribute("usuarioBean") != null) {
-                            oBean.setId(Integer.parseInt(request.getParameter("id")));
-                            datos = process.remove(oBean, oDao);
+                            jsonResult = process.remove(Integer.parseInt(request.getParameter("id")));
                         }
                         break;
                     case "save":
                         if (request.getSession().getAttribute("usuarioBean") != null) {
                             //String jason = TextParser.textDecode(request.getParameter("json"));
-
                             String jason = request.getParameter("json").replaceAll("%2F", "/");
-
-                            oBean = gson.fromJson(jason, oBean.getClass());
-                            datos = process.save(jason, oBean, oDao);
+                            jsonResult = process.save(jason);
                         }
                         break;
                     default:
-
                         Map<String, String> data = new HashMap<>();
                         data.put("status", "401");
                         data.put("message", "error de operación");
-                        String resultado = gson.toJson(data);
+                        Gson gson = new GsonBuilder().setDateFormat("dd/MM/yyyy").create();
+                        jsonResult = gson.toJson(data);
                         break;
                 }
-
             }
-
-            request.setAttribute("contenido", datos);
+            //send the result to the client
+            request.setAttribute("contenido", jsonResult);
             getServletContext().getRequestDispatcher("/jsp/messageAjax.jsp").forward(request, response);
         } catch (Exception ex) {
             Logger.getLogger(ControlJson.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
-            connectionPool.close();
+            //important to close connection
+            connection.close();
+            DataConnectionSource.disposeConnection();
         }
     }
 

@@ -5,7 +5,7 @@
  */
 package net.daw.dao;
 
-import com.jolbox.bonecp.BoneCP;
+
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -16,9 +16,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Locale;
-import net.daw.bean.GenericBeanImplementation;
-import net.daw.bean.GenericBeanInterface;
-import net.daw.data.MysqlDataImplementation;
+import net.daw.bean.GenericBeanImpl;
+import net.daw.data.MysqlDataImpl;
 
 import net.daw.helper.FilterBean;
 
@@ -28,18 +27,17 @@ import net.daw.helper.FilterBean;
  * @param <TIPO_OBJETO>
  *
  */
-public abstract class GenericDaoImplementation<TIPO_OBJETO> implements GenericDaoInterface<TIPO_OBJETO> {
+public abstract class GenericDaoImpl<TIPO_OBJETO> implements GenericDaoInterface<TIPO_OBJETO> {
 
-    protected final MysqlDataImplementation oMysql;
+    protected final MysqlDataImpl oMysql;
     //protected final Conexion.Tipo_conexion enumTipoConexion;
     protected final String strTabla;
+    protected Connection connection = null;
 
-    Connection connection = null;
-
-    public GenericDaoImplementation(String tabla, Connection pooledConnection) throws Exception {
+    public GenericDaoImpl(String tabla, Connection pooledConnection) throws Exception {
         connection = pooledConnection;
         strTabla = tabla;
-        oMysql = new MysqlDataImplementation();
+        oMysql = new MysqlDataImpl();
         oMysql.setPooledConnection(connection);
     }
 
@@ -133,12 +131,12 @@ public abstract class GenericDaoImplementation<TIPO_OBJETO> implements GenericDa
                             //GenericDaoImplementation oAjenaDao = (GenericDaoImplementation) Class.forName("net.daw.dao." + strAjena + "Dao").newInstance();
 
                             Constructor c = Class.forName("net.daw.dao." + strAjena + "Dao").getConstructor(Connection.class);
-                            GenericDaoImplementation oAjenaDao = (GenericDaoImplementation) c.newInstance(connection);
+                            GenericDaoImpl oAjenaDao = (GenericDaoImpl) c.newInstance(connection);
 
-                            GenericBeanImplementation oAjenaBean = (GenericBeanImplementation) Class.forName("net.daw.bean." + strAjena + "Bean").newInstance();
+                            GenericBeanImpl oAjenaBean = (GenericBeanImpl) Class.forName("net.daw.bean." + strAjena + "Bean").newInstance();
                             int intIdAjena = (Integer) metodo_getId_Ajena.invoke(oBean);
                             oAjenaBean.setId(intIdAjena);
-                            oAjenaBean = (GenericBeanImplementation) oAjenaDao.get(oAjenaBean);
+                            oAjenaBean = (GenericBeanImpl) oAjenaDao.get(oAjenaBean);
                             //String strDescription = oAjenaDao.getDescription((Integer) metodo_getId_Ajena.invoke(oBean));
                             method.invoke(oBean, oAjenaBean);
                         }

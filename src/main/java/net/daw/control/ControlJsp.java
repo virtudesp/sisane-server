@@ -4,7 +4,7 @@ import com.jolbox.bonecp.BoneCP;
 import com.jolbox.bonecp.BoneCPConfig;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.SQLException;
+import java.sql.Connection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -12,10 +12,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import net.daw.bean.UsuarioBean;
+import net.daw.conexion.BoneConectionPoolImpl;
+import net.daw.conexion.GenericConnectionInterface;
 import net.daw.dao.UsuarioDao;
-import net.daw.helper.ConnectionSource;
 import net.daw.helper.Estado;
 import net.daw.helper.Estado.Tipo_estado;
+//import org.apache.commons.dbcp.BasicDataSource;
 
 /**
  *
@@ -38,7 +40,8 @@ public class ControlJsp extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, Exception {
 
-        BoneCP connectionPool = null;
+        GenericConnectionInterface DataConnectionSource = null;
+        Connection connection = null;
         try {
 
             try {
@@ -47,15 +50,11 @@ public class ControlJsp extends HttpServlet {
                 e.printStackTrace();
                 return;
             }
-            BoneCPConfig config = new BoneCPConfig();
-            config.setJdbcUrl("jdbc:mysql://127.0.0.1:3306/ausiaxContent");
-            config.setUsername("root");
-            config.setPassword("bitnami");
-            config.setMinConnectionsPerPartition(5);
-            config.setMaxConnectionsPerPartition(10);
-            config.setPartitionCount(1);
-            connectionPool = new BoneCP(config); // setup the connection pool
-
+            DataConnectionSource = new BoneConectionPoolImpl();
+            connection = DataConnectionSource.newConnection();
+            
+            
+            
             //----------------------------------------------------------------------
             //HTTP headers
             response.setHeader("page language", "java");
@@ -94,9 +93,8 @@ public class ControlJsp extends HttpServlet {
                     if (!login.equals("") && !pass.equals("")) {
                         oUsuario.setLogin(login);
                         oUsuario.setPassword(pass);
-                        UsuarioDao oUsuarioDao = new UsuarioDao(connectionPool.getConnection());
 
-                
+                        UsuarioDao oUsuarioDao = new UsuarioDao(connection);
 
                         oUsuario = oUsuarioDao.getFromLogin(oUsuario);
                         if (oUsuario.getId() != 0) {
@@ -112,17 +110,19 @@ public class ControlJsp extends HttpServlet {
             //delivering jsp page
             if ("wrappered".equals(mode)) {
                 request.setAttribute("contenido", "jsp/" + ob + "/" + op + ".jsp");
-                request.setAttribute("connection", connectionPool.getConnection());
+                request.setAttribute("connection", connection);
                 getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
             } else {
                 response.setContentType("text/html; charset=UTF-8");
-                request.setAttribute("connection", connectionPool.getConnection());
+                request.setAttribute("connection", connection);
                 getServletContext().getRequestDispatcher("/jsp/" + ob + "/" + op + ".jsp").forward(request, response);
             }
         } catch (Exception ex) {
             Logger.getLogger(ControlJson.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
-            connectionPool.close();
+            //important to close connection
+            connection.close();
+            DataConnectionSource.disposeConnection();            
         }
 
     }
@@ -148,7 +148,7 @@ public class ControlJsp extends HttpServlet {
                 Logger.getLogger(ControlJsp.class.getName()).log(Level.SEVERE, null, ex);
             }
 
-        } 
+        }
     }
 
     /**
@@ -170,7 +170,7 @@ public class ControlJsp extends HttpServlet {
             } else {
                 Logger.getLogger(ControlJsp.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } 
+        }
     }
 
     /**

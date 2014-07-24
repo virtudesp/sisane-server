@@ -7,11 +7,14 @@ package net.daw.bean;
 import com.google.gson.annotations.Expose;
 import java.util.Date;
 
-/**
- *
- * @author Alvaro
- */
-public class DocumentoBean extends GenericBeanImplementation implements GenericBeanInterface {
+public class DocumentoBean extends GenericBeanImpl implements GenericBeanInterface {
+
+    public DocumentoBean() {
+    }
+
+    public DocumentoBean(Integer id) {
+        super(id);
+    }
 
     @Expose
     private String titulo = "";

@@ -16,16 +16,35 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
-package net.daw.bean;
+package net.daw.helper;
 
 /**
  *
  * @author rafa
  */
-public interface GenericBeanInterface {
+public class ConnectionClass {
 
-    public Integer getId();
+    public static String getDatabaseName() {
+        return "ausiaxContent";
+    }
 
-    public void setId(Integer id);
+    public static String getDatabaseLogin() {
+        return "root";
+    }
 
+    public static String getDatabasePassword() {
+        return "bitnami";
+    }
+
+    public static String getDatabasePort() {
+        return "3306";
+    }
+
+    public static String getDatabaseHost() {
+        return "127.0.0.1";
+    }
+    
+    public static String getConnectionChain(){
+        return "jdbc:mysql://" + ConnectionClass.getDatabaseHost() + ":" + ConnectionClass.getDatabasePort() + "/" + ConnectionClass.getDatabaseName();
+    }
 }

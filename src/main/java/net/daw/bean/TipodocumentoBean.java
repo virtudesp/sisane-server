@@ -10,7 +10,7 @@ import com.google.gson.annotations.Expose;
  *
  * @author al037877
  */
-public class TipodocumentoBean  extends GenericBeanImplementation implements GenericBeanInterface {
+public class TipodocumentoBean  extends GenericBeanImpl implements GenericBeanInterface {
   @Expose
     private String descripcion = "";
   @Expose

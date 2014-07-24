@@ -11,7 +11,7 @@ import net.daw.bean.TipodocumentoBean;
  *
  * @author al037877
  */
-public class TipodocumentoDao extends GenericDaoImplementation<TipodocumentoBean> {
+public class TipodocumentoDao extends GenericDaoImpl<TipodocumentoBean> {
 
     public TipodocumentoDao(Connection pooledConnection) throws Exception {
         super("tipodocumento", pooledConnection);

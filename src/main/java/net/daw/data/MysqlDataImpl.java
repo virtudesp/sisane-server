@@ -13,11 +13,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-
-import net.daw.helper.ConnectionSource;
 import net.daw.helper.FilterBean;
 
-public class MysqlDataImplementation implements GenericDataInterface {
+public class MysqlDataImpl implements GenericDataInterface {
 
     Connection connection = null;
 
@@ -440,6 +438,31 @@ public class MysqlDataImplementation implements GenericDataInterface {
         } finally {
             oStatement.close();
 
+        }
+    }
+
+    @Override
+    public void removeSomeId(String strTabla, ArrayList<Integer> Ids) throws SQLException {
+        Statement oStatement;
+        Iterator<Integer> iterador = Ids.listIterator();
+        while (iterador.hasNext()) {
+            oStatement = (Statement) connection.createStatement();
+            String strSQL = "DELETE FROM " + strTabla + " WHERE id = " + iterador.next();
+            oStatement.executeUpdate(strSQL);
+            oStatement.close();
+        }
+    }
+
+    @Override
+    public void removeSomeCondition(String strTabla, String campo, String valor) throws Exception {
+        Statement oStatement;
+        try {
+            oStatement = (Statement) connection.createStatement();
+            String strSQL = "DELETE FROM " + strTabla + " WHERE " + campo + " like " + valor;
+            oStatement.executeUpdate(strSQL);
+            oStatement.close();
+        } catch (SQLException e) {
+            throw new Exception("mysql.deleteOne: Error al eliminar el registro: " + e.getMessage());
         }
     }
 }

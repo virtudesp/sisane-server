@@ -10,7 +10,7 @@ import com.google.gson.annotations.Expose;
  *
  * @author rafa
  */
-public class UsuarioBean extends GenericBeanImplementation implements GenericBeanInterface {
+public class UsuarioBean extends GenericBeanImpl implements GenericBeanInterface {
 @Expose
     private String login = "";
 @Expose

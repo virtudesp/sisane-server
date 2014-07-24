@@ -5,8 +5,11 @@
 package net.daw.data;
 
 import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import net.daw.helper.FilterBean;
 
 /**
@@ -40,5 +43,9 @@ public interface GenericDataInterface {
     public ArrayList<String> getColumnsName(String strTabla) throws Exception;
 
     public ArrayList<String> getPrettyColumns(String strTabla) throws Exception;
+
+    public void removeSomeId(String strTabla, ArrayList<Integer> Ids) throws SQLException;
+
+    public void removeSomeCondition(String strTabla, String campo, String valor) throws Exception;
 
 }

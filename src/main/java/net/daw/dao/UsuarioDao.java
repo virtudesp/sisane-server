@@ -11,7 +11,7 @@ import net.daw.bean.UsuarioBean;
  *
  * @author rafa
  */
-public class UsuarioDao extends GenericDaoImplementation<UsuarioBean> {
+public class UsuarioDao extends GenericDaoImpl<UsuarioBean> {
 
     public UsuarioDao(Connection pooledConnection) throws Exception {
         super("usuario", pooledConnection);

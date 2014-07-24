@@ -3,26 +3,31 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package net.daw.process;
+package net.daw.operation;
 
+import java.sql.Connection;
 import javax.servlet.ServletException;
 import net.daw.bean.DocumentoBean;
-import net.daw.bean.GenericBeanInterface;
 import net.daw.dao.DocumentoDao;
 
 /**
  *
  * @author rafa
  */
-public class DocumentoProcess extends GenericProcessImplementation<DocumentoBean, DocumentoDao> {
+public class DocumentoOperation extends GenericOperationImpl {
 
+    public DocumentoOperation(Connection con) {
+        super("Documento", con);
+    }
 
-
-    public String getContenido(DocumentoBean oBean, DocumentoDao oDao) throws Exception {
+    public String getContenido(Integer id) throws Exception {
         String data;
         try {
-            oBean = (DocumentoBean) (GenericBeanInterface) oDao.get(oBean);
-            return "{\"data\":\"" + oBean.getContenido() + "\"}";
+            DocumentoBean oDocumentoBean = new DocumentoBean();
+            oDocumentoBean.setId(id);
+            DocumentoDao oDocumentoDao = new DocumentoDao(oConnection);
+            oDocumentoBean = oDocumentoDao.get(oDocumentoBean);
+            return "{\"data\":\"" + oDocumentoBean.getContenido() + "\"}";
         } catch (Exception e) {
             throw new ServletException("GetContenido: View Error: " + e.getMessage());
         }
@@ -73,8 +78,4 @@ public class DocumentoProcess extends GenericProcessImplementation<DocumentoBean
 //            throw new ServletException("SaveJson: View Error: " + e.getMessage());
 //        }
 //    }
-
-
-
-
 }

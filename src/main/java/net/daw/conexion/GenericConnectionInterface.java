@@ -9,5 +9,12 @@ import java.sql.Connection;
 
 
 public interface GenericConnectionInterface {
-    Connection crearConexion();
+
+    
+    public Connection newConnection() ;        
+
+    
+    public void disposeConnection();
+    
 }
+    
