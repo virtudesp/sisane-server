@@ -15,7 +15,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-
 package net.daw.control;
 
 import com.google.gson.Gson;
@@ -32,16 +31,17 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import net.daw.conexion.BoneConectionPoolImpl;
-import net.daw.conexion.GenericConnectionInterface;
+import net.daw.conexion.implementation.BoneConnectionPoolImpl;
+import net.daw.conexion.publicinterface.GenericConnectionInterface;
 import net.daw.helper.FilterBean;
-import net.daw.operation.GenericOperationImpl;
+import net.daw.service.generic.GenericTableServiceImpl;
 
 /**
  *
  * @author rafa
  */
 public class ControlJson extends HttpServlet {
+
     private static final long serialVersionUID = 1L;
 
     private void retardo(Integer iLast) {
@@ -65,7 +65,7 @@ public class ControlJson extends HttpServlet {
                 return;
             }
 
-            DataConnectionSource = new BoneConectionPoolImpl();
+            DataConnectionSource = new BoneConnectionPoolImpl();
             connection = DataConnectionSource.newConnection();
 
             //----------------------------------------------------------------------          
@@ -74,22 +74,19 @@ public class ControlJson extends HttpServlet {
             String operation = request.getParameter("op");
             String object = request.getParameter("ob");
             // prepare parameters
-            
+
             //DocumentoProcess p=new DocumentoProcess("ff",connection);
-            
-            
-            
             String jsonResult = "";
             // create generic class to serve the request
-            Constructor oConstructor = Class.forName("net.daw.operation." + Character.toUpperCase(object.charAt(0)) + object.substring(1) + "Operation").getConstructor(Connection.class);
-            GenericOperationImpl process = (GenericOperationImpl) oConstructor.newInstance(connection);
+            Constructor oConstructor = Class.forName("net.daw.service.implementation." + Character.toUpperCase(object.charAt(0)) + object.substring(1) + "ServiceImpl").getConstructor(Connection.class);
+            GenericTableServiceImpl process = (GenericTableServiceImpl) oConstructor.newInstance(connection);
             // serve the request and get json result into datos
             if (request.getSession().getAttribute("usuarioBean") != null || ("documento".equals(object))) {
                 switch (operation) {
                     case "get":
                         jsonResult = process.get(Integer.parseInt(request.getParameter("id")));
                         break;
-                    case "getprettycolumns":                        
+                    case "getprettycolumns":
                         jsonResult = process.getPrettyColumns();
                         break;
                     case "getcolumns":
@@ -185,7 +182,9 @@ public class ControlJson extends HttpServlet {
             Logger.getLogger(ControlJson.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             //important to close connection
-            connection.close();
+            if (connection != null) {
+                connection.close();
+            }
             DataConnectionSource.disposeConnection();
         }
     }

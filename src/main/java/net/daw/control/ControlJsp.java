@@ -27,10 +27,10 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import net.daw.bean.UsuarioBean;
-import net.daw.conexion.BoneConectionPoolImpl;
-import net.daw.conexion.GenericConnectionInterface;
-import net.daw.dao.UsuarioDao;
+import net.daw.bean.implementation.UsuarioBeanImpl;
+import net.daw.conexion.implementation.BoneConnectionPoolImpl;
+import net.daw.conexion.publicinterface.GenericConnectionInterface;
+import net.daw.dao.implementation.UsuarioDaoImpl;
 import net.daw.helper.Estado;
 import net.daw.helper.Estado.Tipo_estado;
 
@@ -50,7 +50,7 @@ public class ControlJsp extends HttpServlet {
                 e.printStackTrace();
                 return;
             }
-            DataConnectionSource = new BoneConectionPoolImpl();
+            DataConnectionSource = new BoneConnectionPoolImpl();
             connection = DataConnectionSource.newConnection();
             //HTTP headers
             response.setHeader("page language", "java");
@@ -82,13 +82,13 @@ public class ControlJsp extends HttpServlet {
             //login & logout management
             if (ob.equalsIgnoreCase("usuario")) {
                 if (op.equalsIgnoreCase("login02")) {
-                    UsuarioBean oUsuario = new UsuarioBean();
+                    UsuarioBeanImpl oUsuario = new UsuarioBeanImpl();
                     String login = request.getParameter("login");
                     String pass = request.getParameter("password");
                     if (!login.equals("") && !pass.equals("")) {
                         oUsuario.setLogin(login);
                         oUsuario.setPassword(pass);
-                        UsuarioDao oUsuarioDao = new UsuarioDao(connection);
+                        UsuarioDaoImpl oUsuarioDao = new UsuarioDaoImpl(connection);
                         oUsuario = oUsuarioDao.getFromLogin(oUsuario);
                         if (oUsuario.getId() != 0) {
                             //oUsuario = oUsuarioDao.type(oUsuario); //fill user level -> pending
@@ -114,7 +114,9 @@ public class ControlJsp extends HttpServlet {
             Logger.getLogger(ControlJson.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             //important to close connection
-            connection.close();
+            if (connection != null) {
+                connection.close();
+            }
             DataConnectionSource.disposeConnection();            
         }
     }

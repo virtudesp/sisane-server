@@ -3,7 +3,9 @@
     Created on : Jan 19, 2013, 9:28:49 AM
     Author     : rafa
 --%>
-<%@page import="net.daw.bean.UsuarioBean"%><%UsuarioBean user = (UsuarioBean) request.getSession().getAttribute("usuarioBean");                  
+<%@page import="net.daw.bean.implementation.UsuarioBeanImpl"%>
+<%UsuarioBeanImpl user = (UsuarioBeanImpl) request.getSession().getAttribute("usuarioBean");%>
+<%
 if (user != null) {
     String us = user.getLogin();
     String usuario = us.substring(0, 1).toUpperCase() + us.substring(1);

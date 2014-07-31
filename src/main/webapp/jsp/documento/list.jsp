@@ -6,7 +6,7 @@
 
 
 <%@page import="java.sql.Connection"%>
-<%@page import="net.daw.dao.DocumentoDao"%>
+<%@page import="net.daw.dao.implementation.DocumentoDaoImpl"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.Iterator"%>
 <%
@@ -15,7 +15,7 @@
     Iterator<String> oIterador;
     String strNombreMantenimiento = "documento";
     Connection connection = (Connection) request.getAttribute("connection");
-    DocumentoDao oDocumentoDao = new DocumentoDao(connection);
+    DocumentoDaoImpl oDocumentoDao = new DocumentoDaoImpl(connection);
 %>
 
 <div class="row">

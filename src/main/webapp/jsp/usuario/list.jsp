@@ -3,13 +3,15 @@
     Created on : Jan 16, 2013, 12:57:09 PM
     Author     : Jose
 --%>
-<%@page import="net.daw.helper.Conexion"%>
-<%@page import="net.daw.dao.UsuarioDao"%>
+
+<%@page import="java.sql.Connection"%>
+<%@page import="net.daw.dao.implementation.UsuarioDaoImpl"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.Iterator"%>
 <%
-    UsuarioDao oUsuarioDao = new UsuarioDao();
-    ArrayList<String> alColumnsNames = (ArrayList<String>) oUsuarioDao.getColumnsNames(false);
+    Connection connection = (Connection) request.getAttribute("connection");
+    UsuarioDaoImpl oUsuarioDao = new UsuarioDaoImpl(connection);
+    ArrayList<String> alColumnsNames = (ArrayList<String>) oUsuarioDao.getColumnsNames();
     Iterator<String> oIterador = alColumnsNames.listIterator();
     String strNombreMantenimiento = "usuario";
 %>
