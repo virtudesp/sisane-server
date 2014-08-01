@@ -29,10 +29,8 @@ public interface ViewServiceInterface {
 
     public String getPages(int intRegsPerPag, ArrayList<FilterBean> alFilter) throws Exception;
 
-
-
     public String getCount(ArrayList<FilterBean> alFilter) throws Exception;
 
-   
+    public String getView(int intRegsPerPag, int intPage, ArrayList<FilterBean> alFilter, HashMap<String, String> hmOrder) throws Exception;
 
 }

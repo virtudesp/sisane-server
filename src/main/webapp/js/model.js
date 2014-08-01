@@ -3,10 +3,47 @@ var objeto = function(clase, ContextPath) {
     //contexto privado
     var urlJson = ContextPath + '/json?ob=' + clase;
     var urlJsp = ContextPath + '/jsp?ob=' + clase;
+    //cache vars
+    var cFieldNames = null;
+    var cPrettyFieldNames = null;
+    var cPrettyFieldNamesAcciones = null;
+    var cCountFields = null;
+    var cPage = null;
+    var cPages = null;
+    var cRegisters = null;
     return {
         //contexto público (interface)
         getName: function() {
             return clase;
+        },
+        getView: function(pagina, order, ordervalue, rpp, filter, filteroperator, filtervalue, systemfilter, systemfilteroperator, systemfiltervalue) {
+            if (order) {
+                orderParams = '&order=' + order + '&ordervalue=' + ordervalue;
+            } else {
+                orderParams = "";
+            }
+            if (filter) {
+                filterParams = "&filter=" + filter + "&filteroperator=" + filteroperator + "&filtervalue=" + filtervalue;
+            } else {
+                filterParams = "";
+            }
+            if (systemfilter) {
+                systemfilterParams = "&systemfilter=" + systemfilter + "&systemfilteroperator=" + systemfilteroperator + "&systemfiltervalue=" + systemfiltervalue;
+            } else {
+                systemfilterParams = "";
+            }
+            $.when(ajaxCallSync(urlJson + '&op=getview' + filterParams + '&rpp=' + rpp + orderParams + '&page=' + pagina + systemfilterParams, 'GET', '')).done(function(data) {
+                pagina_objs = data; //decodeURI htmlDecode
+            });
+            //return pagina_objs;
+            cFieldNames = pagina_objs.data.columns;
+            cCountFields = cFieldNames.length;
+            cPrettyFieldNames = pagina_objs.data.prettyColumns;
+            cPrettyFieldNamesAcciones = cPrettyFieldNames;
+            cPrettyFieldNamesAcciones.push("acciones");
+            cPage = pagina_objs.data.page.list;
+            cPages = pagina_objs.data.pages.data;
+            cRegisters = pagina_objs.data.registers.data;
         },
         getPath: function() {
             return ContextPath;
@@ -30,34 +67,53 @@ var objeto = function(clase, ContextPath) {
             return resultado;
         },
         getPrettyFieldNames: function() {
-            $.when(ajaxCallSync(urlJson + '&op=getprettycolumns', 'GET', '')).done(function(data) {
-                prettyFieldNames = data;
-            });
+            if (cPrettyFieldNames == null) {
+                $.when(ajaxCallSync(urlJson + '&op=getprettycolumns', 'GET', '')).done(function(data) {
+                    prettyFieldNames = data;
+                    cPrettyFieldNames = data;
+                });
+            } else {
+                prettyFieldNames = cPrettyFieldNames;
+            }
             return prettyFieldNames;
         },
         getPrettyFieldNamesAcciones: function() {
-            $.when(ajaxCallSync(urlJson + '&op=getprettycolumns', 'GET', '')).done(function(data) {
-                prettyFieldNames = data;
-                data.push("acciones");
-                //prettyFieldNames = data['data'];
-                //prettyFieldNames.push("acciones");
-
-            });
+            if (cPrettyFieldNamesAcciones == null) {
+                $.when(ajaxCallSync(urlJson + '&op=getprettycolumns', 'GET', '')).done(function(data) {
+                    prettyFieldNames = data;
+                    prettyFieldNames.push("acciones");
+                    cPrettyFieldNamesAcciones = prettyFieldNames;
+                    //prettyFieldNames = data['data'];
+                    //prettyFieldNames.push("acciones");
+                });
+            } else {
+                prettyFieldNames = cPrettyFieldNamesAcciones;
+            }
             return prettyFieldNames;
         },
         getCountFields: function() {
-            $.when(ajaxCallSync(urlJson + '&op=getcolumns', 'GET', '')).done(function(data) {
-                //countFields = data['data'].length;
-                countFields = data.length;
-            });
+            if (cCountFields == null) {
+                $.when(ajaxCallSync(urlJson + '&op=getcolumns', 'GET', '')).done(function(data) {
+                    //countFields = data['data'].length;
+                    countFields = data.length;
+                    cCountFields = countFields;
+                });
+            } else {
+                countFields = cCountFields;
+            }
             return countFields;
         },
         getFieldNames: function() {
+            if (cFieldNames == null) {
             $.when(ajaxCallSync(urlJson + '&op=getcolumns', 'GET', '')).done(function(data) {
                 //fieldNames = data['data'];
-                fieldNames = data;
+                dataFieldNames = data;
+                cFieldNames=dataFieldNames;
             });
-            return fieldNames;
+             } else {
+                dataFieldNames = cFieldNames;
+            }
+            return dataFieldNames;
         },
         getForeignKey: function(id, campo) {
 //            //pte
@@ -90,56 +146,71 @@ var objeto = function(clase, ContextPath) {
 //            });
         },
         getPage: function(pagina, order, ordervalue, rpp, filter, filteroperator, filtervalue, systemfilter, systemfilteroperator, systemfiltervalue) {
-            if (order) {
-                orderParams = '&order=' + order + '&ordervalue=' + ordervalue;
+            if (cPage == null) {
+                if (order) {
+                    orderParams = '&order=' + order + '&ordervalue=' + ordervalue;
+                } else {
+                    orderParams = "";
+                }
+                if (filter) {
+                    filterParams = "&filter=" + filter + "&filteroperator=" + filteroperator + "&filtervalue=" + filtervalue;
+                } else {
+                    filterParams = "";
+                }
+                if (systemfilter) {
+                    systemfilterParams = "&systemfilter=" + systemfilter + "&systemfilteroperator=" + systemfilteroperator + "&systemfiltervalue=" + systemfiltervalue;
+                } else {
+                    systemfilterParams = "";
+                }
+                $.when(ajaxCallSync(urlJson + '&op=getpage' + filterParams + '&rpp=' + rpp + orderParams + '&page=' + pagina + systemfilterParams, 'GET', '')).done(function(data) {
+                    pagina_objs = data.list; //decodeURI htmlDecode
+                    cPage = data.list;
+                });
             } else {
-                orderParams = "";
+                pagina_objs = cPage;
             }
-            if (filter) {
-                filterParams = "&filter=" + filter + "&filteroperator=" + filteroperator + "&filtervalue=" + filtervalue;
-            } else {
-                filterParams = "";
-            }
-            if (systemfilter) {
-                systemfilterParams = "&systemfilter=" + systemfilter + "&systemfilteroperator=" + systemfilteroperator + "&systemfiltervalue=" + systemfiltervalue;
-            } else {
-                systemfilterParams = "";
-            }
-            $.when(ajaxCallSync(urlJson + '&op=getpage' + filterParams + '&rpp=' + rpp + orderParams + '&page=' + pagina + systemfilterParams, 'GET', '')).done(function(data) {
-                pagina_objs = data; //decodeURI htmlDecode
-            });
             return pagina_objs;
         },
         getPages: function(rpp, filter, filteroperator, filtervalue, systemfilter, systemfilteroperator, systemfiltervalue) {
-            if (filter) {
-                filterParams = "&filter=" + filter + "&filteroperator=" + filteroperator + "&filtervalue=" + filtervalue;
+            if (cPages == null) {
+                if (filter) {
+                    filterParams = "&filter=" + filter + "&filteroperator=" + filteroperator + "&filtervalue=" + filtervalue;
+                } else {
+                    filterParams = "";
+                }
+                if (systemfilter) {
+                    systemfilterParams = "&systemfilter=" + systemfilter + "&systemfilteroperator=" + systemfilteroperator + "&systemfiltervalue=" + systemfiltervalue;
+                } else {
+                    systemfilterParams = "";
+                }
+                $.when(ajaxCallSync(urlJson + '&op=getpages' + filterParams + '&rpp=' + rpp + systemfilterParams, 'GET', '')).done(function(data) {
+                    pages = data['data'];
+                    cPages = data['data'];
+                });
             } else {
-                filterParams = "";
+                pages = cPages;
             }
-            if (systemfilter) {
-                systemfilterParams = "&systemfilter=" + systemfilter + "&systemfilteroperator=" + systemfilteroperator + "&systemfiltervalue=" + systemfiltervalue;
-            } else {
-                systemfilterParams = "";
-            }
-            $.when(ajaxCallSync(urlJson + '&op=getpages' + filterParams + '&rpp=' + rpp + systemfilterParams, 'GET', '')).done(function(data) {
-                pages = data['data'];
-            });
             return pages;
         },
         getRegisters: function(filter, filteroperator, filtervalue, systemfilter, systemfilteroperator, systemfiltervalue) {
-            if (filter) {
-                filterParams = "&filter=" + filter + "&filteroperator=" + filteroperator + "&filtervalue=" + filtervalue;
+            if (cRegisters == null) {
+                if (filter) {
+                    filterParams = "&filter=" + filter + "&filteroperator=" + filteroperator + "&filtervalue=" + filtervalue;
+                } else {
+                    filterParams = "";
+                }
+                if (systemfilter) {
+                    systemfilterParams = "&systemfilter=" + systemfilter + "&systemfilteroperator=" + systemfilteroperator + "&systemfiltervalue=" + systemfiltervalue;
+                } else {
+                    systemfilterParams = "";
+                }
+                $.when(ajaxCallSync(urlJson + '&op=getregisters' + filterParams + systemfilterParams, 'GET', '')).done(function(data) {
+                    regs = data['data'];
+                    cRegisters = data['data'];
+                });
             } else {
-                filterParams = "";
+                regs = cRegisters;
             }
-            if (systemfilter) {
-                systemfilterParams = "&systemfilter=" + systemfilter + "&systemfilteroperator=" + systemfilteroperator + "&systemfiltervalue=" + systemfiltervalue;
-            } else {
-                systemfilterParams = "";
-            }
-            $.when(ajaxCallSync(urlJson + '&op=getregisters' + filterParams + systemfilterParams, 'GET', '')).done(function(data) {
-                regs = data['data'];
-            });
             return regs;
         },
         getAll: function() {

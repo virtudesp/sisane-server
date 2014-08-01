@@ -121,29 +121,29 @@ public abstract class GenericViewServiceImpl extends GenericMetaServiceImpl impl
         }
     }
 
-//    @Override
-//    //no se utiliza por ahora
-//    public String getList(int intRegsPerPag, int intPage, ArrayList<FilterBean> alFilter, HashMap<String, String> hmOrder, OPERATION_BEAN oBean, OPERATION_DAO oDao) throws Exception {
-//        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-//        try {
-//            //falta controlar la transacción a esta altura
-//            String columns = this.getColumns();
-//            String prettyColumns = this.getPrettyColumns();
-//            //String types = this.getTypes();
-//            String page = this.getPage(intRegsPerPag, intPage, alFilter, hmOrder, oBean, oDao);
-//            String pages = this.getPages(intRegsPerPag, alFilter, oDao);
-//            String registers = this.getRegisters(alFilter, oDao);
-//            String data = "{\"data\":{"
-//                    + "\"columns\":" + columns
-//                    + ",\"prettyColumns\":" + prettyColumns
-//                    // + ",\"types\":" + types
-//                    + ",\"page\":" + page
-//                    + ",\"pages\":" + pages
-//                    + ",\"registers\":" + registers
-//                    + "}}";
-//            return data;
-//        } catch (Exception e) {
-//            throw new ServletException("GetpageJson: View Error: " + e.getMessage());
-//        }
-//    }
+    @Override
+    //no se utiliza por ahora
+    public String getView(int intRegsPerPag, int intPage, ArrayList<FilterBean> alFilter, HashMap<String, String> hmOrder) throws Exception {
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            //falta controlar la transacción a esta altura
+            String columns = this.getColumns();
+            String prettyColumns = this.getPrettyColumns();
+            //String types = this.getTypes();
+            String page = this.getPage(intRegsPerPag, intPage, alFilter, hmOrder);
+            String pages = this.getPages(intRegsPerPag, alFilter);
+            String registers = this.getCount(alFilter);
+            String data = "{\"data\":{"
+                    + "\"columns\":" + columns
+                    + ",\"prettyColumns\":" + prettyColumns
+                    // + ",\"types\":" + types
+                    + ",\"page\":" + page
+                    + ",\"pages\":" + pages
+                    + ",\"registers\":" + registers
+                    + "}}";
+            return data;
+        } catch (Exception e) {
+            throw new ServletException("GetpageJson: View Error: " + e.getMessage());
+        }
+    }
 }
