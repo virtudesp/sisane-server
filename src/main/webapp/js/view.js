@@ -22,7 +22,7 @@ var vista = function(objeto) {
             $(place).append('<a class="btn btn-primary" href="jsp#/' + this.getName() + '/list/"' + id + '">Volver</a>');
         },
         getPageLinks: function(page_number, order, ordervalue, rpp, filter, filteroperator, filtervalue, systemfilter, systemfilteroperator, systemfiltervalue) {
-            total_pages = parseInt(objeto.getPages(rpp, filter, filteroperator, filtervalue, systemfilter, systemfilteroperator, systemfiltervalue));
+            total_pages = parseInt(objeto.getCachedPages(rpp, filter, filteroperator, filtervalue, systemfilter, systemfilteroperator, systemfiltervalue));
             page_number = parseInt(page_number);
             neighborhood = parseInt(neighborhood);
             if (page_number > total_pages) {
@@ -56,9 +56,10 @@ var vista = function(objeto) {
             return vector;
         },
         getObjectTable: function(id) {
-            cabecera = objeto.getPrettyFieldNames();
-            datos = objeto.getOne(id);
-            nombres = objeto.getFieldNames();
+            objeto.loadAggregateViewOne();
+            cabecera = objeto.getCachedPrettyFieldNames();
+            datos = objeto.getCachedOne();
+            nombres = objeto.getCachedFieldNames();
             var tabla = "<table class=\"table table table-bordered table-condensed\">";
             $.each(nombres, function(index, valor) {
                 tabla += '<tr><td><strong>' + cabecera[index] + '</strong></td>';
@@ -151,7 +152,7 @@ var vista = function(objeto) {
             });
         },
         getRegistersInfo: function(filter, filteroperator, filtervalue, systemfilter, systemfilteroperator, systemfiltervalue) {
-            regs = this.getObject().getRegisters(filter, filteroperator, filtervalue, systemfilter, systemfilteroperator, systemfiltervalue);
+            regs = this.getObject().getCachedRegisters(filter, filteroperator, filtervalue, systemfilter, systemfilteroperator, systemfiltervalue);
             return "<p><small>Mostrando una consulta de " + regs + " registros.</small></p>";
         },
         getOrderInfo: function(order, ordervalue) {

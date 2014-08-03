@@ -86,6 +86,9 @@ public class ControlJson extends HttpServlet {
                     case "get":
                         jsonResult = process.get(Integer.parseInt(request.getParameter("id")));
                         break;
+                    case "getaggregateviewone":
+                        jsonResult = process.getAggregateViewOne(Integer.parseInt(request.getParameter("id")));
+                        break;
                     case "getprettycolumns":
                         jsonResult = process.getPrettyColumns();
                         break;
@@ -95,7 +98,7 @@ public class ControlJson extends HttpServlet {
                     case "getpage":
                     case "getpages":
                     case "getregisters":
-                    case "getview":
+                    case "getaggregateviewsome":
                         int intRegsPerPag;
                         if (request.getParameter("rpp") == null) {
                             intRegsPerPag = 10;
@@ -133,7 +136,7 @@ public class ControlJson extends HttpServlet {
                                 }
                             }
                         }
-                        if ("getpage".equals(operation) || "getview".equals(operation)) {
+                        if ("getpage".equals(operation) || "getaggregateviewsome".equals(operation)) {
                             HashMap<String, String> hmOrder = new HashMap<>();
                             if (request.getParameter("order") != null) {
                                 if (request.getParameter("ordervalue") != null) {
@@ -147,7 +150,7 @@ public class ControlJson extends HttpServlet {
                             if ("getpage".equals(operation)) {
                                 jsonResult = process.getPage(intRegsPerPag, intPage, alFilter, hmOrder);
                             } else {
-                                jsonResult = process.getView(intRegsPerPag, intPage, alFilter, hmOrder);
+                                jsonResult = process.getAggregateViewSome(intRegsPerPag, intPage, alFilter, hmOrder);
                             }
                         } else {
                             if ("getpages".equals(operation)) {

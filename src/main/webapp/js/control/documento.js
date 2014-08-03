@@ -180,7 +180,7 @@ var control_documento = function(documentoView) {
             $(place).append('<a class="btn btn-primary" href="jsp#/usuario/list/"' + id + '">Volver</a>');
         },
         list: function(pag, order, ordervalue, rpp, filter, filteroperator, filtervalue, callback, systemfilter, systemfilteroperator, systemfiltervalue) {
-            documentoView.getObject().getView(pag, order, ordervalue, rpp, filter, filteroperator, filtervalue, systemfilter, systemfilteroperator, systemfiltervalue);
+            documentoView.getObject().loadAggregateViewSome(pag, order, ordervalue, rpp, filter, filteroperator, filtervalue, systemfilter, systemfilteroperator, systemfiltervalue);
 
             $('#indexContenido').empty().append(documentoView.getPanel("Listado de documento", documentoView.getEmptyList()));
             //muestra la botonera de páginas
@@ -192,10 +192,10 @@ var control_documento = function(documentoView) {
             } else {
                 //$("#datos").empty().append(documentoView.getLoading()).html(documentoView.getPageTable(pag, order, ordervalue, rpp, filter, filteroperator, filtervalue, systemfilter, systemfilteroperator, systemfiltervalue, cargaBotoneraMantenimiento()));
                 //var visibleFields = 13;
-                var fieldNames = documentoView.getObject().getFieldNames();
-                var prettyFieldNames = documentoView.getObject().getPrettyFieldNamesAcciones();
+                var fieldNames = documentoView.getObject().getCachedFieldNames();
+                var prettyFieldNames = documentoView.getObject().getCachedPrettyFieldNamesAcciones();
                 var UrlFromParamsWithoutOrder = documentoView.getUrlFromParamsWithoutOrder(pag, order, ordervalue, rpp, filter, filteroperator, filtervalue, systemfilter, systemfilteroperator, systemfiltervalue);
-
+                var page = documentoView.getObject().getCachedPage(pag, order, ordervalue, rpp, filter, filteroperator, filtervalue, systemfilter, systemfilteroperator, systemfiltervalue);
                 $("#tableHeaders").empty().append(documentoView.getLoading()).html(
                         //documentoView.getHeaderPageTable(prettyFieldNames, visibleFields, documentoView.getObject().getName(), UrlFromParamsWithoutOrder)
                                 function() {
@@ -232,11 +232,7 @@ var control_documento = function(documentoView) {
                                     return tabla;
                                 }
                         );
-
                         $("#tableBody").empty().append(documentoView.getLoading()).html(function() {
-                            page = documentoView.getObject().getPage(pag, order, ordervalue, rpp, filter, filteroperator, filtervalue, systemfilter, systemfilteroperator, systemfiltervalue);
-
-
                             var tabla = "";
                             $.each(page, function(index, value) {
                                 tabla += '<tr>';
@@ -244,9 +240,9 @@ var control_documento = function(documentoView) {
                                 var id;
                                 var strClaveAjena;
                                 $.each(fieldNames, function(index, valor) {
-//                                    if ("id" == valor) {
-//                                        id = value[valor];
-//                                    }
+                                    if ("id" == valor) {
+                                        id = value[valor];
+                                    }
                                     //numField++;
                                     //if (numField <= visibleFields) {
                                     if (/obj_tipodocumento/.test(valor)) {
@@ -294,16 +290,6 @@ var control_documento = function(documentoView) {
                                 tabla += '</tr>';
                             });
                             return tabla;
-
-
-
-
-
-
-
-
-
-
 
 
                             //return documentoView.getBodyPageTable(page, fieldNames, visibleFields, documentoView.getObject().getName(), documentoView.getObject().getPath());

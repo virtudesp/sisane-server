@@ -18,7 +18,6 @@
 package net.daw.service.generic;
 
 import net.daw.service.publicinterface.ViewServiceInterface;
-import net.daw.service.publicinterface.TableServiceInterface;
 import net.daw.service.publicinterface.MetaServiceInterface;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -27,7 +26,6 @@ import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import javax.servlet.ServletException;
 import net.daw.bean.generic.GenericBeanImpl;
 import net.daw.bean.publicinterface.BeanInterface;
@@ -123,7 +121,7 @@ public abstract class GenericViewServiceImpl extends GenericMetaServiceImpl impl
 
     @Override
     //no se utiliza por ahora
-    public String getView(int intRegsPerPag, int intPage, ArrayList<FilterBean> alFilter, HashMap<String, String> hmOrder) throws Exception {
+    public String getAggregateViewSome(int intRegsPerPag, int intPage, ArrayList<FilterBean> alFilter, HashMap<String, String> hmOrder) throws Exception {
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         try {
             //falta controlar la transacción a esta altura
@@ -143,7 +141,27 @@ public abstract class GenericViewServiceImpl extends GenericMetaServiceImpl impl
                     + "}}";
             return data;
         } catch (Exception e) {
-            throw new ServletException("GetpageJson: View Error: " + e.getMessage());
+            throw new ServletException("getAggregateViewSome: View Error: " + e.getMessage());
         }
     }
+    
+    @Override
+     public String getAggregateViewOne(Integer id) throws Exception{
+          try {
+            //falta controlar la transacción a esta altura
+            String columns = this.getColumns();
+            String prettyColumns = this.getPrettyColumns();
+            //String types = this.getTypes();
+            String one = this.get(id);
+            String data = "{\"data\":{"
+                    + "\"columns\":" + columns
+                    + ",\"prettyColumns\":" + prettyColumns
+                    // + ",\"types\":" + types
+                    + ",\"data\":" + one
+                    + "}}";
+            return data;
+        } catch (Exception e) {
+            throw new ServletException("getAggregateViewOne: View Error: " + e.getMessage());
+        }
+     }
 }
