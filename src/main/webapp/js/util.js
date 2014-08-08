@@ -197,6 +197,8 @@ function replaceAll(str, search, rpl) {
     return str.split(search).join(rpl);
 }
 
+
+
 function inicializacion() {
 
     creole = new Parse.Simple.Creole({
@@ -258,6 +260,16 @@ function inicializacion() {
     };
 }
 
+function getIntegerArray(min, max) {
+    var iArray = [];
+    for (var counter = min; counter <= max; counter++) {
+        iArray.push(counter);
+    }
+    return iArray;
+}
+
+
+
 function htmlEncode(value) {
     //create a in-memory div, set it's inner text(which jQuery automatically encodes)
     //then grab the encoded contents back out.  The div never exists on the page.
@@ -272,8 +284,8 @@ function enviarDatosUpdateForm(view, prefijo_div) {
     var disabled = $(prefijo_div + '#formulario').find(':input:disabled').removeAttr('disabled');
     var jsonObj = [];
     jsonObj = $(prefijo_div + '#formulario').serializeObject();
-    disabled.attr('disabled','disabled');
-   
+    disabled.attr('disabled', 'disabled');
+
     //json is sent encoded. be careful of the dates. Dates must be decoded at server side before fill the bean
     //jsonfile = {json: htmlEncode(JSON.stringify(jsonObj))};
     jsonfile = {json: JSON.stringify(jsonObj)};
@@ -302,6 +314,18 @@ function linkBack() {
 }
 ;
 
+$.fn.populateSelectBox = function(values, captions) {
+    var combo = $(this);
+    if (combo.is("select")) {
+        $.each(values, function(index) {
+            if (typeof captions === "undefined")
+                combo.append($("<option />").val(this).text(this));
+            else
+                combo.append($("<option />").val(this).text(captions[index]));
+        });
+    }
+};
+
 function parameters(url) {
     if (url == "")
         return {};
@@ -318,3 +342,18 @@ function parameters(url) {
     return b;
 }
 ;
+
+function getUrlObjectFromParamsWithoutParamArray(urlObj, nameParameterArray) {
+    $.each(nameParameterArray, function() {
+        delete urlObj[this];
+    })
+    return urlObj;
+}
+
+function getUrlStringFromParamsObject(urlObj) {
+    var result = "";
+    for (var key in urlObj) {
+        result += "&" + key + "=" + urlObj[key];
+    }
+    return result;
+}

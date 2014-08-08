@@ -21,15 +21,7 @@ var vista = function(objeto) {
             $(place).append('<a class="btn btn-primary" href="jsp#/' + this.getName() + '/remove/"' + id + '">Borrar</a>');
             $(place).append('<a class="btn btn-primary" href="jsp#/' + this.getName() + '/list/"' + id + '">Volver</a>');
         },
-        getPageLinks: function(page_number, order, ordervalue, rpp, filter, filteroperator, filtervalue, systemfilter, systemfilteroperator, systemfiltervalue) {
-            total_pages = parseInt(objeto.getCachedPages(rpp, filter, filteroperator, filtervalue, systemfilter, systemfilteroperator, systemfiltervalue));
-            page_number = parseInt(page_number);
-            neighborhood = parseInt(neighborhood);
-            if (page_number > total_pages) {
-                page_number = total_pages;
-            }
-            UrlFromParamsWithoutPage = this.getUrlFromParamsWithoutPage(page_number, order, ordervalue, rpp, filter, filteroperator, filtervalue, systemfilter, systemfilteroperator, systemfiltervalue);
-            url = 'jsp#/' + objeto.getName() + '/list/' + UrlFromParamsWithoutPage;
+        getPageLinks: function(url, page_number, total_pages, neighborhood) {
             vector = "<ul class=\"pagination\">";
             if (page_number > 1)
                 vector += ('<li><a class="pagination_link" id="' + (page_number - 1) + '" href="' + url + '&page=' + (page_number - 1) + '">prev</a></li>');
@@ -318,44 +310,106 @@ var vista = function(objeto) {
             }
             return tabla;
         },
-        getBodyPageTable: function(page, fieldNames, visibleFields, operationName, path) {
+        getBodyPageTable: function(page, fieldNames, visibleFields, tdbuttons) {
+//            var tabla = "";
+//            $.each(page, function(index, value) {
+//                tabla += '<tr>';
+//                var numField = 0;
+//                var id;
+//                $.each(fieldNames, function(index, valor) {
+//                    if ("id" == valor) {
+//                        id = value[valor];
+//                    }
+//                    //numField++;
+//                    //if (numField <= visibleFields) {
+//                        if (/id_/.test(valor)) {
+//                            //falta codificar un método dame clave ajena en el modelo ...
+//
+//                            //falta sacar esto como un callback
+//
+//                            foreignRegister = objeto.getForeignKey(value[valor], valor);
+//                            tabla += '<td>' + foreignRegister["id"] + '</td>';
+//
+//
+//
+////                            $.when(ajaxCallSync(path + '/json?ob=' + valor.split("_")[1].replace(/[0-9]*$/, "") + '&op=get&id=' + value[valor], 'GET', '')).done(function(data) {
+////                                var contador = 0;
+////                                var add_tabla = "";
+////                                for (key in data) {
+////                                    if (contador == 0)
+////                                        add_tabla = '<td>id=' + data[key] + '(no existe)</td>';
+////                                    if (contador == 1)
+////                                        add_tabla = '<td>' + data[key] + '</td>';
+////                                    contador++;
+////                                }
+////                                if (contador == 0) {
+////                                    add_tabla = '<td>' + value[valor] + ' #error</td>';
+////                                }
+////                                tabla += add_tabla;
+////                            });
+//                        } else {
+//                            switch (value[valor]) {
+//                                case true:
+//                                    tabla += '<td><i class="glyphicon glyphicon-ok"></i></td>';
+//                                    break;
+//                                case false:
+//                                    tabla += '<td><i class="glyphicon glyphicon-remove"></i></td>';
+//                                    break;
+//                                default:
+//                                    var fieldContent = decodeURIComponent(value[valor]);
+//                                    if (typeof fieldContent == "string") {
+//                                        if (value[valor].length > 50) //don't show too long fields
+//                                            fieldContent = decodeURIComponent(value[valor]).substr(0, 20) + " ...";
+//                                    }
+//                                    tabla += '<td>' + fieldContent + '</td>';
+//                            }
+//                        }
+//                    //}
+//                });
+//                tabla += '<td>';
+//                tabla += tdbuttons(id);
+////                tabla += '<div class="btn-toolbar" role="toolbar"><div class="btn-group btn-group-xs">';
+////                tabla += '<a class="btn btn-default" href="jsp#/' + operationName + '/view/' + id + '"><i class="glyphicon glyphicon-eye-open"></i></a>';
+////                tabla += '<a class="btn btn-default" href="jsp#/' + operationName + '/edit/' + id + '"><i class="glyphicon glyphicon-pencil"></i></a>';
+////                tabla += '<a class="btn btn-default" href="jsp#/' + operationName + '/remove/' + id + '"><i class="glyphicon glyphicon-remove"></i></a>';
+////                tabla += '</div></div>';
+//                tabla += '</td>';
+//                tabla += '</tr>';
+//            });
+//            return tabla;
+
+
             var tabla = "";
             $.each(page, function(index, value) {
                 tabla += '<tr>';
                 var numField = 0;
                 var id;
+                var strClaveAjena;
                 $.each(fieldNames, function(index, valor) {
                     if ("id" == valor) {
                         id = value[valor];
                     }
                     numField++;
                     if (numField <= visibleFields) {
-                        if (/id_/.test(valor)) {
-                            //falta codificar un método dame clave ajena en el modelo ...
-
-                            //falta sacar esto como un callback
-
-                            foreignRegister = objeto.getForeignKey(value[valor], valor);
-                            tabla += '<td>' + foreignRegister["id"] + '</td>';
-
-
-
-//                            $.when(ajaxCallSync(path + '/json?ob=' + valor.split("_")[1].replace(/[0-9]*$/, "") + '&op=get&id=' + value[valor], 'GET', '')).done(function(data) {
-//                                var contador = 0;
-//                                var add_tabla = "";
-//                                for (key in data) {
-//                                    if (contador == 0)
-//                                        add_tabla = '<td>id=' + data[key] + '(no existe)</td>';
-//                                    if (contador == 1)
-//                                        add_tabla = '<td>' + data[key] + '</td>';
-//                                    contador++;
-//                                }
-//                                if (contador == 0) {
-//                                    add_tabla = '<td>' + value[valor] + ' #error</td>';
-//                                }
-//                                tabla += add_tabla;
-//                            });
-                        } else {
+                        if (/obj_tipodocumento/.test(valor)) {
+                            if (value[valor].id > 0) {
+                                strClaveAjena = value[valor].id + ": " + value[valor].descripcion;
+                                strClaveAjena = '<a href="jsp#/tipodocumento/view/' + value[valor].id + '">' + strClaveAjena + '</a>';
+                                tabla += '<td>' + strClaveAjena + '</td>';
+                            } else {
+                                tabla += '<td>sin tipo</td>';
+                            }
+                        }
+                        if (/obj_usuario/.test(valor)) {
+                            if (value[valor].id > 0) {
+                                strClaveAjena = value[valor].id + ": " + value[valor].login;
+                                strClaveAjena = '<a href="jsp#/usuario/view/' + value[valor].id + '">' + strClaveAjena + '</a>';
+                                tabla += '<td>' + strClaveAjena + '</td>';
+                            } else {
+                                tabla += '<td>sin usuario</td>';
+                            }
+                        }
+                        if (!(/obj_/.test(valor))) {
                             switch (value[valor]) {
                                 case true:
                                     tabla += '<td><i class="glyphicon glyphicon-ok"></i></td>';
@@ -374,14 +428,15 @@ var vista = function(objeto) {
                         }
                     }
                 });
-                tabla += '<td><div class="btn-toolbar" role="toolbar"><div class="btn-group btn-group-xs">';
-                tabla += '<a class="btn btn-default" href="jsp#/' + operationName + '/view/' + id + '"><i class="glyphicon glyphicon-eye-open"></i></a>';
-                tabla += '<a class="btn btn-default" href="jsp#/' + operationName + '/edit/' + id + '"><i class="glyphicon glyphicon-pencil"></i></a>';
-                tabla += '<a class="btn btn-default" href="jsp#/' + operationName + '/remove/' + id + '"><i class="glyphicon glyphicon-remove"></i></a>';
-                tabla += '</div></div></td>';
+                tabla += '<td>';
+                tabla += tdbuttons(id);
+                tabla += '</td>';
                 tabla += '</tr>';
             });
             return tabla;
+
+
+
         },
         getPageTable: function(pag, order, ordervalue, rpp, filter, filteroperator, filtervalue, systemfilter, systemfilteroperator, systemfiltervalue, botonera) {
             var tabla = '';

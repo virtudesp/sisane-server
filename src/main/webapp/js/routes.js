@@ -11,7 +11,7 @@ function do_routes(path) {
      * botonera
      */
 
-   
+
 
     Path.map("#/documento").to(function() {
         var documentoObject = objeto('documento', path);
@@ -21,7 +21,8 @@ function do_routes(path) {
         $('#indexContenidoJsp').empty();
         $('#indexContenido').empty().append(documentoView.getEmptyList());
 
-        documentoControl.list(1, null, null, 10, null, null, null, null);
+        //documentoControl.list({page: 1, rpp: 10}, null);
+        documentoControl.list(1, null, null, 10, null, null, null, null, null, null, null);
         return false;
     });
 
@@ -33,6 +34,12 @@ function do_routes(path) {
         $('#indexContenidoJsp').empty();
         $('#indexContenido').empty().append(documentoView.getEmptyList());
         qs = parameters(this.params['url']);
+
+
+        //qs = getUrlObjectFromParamsWithoutParamArray(qs, ["page"]);
+        //alert(getUrlStringFromParamsObject(qs));
+        //documentoControl.list(qs, null);
+
         documentoControl.list(qs["page"], qs["order"], qs["ordervalue"], qs["rpp"], qs["filter"], qs["filteroperator"], qs["filtervalue"], null);
         return false;
     });

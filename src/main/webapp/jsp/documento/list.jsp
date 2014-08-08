@@ -10,7 +10,7 @@
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.Iterator"%>
 <%
-    
+
     ArrayList<String> alColumnsNames;
     Iterator<String> oIterador;
     String strNombreMantenimiento = "documento";
@@ -19,9 +19,31 @@
 %>
 
 <div class="row">
-    <div class="col-md-4">       
-        <a class="btn btn-primary" href='jsp#/documento/new'>Crear documento</a>
-        <a class="btn btn-primary" id="btnDisplayedFields">Campos visibles</a>
+
+    <div class="col-md-2">
+        <div class="text-right">
+            <div class="panel panel-default">
+                <!-- Default panel contents -->
+                <div class="panel-heading">Nuevo</div>
+                <div class="panel-body">
+                    <a class="btn btn-primary" href='jsp#/documento/new'>Crear documento</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="text-right">
+            <div class="panel panel-default">
+                <!-- Default panel contents -->
+                <div class="panel-heading">Campos visibles</div>
+                <div class="panel-body">     
+                    <form class="navbar-form navbar-right" role="form" action="Controller" method="post" id="visibleFieldsForm">
+                        <select id="selectVisibleFields" class="form-control" name="filter" width="80" style="width: 70px">
+                        </select>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
     <div class="col-md-8">
         <div class="text-right">
@@ -30,18 +52,9 @@
                 <div class="panel-heading">Filtro</div>
                 <div class="panel-body">
                     <form class="navbar-form navbar-right" role="form" action="Controller" method="post" id="empresaForm">
-                        <select style="width:160px;" id="selectFilter" class="form-control" name="filter" width="80" style="width: 100px">
-                            <%
-                                alColumnsNames = oDocumentoDao.getColumnsNames();
-                                oIterador = alColumnsNames.listIterator();
-                                while (oIterador.hasNext()) {
-                                    String strNombreColumna = oIterador.next();
-                                    String strNombreColumnaPretty = strNombreColumna.charAt(0) + strNombreColumna.substring(1);
-                            %>
-                            <option value="<%=strNombreColumna%>"><%=strNombreColumnaPretty%></option>
-                            <% }%>
+                        <select id="selectFilter" class="form-control" name="filter" width="80" style="width: 160px">
                         </select>
-                        <select style="width:200px;" id="selectFilteroperator" class="form-control" name="filteroperator" width="80" style="width: 100px">
+                        <select id="selectFilteroperator" class="form-control" name="filteroperator" width="80" style="width: 200px">
                             <option value="like">contiene</option>
                             <option value="notlike">no contiene</option>
                             <option value="equals">es igual a</option>
@@ -51,7 +64,7 @@
                             <option value="greater">es mayor que</option>
                             <option value="greaterorequal">es mayor o igual que</option> 
                         </select>
-                        <input style="width:140px;" id="inputFiltervalue" class="form-control" name="filtervalue" type="text" size="20" maxlength="50" value=""  width="100" style="width: 90px" placeholder="Valor"/>
+                        <input id="inputFiltervalue" class="form-control" name="filtervalue" type="text" size="20" maxlength="50" value=""  width="100" style="width: 140px" placeholder="Valor"/>
                         <input type="submit" class="btn" id="btnFiltrar" name="btnFiltrar" value="Filtrar " />
                     </form>
                 </div>
@@ -151,7 +164,7 @@
                     while (oIterador.hasNext()) {
                         String strNombreColumna = oIterador.next();
                         //String strNombreColumnaPretty = strNombreColumna.charAt(0) + strNombreColumna.substring(1);
-                %>
+%>
                 <label class="checkbox-inline">
                     <input type="checkbox" id="inlineCheckbox1"><%=strNombreColumna%></input>
                 </label>
