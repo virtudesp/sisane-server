@@ -245,8 +245,8 @@ var vista = function(objeto) {
                 url += "&systemfiltervalue=" + systemfiltervalue;
             return url;
         },
-        getRppLinks: function(pag, order, ordervalue, rpp, filter, filteroperator, filtervalue, systemfilter, systemfilteroperator, systemfiltervalue, botonera) {
-            var UrlFromParamsWithoutRpp = this.getUrlFromParamsWithoutRpp(pag, order, ordervalue, rpp, filter, filteroperator, filtervalue, systemfilter, systemfilteroperator, systemfiltervalue);
+        getRppLinks: function(objParams) {
+            var UrlFromParamsWithoutRpp = getUrlStringFromParamsObject(getUrlObjectFromParamsWithoutParamArray(objParams, ["rpp"]));
             var botonera = '<div id="pagination"><ul class="pagination">';
             if (rpp == 5)
                 botonera += '<li class="active">';

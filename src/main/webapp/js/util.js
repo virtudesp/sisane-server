@@ -344,10 +344,11 @@ function parameters(url) {
 ;
 
 function getUrlObjectFromParamsWithoutParamArray(urlObj, nameParameterArray) {
+    var newUrlObj = jQuery.extend(true, {}, urlObj); //http://stackoverflow.com/questions/122102/what-is-the-most-efficient-way-to-clone-an-object
     $.each(nameParameterArray, function() {
-        delete urlObj[this];
+        delete newUrlObj[this];
     })
-    return urlObj;
+    return newUrlObj;
 }
 
 function getUrlStringFromParamsObject(urlObj) {
@@ -355,5 +356,5 @@ function getUrlStringFromParamsObject(urlObj) {
     for (var key in urlObj) {
         result += "&" + key + "=" + urlObj[key];
     }
-    return result;
+    return result.substring(1);
 }

@@ -208,12 +208,16 @@ var control_documento = function(documentoView) {
 
 
             //show page button pad
-            total_pages = parseInt(documentoView.getObject().getCachedPages(rpp, filter, filteroperator, filtervalue, systemfilter, systemfilteroperator, systemfiltervalue));
+            total_pages = parseInt(documentoView.getObject().getCachedPages());
             page_number = parseInt(pag);
             if (page_number > total_pages) {
                 page_number = total_pages;
             }
-            UrlFromParamsWithoutPage = documentoView.getUrlFromParamsWithoutPage(page_number, order, ordervalue, rpp, filter, filteroperator, filtervalue, systemfilter, systemfilteroperator, systemfiltervalue);
+            //UrlFromParamsWithoutPage = documentoView.getUrlFromParamsWithoutPage(page_number, order, ordervalue, rpp, filter, filteroperator, filtervalue, systemfilter, systemfilteroperator, systemfiltervalue);
+            UrlFromParamsWithoutPage = getUrlStringFromParamsObject(getUrlObjectFromParamsWithoutParamArray(objParams, ["page"]));
+            
+            
+            
             url = 'jsp#/' + documentoView.getObject().getName() + '/list/' + UrlFromParamsWithoutPage;
             $("#pagination").empty().append(documentoView.getLoading()).html(documentoView.getPageLinks(url, page_number, total_pages, 2));
 
@@ -231,9 +235,9 @@ var control_documento = function(documentoView) {
             var fieldNames = documentoView.getObject().getCachedFieldNames();
             var prettyFieldNames = documentoView.getObject().getCachedPrettyFieldNamesAcciones();
             var UrlFromParamsWithoutOrder = documentoView.getUrlFromParamsWithoutOrder(pag, order, ordervalue, rpp, filter, filteroperator, filtervalue, systemfilter, systemfilteroperator, systemfiltervalue);
-            var page = documentoView.getObject().getCachedPage(pag, order, ordervalue, rpp, filter, filteroperator, filtervalue, systemfilter, systemfilteroperator, systemfiltervalue);
+            var page = documentoView.getObject().getCachedPage();
             $("#tableHeaders").empty().append(documentoView.getLoading()).html(
-                    documentoView.getHeaderPageTable(prettyFieldNames, fieldNames,visibleFields, documentoView.getObject().getName(), UrlFromParamsWithoutOrder));
+                    documentoView.getHeaderPageTable(prettyFieldNames, fieldNames, visibleFields, documentoView.getObject().getName(), UrlFromParamsWithoutOrder));
             $("#tableBody").empty().append(documentoView.getLoading()).html(function() {
                 return documentoView.getBodyPageTable(page, fieldNames, visibleFields, function(id) {
                     if (callbackLinkParameters) {
@@ -260,7 +264,7 @@ var control_documento = function(documentoView) {
             $("#order").empty().append(documentoView.getLoading()).html(documentoView.getOrderInfo(order, ordervalue));
             //muestra la frase de estado del filtro de la tabla aplicado
             $("#filter").empty().append(documentoView.getLoading()).html(documentoView.getFilterInfo(filter, filteroperator, filtervalue));
-            $('#rpp1').empty().append(documentoView.getRppLinks(pag, order, ordervalue, rpp, filter, filteroperator, filtervalue, systemfilter, systemfilteroperator, systemfiltervalue));
+            $('#rpp1').empty().append(documentoView.getRppLinks(objParams));
             //asignación del evento de filtrado al boton
             $('#btnFiltrar').unbind('click');
             $("#btnFiltrar").click(function(event) {
