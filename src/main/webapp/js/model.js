@@ -14,23 +14,23 @@ var objeto = function(clase, ContextPath) {
     var cOne = null;
     return {
         //contexto público (interface)
-        loadAggregateViewSome: function(pagina, order, ordervalue, rpp, filter, filteroperator, filtervalue, systemfilter, systemfilteroperator, systemfiltervalue) {
-            if (order) {
-                orderParams = '&order=' + order + '&ordervalue=' + ordervalue;
+        loadAggregateViewSome: function(objParams) {
+            if (objParams.order) {
+                orderParams = '&order=' + objParams.order + '&ordervalue=' + objParams.ordervalue;
             } else {
                 orderParams = "";
             }
-            if (filter) {
-                filterParams = "&filter=" + filter + "&filteroperator=" + filteroperator + "&filtervalue=" + filtervalue;
+            if (objParams.filter) {
+                filterParams = "&filter=" + objParams.filter + "&filteroperator=" + objParams.filteroperator + "&filtervalue=" + objParams.filtervalue;
             } else {
                 filterParams = "";
             }
-            if (systemfilter) {
-                systemfilterParams = "&systemfilter=" + systemfilter + "&systemfilteroperator=" + systemfilteroperator + "&systemfiltervalue=" + systemfiltervalue;
+            if (objParams.systemfilter) {
+                systemfilterParams = "&systemfilter=" + objParams.systemfilter + "&systemfilteroperator=" + objParams.systemfilteroperator + "&systemfiltervalue=" + objParams.systemfiltervalue;
             } else {
                 systemfilterParams = "";
             }
-            $.when(ajaxCallSync(urlJson + '&op=getaggregateviewsome' + filterParams + '&rpp=' + rpp + orderParams + '&page=' + pagina + systemfilterParams, 'GET', '')).done(function(data) {
+            $.when(ajaxCallSync(urlJson + '&op=getaggregateviewsome' + filterParams + '&rpp=' + objParams.rpp + orderParams + '&page=' + objParams.page + systemfilterParams, 'GET', '')).done(function(data) {
                 pagina_objs = data; //decodeURI htmlDecode
             });
             //return pagina_objs;

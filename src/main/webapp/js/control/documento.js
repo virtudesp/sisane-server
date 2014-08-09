@@ -182,44 +182,43 @@ var control_documento = function(documentoView) {
             $(place).append('<a class="btn btn-primary" href="jsp#/documento/edit/' + id + '">Guardar</a>');
             $(place).append('<a class="btn btn-primary" href="jsp#/usuario/list/"' + id + '">Volver</a>');
         },
-        list: function(pag, order, ordervalue, rpp, filter, filteroperator, filtervalue, systemfilter, systemfilteroperator, systemfiltervalue, callbackLinkParameters) {
-
+//        list: function(pag, order, ordervalue, rpp, filter, filteroperator, filtervalue, systemfilter, systemfilteroperator, systemfiltervalue, callbackLinkParameters) {
+        list: function(objParams, callbackLinkParameters) {
 
 
 
             // ojo pte!!!
             //implementar función get parameter segura para recoger params
-//            pag = arrParameters["page"];
-//            order = arrParameters["order"];
-//            ordervalue = arrParameters["ordervalue"];
-//            rpp = arrParameters["rpp"];
-//            filter = arrParameters["filter"];
-//            filteroperator = arrParameters["filteroperator"];
-//            filtervalue = arrParameters["filtervalue"];
-//            systemfilter = arrParameters["systemfilter"];
-//            systemfilteroperator = arrParameters["systemfilteroperator"];
-//            systemfiltervalue = arrParameters["systemfiltervalue"];
+            pag = objParams["page"];
+            order = objParams["order"];
+            ordervalue = objParams["ordervalue"];
+            rpp = objParams["rpp"];
+            filter = objParams["filter"];
+            filteroperator = objParams["filteroperator"];
+            filtervalue = objParams["filtervalue"];
+            systemfilter = objParams["systemfilter"];
+            systemfilteroperator = objParams["systemfilteroperator"];
+            systemfiltervalue = objParams["systemfiltervalue"];
 
 
             //get all data from server in one http call and store it
-            documentoView.getObject().loadAggregateViewSome(pag, order, ordervalue, rpp, filter, filteroperator, filtervalue, systemfilter, systemfilteroperator, systemfiltervalue);
+            documentoView.getObject().loadAggregateViewSome(objParams);
             //get html template from server and show it
             $('#indexContenido').empty().append(documentoView.getPanel("Listado de documento", documentoView.getEmptyList()));
 
 
-
+            //show page button pad
             total_pages = parseInt(documentoView.getObject().getCachedPages(rpp, filter, filteroperator, filtervalue, systemfilter, systemfilteroperator, systemfiltervalue));
             page_number = parseInt(pag);
             if (page_number > total_pages) {
                 page_number = total_pages;
             }
-            
             UrlFromParamsWithoutPage = documentoView.getUrlFromParamsWithoutPage(page_number, order, ordervalue, rpp, filter, filteroperator, filtervalue, systemfilter, systemfilteroperator, systemfiltervalue);
             url = 'jsp#/' + documentoView.getObject().getName() + '/list/' + UrlFromParamsWithoutPage;
-
-
-            //show page button pad
             $("#pagination").empty().append(documentoView.getLoading()).html(documentoView.getPageLinks(url, page_number, total_pages, 2));
+
+
+
             //show main list
             //$("#datos").empty().append(documentoView.getLoading()).html(documentoView.getPageTable(pag, order, ordervalue, rpp, filter, filteroperator, filtervalue, systemfilter, systemfilteroperator, systemfiltervalue, cargaBotoneraMantenimiento()));
 
@@ -234,7 +233,7 @@ var control_documento = function(documentoView) {
             var UrlFromParamsWithoutOrder = documentoView.getUrlFromParamsWithoutOrder(pag, order, ordervalue, rpp, filter, filteroperator, filtervalue, systemfilter, systemfilteroperator, systemfiltervalue);
             var page = documentoView.getObject().getCachedPage(pag, order, ordervalue, rpp, filter, filteroperator, filtervalue, systemfilter, systemfilteroperator, systemfiltervalue);
             $("#tableHeaders").empty().append(documentoView.getLoading()).html(
-                    documentoView.getHeaderPageTable(prettyFieldNames, visibleFields, documentoView.getObject().getName(), UrlFromParamsWithoutOrder));
+                    documentoView.getHeaderPageTable(prettyFieldNames, fieldNames,visibleFields, documentoView.getObject().getName(), UrlFromParamsWithoutOrder));
             $("#tableBody").empty().append(documentoView.getLoading()).html(function() {
                 return documentoView.getBodyPageTable(page, fieldNames, visibleFields, function(id) {
                     if (callbackLinkParameters) {

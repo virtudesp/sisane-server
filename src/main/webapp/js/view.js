@@ -278,7 +278,7 @@ var vista = function(objeto) {
             botonera += '</ul></div>';
             return botonera;
         },
-        getHeaderPageTable: function(prettyFieldNames, visibleFields, operationName, UrlFromParamsWithoutOrder) {
+        getHeaderPageTable: function(prettyFieldNames, fieldNames, visibleFields, operationName, UrlFromParamsWithoutOrder) {
             var numField = 0; //visible field counter
             var tabla = "";
             if (prettyFieldNames !== null) {
@@ -290,14 +290,20 @@ var vista = function(objeto) {
                             tabla += '<th class="col-md-2">' + value;
                             tabla += '</th>';
                         } else {
-                            if (value === "id") {
+                            if (fieldNames[numField - 1] === "id") {
                                 tabla += '<th class="col-md-1">' + value;
                             } else {
                                 tabla += '<th>' + value;
                             }
+                            if (fieldNames[numField - 1].substr(0, 4) == "obj_") {
+                                fieldName = fieldNames[numField - 1].substring(4);
+                                fieldName = "id_" + fieldName;
+                            } else {
+                                fieldName=fieldNames[numField - 1];
+                            }
                             tabla += '<br />';
-                            tabla += '<a class="orderAsc' + index + '" href="jsp#/' + operationName + '/list/' + UrlFromParamsWithoutOrder + '&order=' + value + '&ordervalue=asc"><i class="glyphicon glyphicon-arrow-up"></i></a>';
-                            tabla += '<a class="orderDesc' + index + '" href="jsp#/' + operationName + '/list/' + UrlFromParamsWithoutOrder + '&order=' + value + '&ordervalue=desc"><i class="glyphicon glyphicon-arrow-down"></i></a>';
+                            tabla += '<a class="orderAsc' + index + '" href="jsp#/' + operationName + '/list/' + UrlFromParamsWithoutOrder + '&order=' + fieldName + '&ordervalue=asc"><i class="glyphicon glyphicon-arrow-up"></i></a>';
+                            tabla += '<a class="orderDesc' + index + '" href="jsp#/' + operationName + '/list/' + UrlFromParamsWithoutOrder + '&order=' + fieldName + '&ordervalue=desc"><i class="glyphicon glyphicon-arrow-down"></i></a>';
                             tabla += '</th>';
                         }
                     }
