@@ -143,13 +143,13 @@ var vista = function(objeto) {
 
             });
         },
-        getRegistersInfo: function(filter, filteroperator, filtervalue, systemfilter, systemfilteroperator, systemfiltervalue) {
-            regs = this.getObject().getCachedRegisters(filter, filteroperator, filtervalue, systemfilter, systemfilteroperator, systemfiltervalue);
+        getRegistersInfo: function() {
+            regs = this.getObject().getCachedRegisters();
             return "<p><small>Mostrando una consulta de " + regs + " registros.</small></p>";
         },
-        getOrderInfo: function(order, ordervalue) {
+        getOrderInfo: function(objParams) {
             if (order) {
-                strOrder = "<p><small>Contenido ordenado por " + order + " (" + ordervalue + ') <a href="#" id="linkQuitarOrden">(Quitar orden)</a></small></p>';
+                strOrder = "<p><small>Contenido ordenado por " + objParams["order"] + " (" + objParams["ordervalue"] + ') <a href="jsp#/' + this.getName() + '/list/' + getUrlStringFromParamsObject(getUrlObjectFromParamsWithoutParamArray(objParams, ["order", "ordervalue"])) + '" id="linkQuitarOrden">(Quitar orden)</a></small></p>';
             } else {
                 strOrder = "<p>Contenido no ordenado</p>";
             }
@@ -278,9 +278,10 @@ var vista = function(objeto) {
             botonera += '</ul></div>';
             return botonera;
         },
-        getHeaderPageTable: function(prettyFieldNames, fieldNames, visibleFields, operationName, UrlFromParamsWithoutOrder) {
+        getHeaderPageTable: function(prettyFieldNames, fieldNames, visibleFields,  UrlFromParamsWithoutOrder) {
             var numField = 0; //visible field counter
             var tabla = "";
+            var strOperationName= this.getName();
             if (prettyFieldNames !== null) {
                 tabla += '<tr>';
                 $.each(prettyFieldNames, function(index, value) {
@@ -302,8 +303,8 @@ var vista = function(objeto) {
                                 fieldName=fieldNames[numField - 1];
                             }
                             tabla += '<br />';
-                            tabla += '<a class="orderAsc' + index + '" href="jsp#/' + operationName + '/list/' + UrlFromParamsWithoutOrder + '&order=' + fieldName + '&ordervalue=asc"><i class="glyphicon glyphicon-arrow-up"></i></a>';
-                            tabla += '<a class="orderDesc' + index + '" href="jsp#/' + operationName + '/list/' + UrlFromParamsWithoutOrder + '&order=' + fieldName + '&ordervalue=desc"><i class="glyphicon glyphicon-arrow-down"></i></a>';
+                            tabla += '<a class="orderAsc' + index + '" href="jsp#/' + strOperationName + '/list/' + UrlFromParamsWithoutOrder + '&order=' + fieldName + '&ordervalue=asc"><i class="glyphicon glyphicon-arrow-up"></i></a>';
+                            tabla += '<a class="orderDesc' + index + '" href="jsp#/' + strOperationName + '/list/' + UrlFromParamsWithoutOrder + '&order=' + fieldName + '&ordervalue=desc"><i class="glyphicon glyphicon-arrow-down"></i></a>';
                             tabla += '</th>';
                         }
                     }
