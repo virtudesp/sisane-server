@@ -50,7 +50,7 @@ var objeto = function(clase, ContextPath) {
             cFieldNames = pagina_objs.data.columns;
             cCountFields = cFieldNames.length;
             cPrettyFieldNames = pagina_objs.data.prettyColumns;
-            cOne = pagina_objs.data;
+            cOne = pagina_objs.data.data;
         },
         getCachedOne: function() {
             return cOne;

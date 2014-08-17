@@ -260,7 +260,7 @@ var control_documento = function(documentoView) {
             });
             $('#selectFilter').empty().populateSelectBox(fieldNames, prettyFieldNames);
             //show the number of registers of the actual query
-            $("#registers").empty().append(documentoView.getLoading()).html(documentoView.getRegistersInfo());
+            $("#registers").empty().append(documentoView.getLoading()).html(documentoView.getRegistersInfo(documentoView.getObject().getCachedRegisters()));
             //muestra la frase de estado de la ordenación de la tabla
             $("#order").empty().append(documentoView.getLoading()).html(documentoView.getOrderInfo(objParams));
             //muestra la frase de estado del filtro de la tabla aplicado

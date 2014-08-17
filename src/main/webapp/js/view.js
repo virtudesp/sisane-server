@@ -3,6 +3,43 @@ var vista = function(objeto) {
     //contexto privado
     var link = "#";
     var neighborhood = 2;
+    function getForeign(objForeign) {
+        var numKeys = Object.keys(objForeign).length;
+        var strResult = "";
+        for (counter = 0; counter < numKeys - 1; counter++) {
+            strResult += " " + objForeign[Object.keys(objForeign)[counter]];
+        }
+        //if (typeof fieldContent == "string") {
+        if (strResult.length > 50) //don't show too long fields
+            strResult = strResult.substr(0, 20) + " ...";
+        return strResult;
+    }
+    function printValue(value, valor) {
+        var strResult = "";
+        if (/obj_/.test(valor)) {
+            if (value[valor].id > 0) {
+                strResult = '<a href="jsp#/' + valor.substring(4) + '/view/' + value[valor].id + '">' + value[valor].id + ":" + getForeign(value[valor]) + '</a>';
+            } else {
+                strResult = '???';
+            }
+        } else {
+            switch (value[valor]) {
+                case true:
+                    strResult = '<i class="glyphicon glyphicon-ok"></i>';
+                    break;
+                case false:
+                    strResult = '<i class="glyphicon glyphicon-remove"></i>';
+                    break;
+                default:
+                    strResult = decodeURIComponent(value[valor]);
+                    //if (typeof fieldContent == "string") {
+                    if (strResult.length > 50) //don't show too long fields
+                        strResult = strResult.substr(0, 20) + " ...";
+                    //}
+            }
+        }
+        return strResult;
+    }
     return {
         //contexto público (interface)
         getName: function() {
@@ -48,50 +85,94 @@ var vista = function(objeto) {
             return vector;
         },
         getObjectTable: function(id) {
-            objeto.loadAggregateViewOne();
+            objeto.loadAggregateViewOne(id);
             cabecera = objeto.getCachedPrettyFieldNames();
-            datos = objeto.getCachedOne();
+            value = objeto.getCachedOne();
             nombres = objeto.getCachedFieldNames();
+            path = objeto.getPath();
             var tabla = "<table class=\"table table table-bordered table-condensed\">";
             $.each(nombres, function(index, valor) {
                 tabla += '<tr><td><strong>' + cabecera[index] + '</strong></td>';
-                tabla += '<td>';
-                if (/id_/.test(valor)) {
-                    if (datos[valor] == 0) {
-                        tabla += "nulo" + ', <strong> id:0 </strong>';
-                    } else {
-                        $.when(ajaxCallSync(objeto.getPath() + '/json?ob=' + valor.split("_")[1].replace(/[0-9]*$/, "") + '&op=get&id=' + datos[valor], 'GET', '')).done(function(data) {
-                            contador = 0;
-                            add_tabla = "";
-                            for (key in data) {
-                                if (contador === 0)
-                                    add_tabla = data[key];
-                                if (contador === 1)
-                                    add_tabla = data[key] + ', <strong> id: </strong>' + datos[valor];
-                                //if (contador > 1)
-                                //add_tabla = ", " + data[key].substr(0, 8)  + "... ";  
-                                contador++;
-                            }
-                            if (contador === 0) {
-                                add_tabla = datos[valor] + ' #error';
-                            }
-                            tabla += add_tabla;
-                        });
-                    }
-                }
-                else {
-                    switch (datos[valor]) {
-                        case true:
-                            tabla += '<i class="glyphicon glyphicon-ok"></i>';
-                            break;
-                        case false:
-                            tabla += '<i class="glyphicon glyphicon-remove"></i>';
-                            break;
-                        default:
-                            tabla += decodeURIComponent(datos[valor]);
-                    }
-                    tabla += '</td></tr>';
-                }
+
+//                if (/id_/.test(valor)) {
+////                    if (datos[valor] == 0) {
+////                        tabla += "nulo" + ', <strong> id:0 </strong>';
+////                    } else {
+////                        $.when(ajaxCallSync(path + '/json?ob=' + valor.split("_")[1].replace(/[0-9]*$/, "") + '&op=get&id=' + datos[valor], 'GET', '')).done(function(data) {
+////                            contador = 0;
+////                            add_tabla = "";
+////                            for (key in data) {
+////                                if (contador === 0)
+////                                    add_tabla = data[key];
+////                                if (contador === 1)
+////                                    add_tabla = data[key] + ', <strong> id: </strong>' + datos[valor];
+////                                //if (contador > 1)
+////                                //add_tabla = ", " + data[key].substr(0, 8)  + "... ";  
+////                                contador++;
+////                            }
+////                            if (contador === 0) {
+////                                add_tabla = datos[valor] + ' #error';
+////                            }
+////                            tabla += add_tabla;
+////                        });
+////                    }
+//
+//                }
+//                else {
+//                    switch (datos[valor]) {
+//                        case true:
+//                            tabla += '<i class="glyphicon glyphicon-ok"></i>';
+//                            break;
+//                        case false:
+//                            tabla += '<i class="glyphicon glyphicon-remove"></i>';
+//                            break;
+//                        default:
+//                            tabla += decodeURIComponent(datos[valor]);
+//                    }
+//                    tabla += '</td></tr>';
+//                }
+
+
+
+                tabla += '<td>' + printValue(value, valor) + '</td>';
+
+//                if (/obj_tipodocumento/.test(valor)) {
+//                    if (value[valor].id > 0) {
+//                        strClaveAjena = value[valor].id + ": " + value[valor].descripcion;
+//                        strClaveAjena = '<a href="jsp#/' + valor.substring(4) + '/view/' + value[valor].id + '">' + strClaveAjena + '</a>';
+//                        tabla += '<td>' + strClaveAjena + '</td>';
+//                    } else {
+//                        tabla += '<td>???</td>';
+//                    }
+//                }
+//                if (/obj_usuario/.test(valor)) {
+//                    if (value[valor].id > 0) {
+//                        strClaveAjena = value[valor].id + ": " + value[valor].login;
+//                        strClaveAjena = '<a href="jsp#/' + valor.substring(4) + '/view/' + value[valor].id + '">' + strClaveAjena + '</a>';
+//                        tabla += '<td>' + strClaveAjena + '</td>';
+//                    } else {
+//                        tabla += '<td>sin usuario</td>';
+//                    }
+//                }
+//                if (!(/obj_/.test(valor))) {
+//                    switch (value[valor]) {
+//                        case true:
+//                            tabla += '<td><i class="glyphicon glyphicon-ok"></i></td>';
+//                            break;
+//                        case false:
+//                            tabla += '<td><i class="glyphicon glyphicon-remove"></i></td>';
+//                            break;
+//                        default:
+//                            var fieldContent = decodeURIComponent(value[valor]);
+//                            if (typeof fieldContent == "string") {
+//                                if (value[valor].length > 50) //don't show too long fields
+//                                    fieldContent = decodeURIComponent(value[valor]).substr(0, 20) + " ...";
+//                            }
+//                            tabla += '<td>' + fieldContent + '</td>';
+//                    }
+//                }
+
+
             });
             tabla += '</table>';
             return tabla;
@@ -143,8 +224,7 @@ var vista = function(objeto) {
 
             });
         },
-        getRegistersInfo: function() {
-            regs = this.getObject().getCachedRegisters();
+        getRegistersInfo: function(regs) {
             return "<p><small>Mostrando una consulta de " + regs + " registros.</small></p>";
         },
         getOrderInfo: function(objParams) {
@@ -278,10 +358,10 @@ var vista = function(objeto) {
             botonera += '</ul></div>';
             return botonera;
         },
-        getHeaderPageTable: function(prettyFieldNames, fieldNames, visibleFields,  UrlFromParamsWithoutOrder) {
+        getHeaderPageTable: function(prettyFieldNames, fieldNames, visibleFields, UrlFromParamsWithoutOrder) {
             var numField = 0; //visible field counter
             var tabla = "";
-            var strOperationName= this.getName();
+            var strOperationName = this.getName();
             if (prettyFieldNames !== null) {
                 tabla += '<tr>';
                 $.each(prettyFieldNames, function(index, value) {
@@ -300,7 +380,7 @@ var vista = function(objeto) {
                                 fieldName = fieldNames[numField - 1].substring(4);
                                 fieldName = "id_" + fieldName;
                             } else {
-                                fieldName=fieldNames[numField - 1];
+                                fieldName = fieldNames[numField - 1];
                             }
                             tabla += '<br />';
                             tabla += '<a class="orderAsc' + index + '" href="jsp#/' + strOperationName + '/list/' + UrlFromParamsWithoutOrder + '&order=' + fieldName + '&ordervalue=asc"><i class="glyphicon glyphicon-arrow-up"></i></a>';
@@ -398,41 +478,44 @@ var vista = function(objeto) {
                     }
                     numField++;
                     if (numField <= visibleFields) {
-                        if (/obj_tipodocumento/.test(valor)) {
-                            if (value[valor].id > 0) {
-                                strClaveAjena = value[valor].id + ": " + value[valor].descripcion;
-                                strClaveAjena = '<a href="jsp#/tipodocumento/view/' + value[valor].id + '">' + strClaveAjena + '</a>';
-                                tabla += '<td>' + strClaveAjena + '</td>';
-                            } else {
-                                tabla += '<td>sin tipo</td>';
-                            }
-                        }
-                        if (/obj_usuario/.test(valor)) {
-                            if (value[valor].id > 0) {
-                                strClaveAjena = value[valor].id + ": " + value[valor].login;
-                                strClaveAjena = '<a href="jsp#/usuario/view/' + value[valor].id + '">' + strClaveAjena + '</a>';
-                                tabla += '<td>' + strClaveAjena + '</td>';
-                            } else {
-                                tabla += '<td>sin usuario</td>';
-                            }
-                        }
-                        if (!(/obj_/.test(valor))) {
-                            switch (value[valor]) {
-                                case true:
-                                    tabla += '<td><i class="glyphicon glyphicon-ok"></i></td>';
-                                    break;
-                                case false:
-                                    tabla += '<td><i class="glyphicon glyphicon-remove"></i></td>';
-                                    break;
-                                default:
-                                    var fieldContent = decodeURIComponent(value[valor]);
-                                    if (typeof fieldContent == "string") {
-                                        if (value[valor].length > 50) //don't show too long fields
-                                            fieldContent = decodeURIComponent(value[valor]).substr(0, 20) + " ...";
-                                    }
-                                    tabla += '<td>' + fieldContent + '</td>';
-                            }
-                        }
+
+                        tabla += '<td>' + printValue(value, valor) + '</td>';
+
+//                        if (/obj_tipodocumento/.test(valor)) {
+//                            if (value[valor].id > 0) {
+//                                strClaveAjena = value[valor].id + ": " + value[valor].descripcion;
+//                                strClaveAjena = '<a href="jsp#/tipodocumento/view/' + value[valor].id + '">' + strClaveAjena + '</a>';
+//                                tabla += '<td>' + strClaveAjena + '</td>';
+//                            } else {
+//                                tabla += '<td>sin tipo</td>';
+//                            }
+//                        }
+//                        if (/obj_usuario/.test(valor)) {
+//                            if (value[valor].id > 0) {
+//                                strClaveAjena = value[valor].id + ": " + value[valor].login;
+//                                strClaveAjena = '<a href="jsp#/usuario/view/' + value[valor].id + '">' + strClaveAjena + '</a>';
+//                                tabla += '<td>' + strClaveAjena + '</td>';
+//                            } else {
+//                                tabla += '<td>sin usuario</td>';
+//                            }
+//                        }
+//                        if (!(/obj_/.test(valor))) {
+//                            switch (value[valor]) {
+//                                case true:
+//                                    tabla += '<td><i class="glyphicon glyphicon-ok"></i></td>';
+//                                    break;
+//                                case false:
+//                                    tabla += '<td><i class="glyphicon glyphicon-remove"></i></td>';
+//                                    break;
+//                                default:
+//                                    var fieldContent = decodeURIComponent(value[valor]);
+//                                    if (typeof fieldContent == "string") {
+//                                        if (value[valor].length > 50) //don't show too long fields
+//                                            fieldContent = decodeURIComponent(value[valor]).substr(0, 20) + " ...";
+//                                    }
+//                                    tabla += '<td>' + fieldContent + '</td>';
+//                            }
+//                        }
                     }
                 });
                 tabla += '<td>';
