@@ -266,19 +266,19 @@ var control_documento = function(path) {
             $("#tableBody").empty().append(documentoView.getLoading()).html(function() {
                 return documentoView.getBodyPageTable(page, fieldNames, visibleFields, function(id) {
                     if (callbackLinkParameters) {
-                        var tabla = "";
-                        tabla += '<div class="btn-toolbar" role="toolbar"><div class="btn-group btn-group-xs">';
-                        tabla += '<a class="btn btn-default" href="jsp#/' + documentoObject.getName() + '/view/' + callbackLinkParameters + '=' + id + '"><i class="glyphicon glyphicon-ok"></i></a>';
-                        tabla += '</div></div>';
-                        return tabla;
+                        var botonera = "";
+                        botonera += '<div class="btn-toolbar" role="toolbar"><div class="btn-group btn-group-xs">';
+                        botonera += '<a class="btn btn-default" href="jsp#/' + documentoObject.getName() + '/view/' + callbackLinkParameters + '=' + id + '"><i class="glyphicon glyphicon-ok"></i></a>';
+                        botonera += '</div></div>';
+                        return botonera;
                     } else {
-                        var tabla = "";
-                        tabla += '<div class="btn-toolbar" role="toolbar"><div class="btn-group btn-group-xs">';
-                        tabla += '<a class="btn btn-default" href="jsp#/' + documentoObject.getName() + '/view/' + id + '"><i class="glyphicon glyphicon-eye-open"></i></a>';
-                        tabla += '<a class="btn btn-default" href="jsp#/' + documentoObject.getName() + '/edit/' + id + '"><i class="glyphicon glyphicon-pencil"></i></a>';
-                        tabla += '<a class="btn btn-default" href="jsp#/' + documentoObject.getName() + '/remove/' + id + '"><i class="glyphicon glyphicon-remove"></i></a>';
-                        tabla += '</div></div>';
-                        return tabla;
+                        var botonera = "";
+                        botonera += '<div class="btn-toolbar" role="toolbar"><div class="btn-group btn-group-xs">';
+                        botonera += '<a class="btn btn-default" href="jsp#/' + documentoObject.getName() + '/view/' + id + '"><i class="glyphicon glyphicon-eye-open"></i></a>';
+                        botonera += '<a class="btn btn-default" href="jsp#/' + documentoObject.getName() + '/edit/' + id + '"><i class="glyphicon glyphicon-pencil"></i></a>';
+                        botonera += '<a class="btn btn-default" href="jsp#/' + documentoObject.getName() + '/remove/' + id + '"><i class="glyphicon glyphicon-remove"></i></a>';
+                        botonera += '</div></div>';
+                        return botonera;
                     }
                 });
             });
@@ -288,7 +288,7 @@ var control_documento = function(path) {
             //muestra la frase de estado de la ordenación de la tabla
             $("#order").empty().append(documentoView.getLoading()).html(documentoView.getOrderInfo(objParams));
             //muestra la frase de estado del filtro de la tabla aplicado
-            $("#filter").empty().append(documentoView.getLoading()).html(documentoView.getFilterInfo(filter, filteroperator, filtervalue));
+            $("#filter").empty().append(documentoView.getLoading()).html(documentoView.getFilterInfo(objParams));
             $('#rpp1').empty().append(documentoView.getRppLinks(objParams));
             //asignación del evento de filtrado al boton
             $('#btnFiltrar').unbind('click');
@@ -297,12 +297,12 @@ var control_documento = function(path) {
                 filteroperator = $("#selectFilteroperator option:selected").val();
                 filtervalue = $("#inputFiltervalue").val();
 
-
-
                 //parameters=getUrlFromParamsWithoutFilter(pag, order, ordervalue, rpp, filter, filteroperator, filtervalue, systemfilter, systemfilteroperator, systemfiltervalue);
 
                 //["Saab", "Volvo", "BMW"]
-                window.location.href = "jsp#/documento/list/" + documentoView.getUrlFromParamsWithoutFilter(pag, order, ordervalue, rpp, filter, filteroperator, filtervalue, systemfilter, systemfilteroperator, systemfiltervalue) + "&filter=" + filter + "&filteroperator=" + filteroperator + "&filtervalue=" + filtervalue;
+                //window.location.href = "jsp#/documento/list/" + documentoView.getUrlFromParamsWithoutFilter(pag, order, ordervalue, rpp, filter, filteroperator, filtervalue, systemfilter, systemfilteroperator, systemfiltervalue) + "&filter=" + filter + "&filteroperator=" + filteroperator + "&filtervalue=" + filtervalue;
+                window.location.href = "jsp#/documento/list/" + getUrlStringFromParamsObject(getUrlObjectFromParamsWithoutParamArray(objParams, ['filter', 'filteroperator', 'filtervalue'])) + "&filter=" + filter + "&filteroperator=" + filteroperator + "&filtervalue=" + filtervalue;
+
 
                 //thisObject.inicia(pag, order, ordervalue, rpp, filter, filteroperator, filtervalue, callback, systemfilter, systemfilteroperator, systemfiltervalue);
                 return false;

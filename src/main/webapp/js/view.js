@@ -89,7 +89,7 @@ var vista = function(clase, ContextPath) {
             vector += "</ul>";
             return vector;
         },
-        getObjectTable: function(cabecera,value,nombres) {
+        getObjectTable: function(cabecera, value, nombres) {
 //            objeto.loadAggregateViewOne(id);
 //            cabecera = objeto.getCachedPrettyFieldNames();
 //            value = objeto.getCachedOne();
@@ -234,15 +234,15 @@ var vista = function(clase, ContextPath) {
         },
         getOrderInfo: function(objParams) {
             if (order) {
-                strOrder = "<p><small>Contenido ordenado por " + objParams["order"] + " (" + objParams["ordervalue"] + ') <a href="jsp#/' + this.getName() + '/list/' + getUrlStringFromParamsObject(getUrlObjectFromParamsWithoutParamArray(objParams, ["order", "ordervalue"])) + '" id="linkQuitarOrden">(Quitar orden)</a></small></p>';
+                strOrder = "<p><small>Contenido ordenado por " + objParams["order"] + " (" + objParams["ordervalue"] + ') <a href="jsp#/' + clase + '/list/' + getUrlStringFromParamsObject(getUrlObjectFromParamsWithoutParamArray(objParams, ["order", "ordervalue"])) + '" id="linkQuitarOrden">(Quitar orden)</a></small></p>';
             } else {
                 strOrder = "<p>Contenido no ordenado</p>";
             }
             return strOrder;
         },
-        getFilterInfo: function(filter, filteroperator, filtervalue) {
+        getFilterInfo: function(objParams) {
             if (filter) {
-                strFilter = "<p><small>Contenido filtrado (" + filter + " " + filteroperator + " " + filtervalue + ') <a href="#" id="linkQuitarFiltro">(Quitar filtro)</small></a></p>';
+                strFilter = "<p><small>Contenido filtrado (" + objParams ['filter'] + " " + objParams['filteroperator'] + " " + objParams['filtervalue'] + ') <a href="jsp#/' + clase + '/list/' + getUrlStringFromParamsObject(getUrlObjectFromParamsWithoutParamArray(objParams, ["filter", "filteroperator", "filtervalue"])) + '" id="linkQuitarFiltro">(Quitar filtro)</small></a></p>';
             } else {
                 strFilter = "<p>Contenido no filtrado</p>";
             }
@@ -359,7 +359,7 @@ var vista = function(clase, ContextPath) {
         getHeaderPageTable: function(prettyFieldNames, fieldNames, visibleFields, UrlFromParamsWithoutOrder) {
             var numField = 0; //visible field counter
             var tabla = "";
-        
+
             if (prettyFieldNames !== null) {
                 tabla += '<tr>';
                 $.each(prettyFieldNames, function(index, value) {
