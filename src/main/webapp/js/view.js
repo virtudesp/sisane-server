@@ -1,13 +1,18 @@
 //VISTA
-var vista = function(objeto) {
+var vista = function(clase, ContextPath) {
     //contexto privado
     var link = "#";
     var neighborhood = 2;
+    var urlJson = ContextPath + '/json?ob=' + clase;
+    var urlJsp = ContextPath + '/jsp?ob=' + clase;
     function getForeign(objForeign) {
+        //falta organizar con metadatos para mostrar sólo los campos relevantes
         var numKeys = Object.keys(objForeign).length;
         var strResult = "";
         for (counter = 0; counter < numKeys - 1; counter++) {
-            strResult += " " + objForeign[Object.keys(objForeign)[counter]];
+            valor = objForeign[Object.keys(objForeign)[counter]];
+            if (valor != true && valor != false)
+                strResult += " " + valor;
         }
         //if (typeof fieldContent == "string") {
         if (strResult.length > 50) //don't show too long fields
@@ -42,22 +47,22 @@ var vista = function(objeto) {
     }
     return {
         //contexto público (interface)
-        getName: function() {
-            return objeto.getName();
-        },
-        getObject: function() {
-            return objeto;
-        },
+//        getName: function() {
+//            return objeto.getName();
+//        },
+//        getObject: function() {
+//            return objeto;
+//        },
         getLoading: function() {
             return '<img src="fonts/ajax-loading.gif" alt="cargando..." />';
         },
-        getRegisterTableView: function(place, id) {
-            $(place).empty().append("<h1>Vista de " + this.getName() + "</h1>");
-            $(place).append((this.getObjectTable(id)));
-            $(place).append('<a class="btn btn-primary" href="jsp#/' + this.getName() + '/edit/' + id + '">Editar</a>');
-            $(place).append('<a class="btn btn-primary" href="jsp#/' + this.getName() + '/remove/"' + id + '">Borrar</a>');
-            $(place).append('<a class="btn btn-primary" href="jsp#/' + this.getName() + '/list/"' + id + '">Volver</a>');
-        },
+//        getRegisterTableView: function(place, id) {
+//            $(place).empty().append("<h1>Vista de " + this.getName() + "</h1>");
+//            $(place).append((this.getObjectTable(id)));
+//            $(place).append('<a class="btn btn-primary" href="jsp#/' + this.getName() + '/edit/' + id + '">Editar</a>');
+//            $(place).append('<a class="btn btn-primary" href="jsp#/' + this.getName() + '/remove/"' + id + '">Borrar</a>');
+//            $(place).append('<a class="btn btn-primary" href="jsp#/' + this.getName() + '/list/"' + id + '">Volver</a>');
+//        },
         getPageLinks: function(url, page_number, total_pages, neighborhood) {
             vector = "<ul class=\"pagination\">";
             if (page_number > 1)
@@ -84,12 +89,12 @@ var vista = function(objeto) {
             vector += "</ul>";
             return vector;
         },
-        getObjectTable: function(id) {
-            objeto.loadAggregateViewOne(id);
-            cabecera = objeto.getCachedPrettyFieldNames();
-            value = objeto.getCachedOne();
-            nombres = objeto.getCachedFieldNames();
-            path = objeto.getPath();
+        getObjectTable: function(cabecera,value,nombres) {
+//            objeto.loadAggregateViewOne(id);
+//            cabecera = objeto.getCachedPrettyFieldNames();
+//            value = objeto.getCachedOne();
+//            nombres = objeto.getCachedFieldNames();
+//            path = objeto.getPath();
             var tabla = "<table class=\"table table table-bordered table-condensed\">";
             $.each(nombres, function(index, valor) {
                 tabla += '<tr><td><strong>' + cabecera[index] + '</strong></td>';
@@ -187,13 +192,13 @@ var vista = function(objeto) {
             return '<div class="panel panel-default"><div class="panel-heading"><h1>' + titulo + '</h1></div><div class="panel-body">' + contenido + '</div></div>';
         },
         getEmptyForm: function() {
-            $.when(ajaxCallSync(objeto.getUrlJsp() + '&op=form&mode=1', 'GET', '')).done(function(data) {
+            $.when(ajaxCallSync(urlJsp + '&op=form&mode=1', 'GET', '')).done(function(data) {
                 form = data;
             });
             return form;
         },
         getEmptyList: function() {
-            $.when(ajaxCallSync(objeto.getUrlJsp() + '&op=list&mode=1', 'GET', '')).done(function(data) {
+            $.when(ajaxCallSync(urlJsp + '&op=list&mode=1', 'GET', '')).done(function(data) {
                 form = data;
             });
             return form;
@@ -332,36 +337,29 @@ var vista = function(objeto) {
                 botonera += '<li class="active">';
             else
                 botonera += '<li>';
-            botonera += '<a class="pagination_link" id="1" href="jsp#/' + objeto.getName() + '/list/' + UrlFromParamsWithoutRpp + '&rpp=5">5</a></li>';
+            botonera += '<a class="pagination_link" id="1" href="jsp#/' + clase + '/list/' + UrlFromParamsWithoutRpp + '&rpp=5">5</a></li>';
             if (rpp == 10)
                 botonera += '<li class="active">';
             else
                 botonera += '<li>';
-            botonera += '<a class="pagination_link" id="2" href="jsp#/' + objeto.getName() + '/list/' + UrlFromParamsWithoutRpp + '&rpp=10">10</a></li>';
+            botonera += '<a class="pagination_link" id="2" href="jsp#/' + clase + '/list/' + UrlFromParamsWithoutRpp + '&rpp=10">10</a></li>';
             if (rpp == 20)
                 botonera += '<li class="active">';
             else
                 botonera += '<li>';
-            botonera += '<a class="pagination_link" id="3" href="jsp#/' + objeto.getName() + '/list/' + UrlFromParamsWithoutRpp + '&rpp=20">20</a></li>';
+            botonera += '<a class="pagination_link" id="3" href="jsp#/' + clase + '/list/' + UrlFromParamsWithoutRpp + '&rpp=20">20</a></li>';
             if (rpp == 50)
                 botonera += '<li class="active">';
             else
                 botonera += '<li>';
-            botonera += '<a class="pagination_link" id="4" href="jsp#/' + objeto.getName() + '/list/' + UrlFromParamsWithoutRpp + '&rpp=50">50</a></li>';
-            /* 
-             if (rpp == 100)
-             botonera += '<li class="active">';
-             else
-             botonera += '<li>';
-             botonera += '<a class="pagination_link" id="4" href="jsp#/' + objeto.getName() + '/list/' + UrlFromParamsWithoutRpp + '&rpp=100">100</a></li>';
-             */
+            botonera += '<a class="pagination_link" id="4" href="jsp#/' + clase + '/list/' + UrlFromParamsWithoutRpp + '&rpp=50">50</a></li>';
             botonera += '</ul></div>';
             return botonera;
         },
         getHeaderPageTable: function(prettyFieldNames, fieldNames, visibleFields, UrlFromParamsWithoutOrder) {
             var numField = 0; //visible field counter
             var tabla = "";
-            var strOperationName = this.getName();
+        
             if (prettyFieldNames !== null) {
                 tabla += '<tr>';
                 $.each(prettyFieldNames, function(index, value) {
@@ -383,8 +381,8 @@ var vista = function(objeto) {
                                 fieldName = fieldNames[numField - 1];
                             }
                             tabla += '<br />';
-                            tabla += '<a class="orderAsc' + index + '" href="jsp#/' + strOperationName + '/list/' + UrlFromParamsWithoutOrder + '&order=' + fieldName + '&ordervalue=asc"><i class="glyphicon glyphicon-arrow-up"></i></a>';
-                            tabla += '<a class="orderDesc' + index + '" href="jsp#/' + strOperationName + '/list/' + UrlFromParamsWithoutOrder + '&order=' + fieldName + '&ordervalue=desc"><i class="glyphicon glyphicon-arrow-down"></i></a>';
+                            tabla += '<a class="orderAsc' + index + '" href="jsp#/' + clase + '/list/' + UrlFromParamsWithoutOrder + '&order=' + fieldName + '&ordervalue=asc"><i class="glyphicon glyphicon-arrow-up"></i></a>';
+                            tabla += '<a class="orderDesc' + index + '" href="jsp#/' + clase + '/list/' + UrlFromParamsWithoutOrder + '&order=' + fieldName + '&ordervalue=desc"><i class="glyphicon glyphicon-arrow-down"></i></a>';
                             tabla += '</th>';
                         }
                     }
@@ -528,26 +526,26 @@ var vista = function(objeto) {
 
 
         },
-        getPageTable: function(pag, order, ordervalue, rpp, filter, filteroperator, filtervalue, systemfilter, systemfilteroperator, systemfiltervalue, botonera) {
-            var tabla = '';
-            var visibleFields = 7;
-            var fieldNames = objeto.getFieldNames();
-            var prettyFieldNames = objeto.getPrettyFieldNamesAcciones();
-            var UrlFromParamsWithoutOrder = this.getUrlFromParamsWithoutOrder(pag, order, ordervalue, rpp, filter, filteroperator, filtervalue, systemfilter, systemfilteroperator, systemfiltervalue);
-
-            tabla += "<table class=\"table table-responsive table-hover table-striped table-condensed\">";
-
-            tabla += this.getHeaderPageTable(prettyFieldNames, visibleFields, objeto.getName(), UrlFromParamsWithoutOrder);
-
-            page = objeto.getPage(pag, order, ordervalue, rpp, filter, filteroperator, filtervalue, systemfilter, systemfilteroperator, systemfiltervalue)['list'];
-            if (page != 0) {
-                tabla += this.getBodyPageTable(page, fieldNames, visibleFields, objeto.getName(), objeto.getPath());
-                tabla += "</table>";
-            } else {
-                tabla = "<div class=\"alert alert-info\"><h4>Ha habido un problema con la base de datos</h4><br/>El probema puede ser:<ul><li>La tabla está vacia.</li><li>Tu busqueda no tubo resultados.</li></ul></div>";
-            }
-            return tabla;
-        }
+//        getPageTable: function(pag, order, ordervalue, rpp, filter, filteroperator, filtervalue, systemfilter, systemfilteroperator, systemfiltervalue, botonera) {
+//            var tabla = '';
+//            var visibleFields = 7;
+//            var fieldNames = objeto.getFieldNames();
+//            var prettyFieldNames = objeto.getPrettyFieldNamesAcciones();
+//            var UrlFromParamsWithoutOrder = this.getUrlFromParamsWithoutOrder(pag, order, ordervalue, rpp, filter, filteroperator, filtervalue, systemfilter, systemfilteroperator, systemfiltervalue);
+//
+//            tabla += "<table class=\"table table-responsive table-hover table-striped table-condensed\">";
+//
+//            tabla += this.getHeaderPageTable(prettyFieldNames, visibleFields, objeto.getName(), UrlFromParamsWithoutOrder);
+//
+//            page = objeto.getPage(pag, order, ordervalue, rpp, filter, filteroperator, filtervalue, systemfilter, systemfilteroperator, systemfiltervalue)['list'];
+//            if (page != 0) {
+//                tabla += this.getBodyPageTable(page, fieldNames, visibleFields, objeto.getName(), objeto.getPath());
+//                tabla += "</table>";
+//            } else {
+//                tabla = "<div class=\"alert alert-info\"><h4>Ha habido un problema con la base de datos</h4><br/>El probema puede ser:<ul><li>La tabla está vacia.</li><li>Tu busqueda no tubo resultados.</li></ul></div>";
+//            }
+//            return tabla;
+//        }
 //        getPageTable: function(pag, order, ordervalue, rpp, filter, filteroperator, filtervalue, systemfilter, systemfilteroperator, systemfiltervalue, botonera) {
 //            urlWithoutOrder = this.getUrlFromParamsWithoutOrder(pag,rpp, filter, filteroperator, filtervalue, systemfilter, systemfilteroperator, systemfiltervalue, botonera);
 //            var tabla = "<table class=\"table table-responsive table-hover table-striped table-condensed\">";

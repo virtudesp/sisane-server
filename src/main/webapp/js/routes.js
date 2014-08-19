@@ -14,43 +14,48 @@ function do_routes(path) {
 
 
     Path.map("#/documento").to(function() {
-        var documentoObject = objeto('documento', path);
-        var documentoView = vista(documentoObject);
-        var documentoControl = control_documento(documentoView);
-
+//        var documentoObject = objeto('documento', path);
+//        var documentoView = vista(documentoObject);
+//        var documentoControl = control_documento(documentoView);
         $('#indexContenidoJsp').empty();
-        $('#indexContenido').empty().append(documentoView.getEmptyList());
+        var documentoControl = control_documento(path);
 
-        documentoControl.list({page: 1, rpp: 10}, null);
+
+
+        documentoControl.list($('#indexContenido'), {page: 1, rpp: 10}, null);
         //documentoControl.list(1, null, null, 10, null, null, null, null, null, null, null);
         return false;
     });
 
     Path.map("#/documento/list/:url").to(function() {
-        var documentoObject = objeto('documento', path);
-        var documentoView = vista(documentoObject);
-        var documentoControl = control_documento(documentoView);
-
+//        var documentoObject = objeto('documento', path);
+//        var documentoView = vista(documentoObject);
+//        var documentoControl = control_documento(documentoView);
         $('#indexContenidoJsp').empty();
-        $('#indexContenido').empty().append(documentoView.getEmptyList());
+        var documentoControl = control_documento(path);
+
+//        $('#indexContenidoJsp').empty();
+//        $('#indexContenido').empty().append(documentoView.getEmptyList());
         qs = parameters(this.params['url']);
 
 
         //qs = getUrlObjectFromParamsWithoutParamArray(qs, ["page"]);
         //alert(getUrlStringFromParamsObject(qs));
-        documentoControl.list(qs, null);
+        documentoControl.list($('#indexContenido'), qs, null);
 
         //documentoControl.list(qs["page"], qs["order"], qs["ordervalue"], qs["rpp"], qs["filter"], qs["filteroperator"], qs["filtervalue"], null);
         return false;
     });
 
     Path.map("#/documento/view/:id").to(function() {
-        var documentoObject = objeto('documento', path);
-        var documentoView = vista(documentoObject);
-        var documentoControl = control_documento(documentoView);
-
+//        var documentoObject = objeto('documento', path);
+//        var documentoView = vista(documentoObject);
+//        var documentoControl = control_documento(documentoView);
         $('#indexContenidoJsp').empty();
-        $('#indexContenido').empty().append(documentoView.getEmptyDiv());
+        var documentoControl = control_documento(path);
+
+//        $('#indexContenidoJsp').empty();
+//        $('#indexContenido').empty().append(documentoView.getEmptyDiv());
 
         documentoControl.view($('#indexContenido'), this.params['id']);
         return false;

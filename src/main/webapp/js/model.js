@@ -14,6 +14,19 @@ var objeto = function(clase, ContextPath) {
     var cOne = null;
     return {
         //contexto público (interface)
+        getName: function() {
+            return clase;
+        },
+        getPath: function() {
+            return ContextPath;
+        },
+        getUrlJson: function() {
+            return urlJson;
+        },
+        getUrlJsp: function() {
+            return urlJsp;
+        },
+        //--------------------
         loadAggregateViewSome: function(objParams) {
             if (objParams.order) {
                 orderParams = '&order=' + objParams.order + '&ordervalue=' + objParams.ordervalue;
@@ -77,18 +90,6 @@ var objeto = function(clase, ContextPath) {
             return cRegisters;
         },
         //--------------------------------------------------
-        getName: function() {
-            return clase;
-        },
-        getPath: function() {
-            return ContextPath;
-        },
-        getUrlJson: function() {
-            return urlJson;
-        },
-        getUrlJsp: function() {
-            return urlJsp;
-        },
         validateUser: function(user, password) {
             $.when(ajaxCallSync(urlJson + '&op=validate&user=' + user + "&password=" + password, 'GET', '')).done(function(data) {
                 resultado = data['data'];

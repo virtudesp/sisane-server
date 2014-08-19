@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-var control_documento = function(documentoView) {
+var control_documento = function(path) {
     //contexto privado
 
     var prefijo_div = "#documento_list ";
@@ -161,19 +161,39 @@ var control_documento = function(documentoView) {
 
     return {
         new : function(place) {
+
+            var documentoObject = objeto('documento', path);
+            var documentoView = vista('documento', path);
+            $(place).empty();
             //$(place).empty().append("<h1>Alta de " + documentoView.getName() + "</h1>");
             $(place).append(documentoView.getPanel("Alta de documento", documentoView.getEmptyForm()));
             $(place).append('<a class="btn btn-primary" href="jsp#/documento/edit/' + id + '">Guardar</a>');
             $(place).append('<a class="btn btn-primary" href="jsp#/usuario/list/"' + id + '">Volver</a>');
         },
         view: function(place, id) {
+
+            var documentoObject = objeto('documento', path);
+            var documentoView = vista('documento', path);
+
             //$(place).empty().append("<h1>Vista de " + documentoView.getName() + "</h1>");
-            $(place).append(documentoView.getPanel("Vista de documento", documentoView.getObjectTable(id)));
+            $(place).empty();
+            documentoObject.loadAggregateViewOne(id);
+//            cabecera = objeto.getCachedPrettyFieldNames();
+//            value = objeto.getCachedOne();
+//            nombres = objeto.getCachedFieldNames();
+//            path = objeto.getPath();
+
+
+            $(place).append(documentoView.getPanel("Vista de documento", documentoView.getObjectTable(documentoObject.getCachedPrettyFieldNames(), documentoObject.getCachedOne(), documentoObject.getCachedFieldNames())));
             $(place).append('<a class="btn btn-primary" href="jsp#/documento/edit/' + id + '">Editar</a>');
             $(place).append('<a class="btn btn-primary" href="jsp#/usuario/remove/"' + id + '">Borrar</a>');
             $(place).append('<a class="btn btn-primary" href="jsp#/usuario/list/"' + id + '">Volver</a>');
         },
         edit: function(place, id) {
+
+            var documentoObject = objeto('documento', path);
+            var documentoView = vista('documento', path);
+            $(place).empty();
             //$(place).empty().append("<h1>Edición de " + documentoView.getName() + "</h1>");
             $(place).append(documentoView.getPanel("Edición de documento", documentoView.getEmptyForm()));
 
@@ -183,9 +203,13 @@ var control_documento = function(documentoView) {
             $(place).append('<a class="btn btn-primary" href="jsp#/usuario/list/"' + id + '">Volver</a>');
         },
 //        list: function(pag, order, ordervalue, rpp, filter, filteroperator, filtervalue, systemfilter, systemfilteroperator, systemfiltervalue, callbackLinkParameters) {
-        list: function(objParams, callbackLinkParameters) {
+        list: function(place, objParams, callbackLinkParameters) {
 
+            var documentoObject = objeto('documento', path);
+            var documentoView = vista('documento', path);
 
+            $(place).empty();
+            $(place).empty().append(documentoView.getEmptyList());
 
             // ojo pte!!!
             //implementar función get parameter segura para recoger params
@@ -202,13 +226,13 @@ var control_documento = function(documentoView) {
 
 
             //get all data from server in one http call and store it
-            documentoView.getObject().loadAggregateViewSome(objParams);
+            documentoObject.loadAggregateViewSome(objParams);
             //get html template from server and show it
             $('#indexContenido').empty().append(documentoView.getPanel("Listado de documento", documentoView.getEmptyList()));
 
 
             //show page button pad
-            total_pages = parseInt(documentoView.getObject().getCachedPages());
+            total_pages = parseInt(documentoObject.getCachedPages());
             page_number = parseInt(pag);
             if (page_number > total_pages) {
                 page_number = total_pages;
@@ -218,7 +242,7 @@ var control_documento = function(documentoView) {
 
 
 
-            url = 'jsp#/' + documentoView.getObject().getName() + '/list/' + UrlFromParamsWithoutPage;
+            url = 'jsp#/' + documentoObject.getName() + '/list/' + UrlFromParamsWithoutPage;
             $("#pagination").empty().append(documentoView.getLoading()).html(documentoView.getPageLinks(url, page_number, total_pages, 2));
 
 
@@ -232,11 +256,11 @@ var control_documento = function(documentoView) {
             var visibleFields = 13;
 
 
-            var fieldNames = documentoView.getObject().getCachedFieldNames();
-            var prettyFieldNames = documentoView.getObject().getCachedPrettyFieldNamesAcciones();
+            var fieldNames = documentoObject.getCachedFieldNames();
+            var prettyFieldNames = documentoObject.getCachedPrettyFieldNamesAcciones();
             //var UrlFromParamsWithoutOrder = documentoView.getUrlFromParamsWithoutOrder(pag, order, ordervalue, rpp, filter, filteroperator, filtervalue, systemfilter, systemfilteroperator, systemfiltervalue);
             var UrlFromParamsWithoutOrder = getUrlStringFromParamsObject(getUrlObjectFromParamsWithoutParamArray(objParams, ["order", "ordervalue"]));
-            var page = documentoView.getObject().getCachedPage();
+            var page = documentoObject.getCachedPage();
             $("#tableHeaders").empty().append(documentoView.getLoading()).html(
                     documentoView.getHeaderPageTable(prettyFieldNames, fieldNames, visibleFields, UrlFromParamsWithoutOrder));
             $("#tableBody").empty().append(documentoView.getLoading()).html(function() {
@@ -244,15 +268,15 @@ var control_documento = function(documentoView) {
                     if (callbackLinkParameters) {
                         var tabla = "";
                         tabla += '<div class="btn-toolbar" role="toolbar"><div class="btn-group btn-group-xs">';
-                        tabla += '<a class="btn btn-default" href="jsp#/' + documentoView.getObject().getName() + '/view/' + callbackLinkParameters + '=' + id + '"><i class="glyphicon glyphicon-ok"></i></a>';
+                        tabla += '<a class="btn btn-default" href="jsp#/' + documentoObject.getName() + '/view/' + callbackLinkParameters + '=' + id + '"><i class="glyphicon glyphicon-ok"></i></a>';
                         tabla += '</div></div>';
                         return tabla;
                     } else {
                         var tabla = "";
                         tabla += '<div class="btn-toolbar" role="toolbar"><div class="btn-group btn-group-xs">';
-                        tabla += '<a class="btn btn-default" href="jsp#/' + documentoView.getObject().getName() + '/view/' + id + '"><i class="glyphicon glyphicon-eye-open"></i></a>';
-                        tabla += '<a class="btn btn-default" href="jsp#/' + documentoView.getObject().getName() + '/edit/' + id + '"><i class="glyphicon glyphicon-pencil"></i></a>';
-                        tabla += '<a class="btn btn-default" href="jsp#/' + documentoView.getObject().getName() + '/remove/' + id + '"><i class="glyphicon glyphicon-remove"></i></a>';
+                        tabla += '<a class="btn btn-default" href="jsp#/' + documentoObject.getName() + '/view/' + id + '"><i class="glyphicon glyphicon-eye-open"></i></a>';
+                        tabla += '<a class="btn btn-default" href="jsp#/' + documentoObject.getName() + '/edit/' + id + '"><i class="glyphicon glyphicon-pencil"></i></a>';
+                        tabla += '<a class="btn btn-default" href="jsp#/' + documentoObject.getName() + '/remove/' + id + '"><i class="glyphicon glyphicon-remove"></i></a>';
                         tabla += '</div></div>';
                         return tabla;
                     }
@@ -260,7 +284,7 @@ var control_documento = function(documentoView) {
             });
             $('#selectFilter').empty().populateSelectBox(fieldNames, prettyFieldNames);
             //show the number of registers of the actual query
-            $("#registers").empty().append(documentoView.getLoading()).html(documentoView.getRegistersInfo(documentoView.getObject().getCachedRegisters()));
+            $("#registers").empty().append(documentoView.getLoading()).html(documentoView.getRegistersInfo(documentoObject.getCachedRegisters()));
             //muestra la frase de estado de la ordenación de la tabla
             $("#order").empty().append(documentoView.getLoading()).html(documentoView.getOrderInfo(objParams));
             //muestra la frase de estado del filtro de la tabla aplicado
@@ -283,7 +307,7 @@ var control_documento = function(documentoView) {
                 //thisObject.inicia(pag, order, ordervalue, rpp, filter, filteroperator, filtervalue, callback, systemfilter, systemfilteroperator, systemfiltervalue);
                 return false;
             });
-            $('#selectVisibleFields').empty().populateSelectBox(getIntegerArray(1, documentoView.getObject().getCachedCountFields()));
+            $('#selectVisibleFields').empty().populateSelectBox(getIntegerArray(1, documentoObject.getCachedCountFields()));
             $('#selectVisibleFields').unbind('click');
             $("#selectVisibleFields").click(function(event) {
                 //window.location.href = "jsp#/documento/list/" + documentoView.getUrlFromParamsWithoutFilter(pag, order, ordervalue, rpp, filter, filteroperator, filtervalue, systemfilter, systemfilteroperator, systemfiltervalue) + "&filter=" + filter + "&filteroperator=" + filteroperator + "&filtervalue=" + filtervalue;
