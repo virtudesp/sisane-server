@@ -1,12 +1,25 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/* 
+ * Copyright (C) 2014 rafa
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-var control_documento = function(path) {
+
+var control = function(name, path) {
     //contexto privado
 
-    var prefijo_div = "#documento_list ";
+    var prefijo_div = "#" + name + "_list ";
 
     function cargaBotoneraMantenimiento() {
         var botonera = [
@@ -147,12 +160,11 @@ var control_documento = function(path) {
         });
     }
 
-    function loadModalView(place, id, title, content) {
+    function loadModalView(place, id) {
         cabecera = "<button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-hidden=\"true\">×</button>" +
-                "<h3 id=\"myModalLabel\">Detalle de " + title + "</h3>";
+                "<h3 id=\"myModalLabel\">Detalle de " + objView.getObject().getName() + "</h3>";
         pie = "<button class=\"btn btn-primary\" data-dismiss=\"modal\" aria-hidden=\"true\">Cerrar</button>";
-
-        loadForm(place, cabecera, content, pie, true);
+        loadForm(place, cabecera, objView.getObjectTable(id), pie, true);
     }  //asigación de evento de refresco de la tabla cuando volvemos de una operación en ventana modal
 
 
@@ -162,55 +174,63 @@ var control_documento = function(path) {
 
     return {
         new : function(objModel, objView, place) {
+
+//            var objModel = objeto('documento', path);
+//            var objView = vista('documento', path);
             $(place).empty();
-            $(place).append(objView.getPanel("Alta de " + objModel.getName(), objView.getEmptyForm()));
-            var buttonsForm = '<div class="form-group"><div class="col-sm-offset-2 col-sm-10">';
-            buttonsForm += '<button type="submit" class="btn btn-primary" id="submitForm" href="jsp#/' + objModel.getName() + '/edit/' + id + '">Guardar</button>';
-            buttonsForm += '<button type="reset"  class="btn btn-danger"  id="resetForm" href="jsp#/' + objModel.getName() + '/list/' + id + '">Limpiar</button>';
-            buttonsForm += '<a class="btn btn-primary"  id="returnForm" href="jsp#/' + objModel.getName() + '/list/' + '">Volver</a>';
-            buttonsForm += '</div></div>';
-            $("#" + objModel.getName() + 'Form').append(buttonsForm);
+            //$(place).empty().append("<h1>Alta de " + objView.getName() + "</h1>");
+            $(place).append(objView.getPanel("Alta de documento", objView.getEmptyForm()));
+            $(place).append('<a class="btn btn-primary" href="jsp#/documento/edit/' + id + '">Guardar</a>');
+            $(place).append('<a class="btn btn-primary" href="jsp#/usuario/list/"' + id + '">Volver</a>');
         },
         view: function(objModel, objView, place, id) {
+
+//            var objModel = objeto('documento', path);
+//            var objView = vista('documento', path);
+
+            //$(place).empty().append("<h1>Vista de " + objView.getName() + "</h1>");
             $(place).empty();
             objModel.loadAggregateViewOne(id);
-            $(place).append(objView.getPanel("Detalle de " + objModel.getName(), objView.getObjectTable(objModel.getCachedPrettyFieldNames(), objModel.getCachedOne(), objModel.getCachedFieldNames())));
-            $(place).append('<a class="btn btn-primary" href="jsp#/' + objModel.getName() + '/edit/' + id + '">Editar</a>');
-            $(place).append('<a class="btn btn-primary" href="jsp#/' + objModel.getName() + '/remove/' + id + '">Borrar</a>');
-            $(place).append('<a class="btn btn-primary" href="jsp#/' + objModel.getName() + '/list/' + id + '">Volver</a>');
+//            cabecera = objeto.getCachedPrettyFieldNames();
+//            value = objeto.getCachedOne();
+//            nombres = objeto.getCachedFieldNames();
+//            path = objeto.getPath();
+
+
+            $(place).append(objView.getPanel("Vista de documento", objView.getObjectTable(objModel.getCachedPrettyFieldNames(), objModel.getCachedOne(), objModel.getCachedFieldNames())));
+            $(place).append('<a class="btn btn-primary" href="jsp#/documento/edit/' + id + '">Editar</a>');
+            $(place).append('<a class="btn btn-primary" href="jsp#/usuario/remove/"' + id + '">Borrar</a>');
+            $(place).append('<a class="btn btn-primary" href="jsp#/usuario/list/"' + id + '">Volver</a>');
         },
         edit: function(objModel, objView, place, id) {
+
+//            var objModel = objeto('documento', path);
+//            var objView = vista('documento', path);
             $(place).empty();
-            $(place).append(objView.getPanel("Edición de " + objModel.getName(), objView.getEmptyForm()));
+            //$(place).empty().append("<h1>Edición de " + objView.getName() + "</h1>");
+            $(place).append(objView.getPanel("Edición de documento", objView.getEmptyForm()));
+
             //documentoForm_load
-            var buttonsForm = '<div class="form-group"><div class="col-sm-offset-2 col-sm-10">';
-            buttonsForm += '<button type="submit" class="btn btn-primary" id="submitForm" href="jsp#/' + objModel.getName() + '/edit/' + id + '">Guardar</button>';
-            buttonsForm += '<button type="reset"  class="btn btn-danger"  id="resetForm" href="jsp#/' + objModel.getName() + '/list/' + id + '">Limpiar</button>';
-            buttonsForm += '<a class="btn btn-primary"  id="returnForm" href="jsp#/' + objModel.getName() + '/list/' + '">Volver</a>';
-            buttonsForm += '</div></div>';
-            $("#" + objModel.getName() + 'Form').append(buttonsForm);
-            objModel.loadAggregateViewOne(id);
-            objView.doFillForm(objModel.getCachedFieldNames(), objModel.getCachedOne());
-            $('#id').attr("disabled", true);
+
+            $(place).append('<a class="btn btn-primary" href="jsp#/documento/edit/' + id + '">Guardar</a>');
+            $(place).append('<a class="btn btn-primary" href="jsp#/usuario/list/"' + id + '">Volver</a>');
         },
-        remove: function(objModel, objView, place, id) {
-            $(place).empty();
-            objModel.loadAggregateViewOne(id);
-            removeForm = objView.getObjectTable(objModel.getCachedPrettyFieldNames(), objModel.getCachedOne(), objModel.getCachedFieldNames());
-            removeForm += '<div id=\"result\">¿Seguro que desea borrar el registro?</div>';
-            removeForm += '<button id="btnBorrarSi" class="btn btn-danger" data-dismiss="modal" aria-hidden="true">Sí, borrar</button>';
-            removeForm += '<button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">No</button>';
-            $(place).append(objView.getPanel("Borrado de " + objModel.getName(), removeForm));
-            //documentoForm_load
-//            $(place).append('<a class="btn btn-primary" href="jsp#/' + objModel.getName() + '/edit/' + id + '">Borrar</a>');
-//            $(place).append('<a class="btn btn-primary" href="jsp#/' + objModel.getName() + '/list/' + id + '">Volver</a>');
-        },
+//        list: function(pag, order, ordervalue, rpp, filter, filteroperator, filtervalue, systemfilter, systemfilteroperator, systemfiltervalue, callbackLinkParameters) {
         list: function(objModel, objView, place, objParams, callbackLinkParameters) {
             //get all data from server in one http call and store it in cache
             objModel.loadAggregateViewSome(objParams);
-            objParams = validateUrlObjectParameters(objParams, objModel);
             //get html template from server and show it
             $(place).empty().append(objView.getPanel("Listado de " + objModel.getName(), objView.getEmptyList()));
+            //security borders comprobation, pendent of moving
+            if (objParams["vf"] > objModel.getCachedCountFields()) {
+                objParams["vf"] = objModel.getCachedCountFields();
+            }
+            if (objParams["page"] > objModel.getCachedPages()) {
+                objParams["page"] = objModel.getCachedPages();
+            }
+            if (objParams["rpp"] > 50) {
+                objParams["rpp"] = 50;
+            }
             //show page links pad
             var strUrlFromParamsWithoutPage = getUrlStringFromParamsObject(getUrlObjectFromParamsWithoutParamArray(objParams, ["page"]));
             var url = 'jsp#/' + objModel.getName() + '/list/' + strUrlFromParamsWithoutPage;
@@ -234,15 +254,15 @@ var control_documento = function(path) {
                     if (callbackLinkParameters) {
                         var botonera = "";
                         botonera += '<div class="btn-toolbar" role="toolbar"><div class="btn-group btn-group-xs">';
-                        botonera += '<a class="btn btn-default" id="' + id + '"  href="jsp#/' + objModel.getName() + '/view/' + callbackLinkParameters + '=' + id + '"><i class="glyphicon glyphicon-ok"></i></a>';
+                        botonera += '<a class="btn btn-default" href="jsp#/' + objModel.getName() + '/view/' + callbackLinkParameters + '=' + id + '"><i class="glyphicon glyphicon-ok"></i></a>';
                         botonera += '</div></div>';
                         return botonera;
                     } else {
                         var botonera = "";
                         botonera += '<div class="btn-toolbar" role="toolbar"><div class="btn-group btn-group-xs">';
-                        botonera += '<a class="btn btn-default" id="' + id + '"  href="jsp#/' + objModel.getName() + '/view/' + id + '"><i class="glyphicon glyphicon-eye-open"></i></a>';
-                        botonera += '<a class="btn btn-default" id="' + id + '"  href="jsp#/' + objModel.getName() + '/edit/' + id + '"><i class="glyphicon glyphicon-pencil"></i></a>';
-                        botonera += '<a class="btn btn-default" id="' + id + '"  href="jsp#/' + objModel.getName() + '/remove/' + id + '"><i class="glyphicon glyphicon-remove"></i></a>';
+                        botonera += '<a class="btn btn-default" href="jsp#/' + objModel.getName() + '/view/' + id + '"><i class="glyphicon glyphicon-eye-open"></i></a>';
+                        botonera += '<a class="btn btn-default" href="jsp#/' + objModel.getName() + '/edit/' + id + '"><i class="glyphicon glyphicon-pencil"></i></a>';
+                        botonera += '<a class="btn btn-default" href="jsp#/' + objModel.getName() + '/remove/' + id + '"><i class="glyphicon glyphicon-remove"></i></a>';
                         botonera += '</div></div>';
                         return botonera;
                     }
@@ -261,121 +281,11 @@ var control_documento = function(path) {
                 filter = $("#selectFilter option:selected").val();
                 filteroperator = $("#selectFilteroperator option:selected").val();
                 filtervalue = $("#inputFiltervalue").val();
-                window.location.href = 'jsp#/' + objModel.getName() + '/list/' + getUrlStringFromParamsObject(getUrlObjectFromParamsWithoutParamArray(objParams, ['filter', 'filteroperator', 'filtervalue'])) + "&filter=" + filter + "&filteroperator=" + filteroperator + "&filtervalue=" + filtervalue;
+                window.location.href = "jsp#/' + objModel.getName() + '/list/" + getUrlStringFromParamsObject(getUrlObjectFromParamsWithoutParamArray(objParams, ['filter', 'filteroperator', 'filtervalue'])) + "&filter=" + filter + "&filteroperator=" + filteroperator + "&filtervalue=" + filtervalue;
                 return false;
             });
         },
-        modalList: function(objModel, objView, place, objParams, callbackLinkParameters) {
-            var thisObject = this;
-            //get all data from server in one http call and store it in cache
-            objModel.loadAggregateViewSome(objParams);
-            objParams = validateUrlObjectParameters(objParams, objModel);
-            //get html template from server and show it
-            $(place).empty().append(objView.getPanel("Listado de " + objModel.getName(), objView.getEmptyList()));
-            //show page links pad
-            var strUrlFromParamsWithoutPage = getUrlStringFromParamsObject(getUrlObjectFromParamsWithoutParamArray(objParams, ["page"]));
-            var url = 'jsp#/' + objModel.getName() + '/list/' + strUrlFromParamsWithoutPage;
-            $("#pagination").empty().append(objView.getLoading()).html(objView.getPageLinks(url, parseInt(objParams["page"]), parseInt(objModel.getCachedPages()), 2));
-            $('.pagination_link').unbind('click');
-            $('.pagination_link').click(function(event) {
-                //rpp = $( "#rpp option:selected").text();
-                objParams["page"] = $(this).attr('id');
-                thisObject.modalList(objModel, objView, place, objParams, callbackLinkParameters);
-                return false;
-            });
-            //visible fields select population, setting & event
-            $('#selectVisibleFields').empty().populateSelectBox(getIntegerArray(1, objModel.getCachedCountFields()));
-            $("#selectVisibleFields").val(objParams["vf"]);
-            $('#selectVisibleFields').unbind('click');
-            $("#selectVisibleFields").change(function() {
-                objParams["vf"] = $("#selectVisibleFields option:selected").val();
-                thisObject.modalList(objModel, objView, place, objParams, callbackLinkParameters);
-                //window.location.href = "jsp#/" + objModel.getName() + "/list/" + getUrlStringFromParamsObject(getUrlObjectFromParamsWithoutParamArray(objParams, ['vf'])) + "&vf=" + $("#selectVisibleFields option:selected").val();
-                return false;
-            });
-
-
-
-            //show the table
-            var fieldNames = objModel.getCachedFieldNames();
-            var prettyFieldNames = objModel.getCachedPrettyFieldNames();
-            var strUrlFromParamsWithoutOrder = getUrlStringFromParamsObject(getUrlObjectFromParamsWithoutParamArray(objParams, ["order", "ordervalue"]));
-            var page = objModel.getCachedPage();
-            $("#tableHeaders").empty().append(objView.getLoading()).html(objView.getHeaderPageTable(prettyFieldNames, fieldNames, parseInt(objParams["vf"]), strUrlFromParamsWithoutOrder));
-            $("#tableBody").empty().append(objView.getLoading()).html(function() {
-                return objView.getBodyPageTable(page, fieldNames, parseInt(objParams["vf"]), function(id) {
-                    if (callbackLinkParameters) {
-                        var botonera = "";
-                        botonera += '<div class="btn-toolbar" role="toolbar"><div class="btn-group btn-group-xs">';
-                        botonera += '<a class="btn btn-default action01" id="' + id + '" href="jsp#/' + objModel.getName() + '/view/' + callbackLinkParameters + '=' + id + '"><i class="glyphicon glyphicon-ok"></i></a>';
-                        botonera += '</div></div>';
-                        return botonera;
-                    } else {
-                        var botonera = "";
-                        botonera += '<div class="btn-toolbar" role="toolbar"><div class="btn-group btn-group-xs">';
-                        botonera += '<a class="btn btn-default action01" id="' + id + '" href="jsp#/' + objModel.getName() + '/view/' + id + '"><i class="glyphicon glyphicon-eye-open"></i></a>';
-                        botonera += '<a class="btn btn-default action02" id="' + id + '" href="jsp#/' + objModel.getName() + '/edit/' + id + '"><i class="glyphicon glyphicon-pencil"></i></a>';
-                        botonera += '<a class="btn btn-default action03" id="' + id + '" href="jsp#/' + objModel.getName() + '/remove/' + id + '"><i class="glyphicon glyphicon-remove"></i></a>';
-                        botonera += '</div></div>';
-                        return botonera;
-                    }
-                });
-            });
-
-            if (callbackLinkParameters) {
-                $('.btn.btn-default.action01').unbind('click');
-                $('.btn.btn-default.action01').click(callback);
-            } else {
-//                $('.btn.btn-default.action01').unbind('click');
-//                $('.btn.btn-default.action01').click(function() {
-//                    loadDivView('#datos2', $(this).attr('id'));
-//                    return false;
-//                });
-
-                $('.btn.btn-default.action01').unbind('click');
-                $('.btn.btn-default.action01').click(function() {
-
-                    objModel.loadAggregateViewOne($(this).attr('id'));
-                    var content = objView.getObjectTable(objModel.getCachedPrettyFieldNames(), objModel.getCachedOne(), objModel.getCachedFieldNames());
-                    loadModalView('#modal01', $(this).attr('id'), objModel.getName(), content);
-                    return false;
-                });
-
-//                $('.btn.btn-default.action02').unbind('click');
-//                $('.btn.btn-default.action02').click(function() {
-//                    loadModalForm('#modal01', $(this).attr('id'), "edit");
-//                    return false;
-//                });
-//
-//                $('.btn.btn-default.action03').unbind('click');
-//                $('.btn.btn-default.action03').click(function() {
-//                    removeConfirmationModalForm('#modal01', $(this).attr('id'));
-//                    return false;
-//                });
-
-            }
-
-
-
-
-            //show information about the query
-            $("#registers").empty().append(objView.getLoading()).html(objView.getRegistersInfo(objModel.getCachedRegisters()));
-            $("#order").empty().append(objView.getLoading()).html(objView.getOrderInfo(objParams));
-            $("#filter").empty().append(objView.getLoading()).html(objView.getFilterInfo(objParams));
-            //regs per page links
-            $('#nrpp').empty().append(objView.getRppLinks(objParams));
-            //filter population & event
-            $('#selectFilter').empty().populateSelectBox(fieldNames, prettyFieldNames);
-            $('#btnFiltrar').unbind('click');
-            $("#btnFiltrar").click(function(event) {
-                filter = $("#selectFilter option:selected").val();
-                filteroperator = $("#selectFilteroperator option:selected").val();
-                filtervalue = $("#inputFiltervalue").val();
-                window.location.href = 'jsp#/' + objModel.getName() + '/list/' + getUrlStringFromParamsObject(getUrlObjectFromParamsWithoutParamArray(objParams, ['filter', 'filteroperator', 'filtervalue'])) + "&filter=" + filter + "&filteroperator=" + filteroperator + "&filtervalue=" + filtervalue;
-                return false;
-            });
-        },
-        modalListillo: function(pag, order, ordervalue, rpp, filter, filteroperator, filtervalue, callback, systemfilter, systemfilteroperator, systemfiltervalue) {
+        modalList: function(pag, order, ordervalue, rpp, filter, filteroperator, filtervalue, callback, systemfilter, systemfilteroperator, systemfiltervalue) {
 
             var thisObject = this;
 

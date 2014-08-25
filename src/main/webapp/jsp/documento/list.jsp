@@ -110,7 +110,7 @@
                 <div class="panel-heading">Registros por página</div>
                 <div class="panel-body">
                     <div class="text-center">
-                        <div id="rpp1"></div>
+                        <div id="nrpp"></div>
                     </div>
                 </div>
 

@@ -46,29 +46,32 @@
             <input type="text"  class="form-control"  id="hits" name="hits" size="15" placeholder="hits" />
         </div>
     </div>
+    
+    
+    
     <div class="form-group">
-        <label class="col-sm-2 control-label" for="id_usuario">Usuario: </label> 
+        <label class="col-sm-2 control-label" for="obj_usuario_id">Usuario: </label> 
         <div class="col-sm-1">              
-            <input readonly="true"  class="form-control"  id="id_usuario" class="input-mini" name="id_usuario" type="text" size="5" maxlength="5" />  
+            <input readonly="true"  class="form-control"  id="obj_usuario_id" class="input-mini" name="obj_usuario" type="text" size="5" maxlength="5" />  
         </div>
         <div class="col-sm-1">              
-            <a class="btn btn-primary btn-sm" id="id_usuario_button" href="#"><i class="glyphicon glyphicon-search"></i></a>
+            <a class="btn btn-primary btn-sm" id="obj_usuario_button" href="#"><i class="glyphicon glyphicon-search"></i></a>
         </div>        
-        <label class="col-sm-8" for="id_usuario" id="id_usuario_desc"></label>                     
+        <label class="col-sm-8" for="obj_usuario_desc" id="obj_usuario_desc"></label>                     
     </div>
 
 
 
 
     <div class="form-group">
-        <label class="col-sm-2 control-label" for="id_tipodocumento">Tipo de documento: </label> 
+        <label class="col-sm-2 control-label" for="obj_tipodocumento_id">Tipo de documento: </label> 
         <div class="col-sm-1">              
-            <input readonly="true"  class="form-control"  id="id_tipodocumento" class="input-mini" name="id_tipodocumento" type="text" size="5" maxlength="5" />  
+            <input readonly="true"  class="form-control"  id="obj_tipodocumento_id" class="input-mini" name="obj_tipodocumento" type="text" size="5" maxlength="5" />  
         </div>
         <div class="col-sm-1">              
-            <a class="btn btn-primary btn-sm" id="id_tipodocumento_button" href="#"><i class="glyphicon glyphicon-search"></i></a>
+            <a class="btn btn-primary btn-sm" id="obj_tipodocumento_button" href="#"><i class="glyphicon glyphicon-search"></i></a>
         </div>        
-        <label class="col-sm-8" for="id_usuario" id="id_tipodocumento_desc"></label>                     
+        <label class="col-sm-8" for="obj_usuario_desc" id="obj_tipodocumento_desc"></label>                     
     </div>
 
 
@@ -100,12 +103,6 @@
             <input type="checkbox" id="portada" name="destacado" value="true" />
         </div>
     </div>           
-    <div class="form-group">
-        <div class="col-sm-offset-2 col-sm-10">
-            <button type="submit"  class="btn btn-primary"  id="submitForm" >Submit</button>
-            <button type="reset"  class="btn btn-danger"  id="resetForm" >Reset</button>
-        </div>
-    </div>
 </form>
 
 

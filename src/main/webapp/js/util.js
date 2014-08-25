@@ -326,17 +326,22 @@ $.fn.populateSelectBox = function(values, captions) {
     }
 };
 
-function parameters(url) {
-    if (url == "")
+function getUrlObjectFromUrlString(url) {
+    if (typeof url == 'undefined') {
         return {};
-    else
-        a = url.split('&');
+    } else {
+        if (url == "") {
+            return {};
+        } else {
+            a = url.split('&');
+        }
+    }
     var b = {};
     for (var i = 0; i < a.length; ++i)
     {
         var p = a[i].split('=');
         if (p.length != 2)
-            continue;
+            p = ['id', p[0]]; //id parameter by default
         b[p[0]] = decodeURIComponent(p[1].replace(/\+/g, " "));
     }
     return b;
@@ -357,4 +362,30 @@ function getUrlStringFromParamsObject(urlObj) {
         result += "&" + key + "=" + urlObj[key];
     }
     return result.substring(1);
+}
+
+function validateUrlObjectParameters(objParams, objModel) {
+    //security borders comprobation, pendent of moving
+    if (objParams["vf"] > objModel.getCachedCountFields()) {
+        objParams["vf"] = objModel.getCachedCountFields();
+    }
+    if (objParams["page"] > objModel.getCachedPages()) {
+        objParams["page"] = objModel.getCachedPages();
+    }
+    if (objParams["rpp"] > 50) {
+        objParams["rpp"] = 50;
+    }
+    return objParams;
+}
+
+function defaultizeUrlObjectParameters(objParams) {
+    if (typeof objParams["page"] == 'undefined')
+        objParams["page"] = 1;
+    if (typeof objParams["id"] == 'undefined')
+        objParams["id"] = 1;
+    if (typeof objParams["rpp"] == 'undefined')
+        objParams["rpp"] = 10;
+    if (typeof objParams["vf"] == 'undefined')
+        objParams["vf"] = 10;
+    return objParams;
 }
