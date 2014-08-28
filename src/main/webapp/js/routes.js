@@ -19,7 +19,7 @@ function do_routes(path) {
         var documentoControl = control_documento(path);
         $('#indexContenidoJsp').empty();
         documentoControl.list(documentoObject, documentoView, $('#indexContenido'), defaultizeUrlObjectParameters({}), null);
-        //documentoControl.modalList(documentoObject, documentoView, $('#indexContenido'), defaultizeUrlObjectParameters({}), null);
+        //documentoControl.modalListEventsLoading(documentoObject, documentoView, $('#indexContenido'), defaultizeUrlObjectParameters({}), null);        
         return false;
     });
 

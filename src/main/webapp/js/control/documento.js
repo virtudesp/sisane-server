@@ -35,6 +35,22 @@ var control_documento = function(path) {
 
 
 
+
+    function loadModalForm2(title, content) {
+
+        //set head & foot of modal view. Get empty form to be loaded into the content. Show modal.
+
+        cabecera = '<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>';
+
+        cabecera += '<h3 id="myModalLabel">' + title + "</h3>";
+
+        pie = '<button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Cerrar</button>';
+        loadForm('#modal01', cabecera, content, pie, false);
+    }
+
+
+
+
     function loadModalForm(place, id, action) {
 
         //set head & foot of modal view. Get empty form to be loaded into the content. Show modal.
@@ -192,6 +208,31 @@ var control_documento = function(path) {
             objModel.loadAggregateViewOne(id);
             objView.doFillForm(objModel.getCachedFieldNames(), objModel.getCachedOne());
             $('#id').attr("disabled", true);
+
+
+            $('#documentoForm #obj_tipodocumento_button').unbind('click');
+            $("#documentoForm #obj_tipodocumento_button").click(function() {
+                var documentoObject = objeto('tipodocumento', path);
+                var documentoView = vista('tipodocumento', path);
+                var objControl = control_tipodocumento(path);
+                //$('#indexContenidoJsp').empty();
+
+                //idea: separar la contrucción del listado y los eventos asociados al mismo. En un momento sólo cargamos la contrucción, para utilzar el enrutamiento de cliente
+                //en otro momento cargamos ademas los eventos que eliminan el enrutamiento y permiten operar mediante eventos
+                //NO y que el documento js no pinte sino que devuelva un string con el html. NO
+
+
+                cargaModalBuscarClaveAjenaNuevo(path, objModel, objView, objControl, defaultizeUrlObjectParameters({}))
+
+//                loadModalForm2("Seleccionando el tipo de documento",);
+//                documentoControl.modalList(documentoObject, documentoView, $('#indexContenido'), defaultizeUrlObjectParameters({}), null)
+
+                //me he quedado cargando este modal para elegir clave ajena
+
+                //documentoControl.modalList(documentoObject, documentoView, $('#indexContenido'), defaultizeUrlObjectParameters({}), null);
+                return false;
+            });
+
         },
         remove: function(objModel, objView, place, id) {
             $(place).empty();
@@ -206,6 +247,7 @@ var control_documento = function(path) {
 //            $(place).append('<a class="btn btn-primary" href="jsp#/' + objModel.getName() + '/list/' + id + '">Volver</a>');
         },
         list: function(objModel, objView, place, objParams, callbackLinkParameters) {
+            var strHtmlResult = "";
             //get all data from server in one http call and store it in cache
             objModel.loadAggregateViewSome(objParams);
             objParams = validateUrlObjectParameters(objParams, objModel);
@@ -218,7 +260,7 @@ var control_documento = function(path) {
             //visible fields select population, setting & event
             $('#selectVisibleFields').empty().populateSelectBox(getIntegerArray(1, objModel.getCachedCountFields()));
             $("#selectVisibleFields").val(objParams["vf"]);
-            $('#selectVisibleFields').unbind('click');
+            $('#selectVisibleFields').unbind('change');
             $("#selectVisibleFields").change(function() {
                 window.location.href = "jsp#/" + objModel.getName() + "/list/" + getUrlStringFromParamsObject(getUrlObjectFromParamsWithoutParamArray(objParams, ['vf'])) + "&vf=" + $("#selectVisibleFields option:selected").val();
                 return false;
@@ -265,63 +307,43 @@ var control_documento = function(path) {
                 return false;
             });
         },
-        modalList: function(objModel, objView, place, objParams, callbackLinkParameters) {
+        modalListEventsLoading: function(objModel, objView, place, objParams, callbackLinkParameters) {
             var thisObject = this;
-            //get all data from server in one http call and store it in cache
-            objModel.loadAggregateViewSome(objParams);
-            objParams = validateUrlObjectParameters(objParams, objModel);
-            //get html template from server and show it
-            $(place).empty().append(objView.getPanel("Listado de " + objModel.getName(), objView.getEmptyList()));
-            //show page links pad
-            var strUrlFromParamsWithoutPage = getUrlStringFromParamsObject(getUrlObjectFromParamsWithoutParamArray(objParams, ["page"]));
-            var url = 'jsp#/' + objModel.getName() + '/list/' + strUrlFromParamsWithoutPage;
-            $("#pagination").empty().append(objView.getLoading()).html(objView.getPageLinks(url, parseInt(objParams["page"]), parseInt(objModel.getCachedPages()), 2));
             $('.pagination_link').unbind('click');
             $('.pagination_link').click(function(event) {
                 //rpp = $( "#rpp option:selected").text();
-                objParams["page"] = $(this).attr('id');
-                thisObject.modalList(objModel, objView, place, objParams, callbackLinkParameters);
+                objParams = getUrlObjectFromParamsWithoutParamArray(objParams, ["page"]);
+                objParams["page"] = parseInt($(this).attr('id'));
+                thisObject.list(objModel, objView, place, objParams, callbackLinkParameters);
+                thisObject.modalListEventsLoading(objModel, objView, place, objParams, callbackLinkParameters);
                 return false;
             });
             //visible fields select population, setting & event
-            $('#selectVisibleFields').empty().populateSelectBox(getIntegerArray(1, objModel.getCachedCountFields()));
-            $("#selectVisibleFields").val(objParams["vf"]);
-            $('#selectVisibleFields').unbind('click');
+            $('#selectVisibleFields').unbind('change');
             $("#selectVisibleFields").change(function() {
+                objParams = getUrlObjectFromParamsWithoutParamArray(objParams, ["vf"]);
                 objParams["vf"] = $("#selectVisibleFields option:selected").val();
-                thisObject.modalList(objModel, objView, place, objParams, callbackLinkParameters);
+                thisObject.list(objModel, objView, place, objParams, callbackLinkParameters);
+                thisObject.modalListEventsLoading(objModel, objView, place, objParams, callbackLinkParameters);
                 //window.location.href = "jsp#/" + objModel.getName() + "/list/" + getUrlStringFromParamsObject(getUrlObjectFromParamsWithoutParamArray(objParams, ['vf'])) + "&vf=" + $("#selectVisibleFields option:selected").val();
                 return false;
             });
-
-
-
-            //show the table
-            var fieldNames = objModel.getCachedFieldNames();
-            var prettyFieldNames = objModel.getCachedPrettyFieldNames();
-            var strUrlFromParamsWithoutOrder = getUrlStringFromParamsObject(getUrlObjectFromParamsWithoutParamArray(objParams, ["order", "ordervalue"]));
-            var page = objModel.getCachedPage();
-            $("#tableHeaders").empty().append(objView.getLoading()).html(objView.getHeaderPageTable(prettyFieldNames, fieldNames, parseInt(objParams["vf"]), strUrlFromParamsWithoutOrder));
-            $("#tableBody").empty().append(objView.getLoading()).html(function() {
-                return objView.getBodyPageTable(page, fieldNames, parseInt(objParams["vf"]), function(id) {
-                    if (callbackLinkParameters) {
-                        var botonera = "";
-                        botonera += '<div class="btn-toolbar" role="toolbar"><div class="btn-group btn-group-xs">';
-                        botonera += '<a class="btn btn-default action01" id="' + id + '" href="jsp#/' + objModel.getName() + '/view/' + callbackLinkParameters + '=' + id + '"><i class="glyphicon glyphicon-ok"></i></a>';
-                        botonera += '</div></div>';
-                        return botonera;
-                    } else {
-                        var botonera = "";
-                        botonera += '<div class="btn-toolbar" role="toolbar"><div class="btn-group btn-group-xs">';
-                        botonera += '<a class="btn btn-default action01" id="' + id + '" href="jsp#/' + objModel.getName() + '/view/' + id + '"><i class="glyphicon glyphicon-eye-open"></i></a>';
-                        botonera += '<a class="btn btn-default action02" id="' + id + '" href="jsp#/' + objModel.getName() + '/edit/' + id + '"><i class="glyphicon glyphicon-pencil"></i></a>';
-                        botonera += '<a class="btn btn-default action03" id="' + id + '" href="jsp#/' + objModel.getName() + '/remove/' + id + '"><i class="glyphicon glyphicon-remove"></i></a>';
-                        botonera += '</div></div>';
-                        return botonera;
-                    }
-                });
+            $('.rpp_link').unbind('click');
+            $('.rpp_link').on('click', function(event) {
+                objParams = getUrlObjectFromParamsWithoutParamArray(objParams, ["rpp"]);
+                objParams["rpp"] = parseInt($(this).attr('id'));
+                thisObject.list(objModel, objView, place, objParams, callbackLinkParameters);
+                thisObject.modalListEventsLoading(objModel, objView, place, objParams, callbackLinkParameters);
+                //window.location.href = "jsp#/" + objModel.getName() + "/list/" + getUrlStringFromParamsObject(getUrlObjectFromParamsWithoutParamArray(objParams, ['vf'])) + "&vf=" + $("#selectVisibleFields option:selected").val();
+                return false;
+                //thisObject.inicia(pag, order, ordervalue, rpp, filter, filteroperator, filtervalue, callback, systemfilter, systemfilteroperator, systemfiltervalue);
             });
 
+
+            //continuar con los eventos
+
+
+            //table events
             if (callbackLinkParameters) {
                 $('.btn.btn-default.action01').unbind('click');
                 $('.btn.btn-default.action01').click(callback);
@@ -355,176 +377,64 @@ var control_documento = function(path) {
 
             }
 
-
-
-
-            //show information about the query
-            $("#registers").empty().append(objView.getLoading()).html(objView.getRegistersInfo(objModel.getCachedRegisters()));
-            $("#order").empty().append(objView.getLoading()).html(objView.getOrderInfo(objParams));
-            $("#filter").empty().append(objView.getLoading()).html(objView.getFilterInfo(objParams));
-            //regs per page links
-            $('#nrpp').empty().append(objView.getRppLinks(objParams));
-            //filter population & event
-            $('#selectFilter').empty().populateSelectBox(fieldNames, prettyFieldNames);
+            //filter event
             $('#btnFiltrar').unbind('click');
             $("#btnFiltrar").click(function(event) {
-                filter = $("#selectFilter option:selected").val();
-                filteroperator = $("#selectFilteroperator option:selected").val();
-                filtervalue = $("#inputFiltervalue").val();
-                window.location.href = 'jsp#/' + objModel.getName() + '/list/' + getUrlStringFromParamsObject(getUrlObjectFromParamsWithoutParamArray(objParams, ['filter', 'filteroperator', 'filtervalue'])) + "&filter=" + filter + "&filteroperator=" + filteroperator + "&filtervalue=" + filtervalue;
+//                filter = $("#selectFilter option:selected").val();
+//                filteroperator = $("#selectFilteroperator option:selected").val();
+//                filtervalue = $("#inputFiltervalue").val();
+//                window.location.href = 'jsp#/' + objModel.getName() + '/list/' + getUrlStringFromParamsObject(getUrlObjectFromParamsWithoutParamArray(objParams, ['filter', 'filteroperator', 'filtervalue'])) + "&filter=" + filter + "&filteroperator=" + filteroperator + "&filtervalue=" + filtervalue;
+//                return false;
+                objParams = getUrlObjectFromParamsWithoutParamArray(objParams, ["filter", "filteroperator", "filtervalue"]);
+                objParams["filter"] = $("#selectFilter option:selected").val();
+                objParams["filteroperator"] = $("#selectFilteroperator option:selected").val();
+                objParams["filtervalue"] = $("#inputFiltervalue").val();
+                thisObject.list(objModel, objView, place, objParams, callbackLinkParameters);
+                thisObject.modalListEventsLoading(objModel, objView, place, objParams, callbackLinkParameters);
+                //window.location.href = "jsp#/" + objModel.getName() + "/list/" + getUrlStringFromParamsObject(getUrlObjectFromParamsWithoutParamArray(objParams, ['vf'])) + "&vf=" + $("#selectVisibleFields option:selected").val();
                 return false;
             });
-        },
-        modalListillo: function(pag, order, ordervalue, rpp, filter, filteroperator, filtervalue, callback, systemfilter, systemfilteroperator, systemfiltervalue) {
 
-            var thisObject = this;
+            $('.orderAsc').unbind('click');
+            $('.orderAsc').on('click', function(event) {
+                objParams = getUrlObjectFromParamsWithoutParamArray(objParams, ["order", "ordervalue"]);
+                objParams["order"] = $(this).attr('id');
+                objParams["ordervalue"] = "asc";
+                thisObject.list(objModel, objView, place, objParams, callbackLinkParameters);
+                thisObject.modalListEventsLoading(objModel, objView, place, objParams, callbackLinkParameters);
+                //window.location.href = "jsp#/" + objModel.getName() + "/list/" + getUrlStringFromParamsObject(getUrlObjectFromParamsWithoutParamArray(objParams, ['vf'])) + "&vf=" + $("#selectVisibleFields option:selected").val();
+                return false;
+                //thisObject.inicia(pag, order, ordervalue, rpp, filter, filteroperator, filtervalue, callback, systemfilter, systemfilteroperator, systemfiltervalue);
+            });
 
-            //controlar que no estemos en una página fuera de órbita
-
-            if (parseInt(pag) > parseInt(objView.getObject().getPages(rpp, filter, filteroperator, filtervalue))) {
-                pag = objView.getObject().getPages(rpp, filter, filteroperator, filtervalue);
-            }
-
-
-
-            //muestra la botonera de páginas
-
-            $("#pagination").empty().append(objView.getLoading()).html(objView.getPageLinks(pag, order, ordervalue, rpp, filter, filteroperator, filtervalue, systemfilter, systemfilteroperator, systemfiltervalue));
-
-            //muestra el listado principal
-
-            if (callback) {
-                $("#datos").empty().append(objView.getLoading()).html(objView.getPageTable(pag, order, ordervalue, rpp, filter, filteroperator, filtervalue, systemfilter, systemfilteroperator, systemfiltervalue, cargaBotoneraBuscando()));
-            } else {
-                $("#datos").empty().append(objView.getLoading()).html(objView.getPageTable(pag, order, ordervalue, rpp, filter, filteroperator, filtervalue, systemfilter, systemfilteroperator, systemfiltervalue, cargaBotoneraMantenimiento()));
-            }
-
-            //muestra la frase con el número de registros de la consulta
-
-            $("#registers").empty().append(objView.getLoading()).html(objView.getRegistersInfo(filter, filteroperator, filtervalue, systemfilter, systemfilteroperator, systemfiltervalue));
-            //$( "#registers").empty().append(objView.getLoading()).html('<a href="jsp#/documento/view/1">Ver documento 1</a>');
-
-            //muestra la frase de estado de la ordenación de la tabla
-
-            $("#order").empty().append(objView.getLoading()).html(objView.getOrderInfo(order, ordervalue));
-
-            //muestra la frase de estado del filtro de la tabla aplicado
-
-            $("#filter").empty().append(objView.getLoading()).html(objView.getFilterInfo(filter, filteroperator, filtervalue));
-
-            //asignación eventos de la botonera de cada línea del listado principal
-
-            if (callback) {
-                $('.btn.btn-default.action01').unbind('click');
-                $('.btn.btn-default.action01').click(callback);
-            } else {
-                $('.btn.btn-default.action01').unbind('click');
-                $('.btn.btn-default.action01').click(function() {
-                    loadDivView('#datos2', $(this).attr('id'));
-                });
-
-                $('.btn.btn-default.action02').unbind('click');
-                $('.btn.btn-default.action02').click(function() {
-                    loadModalView('#modal01', $(this).attr('id'));
-                });
-
-                $('.btn.btn-default.action03').unbind('click');
-                $('.btn.btn-default.action03').click(function() {
-                    loadModalForm('#modal01', $(this).attr('id'), "edit");
-                });
-
-                $('.btn.btn-default.action04').unbind('click');
-                $('.btn.btn-default.action04').click(function() {
-                    removeConfirmationModalForm('#modal01', $(this).attr('id'));
-                });
-
-            }
-
-            $('#rpp1').empty().append(objView.getRppLinks(pag, order, ordervalue, rpp, filter, filteroperator, filtervalue, systemfilter, systemfilteroperator, systemfiltervalue));
-
-            //asignación de evento del enlace para quitar el orden en el listado principal
+            $('.orderDesc').unbind('click');
+            $('.orderDesc').on('click', function(event) {
+                objParams = getUrlObjectFromParamsWithoutParamArray(objParams, ["order", "ordervalue"]);
+                objParams["order"] = $(this).attr('id');
+                objParams["ordervalue"] = "desc";
+                thisObject.list(objModel, objView, place, objParams, callbackLinkParameters);
+                thisObject.modalListEventsLoading(objModel, objView, place, objParams, callbackLinkParameters);
+                //window.location.href = "jsp#/" + objModel.getName() + "/list/" + getUrlStringFromParamsObject(getUrlObjectFromParamsWithoutParamArray(objParams, ['vf'])) + "&vf=" + $("#selectVisibleFields option:selected").val();
+                return false;
+                //thisObject.inicia(pag, order, ordervalue, rpp, filter, filteroperator, filtervalue, callback, systemfilter, systemfilteroperator, systemfiltervalue);
+            });
 
             $('#linkQuitarOrden').unbind('click');
             $('#linkQuitarOrden').click(function() {
-                thisObject.inicia(pag, null, null, rpp, filter, filteroperator, filtervalue, callback, systemfilter, systemfilteroperator, systemfiltervalue);
+                objParams = getUrlObjectFromParamsWithoutParamArray(objParams, ["order", "ordervalue"]);
+                thisObject.list(objModel, objView, place, objParams, callbackLinkParameters);
+                thisObject.modalListEventsLoading(objModel, objView, place, objParams, callbackLinkParameters);                
+                return false;
             });
 
             //asignación de evento del enlace para quitar el filtro en el listado principal
 
             $('#linkQuitarFiltro').unbind('click');
             $('#linkQuitarFiltro').click(function() {
-                thisObject.inicia(pag, order, ordervalue, rpp, null, null, null, callback, systemfilter, systemfilteroperator, systemfiltervalue);
-            });
-
-            //asignación de eventos de la ordenación por columnas del listado principal
-
-            $.each(objView.getObject().getFieldNames(), function(index, valor) {
-                $('.orderAsc').unbind('click');
-                $('.orderAsc' + index).click(function() {
-                    rpp = $("#rpp option:selected").text();
-                    thisObject.inicia(pag, valor, "asc", rpp, filter, filteroperator, filtervalue, callback, systemfilter, systemfilteroperator, systemfiltervalue);
-                });
-                $('.orderDesc').unbind('click');
-                $('.orderDesc' + index).click(function() {
-                    rpp = $("#rpp option:selected").text();
-                    thisObject.inicia(pag, valor, "desc", rpp, filter, filteroperator, filtervalue, callback, systemfilter, systemfilteroperator, systemfiltervalue);
-                });
-
-            });
-
-            //asignación del evento de click para cambiar de página en la botonera de paginación
-
-//            $( '.pagination_link').unbind('click');
-//            $( '.pagination_link').click(function(event) {
-//                var id = $(this).attr('id');
-//                rpp = $( "#rpp option:selected").text();
-//                thisObject.inicia(id, order, ordervalue, rpp, filter, filteroperator, filtervalue, callback, systemfilter, systemfilteroperator, systemfiltervalue);
-//                return false;
-//
-//            });
-
-            //boton de crear un nuevo elemento
-            if (callback) {
-                $('#crear').css("display", "none");
-            } else {
-                $('#crear').unbind('click');
-                $('#crear').click(function() {
-                    loadModalForm('#modal01', $(this).attr('id'));
-                });
-            }
-
-
-
-
-            //asignación del evento de filtrado al boton
-
-            $('#btnFiltrar').unbind('click');
-            $("#btnFiltrar").click(function(event) {
-                filter = $("#selectFilter option:selected").val();
-                filteroperator = $("#selectFilteroperator option:selected").val();
-                filtervalue = $("#inputFiltervalue").val();
-
-                window.location.href = "jsp#/documento/list/" + objView.getUrlFromParamsWithoutFilter(pag, order, ordervalue, rpp, filter, filteroperator, filtervalue, systemfilter, systemfilteroperator, systemfiltervalue) + "&filter=" + filter + "&filteroperator=" + filteroperator + "&filtervalue=" + filtervalue;
-
-                //thisObject.inicia(pag, order, ordervalue, rpp, filter, filteroperator, filtervalue, callback, systemfilter, systemfilteroperator, systemfiltervalue);
+                objParams = getUrlObjectFromParamsWithoutParamArray(objParams, ["filter", "filteroperator", "filtervalue"]);
+                thisObject.list(objModel, objView, place, objParams, callbackLinkParameters);
+                thisObject.modalListEventsLoading(objModel, objView, place, objParams, callbackLinkParameters);                
                 return false;
-            });
-
-            //asigación de evento de refresco de la tabla cuando volvemos de una operación en ventana modal
-
-            $('#modal01').unbind('hidden.bs.modal');
-            $('#modal01').on('hidden.bs.modal', function() {
-                rpp = $("#rpp option:selected").text();
-                thisObject.inicia(pag, order, ordervalue, rpp, filter, filteroperator, filtervalue, callback, systemfilter, systemfilteroperator, systemfiltervalue);
-
-            });
-
-            //asignación del evento de cambio del numero de regs por página
-
-            $('#rpp').unbind('change');
-            $('#rpp').on('change', function() {
-                rpp = $("#rpp option:selected").text();
-                thisObject.inicia(pag, order, ordervalue, rpp, filter, filteroperator, filtervalue, callback, systemfilter, systemfilteroperator, systemfiltervalue);
             });
         }
     };

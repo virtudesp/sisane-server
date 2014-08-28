@@ -135,9 +135,9 @@
 <div id="modal01" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
-            <div class="modal-header"></div>
-            <div class="modal-body"></div>
-            <div class="modal-footer"></div>
+            <div class="modal-header" id="modal-header"></div>
+            <div class="modal-body" id="modal-body"></div>
+            <div class="modal-footer" id="modal-footer"></div>
         </div>
     </div>
 </div>
@@ -150,31 +150,4 @@
         </div>                
     </div>
 </div>
-
-<div id="modalDisplayedFields" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 id="myModalLabel">Campos visibles</h3>
-            </div>
-            <div class="modal-body">
-                <%
-                    alColumnsNames = oDocumentoDao.getPrettyColumnsNames();
-                    oIterador = alColumnsNames.listIterator();
-                    while (oIterador.hasNext()) {
-                        String strNombreColumna = oIterador.next();
-                        //String strNombreColumnaPretty = strNombreColumna.charAt(0) + strNombreColumna.substring(1);
-%>
-                <label class="checkbox-inline">
-                    <input type="checkbox" id="inlineCheckbox1"><%=strNombreColumna%></input>
-                </label>
-                <% }
-                %>
-            </div>
-            <div class="modal-footer">
-                <button id="btnDefaultDisplayedFields" class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Por defecto</button>                
-                <button id="btnCloseModalDisplayedFields" class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Cerrar</button>
-            </div>
-        </div>                
-    </div>
-</div>        
+     

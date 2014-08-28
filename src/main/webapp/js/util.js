@@ -42,6 +42,21 @@ function cargaModalBuscarClaveAjena(strObjetoForeign, strPlace, control, functio
     consultaControl.inicia(consultaView, 1, null, null, 10, null, null, null, functionCallback, null, null, null);
 }
 
+
+function cargaModalBuscarClaveAjenaNuevo(path, objModel, objView, objControl, objParams) {
+    //var objConsulta = objeto(strObjetoForeign, path);
+    //var consultaView = vista(objConsulta, path);
+    cabecera = '<button id="full-width" type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>' + '<h3 id="myModalLabel">Elección</h3>';
+    pie = '<button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Cerrar</button>';
+    listado = objView.getEmptyList();
+    loadForm('#modal01', cabecera, "", pie, true);        
+    //var consultaControl = control(path);
+    //consultaControl.inicia(consultaView, 1, null, null, 10, null, null, null, functionCallback, null, null, null);
+    objControl.list(objModel, objView, '#modal-body', objParams, null);       
+}
+
+
+
 function creoleParse(content, lugar) {
     var div = document.createElement('div');
     div.innerHTML = "";

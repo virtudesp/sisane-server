@@ -251,22 +251,22 @@ var vista = function(clase, ContextPath) {
                 botonera += '<li class="active">';
             else
                 botonera += '<li>';
-            botonera += '<a class="pagination_link" id="1" href="jsp#/' + clase + '/list/' + UrlFromParamsWithoutRpp + '&rpp=5">5</a></li>';
+            botonera += '<a class="rpp_link" id="5" href="jsp#/' + clase + '/list/' + UrlFromParamsWithoutRpp + '&rpp=5">5</a></li>';
             if (objParams['rpp'] == 10)
                 botonera += '<li class="active">';
             else
                 botonera += '<li>';
-            botonera += '<a class="pagination_link" id="2" href="jsp#/' + clase + '/list/' + UrlFromParamsWithoutRpp + '&rpp=10">10</a></li>';
+            botonera += '<a class="rpp_link" id="10" href="jsp#/' + clase + '/list/' + UrlFromParamsWithoutRpp + '&rpp=10">10</a></li>';
             if (objParams['rpp'] == 20)
                 botonera += '<li class="active">';
             else
                 botonera += '<li>';
-            botonera += '<a class="pagination_link" id="3" href="jsp#/' + clase + '/list/' + UrlFromParamsWithoutRpp + '&rpp=20">20</a></li>';
+            botonera += '<a class="rpp_link" id="20" href="jsp#/' + clase + '/list/' + UrlFromParamsWithoutRpp + '&rpp=20">20</a></li>';
             if (objParams['rpp'] == 50)
                 botonera += '<li class="active">';
             else
                 botonera += '<li>';
-            botonera += '<a class="pagination_link" id="4" href="jsp#/' + clase + '/list/' + UrlFromParamsWithoutRpp + '&rpp=50">50</a></li>';
+            botonera += '<a class="rpp_link" id="50" href="jsp#/' + clase + '/list/' + UrlFromParamsWithoutRpp + '&rpp=50">50</a></li>';
             botonera += '</ul></div>';
             return botonera;
         },
@@ -294,8 +294,8 @@ var vista = function(clase, ContextPath) {
                             fieldName = fieldNames[numField - 1];
                         }
                         tabla += '<br />';
-                        tabla += '<a class="orderAsc' + index + '" href="jsp#/' + clase + '/list/' + UrlFromParamsWithoutOrder + '&order=' + fieldName + '&ordervalue=asc"><i class="glyphicon glyphicon-arrow-up"></i></a>';
-                        tabla += '<a class="orderDesc' + index + '" href="jsp#/' + clase + '/list/' + UrlFromParamsWithoutOrder + '&order=' + fieldName + '&ordervalue=desc"><i class="glyphicon glyphicon-arrow-down"></i></a>';
+                        tabla += '<a class="orderAsc" id="' + fieldName + '" href="jsp#/' + clase + '/list/' + UrlFromParamsWithoutOrder + '&order=' + fieldName + '&ordervalue=asc"><i class="glyphicon glyphicon-arrow-up"></i></a>';
+                        tabla += '<a class="orderDesc" id="' + fieldName + '" href="jsp#/' + clase + '/list/' + UrlFromParamsWithoutOrder + '&order=' + fieldName + '&ordervalue=desc"><i class="glyphicon glyphicon-arrow-down"></i></a>';
                         tabla += '</th>';
 //                        }
                     }

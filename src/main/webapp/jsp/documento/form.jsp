@@ -46,9 +46,9 @@
             <input type="text"  class="form-control"  id="hits" name="hits" size="15" placeholder="hits" />
         </div>
     </div>
-    
-    
-    
+
+
+
     <div class="form-group">
         <label class="col-sm-2 control-label" for="obj_usuario_id">Usuario: </label> 
         <div class="col-sm-1">              
@@ -105,7 +105,15 @@
     </div>           
 </form>
 
-
+<div id="modal01" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header" id="modal-header"></div>
+            <div class="modal-body" id="modal-body"></div>
+            <div class="modal-footer" id="modal-footer"></div>
+        </div>
+    </div>
+</div>
 
 <script>
     $("#documentoForm #alta").datepicker({
@@ -197,6 +205,9 @@
                     .closest('.control-group').removeClass('error').addClass('success');
         }
     });
+    
+   
+
     function documentoForm_load(valores) {
         $('#documento_form #titulo').val(valores['titulo']);
         $('#documento_form #contenido').val(valores['contenido']);
@@ -221,6 +232,8 @@
         valores['portada'] = $('#documento_form #portada');
         return valores;
     }
+
+
 
     /*
      doFillForm: function(id) {
