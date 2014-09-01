@@ -1,8 +1,8 @@
 //MODELO
-var objeto = function(clase, ContextPath) {
+var objeto = function(clase) {
     //contexto privado
-    var urlJson = ContextPath + '/json?ob=' + clase;
-    var urlJsp = ContextPath + '/jsp?ob=' + clase;
+    var urlJson = path + '/json?ob=' + clase;
+    var urlJsp = path + '/jsp?ob=' + clase;
     //cache vars
     var cFieldNames = null;
     var cPrettyFieldNames = null;
@@ -18,7 +18,7 @@ var objeto = function(clase, ContextPath) {
             return clase;
         },
         getPath: function() {
-            return ContextPath;
+            return path;
         },
         getUrlJson: function() {
             return urlJson;
@@ -143,13 +143,13 @@ var objeto = function(clase, ContextPath) {
             idAjena = registro[campo];
             //hay que obtener el nombre del campo
             var objetoForeign = campo.split("_")[1].replace(/[0-9]*$/, "");
-            var foreignObject = objeto(objetoForeign, ContextPath);
+            var foreignObject = objeto(objetoForeign, path);
             var registroForeign = foreignObject.getOne(idAjena);
             return registroForeign;
 //            
 //            //falta comprobaciones
 //            
-//            $.when(ajaxCallSync(ContextPath + '/json?ob=' + objetoForeign + '&op=get&id=' + value[valor], 'GET', '')).done(function(data) {
+//            $.when(ajaxCallSync(path + '/json?ob=' + objetoForeign + '&op=get&id=' + value[valor], 'GET', '')).done(function(data) {
 //                var contador = 0;
 //                var add_tabla = "";
 //                for (key in data) {

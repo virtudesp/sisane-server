@@ -1,3 +1,25 @@
+//VISTA
+var util = function() {
+    //contexto privado
+    var link = "#";
+    var neighborhood = 2;
+    var urlJson = ContextPath + '/json?ob=' + clase;
+    var urlJsp = ContextPath + '/jsp?ob=' + clase;
+    function getForeign(objForeign) {
+    
+    }
+
+ return {
+
+        getLoading: function() {
+            return '<img src="fonts/ajax-loading.gif" alt="cargando..." />';
+        },
+        getLoading2: function() {
+            return '<img src="fonts/ajax-loading.gif" alt="cargando..." />';
+        }
+    }
+}
+
 function ajaxCallSync(url, type, data) {
     return $.ajax({
         type: type,
@@ -19,43 +41,6 @@ function ajaxCallASync(url, type, data, callBackFunction) {
     });
 }
 
-function cargaDescripcionClaveAjenaEnFormulario(lugarID, lugarDesc, objetoClaveAjena, path) {
-    if ($(lugarID).val() != "") {
-        objInfo = objeto(objetoClaveAjena, path).getOne($(lugarID).val());
-        if (objInfo != "" && $(lugarID).val() != 0) {
-            props = Object.getOwnPropertyNames(objInfo);
-            $(lugarDesc).text(objInfo[props[0]]); //muestra el primer campo
-        } else {
-            $(lugarDesc).text("???");
-        }
-    }
-}
-
-function cargaModalBuscarClaveAjena(strObjetoForeign, strPlace, control, functionCallback, path) {
-    var objConsulta = objeto(strObjetoForeign, path);
-    var consultaView = vista(objConsulta, path);
-    cabecera = '<button id="full-width" type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>' + '<h3 id="myModalLabel">Elección</h3>';
-    pie = '<button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Cerrar</button>';
-    listado = consultaView.getEmptyList();
-    loadForm(strPlace, cabecera, listado, pie, true);
-    var consultaControl = control(path);
-    consultaControl.inicia(consultaView, 1, null, null, 10, null, null, null, functionCallback, null, null, null);
-}
-
-
-function cargaModalBuscarClaveAjenaNuevo(path, objModel, objView, objControl, objParams) {
-    //var objConsulta = objeto(strObjetoForeign, path);
-    //var consultaView = vista(objConsulta, path);
-    cabecera = '<button id="full-width" type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>' + '<h3 id="myModalLabel">Elección</h3>';
-    pie = '<button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Cerrar</button>';
-    listado = objView.getEmptyList();
-    loadForm('#modal01', cabecera, "", pie, true);        
-    //var consultaControl = control(path);
-    //consultaControl.inicia(consultaView, 1, null, null, 10, null, null, null, functionCallback, null, null, null);
-    objControl.list(objModel, objView, '#modal-body', objParams, null);       
-}
-
-
 
 function creoleParse(content, lugar) {
     var div = document.createElement('div');
@@ -75,78 +60,6 @@ function creoleParse(content, lugar) {
 
     lugar.empty().append(codigo);
 
-}
-
-function getNeighborhood(link, page_number, total_pages, neighborhood) {
-    page_number = parseInt(page_number);
-    total_pages = parseInt(total_pages);
-    neighborhood = parseInt(neighborhood);
-    vector = "<div class=\"pagination\"><ul>";
-    if (page_number > 1)
-        vector += ("<li><a class=\"pagination_link\" id=\"" + (page_number - 1) + "\" href=\"" + link + (page_number - 1) + "\">prev</a></li>");
-    if (page_number > neighborhood + 1)
-        vector += ("<li><a class=\"pagination_link\" id=\"1\" href=\"" + link + "1\">1</a></li>");
-    if (page_number > neighborhood + 2)
-        vector += ("<li>" + "<a href=\"#\">...</a>" + "</li>");
-    for (i = (page_number - neighborhood); i <= (page_number + neighborhood); i++) {
-        if (i >= 1 && i <= total_pages) {
-            if (page_number == i) {
-                vector += ("<li class=\"active\"><a class=\"pagination_link\" id=\"" + i + "\" href=\"" + link + i + "\">" + i + "</a></li>");
-            }
-            else
-                vector += ("<li><a class=\"pagination_link\" id=\"" + i + "\" href=\"" + link + i + "\">" + i + "</a></li>");
-        }
-    }
-    if (page_number < total_pages - (neighborhood + 1))
-        vector += ("<li>" + "<a href=\"#\">...</a>" + "</li>");
-    if (page_number < total_pages - (neighborhood))
-        vector += ("<li><a class=\"pagination_link\" id=\"" + total_pages + "\" href=\"" + link + total_pages + "\">" + total_pages + "</a></li>");
-    if (page_number < total_pages)
-        vector += ("<li><a class=\"pagination_link\"  id=\"" + (page_number + 1) + "\" href=\"" + link + (page_number + 1) + "\">next</a></li>");
-    vector += "</ul></div>";
-    return vector;
-}
-
-function buildDataTable(cabecera, campos, datos) {
-    var tabla = "<table class=\"table table table-striped table-condensed\">";
-    if (cabecera != null) {
-        tabla += '<tr>';
-        $.each(cabecera, function(index, value) {
-            tabla += '<th>' + value + '</th>';
-        })
-        tabla += '</tr>';
-    }
-    $.each(datos['list'], function(index, value) {
-        tabla += '<tr>';
-
-        $.each(campos, function(index, valor) {
-            tabla += '<td>' + value[valor] + '</td>';
-        })
-        tabla += '<td><div class="btn-toolbar"><div class="btn-group">';
-        tabla += '<a class="btn btn-mini action01" id=' + value.id + ' href="#"><i class="glyphicon-eye-open"></i></a>';
-        tabla += '<a class="btn btn-mini action02" id=' + value.id + ' href="#"><i class="glyphicon-zoom-in"></i></a>';
-        tabla += '<a class="btn btn-mini action03" id=' + value.id + ' href="#"><i class="glyphicon-pencil"></i></a>';
-        tabla += '<a class="btn btn-mini action04" id=' + value.id + ' href="#"><i class="glyphicon-remove"></i></a>';
-        tabla += '</div></div></td>';
-        tabla += '</tr>';
-    });
-    tabla += "</table>";
-    return tabla;
-}
-
-function buildViewTable(cabecera, campos, datos) {
-    var tabla = "<table class=\"table table table-bordered table-condensed\">";
-    $.each(campos, function(index, valor) {
-        tabla += '<tr><td><strong>' + cabecera[index] + '</strong></td><td>' + datos[valor] + '</td></tr>';
-    })
-    tabla += '</table>';
-    return tabla;
-}
-
-function loadUpdateFormData(campos, datos) {
-    $.each(campos, function(index, valor) {
-        $('#' + campos[index]).val(datos[campos[index]]);
-    })
 }
 
 function loadForm(modalName, headerData, bodyData, footerData, keyb) {
@@ -295,33 +208,7 @@ function htmlDecode(value) {
     return $('<div/>').html(value).text();
 }
 
-function enviarDatosUpdateForm(view, prefijo_div) {
-    var disabled = $(prefijo_div + '#formulario').find(':input:disabled').removeAttr('disabled');
-    var jsonObj = [];
-    jsonObj = $(prefijo_div + '#formulario').serializeObject();
-    disabled.attr('disabled', 'disabled');
 
-    //json is sent encoded. be careful of the dates. Dates must be decoded at server side before fill the bean
-    //jsonfile = {json: htmlEncode(JSON.stringify(jsonObj))};
-    jsonfile = {json: JSON.stringify(jsonObj)};
-    cabecera = "<button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-hidden=\"true\">×</button>" + "<h3 id=\"myModalLabel\">Respuesta del servidor</h3>";
-    pie = "<button class=\"btn btn-primary\" data-dismiss=\"modal\" aria-hidden=\"true\">Cerrar</button>";
-    resultado = view.getObject().saveOne(jsonfile);
-    if (resultado["status"] = "200") {
-        mensaje = 'valores actualizados correctamente para el registro con id=' + resultado["message"];
-        loadForm('#modal02', cabecera, "Código: " + resultado["status"] + "<br />" + mensaje + "<br />" + view.getObjectTable(resultado["message"]), pie, true);
-    } else {
-        mensaje = 'el servidor ha retornado el mensaje de error=' + resultado["message"];
-        loadForm('#modal02', cabecera, "Código: " + resultado["status"] + "<br />" + mensaje + "<br />" + view.getObjectTable(resultado["message"]), pie, true);
-    }
-    $(prefijo_div + '#modal02').css({
-        'right': '20px',
-        'left': '20px',
-        'width': 'auto',
-        'margin': '0',
-        'display': 'block'
-    });
-}
 
 function linkBack() {
     history.back();
@@ -341,66 +228,3 @@ $.fn.populateSelectBox = function(values, captions) {
     }
 };
 
-function getUrlObjectFromUrlString(url) {
-    if (typeof url == 'undefined') {
-        return {};
-    } else {
-        if (url == "") {
-            return {};
-        } else {
-            a = url.split('&');
-        }
-    }
-    var b = {};
-    for (var i = 0; i < a.length; ++i)
-    {
-        var p = a[i].split('=');
-        if (p.length != 2)
-            p = ['id', p[0]]; //id parameter by default
-        b[p[0]] = decodeURIComponent(p[1].replace(/\+/g, " "));
-    }
-    return b;
-}
-;
-
-function getUrlObjectFromParamsWithoutParamArray(urlObj, nameParameterArray) {
-    var newUrlObj = jQuery.extend(true, {}, urlObj); //http://stackoverflow.com/questions/122102/what-is-the-most-efficient-way-to-clone-an-object
-    $.each(nameParameterArray, function() {
-        delete newUrlObj[this];
-    })
-    return newUrlObj;
-}
-
-function getUrlStringFromParamsObject(urlObj) {
-    var result = "";
-    for (var key in urlObj) {
-        result += "&" + key + "=" + urlObj[key];
-    }
-    return result.substring(1);
-}
-
-function validateUrlObjectParameters(objParams, objModel) {
-    //security borders comprobation, pendent of moving
-    if (objParams["vf"] > objModel.getCachedCountFields()) {
-        objParams["vf"] = objModel.getCachedCountFields();
-    }
-    if (objParams["page"] > objModel.getCachedPages()) {
-        objParams["page"] = objModel.getCachedPages();
-    }
-    if (objParams["rpp"] > 50) {
-        objParams["rpp"] = 50;
-    }
-    return objParams;
-}
-
-function defaultizeUrlObjectParameters(objParams) {
-    if (typeof objParams["page"] == 'undefined')
-        objParams["page"] = 1;
-    if (typeof objParams["id"] == 'undefined')
-        objParams["id"] = 1;
-    if (typeof objParams["rpp"] == 'undefined')
-        objParams["rpp"] = 10;
-    if (typeof objParams["vf"] == 'undefined')
-        objParams["vf"] = 10;
-    return objParams;
-}

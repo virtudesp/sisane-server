@@ -140,18 +140,14 @@
         <script src="js/model.js" charset="UTF-8"></script>
         <script src="js/view.js" charset="UTF-8"></script>
         <script src="js/routes.js" charset="UTF-8"></script>
+        <script src="js/param.js" charset="UTF-8"></script>
 
-        
-        
-        
+
         <script src="js/control/documento.js" charset="UTF-8"></script> 
         <script src="js/control/tipodocumento.js" charset="UTF-8"></script>
 
 
-        
-        
-        
-        
+
         <script src="js/control/alumno.js" charset="UTF-8"></script>
         <script src="js/control/usuario.js" charset="UTF-8"></script>
         <script src="js/control/lenguaje.js" charset="UTF-8"></script>
@@ -182,15 +178,17 @@
 
 
 
-
+            var path = '<%=request.getContextPath()%>';
 
             $(document).ready(function() {
 
                 //$('#indexContenidoJsp').addClass('animated slideInDown');
                 //$('#menuSuperior').addClass('animated slideInLeft');
                 //$('#menuLateral').addClass('animated slideInRight');
+
                 inicializacion();
-                do_routes('<%=request.getContextPath()%>');
+                do_routes();
+
 
             });
 

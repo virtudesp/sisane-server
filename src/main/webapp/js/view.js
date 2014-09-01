@@ -1,10 +1,10 @@
 //VISTA
-var vista = function(clase, ContextPath) {
+var vista = function(clase) {
     //contexto privado
     var link = "#";
     var neighborhood = 2;
-    var urlJson = ContextPath + '/json?ob=' + clase;
-    var urlJsp = ContextPath + '/jsp?ob=' + clase;
+    var urlJson = path + '/json?ob=' + clase;
+    var urlJsp = path + '/jsp?ob=' + clase;
     function getForeign(objForeign) {
         //falta organizar con metadatos para mostrar sólo los campos relevantes
         var numKeys = Object.keys(objForeign).length;
@@ -148,7 +148,7 @@ var vista = function(clase, ContextPath) {
         },
         getOrderInfo: function(objParams) {
             if (objParams['order']) {
-                strOrder = "<p><small>Contenido ordenado por " + objParams["order"] + " (" + objParams["ordervalue"] + ') <a href="jsp#/' + clase + '/list/' + getUrlStringFromParamsObject(getUrlObjectFromParamsWithoutParamArray(objParams, ["order", "ordervalue"])) + '" id="linkQuitarOrden">(Quitar orden)</a></small></p>';
+                strOrder = "<p><small>Contenido ordenado por " + objParams["order"] + " (" + objParams["ordervalue"] + ') <a href="jsp#/' + clase + '/list/' + param().getUrlStringFromParamsObject(param().getUrlObjectFromParamsWithoutParamArray(objParams, ["order", "ordervalue"])) + '" id="linkQuitarOrden">(Quitar orden)</a></small></p>';
             } else {
                 strOrder = "<p>Contenido no ordenado</p>";
             }
@@ -156,7 +156,7 @@ var vista = function(clase, ContextPath) {
         },
         getFilterInfo: function(objParams) {
             if (objParams['filter']) {
-                strFilter = "<p><small>Contenido filtrado (" + objParams ['filter'] + " " + objParams['filteroperator'] + " " + objParams['filtervalue'] + ') <a href="jsp#/' + clase + '/list/' + getUrlStringFromParamsObject(getUrlObjectFromParamsWithoutParamArray(objParams, ["filter", "filteroperator", "filtervalue"])) + '" id="linkQuitarFiltro">(Quitar filtro)</small></a></p>';
+                strFilter = "<p><small>Contenido filtrado (" + objParams ['filter'] + " " + objParams['filteroperator'] + " " + objParams['filtervalue'] + ') <a href="jsp#/' + clase + '/list/' + param().getUrlStringFromParamsObject(param().getUrlObjectFromParamsWithoutParamArray(objParams, ["filter", "filteroperator", "filtervalue"])) + '" id="linkQuitarFiltro">(Quitar filtro)</small></a></p>';
             } else {
                 strFilter = "<p>Contenido no filtrado</p>";
             }
@@ -245,7 +245,7 @@ var vista = function(clase, ContextPath) {
 //            return url;
 //        },
         getRppLinks: function(objParams) {
-            var UrlFromParamsWithoutRpp = getUrlStringFromParamsObject(getUrlObjectFromParamsWithoutParamArray(objParams, ["rpp"]));
+            var UrlFromParamsWithoutRpp = param().getUrlStringFromParamsObject(param().getUrlObjectFromParamsWithoutParamArray(objParams, ["rpp"]));
             var botonera = '<div id="pagination"><ul class="pagination">';
             if (objParams['rpp'] == 5)
                 botonera += '<li class="active">';
