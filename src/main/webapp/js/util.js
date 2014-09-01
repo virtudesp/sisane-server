@@ -20,26 +20,6 @@ var util = function() {
     }
 }
 
-function ajaxCallSync(url, type, data) {
-    return $.ajax({
-        type: type,
-        url: url,
-        data: data,
-        async: false,
-        timeout: 30000
-    });
-}
-
-function ajaxCallASync(url, type, data, callBackFunction) {
-    $.ajax({
-        type: type,
-        url: url,
-        data: data,
-        async: true,
-        timeout: 30000,
-        success: callBackFunction
-    });
-}
 
 
 function creoleParse(content, lugar) {
@@ -86,24 +66,7 @@ function createDiv(id, data) {
     $('#' + id).append(data);
 }
 
-function procesaAjax(direccion, funcion) {
-    $.ajax({
-        url: direccion,
-        //data: "nocache=" + Math.random(),
-        type: "GET",
-        dataType: "json",
-        beforeSend: function() {
-        },
-        success: function(source) {
-            $("#data").empty();
-            funcion(source);
-        },
-        error: function(dato) {
-            $("#data").empty();
-            $("#data").append("ERROR en la recepción de datos de clientes");
-        }
-    });
-}
+
 
 function showObjeto(source) {
     $("#data").append("<p>" + source['id'] + " " + source['nombre'] + "</p><hr/>");

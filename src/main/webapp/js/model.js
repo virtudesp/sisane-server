@@ -43,7 +43,7 @@ var objeto = function(clase) {
             } else {
                 systemfilterParams = "";
             }
-            $.when(ajaxCallSync(urlJson + '&op=getaggregateviewsome' + filterParams + '&rpp=' + objParams.rpp + orderParams + '&page=' + objParams.page + systemfilterParams, 'GET', '')).done(function(data) {
+            $.when(ajax().ajaxCallSync(urlJson + '&op=getaggregateviewsome' + filterParams + '&rpp=' + objParams.rpp + orderParams + '&page=' + objParams.page + systemfilterParams, 'GET', '')).done(function(data) {
                 pagina_objs = data; //decodeURI htmlDecode
             });
             //return pagina_objs;
@@ -57,7 +57,7 @@ var objeto = function(clase) {
             cRegisters = pagina_objs.data.registers.data;
         },
         loadAggregateViewOne: function(id1) {
-            $.when(ajaxCallSync(urlJson + '&op=getaggregateviewone&id=' + id1, 'GET', '')).done(function(data) {
+            $.when(ajax().ajaxCallSync(urlJson + '&op=getaggregateviewone&id=' + id1, 'GET', '')).done(function(data) {
                 pagina_objs = data;
             });
             cFieldNames = pagina_objs.data.columns;
@@ -91,26 +91,26 @@ var objeto = function(clase) {
         },
         //--------------------------------------------------
         validateUser: function(user, password) {
-            $.when(ajaxCallSync(urlJson + '&op=validate&user=' + user + "&password=" + password, 'GET', '')).done(function(data) {
+            $.when(ajax().ajaxCallSync(urlJson + '&op=validate&user=' + user + "&password=" + password, 'GET', '')).done(function(data) {
                 resultado = data['data'];
             });
             return resultado;
         },
         getGenericOperation: function(operation, id) {
-            $.when(ajaxCallSync(urlJson + '&op=' + operation + "&id=" + id, 'GET', '')).done(function(data) {
+            $.when(ajax().ajaxCallSync(urlJson + '&op=' + operation + "&id=" + id, 'GET', '')).done(function(data) {
                 resultado = data['data'];
             });
             return resultado;
         },
         getPrettyFieldNames: function() {
-            $.when(ajaxCallSync(urlJson + '&op=getprettycolumns', 'GET', '')).done(function(data) {
+            $.when(ajax().ajaxCallSync(urlJson + '&op=getprettycolumns', 'GET', '')).done(function(data) {
                 prettyFieldNames = data;
                 cPrettyFieldNames = data;
             });
             return prettyFieldNames;
         },
         getPrettyFieldNamesAcciones: function() {
-            $.when(ajaxCallSync(urlJson + '&op=getprettycolumns', 'GET', '')).done(function(data) {
+            $.when(ajax().ajaxCallSync(urlJson + '&op=getprettycolumns', 'GET', '')).done(function(data) {
                 prettyFieldNames = data;
                 prettyFieldNames.push("acciones");
                 cPrettyFieldNamesAcciones = prettyFieldNames;
@@ -120,7 +120,7 @@ var objeto = function(clase) {
             return prettyFieldNames;
         },
         getCountFields: function() {
-            $.when(ajaxCallSync(urlJson + '&op=getcolumns', 'GET', '')).done(function(data) {
+            $.when(ajax().ajaxCallSync(urlJson + '&op=getcolumns', 'GET', '')).done(function(data) {
                 //countFields = data['data'].length;
                 countFields = data.length;
                 cCountFields = countFields;
@@ -128,7 +128,7 @@ var objeto = function(clase) {
             return countFields;
         },
         getFieldNames: function() {
-            $.when(ajaxCallSync(urlJson + '&op=getcolumns', 'GET', '')).done(function(data) {
+            $.when(ajax().ajaxCallSync(urlJson + '&op=getcolumns', 'GET', '')).done(function(data) {
                 //fieldNames = data['data'];
                 dataFieldNames = data;
                 cFieldNames = dataFieldNames;
@@ -149,7 +149,7 @@ var objeto = function(clase) {
 //            
 //            //falta comprobaciones
 //            
-//            $.when(ajaxCallSync(path + '/json?ob=' + objetoForeign + '&op=get&id=' + value[valor], 'GET', '')).done(function(data) {
+//            $.when(ajax().ajaxCallSync(path + '/json?ob=' + objetoForeign + '&op=get&id=' + value[valor], 'GET', '')).done(function(data) {
 //                var contador = 0;
 //                var add_tabla = "";
 //                for (key in data) {
@@ -181,7 +181,7 @@ var objeto = function(clase) {
             } else {
                 systemfilterParams = "";
             }
-            $.when(ajaxCallSync(urlJson + '&op=getpage' + filterParams + '&rpp=' + rpp + orderParams + '&page=' + pagina + systemfilterParams, 'GET', '')).done(function(data) {
+            $.when(ajax().ajaxCallSync(urlJson + '&op=getpage' + filterParams + '&rpp=' + rpp + orderParams + '&page=' + pagina + systemfilterParams, 'GET', '')).done(function(data) {
                 pagina_objs = data.list; //decodeURI htmlDecode
                 cPage = data.list;
             });
@@ -198,7 +198,7 @@ var objeto = function(clase) {
             } else {
                 systemfilterParams = "";
             }
-            $.when(ajaxCallSync(urlJson + '&op=getpages' + filterParams + '&rpp=' + rpp + systemfilterParams, 'GET', '')).done(function(data) {
+            $.when(ajax().ajaxCallSync(urlJson + '&op=getpages' + filterParams + '&rpp=' + rpp + systemfilterParams, 'GET', '')).done(function(data) {
                 pages = data['data'];
                 cPages = data['data'];
             });
@@ -216,7 +216,7 @@ var objeto = function(clase) {
             } else {
                 systemfilterParams = "";
             }
-            $.when(ajaxCallSync(urlJson + '&op=getregisters' + filterParams + systemfilterParams, 'GET', '')).done(function(data) {
+            $.when(ajax().ajaxCallSync(urlJson + '&op=getregisters' + filterParams + systemfilterParams, 'GET', '')).done(function(data) {
                 regs = data['data'];
                 cRegisters = data['data'];
             });
@@ -224,25 +224,25 @@ var objeto = function(clase) {
             return regs;
         },
         getAll: function() {
-            $.when(ajaxCallSync(urlJson + '&op=getall', 'GET', '')).done(function(data) {
+            $.when(ajax().ajaxCallSync(urlJson + '&op=getall', 'GET', '')).done(function(data) {
                 one = data;
             });
             return one;
         },
         getOne: function(id1) {
-            $.when(ajaxCallSync(urlJson + '&op=get&id=' + id1, 'GET', '')).done(function(data) {
+            $.when(ajax().ajaxCallSync(urlJson + '&op=get&id=' + id1, 'GET', '')).done(function(data) {
                 one = data;
             });
             return one;
         },
         saveOne: function(jsonfile) {
-            $.when(ajaxCallSync(urlJson + '&op=save', 'GET', jsonfile)).done(function(data) {
+            $.when(ajax().ajaxCallSync(urlJson + '&op=save', 'GET', jsonfile)).done(function(data) {
                 feedback = data;
             });
             return feedback;
         },
         removeOne: function(id) {
-            $.when(ajaxCallSync(urlJson + '&op=remove&id=' + id, 'GET', '')).done(function(data) {
+            $.when(ajax().ajaxCallSync(urlJson + '&op=remove&id=' + id, 'GET', '')).done(function(data) {
                 feedback = data;
             });
             return feedback;

@@ -5,47 +5,50 @@ var vista = function(clase) {
     var neighborhood = 2;
     var urlJson = path + '/json?ob=' + clase;
     var urlJsp = path + '/jsp?ob=' + clase;
-    function getForeign(objForeign) {
-        //falta organizar con metadatos para mostrar sólo los campos relevantes
-        var numKeys = Object.keys(objForeign).length;
-        var strResult = "";
-        for (counter = 0; counter < numKeys - 1; counter++) {
-            valor = objForeign[Object.keys(objForeign)[counter]];
-            if (valor != true && valor != false)
-                strResult += " " + valor;
-        }
-        //if (typeof fieldContent == "string") {
-        if (strResult.length > 50) //don't show too long fields
-            strResult = strResult.substr(0, 20) + " ...";
-        return strResult;
-    }
-    function printValue(value, valor) {
-        var strResult = "";
-        if (/obj_/.test(valor)) {
-            if (value[valor].id > 0) {
-                strResult = '<a href="jsp#/' + valor.substring(4) + '/view/' + value[valor].id + '">' + value[valor].id + ":" + getForeign(value[valor]) + '</a>';
-            } else {
-                strResult = '???';
-            }
-        } else {
-            switch (value[valor]) {
-                case true:
-                    strResult = '<i class="glyphicon glyphicon-ok"></i>';
-                    break;
-                case false:
-                    strResult = '<i class="glyphicon glyphicon-remove"></i>';
-                    break;
-                default:
-                    strResult = decodeURIComponent(value[valor]);
-                    //if (typeof fieldContent == "string") {
-                    if (strResult.length > 50) //don't show too long fields
-                        strResult = strResult.substr(0, 20) + " ...";
-                    //}
-            }
-        }
-        return strResult;
-    }
+
+
     return {
+        getForeign: function(objForeign) {
+            //falta organizar con metadatos para mostrar sólo los campos relevantes
+            var numKeys = Object.keys(objForeign).length;
+            var strResult = "";
+            for (counter = 0; counter < numKeys - 1; counter++) {
+                valor = objForeign[Object.keys(objForeign)[counter]];
+                if (valor != true && valor != false)
+                    strResult += " " + valor;
+            }
+            //if (typeof fieldContent == "string") {
+            if (strResult.length > 50) //don't show too long fields
+                strResult = strResult.substr(0, 20) + " ...";
+            return strResult;
+        },
+        printValue: function(value, valor) {
+            var thisObject = this;
+            var strResult = "";
+            if (/obj_/.test(valor)) {
+                if (value[valor].id > 0) {
+                    strResult = '<a href="jsp#/' + valor.substring(4) + '/view/' + value[valor].id + '">' + value[valor].id + ":" + thisObject.getForeign(value[valor]) + '</a>';
+                } else {
+                    strResult = '???';
+                }
+            } else {
+                switch (value[valor]) {
+                    case true:
+                        strResult = '<i class="glyphicon glyphicon-ok"></i>';
+                        break;
+                    case false:
+                        strResult = '<i class="glyphicon glyphicon-remove"></i>';
+                        break;
+                    default:
+                        strResult = decodeURIComponent(value[valor]);
+                        //if (typeof fieldContent == "string") {
+                        if (strResult.length > 50) //don't show too long fields
+                            strResult = strResult.substr(0, 20) + " ...";
+                        //}
+                }
+            }
+            return strResult;
+        },
         //contexto público (interface)
 //        getName: function() {
 //            return objeto.getName();
@@ -90,7 +93,7 @@ var vista = function(clase) {
             return vector;
         },
         getTemplate: function() {
-            $.when(ajaxCallSync(objeto.getUrlJsp() + '&op=' + template, 'GET', '')).done(function(data) {
+            $.when(ajax().ajaxCallSync(objeto.getUrlJsp() + '&op=' + template, 'GET', '')).done(function(data) {
                 form = data;
             });
             return form;
@@ -99,13 +102,13 @@ var vista = function(clase) {
             return '<div class="panel panel-default"><div class="panel-heading"><h1>' + titulo + '</h1></div><div class="panel-body">' + contenido + '</div></div>';
         },
         getEmptyForm: function() {
-            $.when(ajaxCallSync(urlJsp + '&op=form&mode=1', 'GET', '')).done(function(data) {
+            $.when(ajax().ajaxCallSync(urlJsp + '&op=form&mode=1', 'GET', '')).done(function(data) {
                 form = data;
             });
             return form;
         },
         getEmptyList: function() {
-            $.when(ajaxCallSync(urlJsp + '&op=list&mode=1', 'GET', '')).done(function(data) {
+            $.when(ajax().ajaxCallSync(urlJsp + '&op=list&mode=1', 'GET', '')).done(function(data) {
                 form = data;
             });
             return form;
@@ -114,19 +117,21 @@ var vista = function(clase) {
             return '<div id="content"></div>';
         },
         getObjectTable: function(nombresCamposBonitos, valoresRegistro, nombresCampos) {
+            var thisObject = this;
             var tabla = "<table class=\"table table table-bordered table-condensed\">";
             $.each(nombresCampos, function(index, nombreDeCampo) {
                 tabla += '<tr><td><strong>' + nombresCamposBonitos[index] + '</strong></td>';
-                tabla += '<td>' + printValue(valoresRegistro, nombreDeCampo) + '</td>';
+                tabla += '<td>' + thisObject.printValue(valoresRegistro, nombreDeCampo) + '</td>';
             });
             tabla += '</table>';
             return tabla;
         },
         doFillForm: function(campos, datos) {
+            var thisObject = this;
             $.each(campos, function(index, valor) {
                 if (/obj_/.test(valor)) {
                     $('#' + campos[index] + "_id").val(decodeURIComponent(datos[campos[index]].id));
-                    $('#' + campos[index] + "_desc").text(decodeURIComponent(getForeign(datos[campos[index]])));
+                    $('#' + campos[index] + "_desc").text(decodeURIComponent(thisObject.getForeign(datos[campos[index]])));
                 } else {
                     switch (datos[campos[index]]) {
                         case true:
@@ -137,7 +142,7 @@ var vista = function(clase) {
                             break;
                         default:
                             //$('#' + campos[index]).val(decodeURIComponent(datos[campos[index]]));
-                            $('#' + campos[index]).val(decodeURIComponent(printValue(datos, valor)));
+                            $('#' + campos[index]).val(decodeURIComponent(thisObject.printValue(datos, valor)));
                     }
                 }
 
@@ -310,6 +315,7 @@ var vista = function(clase) {
             return tabla;
         },
         getBodyPageTable: function(page, fieldNames, visibleFields, tdbuttons) {
+            var thisObject = this;
 //            var tabla = "";
 //            $.each(page, function(index, value) {
 //                tabla += '<tr>';
@@ -331,7 +337,7 @@ var vista = function(clase) {
 //
 //
 //
-////                            $.when(ajaxCallSync(path + '/json?ob=' + valor.split("_")[1].replace(/[0-9]*$/, "") + '&op=get&id=' + value[valor], 'GET', '')).done(function(data) {
+////                            $.when(ajax().ajaxCallSync(path + '/json?ob=' + valor.split("_")[1].replace(/[0-9]*$/, "") + '&op=get&id=' + value[valor], 'GET', '')).done(function(data) {
 ////                                var contador = 0;
 ////                                var add_tabla = "";
 ////                                for (key in data) {
@@ -391,7 +397,7 @@ var vista = function(clase) {
                     numField++;
                     if (numField <= visibleFields) {
 
-                        tabla += '<td>' + printValue(value, valor) + '</td>';
+                        tabla += '<td>' + thisObject.printValue(value, valor) + '</td>';
 
 //                        if (/obj_tipodocumento/.test(valor)) {
 //                            if (value[valor].id > 0) {
@@ -507,7 +513,7 @@ var vista = function(clase) {
 //                        numField++;
 //                        if (numField <= visibleFields) {
 //                            if (/id_/.test(valor)) {
-//                                $.when(ajaxCallSync(objeto.getPath() + '/json?ob=' + valor.split("_")[1].replace(/[0-9]*$/, "") + '&op=get&id=' + value[valor], 'GET', '')).done(function(data) {
+//                                $.when(ajax().ajaxCallSync(objeto.getPath() + '/json?ob=' + valor.split("_")[1].replace(/[0-9]*$/, "") + '&op=get&id=' + value[valor], 'GET', '')).done(function(data) {
 //                                    contador = 0;
 //                                    add_tabla = "";
 //                                    for (key in data) {
