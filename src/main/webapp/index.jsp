@@ -42,6 +42,8 @@
         <link rel="stylesheet" href="css/main.css">
         <link rel="stylesheet" href="css/jquery-ui.css">
         <link rel="stylesheet" href="css/animate.css">
+        <link rel="stylesheet" href="css/bootstrapValidator.min.css">
+        <link rel="stylesheet" href="css/bootstrap-datetimepicker.min.css"  />
     </head>
     <body>
         <!--[if lt IE 7]>
@@ -116,24 +118,29 @@
 
         <!-- carga de javascript   -->
 
-        <script src="js/vendor/jquery-1.11.1.min.js"></script>
-        <script src="js/vendor/bootstrap.min.js"></script>
-        <script src="js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
-        <script src="js/vendor/jquery-ui.js"></script>
-        <script src="./js/vendor/path.min.js"></script> 
-        <script src="./js/vendor/jquery.validate.min.js"></script>
-        <script src="./js/vendor/creole-parser.js"></script>
+        <script type="text/javascript"  src="./js/vendor/jquery-1.11.1.min.js"></script>
+        <script type="text/javascript"  src="./js/vendor/bootstrap.min.js"></script>
+        <script type="text/javascript"  src="./js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+
+        <script type="text/javascript"  src="./js/vendor/moment.js"></script>
+        <script type="text/javascript"  src="./js/vendor/moment.locale.es.js"></script>
+        <script type="text/javascript"  src="./js/vendor/bootstrap-datetimepicker.min.js"></script>
+        
+        <script type="text/javascript"  src="./js/vendor/path.min.js"></script> 
+        <script type="text/javascript"  src="./js/vendor/bootstrapValidator.min.js"></script>
+        <script type="text/javascript"  src="./js/vendor/language/es_ES.js"></script>
+        <script type="text/javascript"  src="./js/vendor/creole-parser.js"></script>
 
         <!--
+        <script type="text/javascript"  src="./js/vendor/jquery-ui.js"></script>
+        <script src="./js/vendor/jquery.validate.min.js"></script>
+        
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
         <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.10.2.min.js"><\/script>')</script>
         <script src="js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
         <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css" />
         <script src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
         -->
-
-
-
 
 
         <script src="js/util.js" charset="UTF-8"></script>

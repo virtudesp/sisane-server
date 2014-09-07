@@ -18,11 +18,20 @@ body {
         width: 100%;
     }
 }
+
 table{
     font-size: 10px;
 }
 th{
-min-width: 30px;
-color: whitesmoke;
-background-color: black;
+    min-width: 30px;
+    color: whitesmoke;
+    background-color: black;
+}
+.datepicker th{
+    background-color: white;
+    color: black;
+}
+#indexContenido .form-control-feedback {
+    top: 0px;
+    right: -15px;
 }

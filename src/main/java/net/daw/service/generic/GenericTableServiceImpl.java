@@ -71,7 +71,7 @@ public abstract class GenericTableServiceImpl extends GenericViewServiceImpl imp
             GenericBeanImpl oGenericBean = (GenericBeanImpl) Class.forName("net.daw.bean.implementation." + strObjectName + "BeanImpl").newInstance();
             Constructor c = Class.forName("net.daw.dao.implementation." + strObjectName + "DaoImpl").getConstructor(Connection.class);
             GenericTableDaoImpl oGenericDao = (GenericTableDaoImpl) c.newInstance(oConnection);
-            Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+            Gson gson = new GsonBuilder().setDateFormat("dd/MM/yyyy").excludeFieldsWithoutExposeAnnotation().create();
             oGenericBean = gson.fromJson(jason, oGenericBean.getClass());
             Map<String, String> data = new HashMap<>();
             if (oGenericBean != null) {

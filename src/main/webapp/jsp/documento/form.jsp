@@ -1,21 +1,14 @@
-<%-- 
-    Document   : form
-    Created on : Jan 21, 2013, 10:24:17 AM
-    Author     : Alvaro
---%>
-
-
 <form class="form-horizontal" role="form" action="#" id="documentoForm" name="formulario">
     <div class="form-group">
         <label class="col-sm-2 control-label" for="id">Id:</label>
         <div class="col-sm-2">
-            <input type="text" class="form-control" id="id" name="id" placeholder="id" />
+            <input type="text" id="id" class="form-control"  name="id" placeholder="id" />
         </div>
     </div>
     <div class="form-group">
         <label class="col-sm-2 control-label"  for="titulo">Titulo:</label>
         <div class="col-sm-6">
-            <input type="text" class="form-control" id="titulo" name="titulo" size="15" placeholder="titulo" />
+            <input type="text" id="titulo" class="form-control"  name="titulo" size="15" placeholder="titulo" />
         </div>
     </div>
     <div class="form-group">
@@ -28,18 +21,42 @@
         </div>
     </div>
 
+
+
+
+
+
     <div class="form-group">
-        <label class="col-sm-2 control-label" for="alta">Alta:</label> 
-        <div class="col-sm-2">
-            <input id="alta"  class="form-control"  name="alta" type="text" size="10" maxlength="50" value="" placeholder="Fecha de alta"/> 
+        <label class="col-sm-2 control-label" for="alta_group">Alta:</label> 
+        <div class="col-sm-3">           
+            <div class='input-group date' id='alta_group'>
+                <input type='text' class="form-control" id='alta' name="alta_group" placeholder="Fecha de alta" />
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+            </div>
         </div>
     </div>
+
     <div class="form-group">
-        <label class="col-sm-2 control-label" for="cambio">Cambio:</label> 
-        <div class="col-sm-2">
-            <input id="cambio"  class="form-control"  name="cambio" type="text" size="10" maxlength="50" value="" placeholder="Fecha de la modificación"/> 
+        <label class="col-sm-2 control-label" for="cambio_group">Cambio:</label> 
+        <div class="col-sm-3">      
+            <div class='input-group date' id='cambio_group'>
+                <input type='text' class="form-control" id='cambio' name="cambio_group" placeholder="Fecha de cambio" />
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+            </div>
         </div>
-    </div>    
+    </div>
+
+
+
+
+
+
+
+
     <div class="form-group">
         <label class="col-sm-2 control-label"  for="hits">Hits:</label>
         <div class="col-sm-2">
@@ -52,7 +69,7 @@
     <div class="form-group">
         <label class="col-sm-2 control-label" for="obj_usuario_id">Usuario: </label> 
         <div class="col-sm-1">              
-            <input readonly="true"  class="form-control"  id="obj_usuario_id" class="input-mini" name="obj_usuario" type="text" size="5" maxlength="5" />  
+            <input readonly="true"  class="form-control"  id="obj_usuario_id" class="input-mini" name="id_usuario" type="text" size="5" maxlength="5" />  
         </div>
         <div class="col-sm-1">              
             <a class="btn btn-primary btn-sm" id="obj_usuario_button" href="#"><i class="glyphicon glyphicon-search"></i></a>
@@ -66,7 +83,7 @@
     <div class="form-group">
         <label class="col-sm-2 control-label" for="obj_tipodocumento_id">Tipo de documento: </label> 
         <div class="col-sm-1">              
-            <input readonly="true"  class="form-control"  id="obj_tipodocumento_id" class="input-mini" name="obj_tipodocumento" type="text" size="5" maxlength="5" />  
+            <input readonly="true"  class="form-control"  id="obj_tipodocumento_id" class="input-mini" name="id_tipodocumento" type="text" size="5" maxlength="5" />  
         </div>
         <div class="col-sm-1">              
             <a class="btn btn-primary btn-sm" id="obj_tipodocumento_button" href="#"><i class="glyphicon glyphicon-search"></i></a>
@@ -102,7 +119,24 @@
         <div class="col-sm-1">
             <input type="checkbox" id="portada" name="destacado" value="true" />
         </div>
-    </div>           
+    </div> 
+
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <div id="messages"></div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <button type="submit" class="btn btn-primary" id="submitForm">Guardar</button>
+            <button type="reset"  class="btn btn-danger"  id="resetForm">Limpiar</button>
+            <a class="btn btn-primary"  id="returnForm">Volver</a>
+        </div>
+    </div>
+
+
+
 </form>
 
 <div id="modal01" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -115,143 +149,4 @@
     </div>
 </div>
 
-<script>
-    $("#documentoForm #alta").datepicker({
-        showOn: 'both',
-        buttonImageOnly: true,
-        changeYear: true,
-        numberOfMonths: 1
-    });
-    $("#documentoForm #cambio").datepicker({
-        showOn: 'both',
-        buttonImageOnly: true,
-        changeYear: true,
-        numberOfMonths: 1
-    });
-    $(function() {
-        $("#datepicker").datepicker();
-    });
-    //http://jqueryvalidation.org/documentation/
-    $('#documentoForm').validate({
-        rules: {
-            titulo: {
-                required: true,
-                maxlength: 255
-            },
-            contenido: {
-                required: true
-            },
-            alta: {
-                required: true
-            },
-            cambio: {
-                required: true
-            },
-            hits: {
-                required: true,
-                maxlength: 6,
-                digits: true
-            },
-            id_usuario: {
-                required: true,
-                digits: true
-            },
-            etiquetas: {
-                required: true,
-                maxlength: 255
-            },
-            publicado: {
-                required: false
-            },
-            portada: {
-                required: false
-            }
-        },
-        messages: {
-            titulo: {
-                required: "Introduce un titulo",
-                maxlength: "Tiene que ser menos de 255 caracteres"
-            },
-            contenido: {
-                required: "Introduce contenido"
-            },
-            alta: {
-                required: "Introduce una fecha de alta"
-            },
-            cambio: {
-                required: "Introduce una fecha de modificación"
-            },
-            hits: {
-                required: "Introduce una nota",
-                maxlength: "Tiene que ser menos de 6 caracteres",
-                digits: "Tiene que ser un numero entero"
-            },
-            id_usuario: {
-                required: "Introduce un usuario",
-                digits: "El id del usuario tiene que ser un entero"
-            },
-            etiquetas: {
-                required: "Introduce una/s etiqueta/s",
-                maxlength: "Tiene que ser menos de 255 caracteres"
-            }
-
-        },
-        highlight: function(element) {
-            $(element).closest('.control-group').removeClass('success').addClass('error');
-        },
-        success: function(element) {
-            element
-                    .text('OK!').addClass('valid')
-                    .closest('.control-group').removeClass('error').addClass('success');
-        }
-    });
-    
-   
-
-    function documentoForm_load(valores) {
-        $('#documento_form #titulo').val(valores['titulo']);
-        $('#documento_form #contenido').val(valores['contenido']);
-        $('#documento_form #alta').val(valores['alta']);
-        $('#documento_form #cambio').val(valores['cambio']);
-        $('#documento_form #hits').val(valores['hits']);
-        $('#documento_form #id_usuario').val(valores['id_usuario']);
-        $('#documento_form #etiquetas').val(valores['etiquetas']);
-        $('#documento_form #publicado').val(valores['publicado']);
-        $('#documento_form #portada').val(valores['portada']);
-    }
-    function documentoForm_unload() {
-        var valores = [];
-        valores['titulo'] = $('#documento_form #titulo');
-        valores['contenido'] = $('#documento_form #contenido');
-        valores['alta'] = $('#documento_form #alta');
-        valores['cambio'] = $('#documento_form #cambio');
-        valores['hits'] = $('#documento_form #hits');
-        valores['id_usuario'] = $('#documento_form #id_usuario');
-        valores['etiquetas'] = $('#documento_form #etiquetas');
-        valores['publicado'] = $('#documento_form #publicado');
-        valores['portada'] = $('#documento_form #portada');
-        return valores;
-    }
-
-
-
-    /*
-     doFillForm: function(id) {
-     campos = objeto.getFieldNames();
-     datos = objeto.getOne(id);
-     $.each(campos, function(index, valor) {
-     var a = true;
-     switch (datos[campos[index]]) {
-     case true:
-     $('#' + campos[index]).attr("checked", "checked");
-     break;
-     case false:
-     break;
-     default:
-     $('#' + campos[index]).val(decodeURIComponent(datos[campos[index]]));
-     }
-     
-     });
-     },
-     */
-</script>        
+<script src="js/view/documento_form.js" charset="UTF-8"></script>      

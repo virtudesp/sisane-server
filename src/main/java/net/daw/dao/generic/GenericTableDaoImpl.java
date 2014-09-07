@@ -26,7 +26,7 @@ import java.sql.Connection;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 
-public abstract class GenericTableDaoImpl<TIPO_OBJETO> extends GenericViewDaoImpl<TIPO_OBJETO>  implements TableDaoInterface<TIPO_OBJETO>, ViewDaoInterface<TIPO_OBJETO>, MetaDaoInterface {
+public abstract class GenericTableDaoImpl<TIPO_OBJETO> extends GenericViewDaoImpl<TIPO_OBJETO> implements TableDaoInterface<TIPO_OBJETO>, ViewDaoInterface<TIPO_OBJETO>, MetaDaoInterface {
 
     //protected final DataImpl oMysql;
     protected final String strTabla;
@@ -34,7 +34,7 @@ public abstract class GenericTableDaoImpl<TIPO_OBJETO> extends GenericViewDaoImp
 
     public GenericTableDaoImpl(String view, Connection pooledConnection) throws Exception {
         super(view, pooledConnection);
-        strTabla=view;
+        strTabla = view;
     }
 //
 ////    public GenericImplDaoTable(String tabla, Connection pooledConnection) throws Exception {
@@ -203,24 +203,26 @@ public abstract class GenericTableDaoImpl<TIPO_OBJETO> extends GenericViewDaoImp
             for (Method method : tipo.getMethods()) {
                 if (!method.getName().substring(3).equalsIgnoreCase("id")) {
                     if (method.getName().substring(0, 3).equalsIgnoreCase("get")) {
-                        if (!method.getName().equals("getClass")) {
-                            final Class<?> classTipoDevueltoMetodoGet = method.getReturnType();
-                            String value = method.invoke(oBean).toString();
-                            switch (classTipoDevueltoMetodoGet.getName()) {
-                                case "java.util.Date":
-                                    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-                                    value = format.format(method.invoke(oBean));
-                                    break;
-                                case "java.lang.Boolean":
-                                    if ("true".equals(value)) {
-                                        value = "1";
-                                    } else {
-                                        value = "0";
-                                    }
-                                    break;
+                        if (!method.getName().substring(0, 6).equalsIgnoreCase("getObj")) {
+                            if (!method.getName().equals("getClass")) {
+                                final Class<?> classTipoDevueltoMetodoGet = method.getReturnType();
+                                String value = method.invoke(oBean).toString();
+                                switch (classTipoDevueltoMetodoGet.getName()) {
+                                    case "java.util.Date":
+                                        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+                                        value = format.format(method.invoke(oBean));
+                                        break;
+                                    case "java.lang.Boolean":
+                                        if ("true".equals(value)) {
+                                            value = "1";
+                                        } else {
+                                            value = "0";
+                                        }
+                                        break;
+                                }
+                                String strCampo = method.getName().substring(3).toLowerCase(Locale.ENGLISH);
+                                oMysql.updateOne((Integer) metodo_getId.invoke(oBean), strTabla, strCampo, value);
                             }
-                            String strCampo = method.getName().substring(3).toLowerCase(Locale.ENGLISH);
-                            oMysql.updateOne((Integer) metodo_getId.invoke(oBean), strTabla, strCampo, value);
                         }
                     }
                 }
@@ -263,5 +265,4 @@ public abstract class GenericTableDaoImpl<TIPO_OBJETO> extends GenericViewDaoImp
 //        }
 //        return alColumns;
 //    }
-
 }
