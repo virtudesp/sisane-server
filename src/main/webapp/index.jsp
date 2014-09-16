@@ -152,6 +152,12 @@
 
 
         <script src="js/control/documento.js" charset="UTF-8"></script> 
+        
+        
+        
+        
+        
+        
         <script src="js/control/tipodocumento.js" charset="UTF-8"></script>
 
 

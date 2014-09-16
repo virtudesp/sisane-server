@@ -1,21 +1,38 @@
 //VISTA
 var util = function() {
     //contexto privado
-    var link = "#";
-    var neighborhood = 2;
-    var urlJson = ContextPath + '/json?ob=' + clase;
-    var urlJsp = ContextPath + '/jsp?ob=' + clase;
-    function getForeign(objForeign) {
-    
-    }
-
- return {
-
+//    var link = "#";
+//    var neighborhood = 2;
+//    var urlJson = ContextPath + '/json?ob=' + clase;
+//    var urlJsp = ContextPath + '/jsp?ob=' + clase;
+    return {
         getLoading: function() {
             return '<img src="fonts/ajax-loading.gif" alt="cargando..." />';
         },
         getLoading2: function() {
             return '<img src="fonts/ajax-loading.gif" alt="cargando..." />';
+        },
+        getForeign: function(objForeign) {
+            //falta organizar con metadatos para mostrar sólo los campos relevantes
+            var numKeys = Object.keys(objForeign).length;
+            var strResult = "";
+            for (counter = 0; counter < numKeys - 1; counter++) {
+                valor = objForeign[Object.keys(objForeign)[counter]];
+                if (valor != true && valor != false)
+                    strResult += " " + valor;
+            }
+            //if (typeof fieldContent == "string") {
+            if (strResult.length > 50) //don't show too long fields
+                strResult = strResult.substr(0, 20) + " ...";
+            return strResult;
+        },
+        loadForm: function(modalName, headerData, bodyData, footerData, keyb) {
+            $(modalName + ' .modal-header').empty().append(headerData);
+            $(modalName + ' .modal-body').empty().append(bodyData);
+            $(modalName + ' .modal-footer').empty().append(footerData);
+            $(modalName).modal({
+                keyboard: keyb
+            })
         }
     }
 }
@@ -42,14 +59,7 @@ function creoleParse(content, lugar) {
 
 }
 
-function loadForm(modalName, headerData, bodyData, footerData, keyb) {
-    $(modalName + ' .modal-header').empty().append(headerData);
-    $(modalName + ' .modal-body').empty().append(bodyData);
-    $(modalName + ' .modal-footer').empty().append(footerData);
-    $(modalName).modal({
-        keyboard: keyb
-    })
-}
+
 
 function startSpinner(place, ContextPath) {
     $(place).empty();

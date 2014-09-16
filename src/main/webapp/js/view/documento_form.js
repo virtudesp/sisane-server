@@ -185,6 +185,10 @@ function documentoForm_unload() {
 }
 
 $(document).ready(function() {
+//    $('#obj_tipodocumento_id').on('change', 'input', function() {
+//        alert('cambio');
+//        $('#obj_tipodocumento_desc').html="qqq";
+//    });
     $(function() {
         $('#alta_group').datetimepicker({
             pickTime: false,
@@ -199,92 +203,136 @@ $(document).ready(function() {
     });
 
 //http://jqueryvalidation.org/documentation/
-    $('#documentoForm').bootstrapValidator({
-        container: '#messages',
-        feedbackIcons: {
-            valid: 'glyphicon glyphicon-ok',
-            invalid: 'glyphicon glyphicon-remove',
-            validating: 'glyphicon glyphicon-refresh'
-        },
-        fields: {
-            titulo: {
-                validators: {
-                    notEmpty: {
-                        message: 'The full name is required and cannot be empty'
-                    },
-                    stringLength: {
-                        max: 255,
-                        message: 'The title must be less than 255 characters long'
-                    }
-                }
-            },
-            contenido: {
-                validators: {
-                    notEmpty: {
-                        message: 'The full name is required and cannot be empty'
-                    }
-                }
-            },
-            alta_group: {
-                validators: {
-                    notEmpty: {
-                        message: 'alta The full name is required and cannot be empty'
-                    },
-                    date: {
-                        format: 'DD/MM/YYYY',
-                        message: 'alta ssThe full name is required and cannot be empty'
-                    }
-                }
-            },
-            cambio_group: {
-                validators: {
-                    notEmpty: {
-                        message: 'cambio The full name is required and cannot be empty'
-                    },
-                    date: {
-                        format: 'DD/MM/YYYY',
-                        message: 'alta ssThe full name is required and cannot be empty'
-                    }
-                }
-            },
-            hits: {
-                validators: {
-                    notEmpty: {
-                        message: 'The full name is required and cannot be empty'
-                    },
-                    integer: {
-                        message: 'The value is not an integer'
-                    },
-                    between: {
-                        min: -0,
-                        max: 99999999,
-                        message: 'The latitude must be between 0 and 99999999'
-                    }
-                }
-
-            },
-            obj_usuario_id: {
-                notEmpty: {
-                    message: 'The full name is required and cannot be empty'
-                }
-            },
-            obj_tipodocumento_id: {
-                notEmpty: {
-                    message: 'The full name is required and cannot be empty'
-                }
-            },
-            etiquetas: {
-                notEmpty: {
-                    message: 'etiThe full name is required and cannot be empty'
+    $('#documentoForm')
+//            .find('[name="id_usuario"]')
+//            // Revalidate the color when it is changed
+//            .change(function(e) {
+//                alert('cambio');
+//                $('#documentoForm').bootstrapValidator('revalidateField', 'id_usuario');
+//            })
+//            .end()
+            .bootstrapValidator({
+                container: '#messages',
+                feedbackIcons: {
+                    valid: 'glyphicon glyphicon-ok',
+                    invalid: 'glyphicon glyphicon-remove',
+                    validating: 'glyphicon glyphicon-refresh'
                 },
-                stringLength: {
-                    max: 100,
-                    message: 'eti The bio must be less than 100 characters'
-                }
-            }
-        }
+                fields: {
+                    titulo: {
+                        validators: {
+                            notEmpty: {
+                                message: 'The full name is required and cannot be empty'
+                            },
+                            stringLength: {
+                                max: 255,
+                                message: 'The title must be less than 255 characters long'
+                            }
+                        }
+                    },
+                    contenido: {
+                        validators: {
+                            notEmpty: {
+                                message: 'The full name is required and cannot be empty'
+                            }
+                        }
+                    },
+                    alta_group: {
+                        validators: {
+                            notEmpty: {
+                                message: 'alta The full name is required and cannot be empty'
+                            },
+                            date: {
+                                format: 'DD/MM/YYYY',
+                                message: 'alta ssThe full name is required and cannot be empty'
+                            }
+                        }
+                    },
+                    cambio_group: {
+                        validators: {
+                            notEmpty: {
+                                message: 'cambio The full name is required and cannot be empty'
+                            },
+                            date: {
+                                format: 'DD/MM/YYYY',
+                                message: 'alta ssThe full name is required and cannot be empty'
+                            }
+                        }
+                    },
+                    hits: {
+                        validators: {
+                            notEmpty: {
+                                message: 'The full name is required and cannot be empty'
+                            },
+                            integer: {
+                                message: 'The value is not an integer'
+                            },
+                            between: {
+                                min: -0,
+                                max: 99999999,
+                                message: 'The latitude must be between 0 and 99999999'
+                            }
+                        }
 
-    });
+                    },
+                    id_usuario: {
+                        validators: {
+                            notEmpty: {
+                                message: 'Tienes que elegir un usuario'
+                            },
+                            integer: {
+                                message: 'El identificador de usuario debe ser un entero'
+                            }
+                        }
+                    },
+                    id_tipodocumento: {
+                        validators: {
+                            notEmpty: {
+                                message: 'Tienes que elegir un tipo de documento'
+                            },
+                            integer: {
+                                message: 'El identificador de tipo de documento debe ser un entero'
+                            }
+                        }
+                    },
+                    etiquetas: {
+                        validators: {
+                            notEmpty: {
+                                message: 'No has añadido etiquetas'
+                            },
+                            stringLength: {
+                                max: 100,
+                                message: 'La longitud de las etiquetas debe ser de 100 caracteres como mucho'
+                            }
+                        }
+                    }
+
+                }
+//            });
+
+
+
+            })
+            .on('change', '[name="id_usuario"]', function() {
+                $('#documentoForm').bootstrapValidator('revalidateField', 'id_usuario');
+            })
+
+            .on('change', '[name="id_tipodocumento"]', function() {
+                $('#documentoForm').bootstrapValidator('revalidateField', 'id_tipodocumento');
+            })
+            ;
+//    $('#id_usuario').on('change', function() {
+//        alert('cambio id_usuario');
+//        $('#documentoForm').bootstrapValidator('revalidateField', 'id_usuario');
+//    });
+
+
+//    $('#id_usuario').on('dp.change', function(e) {
+//        // Revalidate the date when user change it
+//        $('#documentoForm').bootstrapValidator('revalidateField', 'id_usuario');
+//    });
+
+
     $('#alta_group').on('dp.change dp.show', function(e) {
         // Revalidate the date when user change it
         $('#documentoForm').bootstrapValidator('revalidateField', 'alta_group');

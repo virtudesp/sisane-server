@@ -135,6 +135,10 @@ var objeto = function(clase) {
             });
             return dataFieldNames;
         },
+        getMeAsAForeignKey:function(id) {
+            //returns the description of this object to be displayed as a foreign key
+            return util().getForeign(this.getOne(id));
+        },
         getForeignKey: function(id, campo) {
 //            //pte
 //            //con la id sacamos el registro

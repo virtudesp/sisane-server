@@ -8,26 +8,13 @@ var vista = function(clase) {
 
 
     return {
-        getForeign: function(objForeign) {
-            //falta organizar con metadatos para mostrar sólo los campos relevantes
-            var numKeys = Object.keys(objForeign).length;
-            var strResult = "";
-            for (counter = 0; counter < numKeys - 1; counter++) {
-                valor = objForeign[Object.keys(objForeign)[counter]];
-                if (valor != true && valor != false)
-                    strResult += " " + valor;
-            }
-            //if (typeof fieldContent == "string") {
-            if (strResult.length > 50) //don't show too long fields
-                strResult = strResult.substr(0, 20) + " ...";
-            return strResult;
-        },
+
         printValue: function(value, valor) {
             var thisObject = this;
             var strResult = "";
             if (/obj_/.test(valor)) {
                 if (value[valor].id > 0) {
-                    strResult = '<a href="jsp#/' + valor.substring(4) + '/view/' + value[valor].id + '">' + value[valor].id + ":" + thisObject.getForeign(value[valor]) + '</a>';
+                    strResult = '<a href="jsp#/' + valor.substring(4) + '/view/' + value[valor].id + '">' + value[valor].id + ":" + util().getForeign(value[valor]) + '</a>';
                 } else {
                     strResult = '???';
                 }
@@ -131,7 +118,14 @@ var vista = function(clase) {
             $.each(campos, function(index, valor) {
                 if (/obj_/.test(valor)) {
                     $('#' + campos[index] + "_id").val(decodeURIComponent(datos[campos[index]].id));
-                    $('#' + campos[index] + "_desc").text(decodeURIComponent(thisObject.getForeign(datos[campos[index]])));
+                    
+                    
+                    
+                    
+                    
+                    $('#' + campos[index] + "_desc").text(decodeURIComponent(util().getForeign(datos[campos[index]])));
+                    
+                    //$('#' + campos[index] + "_desc").text(decodeURIComponent(thisObject.getForeign(datos[campos[index]])));
                 } else {
                     switch (datos[campos[index]]) {
                         case true:

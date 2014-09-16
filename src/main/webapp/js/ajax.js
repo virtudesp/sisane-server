@@ -38,8 +38,8 @@ var ajax = function() {
                 timeout: 30000,
                 success: callBackFunction
             });
-            },
-            procesaAjax : function (direccion, funcion) {
+        },
+        procesaAjax: function(direccion, funcion) {
             $.ajax({
                 url: direccion,
                 //data: "nocache=" + Math.random(),

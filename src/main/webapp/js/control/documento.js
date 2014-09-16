@@ -173,41 +173,27 @@ var control_documento = function() {
 
 
 
-    function cargaDescripcionClaveAjenaEnFormulario(lugarID, lugarDesc, objetoClaveAjena, path) {
-        if ($(lugarID).val() != "") {
-            objInfo = objeto(objetoClaveAjena, path).getOne($(lugarID).val());
-            if (objInfo != "" && $(lugarID).val() != 0) {
-                props = Object.getOwnPropertyNames(objInfo);
-                $(lugarDesc).text(objInfo[props[0]]); //muestra el primer campo
-            } else {
-                $(lugarDesc).text("???");
-            }
-        }
-    }
 
-    function cargaModalBuscarClaveAjena(strObjetoForeign, strPlace, control, functionCallback, path) {
-        var objConsulta = objeto(strObjetoForeign, path);
-        var consultaView = vista(objConsulta, path);
-        cabecera = '<button id="full-width" type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>' + '<h3 id="myModalLabel">Elección</h3>';
-        pie = '<button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Cerrar</button>';
-        listado = consultaView.getEmptyList();
-        loadForm(strPlace, cabecera, listado, pie, true);
-        var consultaControl = control(path);
-        consultaControl.inicia(consultaView, 1, null, null, 10, null, null, null, functionCallback, null, null, null);
-    }
-    ;
 
-    function cargaModalBuscarClaveAjenaNuevo(path, objControl, objParams) {
+
+    function cargaModalBuscarClaveAjenaNuevo(objControl, objParams, place_id, place_desc, descObjAjena) {
         //var objConsulta = objeto(strObjetoForeign, path);
         //var consultaView = vista(objConsulta, path);
         cabecera = '<button id="full-width" type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>' + '<h3 id="myModalLabel">Elección</h3>';
         pie = '<button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Cerrar</button>';
-        listado = vista('documento').getEmptyList();
-        loadForm('#modal01', cabecera, "", pie, true);
+        //listado = vista('documento').getEmptyList();
+        util().loadForm('#modal01', cabecera, "", pie, true);
         //var consultaControl = control(path);
         //consultaControl.inicia(consultaView, 1, null, null, 10, null, null, null, functionCallback, null, null, null);
-        objControl.list('#modal-body', objParams, null);
-        objControl.modalListEventsLoading('#modal-body', objParams, null);
+        objControl.list('#modal-body', objParams, true);
+        objControl.modalListEventsLoading('#modal-body', objParams, function(id) {
+            //fulfill id
+            place_id.val(id).change();
+            //fulfill description
+            place_desc.text(decodeURIComponent(objeto(descObjAjena).getMeAsAForeignKey(id)));
+            //hide form
+            $('#modal01').modal('hide');
+        });
     }
 
     function enviarDatosUpdateForm() {
@@ -225,11 +211,11 @@ var control_documento = function() {
         resultado = objeto('documento').saveOne(jsonfile);
         if (resultado["status"] = "200") {
             mensaje = 'valores actualizados correctamente para el registro con id=' + resultado["message"];
-            loadForm('#modal01', cabecera,"", "Código: " + resultado["status"] + "<br />" + mensaje + "<br />"  + pie, true);
+            util().loadForm('#modal01', cabecera, "", "Código: " + resultado["status"] + "<br />" + mensaje + "<br />" + pie, true);
             control_documento().view($('#modal01 .modal-body'), parseInt(resultado["message"]));
         } else {
             mensaje = 'el servidor ha retornado el mensaje de error=' + resultado["message"];
-            loadForm('#modal01', cabecera, "Código: " + resultado["status"] + "<br />" + mensaje + "<br />", pie, true);
+            util().loadForm('#modal01', cabecera, "Código: " + resultado["status"] + "<br />" + mensaje + "<br />", pie, true);
         }
         $('#modal02').css({
             'right': '20px',
@@ -239,17 +225,58 @@ var control_documento = function() {
             'display': 'block'
         });
     }
+    function cargaAjenas() {
+        $('#documentoForm #obj_usuario_button').unbind('click');
+        $("#documentoForm #obj_usuario_button").click(function() {
+            var documentoObject = objeto('usuario');
+            var documentoView = vista('usuario');
+            var objControl = control_documento();  //para probar dejar documento
+            cargaModalBuscarClaveAjenaNuevo(objControl, param().defaultizeUrlObjectParameters({}), $('#obj_usuario_id'), $('#obj_usuario_desc'), 'usuario')
+            
+            return false;
+        });
+        $('#documentoForm #obj_tipodocumento_button').unbind('click');
+        $("#documentoForm #obj_tipodocumento_button").click(function() {
+            var documentoObject = objeto('tipodocumento');
+            var documentoView = vista('tipodocumento');
+            var objControl = control_documento();  //para probar dejar documento
+            cargaModalBuscarClaveAjenaNuevo(objControl, param().defaultizeUrlObjectParameters({}), $('#obj_tipodocumento_id'), $('#obj_tipodocumento_desc'), 'tipodocumento')
+            return false;
+        });
+
+    }
 
     return {
         new : function(place) {
             $(place).empty();
             $(place).append(vista('documento').getPanel("Alta de " + objeto('documento').getName(), vista('documento').getEmptyForm()));
-            var buttonsForm = '<div class="form-group"><div class="col-sm-offset-2 col-sm-10">';
-            buttonsForm += '<button type="submit" class="btn btn-primary" id="submitForm" href="jsp#/' + objeto('documento').getName() + '/edit/' + id + '">Guardar</button>';
-            buttonsForm += '<button type="reset"  class="btn btn-danger"  id="resetForm" href="jsp#/' + objeto('documento').getName() + '/list/' + id + '">Limpiar</button>';
-            buttonsForm += '<a class="btn btn-primary"  id="returnForm" href="jsp#/' + objeto('documento').getName() + '/list/' + '">Volver</a>';
-            buttonsForm += '</div></div>';
-            $("#" + objeto('documento').getName() + 'Form').append(buttonsForm);
+            //id must not be enabled
+            //
+            cargaAjenas();
+            $('#submitForm').unbind('click');
+            $('#submitForm').click(function() {
+                $('#documentoForm').on('success.form.bv', function(e) {
+                    e.preventDefault();
+                    //if ($('#documentoForm').valid()) {
+                  
+                        enviarDatosUpdateForm();
+                        
+                    
+
+                    //alert('envio de datos1');
+                    //}
+                    return false;
+                });
+            });
+
+
+//            var buttonsForm = '<div class="form-group"><div class="col-sm-offset-2 col-sm-10">';
+//            buttonsForm += '<button type="submit" class="btn btn-primary" id="submitForm" href="jsp#/' + objeto('documento').getName() + '/edit/' + id + '">Guardar</button>';
+//            buttonsForm += '<button type="reset"  class="btn btn-danger"  id="resetForm" href="jsp#/' + objeto('documento').getName() + '/list/' + id + '">Limpiar</button>';
+//            buttonsForm += '<a class="btn btn-primary"  id="returnForm" href="jsp#/' + objeto('documento').getName() + '/list/' + '">Volver</a>';
+//            buttonsForm += '</div></div>';
+//            $("#" + objeto('documento').getName() + 'Form').append(buttonsForm);
+
         },
         view: function(place, id) {
             $(place).empty();
@@ -277,49 +304,66 @@ var control_documento = function() {
             $('#id').attr("disabled", true);
 
 
-            $('#documentoForm #obj_tipodocumento_button').unbind('click');
-            $("#documentoForm #obj_tipodocumento_button").click(function() {
-                var documentoObject = objeto('tipodocumento', path);
-                var documentoView = vista('tipodocumento', path);
-                var objControl = control_tipodocumento(path);  //para probar dejar documento
-                //$('#indexContenidoJsp').empty();
-
-                //idea: separar la contrucción del listado y los eventos asociados al mismo. En un momento sólo cargamos la contrucción, para utilzar el enrutamiento de cliente
-                //en otro momento cargamos ademas los eventos que eliminan el enrutamiento y permiten operar mediante eventos
-                //NO y que el documento js no pinte sino que devuelva un string con el html. NO
+            cargaAjenas();
 
 
-                cargaModalBuscarClaveAjenaNuevo(path, objControl, param().defaultizeUrlObjectParameters({}))
 
-//                loadModalForm2("Seleccionando el tipo de documento",);
-//                documentoControl.modalList(documentoObject, documentoView, $('#indexContenido'), param().defaultizeUrlObjectParameters({}), null)
-
-                //me he quedado cargando este modal para elegir clave ajena
-
-                //documentoControl.modalList(documentoObject, documentoView, $('#indexContenido'), param().defaultizeUrlObjectParameters({}), null);
-                return false;
-            });
             $('#submitForm').unbind('click');
             $('#submitForm').click(function() {
                 //if ($('#documentoForm').valid()) {
-                    enviarDatosUpdateForm();
-                    //alert('envio de datos1');
+                enviarDatosUpdateForm();
+                //alert('envio de datos1');
                 //}
                 return false;
             });
 
         },
         remove: function(place, id) {
+//            $(place).empty();
+//            objeto('documento').loadAggregateViewOne(id);
+//            removeForm = vista('documento').getObjectTable(objeto('documento').getCachedPrettyFieldNames(), objeto('documento').getCachedOne(), objeto('documento').getCachedFieldNames());
+//            removeForm += '<div id=\"result\">¿Seguro que desea borrar el registro?</div>';
+//            removeForm += '<button id="btnBorrarSi" class="btn btn-danger" data-dismiss="modal" aria-hidden="true">Sí, borrar</button>';
+//            removeForm += '<button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">No</button>';
+//            $(place).append(vista('documento').getPanel("Borrado de " + objeto('documento').getName(), removeForm));
+//            //documentoForm_load
+////            $(place).append('<a class="btn btn-primary" href="jsp#/' + objeto('documento').getName() + '/edit/' + id + '">Borrar</a>');
+////            $(place).append('<a class="btn btn-primary" href="jsp#/' + objeto('documento').getName() + '/list/' + id + '">Volver</a>');
+
+
+
+
             $(place).empty();
-            objeto('documento').loadAggregateViewOne(id);
-            removeForm = vista('documento').getObjectTable(objeto('documento').getCachedPrettyFieldNames(), objeto('documento').getCachedOne(), objeto('documento').getCachedFieldNames());
-            removeForm += '<div id=\"result\">¿Seguro que desea borrar el registro?</div>';
-            removeForm += '<button id="btnBorrarSi" class="btn btn-danger" data-dismiss="modal" aria-hidden="true">Sí, borrar</button>';
-            removeForm += '<button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">No</button>';
-            $(place).append(vista('documento').getPanel("Borrado de " + objeto('documento').getName(), removeForm));
-            //documentoForm_load
-//            $(place).append('<a class="btn btn-primary" href="jsp#/' + objeto('documento').getName() + '/edit/' + id + '">Borrar</a>');
-//            $(place).append('<a class="btn btn-primary" href="jsp#/' + objeto('documento').getName() + '/list/' + id + '">Volver</a>');
+            var oDocumentoModel = objeto('documento');
+            oDocumentoModel.loadAggregateViewOne(id);
+            $(place).append(vista('documento').getPanel("Borrado de " + objeto('documento').getName(), vista('documento').getObjectTable(oDocumentoModel.getCachedPrettyFieldNames(), oDocumentoModel.getCachedOne(), oDocumentoModel.getCachedFieldNames())));
+            $(place).append('<div id=\"result\">¿Seguro que desea borrar el registro?</div>');
+            $(place).append('<a class="btn btn-danger" id="btnBorrarSi" href="#">Sí, borrar</a>');
+            $(place).append('<a class="btn btn-primary" id="btnBorrarNo"  href="#">No</a>');
+
+            $('#btnBorrarSi').unbind('click');
+            $('#btnBorrarSi').click(function(event) {
+                //alert('borrar el ' + id);
+                resultado = objeto('documento').removeOne(id);
+                cabecera = "<button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-hidden=\"true\">×</button>" + "<h3 id=\"myModalLabel\">Respuesta del servidor</h3>";
+                pie = "<button class=\"btn btn-primary\" data-dismiss=\"modal\" aria-hidden=\"true\">Cerrar</button>";
+                if (resultado["status"] = "200") {
+                    mensaje = 'Ha sido borrado el registro con id=' + resultado["message"];
+                    util().loadForm('#modal01', cabecera, "Código: " + resultado["status"] + "<br />" + mensaje + "<br />", pie, true);
+                } else {
+                    mensaje = 'El registro no ha sido borrado. El servidor ha retornado el mensaje de error=' + resultado["message"];
+                    util().loadForm('#modal01', cabecera, "Código: " + resultado["status"] + "<br />" + mensaje + "<br />", pie, true);
+                }
+                $('#modal01').css({
+                    'right': '20px',
+                    'left': '20px',
+                    'width': 'auto',
+                    'margin': '0',
+                    'display': 'block'
+                });
+                return false;
+            });
+
         },
         list: function(place, objParams, callbackLinkParameters) {
 
@@ -352,7 +396,8 @@ var control_documento = function() {
                     if (callbackLinkParameters) {
                         var botonera = "";
                         botonera += '<div class="btn-toolbar" role="toolbar"><div class="btn-group btn-group-xs">';
-                        botonera += '<a class="btn btn-default select" id="' + id + '"  href="jsp#/' + objeto('documento').getName() + '/view/' + callbackLinkParameters + '=' + id + '"><i class="glyphicon glyphicon-ok"></i></a>';
+                        //botonera += '<a class="btn btn-default select" id="' + id + '"  href="jsp#/' + objeto('documento').getName() + '/view/' + callbackLinkParameters + '=' + id + '"><i class="glyphicon glyphicon-ok"></i></a>';
+                        botonera += '<a class="btn btn-default selector_button" id="' + id + '"  href="#"><i class="glyphicon glyphicon-ok"></i></a>';
                         botonera += '</div></div>';
                         return botonera;
                     } else {
@@ -421,8 +466,8 @@ var control_documento = function() {
 
             //table events
             if (callbackFunction) {
-                $('.btn.btn-default.action01').unbind('click');
-                $('.btn.btn-default.action01').click(function(event) {
+                $('.btn.btn-default.selector_button').unbind('click');
+                $('.btn.btn-default.selector_button').click(function(event) {
                     callbackFunction(parseInt($(this).attr('id')))
                 });
             } else {
