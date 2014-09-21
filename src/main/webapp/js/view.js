@@ -1,14 +1,11 @@
 //VISTA
 var vista = function(clase) {
-    //contexto privado
+//contexto privado
     var link = "#";
     var neighborhood = 2;
     var urlJson = path + '/json?ob=' + clase;
     var urlJsp = path + '/jsp?ob=' + clase;
-
-
     return {
-
         printValue: function(value, valor) {
             var thisObject = this;
             var strResult = "";
@@ -94,14 +91,38 @@ var vista = function(clase) {
             });
             return form;
         },
-        getEmptyList: function() {
-            $.when(ajax().ajaxCallSync(urlJsp + '&op=list&mode=1', 'GET', '')).done(function(data) {
+//        getEmptyList: function() {
+//            $.when(ajax().ajaxCallSync(urlJsp + '&op=list&mode=1', 'GET', '')).done(function(data) {
+//                form = data;
+//            });
+//            return form;
+//        },
+        getEmptyHList: function() {
+            $.when(ajax().ajaxCallSync(urlJsp + '&op=hlist&mode=1', 'GET', '')).done(function(data) {
+                form = data;
+            });
+            return form;
+        },
+        getEmptyVList: function() {
+            $.when(ajax().ajaxCallSync(urlJsp + '&op=vlist&mode=1', 'GET', '')).done(function(data) {
                 form = data;
             });
             return form;
         },
         getEmptyDiv: function() {
             return '<div id="content"></div>';
+        },
+        getEmptyModal: function() {
+            var modal = '<div id="modal01" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">';
+            modal += '<div class="modal-dialog modal-lg">';
+            modal += '<div class="modal-content">';
+            modal += '<div class="modal-header" id="modal-header"></div>';
+            modal += '<div class="modal-body" id="modal-body"></div>';
+            modal += '<div class="modal-footer" id="modal-footer"></div>';
+            modal += '</div>';
+            modal += '</div>';
+            modal += '</div>';
+            return modal;
         },
         getObjectTable: function(nombresCamposBonitos, valoresRegistro, nombresCampos) {
             var thisObject = this;
@@ -118,13 +139,7 @@ var vista = function(clase) {
             $.each(campos, function(index, valor) {
                 if (/obj_/.test(valor)) {
                     $('#' + campos[index] + "_id").val(decodeURIComponent(datos[campos[index]].id));
-                    
-                    
-                    
-                    
-                    
                     $('#' + campos[index] + "_desc").text(decodeURIComponent(util().getForeign(datos[campos[index]])));
-                    
                     //$('#' + campos[index] + "_desc").text(decodeURIComponent(thisObject.getForeign(datos[campos[index]])));
                 } else {
                     switch (datos[campos[index]]) {
@@ -392,7 +407,6 @@ var vista = function(clase) {
                     if (numField <= visibleFields) {
 
                         tabla += '<td>' + thisObject.printValue(value, valor) + '</td>';
-
 //                        if (/obj_tipodocumento/.test(valor)) {
 //                            if (value[valor].id > 0) {
 //                                strClaveAjena = value[valor].id + ": " + value[valor].descripcion;
@@ -436,9 +450,6 @@ var vista = function(clase) {
                 tabla += '</tr>';
             });
             return tabla;
-
-
-
         },
 //        getPageTable: function(pag, order, ordervalue, rpp, filter, filteroperator, filtervalue, systemfilter, systemfilteroperator, systemfiltervalue, botonera) {
 //            var tabla = '';
@@ -564,7 +575,6 @@ var vista = function(clase) {
 //
 //        }
     };
-
 };
 
 

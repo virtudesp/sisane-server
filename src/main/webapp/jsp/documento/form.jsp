@@ -129,9 +129,7 @@
 
     <div class="form-group">
         <div class="col-sm-offset-2 col-sm-10">
-            <button type="submit" class="btn btn-primary" id="submitForm">Guardar</button>
-            <button type="reset"  class="btn btn-danger"  id="resetForm">Limpiar</button>
-            <a class="btn btn-primary"  id="returnForm">Volver</a>
+            <button class="btn btn-primary" id="submitForm">Guardar</button>
         </div>
     </div>
 
@@ -148,5 +146,192 @@
         </div>
     </div>
 </div>
+<script type="text/javascript">
+    function documentoForm_load(valores) {
+        $('#documento_form #titulo').val(valores['titulo']);
+        $('#documento_form #contenido').val(valores['contenido']);
+        $('#documento_form #alta').val(valores['alta']);
+        $('#documento_form #cambio').val(valores['cambio']);
+        $('#documento_form #hits').val(valores['hits']);
+        $('#documento_form #id_usuario').val(valores['id_usuario']);
+        $('#documento_form #etiquetas').val(valores['etiquetas']);
+        $('#documento_form #publicado').val(valores['publicado']);
+        $('#documento_form #portada').val(valores['portada']);
+    }
+    function documentoForm_unload() {
+        var valores = [];
+        valores['titulo'] = $('#documento_form #titulo');
+        valores['contenido'] = $('#documento_form #contenido');
+        valores['alta'] = $('#documento_form #alta');
+        valores['cambio'] = $('#documento_form #cambio');
+        valores['hits'] = $('#documento_form #hits');
+        valores['id_usuario'] = $('#documento_form #id_usuario');
+        valores['etiquetas'] = $('#documento_form #etiquetas');
+        valores['publicado'] = $('#documento_form #publicado');
+        valores['portada'] = $('#documento_form #portada');
+        return valores;
+    }
 
-<script src="js/view/documento_form.js" charset="UTF-8"></script>      
+    $(document).ready(function() {
+//    $('#obj_tipodocumento_id').on('change', 'input', function() {
+//        alert('cambio');
+//        $('#obj_tipodocumento_desc').html="qqq";
+//    });
+        $(function() {
+            $('#alta_group').datetimepicker({
+                pickTime: false,
+                language: 'es',
+                showToday: true
+            });
+            $('#cambio_group').datetimepicker({
+                pickTime: false,
+                language: 'es',
+                showToday: true
+            });
+        });
+
+//http://jqueryvalidation.org/documentation/
+        $('#documentoForm')
+//            .find('[name="id_usuario"]')
+//            // Revalidate the color when it is changed
+//            .change(function(e) {
+//                alert('cambio');
+//                $('#documentoForm').bootstrapValidator('revalidateField', 'id_usuario');
+//            })
+//            .end()
+                .bootstrapValidator({
+                    container: '#messages',
+                    feedbackIcons: {
+                        valid: 'glyphicon glyphicon-ok',
+                        invalid: 'glyphicon glyphicon-remove',
+                        validating: 'glyphicon glyphicon-refresh'
+                    },
+                    fields: {
+                        titulo: {
+                            validators: {
+                                notEmpty: {
+                                    message: 'Debe introducir un título'
+                                },
+                                stringLength: {
+                                    max: 255,
+                                    message: 'El título debe tener como máximo 255 caracteres'
+                                }
+                            }
+                        },
+                        contenido: {
+                            validators: {
+                                notEmpty: {
+                                    message: 'Debe introducir contenido'
+                                }
+                            }
+                        },
+                        alta_group: {
+                            validators: {
+                                notEmpty: {
+                                    message: 'Debe introducir una fecha de alta'
+                                },
+                                date: {
+                                    format: 'DD/MM/YYYY',
+                                    message: 'La fecha de alta no tiene formato DD/MM/YYYY'
+                                }
+                            }
+                        },
+                        cambio_group: {
+                            validators: {
+                                notEmpty: {
+                                    message: 'Debe introducir una fecha de cambio'
+                                },
+                                date: {
+                                    format: 'DD/MM/YYYY',
+                                    message: 'La fecha de cambio no tiene formato DD/MM/YYYY'
+                                }
+                            }
+                        },
+                        hits: {
+                            validators: {
+                                notEmpty: {
+                                    message: 'Debe introducir un número de hits'
+                                },
+                                integer: {
+                                    message: 'El valor de hits debe ser un entero'
+                                },
+                                between: {
+                                    min: -0,
+                                    max: 99999999,
+                                    message: 'El número de hits debe ser un entero entre 0 y 99999999'
+                                }
+                            }
+
+                        },
+                        id_usuario: {
+                            validators: {
+                                notEmpty: {
+                                    message: 'Debe elegir un usuario'
+                                },
+                                integer: {
+                                    message: 'El identificador de usuario debe ser un entero'
+                                }
+                            }
+                        },
+                        id_tipodocumento: {
+                            validators: {
+                                notEmpty: {
+                                    message: 'Debe elegir un tipo de documento'
+                                },
+                                integer: {
+                                    message: 'El identificador de tipo de documento debe ser un entero'
+                                }
+                            }
+                        },
+                        etiquetas: {
+                            validators: {
+                                notEmpty: {
+                                    message: 'Debe introducir una etiqueta'
+                                },
+                                stringLength: {
+                                    max: 100,
+                                    message: 'La longitud de las etiquetas debe ser de 100 caracteres como mucho'
+                                }
+                            }
+                        }
+
+                    }
+//            });
+
+
+
+                })
+                .on('change', '[name="id_usuario"]', function() {
+                    $('#documentoForm').bootstrapValidator('revalidateField', 'id_usuario');
+                })
+
+                .on('change', '[name="id_tipodocumento"]', function() {
+                    $('#documentoForm').bootstrapValidator('revalidateField', 'id_tipodocumento');
+                })
+                ;
+//    $('#id_usuario').on('change', function() {
+//        alert('cambio id_usuario');
+//        $('#documentoForm').bootstrapValidator('revalidateField', 'id_usuario');
+//    });
+
+
+//    $('#id_usuario').on('dp.change', function(e) {
+//        // Revalidate the date when user change it
+//        $('#documentoForm').bootstrapValidator('revalidateField', 'id_usuario');
+//    });
+
+
+        $('#alta_group').on('dp.change dp.show', function(e) {
+            // Revalidate the date when user change it
+            $('#documentoForm').bootstrapValidator('revalidateField', 'alta_group');
+        });
+        $('#cambio_group').on('dp.change dp.show', function(e) {
+            // Revalidate the date when user change it
+            $('#documentoForm').bootstrapValidator('revalidateField', 'cambio_group');
+        });
+    });
+
+//http://bootstrapvalidator.com/
+//https://github.com/Eonasdan/bootstrap-datetimepicker 
+
+</script>
