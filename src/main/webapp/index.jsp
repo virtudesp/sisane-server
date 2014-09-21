@@ -146,6 +146,7 @@
         <script src="js/util.js" charset="UTF-8"></script>
         <script src="js/model.js" charset="UTF-8"></script>
         <script src="js/view.js" charset="UTF-8"></script>
+        <script src="js/viewSpecific.js" charset="UTF-8"></script>
         <script src="js/routes.js" charset="UTF-8"></script>
         <script src="js/param.js" charset="UTF-8"></script>
         <script src="js/ajax.js" charset="UTF-8"></script>

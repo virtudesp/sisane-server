@@ -2,6 +2,11 @@
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
+ * 2 problems:
+ * 1-quitar callbackLinkParameters de list y sacar la botonera
+ * b-al reves en el modalListEventsLoading que solo servira para seleccionar
+ * 2sacar doEventsLoading
+ * hacer control generico
  */
 var control_documento = function() {
     function loadModalView(place, id, title, content) {
@@ -10,25 +15,6 @@ var control_documento = function() {
         pie = "<button class=\"btn btn-primary\" data-dismiss=\"modal\" aria-hidden=\"true\">Cerrar</button>";
         loadForm(place, cabecera, content, pie, true);
     }  //asigación de evento de refresco de la tabla cuando volvemos de una operación en ventana modal
-    function cargaModalBuscarClaveAjenaNuevo(objControl, objParams, place_id, place_desc, descObjAjena) {
-        //var objConsulta = objeto(strObjetoForeign, path);
-        //var consultaView = vista(objConsulta, path);
-        cabecera = '<button id="full-width" type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>' + '<h3 id="myModalLabel">Elección</h3>';
-        pie = '<button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Cerrar</button>';
-        //listado = vista('documento').getEmptyList();
-        util().loadForm('#modal01', cabecera, "", pie, true);
-        //var consultaControl = control(path);
-        //consultaControl.inicia(consultaView, 1, null, null, 10, null, null, null, functionCallback, null, null, null);
-        objControl.list('#modal-body', objParams, true);
-        objControl.modalListEventsLoading('#modal-body', objParams, function(id) {
-            //fulfill id
-            place_id.val(id).change();
-            //fulfill description
-            place_desc.text(decodeURIComponent(objeto(descObjAjena).getMeAsAForeignKey(id)));
-            //hide form
-            $('#modal01').modal('hide');
-        });
-    }
     function doSendData() {
         var view = vista('documento');
         var disabled = $('#documentoForm').find(':input:disabled').removeAttr('disabled');
@@ -61,33 +47,13 @@ var control_documento = function() {
             'display': 'block'
         });
     }
-    function doEventsLoading() {
-        $('#documentoForm #obj_usuario_button').unbind('click');
-        $("#documentoForm #obj_usuario_button").click(function() {
-            var documentoObject = objeto('usuario');
-            var documentoView = vista('usuario');
-            var objControl = control_documento();  //para probar dejar documento
-            cargaModalBuscarClaveAjenaNuevo(objControl, param().defaultizeUrlObjectParameters({}), $('#obj_usuario_id'), $('#obj_usuario_desc'), 'usuario')
-
-            return false;
-        });
-        $('#documentoForm #obj_tipodocumento_button').unbind('click');
-        $("#documentoForm #obj_tipodocumento_button").click(function() {
-            var documentoObject = objeto('tipodocumento');
-            var documentoView = vista('tipodocumento');
-            var objControl = control_documento();  //para probar dejar documento
-            cargaModalBuscarClaveAjenaNuevo(objControl, param().defaultizeUrlObjectParameters({}), $('#obj_tipodocumento_id'), $('#obj_tipodocumento_desc'), 'tipodocumento')
-            return false;
-        });
-
-    }
     return {
         new : function(place) {
             $(place).empty();
             $(place).append(vista('documento').getPanel("Alta de " + objeto('documento').getName(), vista('documento').getEmptyForm()));
             //id must not be enabled
             $('#id').val('0').attr("disabled", true);
-            doEventsLoading();
+            viewSpecific('documento').doEventsLoading();
             $('#submitForm').unbind('click');
             $('#submitForm').click(function() {
                 $('#documentoForm').on('success.form.bv', function(e) {
@@ -113,13 +79,12 @@ var control_documento = function() {
             oDocumentoModel.loadAggregateViewOne(id);
             vista('documento').doFillForm(oDocumentoModel.getCachedFieldNames(), oDocumentoModel.getCachedOne());
             $('#id').attr("disabled", true);
-            doEventsLoading();
+            viewSpecific('documento').doEventsLoading();
             $('#submitForm').unbind('click');
             $('#submitForm').click(function() {
                 doSendData();
                 return false;
             });
-
         },
         remove: function(place, id) {
             $(place).empty();
@@ -159,7 +124,7 @@ var control_documento = function() {
             });
 
         },
-        list: function(place, objParams, callbackLinkParameters) {
+        list: function(place, objParams,callback) {
             objParams = param().validateUrlObjectParameters(objParams);
             //get all data from server in one http call and store it in cache
             var oDocumentoModel = objeto('documento');
@@ -185,23 +150,17 @@ var control_documento = function() {
             var page = oDocumentoModel.getCachedPage();
             $("#tableHeaders").empty().append(vista('documento').getLoading()).html(vista('documento').getHeaderPageTable(prettyFieldNames, fieldNames, parseInt(objParams["vf"]), strUrlFromParamsWithoutOrder));
             $("#tableBody").empty().append(vista('documento').getLoading()).html(function() {
-                return vista('documento').getBodyPageTable(page, fieldNames, parseInt(objParams["vf"]), function(id) {
-                    if (callbackLinkParameters) {
+                return vista('documento').getBodyPageTable(page, fieldNames, parseInt(objParams["vf"]), function(id) {                    
+                     if (callback) {
                         var botonera = "";
-                        botonera += '<div class="btn-toolbar" role="toolbar"><div class="btn-group btn-group-xs">';
-                        //botonera += '<a class="btn btn-default select" id="' + id + '"  href="jsp#/' + objeto('documento').getName() + '/view/' + callbackLinkParameters + '=' + id + '"><i class="glyphicon glyphicon-ok"></i></a>';
+                        botonera += '<div class="btn-toolbar" role="toolbar"><div class="btn-group btn-group-xs">';                        
                         botonera += '<a class="btn btn-default selector_button" id="' + id + '"  href="#"><i class="glyphicon glyphicon-ok"></i></a>';
                         botonera += '</div></div>';
                         return botonera;
                     } else {
-                        var botonera = "";
-                        botonera += '<div class="btn-toolbar" role="toolbar"><div class="btn-group btn-group-xs">';
-                        botonera += '<a class="btn btn-default view" id="' + id + '"  href="jsp#/' + objeto('documento').getName() + '/view/' + id + '"><i class="glyphicon glyphicon-eye-open"></i></a>';
-                        botonera += '<a class="btn btn-default edit" id="' + id + '"  href="jsp#/' + objeto('documento').getName() + '/edit/' + id + '"><i class="glyphicon glyphicon-pencil"></i></a>';
-                        botonera += '<a class="btn btn-default remove" id="' + id + '"  href="jsp#/' + objeto('documento').getName() + '/remove/' + id + '"><i class="glyphicon glyphicon-remove"></i></a>';
-                        botonera += '</div></div>';
-                        return botonera;
-                    }
+                       return viewSpecific('documento').loadButtons(id);
+                    }                                                                               
+                    //mejor pasar documento como parametro y crear un repo global de código personalizado
                 });
             });
             //show information about the query

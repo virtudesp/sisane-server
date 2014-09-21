@@ -147,58 +147,20 @@
     </div>
 </div>
 <script type="text/javascript">
-    function documentoForm_load(valores) {
-        $('#documento_form #titulo').val(valores['titulo']);
-        $('#documento_form #contenido').val(valores['contenido']);
-        $('#documento_form #alta').val(valores['alta']);
-        $('#documento_form #cambio').val(valores['cambio']);
-        $('#documento_form #hits').val(valores['hits']);
-        $('#documento_form #id_usuario').val(valores['id_usuario']);
-        $('#documento_form #etiquetas').val(valores['etiquetas']);
-        $('#documento_form #publicado').val(valores['publicado']);
-        $('#documento_form #portada').val(valores['portada']);
-    }
-    function documentoForm_unload() {
-        var valores = [];
-        valores['titulo'] = $('#documento_form #titulo');
-        valores['contenido'] = $('#documento_form #contenido');
-        valores['alta'] = $('#documento_form #alta');
-        valores['cambio'] = $('#documento_form #cambio');
-        valores['hits'] = $('#documento_form #hits');
-        valores['id_usuario'] = $('#documento_form #id_usuario');
-        valores['etiquetas'] = $('#documento_form #etiquetas');
-        valores['publicado'] = $('#documento_form #publicado');
-        valores['portada'] = $('#documento_form #portada');
-        return valores;
-    }
 
     $(document).ready(function() {
-//    $('#obj_tipodocumento_id').on('change', 'input', function() {
-//        alert('cambio');
-//        $('#obj_tipodocumento_desc').html="qqq";
-//    });
-        $(function() {
-            $('#alta_group').datetimepicker({
-                pickTime: false,
-                language: 'es',
-                showToday: true
-            });
-            $('#cambio_group').datetimepicker({
-                pickTime: false,
-                language: 'es',
-                showToday: true
-            });
+        $('#alta_group').datetimepicker({
+            pickTime: false,
+            language: 'es',
+            showToday: true
         });
-
-//http://jqueryvalidation.org/documentation/
+        $('#cambio_group').datetimepicker({
+            pickTime: false,
+            language: 'es',
+            showToday: true
+        });
+        //http://jqueryvalidation.org/documentation/
         $('#documentoForm')
-//            .find('[name="id_usuario"]')
-//            // Revalidate the color when it is changed
-//            .change(function(e) {
-//                alert('cambio');
-//                $('#documentoForm').bootstrapValidator('revalidateField', 'id_usuario');
-//            })
-//            .end()
                 .bootstrapValidator({
                     container: '#messages',
                     feedbackIcons: {
@@ -296,10 +258,6 @@
                         }
 
                     }
-//            });
-
-
-
                 })
                 .on('change', '[name="id_usuario"]', function() {
                     $('#documentoForm').bootstrapValidator('revalidateField', 'id_usuario');
@@ -309,29 +267,14 @@
                     $('#documentoForm').bootstrapValidator('revalidateField', 'id_tipodocumento');
                 })
                 ;
-//    $('#id_usuario').on('change', function() {
-//        alert('cambio id_usuario');
-//        $('#documentoForm').bootstrapValidator('revalidateField', 'id_usuario');
-//    });
-
-
-//    $('#id_usuario').on('dp.change', function(e) {
-//        // Revalidate the date when user change it
-//        $('#documentoForm').bootstrapValidator('revalidateField', 'id_usuario');
-//    });
-
-
         $('#alta_group').on('dp.change dp.show', function(e) {
-            // Revalidate the date when user change it
+// Revalidate the date when user change it
             $('#documentoForm').bootstrapValidator('revalidateField', 'alta_group');
         });
         $('#cambio_group').on('dp.change dp.show', function(e) {
-            // Revalidate the date when user change it
+// Revalidate the date when user change it
             $('#documentoForm').bootstrapValidator('revalidateField', 'cambio_group');
         });
     });
-
-//http://bootstrapvalidator.com/
-//https://github.com/Eonasdan/bootstrap-datetimepicker 
-
 </script>
+     

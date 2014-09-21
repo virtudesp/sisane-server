@@ -35,14 +35,12 @@ function do_routes() {
     });
 
     Path.map("#/documento/edit/:id").to(function() {
-
         $('#indexContenidoJsp').empty();
         var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
         control_documento().edit($('#indexContenido'), paramsObject['id']);
     });
 
     Path.map("#/documento/new").to(function() {
-
         $('#indexContenidoJsp').empty();
         var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
         control_documento().new($('#indexContenido'));
@@ -50,7 +48,6 @@ function do_routes() {
     });
 
     Path.map("#/documento/remove/:id").to(function() {
-
         $('#indexContenidoJsp').empty();
         var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
         control_documento().remove($('#indexContenido'), paramsObject['id']);

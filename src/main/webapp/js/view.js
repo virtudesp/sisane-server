@@ -43,6 +43,25 @@ var vista = function(clase) {
         getLoading: function() {
             return '<img src="fonts/ajax-loading.gif" alt="cargando..." />';
         },
+        cargaModalBuscarClaveAjenaNuevo: function(objControl, objParams, place_id, place_desc, descObjAjena) {
+            //var objConsulta = objeto(strObjetoForeign, path);
+            //var consultaView = vista(objConsulta, path);
+            cabecera = '<button id="full-width" type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>' + '<h3 id="myModalLabel">Elección</h3>';
+            pie = '<button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Cerrar</button>';
+            //listado = vista('documento').getEmptyList();
+            util().loadForm('#modal01', cabecera, "", pie, true);
+            //var consultaControl = control(path);
+            //consultaControl.inicia(consultaView, 1, null, null, 10, null, null, null, functionCallback, null, null, null);
+            objControl.list('#modal-body', objParams, true);
+            objControl.modalListEventsLoading('#modal-body', objParams, function(id) {
+                //fulfill id
+                place_id.val(id).change();
+                //fulfill description
+                place_desc.text(decodeURIComponent(objeto(descObjAjena).getMeAsAForeignKey(id)));
+                //hide form
+                $('#modal01').modal('hide');
+            });
+        },
 //        getRegisterTableView: function(place, id) {
 //            $(place).empty().append("<h1>Vista de " + this.getName() + "</h1>");
 //            $(place).append((this.getObjectTable(id)));
