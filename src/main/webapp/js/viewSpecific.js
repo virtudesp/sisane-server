@@ -24,15 +24,19 @@ var viewSpecific = function(clase) {
         loadFormValues: function(valores) {
             switch (clase) {
                 case 'documento':
-                    $('#documento_form #titulo').val(valores['titulo']);
-                    $('#documento_form #contenido').val(valores['contenido']);
-                    $('#documento_form #alta').val(valores['alta']);
-                    $('#documento_form #cambio').val(valores['cambio']);
-                    $('#documento_form #hits').val(valores['hits']);
-                    $('#documento_form #id_usuario').val(valores['id_usuario']);
-                    $('#documento_form #etiquetas').val(valores['etiquetas']);
-                    $('#documento_form #publicado').val(valores['publicado']);
-                    $('#documento_form #portada').val(valores['portada']);
+//                    $('#documento_form #titulo').val(valores['titulo']);
+//                    $('#documento_form #contenido').val(valores['contenido']);
+//                    $('#documento_form #alta').val(valores['alta']);
+//                    $('#documento_form #cambio').val(valores['cambio']);
+//                    $('#documento_form #hits').val(valores['hits']);
+//                    $('#documento_form #id_usuario').val(valores['id_usuario']);
+//                    $('#documento_form #etiquetas').val(valores['etiquetas']);
+//                    $('#documento_form #publicado').val(valores['publicado']);
+//                    $('#documento_form #portada').val(valores['portada']);
+
+
+
+
                     break;
                 default:
                     alert("Ha ocuurido un error de cliente en viewSpecific");
@@ -42,15 +46,18 @@ var viewSpecific = function(clase) {
             switch (clase) {
                 case 'documento':
                     var valores = [];
-                    valores['titulo'] = $('#documento_form #titulo');
-                    valores['contenido'] = $('#documento_form #contenido');
-                    valores['alta'] = $('#documento_form #alta');
-                    valores['cambio'] = $('#documento_form #cambio');
-                    valores['hits'] = $('#documento_form #hits');
-                    valores['id_usuario'] = $('#documento_form #id_usuario');
-                    valores['etiquetas'] = $('#documento_form #etiquetas');
-                    valores['publicado'] = $('#documento_form #publicado');
-                    valores['portada'] = $('#documento_form #portada');
+//                    valores['titulo'] = $('#documento_form #titulo');
+//                    valores['contenido'] = $('#documento_form #contenido');
+//                    valores['alta'] = $('#documento_form #alta');
+//                    valores['cambio'] = $('#documento_form #cambio');
+//                    valores['hits'] = $('#documento_form #hits');
+//                    valores['id_usuario'] = $('#documento_form #id_usuario');
+//                    valores['etiquetas'] = $('#documento_form #etiquetas');
+//                    valores['publicado'] = $('#documento_form #publicado');
+//                    valores['portada'] = $('#documento_form #portada');
+                    var disabled = $('#documentoForm').find(':input:disabled').removeAttr('disabled');
+                    valores = $('#documentoForm').serializeObject();
+                    disabled.attr('disabled', 'disabled');
                     return valores;
                     break;
                 default:
@@ -64,7 +71,7 @@ var viewSpecific = function(clase) {
                     $("#documentoForm #obj_usuario_button").click(function() {
                         var documentoObject = objeto('usuario');
                         var documentoView = vista('usuario');
-                        var objControl = control_documento();  //para probar dejar documento
+                        var objControl = control('documento');  //para probar dejar documento
                         documentoView.cargaModalBuscarClaveAjenaNuevo(objControl, param().defaultizeUrlObjectParameters({}), $('#obj_usuario_id'), $('#obj_usuario_desc'), 'usuario')
                         return false;
                     });
@@ -72,7 +79,7 @@ var viewSpecific = function(clase) {
                     $("#documentoForm #obj_tipodocumento_button").click(function() {
                         var documentoObject = objeto('tipodocumento');
                         var documentoView = vista('tipodocumento');
-                        var objControl = control_documento();  //para probar dejar documento
+                        var objControl = control('documento');  //para probar dejar documento
                         documentoView.cargaModalBuscarClaveAjenaNuevo(objControl, param().defaultizeUrlObjectParameters({}), $('#obj_tipodocumento_id'), $('#obj_tipodocumento_desc'), 'tipodocumento')
                         return false;
                     });
@@ -94,6 +101,15 @@ var viewSpecific = function(clase) {
                     break;
                 default:
                     alert("Ha ocuurido un error de cliente en viewSpecific");
+            }
+        },
+        okValidation: function(f) {
+            switch (clase) {
+                case 'documento':
+                    $('#documentoForm').on('success.form.bv', f);
+                    break;
+                default:
+                    alert("Ha ocuurido un error de cliente en okValidation");
             }
         }
     }

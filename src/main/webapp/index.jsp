@@ -152,7 +152,7 @@
         <script src="js/ajax.js" charset="UTF-8"></script>
 
 
-        <script src="js/control/documento.js" charset="UTF-8"></script> 
+        <script src="js/control.js" charset="UTF-8"></script> 
         
         
         
@@ -162,32 +162,6 @@
         <script src="js/control/tipodocumento.js" charset="UTF-8"></script>
 
 
-
-        <script src="js/control/alumno.js" charset="UTF-8"></script>
-        <script src="js/control/usuario.js" charset="UTF-8"></script>
-        <script src="js/control/lenguaje.js" charset="UTF-8"></script>
-
-        <script src="js/control/entrada.js" charset="UTF-8"></script>
-        <script src="js/control/actividad.js" charset="UTF-8"></script>
-        <script src="js/control/empresa.js" charset="UTF-8"></script>
-        <script src="js/control/entrada.js" charset="UTF-8"></script>
-        <script src="js/control/hilo.js" charset="UTF-8"></script>
-
-        <script src="js/control/votodocumento.js" charset="UTF-8"></script>
-        <script src="js/control/estado.js" charset="UTF-8"></script>
-        <script src="js/control/comentario.js" charset="UTF-8"></script>
-        <script src="js/control/actividadoffline.js" charset="UTF-8"></script>
-        <script src="js/control/entrega.js" charset="UTF-8"></script>    
-        <script src="js/control/metadocumento.js" charset="UTF-8"></script>
-        <script src="js/control/repositorio.js" charset="UTF-8"></script>
-        <script src="js/control/opcion.js" charset="UTF-8"></script>    
-        <script src="js/control/cuestionario.js" charset="UTF-8"></script>
-        <script src="js/control/pregunta.js" charset="UTF-8"></script>
-        <script src="js/control/follower.js" charset="UTF-8"></script>
-        <script src="js/control/incidencias.js" charset="UTF-8"></script>
-        <script src="js/control/requerimiento.js" charset="UTF-8"></script>
-        <script src="js/control/profesor.js" charset="UTF-8"></script>
-        <script src="js/control/backlog.js" charset="UTF-8"></script>
 
         <script>
 

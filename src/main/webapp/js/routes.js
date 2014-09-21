@@ -15,7 +15,7 @@ function do_routes() {
 
     Path.map("#/documento").to(function() {
         $('#indexContenidoJsp').empty();
-        control_documento().list($('#indexContenido'), param().defaultizeUrlObjectParameters({}), null);
+        control('documento').list($('#indexContenido'), param().defaultizeUrlObjectParameters({}), null);
         //documentoControl.modalListEventsLoading(documentoObject, documentoView, $('#indexContenido'), param().defaultizeUrlObjectParameters({}), null);        
         return false;
     });
@@ -23,34 +23,34 @@ function do_routes() {
     Path.map("#/documento/list/:url").to(function() {
         $('#indexContenidoJsp').empty();
         var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
-        control_documento().list($('#indexContenido'), paramsObject, null);
+        control('documento').list($('#indexContenido'), paramsObject, null);
         return false;
     });
 
     Path.map("#/documento/view/:id").to(function() {
         $('#indexContenidoJsp').empty();
         var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
-        control_documento().view($('#indexContenido'), paramsObject['id']);
+        control('documento').view($('#indexContenido'), paramsObject['id']);
         return false;
     });
 
     Path.map("#/documento/edit/:id").to(function() {
         $('#indexContenidoJsp').empty();
         var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
-        control_documento().edit($('#indexContenido'), paramsObject['id']);
+        control('documento').edit($('#indexContenido'), paramsObject['id']);
     });
 
     Path.map("#/documento/new").to(function() {
         $('#indexContenidoJsp').empty();
         var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
-        control_documento().new($('#indexContenido'));
+        control('documento').new($('#indexContenido'));
         return false;
     });
 
     Path.map("#/documento/remove/:id").to(function() {
         $('#indexContenidoJsp').empty();
         var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
-        control_documento().remove($('#indexContenido'), paramsObject['id']);
+        control('documento').remove($('#indexContenido'), paramsObject['id']);
         return false;
     });
 

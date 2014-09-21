@@ -1,20 +1,24 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- * 2 problems:
- * 1-quitar callbackLinkParameters de list y sacar la botonera
- * b-al reves en el modalListEventsLoading que solo servira para seleccionar
- * 2sacar doEventsLoading
- * hacer control generico
+/* 
+ * Copyright (C) 2014 rafa
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
+
+
 var control = function(clase) {
-//    function loadModalView(place, id, title, content) {
-//        cabecera = "<button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-hidden=\"true\">×</button>" +
-//                "<h3 id=\"myModalLabel\">Detalle de " + title + "</h3>";
-//        pie = "<button class=\"btn btn-primary\" data-dismiss=\"modal\" aria-hidden=\"true\">Cerrar</button>";
-//        loadForm(place, cabecera, content, pie, true);
-//    }  //asigación de evento de refresco de la tabla cuando volvemos de una operación en ventana modal
+
     function doSendData() {
 
 //        var disabled = $('#documentoForm').find(':input:disabled').removeAttr('disabled');
@@ -53,12 +57,17 @@ var control = function(clase) {
             $('#id').val('0').attr("disabled", true);
             viewSpecific(clase).doEventsLoading();
             $('#submitForm').unbind('click');
-            $('#submitForm').click(function(e) {
-                //$('#documentoForm').on('success.form.bv', function() {                    
-                doSendData();
-                //});
-                e.preventDefault();
-                return false;
+            $('#submitForm').click(function() {
+                viewSpecific(clase).okValidation(function(e) {
+                    doSendData();
+                    e.preventDefault();
+                    return false;
+                });
+//                $('#documentoForm').on('success.form.bv', function(e) {
+//                    doSendData();
+//                    e.preventDefault();
+//                    return false;
+//                });
             });
         },
         view: function(place, id) {
@@ -79,12 +88,17 @@ var control = function(clase) {
             $('#id').attr("disabled", true);
             viewSpecific(clase).doEventsLoading();
             $('#submitForm').unbind('click');
-            $('#submitForm').click(function(e) {
-                //$('#documentoForm').on('success.form.bv', function() {
-                doSendData();
-                //})
-                e.preventDefault();
-                return false;
+            $('#submitForm').click(function() {
+                viewSpecific(clase).okValidation(function(e) {
+                    doSendData();
+                    e.preventDefault();
+                    return false;
+                });
+//                $('#documentoForm').on('success.form.bv', function(e) {
+//                    doSendData();
+//                    e.preventDefault();
+//                    return false;
+//                });
             });
         },
         remove: function(place, id) {

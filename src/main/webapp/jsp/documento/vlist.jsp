@@ -17,7 +17,54 @@
     DocumentoDaoImpl oDocumentoDao = new DocumentoDaoImpl(connection);
 %>
 <div class="row">
-    <div class="col-md-3"">
+    <div class="col-md-2">
+        <div class="panel panel-default">
+            <!-- Default panel contents -->
+            <div class="panel-heading">Nuevo</div>
+            <div class="panel-body">
+                <a class="btn btn-primary" href='jsp#/documento/new'>Crear documento</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-5">
+        <div class="panel panel-default">
+            <!-- Default panel contents -->
+            <div class="panel-heading">Paginación</div>
+            <div class="panel-body">
+                <div class="text-center">
+                    <div id="pagination"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="panel panel-default">
+            <!-- Default panel contents -->
+            <div class="panel-heading">Campos visibles</div>
+            <div class="panel-body">     
+                <form class="navbar-form navbar-right" role="form" action="Controller" method="post" id="visibleFieldsForm">
+                    <select id="selectVisibleFields" class="form-control" name="filter" width="80" style="width: 70px">
+                    </select>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="panel panel-default">
+            <!-- Default panel contents -->
+            <div class="panel-heading">Registros por página</div>
+            <div class="panel-body">
+                <div class="text-center">
+                    <div id="nrpp"></div>
+                </div>
+            </div>
+        </div>
+    </div>        
+</div>
+<div class="row">
+    <div class="col-md-3">
         <div class="panel panel-default">
             <div class="panel-heading">Información de estado</div>
             <div class="panel-body">
@@ -28,24 +75,7 @@
                 </div>
             </div>
         </div>
-        <div class="panel panel-default">
-            <!-- Default panel contents -->
-            <div class="panel-heading">Paginación</div>
-            <div class="panel-body">
-                <div class="text-center">
-                    <div id="pagination"></div>
-                </div>
-            </div>
-        </div>
-        <div class="panel panel-default">
-            <!-- Default panel contents -->
-            <div class="panel-heading">Registros por página</div>
-            <div class="panel-body">
-                <div class="text-center">
-                    <div id="nrpp"></div>
-                </div>
-            </div>
-        </div>
+
         <div class="panel panel-default">
             <!-- Default panel contents -->
             <div class="panel-heading">Filtro</div>
@@ -68,23 +98,8 @@
                 </form>
             </div>
         </div>
-        <div class="panel panel-default">
-            <!-- Default panel contents -->
-            <div class="panel-heading">Nuevo</div>
-            <div class="panel-body">
-                <a class="btn btn-primary" href='jsp#/documento/new'>Crear documento</a>
-            </div>
-        </div>
-        <div class="panel panel-default">
-            <!-- Default panel contents -->
-            <div class="panel-heading">Campos visibles</div>
-            <div class="panel-body">     
-                <form class="navbar-form navbar-right" role="form" action="Controller" method="post" id="visibleFieldsForm">
-                    <select id="selectVisibleFields" class="form-control" name="filter" width="80" style="width: 70px">
-                    </select>
-                </form>
-            </div>
-        </div>
+
+
     </div> 
     <div class="col-md-9" id="menuLateralList">
         <table class="table table-responsive table-hover table-striped table-condensed">
