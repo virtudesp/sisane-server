@@ -116,14 +116,9 @@ var vista = function(clase) {
 //            });
 //            return form;
 //        },
-        getEmptyHList: function() {
-            $.when(ajax().ajaxCallSync(urlJsp + '&op=hlist&mode=1', 'GET', '')).done(function(data) {
-                form = data;
-            });
-            return form;
-        },
-        getEmptyVList: function() {
-            $.when(ajax().ajaxCallSync(urlJsp + '&op=vlist&mode=1', 'GET', '')).done(function(data) {
+
+        getEmptyList: function() {
+            $.when(ajax().ajaxCallSync(urlJsp + '&op=list&mode=1', 'GET', '')).done(function(data) {
                 form = data;
             });
             return form;
@@ -177,7 +172,7 @@ var vista = function(clase) {
             });
         },
         getRegistersInfo: function(regs) {
-            return "<p><small>Mostrando una consulta de " + regs + " registros.</small></p>";
+            return "<p>Mostrando una consulta de " + regs + " registros.</p>";
         },
         getOrderInfo: function(objParams) {
             if (objParams['order']) {
@@ -302,6 +297,33 @@ var vista = function(clase) {
             botonera += '<a class="rpp_link" id="50" href="jsp#/' + clase + '/list/' + UrlFromParamsWithoutRpp + '&rpp=50">50</a></li>';
             botonera += '</ul></div>';
             return botonera;
+        },
+        doResultOperationNotifyToUser: function(editing, resultado) {
+            cabecera = "<button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-hidden=\"true\">×</button>" + "<h3 id=\"myModalLabel\">Respuesta del servidor</h3>";
+            pie = "<button class=\"btn btn-primary\" data-dismiss=\"modal\" aria-hidden=\"true\">Cerrar</button>";
+            if (resultado["status"] = "200") {
+                if (editing) {
+                    mensaje = 'valores actualizados correctamente para el registro con id=' + resultado["message"];
+                }
+                else {
+                    mensaje = 'se ha creado el registro con id=' + resultado["message"];
+                }
+                util().loadForm('#modal01', cabecera, "Código: " + resultado["status"] + "<br />" + mensaje + "<br />", pie, true);
+                $('#modal01').on('hidden.bs.modal', function() {
+                    window.location.href = "jsp#/" + objeto(clase).getName() + "/view/" + resultado["message"];
+                })
+                //control_documento().view($('#modal01 .modal-body'), parseInt(resultado["message"]));
+            } else {
+                mensaje = 'el servidor ha retornado el mensaje de error=' + resultado["message"];
+                util().loadForm('#modal01', cabecera, "Código: " + resultado["status"] + "<br />" + mensaje + "<br />", pie, true);
+            }
+            $('#modal01').css({
+                'right': '40px',
+                'left': '40px',
+                'width': 'auto',
+                'margin': '0',
+                'display': 'block'
+            });
         },
         getHeaderPageTable: function(prettyFieldNames, fieldNames, visibleFields, UrlFromParamsWithoutOrder) {
             var numField = 0; //visible field counter

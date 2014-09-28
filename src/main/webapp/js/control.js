@@ -19,36 +19,7 @@
 
 var control = function(clase) {
 
-    function doSendData() {
-
-//        var disabled = $('#documentoForm').find(':input:disabled').removeAttr('disabled');
-//        var jsonObj = [];
-//        jsonObj = $('#documentoForm').serializeObject();
-//        disabled.attr('disabled', 'disabled');
-        //json is sent encoded. be careful of the dates. Dates must be decoded at server side before fill the bean
-        //jsonfile = {json: htmlEncode(JSON.stringify(jsonObj))};        
-        cabecera = "<button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-hidden=\"true\">×</button>" + "<h3 id=\"myModalLabel\">Respuesta del servidor</h3>";
-        pie = "<button class=\"btn btn-primary\" data-dismiss=\"modal\" aria-hidden=\"true\">Cerrar</button>";
-        resultado = objeto(clase).saveOne({json: JSON.stringify(viewSpecific(clase).getFormValues())});
-        if (resultado["status"] = "200") {
-            mensaje = 'valores actualizados correctamente para el registro con id=' + resultado["message"];
-            util().loadForm('#modal01', cabecera, "Código: " + resultado["status"] + "<br />" + mensaje + "<br />", pie, true);
-            $('#modal01').on('hidden.bs.modal', function() {
-                window.location.href = "jsp#/" + objeto(clase).getName() + "/view/" + resultado["message"];
-            })
-            //control_documento().view($('#modal01 .modal-body'), parseInt(resultado["message"]));
-        } else {
-            mensaje = 'el servidor ha retornado el mensaje de error=' + resultado["message"];
-            util().loadForm('#modal01', cabecera, "Código: " + resultado["status"] + "<br />" + mensaje + "<br />", pie, true);
-        }
-        $('#modal01').css({
-            'right': '40px',
-            'left': '40px',
-            'width': 'auto',
-            'margin': '0',
-            'display': 'block'
-        });
-    }
+    
     return {
         new : function(place) {
             $(place).empty();
@@ -59,7 +30,7 @@ var control = function(clase) {
             $('#submitForm').unbind('click');
             $('#submitForm').click(function() {
                 viewSpecific(clase).okValidation(function(e) {
-                    doSendData();
+                    vista(clase).doResultOperationNotifyToUser(false, objeto(clase).saveOne({json: JSON.stringify(viewSpecific(clase).getFormValues())}));
                     e.preventDefault();
                     return false;
                 });
@@ -90,7 +61,7 @@ var control = function(clase) {
             $('#submitForm').unbind('click');
             $('#submitForm').click(function() {
                 viewSpecific(clase).okValidation(function(e) {
-                    doSendData();
+                    vista(clase).doResultOperationNotifyToUser(true, objeto(clase).saveOne({json: JSON.stringify(viewSpecific(clase).getFormValues())}));
                     e.preventDefault();
                     return false;
                 });
@@ -145,7 +116,7 @@ var control = function(clase) {
             var oDocumentoModel = objeto(clase);
             oDocumentoModel.loadAggregateViewSome(objParams);
             //get html template from server and show it
-            $(place).empty().append(vista(clase).getPanel("Listado de " + objeto(clase).getName(), vista(clase).getEmptyVList()));
+            $(place).empty().append(vista(clase).getPanel("Listado de " + objeto(clase).getName(), vista(clase).getEmptyList()));
             //show page links pad
             var strUrlFromParamsWithoutPage = param().getUrlStringFromParamsObject(param().getUrlObjectFromParamsWithoutParamArray(objParams, ["page"]));
             var url = 'jsp#/' + objeto(clase).getName() + '/list/' + strUrlFromParamsWithoutPage;
