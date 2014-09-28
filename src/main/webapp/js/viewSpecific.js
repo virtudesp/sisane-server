@@ -21,7 +21,7 @@
 
 var viewSpecific = function(clase) {
     return {
-        loadFormValues: function(valores) {
+        loadFormValues: function(valores, campos) {
             switch (clase) {
                 case 'documento':
 //                    $('#documento_form #titulo').val(valores['titulo']);
@@ -34,8 +34,7 @@ var viewSpecific = function(clase) {
 //                    $('#documento_form #publicado').val(valores['publicado']);
 //                    $('#documento_form #portada').val(valores['portada']);
 
-
-
+                    vista(clase).doFillForm(valores, campos);
 
                     break;
                 default:
@@ -55,6 +54,7 @@ var viewSpecific = function(clase) {
 //                    valores['etiquetas'] = $('#documento_form #etiquetas');
 //                    valores['publicado'] = $('#documento_form #publicado');
 //                    valores['portada'] = $('#documento_form #portada');
+
                     var disabled = $('#documentoForm').find(':input:disabled').removeAttr('disabled');
                     valores = $('#documentoForm').serializeObject();
                     disabled.attr('disabled', 'disabled');
@@ -69,18 +69,35 @@ var viewSpecific = function(clase) {
                 case 'documento':
                     $('#documentoForm #obj_usuario_button').unbind('click');
                     $("#documentoForm #obj_usuario_button").click(function() {
-                        var documentoObject = objeto('usuario');
-                        var documentoView = vista('usuario');
-                        var objControl = control('documento');  //para probar dejar documento
-                        documentoView.cargaModalBuscarClaveAjenaNuevo(objControl, param().defaultizeUrlObjectParameters({}), $('#obj_usuario_id'), $('#obj_usuario_desc'), 'usuario')
+                        var oControl = control('documento');  //para probar dejar documento
+                        //vista('usuario').cargaModalBuscarClaveAjena('#modal01', "documento");
+
+                        $("#documentoForm").append(vista(clase).getEmptyModal());
+                        util().loadForm('#modal01', vista('usuario').getFormHeader('Elección de usuario'), "", vista('usuario').getFormFooter(), true);
+
+                        oControl.list('#modal01 #modal-body', param().defaultizeUrlObjectParameters({}), true);
+                        oControl.modalListEventsLoading('#modal01 #modal-body', param().defaultizeUrlObjectParameters({}), function(id) {
+                            $('#obj_usuario_id').val(id).change();
+                            $('#obj_usuario_desc').text(decodeURIComponent(objeto('usuario').getMeAsAForeignKey(id)));
+                            $('#modal01').modal('hide');
+                           
+                        });
                         return false;
                     });
                     $('#documentoForm #obj_tipodocumento_button').unbind('click');
                     $("#documentoForm #obj_tipodocumento_button").click(function() {
-                        var documentoObject = objeto('tipodocumento');
-                        var documentoView = vista('tipodocumento');
-                        var objControl = control('documento');  //para probar dejar documento
-                        documentoView.cargaModalBuscarClaveAjenaNuevo(objControl, param().defaultizeUrlObjectParameters({}), $('#obj_tipodocumento_id'), $('#obj_tipodocumento_desc'), 'tipodocumento')
+                        var oControl = control('documento');
+
+                        $("#documentoForm").append(vista(clase).getEmptyModal());
+                        util().loadForm('#modal01', vista('tipodocumento').getFormHeader('Elección de tipo de documento'), "", vista('tipodocumento').getFormFooter(), true);
+
+                        oControl.list('#modal01 #modal-body', param().defaultizeUrlObjectParameters({}), true);
+                        oControl.modalListEventsLoading('#modal01 #modal-body', param().defaultizeUrlObjectParameters({}), function(id) {
+                            $('#obj_tipodocumento_id').val(id).change();
+                            $('#obj_tipodocumento_desc').text(decodeURIComponent(objeto('tipodocumento').getMeAsAForeignKey(id)));
+                            $('#modal01').modal('hide');
+                            
+                        });
                         return false;
                     });
                     break;

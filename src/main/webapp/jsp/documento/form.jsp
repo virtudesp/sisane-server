@@ -21,11 +21,7 @@
         </div>
     </div>
 
-
-
-
-
-
+    
     <div class="form-group">
         <label class="col-sm-2 control-label" for="alta_group">Alta:</label> 
         <div class="col-sm-3">           

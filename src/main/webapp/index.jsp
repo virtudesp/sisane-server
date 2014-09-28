@@ -150,20 +150,14 @@
         <script src="js/routes.js" charset="UTF-8"></script>
         <script src="js/param.js" charset="UTF-8"></script>
         <script src="js/ajax.js" charset="UTF-8"></script>
-
-
         <script src="js/control.js" charset="UTF-8"></script> 
-        
-        
-        
-        
         
         
         <script src="js/control/tipodocumento.js" charset="UTF-8"></script>
 
 
 
-        <script>
+        <script type="text/javascript">
 
 
 

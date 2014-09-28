@@ -15,7 +15,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-
 package net.daw.control;
 
 import java.io.IOException;
@@ -38,9 +37,17 @@ public class ControlJsp extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
 
+    private void retardo(Integer iLast) {
+        try {
+            Thread.sleep(iLast);
+        } catch (InterruptedException ex) {
+            Thread.currentThread().interrupt();
+        }
+    }
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, Exception {
-
+        retardo(0); //debug delay
         GenericConnectionInterface DataConnectionSource = null;
         Connection connection = null;
         try {
@@ -117,7 +124,7 @@ public class ControlJsp extends HttpServlet {
             if (connection != null) {
                 connection.close();
             }
-            DataConnectionSource.disposeConnection();            
+            DataConnectionSource.disposeConnection();
         }
     }
 

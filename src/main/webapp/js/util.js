@@ -7,11 +7,11 @@ var util = function() {
 //    var urlJsp = ContextPath + '/jsp?ob=' + clase;
     return {
         getLoading: function() {
-            return '<img src="fonts/ajax-loading.gif" alt="cargando..." />';
+            return '<img src="images/ajax-loading.gif" alt="cargando..." />';
         },
-        getLoading2: function() {
-            return '<img src="fonts/ajax-loading.gif" alt="cargando..." />';
-        },
+//        getLoading2: function() {
+//            return '<img src="images/ajax-loading.gif" alt="cargando..." />';
+//        },
         getForeign: function(objForeign) {
             //falta organizar con metadatos para mostrar sólo los campos relevantes
             var numKeys = Object.keys(objForeign).length;
@@ -159,6 +159,22 @@ function inicializacion() {
         });
         return o;
     };
+    //load spinner
+//    var img = $('<img alt="cargando..." / >').attr('src', "images/ajax-loading.gif").load(function() {
+//        if (!this.complete || typeof this.naturalWidth == "undefined" || this.naturalWidth == 0) {
+//            spinner = '<h3>Loading...</h3>';
+//        } else {
+//            spinner = '<img src="images/ajax-loading.gif" alt="cargando..." />';
+//        }
+//    });
+    
+    
+        $.when(ajax().ajaxCallSync('images/ajax-loading.gif', 'GET', '')).done(function() {
+            spinner = '<img src="images/ajax-loading.gif" alt="cargando..." />';
+        })
+   
+    
+    
 }
 
 function getIntegerArray(min, max) {
@@ -201,3 +217,9 @@ $.fn.populateSelectBox = function(values, captions) {
     }
 };
 
+
+$.fn.spinner = function() {
+
+    $(this).html(spinner);
+
+};

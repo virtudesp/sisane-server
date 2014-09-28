@@ -19,8 +19,11 @@
 
 var control = function(clase) {
 
-    
+
     return {
+        getClassName: function() {
+            return clase;
+        },
         new : function(place) {
             $(place).empty();
             $(place).append(vista(clase).getPanel("Alta de " + objeto(clase).getName(), vista(clase).getEmptyForm()));
@@ -29,16 +32,12 @@ var control = function(clase) {
             viewSpecific(clase).doEventsLoading();
             $('#submitForm').unbind('click');
             $('#submitForm').click(function() {
-                viewSpecific(clase).okValidation(function(e) {
-                    vista(clase).doResultOperationNotifyToUser(false, objeto(clase).saveOne({json: JSON.stringify(viewSpecific(clase).getFormValues())}));
+                viewSpecific(clase).okValidation(function(e) {                    
+                    resultado = objeto(clase).saveOne({json: JSON.stringify(viewSpecific(clase).getFormValues())});
+                    vista(clase).doResultOperationNotifyToUser(place, resultado["status"], "Se ha creado el registro con id=" + resultado["message"], resultado["message"], true);                 
                     e.preventDefault();
                     return false;
                 });
-//                $('#documentoForm').on('success.form.bv', function(e) {
-//                    doSendData();
-//                    e.preventDefault();
-//                    return false;
-//                });
             });
         },
         view: function(place, id) {
@@ -55,21 +54,17 @@ var control = function(clase) {
             $(place).append(vista(clase).getPanel("Edición de " + objeto(clase).getName(), vista(clase).getEmptyForm()));
             var oDocumentoModel = objeto(clase);
             oDocumentoModel.loadAggregateViewOne(id);
-            vista(clase).doFillForm(oDocumentoModel.getCachedFieldNames(), oDocumentoModel.getCachedOne());
+            viewSpecific(clase).loadFormValues(oDocumentoModel.getCachedOne(), oDocumentoModel.getCachedFieldNames());
             $('#id').attr("disabled", true);
             viewSpecific(clase).doEventsLoading();
             $('#submitForm').unbind('click');
             $('#submitForm').click(function() {
                 viewSpecific(clase).okValidation(function(e) {
-                    vista(clase).doResultOperationNotifyToUser(true, objeto(clase).saveOne({json: JSON.stringify(viewSpecific(clase).getFormValues())}));
+                    resultado = objeto(clase).saveOne({json: JSON.stringify(viewSpecific(clase).getFormValues())});
+                    vista(clase).doResultOperationNotifyToUser(place, resultado["status"], "Se ha actualizado el registro con id=" + resultado["message"], resultado["message"], true);               
                     e.preventDefault();
                     return false;
                 });
-//                $('#documentoForm').on('success.form.bv', function(e) {
-//                    doSendData();
-//                    e.preventDefault();
-//                    return false;
-//                });
             });
         },
         remove: function(place, id) {
@@ -79,36 +74,12 @@ var control = function(clase) {
             $(place).append(vista(clase).getPanel("Borrado de " + objeto(clase).getName(), vista(clase).getObjectTable(oDocumentoModel.getCachedPrettyFieldNames(), oDocumentoModel.getCachedOne(), oDocumentoModel.getCachedFieldNames())));
             $(place).append('<div id=\"result\">¿Seguro que desea borrar el registro?</div>');
             $(place).append('<a class="btn btn-danger" id="btnBorrarSi" href="#">Sí, borrar</a>');
-
             $('#btnBorrarSi').unbind('click');
             $('#btnBorrarSi').click(function(event) {
-                //alert('borrar el ' + id);
                 resultado = objeto(clase).removeOne(id);
-                cabecera = "<button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-hidden=\"true\">×</button>" + "<h3 id=\"myModalLabel\">Respuesta del servidor</h3>";
-                pie = "<button class=\"btn btn-primary\" data-dismiss=\"modal\" aria-hidden=\"true\">Cerrar</button>";
-                if (resultado["status"] = "200") {
-                    mensaje = 'Ha sido borrado el registro con id=' + resultado["message"];
-                    $(place).append(vista(clase).getEmptyModal());
-                    util().loadForm('#modal01', cabecera, "Código: " + resultado["status"] + "<br />" + mensaje + "<br />", pie, true);
-                } else {
-                    mensaje = 'El registro no ha sido borrado. El servidor ha retornado el mensaje de error=' + resultado["message"];
-                    $(place).append(vista(clase).getEmptyModal());
-                    util().loadForm('#modal01', cabecera, "Código: " + resultado["status"] + "<br />" + mensaje + "<br />", pie, true);
-                }
-                $('#modal01').css({
-                    'right': '20px',
-                    'left': '20px',
-                    'width': 'auto',
-                    'margin': '0',
-                    'display': 'block'
-                });
-
-                $('#modal01').on('hidden.bs.modal', function() {
-                    $(place).empty();
-                })
+                vista(clase).doResultOperationNotifyToUser(place, resultado["status"],  resultado["message"], resultado["message"], false);
                 return false;
             });
-
         },
         list: function(place, objParams, callback) {
             objParams = param().validateUrlObjectParameters(objParams);
@@ -116,7 +87,11 @@ var control = function(clase) {
             var oDocumentoModel = objeto(clase);
             oDocumentoModel.loadAggregateViewSome(objParams);
             //get html template from server and show it
-            $(place).empty().append(vista(clase).getPanel("Listado de " + objeto(clase).getName(), vista(clase).getEmptyList()));
+            if (callback) {
+                $(place).empty().append(vista(clase).getLoading()).html(vista(clase).getEmptyList());
+            } else {
+                $(place).empty().append(vista(clase).getLoading()).html(vista(clase).getPanel("Listado de " + objeto(clase).getName(), vista(clase).getEmptyList()));
+            }
             //show page links pad
             var strUrlFromParamsWithoutPage = param().getUrlStringFromParamsObject(param().getUrlObjectFromParamsWithoutParamArray(objParams, ["page"]));
             var url = 'jsp#/' + objeto(clase).getName() + '/list/' + strUrlFromParamsWithoutPage;

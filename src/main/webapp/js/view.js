@@ -6,7 +6,7 @@ var vista = function(clase) {
     var urlJson = path + '/json?ob=' + clase;
     var urlJsp = path + '/jsp?ob=' + clase;
     return {
-        printValue: function(value, valor) {
+        printValue: function(value, valor, recortar) {
             var thisObject = this;
             var strResult = "";
             if (/obj_/.test(valor)) {
@@ -26,49 +26,37 @@ var vista = function(clase) {
                     default:
                         strResult = decodeURIComponent(value[valor]);
                         //if (typeof fieldContent == "string") {
-                        if (strResult.length > 50) //don't show too long fields
-                            strResult = strResult.substr(0, 20) + " ...";
+                        if (recortar)
+                            if (strResult.length > 50) //don't show too long fields
+                                strResult = strResult.substr(0, 20) + " ...";
                         //}
                 }
             }
             return strResult;
         },
-        //contexto público (interface)
-//        getName: function() {
-//            return objeto.getName();
-//        },
-//        getObject: function() {
-//            return objeto;
-//        },
         getLoading: function() {
-            return '<img src="fonts/ajax-loading.gif" alt="cargando..." />';
+            return '<img src="images/ajax-loading.gif" alt="cargando..." />';
         },
-        cargaModalBuscarClaveAjenaNuevo: function(objControl, objParams, place_id, place_desc, descObjAjena) {
-            //var objConsulta = objeto(strObjetoForeign, path);
-            //var consultaView = vista(objConsulta, path);
-            cabecera = '<button id="full-width" type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>' + '<h3 id="myModalLabel">Elección</h3>';
-            pie = '<button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Cerrar</button>';
-            //listado = vista('documento').getEmptyList();
-            util().loadForm('#modal01', cabecera, "", pie, true);
-            //var consultaControl = control(path);
-            //consultaControl.inicia(consultaView, 1, null, null, 10, null, null, null, functionCallback, null, null, null);
-            objControl.list('#modal-body', objParams, true);
-            objControl.modalListEventsLoading('#modal-body', objParams, function(id) {
-                //fulfill id
-                place_id.val(id).change();
-                //fulfill description
-                place_desc.text(decodeURIComponent(objeto(descObjAjena).getMeAsAForeignKey(id)));
-                //hide form
-                $('#modal01').modal('hide');
-            });
+        getEmptyModal: function() {
+            var modal = '<div id="modal01" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">';
+            modal += '<div class="modal-dialog modal-lg">';
+            modal += '<div class="modal-content">';
+            modal += '<div class="modal-header" id="modal-header"></div>';
+            modal += '<div class="modal-body" id="modal-body"></div>';
+            modal += '<div class="modal-footer" id="modal-footer"></div>';
+            modal += '</div>';
+            modal += '</div>';
+            modal += '</div>';
+            return modal;
         },
-//        getRegisterTableView: function(place, id) {
-//            $(place).empty().append("<h1>Vista de " + this.getName() + "</h1>");
-//            $(place).append((this.getObjectTable(id)));
-//            $(place).append('<a class="btn btn-primary" href="jsp#/' + this.getName() + '/edit/' + id + '">Editar</a>');
-//            $(place).append('<a class="btn btn-primary" href="jsp#/' + this.getName() + '/remove/"' + id + '">Borrar</a>');
-//            $(place).append('<a class="btn btn-primary" href="jsp#/' + this.getName() + '/list/"' + id + '">Volver</a>');
-//        },
+        getFormHeader: function(title) {
+            cabecera = '<button id="full-width" type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>';
+            cabecera += '<h1 id="myModalLabel">' + title + '</h1>';
+            return cabecera;
+        },
+        getFormFooter: function() {
+            return pie = '<button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Cerrar</button>';
+        },       
         getPageLinks: function(url, page_number, total_pages, neighborhood) {
             vector = "<ul class=\"pagination\">";
             if (page_number > 1)
@@ -95,12 +83,6 @@ var vista = function(clase) {
             vector += "</ul>";
             return vector;
         },
-        getTemplate: function() {
-            $.when(ajax().ajaxCallSync(objeto.getUrlJsp() + '&op=' + template, 'GET', '')).done(function(data) {
-                form = data;
-            });
-            return form;
-        },
         getPanel: function(titulo, contenido) {
             return '<div class="panel panel-default"><div class="panel-heading"><h1>' + titulo + '</h1></div><div class="panel-body">' + contenido + '</div></div>';
         },
@@ -110,45 +92,26 @@ var vista = function(clase) {
             });
             return form;
         },
-//        getEmptyList: function() {
-//            $.when(ajax().ajaxCallSync(urlJsp + '&op=list&mode=1', 'GET', '')).done(function(data) {
-//                form = data;
-//            });
-//            return form;
-//        },
-
         getEmptyList: function() {
             $.when(ajax().ajaxCallSync(urlJsp + '&op=list&mode=1', 'GET', '')).done(function(data) {
                 form = data;
             });
             return form;
         },
-        getEmptyDiv: function() {
-            return '<div id="content"></div>';
-        },
-        getEmptyModal: function() {
-            var modal = '<div id="modal01" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">';
-            modal += '<div class="modal-dialog modal-lg">';
-            modal += '<div class="modal-content">';
-            modal += '<div class="modal-header" id="modal-header"></div>';
-            modal += '<div class="modal-body" id="modal-body"></div>';
-            modal += '<div class="modal-footer" id="modal-footer"></div>';
-            modal += '</div>';
-            modal += '</div>';
-            modal += '</div>';
-            return modal;
-        },
+//        getEmptyDiv: function() {
+//            return '<div id="content"></div>';
+//        },
         getObjectTable: function(nombresCamposBonitos, valoresRegistro, nombresCampos) {
             var thisObject = this;
             var tabla = "<table class=\"table table table-bordered table-condensed\">";
             $.each(nombresCampos, function(index, nombreDeCampo) {
                 tabla += '<tr><td><strong>' + nombresCamposBonitos[index] + '</strong></td>';
-                tabla += '<td>' + thisObject.printValue(valoresRegistro, nombreDeCampo) + '</td>';
+                tabla += '<td>' + thisObject.printValue(valoresRegistro, nombreDeCampo, false) + '</td>';
             });
             tabla += '</table>';
             return tabla;
         },
-        doFillForm: function(campos, datos) {
+        doFillForm: function(datos, campos) {
             var thisObject = this;
             $.each(campos, function(index, valor) {
                 if (/obj_/.test(valor)) {
@@ -165,7 +128,7 @@ var vista = function(clase) {
                             break;
                         default:
                             //$('#' + campos[index]).val(decodeURIComponent(datos[campos[index]]));
-                            $('#' + campos[index]).val(decodeURIComponent(thisObject.printValue(datos, valor)));
+                            $('#' + campos[index]).val(decodeURIComponent(thisObject.printValue(datos, valor, false)));
                     }
                 }
 
@@ -190,88 +153,6 @@ var vista = function(clase) {
             }
             return strFilter;
         },
-//        getUrlFromParamsWithoutOrder: function(pag, order, ordervalue, rpp, filter, filteroperator, filtervalue, systemfilter, systemfilteroperator, systemfiltervalue) {
-//            var url = '';
-//            if (pag)
-//                url += "page=" + pag;
-//            if (rpp)
-//                url += "&rpp=" + rpp;
-//            if (filter)
-//                url += "&filter=" + filter;
-//            if (filteroperator)
-//                url += "&filteroperator=" + filteroperator;
-//            if (filtervalue)
-//                url += "&filtervalue=" + filtervalue;
-//            if (systemfilter)
-//                url += "&systemfilter=" + systemfilter;
-//            if (systemfilteroperator)
-//                url += "&systemfilteroperator=" + systemfilteroperator;
-//            if (systemfiltervalue)
-//                url += "&systemfiltervalue=" + systemfiltervalue;
-//            return url;
-//        },
-//        getUrlFromParamsWithoutPage: function(pag, order, ordervalue, rpp, filter, filteroperator, filtervalue, systemfilter, systemfilteroperator, systemfiltervalue) {
-//            var url = '';
-//            if (rpp)
-//                url += "rpp=" + rpp;
-//            if (order)
-//                url += "&order=" + order;
-//            if (ordervalue)
-//                url += "&ordervalue=" + ordervalue;
-//            if (filter)
-//                url += "&filter=" + filter;
-//            if (filteroperator)
-//                url += "&filteroperator=" + filteroperator;
-//            if (filtervalue)
-//                url += "&filtervalue=" + filtervalue;
-//            if (systemfilter)
-//                url += "&systemfilter=" + systemfilter;
-//            if (systemfilteroperator)
-//                url += "&systemfilteroperator=" + systemfilteroperator;
-//            if (systemfiltervalue)
-//                url += "&systemfiltervalue=" + systemfiltervalue;
-//            return url;
-//        },
-//        getUrlFromParamsWithoutFilter: function(pag, order, ordervalue, rpp, filter, filteroperator, filtervalue, systemfilter, systemfilteroperator, systemfiltervalue) {
-//            var url = '';
-//            if (pag)
-//                url += "page=" + pag;
-//            if (rpp)
-//                url += "&rpp=" + rpp;
-//            if (order)
-//                url += "&order=" + order;
-//            if (ordervalue)
-//                url += "&ordervalue=" + ordervalue;
-//            if (systemfilter)
-//                url += "&systemfilter=" + systemfilter;
-//            if (systemfilteroperator)
-//                url += "&systemfilteroperator=" + systemfilteroperator;
-//            if (systemfiltervalue)
-//                url += "&systemfiltervalue=" + systemfiltervalue;
-//            return url;
-//        },
-//        getUrlFromParamsWithoutRpp: function(pag, order, ordervalue, rpp, filter, filteroperator, filtervalue, systemfilter, systemfilteroperator, systemfiltervalue) {
-//            var url = '';
-//            if (pag)
-//                url += "page=" + pag;
-//            if (order)
-//                url += "&order=" + order;
-//            if (ordervalue)
-//                url += "&ordervalue=" + ordervalue;
-//            if (filter)
-//                url += "&filter=" + filter;
-//            if (filteroperator)
-//                url += "&filteroperator=" + filteroperator;
-//            if (filtervalue)
-//                url += "&filtervalue=" + filtervalue;
-//            if (systemfilter)
-//                url += "&systemfilter=" + systemfilter;
-//            if (systemfilteroperator)
-//                url += "&systemfilteroperator=" + systemfilteroperator;
-//            if (systemfiltervalue)
-//                url += "&systemfiltervalue=" + systemfiltervalue;
-//            return url;
-//        },
         getRppLinks: function(objParams) {
             var UrlFromParamsWithoutRpp = param().getUrlStringFromParamsObject(param().getUrlObjectFromParamsWithoutParamArray(objParams, ["rpp"]));
             var botonera = '<div id="pagination"><ul class="pagination">';
@@ -298,32 +179,31 @@ var vista = function(clase) {
             botonera += '</ul></div>';
             return botonera;
         },
-        doResultOperationNotifyToUser: function(editing, resultado) {
-            cabecera = "<button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-hidden=\"true\">×</button>" + "<h3 id=\"myModalLabel\">Respuesta del servidor</h3>";
-            pie = "<button class=\"btn btn-primary\" data-dismiss=\"modal\" aria-hidden=\"true\">Cerrar</button>";
-            if (resultado["status"] = "200") {
-                if (editing) {
-                    mensaje = 'valores actualizados correctamente para el registro con id=' + resultado["message"];
-                }
-                else {
-                    mensaje = 'se ha creado el registro con id=' + resultado["message"];
-                }
-                util().loadForm('#modal01', cabecera, "Código: " + resultado["status"] + "<br />" + mensaje + "<br />", pie, true);
-                $('#modal01').on('hidden.bs.modal', function() {
-                    window.location.href = "jsp#/" + objeto(clase).getName() + "/view/" + resultado["message"];
-                })
-                //control_documento().view($('#modal01 .modal-body'), parseInt(resultado["message"]));
+        doResultOperationNotifyToUser: function(place, resultadoStatus, resultadoMessage, id, mostrar) {
+            if (resultadoStatus == "200") {
+                mensaje = "<h3>La operacion se ha ejecutado con éxito</h3>";
             } else {
-                mensaje = 'el servidor ha retornado el mensaje de error=' + resultado["message"];
-                util().loadForm('#modal01', cabecera, "Código: " + resultado["status"] + "<br />" + mensaje + "<br />", pie, true);
+                mensaje = "<h3>ERROR</h3>";
             }
+            mensaje += "<h5>Código: " + resultadoStatus + "</h5><h5>" + resultadoMessage + "</h5>";
+            $(place).append(vista(clase).getEmptyModal());
+            util().loadForm('#modal01', vista(clase).getFormHeader('Respuesta del servidor'), mensaje, vista(clase).getFormFooter(), true);
             $('#modal01').css({
-                'right': '40px',
-                'left': '40px',
+                'right': '20px',
+                'left': '20px',
                 'width': 'auto',
-                'margin': '0',
+                'margin': '10px',
                 'display': 'block'
             });
+            if (mostrar && resultadoStatus == "200") {
+                $('#modal01').on('hidden.bs.modal', function() {
+                    window.location.href = "jsp#/" + objeto(clase).getName() + "/view/" + id;
+                })
+            } else {
+                $('#modal01').on('hidden.bs.modal', function() {
+                    $(place).empty();
+                })
+            }
         },
         getHeaderPageTable: function(prettyFieldNames, fieldNames, visibleFields, UrlFromParamsWithoutOrder) {
             var numField = 0; //visible field counter
@@ -352,12 +232,7 @@ var vista = function(clase) {
                         tabla += '<a class="orderAsc" id="' + fieldName + '" href="jsp#/' + clase + '/list/' + UrlFromParamsWithoutOrder + '&order=' + fieldName + '&ordervalue=asc"><i class="glyphicon glyphicon-arrow-up"></i></a>';
                         tabla += '<a class="orderDesc" id="' + fieldName + '" href="jsp#/' + clase + '/list/' + UrlFromParamsWithoutOrder + '&order=' + fieldName + '&ordervalue=desc"><i class="glyphicon glyphicon-arrow-down"></i></a>';
                         tabla += '</th>';
-//                        }
                     }
-//                    if (numField == visibleFields + 1) {
-//                        tabla += '<th class="col-md-2">acciones</th>';
-//                    }
-
                 });
                 tabla += '<th class="col-md-2">acciones</th>';
                 tabla += '</tr>';
@@ -366,74 +241,6 @@ var vista = function(clase) {
         },
         getBodyPageTable: function(page, fieldNames, visibleFields, tdbuttons) {
             var thisObject = this;
-//            var tabla = "";
-//            $.each(page, function(index, value) {
-//                tabla += '<tr>';
-//                var numField = 0;
-//                var id;
-//                $.each(fieldNames, function(index, valor) {
-//                    if ("id" == valor) {
-//                        id = value[valor];
-//                    }
-//                    //numField++;
-//                    //if (numField <= visibleFields) {
-//                        if (/id_/.test(valor)) {
-//                            //falta codificar un método dame clave ajena en el modelo ...
-//
-//                            //falta sacar esto como un callback
-//
-//                            foreignRegister = objeto.getForeignKey(value[valor], valor);
-//                            tabla += '<td>' + foreignRegister["id"] + '</td>';
-//
-//
-//
-////                            $.when(ajax().ajaxCallSync(path + '/json?ob=' + valor.split("_")[1].replace(/[0-9]*$/, "") + '&op=get&id=' + value[valor], 'GET', '')).done(function(data) {
-////                                var contador = 0;
-////                                var add_tabla = "";
-////                                for (key in data) {
-////                                    if (contador == 0)
-////                                        add_tabla = '<td>id=' + data[key] + '(no existe)</td>';
-////                                    if (contador == 1)
-////                                        add_tabla = '<td>' + data[key] + '</td>';
-////                                    contador++;
-////                                }
-////                                if (contador == 0) {
-////                                    add_tabla = '<td>' + value[valor] + ' #error</td>';
-////                                }
-////                                tabla += add_tabla;
-////                            });
-//                        } else {
-//                            switch (value[valor]) {
-//                                case true:
-//                                    tabla += '<td><i class="glyphicon glyphicon-ok"></i></td>';
-//                                    break;
-//                                case false:
-//                                    tabla += '<td><i class="glyphicon glyphicon-remove"></i></td>';
-//                                    break;
-//                                default:
-//                                    var fieldContent = decodeURIComponent(value[valor]);
-//                                    if (typeof fieldContent == "string") {
-//                                        if (value[valor].length > 50) //don't show too long fields
-//                                            fieldContent = decodeURIComponent(value[valor]).substr(0, 20) + " ...";
-//                                    }
-//                                    tabla += '<td>' + fieldContent + '</td>';
-//                            }
-//                        }
-//                    //}
-//                });
-//                tabla += '<td>';
-//                tabla += tdbuttons(id);
-////                tabla += '<div class="btn-toolbar" role="toolbar"><div class="btn-group btn-group-xs">';
-////                tabla += '<a class="btn btn-default" href="jsp#/' + operationName + '/view/' + id + '"><i class="glyphicon glyphicon-eye-open"></i></a>';
-////                tabla += '<a class="btn btn-default" href="jsp#/' + operationName + '/edit/' + id + '"><i class="glyphicon glyphicon-pencil"></i></a>';
-////                tabla += '<a class="btn btn-default" href="jsp#/' + operationName + '/remove/' + id + '"><i class="glyphicon glyphicon-remove"></i></a>';
-////                tabla += '</div></div>';
-//                tabla += '</td>';
-//                tabla += '</tr>';
-//            });
-//            return tabla;
-
-
             var tabla = "";
             $.each(page, function(index, value) {
                 tabla += '<tr>';
@@ -446,43 +253,7 @@ var vista = function(clase) {
                     }
                     numField++;
                     if (numField <= visibleFields) {
-
-                        tabla += '<td>' + thisObject.printValue(value, valor) + '</td>';
-//                        if (/obj_tipodocumento/.test(valor)) {
-//                            if (value[valor].id > 0) {
-//                                strClaveAjena = value[valor].id + ": " + value[valor].descripcion;
-//                                strClaveAjena = '<a href="jsp#/tipodocumento/view/' + value[valor].id + '">' + strClaveAjena + '</a>';
-//                                tabla += '<td>' + strClaveAjena + '</td>';
-//                            } else {
-//                                tabla += '<td>sin tipo</td>';
-//                            }
-//                        }
-//                        if (/obj_usuario/.test(valor)) {
-//                            if (value[valor].id > 0) {
-//                                strClaveAjena = value[valor].id + ": " + value[valor].login;
-//                                strClaveAjena = '<a href="jsp#/usuario/view/' + value[valor].id + '">' + strClaveAjena + '</a>';
-//                                tabla += '<td>' + strClaveAjena + '</td>';
-//                            } else {
-//                                tabla += '<td>sin usuario</td>';
-//                            }
-//                        }
-//                        if (!(/obj_/.test(valor))) {
-//                            switch (value[valor]) {
-//                                case true:
-//                                    tabla += '<td><i class="glyphicon glyphicon-ok"></i></td>';
-//                                    break;
-//                                case false:
-//                                    tabla += '<td><i class="glyphicon glyphicon-remove"></i></td>';
-//                                    break;
-//                                default:
-//                                    var fieldContent = decodeURIComponent(value[valor]);
-//                                    if (typeof fieldContent == "string") {
-//                                        if (value[valor].length > 50) //don't show too long fields
-//                                            fieldContent = decodeURIComponent(value[valor]).substr(0, 20) + " ...";
-//                                    }
-//                                    tabla += '<td>' + fieldContent + '</td>';
-//                            }
-//                        }
+                        tabla += '<td>' + thisObject.printValue(value, valor, true) + '</td>';
                     }
                 });
                 tabla += '<td>';
@@ -492,129 +263,6 @@ var vista = function(clase) {
             });
             return tabla;
         },
-//        getPageTable: function(pag, order, ordervalue, rpp, filter, filteroperator, filtervalue, systemfilter, systemfilteroperator, systemfiltervalue, botonera) {
-//            var tabla = '';
-//            var visibleFields = 7;
-//            var fieldNames = objeto.getFieldNames();
-//            var prettyFieldNames = objeto.getPrettyFieldNamesAcciones();
-//            var UrlFromParamsWithoutOrder = this.getUrlFromParamsWithoutOrder(pag, order, ordervalue, rpp, filter, filteroperator, filtervalue, systemfilter, systemfilteroperator, systemfiltervalue);
-//
-//            tabla += "<table class=\"table table-responsive table-hover table-striped table-condensed\">";
-//
-//            tabla += this.getHeaderPageTable(prettyFieldNames, visibleFields, objeto.getName(), UrlFromParamsWithoutOrder);
-//
-//            page = objeto.getPage(pag, order, ordervalue, rpp, filter, filteroperator, filtervalue, systemfilter, systemfilteroperator, systemfiltervalue)['list'];
-//            if (page != 0) {
-//                tabla += this.getBodyPageTable(page, fieldNames, visibleFields, objeto.getName(), objeto.getPath());
-//                tabla += "</table>";
-//            } else {
-//                tabla = "<div class=\"alert alert-info\"><h4>Ha habido un problema con la base de datos</h4><br/>El probema puede ser:<ul><li>La tabla está vacia.</li><li>Tu busqueda no tubo resultados.</li></ul></div>";
-//            }
-//            return tabla;
-//        }
-//        getPageTable: function(pag, order, ordervalue, rpp, filter, filteroperator, filtervalue, systemfilter, systemfilteroperator, systemfiltervalue, botonera) {
-//            urlWithoutOrder = this.getUrlFromParamsWithoutOrder(pag,rpp, filter, filteroperator, filtervalue, systemfilter, systemfilteroperator, systemfiltervalue, botonera);
-//            var tabla = "<table class=\"table table-responsive table-hover table-striped table-condensed\">";
-//            var visibleFields = 5;
-//            var numField = 0; //visible field counter
-//            if (objeto.getPrettyFieldNamesAcciones() !== null) {
-//                tabla += '<tr>';
-//                $.each(objeto.getPrettyFieldNamesAcciones(), function(index, value) {
-//                    numField++; //field counter
-//                    if (numField <= visibleFields) {
-//                        if (value === "acciones") {
-//                            tabla += '<th class="col-md-2">' + value;
-//                            tabla += '</th>';
-//                        } else {
-//                            if (value === "id") {
-//                                tabla += '<th class="col-md-1">' + value;
-//                                tabla += '<br /><a class="orderAsc' + index + '" href="jsp#/' + this.getName() + '/list/' + url + '&order=id&ordervalue=asc"><i class="glyphicon glyphicon-arrow-up"></i></a>';
-//                                tabla += '<a class="orderDesc' + index + '" href="#"><i class="glyphicon glyphicon-arrow-down"></i></a>';
-//                                tabla += '</th>';
-//                            } else {
-//                                tabla += '<th>' + value;
-//                                tabla += '<br /><a class="orderAsc' + index + '" href="#"><i class="glyphicon glyphicon-arrow-up"></i></a>';
-//                                tabla += '<a class="orderDesc' + index + '" href="#"><i class="glyphicon glyphicon-arrow-down"></i></a>';
-//                                tabla += '</th>';
-//                            }
-//                        }
-//                    }
-//                    if (numField == visibleFields + 1) {
-//                        tabla += '<th class="col-md-2">acciones</th>';
-//                    }
-//
-//                });
-//                tabla += '</tr>';
-//            }
-//
-//            page = objeto.getPage(pag, order, ordervalue, rpp, filter, filteroperator, filtervalue, systemfilter, systemfilteroperator, systemfiltervalue)['list'];
-//            if (page != 0) {
-//                $.each(page, function(index, value) {
-//                    tabla += '<tr>';
-//                    numField = 0;
-//                    $.each(objeto.getFieldNames(), function(index, valor) {
-//                        if ("id" == valor) {
-//                            id = valor;
-//                        }
-//                        numField++;
-//                        if (numField <= visibleFields) {
-//                            if (/id_/.test(valor)) {
-//                                $.when(ajax().ajaxCallSync(objeto.getPath() + '/json?ob=' + valor.split("_")[1].replace(/[0-9]*$/, "") + '&op=get&id=' + value[valor], 'GET', '')).done(function(data) {
-//                                    contador = 0;
-//                                    add_tabla = "";
-//                                    for (key in data) {
-//                                        if (contador == 0)
-//                                            add_tabla = '<td>id=' + data[key] + '(no existe)</td>';
-//                                        if (contador == 1)
-//                                            add_tabla = '<td>' + data[key] + '</td>';
-//                                        contador++;
-//                                    }
-//                                    if (contador == 0) {
-//                                        add_tabla = '<td>' + value[valor] + ' #error</td>';
-//                                    }
-//                                    tabla += add_tabla;
-//                                });
-//                            } else {
-//                                switch (value[valor]) {
-//                                    case true:
-//                                        tabla += '<td><i class="glyphicon glyphicon-ok"></i></td>';
-//                                        break;
-//                                    case false:
-//                                        tabla += '<td><i class="glyphicon glyphicon-remove"></i></td>';
-//                                        break;
-//                                    default:
-//                                        var fieldContent = decodeURIComponent(value[valor]);
-//                                        if (typeof fieldContent == "string") {
-//
-//                                            if (value[valor].length > 50) //don't show too long fields
-//                                                fieldContent = decodeURIComponent(value[valor]).substr(0, 20) + " ...";
-//
-//                                        }
-//                                        tabla += '<td>' + fieldContent + '</td>';
-//                                }
-//                            }
-//                        }
-//                    });
-//
-//                    tabla += '<td><div class="btn-toolbar" role="toolbar"><div class="btn-group btn-group-xs">';
-//                    if (callback) {
-//
-//                    } else {
-//                        tabla += '<a class="btn btn-default" href="jsp#/' + vista.getName() + '/view/' + id + '"><i class="glyphicon glyphicon-eye-open"></i> ' + valor.text + '</a>';
-//                        tabla += '<a class="btn btn-default" href="jsp#/' + vista.getName() + '/edit/' + id + '"><i class="glyphicon glyphicon-pencil"></i> ' + valor.text + '</a>';
-//                        tabla += '<a class="btn btn-default" href="jsp#/' + vista.getName() + '/remove/' + id + '"><i class="glyphicon glyphicon-remove"></i> ' + valor.text + '</a>';
-//                    }
-//                    tabla += '</div></div></td>';
-//                    tabla += '</tr>';
-//                });
-//                tabla += "</table>";
-//            } else {
-//                tabla = "<div class=\"alert alert-info\"><h4>Ha habido un problema con la base de datos</h4><br/>El probema puede ser:<ul><li>La tabla está vacia.</li><li>Tu busqueda no tubo resultados.</li></ul></div>";
-//            }
-//
-//            return tabla;
-//
-//        }
     };
 };
 
