@@ -1,7 +1,7 @@
-ausiasContent
-=============
+openAusias
+==========
 
-ausiasContent
+openAusias
 
 
 * unstable
