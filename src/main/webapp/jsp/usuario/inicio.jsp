@@ -1,5 +1,6 @@
+<%@page import="net.daw.helper.AppInformation"%>
 <div class="jumbotron">
-    <h1>Bienvenidos a openAusias 2014</h1>
+    <h1>Bienvenidos a <%=AppInformation.getAppName()%> 2014</h1>
     <h3>Versión (v.02) de 1/10/2014</h3>
     <h5>Desarrollo de aplicaciones web. CPIFP Ausiàs March. Curso 2014-2015</h5>    
 </div>
@@ -7,7 +8,7 @@
     <div class="col-md-8">
         <div class="row">
             <div class="col-md-6">
-                <h3>¿Qué es openAusias?</h3>
+                <h3>¿Qué es <%=AppInformation.getAppName()%>?</h3>
                 <p>Es una aplicación didáctica para aprender a organizar y desarrollar 
                     aplicaciones AJAX. Está pensado para soportar mantenimientos 
                     CRUDL (create remove update delete list).</p>

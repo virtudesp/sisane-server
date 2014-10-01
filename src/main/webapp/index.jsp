@@ -18,6 +18,7 @@
 
 
 <%@page import="net.daw.bean.implementation.UsuarioBeanImpl"%>
+<%@page import="net.daw.helper.AppInformation"%>
 <%UsuarioBeanImpl user = (UsuarioBeanImpl) request.getSession().getAttribute("usuarioBean");%>
 
 <!DOCTYPE html>
@@ -53,7 +54,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="jsp">ausiàsContent</a>
+                    <a class="navbar-brand" href="jsp"><%=AppInformation.getAppName()%></a>
                 </div>
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse navbar-ex1-collapse">
