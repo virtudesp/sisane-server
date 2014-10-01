@@ -1,5 +1,5 @@
-/* 
- * Copyright (C) 2014 rafa
+/*
+ * Copyright (C) July 2014 Rafael Aznar
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -16,7 +16,6 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
-//VISTA
 var param = function() {
     return {
         getUrlObjectFromUrlString: function(url) {

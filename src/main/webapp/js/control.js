@@ -1,5 +1,5 @@
-/* 
- * Copyright (C) 2014 rafa
+/*
+ * Copyright (C) July 2014 Rafael Aznar
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -17,6 +17,7 @@
  */
 
 
+
 var control = function(clase) {
 
 
@@ -26,14 +27,14 @@ var control = function(clase) {
         },
         new : function(place) {
             $(place).empty();
-            $(place).append(vista(clase).getPanel("Alta de " + objeto(clase).getName(), vista(clase).getEmptyForm()));
+            $(place).append(vista(clase).getPanel("Alta de " + model(clase).getName(), vista(clase).getEmptyForm()));
             //id must not be enabled
             $('#id').val('0').attr("disabled", true);
             viewSpecific(clase).doEventsLoading();
             $('#submitForm').unbind('click');
             $('#submitForm').click(function() {
                 viewSpecific(clase).okValidation(function(e) {                    
-                    resultado = objeto(clase).saveOne({json: JSON.stringify(viewSpecific(clase).getFormValues())});
+                    resultado = model(clase).saveOne({json: JSON.stringify(viewSpecific(clase).getFormValues())});
                     vista(clase).doResultOperationNotifyToUser(place, resultado["status"], "Se ha creado el registro con id=" + resultado["message"], resultado["message"], true);                 
                     e.preventDefault();
                     return false;
@@ -42,17 +43,17 @@ var control = function(clase) {
         },
         view: function(place, id) {
             $(place).empty();
-            var oDocumentoModel = objeto(clase);
+            var oDocumentoModel = model(clase);
             oDocumentoModel.loadAggregateViewOne(id);
-            $(place).append(vista(clase).getPanel("Detalle de " + objeto(clase).getName(), vista(clase).getObjectTable(oDocumentoModel.getCachedPrettyFieldNames(), oDocumentoModel.getCachedOne(), oDocumentoModel.getCachedFieldNames())));
-            $(place).append('<a class="btn btn-primary" href="jsp#/' + objeto(clase).getName() + '/edit/' + id + '">Editar</a>');
-            $(place).append('<a class="btn btn-primary" href="jsp#/' + objeto(clase).getName() + '/remove/' + id + '">Borrar</a>');
-            $(place).append('<a class="btn btn-primary" href="jsp#/' + objeto(clase).getName() + '/list/' + id + '">Listar</a>');
+            $(place).append(vista(clase).getPanel("Detalle de " + model(clase).getName(), vista(clase).getObjectTable(oDocumentoModel.getCachedPrettyFieldNames(), oDocumentoModel.getCachedOne(), oDocumentoModel.getCachedFieldNames())));
+            $(place).append('<a class="btn btn-primary" href="jsp#/' + model(clase).getName() + '/edit/' + id + '">Editar</a>');
+            $(place).append('<a class="btn btn-primary" href="jsp#/' + model(clase).getName() + '/remove/' + id + '">Borrar</a>');
+            $(place).append('<a class="btn btn-primary" href="jsp#/' + model(clase).getName() + '/list/' + id + '">Listar</a>');
         },
         edit: function(place, id) {
             $(place).empty();
-            $(place).append(vista(clase).getPanel("Edición de " + objeto(clase).getName(), vista(clase).getEmptyForm()));
-            var oDocumentoModel = objeto(clase);
+            $(place).append(vista(clase).getPanel("Edición de " + model(clase).getName(), vista(clase).getEmptyForm()));
+            var oDocumentoModel = model(clase);
             oDocumentoModel.loadAggregateViewOne(id);
             viewSpecific(clase).loadFormValues(oDocumentoModel.getCachedOne(), oDocumentoModel.getCachedFieldNames());
             $('#id').attr("disabled", true);
@@ -60,7 +61,7 @@ var control = function(clase) {
             $('#submitForm').unbind('click');
             $('#submitForm').click(function() {
                 viewSpecific(clase).okValidation(function(e) {
-                    resultado = objeto(clase).saveOne({json: JSON.stringify(viewSpecific(clase).getFormValues())});
+                    resultado = model(clase).saveOne({json: JSON.stringify(viewSpecific(clase).getFormValues())});
                     vista(clase).doResultOperationNotifyToUser(place, resultado["status"], "Se ha actualizado el registro con id=" + resultado["message"], resultado["message"], true);               
                     e.preventDefault();
                     return false;
@@ -69,14 +70,14 @@ var control = function(clase) {
         },
         remove: function(place, id) {
             $(place).empty();
-            var oDocumentoModel = objeto(clase);
+            var oDocumentoModel = model(clase);
             oDocumentoModel.loadAggregateViewOne(id);
-            $(place).append(vista(clase).getPanel("Borrado de " + objeto(clase).getName(), vista(clase).getObjectTable(oDocumentoModel.getCachedPrettyFieldNames(), oDocumentoModel.getCachedOne(), oDocumentoModel.getCachedFieldNames())));
+            $(place).append(vista(clase).getPanel("Borrado de " + model(clase).getName(), vista(clase).getObjectTable(oDocumentoModel.getCachedPrettyFieldNames(), oDocumentoModel.getCachedOne(), oDocumentoModel.getCachedFieldNames())));
             $(place).append('<div id=\"result\">¿Seguro que desea borrar el registro?</div>');
             $(place).append('<a class="btn btn-danger" id="btnBorrarSi" href="#">Sí, borrar</a>');
             $('#btnBorrarSi').unbind('click');
             $('#btnBorrarSi').click(function(event) {
-                resultado = objeto(clase).removeOne(id);
+                resultado = model(clase).removeOne(id);
                 vista(clase).doResultOperationNotifyToUser(place, resultado["status"],  resultado["message"], resultado["message"], false);
                 return false;
             });
@@ -84,24 +85,24 @@ var control = function(clase) {
         list: function(place, objParams, callback) {
             objParams = param().validateUrlObjectParameters(objParams);
             //get all data from server in one http call and store it in cache
-            var oDocumentoModel = objeto(clase);
+            var oDocumentoModel = model(clase);
             oDocumentoModel.loadAggregateViewSome(objParams);
             //get html template from server and show it
             if (callback) {
-                $(place).empty().append(vista(clase).getLoading()).html(vista(clase).getEmptyList());
+                $(place).empty().append(vista(clase).getSpinner()).html(vista(clase).getEmptyList());
             } else {
-                $(place).empty().append(vista(clase).getLoading()).html(vista(clase).getPanel("Listado de " + objeto(clase).getName(), vista(clase).getEmptyList()));
+                $(place).empty().append(vista(clase).getSpinner()).html(vista(clase).getPanel("Listado de " + model(clase).getName(), vista(clase).getEmptyList()));
             }
             //show page links pad
             var strUrlFromParamsWithoutPage = param().getUrlStringFromParamsObject(param().getUrlObjectFromParamsWithoutParamArray(objParams, ["page"]));
-            var url = 'jsp#/' + objeto(clase).getName() + '/list/' + strUrlFromParamsWithoutPage;
-            $("#pagination").empty().append(vista(clase).getLoading()).html(vista(clase).getPageLinks(url, parseInt(objParams["page"]), parseInt(oDocumentoModel.getCachedPages()), 2));
+            var url = 'jsp#/' + model(clase).getName() + '/list/' + strUrlFromParamsWithoutPage;
+            $("#pagination").empty().append(vista(clase).getSpinner()).html(vista(clase).getPageLinks(url, parseInt(objParams["page"]), parseInt(oDocumentoModel.getCachedPages()), 2));
             //visible fields select population, setting & event
-            $('#selectVisibleFields').empty().populateSelectBox(getIntegerArray(1, oDocumentoModel.getCachedCountFields()));
+            $('#selectVisibleFields').empty().populateSelectBox(util().getIntegerArray(1, oDocumentoModel.getCachedCountFields()));
             $("#selectVisibleFields").val(objParams["vf"]);
             $('#selectVisibleFields').unbind('change');
             $("#selectVisibleFields").change(function() {
-                window.location.href = "jsp#/" + objeto(clase).getName() + "/list/" + param().getUrlStringFromParamsObject(param().getUrlObjectFromParamsWithoutParamArray(objParams, ['vf'])) + "&vf=" + $("#selectVisibleFields option:selected").val();
+                window.location.href = "jsp#/" + model(clase).getName() + "/list/" + param().getUrlStringFromParamsObject(param().getUrlObjectFromParamsWithoutParamArray(objParams, ['vf'])) + "&vf=" + $("#selectVisibleFields option:selected").val();
                 return false;
             });
             //show the table
@@ -109,8 +110,8 @@ var control = function(clase) {
             var prettyFieldNames = oDocumentoModel.getCachedPrettyFieldNames();
             var strUrlFromParamsWithoutOrder = param().getUrlStringFromParamsObject(param().getUrlObjectFromParamsWithoutParamArray(objParams, ["order", "ordervalue"]));
             var page = oDocumentoModel.getCachedPage();
-            $("#tableHeaders").empty().append(vista(clase).getLoading()).html(vista(clase).getHeaderPageTable(prettyFieldNames, fieldNames, parseInt(objParams["vf"]), strUrlFromParamsWithoutOrder));
-            $("#tableBody").empty().append(vista(clase).getLoading()).html(function() {
+            $("#tableHeaders").empty().append(vista(clase).getSpinner()).html(vista(clase).getHeaderPageTable(prettyFieldNames, fieldNames, parseInt(objParams["vf"]), strUrlFromParamsWithoutOrder));
+            $("#tableBody").empty().append(vista(clase).getSpinner()).html(function() {
                 return vista(clase).getBodyPageTable(page, fieldNames, parseInt(objParams["vf"]), function(id) {
                     if (callback) {
                         var botonera = "";
@@ -125,9 +126,9 @@ var control = function(clase) {
                 });
             });
             //show information about the query
-            $("#registers").empty().append(vista(clase).getLoading()).html(vista(clase).getRegistersInfo(oDocumentoModel.getCachedRegisters()));
-            $("#order").empty().append(vista(clase).getLoading()).html(vista(clase).getOrderInfo(objParams));
-            $("#filter").empty().append(vista(clase).getLoading()).html(vista(clase).getFilterInfo(objParams));
+            $("#registers").empty().append(vista(clase).getSpinner()).html(vista(clase).getRegistersInfo(oDocumentoModel.getCachedRegisters()));
+            $("#order").empty().append(vista(clase).getSpinner()).html(vista(clase).getOrderInfo(objParams));
+            $("#filter").empty().append(vista(clase).getSpinner()).html(vista(clase).getFilterInfo(objParams));
             //regs per page links
             $('#nrpp').empty().append(vista(clase).getRppLinks(objParams));
             //filter population & event
@@ -137,7 +138,7 @@ var control = function(clase) {
                 filter = $("#selectFilter option:selected").val();
                 filteroperator = $("#selectFilteroperator option:selected").val();
                 filtervalue = $("#inputFiltervalue").val();
-                window.location.href = 'jsp#/' + objeto(clase).getName() + '/list/' + param().getUrlStringFromParamsObject(param().getUrlObjectFromParamsWithoutParamArray(objParams, ['filter', 'filteroperator', 'filtervalue'])) + "&filter=" + filter + "&filteroperator=" + filteroperator + "&filtervalue=" + filtervalue;
+                window.location.href = 'jsp#/' + model(clase).getName() + '/list/' + param().getUrlStringFromParamsObject(param().getUrlObjectFromParamsWithoutParamArray(objParams, ['filter', 'filteroperator', 'filtervalue'])) + "&filter=" + filter + "&filteroperator=" + filteroperator + "&filtervalue=" + filtervalue;
                 return false;
             });
         },
@@ -159,7 +160,7 @@ var control = function(clase) {
                 objParams["vf"] = $("#selectVisibleFields option:selected").val();
                 thisObject.list(place, objParams, callbackFunction);
                 thisObject.modalListEventsLoading(place, objParams, callbackFunction);
-                //window.location.href = "jsp#/" + objeto('documento').getName() + "/list/" + param().getUrlStringFromParamsObject(param().getUrlObjectFromParamsWithoutParamArray(objParams, ['vf'])) + "&vf=" + $("#selectVisibleFields option:selected").val();
+                //window.location.href = "jsp#/" + model('documento').getName() + "/list/" + param().getUrlStringFromParamsObject(param().getUrlObjectFromParamsWithoutParamArray(objParams, ['vf'])) + "&vf=" + $("#selectVisibleFields option:selected").val();
                 return false;
             });
             $('.rpp_link').unbind('click');
@@ -168,7 +169,7 @@ var control = function(clase) {
                 objParams["rpp"] = parseInt($(this).attr('id'));
                 thisObject.list(place, objParams, callbackFunction);
                 thisObject.modalListEventsLoading(place, objParams, callbackFunction);
-                //window.location.href = "jsp#/" + objeto('documento').getName() + "/list/" + param().getUrlStringFromParamsObject(param().getUrlObjectFromParamsWithoutParamArray(objParams, ['vf'])) + "&vf=" + $("#selectVisibleFields option:selected").val();
+                //window.location.href = "jsp#/" + model('documento').getName() + "/list/" + param().getUrlStringFromParamsObject(param().getUrlObjectFromParamsWithoutParamArray(objParams, ['vf'])) + "&vf=" + $("#selectVisibleFields option:selected").val();
                 return false;
                 //thisObject.inicia(pag, order, ordervalue, rpp, filter, filteroperator, filtervalue, callback, systemfilter, systemfilteroperator, systemfiltervalue);
             });
@@ -181,10 +182,10 @@ var control = function(clase) {
             } else {
 //                $('.btn.btn-default.action01').unbind('click');
 //                $('.btn.btn-default.action01').click(function() {
-//                    var oDocumentoModel = objeto('documento');
+//                    var oDocumentoModel = model('documento');
 //                    oDocumentoModel.loadAggregateViewOne($(this).attr('id'));
 //                    var content = vista('documento').getObjectTable(oDocumentoModel.getCachedPrettyFieldNames(), oDocumentoModel.getCachedOne(), oDocumentoModel.getCachedFieldNames());
-//                    loadModalView('#modal01', $(this).attr('id'), objeto('documento').getName(), content);
+//                    loadModalView('#modal01', $(this).attr('id'), model('documento').getName(), content);
 //                    return false;
 //                });
 //                $('.btn.btn-default.action02').unbind('click');
@@ -206,7 +207,7 @@ var control = function(clase) {
 //                filter = $("#selectFilter option:selected").val();
 //                filteroperator = $("#selectFilteroperator option:selected").val();
 //                filtervalue = $("#inputFiltervalue").val();
-//                window.location.href = 'jsp#/' + objeto('documento').getName() + '/list/' + param().getUrlStringFromParamsObject(param().getUrlObjectFromParamsWithoutParamArray(objParams, ['filter', 'filteroperator', 'filtervalue'])) + "&filter=" + filter + "&filteroperator=" + filteroperator + "&filtervalue=" + filtervalue;
+//                window.location.href = 'jsp#/' + model('documento').getName() + '/list/' + param().getUrlStringFromParamsObject(param().getUrlObjectFromParamsWithoutParamArray(objParams, ['filter', 'filteroperator', 'filtervalue'])) + "&filter=" + filter + "&filteroperator=" + filteroperator + "&filtervalue=" + filtervalue;
 //                return false;
                 objParams = param().getUrlObjectFromParamsWithoutParamArray(objParams, ["filter", "filteroperator", "filtervalue"]);
                 objParams["filter"] = $("#selectFilter option:selected").val();
@@ -214,7 +215,7 @@ var control = function(clase) {
                 objParams["filtervalue"] = $("#inputFiltervalue").val();
                 thisObject.list(place, objParams, callbackFunction);
                 thisObject.modalListEventsLoading(place, objParams, callbackFunction);
-                //window.location.href = "jsp#/" + objeto('documento').getName() + "/list/" + param().getUrlStringFromParamsObject(param().getUrlObjectFromParamsWithoutParamArray(objParams, ['vf'])) + "&vf=" + $("#selectVisibleFields option:selected").val();
+                //window.location.href = "jsp#/" + model('documento').getName() + "/list/" + param().getUrlStringFromParamsObject(param().getUrlObjectFromParamsWithoutParamArray(objParams, ['vf'])) + "&vf=" + $("#selectVisibleFields option:selected").val();
                 return false;
             });
 
@@ -225,7 +226,7 @@ var control = function(clase) {
                 objParams["ordervalue"] = "asc";
                 thisObject.list(place, objParams, callbackFunction);
                 thisObject.modalListEventsLoading(place, objParams, callbackFunction);
-                //window.location.href = "jsp#/" + objeto('documento').getName() + "/list/" + param().getUrlStringFromParamsObject(param().getUrlObjectFromParamsWithoutParamArray(objParams, ['vf'])) + "&vf=" + $("#selectVisibleFields option:selected").val();
+                //window.location.href = "jsp#/" + model('documento').getName() + "/list/" + param().getUrlStringFromParamsObject(param().getUrlObjectFromParamsWithoutParamArray(objParams, ['vf'])) + "&vf=" + $("#selectVisibleFields option:selected").val();
                 return false;
                 //thisObject.inicia(pag, order, ordervalue, rpp, filter, filteroperator, filtervalue, callback, systemfilter, systemfilteroperator, systemfiltervalue);
             });
@@ -237,7 +238,7 @@ var control = function(clase) {
                 objParams["ordervalue"] = "desc";
                 thisObject.list(place, objParams, callbackFunction);
                 thisObject.modalListEventsLoading(place, objParams, callbackFunction);
-                //window.location.href = "jsp#/" + objeto('documento').getName() + "/list/" + param().getUrlStringFromParamsObject(param().getUrlObjectFromParamsWithoutParamArray(objParams, ['vf'])) + "&vf=" + $("#selectVisibleFields option:selected").val();
+                //window.location.href = "jsp#/" + model('documento').getName() + "/list/" + param().getUrlStringFromParamsObject(param().getUrlObjectFromParamsWithoutParamArray(objParams, ['vf'])) + "&vf=" + $("#selectVisibleFields option:selected").val();
                 return false;
                 //thisObject.inicia(pag, order, ordervalue, rpp, filter, filteroperator, filtervalue, callback, systemfilter, systemfilteroperator, systemfiltervalue);
             });

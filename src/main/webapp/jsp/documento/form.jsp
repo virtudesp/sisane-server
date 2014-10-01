@@ -1,3 +1,21 @@
+<%-- 
+ Copyright (C) July 2014 Rafael Aznar
+
+ This program is free software; you can redistribute it and/or
+ modify it under the terms of the GNU General Public License
+ as published by the Free Software Foundation; either version 2
+ of the License, or (at your option) any later version.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with this program; if not, write to the Free Software
+ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+--%>
+
 <form class="form-horizontal" role="form" action="#" id="documentoForm" name="formulario">
     <div class="form-group">
         <label class="col-sm-2 control-label" for="id">Id:</label>
@@ -66,9 +84,6 @@
         <label class="col-sm-7" for="obj_usuario_desc" id="obj_usuario_desc"></label>                     
     </div>
 
-
-
-
     <div class="form-group">
         <label class="col-sm-2 control-label" for="obj_tipodocumento_id">Tipo de documento: </label> 
         <div class="col-sm-2">              
@@ -79,10 +94,6 @@
         </div>        
         <label class="col-sm-7" for="obj_usuario_desc" id="obj_tipodocumento_desc"></label>                     
     </div>
-
-
-
-
 
     <div class="form-group">
         <label class="col-sm-2 control-label"  for="etiquetas">Etiquetas:</label>
@@ -122,19 +133,10 @@
         </div>
     </div>
 
-
-
 </form>
 
-<div id="modal01" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header" id="modal-header"></div>
-            <div class="modal-body" id="modal-body"></div>
-            <div class="modal-footer" id="modal-footer"></div>
-        </div>
-    </div>
-</div>
+
+
 <script type="text/javascript">
 
     $(document).ready(function() {

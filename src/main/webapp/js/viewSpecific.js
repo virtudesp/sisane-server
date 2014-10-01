@@ -1,5 +1,5 @@
-/* 
- * Copyright (C) 2014 rafa
+/*
+ * Copyright (C) July 2014 Rafael Aznar
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -15,6 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
+
 
 //http://bootstrapvalidator.com/
 //https://github.com/Eonasdan/bootstrap-datetimepicker 
@@ -75,12 +76,14 @@ var viewSpecific = function(clase) {
                         $("#documentoForm").append(vista(clase).getEmptyModal());
                         util().loadForm('#modal01', vista('usuario').getFormHeader('Elección de usuario'), "", vista('usuario').getFormFooter(), true);
 
+                        $('#documentoForm').append(vista('documento').getEmptyModal());
+
                         oControl.list('#modal01 #modal-body', param().defaultizeUrlObjectParameters({}), true);
                         oControl.modalListEventsLoading('#modal01 #modal-body', param().defaultizeUrlObjectParameters({}), function(id) {
                             $('#obj_usuario_id').val(id).change();
-                            $('#obj_usuario_desc').text(decodeURIComponent(objeto('usuario').getMeAsAForeignKey(id)));
+                            $('#obj_usuario_desc').text(decodeURIComponent(model('usuario').getMeAsAForeignKey(id)));
                             $('#modal01').modal('hide');
-                           
+
                         });
                         return false;
                     });
@@ -91,12 +94,39 @@ var viewSpecific = function(clase) {
                         $("#documentoForm").append(vista(clase).getEmptyModal());
                         util().loadForm('#modal01', vista('tipodocumento').getFormHeader('Elección de tipo de documento'), "", vista('tipodocumento').getFormFooter(), true);
 
+                        $('#documentoForm').append(vista('documento').getEmptyModal());
+
                         oControl.list('#modal01 #modal-body', param().defaultizeUrlObjectParameters({}), true);
                         oControl.modalListEventsLoading('#modal01 #modal-body', param().defaultizeUrlObjectParameters({}), function(id) {
                             $('#obj_tipodocumento_id').val(id).change();
-                            $('#obj_tipodocumento_desc').text(decodeURIComponent(objeto('tipodocumento').getMeAsAForeignKey(id)));
+                            $('#obj_tipodocumento_desc').text(decodeURIComponent(model('tipodocumento').getMeAsAForeignKey(id)));
                             $('#modal01').modal('hide');
-                            
+
+                        });
+                        return false;
+                    });
+                    $('#contenido_button').unbind('click');
+                    $('#contenido_button').click(function() {
+                        //cabecera = '<button id="full-width" type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>' + '<h3 id="myModalLabel">Edición de contenidos</h3>';
+                        cabecera = vista('documento').getFormHeader('Edición de contenidos');
+                        //pie = '<button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="true">Cerrar</button>';                        
+                        pie = '<a class="btn btn-primary" href="http://creoleparser.googlecode.com/svn/trunk/creoleparser/test_pages/CheatSheetPlus.html">Sintaxis</a>';
+                        pie += vista('documento').getFormFooter();
+                        contenido = '<div class="row"><div class="col-md-6">';
+                        contenido += '<textarea type="text" id="contenidomodal" name="contenido" rows="20" cols="70" placeholder="contenido"></textarea>';
+                        contenido += '</div><div class="col-md-6"><div id="textoparseado"></div></div>';
+                        contenido += '</div>';
+
+                        $('#documentoForm').append(vista('documento').getEmptyModal());
+
+                        util().loadForm('#modal01', cabecera, contenido, pie, true);
+                        var texto = $('#contenido').val();
+                        $('#contenidomodal').val(texto);
+                        util().creoleParse(texto, $('#textoparseado'));
+                        $('#contenido').val($('#contenidomodal').val());
+                        $('#contenidomodal').keyup(function() {
+                            util().creoleParse($('#contenidomodal').val(), $('#textoparseado'));
+                            $('#contenido').val($('#contenidomodal').val());
                         });
                         return false;
                     });
@@ -110,9 +140,9 @@ var viewSpecific = function(clase) {
                 case 'documento':
                     var botonera = "";
                     botonera += '<div class="btn-toolbar" role="toolbar"><div class="btn-group btn-group-xs">';
-                    botonera += '<a class="btn btn-default view" id="' + id + '"  href="jsp#/' + objeto('documento').getName() + '/view/' + id + '"><i class="glyphicon glyphicon-eye-open"></i></a>';
-                    botonera += '<a class="btn btn-default edit" id="' + id + '"  href="jsp#/' + objeto('documento').getName() + '/edit/' + id + '"><i class="glyphicon glyphicon-pencil"></i></a>';
-                    botonera += '<a class="btn btn-default remove" id="' + id + '"  href="jsp#/' + objeto('documento').getName() + '/remove/' + id + '"><i class="glyphicon glyphicon-remove"></i></a>';
+                    botonera += '<a class="btn btn-default view" id="' + id + '"  href="jsp#/' + model('documento').getName() + '/view/' + id + '"><i class="glyphicon glyphicon-eye-open"></i></a>';
+                    botonera += '<a class="btn btn-default edit" id="' + id + '"  href="jsp#/' + model('documento').getName() + '/edit/' + id + '"><i class="glyphicon glyphicon-pencil"></i></a>';
+                    botonera += '<a class="btn btn-default remove" id="' + id + '"  href="jsp#/' + model('documento').getName() + '/remove/' + id + '"><i class="glyphicon glyphicon-remove"></i></a>';
                     botonera += '</div></div>';
                     return botonera;
                     break;

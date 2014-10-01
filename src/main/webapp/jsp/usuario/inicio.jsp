@@ -1,17 +1,15 @@
 <div class="jumbotron">
-    <h1>Bienvenidos a ajax yield 2014</h1>
-    <h3>Versión (v.01) de 17/1/2014</h3>
-    <h5>Desarrollo de aplicaciones web. CPIFP Ausiàs March. Curso 2013-2014.</h5>    
+    <h1>Bienvenidos a openAusias 2014</h1>
+    <h3>Versión (v.02) de 1/10/2014</h3>
+    <h5>Desarrollo de aplicaciones web. CPIFP Ausiàs March. Curso 2014-2015</h5>    
 </div>
 <div class="row">
     <div class="col-md-8">
         <div class="row">
             <div class="col-md-6">
-                <h3>¿Qué es ajax stock?</h3>
+                <h3>¿Qué es openAusias?</h3>
                 <p>Es una aplicación didáctica para aprender a organizar y desarrollar 
-                    aplicaciones AJAX. Se trata de un proyecto que  
-                    construimos durante la segunda evaluación de los módulos DES-DEC 
-                    del ciclo formativo DAW. Está pensado para soportar mantenimientos 
+                    aplicaciones AJAX. Está pensado para soportar mantenimientos 
                     CRUDL (create remove update delete list).</p>
             </div>
             <div class="col-md-6">
@@ -25,13 +23,13 @@
         <div class="row">    
             <div class="col-md-6">
                 <h3>¿Quién la ha desarrollado?</h3>
-                <p>La han desarrollado los alumnos de DAW del CPIFP Ausiàs March de Valencia (Spain).
-                    El profesor del módulo es Rafael Aznar.
-                    Puedes contactar en raznar at ausasmarch dot net.</p>
+                <p>La ha desarrollado Rafael Aznar,
+                    profesor de DAW en el CPIFP Ausiàs March de Valencia (Spain).
+                    Puedes contactar en raznar {at} ausiasmarch {dot} net.</p>
             </div> 
             <div class="col-md-6">
                 <h3>¿Qué licencia tiene?</h3>
-                <p>La he liberado con licencia <a href="http://www.gnu.org/licenses/fdl-1.3.html">GNU Free Documentation License 1.3</a></p>
+                <p>La he liberado con licencia <a href="http://www.gnu.org/licenses/gpl-2.0.html">GNU General Public License, version 2</a></p>
             </div>
 
         </div>
@@ -50,25 +48,5 @@
             <li>Ajax Stock soporta Relaciones 1:M</li>
             <li>Ajax Stock soporta Relaciones M:M</li>
         </ul>
-    </div>
-</div>
-<div class="row">
-    <div class="col-md-12">
-        <h3>Alumnos que han participado en el proyecto</h3>
-        BENITO SORIA, PEDRO JOSÉ -
-        BONET CEREZUELA, JAVIER -
-        CREGO TAPIA, ÁLVARO -
-        ESLAVA BARRERA, JORGE -
-        GIMENO GILABERT, ENRIQUE -
-        GRANCHA BONORA, JOSÉ -
-        MARTÍN MOLINA, CRISTINA -
-        MARTÍN TÁRRAGA, SERGIO -
-        MEMBRILLAS BELENGUER, EDUARDO -
-        NAVARRO PERIS, ANTONIO -
-        ORTEGA ORTEGA, DIANA -
-        PÉREZ GODESART, JUAN -
-        RODRÍGUEZ SERRA, DANIEL -
-        SEGOVIA LEÓN, JACOBO -
-        TAMARIT MARTÍNEZ, SALVADOR 
     </div>
 </div>

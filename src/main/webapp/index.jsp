@@ -1,27 +1,22 @@
 <%-- 
-/* 
- * 
- * Created on: June, 2014
- * Created by: Rafel Aznar (rafaaznar{at}gmail.com)
- * 
- * Copyright (C) 
- * 
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License
- * as published by the Free Software Foundation; either version 2
- * of the License, or (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
- *
- */
+ Copyright (C) July 2014 Rafael Aznar
+
+ This program is free software; you can redistribute it and/or
+ modify it under the terms of the GNU General Public License
+ as published by the Free Software Foundation; either version 2
+ of the License, or (at your option) any later version.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with this program; if not, write to the Free Software
+ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 --%>
+
+
 <%@page import="net.daw.bean.implementation.UsuarioBeanImpl"%>
 <%UsuarioBeanImpl user = (UsuarioBeanImpl) request.getSession().getAttribute("usuarioBean");%>
 
@@ -40,7 +35,7 @@
         <meta name="viewport" content="width=device-width">
         <link rel="stylesheet" href="css/bootstrap.min.css">
         <link rel="stylesheet" href="css/main.css">
-        <link rel="stylesheet" href="css/jquery-ui.css">
+        <!-- <link rel="stylesheet" href="css/jquery-ui.css"> -->
         <link rel="stylesheet" href="css/animate.css">
         <link rel="stylesheet" href="css/bootstrapValidator.min.css">
         <link rel="stylesheet" href="css/bootstrap-datetimepicker.min.css"  />
@@ -125,7 +120,7 @@
         <script type="text/javascript"  src="./js/vendor/moment.js"></script>
         <script type="text/javascript"  src="./js/vendor/moment.locale.es.js"></script>
         <script type="text/javascript"  src="./js/vendor/bootstrap-datetimepicker.min.js"></script>
-        
+
         <script type="text/javascript"  src="./js/vendor/path.min.js"></script> 
         <script type="text/javascript"  src="./js/vendor/bootstrapValidator.min.js"></script>
         <script type="text/javascript"  src="./js/vendor/language/es_ES.js"></script>
@@ -142,7 +137,7 @@
         <script src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
         -->
 
-
+        
         <script src="js/util.js" charset="UTF-8"></script>
         <script src="js/model.js" charset="UTF-8"></script>
         <script src="js/view.js" charset="UTF-8"></script>
@@ -151,15 +146,10 @@
         <script src="js/param.js" charset="UTF-8"></script>
         <script src="js/ajax.js" charset="UTF-8"></script>
         <script src="js/control.js" charset="UTF-8"></script> 
+        <script src="js/initialization.js" charset="UTF-8"></script>
         
-        
-        <script src="js/control/tipodocumento.js" charset="UTF-8"></script>
-
-
 
         <script type="text/javascript">
-
-
 
             var path = '<%=request.getContextPath()%>';
 
@@ -171,7 +161,7 @@
 
                 inicializacion();
                 do_routes();
-
+                Path.listen();
 
             });
 
