@@ -15,15 +15,12 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-
 package net.daw.dao.publicinterface;
 
 public interface TableDaoInterface<GenericBeanImplementation> {
 
     public GenericBeanImplementation set(GenericBeanImplementation oBean) throws Exception;
 
-    public void remove(GenericBeanImplementation oBean) throws Exception;
-
-
+    public int remove(GenericBeanImplementation oBean) throws Exception;
 
 }

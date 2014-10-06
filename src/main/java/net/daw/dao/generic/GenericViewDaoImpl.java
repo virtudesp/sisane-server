@@ -32,21 +32,11 @@ import java.util.Locale;
 import net.daw.bean.generic.GenericBeanImpl;
 import net.daw.helper.FilterBean;
 
-public class GenericViewDaoImpl<TIPO_OBJETO>  extends GenericMetaDaoImpl<TIPO_OBJETO>   implements ViewDaoInterface<TIPO_OBJETO>, MetaDaoInterface {
+public class GenericViewDaoImpl<TIPO_OBJETO> extends GenericMetaDaoImpl<TIPO_OBJETO> implements ViewDaoInterface<TIPO_OBJETO>, MetaDaoInterface {
 
     public GenericViewDaoImpl(String view, Connection pooledConnection) throws Exception {
         super(view, pooledConnection);
     }
-
-    //protected final DataImpl oMysql;
-    //protected final String strView;
-    //protected Connection connection = null;
-
-//    public GenericImplDaoView(String view, Connection pooledConnection) throws Exception {
-//        connection = pooledConnection;
-//        strView = view;
-//        oMysql = new DataImpl(connection);
-//    }
 
     @Override
     public int getPages(int intRegsPerPag, ArrayList<FilterBean> hmFilter) throws Exception {
@@ -55,7 +45,7 @@ public class GenericViewDaoImpl<TIPO_OBJETO>  extends GenericMetaDaoImpl<TIPO_OB
             pages = oMysql.getPages(strView, intRegsPerPag, hmFilter);
             return pages;
         } catch (Exception e) {
-            throw new Exception("GenericDao.getPages: Error: " + e.getMessage());
+            throw new Exception("GenericViewDaoImpl.getPages: Error: " + e.getMessage());
         }
     }
 
@@ -66,7 +56,7 @@ public class GenericViewDaoImpl<TIPO_OBJETO>  extends GenericMetaDaoImpl<TIPO_OB
             pages = oMysql.getCount(strView, hmFilter);
             return pages;
         } catch (Exception e) {
-            throw new Exception("GenericDao.getCount: Error: " + e.getMessage());
+            throw new Exception("GenericViewDaoImpl.getCount: Error: " + e.getMessage());
         }
 
     }
@@ -87,7 +77,7 @@ public class GenericViewDaoImpl<TIPO_OBJETO>  extends GenericMetaDaoImpl<TIPO_OB
             }
             return arrCliente;
         } catch (Exception e) {
-            throw new Exception("GenericDao.getPage: Error: " + e.getMessage());
+            throw new Exception("GenericViewDaoImpl.getPage: Error: " + e.getMessage());
         }
 
     }
@@ -174,7 +164,7 @@ public class GenericViewDaoImpl<TIPO_OBJETO>  extends GenericMetaDaoImpl<TIPO_OB
     }
 
     @Override
-    public TIPO_OBJETO get(TIPO_OBJETO oBean) throws Exception  {
+    public TIPO_OBJETO get(TIPO_OBJETO oBean) throws Exception {
         Class<TIPO_OBJETO> tipo = (Class<TIPO_OBJETO>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
         Method metodo_getId = tipo.getMethod("getId");
         Method metodo_setId = tipo.getMethod("setId", Integer.class);
@@ -187,7 +177,7 @@ public class GenericViewDaoImpl<TIPO_OBJETO>  extends GenericMetaDaoImpl<TIPO_OB
                     oBean = fillForeign(oBean, tipo);
                 }
             } catch (Exception e) {
-                throw new Exception("GenericDao.get: Error: " + e.getMessage());
+                throw new Exception("GenericViewDaoImpl.get: Error: " + e.getMessage());
             }
         } else {
             metodo_setId.invoke(oBean, 0);
@@ -202,7 +192,7 @@ public class GenericViewDaoImpl<TIPO_OBJETO>  extends GenericMetaDaoImpl<TIPO_OB
         try {
             alColumns = oMysql.getColumnsName(strView);
         } catch (Exception e) {
-            throw new Exception("GenericDao.getColumnsNames: Error: " + e.getMessage());
+            throw new Exception("GenericViewDaoImpl.getColumnsNames: Error: " + e.getMessage());
         }
         return alColumns;
     }
@@ -213,7 +203,7 @@ public class GenericViewDaoImpl<TIPO_OBJETO>  extends GenericMetaDaoImpl<TIPO_OB
         try {
             alColumns = oMysql.getPrettyColumns(strView);
         } catch (Exception e) {
-            throw new Exception("GenericDao.getPrettyColumnsNames: Error: " + e.getMessage());
+            throw new Exception("GenericViewDaoImpl.getPrettyColumnsNames: Error: " + e.getMessage());
         }
         return alColumns;
     }

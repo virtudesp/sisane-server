@@ -29,10 +29,14 @@ public class GenericMetaDaoImpl<TIPO_OBJETO> implements MetaDaoInterface {
     protected Connection connection = null;
 
     public GenericMetaDaoImpl(String view, Connection pooledConnection) throws Exception {
-        connection = pooledConnection;
-        strView = view;
-        oMysql = new MysqlDataImpl(connection);
-    }    
+        try {
+            connection = pooledConnection;
+            strView = view;
+            oMysql = new MysqlDataImpl(connection);
+        } catch (Exception e) {
+            throw new Exception("GenericMetaDaoImpl.constructor: Error: " + e.getMessage());
+        }
+    }
 
     @Override
     public ArrayList<String> getColumnsNames() throws Exception {
@@ -40,7 +44,7 @@ public class GenericMetaDaoImpl<TIPO_OBJETO> implements MetaDaoInterface {
         try {
             alColumns = oMysql.getColumnsName(strView);
         } catch (Exception e) {
-            throw new Exception("GenericDao.getColumnsNames: Error: " + e.getMessage());
+            throw new Exception("GenericMetaDaoImpl.getColumnsNames: Error: " + e.getMessage());
         }
         return alColumns;
     }
@@ -51,7 +55,7 @@ public class GenericMetaDaoImpl<TIPO_OBJETO> implements MetaDaoInterface {
         try {
             alColumns = oMysql.getPrettyColumns(strView);
         } catch (Exception e) {
-            throw new Exception("GenericDao.getPrettyColumnsNames: Error: " + e.getMessage());
+            throw new Exception("GenericMetaDaoImpl.getPrettyColumnsNames: Error: " + e.getMessage());
         }
         return alColumns;
     }
