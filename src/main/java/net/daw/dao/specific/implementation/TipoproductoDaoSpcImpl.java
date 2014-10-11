@@ -93,10 +93,10 @@ public class TipoproductoDaoSpcImpl implements ViewDaoInterface<ProductoBeanImpl
                 if (!oMysql.existsOne("producto", oProductoBean.getId())) {
                     oProductoBean.setId(0);
                 } else {
-                    oProductoBean.setCodigo(oMysql.getOneFromTable(strTableName, "codigo", oProductoBean.getId()));
-                    oProductoBean.setDescripcion(oMysql.getOneFromTable(strTableName, "descripcion", oProductoBean.getId()));
-                    oProductoBean.setPrecio(Double.parseDouble(oMysql.getOneFromTable(strTableName, "precio", oProductoBean.getId())));
-                    oProductoBean.setId_tipoProducto(Integer.parseInt(oMysql.getOneFromTable(strTableName, "id_tipoproducto", oProductoBean.getId())));
+                    oProductoBean.setCodigo(oMysql.getOne(strTableName, "codigo", oProductoBean.getId()));
+                    oProductoBean.setDescripcion(oMysql.getOne(strTableName, "descripcion", oProductoBean.getId()));
+                    oProductoBean.setPrecio(Double.parseDouble(oMysql.getOne(strTableName, "precio", oProductoBean.getId())));
+                    oProductoBean.setId_tipoProducto(Integer.parseInt(oMysql.getOne(strTableName, "id_tipoproducto", oProductoBean.getId())));
                 }
             } catch (Exception e) {
                 throw new Exception(strClassName + ".get: Error: " + e.getMessage());

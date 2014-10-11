@@ -146,7 +146,7 @@ public class MysqlDataImpl implements DataInterface {
     }
 
     @Override
-    public String getOneFromTable(String strTabla, String strCampo, int id) throws Exception {
+    public String getOne(String strTabla, String strCampo, int id) throws Exception {
         PreparedStatement oPreparedStatement = null;
         ResultSet oResultSet;
         try {
@@ -169,26 +169,26 @@ public class MysqlDataImpl implements DataInterface {
         }
     }
 
-    @Override
-    public String getOneFromSql(String strSQL) throws Exception {
-        Statement oStatement = null;
-        ResultSet oResultSet;
-        try {
-            oResultSet = oStatement.executeQuery(strSQL);
-            if (oResultSet.next()) {
-                return oResultSet.getString("strvalue");
-            } else {
-                return null;
-            }
-        } catch (SQLException ex) {
-            throw new Exception("mysql.getOne: No se ha podido realizar la consulta: " + ex.getMessage());
-        } finally {
-            if (oStatement != null) {
-                oStatement.close();
-            }
-
-        }
-    }
+//    @Override
+//    public String getOneFromSql(String strSQL) throws Exception {
+//        Statement oStatement = null;
+//        ResultSet oResultSet;
+//        try {
+//            oResultSet = oStatement.executeQuery(strSQL);
+//            if (oResultSet.next()) {
+//                return oResultSet.getString("strvalue");
+//            } else {
+//                return null;
+//            }
+//        } catch (SQLException ex) {
+//            throw new Exception("mysql.getOne: No se ha podido realizar la consulta: " + ex.getMessage());
+//        } finally {
+//            if (oStatement != null) {
+//                oStatement.close();
+//            }
+//
+//        }
+//    }
 
     @Override
     public Boolean existsOne(String strTabla, int id) throws Exception {

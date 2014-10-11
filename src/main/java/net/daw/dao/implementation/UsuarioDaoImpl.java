@@ -37,7 +37,7 @@ public class UsuarioDaoImpl extends GenericTableDaoImpl<UsuarioBeanImpl> {
                 Integer intId = Integer.parseInt(strId);
                 oUsuario.setId(intId);
                 String pass = oUsuario.getPassword();
-                oUsuario.setPassword(oMysql.getOneFromTable("usuario", "password", oUsuario.getId()));
+                oUsuario.setPassword(oMysql.getOne("usuario", "password", oUsuario.getId()));
                 if (!pass.equals(oUsuario.getPassword())) {
                     oUsuario.setId(0);
                 }

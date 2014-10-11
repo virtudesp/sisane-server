@@ -15,7 +15,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-
 package net.daw.data.publicinterface;
 
 import java.sql.SQLException;
@@ -23,24 +22,23 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import net.daw.helper.FilterBean;
 
-
 public interface DataInterface {
 
-    public int removeOne(int intId, String strTabla) throws Exception;
+    public ArrayList<String> getColumnsName(String strTabla) throws Exception;
 
-    public int insertOne(String strTabla) throws Exception;
+    public ArrayList<String> getPrettyColumns(String strTabla) throws Exception;
 
-    public int setNull(int intId, String strTabla, String strCampo) throws Exception;
-
-    public int updateOne(int intId, String strTabla, String strCampo, String strValor) throws Exception;
+    public Boolean existsOne(String strTabla, int id) throws Exception;
 
     public String getId(String strTabla, String strCampo, String strValor) throws Exception;
 
-    public String getOneFromTable(String strTabla, String strCampo, int id) throws Exception;
-    
-    public String getOneFromSql(String strSQL) throws Exception;
+    public String getOne(String strTabla, String strCampo, int id) throws Exception;
 
-    public Boolean existsOne(String strTabla, int id) throws Exception;
+    public int setNull(int intId, String strTabla, String strCampo) throws Exception;
+
+    public int insertOne(String strTabla) throws Exception;
+
+    public int updateOne(int intId, String strTabla, String strCampo, String strValor) throws Exception;
 
     public int getPages(String strTabla, int intRegsPerPage, ArrayList<FilterBean> alFilter) throws Exception;
 
@@ -48,12 +46,11 @@ public interface DataInterface {
 
     public ArrayList<Integer> getPage(String strTabla, int intRegsPerPage, int intPagina, ArrayList<FilterBean> alFilter, HashMap<String, String> hmOrder) throws Exception;
 
-    public ArrayList<String> getColumnsName(String strTabla) throws Exception;
-
-    public ArrayList<String> getPrettyColumns(String strTabla) throws Exception;
+    public int removeOne(int intId, String strTabla) throws Exception;
 
     public void removeSomeId(String strTabla, ArrayList<Integer> Ids) throws SQLException;
 
     public void removeSomeCondition(String strTabla, String campo, String valor) throws Exception;
 
+    //public String getOneFromSql(String strSQL) throws Exception;
 }
