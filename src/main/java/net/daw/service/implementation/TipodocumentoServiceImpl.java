@@ -17,7 +17,7 @@
  */
 package net.daw.service.implementation;
 
-import net.daw.service.generic.GenericTableServiceImpl;
+import net.daw.service.generic.implementation.GenericTableServiceImpl;
 import java.sql.Connection;
 
 public class TipodocumentoServiceImpl extends GenericTableServiceImpl {

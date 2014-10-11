@@ -25,7 +25,7 @@ import net.daw.bean.implementation.ProductoBeanImpl;
 import net.daw.dao.publicinterface.MetaDaoInterface;
 import net.daw.dao.publicinterface.TableDaoInterface;
 import net.daw.dao.publicinterface.ViewDaoInterface;
-import net.daw.data.implementation.MysqlDataImpl;
+import net.daw.data.specific.implementation.MysqlDataImpl;
 import net.daw.helper.FilterBean;
 
 public class TipoproductoDaoSpcImpl implements ViewDaoInterface<ProductoBeanImpl>, TableDaoInterface<ProductoBeanImpl>, MetaDaoInterface {

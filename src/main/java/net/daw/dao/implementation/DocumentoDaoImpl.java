@@ -18,7 +18,7 @@
 
 package net.daw.dao.implementation;
 
-import net.daw.dao.generic.GenericTableDaoImpl;
+import net.daw.dao.generic.implementation.GenericTableDaoImpl;
 import java.sql.Connection;
 import net.daw.bean.implementation.DocumentoBeanImpl;
 

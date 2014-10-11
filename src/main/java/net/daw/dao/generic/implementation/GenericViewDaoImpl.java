@@ -15,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-package net.daw.dao.generic;
+package net.daw.dao.generic.implementation;
 
 import net.daw.dao.publicinterface.ViewDaoInterface;
 import net.daw.dao.publicinterface.MetaDaoInterface;
@@ -29,7 +29,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Locale;
-import net.daw.bean.generic.GenericBeanImpl;
+import net.daw.bean.generic.implementation.GenericBeanImpl;
 import net.daw.helper.FilterBean;
 
 public class GenericViewDaoImpl<TIPO_OBJETO> extends GenericMetaDaoImpl<TIPO_OBJETO> implements ViewDaoInterface<TIPO_OBJETO>, MetaDaoInterface {

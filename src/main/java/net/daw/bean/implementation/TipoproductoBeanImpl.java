@@ -17,7 +17,7 @@
  */
 package net.daw.bean.implementation;
 
-import net.daw.bean.generic.GenericBeanImpl;
+import net.daw.bean.generic.implementation.GenericBeanImpl;
 import net.daw.bean.publicinterface.BeanInterface;
 
 public class TipoproductoBeanImpl extends GenericBeanImpl implements BeanInterface {

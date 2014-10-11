@@ -15,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-package net.daw.service.generic;
+package net.daw.service.generic.implementation;
 
 import net.daw.service.publicinterface.ViewServiceInterface;
 import net.daw.service.publicinterface.TableServiceInterface;
@@ -27,9 +27,9 @@ import java.sql.Connection;
 import java.util.HashMap;
 import java.util.Map;
 import javax.servlet.ServletException;
-import net.daw.bean.generic.GenericBeanImpl;
+import net.daw.bean.generic.implementation.GenericBeanImpl;
 import net.daw.bean.publicinterface.BeanInterface;
-import net.daw.dao.generic.GenericTableDaoImpl;
+import net.daw.dao.generic.implementation.GenericTableDaoImpl;
 
 public abstract class GenericTableServiceImpl extends GenericViewServiceImpl implements TableServiceInterface, ViewServiceInterface, MetaServiceInterface {
 

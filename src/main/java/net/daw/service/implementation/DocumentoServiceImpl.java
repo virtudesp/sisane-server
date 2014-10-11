@@ -18,7 +18,7 @@
 
 package net.daw.service.implementation;
 
-import net.daw.service.generic.GenericTableServiceImpl;
+import net.daw.service.generic.implementation.GenericTableServiceImpl;
 import java.sql.Connection;
 import javax.servlet.ServletException;
 import net.daw.bean.implementation.DocumentoBeanImpl;

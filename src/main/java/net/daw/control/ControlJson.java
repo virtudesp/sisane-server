@@ -15,7 +15,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-
 package net.daw.control;
 
 import com.google.gson.Gson;
@@ -34,8 +33,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import net.daw.conexion.implementation.BoneConnectionPoolImpl;
 import net.daw.conexion.publicinterface.GenericConnectionInterface;
+import net.daw.control.generic.implementation.GenericControlImpl;
+import net.daw.control.process.implementation.DocumentoProcessImplementation;
 import net.daw.helper.FilterBean;
-import net.daw.service.generic.GenericTableServiceImpl;
+import net.daw.service.generic.implementation.GenericTableServiceImpl;
 
 /**
  *
@@ -55,133 +56,20 @@ public class ControlJson extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, Exception {
-        GenericConnectionInterface DataConnectionSource = null;
-        Connection connection = null;
-
         try {
             try {
                 Class.forName("com.mysql.jdbc.Driver");
             } catch (Exception e) {
                 e.printStackTrace();
                 return;
-            }
-
-            DataConnectionSource = new BoneConnectionPoolImpl();
-            connection = DataConnectionSource.newConnection();
-
+            }       
             //----------------------------------------------------------------------          
             retardo(0); //debug delay
-            // get parameters
-            String operation = request.getParameter("op");
-            String object = request.getParameter("ob");
-            // prepare parameters
-
-            //DocumentoProcess p=new DocumentoProcess("ff",connection);
-            String jsonResult = "";
-            // create generic class to serve the request
-            Constructor oConstructor = Class.forName("net.daw.service.implementation." + Character.toUpperCase(object.charAt(0)) + object.substring(1) + "ServiceImpl").getConstructor(Connection.class);
-            GenericTableServiceImpl process = (GenericTableServiceImpl) oConstructor.newInstance(connection);
-            // serve the request and get json result into datos
-            if (request.getSession().getAttribute("usuarioBean") != null || ("documento".equals(object))) {
-                switch (operation) {
-                    case "get":
-                        jsonResult = process.get(Integer.parseInt(request.getParameter("id")));
-                        break;
-                    case "getaggregateviewone":
-                        jsonResult = process.getAggregateViewOne(Integer.parseInt(request.getParameter("id")));
-                        break;
-                    case "getprettycolumns":
-                        jsonResult = process.getPrettyColumns();
-                        break;
-                    case "getcolumns":
-                        jsonResult = process.getColumns();
-                        break;
-                    case "getpage":
-                    case "getpages":
-                    case "getregisters":
-                    case "getaggregateviewsome":
-                        int intRegsPerPag;
-                        if (request.getParameter("rpp") == null) {
-                            intRegsPerPag = 10;
-                        } else {
-                            intRegsPerPag = Integer.parseInt(request.getParameter("rpp"));
-                        }
-                        int intPage;
-                        if (request.getParameter("page") == null) {
-                            intPage = 1;
-                        } else {
-                            intPage = Integer.parseInt(request.getParameter("page"));
-                        }
-                        ArrayList<FilterBean> alFilter = new ArrayList<>();
-                        if (request.getParameter("filter") != null) {
-                            if (request.getParameter("filteroperator") != null) {
-                                if (request.getParameter("filtervalue") != null) {
-                                    FilterBean oFilterBean = new FilterBean();
-                                    oFilterBean.setFilter(request.getParameter("filter"));
-                                    oFilterBean.setFilterOperator(request.getParameter("filteroperator"));
-                                    oFilterBean.setFilterValue(request.getParameter("filtervalue"));
-                                    oFilterBean.setFilterOrigin("user");
-                                    alFilter.add(oFilterBean);
-                                }
-                            }
-                        }
-                        if (request.getParameter("systemfilter") != null) {
-                            if (request.getParameter("systemfilteroperator") != null) {
-                                if (request.getParameter("systemfiltervalue") != null) {
-                                    FilterBean oFilterBean = new FilterBean();
-                                    oFilterBean.setFilter(request.getParameter("systemfilter"));
-                                    oFilterBean.setFilterOperator(request.getParameter("systemfilteroperator"));
-                                    oFilterBean.setFilterValue(request.getParameter("systemfiltervalue"));
-                                    oFilterBean.setFilterOrigin("system");
-                                    alFilter.add(oFilterBean);
-                                }
-                            }
-                        }
-                        if ("getpage".equals(operation) || "getaggregateviewsome".equals(operation)) {
-                            HashMap<String, String> hmOrder = new HashMap<>();
-                            if (request.getParameter("order") != null) {
-                                if (request.getParameter("ordervalue") != null) {
-                                    hmOrder.put(request.getParameter("order"), request.getParameter("ordervalue"));
-                                } else {
-                                    hmOrder = null;
-                                }
-                            } else {
-                                hmOrder = null;
-                            }
-                            if ("getpage".equals(operation)) {
-                                jsonResult = process.getPage(intRegsPerPag, intPage, alFilter, hmOrder);
-                            } else {
-                                jsonResult = process.getAggregateViewSome(intRegsPerPag, intPage, alFilter, hmOrder);
-                            }
-                        } else {
-                            if ("getpages".equals(operation)) {
-                                jsonResult = process.getPages(intRegsPerPag, alFilter);
-                            } else {
-                                if ("getregisters".equals(operation)) {
-                                    jsonResult = process.getCount(alFilter);
-                                }
-                            }
-                        }
-                        break;
-                    case "remove":
-                        //if (request.getSession().getAttribute("usuarioBean") != null) {
-                        jsonResult = process.remove(Integer.parseInt(request.getParameter("id")));
-                        //}
-                        break;
-                    case "save":
-                        //if (request.getSession().getAttribute("usuarioBean") != null) {
-                        //String jason = TextParser.textDecode(request.getParameter("json"));
-                        String jason = request.getParameter("json").replaceAll("%2F", "/");
-                        jsonResult = process.save(jason);
-                        //}
-                        break;
-                    default:
-                        Map<String, String> data = new HashMap<>();
-                        data.put("status", "401");
-                        data.put("message", "error de operación");
-                        Gson gson = new GsonBuilder().setDateFormat("dd/MM/yyyy").create();
-                        jsonResult = gson.toJson(data);
-                        break;
+            String jsonResult = "";       
+            if (request.getSession().getAttribute("usuarioBean") != null) {
+                if ("documento".equals(request.getParameter("ob"))) {                                                            
+                    DocumentoProcessImplementation oDocumentoProcess = new DocumentoProcessImplementation();
+                    jsonResult=oDocumentoProcess.execute(request);                    
                 }
             }
             //send the result to the client
@@ -191,10 +79,7 @@ public class ControlJson extends HttpServlet {
             Logger.getLogger(ControlJson.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             //important to close connection
-            if (connection != null) {
-                connection.close();
-            }
-            DataConnectionSource.disposeConnection();
+    
         }
     }
 

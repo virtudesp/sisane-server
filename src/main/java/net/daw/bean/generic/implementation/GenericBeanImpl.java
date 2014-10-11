@@ -15,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-package net.daw.bean.generic;
+package net.daw.bean.generic.implementation;
 
 import net.daw.bean.publicinterface.BeanInterface;
 import com.google.gson.annotations.Expose;

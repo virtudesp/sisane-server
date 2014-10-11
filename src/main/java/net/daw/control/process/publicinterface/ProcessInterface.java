@@ -15,16 +15,13 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-package net.daw.dao.implementation;
+package net.daw.control.process.publicinterface;
 
-import net.daw.dao.generic.implementation.GenericTableDaoImpl;
-import java.sql.Connection;
-import net.daw.bean.implementation.TipodocumentoBeanImpl;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
-public class TipodocumentoDaoImpl extends GenericTableDaoImpl<TipodocumentoBeanImpl> {
+public interface ProcessInterface {
 
-    public TipodocumentoDaoImpl(Connection pooledConnection) throws Exception {
-        super("tipodocumento", pooledConnection);
-    }
+    public abstract String execute(HttpServletRequest request) throws Exception;
 
 }

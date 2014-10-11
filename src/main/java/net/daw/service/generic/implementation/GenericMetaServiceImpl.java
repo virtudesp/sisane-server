@@ -16,7 +16,7 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
-package net.daw.service.generic;
+package net.daw.service.generic.implementation;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -24,7 +24,7 @@ import java.lang.reflect.Constructor;
 import java.sql.Connection;
 import java.util.ArrayList;
 import javax.servlet.ServletException;
-import net.daw.dao.generic.GenericTableDaoImpl;
+import net.daw.dao.generic.implementation.GenericTableDaoImpl;
 import net.daw.service.publicinterface.MetaServiceInterface;
 
 
