@@ -17,26 +17,14 @@
  */
 package net.daw.control;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import java.io.IOException;
-import java.lang.reflect.Constructor;
-import java.sql.Connection;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import net.daw.conexion.implementation.BoneConnectionPoolImpl;
-import net.daw.conexion.publicinterface.GenericConnectionInterface;
-import net.daw.control.operation.generic.implementation.GenericControlOperationImpl;
 import net.daw.control.process.specific.implementation.DocumentoControlProcessSpecificImplementation;
-import net.daw.helper.FilterBean;
-import net.daw.service.generic.implementation.GenericTableServiceImpl;
 
 /**
  *
