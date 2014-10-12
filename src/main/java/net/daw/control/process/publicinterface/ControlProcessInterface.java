@@ -20,7 +20,7 @@ package net.daw.control.process.publicinterface;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public interface ProcessInterface {
+public interface ControlProcessInterface {
 
     public abstract String execute(HttpServletRequest request) throws Exception;
 

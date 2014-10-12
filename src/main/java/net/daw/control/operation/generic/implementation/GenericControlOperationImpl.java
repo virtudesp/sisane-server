@@ -15,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-package net.daw.control.generic.implementation;
+package net.daw.control.operation.generic.implementation;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -24,20 +24,20 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import javax.servlet.http.HttpServletRequest;
-import net.daw.control.publicinterface.GenericControlInterface;
+import net.daw.control.operation.publicinterface.ControlOperationInterface;
 import net.daw.service.generic.implementation.GenericTableServiceImpl;
 import net.daw.conexion.implementation.BoneConnectionPoolImpl;
 import net.daw.conexion.publicinterface.GenericConnectionInterface;
 import net.daw.helper.FilterBean;
 
-public class GenericControlImpl implements GenericControlInterface {
+public class GenericControlOperationImpl implements ControlOperationInterface {
 
     private GenericConnectionInterface DataConnectionSource = null;
     private Connection connection = null;
     private final String operation, object;
     private final GenericTableServiceImpl process;
 
-    public GenericControlImpl(HttpServletRequest request) throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+    public GenericControlOperationImpl(HttpServletRequest request) throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
         DataConnectionSource = new BoneConnectionPoolImpl();
         connection = DataConnectionSource.newConnection();
         operation = request.getParameter("op");

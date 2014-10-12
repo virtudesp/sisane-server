@@ -33,8 +33,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import net.daw.conexion.implementation.BoneConnectionPoolImpl;
 import net.daw.conexion.publicinterface.GenericConnectionInterface;
-import net.daw.control.generic.implementation.GenericControlImpl;
-import net.daw.control.process.implementation.DocumentoProcessImplementation;
+import net.daw.control.operation.generic.implementation.GenericControlOperationImpl;
+import net.daw.control.process.specific.implementation.DocumentoControlProcessSpecificImplementation;
 import net.daw.helper.FilterBean;
 import net.daw.service.generic.implementation.GenericTableServiceImpl;
 
@@ -68,7 +68,7 @@ public class ControlJson extends HttpServlet {
             String jsonResult = "";       
             if (request.getSession().getAttribute("usuarioBean") != null) {
                 if ("documento".equals(request.getParameter("ob"))) {                                                            
-                    DocumentoProcessImplementation oDocumentoProcess = new DocumentoProcessImplementation();
+                    DocumentoControlProcessSpecificImplementation oDocumentoProcess = new DocumentoControlProcessSpecificImplementation();
                     jsonResult=oDocumentoProcess.execute(request);                    
                 }
             }

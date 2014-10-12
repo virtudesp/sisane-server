@@ -15,12 +15,12 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-package net.daw.control.publicinterface;
+package net.daw.control.operation.publicinterface;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public interface GenericControlInterface {
+public interface ControlOperationInterface {
 
     public String get(HttpServletRequest request) throws Exception;
 

@@ -15,23 +15,23 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-package net.daw.control.process.implementation;
+package net.daw.control.process.specific.implementation;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import java.util.HashMap;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
-import net.daw.control.generic.implementation.GenericControlImpl;
-import net.daw.control.process.publicinterface.ProcessInterface;
+import net.daw.control.operation.generic.implementation.GenericControlOperationImpl;
+import net.daw.control.process.publicinterface.ControlProcessInterface;
 
-public class DocumentoProcessImplementation implements ProcessInterface {
+public class DocumentoControlProcessSpecificImplementation implements ControlProcessInterface {
 
     @Override
     public String execute(HttpServletRequest request) throws Exception {
         String operation = request.getParameter("op");
         String object = request.getParameter("ob");
-        GenericControlImpl oControl = new GenericControlImpl(request);
+        GenericControlOperationImpl oControl = new GenericControlOperationImpl(request);
         String jsonResult = "";
         switch (operation) {
             case "get":
