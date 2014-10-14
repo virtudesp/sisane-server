@@ -25,6 +25,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import net.daw.control.process.specific.implementation.DocumentoControlProcessSpecificImplementation;
+import net.daw.control.process.specific.implementation.ProductoControlProcessSpecificImplementation;
+import net.daw.control.process.specific.implementation.TipoproductoControlProcessSpecificImplementation;
 
 /**
  *
@@ -50,14 +52,22 @@ public class ControlJson extends HttpServlet {
             } catch (Exception e) {
                 e.printStackTrace();
                 return;
-            }       
+            }
             //----------------------------------------------------------------------          
             retardo(0); //debug delay
-            String jsonResult = "";       
+            String jsonResult = "";
             if (request.getSession().getAttribute("usuarioBean") != null) {
-                if ("documento".equals(request.getParameter("ob"))) {                                                            
+                if ("documento".equals(request.getParameter("ob"))) {
                     DocumentoControlProcessSpecificImplementation oDocumentoProcess = new DocumentoControlProcessSpecificImplementation();
-                    jsonResult=oDocumentoProcess.execute(request);                    
+                    jsonResult = oDocumentoProcess.execute(request);
+                }
+                if ("producto".equals(request.getParameter("ob"))) {
+                    ProductoControlProcessSpecificImplementation oProductoProcess = new ProductoControlProcessSpecificImplementation();
+                    jsonResult = oProductoProcess.execute(request);
+                }
+                if ("tipoproducto".equals(request.getParameter("ob"))) {
+                    TipoproductoControlProcessSpecificImplementation oTipoproductoProcess = new TipoproductoControlProcessSpecificImplementation();
+                    jsonResult = oTipoproductoProcess.execute(request);
                 }
             }
             //send the result to the client
@@ -67,7 +77,7 @@ public class ControlJson extends HttpServlet {
             Logger.getLogger(ControlJson.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             //important to close connection
-    
+
         }
     }
 

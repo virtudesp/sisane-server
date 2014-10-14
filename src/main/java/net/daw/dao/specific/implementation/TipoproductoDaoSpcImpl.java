@@ -21,14 +21,14 @@ import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
-import net.daw.bean.implementation.ProductoBeanImpl;
+import net.daw.bean.implementation.TipoproductoBeanImpl;
 import net.daw.dao.publicinterface.MetaDaoInterface;
 import net.daw.dao.publicinterface.TableDaoInterface;
 import net.daw.dao.publicinterface.ViewDaoInterface;
 import net.daw.data.specific.implementation.MysqlDataImpl;
 import net.daw.helper.FilterBean;
 
-public class TipoproductoDaoSpcImpl implements ViewDaoInterface<ProductoBeanImpl>, TableDaoInterface<ProductoBeanImpl>, MetaDaoInterface {
+public class TipoproductoDaoSpcImpl implements ViewDaoInterface<TipoproductoBeanImpl>, TableDaoInterface<TipoproductoBeanImpl>, MetaDaoInterface {
 
     private final String strTableName = "tipoproducto";
     private final String strClassName = this.getClass().getName();
@@ -70,64 +70,58 @@ public class TipoproductoDaoSpcImpl implements ViewDaoInterface<ProductoBeanImpl
     }
 
     @Override
-    public ArrayList<ProductoBeanImpl> getPage(int intRegsPerPag, int intPage, ArrayList<FilterBean> hmFilter, HashMap<String, String> hmOrder) throws Exception {
+    public ArrayList<TipoproductoBeanImpl> getPage(int intRegsPerPag, int intPage, ArrayList<FilterBean> hmFilter, HashMap<String, String> hmOrder) throws Exception {
         ArrayList<Integer> arrId;
-        ArrayList<ProductoBeanImpl> arrProducto = new ArrayList<>();
+        ArrayList<TipoproductoBeanImpl> arrTipoproducto = new ArrayList<>();
         try {
             arrId = oMysql.getPage(strTableName, intRegsPerPag, intPage, hmFilter, hmOrder);
             Iterator<Integer> iterador = arrId.listIterator();
             while (iterador.hasNext()) {
-                ProductoBeanImpl oProductoBean = new ProductoBeanImpl(iterador.next());
-                arrProducto.add(this.get(oProductoBean));
+                TipoproductoBeanImpl oTipoproductoBean = new TipoproductoBeanImpl(iterador.next());
+                arrTipoproducto.add(this.get(oTipoproductoBean));
             }
-            return arrProducto;
+            return arrTipoproducto;
         } catch (Exception e) {
             throw new Exception(strClassName + ".getPage: Error: " + e.getMessage());
         }
     }
 
     @Override
-    public ProductoBeanImpl get(ProductoBeanImpl oProductoBean) throws Exception {
-        if (oProductoBean.getId() > 0) {
+    public TipoproductoBeanImpl get(TipoproductoBeanImpl oTipoproductoBean) throws Exception {
+        if (oTipoproductoBean.getId() > 0) {
             try {
-                if (!oMysql.existsOne("producto", oProductoBean.getId())) {
-                    oProductoBean.setId(0);
+                if (!oMysql.existsOne("producto", oTipoproductoBean.getId())) {
+                    oTipoproductoBean.setId(0);
                 } else {
-                    oProductoBean.setCodigo(oMysql.getOne(strTableName, "codigo", oProductoBean.getId()));
-                    oProductoBean.setDescripcion(oMysql.getOne(strTableName, "descripcion", oProductoBean.getId()));
-                    oProductoBean.setPrecio(Double.parseDouble(oMysql.getOne(strTableName, "precio", oProductoBean.getId())));
-                    oProductoBean.setId_tipoProducto(Integer.parseInt(oMysql.getOne(strTableName, "id_tipoproducto", oProductoBean.getId())));
+                    oTipoproductoBean.setDescripcion(oMysql.getOne(strTableName, "descripcion", oTipoproductoBean.getId()));
                 }
             } catch (Exception e) {
                 throw new Exception(strClassName + ".get: Error: " + e.getMessage());
             }
         } else {
-            oProductoBean.setId(0);
+            oTipoproductoBean.setId(0);
         }
-        return oProductoBean;
+        return oTipoproductoBean;
     }
 
     @Override
-    public ProductoBeanImpl set(ProductoBeanImpl oProductoBean) throws Exception {
+    public TipoproductoBeanImpl set(TipoproductoBeanImpl oTipoproductoBean) throws Exception {
         try {
-            if (oProductoBean.getId() == 0) {
-                oProductoBean.setId(oMysql.insertOne("producto"));
+            if (oTipoproductoBean.getId() == 0) {
+                oTipoproductoBean.setId(oMysql.insertOne("producto"));
             }
-            oMysql.updateOne(oProductoBean.getId(), strTableName, "codigo", oProductoBean.getCodigo());
-            oMysql.updateOne(oProductoBean.getId(), strTableName, "descripcion", oProductoBean.getDescripcion());
-            oMysql.updateOne(oProductoBean.getId(), strTableName, "precio", oProductoBean.getPrecio().toString());
-            oMysql.updateOne(oProductoBean.getId(), strTableName, "id_tipoproducto", oProductoBean.getId_tipoProducto().toString());
+            oMysql.updateOne(oTipoproductoBean.getId(), strTableName, "descripcion", oTipoproductoBean.getDescripcion());
         } catch (Exception e) {
             throw new Exception(strClassName + ".set: Error: " + e.getMessage());
         }
-        return oProductoBean;
+        return oTipoproductoBean;
     }
 
     @Override
-    public int remove(ProductoBeanImpl oProductoBean) throws Exception {
+    public int remove(TipoproductoBeanImpl oTipoproductoBean) throws Exception {
         int result = 0;
         try {
-            result = oMysql.removeOne(oProductoBean.getId(), strTableName);
+            result = oMysql.removeOne(oTipoproductoBean.getId(), strTableName);
         } catch (Exception e) {
             throw new Exception(strClassName + ".remove: Error: " + e.getMessage());
         }

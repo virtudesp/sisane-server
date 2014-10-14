@@ -93,7 +93,7 @@ public abstract class GenericViewServiceImpl extends GenericMetaServiceImpl impl
             String data = "{\"data\":\"" + Integer.toString(pages) + "\"}";
             return data;
         } catch (Exception e) {
-            throw new ServletException("FollowerGetpagesJson: View Error: " + e.getMessage());
+            throw new ServletException("GetpagesJson: View Error: " + e.getMessage());
         } finally {
             oConnection.commit();
         }
