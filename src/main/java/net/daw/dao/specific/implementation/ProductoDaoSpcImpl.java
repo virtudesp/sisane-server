@@ -31,7 +31,7 @@ import net.daw.helper.FilterBean;
 public class ProductoDaoSpcImpl implements ViewDaoInterface<ProductoBeanImpl>, TableDaoInterface<ProductoBeanImpl>, MetaDaoInterface {
 
     private final String strTableName = "producto";
-    private final String strClassName = this.getClass().getName();
+    private final String strClassName = "ProductoDaoSpcImpl";
     private final MysqlDataImpl oMysql;
     private final String strView;
     private Connection connection = null;
@@ -110,7 +110,7 @@ public class ProductoDaoSpcImpl implements ViewDaoInterface<ProductoBeanImpl>, T
     public ProductoBeanImpl set(ProductoBeanImpl oProductoBean) throws Exception {
         try {
             if (oProductoBean.getId() == 0) {
-                oProductoBean.setId(oMysql.insertOne("producto"));
+                oProductoBean.setId(oMysql.insertOne(strTableName));
             }
             oMysql.updateOne(oProductoBean.getId(), strTableName, "codigo", oProductoBean.getCodigo());
             oMysql.updateOne(oProductoBean.getId(), strTableName, "descripcion", oProductoBean.getDescripcion());
@@ -137,7 +137,7 @@ public class ProductoDaoSpcImpl implements ViewDaoInterface<ProductoBeanImpl>, T
     public ArrayList<String> getColumnsNames() throws Exception {
         ArrayList<String> alColumns = null;
         try {
-            alColumns = oMysql.getColumnsName("producto");
+            alColumns = oMysql.getColumnsName(strTableName);
         } catch (Exception e) {
             throw new Exception(strClassName + ".getColumnsNames: Error: " + e.getMessage());
         } finally {

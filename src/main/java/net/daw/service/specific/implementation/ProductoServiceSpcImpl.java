@@ -40,7 +40,7 @@ public class ProductoServiceSpcImpl implements TableServiceInterface, ViewServic
 
     public ProductoServiceSpcImpl(String ob, Connection con) {
         strObjectName = Character.toUpperCase(ob.charAt(0)) + ob.substring(1);
-        oConnection = con;
+        oConnection = con;        
     }
 
     @Override
