@@ -17,6 +17,7 @@
 --%>
 
 
+<%@page import="net.daw.helper.EstadoHelper"%>
 <%@page import="net.daw.bean.generic.specific.implementation.UsuarioBeanGenSpImpl"%>
 <%@page import="net.daw.helper.AppInformationHelper"%>
 <%UsuarioBeanGenSpImpl user = (UsuarioBeanGenSpImpl) request.getSession().getAttribute("usuarioBean");%>
@@ -87,7 +88,7 @@
                 <div class="col-md-12" id="contenidoParseado"></div>   
             </div>
             <div class="row">
-                <div class="col-md-12"><hr><footer><p>&copy; Rafael Aznar (2014)</p></footer></div>   
+                <div class="col-md-12"><hr><footer><p>&copy; <%=EstadoHelper.getAutor()%>: <%=EstadoHelper.getMailAutor()%> (<%=EstadoHelper.getAnyo()%>) - <%=EstadoHelper.getLicenciaLink()%></p></footer></div> 
             </div>
         </div>            
 
@@ -105,7 +106,7 @@
                 <div class="col-md-12" id="contenidoParseado"></div>   
             </div>
             <div class="row">
-                <div class="col-md-12"><hr><footer><p>&copy; Rafael Aznar (2014)</p></footer></div>   
+                <div class="col-md-12"><hr><footer><p>&copy; <%=EstadoHelper.getAutor()%>: <%=EstadoHelper.getMailAutor()%> (<%=EstadoHelper.getAnyo()%>) - <%=EstadoHelper.getLicenciaLink()%></p></footer></div>   
             </div>
         </div>  
 

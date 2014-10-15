@@ -29,4 +29,31 @@ public class EstadoHelper {
         return Tipo_estado.Debug;
     }
 
+    public static String getVersion() {
+        return "03";
+    }
+
+    public static String getFecha() {
+        return "15/10/2014";
+    }
+
+    public static String getAnyo() {
+        return "2014";
+    }
+
+    public static String getCurso() {
+        return "2014-2015";
+    }
+
+    public static String getAutor() {
+        return "Rafael Aznar";
+    }
+
+    public static String getMailAutor() {
+        return "rafaaznar{at}gmail{dot}com";
+    }
+
+    public static String getLicenciaLink() {
+        return "<a href=\"http://www.gnu.org/licenses/gpl-2.0.html\">GNU General Public License, version 2</a>";
+    }
 }
