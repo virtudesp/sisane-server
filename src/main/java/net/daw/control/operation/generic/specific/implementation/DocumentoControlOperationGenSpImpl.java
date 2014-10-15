@@ -15,13 +15,17 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-package net.daw.control.route.publicinterface;
 
+package net.daw.control.operation.generic.specific.implementation;
+
+import java.lang.reflect.InvocationTargetException;
 import javax.servlet.http.HttpServletRequest;
-import net.daw.control.operation.publicinterface.ControlOperationInterface;
+import net.daw.control.operation.generic.implementation.ControlOperationGenImpl;
 
-public interface ControlRouteInterface {
+public class DocumentoControlOperationGenSpImpl extends ControlOperationGenImpl {
 
-    public abstract String execute(HttpServletRequest request, ControlOperationInterface oControl) throws Exception;
-
+    public DocumentoControlOperationGenSpImpl(HttpServletRequest request) throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+        super(request);
+    }
+    
 }

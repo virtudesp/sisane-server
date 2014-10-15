@@ -22,15 +22,14 @@ import com.google.gson.GsonBuilder;
 import java.util.HashMap;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
-import net.daw.control.operation.generic.implementation.ControlOperationGenImpl;
+import net.daw.control.operation.publicinterface.ControlOperationInterface;
 import net.daw.control.route.publicinterface.ControlRouteInterface;
 
 public class ControlRouteGenImpl implements ControlRouteInterface {
 
     @Override
-    public String execute(HttpServletRequest request) throws Exception {
+    public String execute(HttpServletRequest request,ControlOperationInterface oControl ) throws Exception {
         String operation = request.getParameter("op");
-        ControlOperationGenImpl oControl = new ControlOperationGenImpl(request);
         String jsonResult = "";
         switch (operation) {
             case "get":

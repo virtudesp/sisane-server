@@ -15,13 +15,12 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-package net.daw.control.route.publicinterface;
 
-import javax.servlet.http.HttpServletRequest;
-import net.daw.control.operation.publicinterface.ControlOperationInterface;
+package net.daw.control.route.generic.specific.implementation;
 
-public interface ControlRouteInterface {
+import net.daw.control.route.generic.implementation.ControlRouteGenImpl;
 
-    public abstract String execute(HttpServletRequest request, ControlOperationInterface oControl) throws Exception;
 
+public class DocumentoControlRouteGenSpImpl extends ControlRouteGenImpl{
+    
 }

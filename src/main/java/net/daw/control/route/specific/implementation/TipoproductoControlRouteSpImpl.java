@@ -22,46 +22,48 @@ import com.google.gson.GsonBuilder;
 import java.util.HashMap;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
+import net.daw.control.operation.generic.implementation.ControlOperationGenImpl;
+import net.daw.control.operation.publicinterface.ControlOperationInterface;
 import net.daw.control.operation.specific.implementation.TipoproductoControlOperationSpImpl;
 import net.daw.control.route.publicinterface.ControlRouteInterface;
 
 public class TipoproductoControlRouteSpImpl implements ControlRouteInterface {
 
     @Override
-    public String execute(HttpServletRequest request) throws Exception {
+    public String execute(HttpServletRequest request, ControlOperationInterface oControl) throws Exception {
         String operation = request.getParameter("op");
         TipoproductoControlOperationSpImpl oControlOperation = new TipoproductoControlOperationSpImpl(request);
         String jsonResult = "";
         switch (operation) {
             case "get":
-                jsonResult = oControlOperation.get(request);
+                jsonResult = oControl.get(request);
                 break;
             case "getaggregateviewone":
-                jsonResult = oControlOperation.getaggregateviewone(request);
+                jsonResult = oControl.getaggregateviewone(request);
                 break;
             case "getprettycolumns":
-                jsonResult = oControlOperation.getprettycolumns(request);
+                jsonResult = oControl.getprettycolumns(request);
                 break;
             case "getcolumns":
-                jsonResult = oControlOperation.getcolumns(request);
+                jsonResult = oControl.getcolumns(request);
                 break;
             case "getpage":
-                jsonResult = oControlOperation.getpage(request);
+                jsonResult = oControl.getpage(request);
                 break;
             case "getpages":
-                jsonResult = oControlOperation.getpages(request);
+                jsonResult = oControl.getpages(request);
                 break;
             case "getregisters":
-                jsonResult = oControlOperation.getregisters(request);
+                jsonResult = oControl.getregisters(request);
                 break;
             case "getaggregateviewsome":
-                jsonResult = oControlOperation.getaggregateviewsome(request);
+                jsonResult = oControl.getaggregateviewsome(request);
                 break;
             case "remove":
-                jsonResult = oControlOperation.remove(request);
+                jsonResult = oControl.remove(request);
                 break;
             case "save":
-                jsonResult = oControlOperation.save(request);
+                jsonResult = oControl.save(request);
                 break;
             default:
                 Map<String, String> data = new HashMap<>();
@@ -73,5 +75,6 @@ public class TipoproductoControlRouteSpImpl implements ControlRouteInterface {
         }
         return jsonResult;
     }
+
 
 }

@@ -24,7 +24,10 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import net.daw.control.route.generic.implementation.ControlRouteGenImpl;
+import net.daw.control.operation.generic.specific.implementation.DocumentoControlOperationGenSpImpl;
+import net.daw.control.operation.specific.implementation.ProductoControlOperationSpImpl;
+import net.daw.control.operation.specific.implementation.TipoproductoControlOperationSpImpl;
+import net.daw.control.route.generic.specific.implementation.DocumentoControlRouteGenSpImpl;
 import net.daw.control.route.specific.implementation.ProductoControlRouteSpImpl;
 import net.daw.control.route.specific.implementation.TipoproductoControlRouteSpImpl;
 
@@ -58,26 +61,26 @@ public class JsonControl extends HttpServlet {
             String jsonResult = "";
             if (request.getSession().getAttribute("usuarioBean") != null) {
                 if ("documento".equals(request.getParameter("ob"))) {
-                    ControlRouteGenImpl oDocumentoProcess = new ControlRouteGenImpl();
-                    jsonResult = oDocumentoProcess.execute(request);
+                    DocumentoControlRouteGenSpImpl oDocumentoRoute = new DocumentoControlRouteGenSpImpl();
+                    DocumentoControlOperationGenSpImpl oControlOperation = new DocumentoControlOperationGenSpImpl(request);
+                    jsonResult = oDocumentoRoute.execute(request, oControlOperation);
                 }
                 if ("producto".equals(request.getParameter("ob"))) {
-                    ProductoControlRouteSpImpl oProductoProcess = new ProductoControlRouteSpImpl();
-                    jsonResult = oProductoProcess.execute(request);
+                    ProductoControlRouteSpImpl oProductoRoute = new ProductoControlRouteSpImpl();
+                    ProductoControlOperationSpImpl oControlOperation = new ProductoControlOperationSpImpl(request);
+                    jsonResult = oProductoRoute.execute(request, oControlOperation);
                 }
                 if ("tipoproducto".equals(request.getParameter("ob"))) {
-                    TipoproductoControlRouteSpImpl oTipoproductoProcess = new TipoproductoControlRouteSpImpl();
-                    jsonResult = oTipoproductoProcess.execute(request);
+                    TipoproductoControlRouteSpImpl oTipoproductoRoute = new TipoproductoControlRouteSpImpl();
+                    TipoproductoControlOperationSpImpl oControlOperation = new TipoproductoControlOperationSpImpl(request);
+                    jsonResult = oTipoproductoRoute.execute(request, oControlOperation);
                 }
             }
-            //send the result to the client
             request.setAttribute("contenido", jsonResult);
             getServletContext().getRequestDispatcher("/jsp/messageAjax.jsp").forward(request, response);
         } catch (Exception ex) {
             Logger.getLogger(JsonControl.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
-            //important to close connection
-
         }
     }
 
