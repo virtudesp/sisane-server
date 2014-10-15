@@ -2,11 +2,11 @@
 <web-app version="3.0" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
     <servlet>
         <servlet-name>ControlJson</servlet-name>
-        <servlet-class>net.daw.control.ControlJson</servlet-class>
+        <servlet-class>net.daw.control.JsonControl</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ControlJsp</servlet-name>
-        <servlet-class>net.daw.control.ControlJsp</servlet-class>
+        <servlet-class>net.daw.control.JspControl</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>ControlJson</servlet-name>

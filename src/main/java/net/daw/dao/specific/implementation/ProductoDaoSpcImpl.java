@@ -21,18 +21,18 @@ import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
-import net.daw.bean.implementation.ProductoBeanImpl;
+import net.daw.bean.generic.specific.implementation.ProductoBeanGenSpImpl;
 import net.daw.dao.publicinterface.MetaDaoInterface;
 import net.daw.dao.publicinterface.TableDaoInterface;
 import net.daw.dao.publicinterface.ViewDaoInterface;
-import net.daw.data.specific.implementation.MysqlDataImpl;
-import net.daw.helper.FilterBean;
+import net.daw.data.specific.implementation.MysqlDataSpImpl;
+import net.daw.helper.FilterBeanHelper;
 
-public class ProductoDaoSpcImpl implements ViewDaoInterface<ProductoBeanImpl>, TableDaoInterface<ProductoBeanImpl>, MetaDaoInterface {
+public class ProductoDaoSpcImpl implements ViewDaoInterface<ProductoBeanGenSpImpl>,TableDaoInterface<ProductoBeanGenSpImpl> , MetaDaoInterface {
 
     private final String strTableName = "producto";
     private final String strClassName = "ProductoDaoSpcImpl";
-    private final MysqlDataImpl oMysql;
+    private final MysqlDataSpImpl oMysql;
     private final String strView;
     private Connection connection = null;
 
@@ -40,14 +40,14 @@ public class ProductoDaoSpcImpl implements ViewDaoInterface<ProductoBeanImpl>, T
         try {
             connection = pooledConnection;
             strView = view;
-            oMysql = new MysqlDataImpl(connection);
+            oMysql = new MysqlDataSpImpl(connection);
         } catch (Exception e) {
             throw new Exception(strClassName + ".constructor: Error: " + e.getMessage());
         }
     }
 
     @Override
-    public int getPages(int intRegsPerPag, ArrayList<FilterBean> hmFilter) throws Exception {
+    public int getPages(int intRegsPerPag, ArrayList<FilterBeanHelper> hmFilter) throws Exception {
         int pages;
         try {
             pages = oMysql.getPages(strTableName, intRegsPerPag, hmFilter);
@@ -58,7 +58,7 @@ public class ProductoDaoSpcImpl implements ViewDaoInterface<ProductoBeanImpl>, T
     }
 
     @Override
-    public int getCount(ArrayList<FilterBean> hmFilter) throws Exception {
+    public int getCount(ArrayList<FilterBeanHelper> hmFilter) throws Exception {
         int pages;
         try {
             pages = oMysql.getCount(strTableName, hmFilter);
@@ -69,14 +69,14 @@ public class ProductoDaoSpcImpl implements ViewDaoInterface<ProductoBeanImpl>, T
     }
 
     @Override
-    public ArrayList<ProductoBeanImpl> getPage(int intRegsPerPag, int intPage, ArrayList<FilterBean> hmFilter, HashMap<String, String> hmOrder) throws Exception {
+    public ArrayList<ProductoBeanGenSpImpl> getPage(int intRegsPerPag, int intPage, ArrayList<FilterBeanHelper> hmFilter, HashMap<String, String> hmOrder) throws Exception {
         ArrayList<Integer> arrId;
-        ArrayList<ProductoBeanImpl> arrProducto = new ArrayList<>();
+        ArrayList<ProductoBeanGenSpImpl> arrProducto = new ArrayList<>();
         try {
             arrId = oMysql.getPage(strTableName, intRegsPerPag, intPage, hmFilter, hmOrder);
             Iterator<Integer> iterador = arrId.listIterator();
             while (iterador.hasNext()) {
-                ProductoBeanImpl oProductoBean = new ProductoBeanImpl(iterador.next());
+                ProductoBeanGenSpImpl oProductoBean = new ProductoBeanGenSpImpl(iterador.next());
                 arrProducto.add(this.get(oProductoBean));
             }
             return arrProducto;
@@ -86,7 +86,7 @@ public class ProductoDaoSpcImpl implements ViewDaoInterface<ProductoBeanImpl>, T
     }
 
     @Override
-    public ProductoBeanImpl get(ProductoBeanImpl oProductoBean) throws Exception {
+    public ProductoBeanGenSpImpl get(ProductoBeanGenSpImpl oProductoBean) throws Exception {
         if (oProductoBean.getId() > 0) {
             try {
                 if (!oMysql.existsOne("producto", oProductoBean.getId())) {
@@ -107,7 +107,7 @@ public class ProductoDaoSpcImpl implements ViewDaoInterface<ProductoBeanImpl>, T
     }
 
     @Override
-    public ProductoBeanImpl set(ProductoBeanImpl oProductoBean) throws Exception {
+    public ProductoBeanGenSpImpl set(ProductoBeanGenSpImpl oProductoBean) throws Exception {
         try {
             if (oProductoBean.getId() == 0) {
                 oProductoBean.setId(oMysql.insertOne(strTableName));
@@ -123,7 +123,7 @@ public class ProductoDaoSpcImpl implements ViewDaoInterface<ProductoBeanImpl>, T
     }
 
     @Override
-    public int remove(ProductoBeanImpl oProductoBean) throws Exception {
+    public int remove(ProductoBeanGenSpImpl oProductoBean) throws Exception {
         int result = 0;
         try {
             result = oMysql.removeOne(oProductoBean.getId(), strTableName);

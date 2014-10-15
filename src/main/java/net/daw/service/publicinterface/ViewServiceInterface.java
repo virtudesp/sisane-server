@@ -19,20 +19,20 @@ package net.daw.service.publicinterface;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import net.daw.helper.FilterBean;
+import net.daw.helper.FilterBeanHelper;
 
 public interface ViewServiceInterface {
 
     public String get(Integer id) throws Exception;
 
-    public String getPage(int intRegsPerPag, int intPage, ArrayList<FilterBean> alFilter, HashMap<String, String> hmOrder) throws Exception;
+    public String getPage(int intRegsPerPag, int intPage, ArrayList<FilterBeanHelper> alFilter, HashMap<String, String> hmOrder) throws Exception;
 
-    public String getPages(int intRegsPerPag, ArrayList<FilterBean> alFilter) throws Exception;
+    public String getPages(int intRegsPerPag, ArrayList<FilterBeanHelper> alFilter) throws Exception;
 
-    public String getCount(ArrayList<FilterBean> alFilter) throws Exception;
+    public String getCount(ArrayList<FilterBeanHelper> alFilter) throws Exception;
 
     public String getAggregateViewOne(Integer id) throws Exception;
 
-    public String getAggregateViewSome(int intRegsPerPag, int intPage, ArrayList<FilterBean> alFilter, HashMap<String, String> hmOrder) throws Exception;
+    public String getAggregateViewSome(int intRegsPerPag, int intPage, ArrayList<FilterBeanHelper> alFilter, HashMap<String, String> hmOrder) throws Exception;
 
 }

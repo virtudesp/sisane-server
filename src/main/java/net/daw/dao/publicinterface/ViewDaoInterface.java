@@ -19,15 +19,15 @@ package net.daw.dao.publicinterface;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import net.daw.helper.FilterBean;
+import net.daw.helper.FilterBeanHelper;
 
 public interface ViewDaoInterface<GenericBeanImplementation> {
 
-    public int getPages(int intRegsPerPag, ArrayList<FilterBean> hmFilter) throws Exception;
+    public int getPages(int intRegsPerPag, ArrayList<FilterBeanHelper> hmFilter) throws Exception;
 
-    public int getCount(ArrayList<FilterBean> hmFilter) throws Exception;
+    public int getCount(ArrayList<FilterBeanHelper> hmFilter) throws Exception;
 
-    public ArrayList<GenericBeanImplementation> getPage(int intRegsPerPag, int intPage, ArrayList<FilterBean> hmFilter, HashMap<String, String> hmOrder) throws Exception;
+    public ArrayList<GenericBeanImplementation> getPage(int intRegsPerPag, int intPage, ArrayList<FilterBeanHelper> hmFilter, HashMap<String, String> hmOrder) throws Exception;
 
     public GenericBeanImplementation get(GenericBeanImplementation oBean) throws Exception;
 }

@@ -20,7 +20,7 @@ package net.daw.data.publicinterface;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import net.daw.helper.FilterBean;
+import net.daw.helper.FilterBeanHelper;
 
 public interface DataInterface {
 
@@ -40,11 +40,11 @@ public interface DataInterface {
 
     public int updateOne(int intId, String strTabla, String strCampo, String strValor) throws Exception;
 
-    public int getPages(String strTabla, int intRegsPerPage, ArrayList<FilterBean> alFilter) throws Exception;
+    public int getPages(String strTabla, int intRegsPerPage, ArrayList<FilterBeanHelper> alFilter) throws Exception;
 
-    public int getCount(String strTabla, ArrayList<FilterBean> alFilter) throws Exception;
+    public int getCount(String strTabla, ArrayList<FilterBeanHelper> alFilter) throws Exception;
 
-    public ArrayList<Integer> getPage(String strTabla, int intRegsPerPage, int intPagina, ArrayList<FilterBean> alFilter, HashMap<String, String> hmOrder) throws Exception;
+    public ArrayList<Integer> getPage(String strTabla, int intRegsPerPage, int intPagina, ArrayList<FilterBeanHelper> alFilter, HashMap<String, String> hmOrder) throws Exception;
 
     public int removeOne(int intId, String strTabla) throws Exception;
 

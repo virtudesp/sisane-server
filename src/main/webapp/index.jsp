@@ -17,9 +17,9 @@
 --%>
 
 
-<%@page import="net.daw.bean.implementation.UsuarioBeanImpl"%>
-<%@page import="net.daw.helper.AppInformation"%>
-<%UsuarioBeanImpl user = (UsuarioBeanImpl) request.getSession().getAttribute("usuarioBean");%>
+<%@page import="net.daw.bean.generic.specific.implementation.UsuarioBeanGenSpImpl"%>
+<%@page import="net.daw.helper.AppInformationHelper"%>
+<%UsuarioBeanGenSpImpl user = (UsuarioBeanGenSpImpl) request.getSession().getAttribute("usuarioBean");%>
 
 <!DOCTYPE html>
 <!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
@@ -54,7 +54,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="jsp"><%=AppInformation.getAppName()%></a>
+                    <a class="navbar-brand" href="jsp"><%=AppInformationHelper.getAppName()%></a>
                 </div>
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse navbar-ex1-collapse">

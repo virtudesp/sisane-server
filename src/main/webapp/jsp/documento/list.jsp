@@ -17,7 +17,7 @@
 --%>
 
 <%@page import="java.sql.Connection"%>
-<%@page import="net.daw.dao.implementation.DocumentoDaoImpl"%>
+<%@page import="net.daw.dao.generic.specific.implementation.DocumentoDaoGenSpImpl"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.Iterator"%>
 <%
@@ -25,7 +25,7 @@
     Iterator<String> oIterador;
     String strNombreMantenimiento = "documento";
     Connection connection = (Connection) request.getAttribute("connection");
-    DocumentoDaoImpl oDocumentoDao = new DocumentoDaoImpl(connection);
+    DocumentoDaoGenSpImpl oDocumentoDao = new DocumentoDaoGenSpImpl(connection);
 %>
 <div class="row">
     <div class="col-md-12">
