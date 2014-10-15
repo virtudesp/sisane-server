@@ -40,7 +40,7 @@ public class ProductoServiceSpImpl implements TableServiceInterface, ViewService
 
     public ProductoServiceSpImpl(String ob, Connection con) {
         strObjectName = Character.toUpperCase(ob.charAt(0)) + ob.substring(1);
-        oConnection = con;        
+        oConnection = con;
     }
 
     @Override
@@ -48,16 +48,12 @@ public class ProductoServiceSpImpl implements TableServiceInterface, ViewService
         try {
             oConnection.setAutoCommit(false);
             ProductoDaoSpcImpl oProductoDAO = new ProductoDaoSpcImpl("Producto", oConnection);
-            ProductoBeanGenSpImpl oProducto = new ProductoBeanGenSpImpl();
-            oProducto.setId(id);
+            ProductoBeanGenSpImpl oProducto = new ProductoBeanGenSpImpl(id);
             Map<String, String> data = new HashMap<>();
             if (oProducto != null) {
                 oProductoDAO.remove(oProducto);
                 data.put("status", "200");
                 data.put("message", "se ha eliminado el registro con id=" + oProducto.getId());
-            } else {
-                data.put("status", "error");
-                data.put("message", "error");
             }
             Gson gson = new Gson();
             String resultado = gson.toJson(data);
@@ -83,9 +79,6 @@ public class ProductoServiceSpImpl implements TableServiceInterface, ViewService
                 oProducto = oProductoDAO.set(oProducto);
                 data.put("status", "200");
                 data.put("message", Integer.toString(oProducto.getId()));
-            } else {
-                data.put("status", "error");
-                data.put("message", "error");
             }
             String resultado = gson.toJson(data);
             oConnection.commit();
@@ -101,9 +94,8 @@ public class ProductoServiceSpImpl implements TableServiceInterface, ViewService
         try {
             oConnection.setAutoCommit(false);
             ProductoDaoSpcImpl oProductoDAO = new ProductoDaoSpcImpl("Producto", oConnection);
-            ProductoBeanGenSpImpl oProducto = new ProductoBeanGenSpImpl();
-            oProducto.setId(id);
-            oProductoDAO.get(oProducto);
+            ProductoBeanGenSpImpl oProducto = new ProductoBeanGenSpImpl(id);
+            oProducto = oProductoDAO.get(oProducto);
             GsonBuilder gsonBuilder = new GsonBuilder();
             gsonBuilder.setDateFormat("dd/MM/yyyy");
             Gson gson = gsonBuilder.create();
