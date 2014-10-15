@@ -20,8 +20,21 @@ body {
     }
 }
 
+.container .jumbotron {
+    border-radius: 0px;
+}
+
+.jumbotron {
+
+    background-color: #f0a30a ;
+}
+
+.panel-heading {
+    border-radius: 0px;
+}
+
 table{
-   
+
 }
 th{
     min-width: 30px;
@@ -47,12 +60,12 @@ th{
 
 
 .panel-body {
-padding: 5px 15px;
+    padding: 5px 15px;
 }
 
 h1, .h1, h2, .h2, h3, .h3 {
-margin-top: 10px;
-margin-bottom: 5px;
+    margin-top: 10px;
+    margin-bottom: 5px;
 }
 
 .pagination{
@@ -60,7 +73,7 @@ margin-bottom: 5px;
 }
 .form-control{
     border-radius: 0;
-    
+
 }
 .btn{
     border-radius: 0;
@@ -75,23 +88,32 @@ padding-left: 10px;
 .panel-default>.panel-heading {
     background-color:#60a917;
     color:whitesmoke;
-    font-size: 14px;
+    font-size: 15px;
 }
 
 .navbar-inverse {
-background-color: #333333; 
-border-color: #080808;
-color:whitesmoke;
-font-size: 12px;
+    background-color: #647687; 
+
 }
 
 .navbar-inverse .navbar-nav>li>a {
-color: #C5C5C5;
+    color: white;
+    font-size: 15px;
 }
 
-.navbar-inverse .navbar-nav>.active>a, .navbar-inverse .navbar-nav>.active>a:hover, .navbar-inverse .navbar-nav>.active>a:focus {
-font-weight: bold;
+.navbar-inverse .navbar-nav>li>a:hover {
+    color: yellow;
+    font-size: 15px;
+}
+
+.navbar-inverse .navbar-brand {
+    color:whitesmoke;
+}
+.navbar-inverse .navbar-brand:hover {
+    color:yellow;
+}
+
+.navbar-inverse .navbar-nav>.open>a, .navbar-inverse .navbar-nav>.open>a:hover, .navbar-inverse .navbar-nav>.open>a:focus {
     color: #fff;
-background-color: #080808;
+    background-color: #333333;
 }
-
