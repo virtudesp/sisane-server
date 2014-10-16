@@ -180,9 +180,9 @@ public class TipoproductoControlOperationSpImpl implements ControlOperationInter
     }
 
     @Override
-    public String save(HttpServletRequest request) throws Exception {
+    public String set(HttpServletRequest request) throws Exception {
         String jason = request.getParameter("json").replaceAll("%2F", "/");
-        String result = oTipoproductoService.save(jason);
+        String result = oTipoproductoService.set(jason);
         closeDB();
         return result;
     }

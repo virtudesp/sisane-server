@@ -60,7 +60,7 @@ public class ProductoControlRouteSpImpl implements ControlRouteInterface {
                 jsonResult = oControl.remove(request);
                 break;
             case "save":
-                jsonResult = oControl.save(request);
+                jsonResult = oControl.set(request);
                 break;
             default:
                 Map<String, String> data = new HashMap<>();

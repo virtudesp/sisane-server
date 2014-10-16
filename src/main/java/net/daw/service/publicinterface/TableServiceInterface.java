@@ -22,6 +22,6 @@ public interface TableServiceInterface  {
     
     public String remove(Integer id) throws Exception;
 
-    public String save(String jason) throws Exception;
+    public String set(String jason) throws Exception;
 
 }

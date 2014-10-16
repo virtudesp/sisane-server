@@ -64,7 +64,7 @@ public class ProductoServiceSpImpl implements TableServiceInterface, ViewService
     }
 
     @Override
-    public String save(String jason) throws Exception {
+    public String set(String jason) throws Exception {
         try {
             oConnection.setAutoCommit(false);
             ProductoDaoSpcImpl oProductoDAO = new ProductoDaoSpcImpl("Producto", oConnection);

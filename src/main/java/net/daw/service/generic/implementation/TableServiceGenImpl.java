@@ -65,7 +65,7 @@ public abstract class TableServiceGenImpl extends ViewServiceGenImpl implements 
     }
 
     @Override
-    public String save(String jason) throws Exception {
+    public String set(String jason) throws Exception {
         try {
             oConnection.setAutoCommit(false);
             BeanGenImpl oGenericBean = (BeanGenImpl) Class.forName("net.daw.bean.generic.specific.implementation." + strObjectName + "BeanGenSpImpl").newInstance();

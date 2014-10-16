@@ -184,9 +184,9 @@ public class ControlOperationGenImpl implements ControlOperationInterface {
     }
 
     @Override
-    public String save(HttpServletRequest request) throws Exception {
+    public String set(HttpServletRequest request) throws Exception {
         String jason = request.getParameter("json").replaceAll("%2F", "/");
-        String result = process.save(jason);
+        String result = process.set(jason);
         closeDB();
         return result;
     }
