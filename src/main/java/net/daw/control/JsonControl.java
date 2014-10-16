@@ -67,19 +67,21 @@ public class JsonControl extends HttpServlet {
             if (request.getSession().getAttribute("usuarioBean") != null) {
                 if ("documento".equals(request.getParameter("ob"))) {
                     DocumentoControlRouteGenSpImpl oDocumentoRoute = new DocumentoControlRouteGenSpImpl();
-                    DocumentoControlOperationGenSpImpl oControlOperation = new DocumentoControlOperationGenSpImpl(request);
-                    jsonResult = oDocumentoRoute.execute(request, oControlOperation);
+                    DocumentoControlOperationGenSpImpl oDocumentoControlOperation = new DocumentoControlOperationGenSpImpl(request);
+                    jsonResult = oDocumentoRoute.execute(request, oDocumentoControlOperation);
                 }
                 if ("producto".equals(request.getParameter("ob"))) {
                     ProductoControlRouteSpImpl oProductoRoute = new ProductoControlRouteSpImpl();
-                    ProductoControlOperationSpImpl oControlOperation = new ProductoControlOperationSpImpl(request);
-                    jsonResult = oProductoRoute.execute(request, oControlOperation);
+                    ProductoControlOperationSpImpl oProductoControlOperation = new ProductoControlOperationSpImpl(request);
+                    jsonResult = oProductoRoute.execute(request, oProductoControlOperation);
                 }
                 if ("tipoproducto".equals(request.getParameter("ob"))) {
                     TipoproductoControlRouteSpImpl oTipoproductoRoute = new TipoproductoControlRouteSpImpl();
-                    TipoproductoControlOperationSpImpl oControlOperation = new TipoproductoControlOperationSpImpl(request);
-                    jsonResult = oTipoproductoRoute.execute(request, oControlOperation);
+                    TipoproductoControlOperationSpImpl oTipoproductoControlOperation = new TipoproductoControlOperationSpImpl(request);
+                    jsonResult = oTipoproductoRoute.execute(request, oTipoproductoControlOperation);
                 }
+            } else {
+                jsonResult="{\"error\" : \"No tienes sesión\"}";
             }
             request.setAttribute("contenido", jsonResult);
             getServletContext().getRequestDispatcher("/jsp/messageAjax.jsp").forward(request, response);
