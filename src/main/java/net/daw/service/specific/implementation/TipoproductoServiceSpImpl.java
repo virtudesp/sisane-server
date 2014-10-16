@@ -48,17 +48,11 @@ public class TipoproductoServiceSpImpl implements TableServiceInterface, ViewSer
         try {
             oConnection.setAutoCommit(false);
             TipoproductoDaoSpcImpl oTipoproductoDAO = new TipoproductoDaoSpcImpl("Tipoproducto", oConnection);
-            TipoproductoBeanGenSpImpl oTipoproducto = new TipoproductoBeanGenSpImpl();
-            oTipoproducto.setId(id);
+            TipoproductoBeanGenSpImpl oTipoproducto = new TipoproductoBeanGenSpImpl(id);
             Map<String, String> data = new HashMap<>();
-            if (oTipoproducto != null) {
-                oTipoproductoDAO.remove(oTipoproducto);
-                data.put("status", "200");
-                data.put("message", "se ha eliminado el registro con id=" + oTipoproducto.getId());
-            } else {
-                data.put("status", "error");
-                data.put("message", "error");
-            }
+            oTipoproductoDAO.remove(oTipoproducto);
+            data.put("status", "200");
+            data.put("message", "se ha eliminado el registro con id=" + oTipoproducto.getId());
             Gson gson = new Gson();
             String resultado = gson.toJson(data);
             oConnection.commit();
@@ -79,14 +73,9 @@ public class TipoproductoServiceSpImpl implements TableServiceInterface, ViewSer
             jason = EncodingUtilHelper.decodeURIComponent(jason);
             oTipoproducto = gson.fromJson(jason, oTipoproducto.getClass());
             Map<String, String> data = new HashMap<>();
-            if (oTipoproducto != null) {
-                oTipoproducto = oTipoproductoDAO.set(oTipoproducto);
-                data.put("status", "200");
-                data.put("message", Integer.toString(oTipoproducto.getId()));
-            } else {
-                data.put("status", "error");
-                data.put("message", "error");
-            }
+            oTipoproducto = oTipoproductoDAO.set(oTipoproducto);
+            data.put("status", "200");
+            data.put("message", Integer.toString(oTipoproducto.getId()));
             String resultado = gson.toJson(data);
             oConnection.commit();
             return resultado;

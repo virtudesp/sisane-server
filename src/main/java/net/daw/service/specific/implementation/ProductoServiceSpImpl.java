@@ -50,11 +50,9 @@ public class ProductoServiceSpImpl implements TableServiceInterface, ViewService
             ProductoDaoSpcImpl oProductoDAO = new ProductoDaoSpcImpl("Producto", oConnection);
             ProductoBeanGenSpImpl oProducto = new ProductoBeanGenSpImpl(id);
             Map<String, String> data = new HashMap<>();
-            if (oProducto != null) {
-                oProductoDAO.remove(oProducto);
-                data.put("status", "200");
-                data.put("message", "se ha eliminado el registro con id=" + oProducto.getId());
-            }
+            oProductoDAO.remove(oProducto);
+            data.put("status", "200");
+            data.put("message", "se ha eliminado el registro con id=" + oProducto.getId());
             Gson gson = new Gson();
             String resultado = gson.toJson(data);
             oConnection.commit();
@@ -74,12 +72,10 @@ public class ProductoServiceSpImpl implements TableServiceInterface, ViewService
             Gson gson = new GsonBuilder().setDateFormat("dd/MM/yyyy").create();
             jason = EncodingUtilHelper.decodeURIComponent(jason);
             oProducto = gson.fromJson(jason, oProducto.getClass());
+            oProducto = oProductoDAO.set(oProducto);
             Map<String, String> data = new HashMap<>();
-            if (oProducto != null) {
-                oProducto = oProductoDAO.set(oProducto);
-                data.put("status", "200");
-                data.put("message", Integer.toString(oProducto.getId()));
-            }
+            data.put("status", "200");
+            data.put("message", Integer.toString(oProducto.getId()));
             String resultado = gson.toJson(data);
             oConnection.commit();
             return resultado;
@@ -195,7 +191,6 @@ public class ProductoServiceSpImpl implements TableServiceInterface, ViewService
     public String getAggregateViewOne(Integer id) throws Exception {
         try {
             oConnection.setAutoCommit(false);
-            //falta controlar la transacción a esta altura
             String columns = this.getColumns();
             String prettyColumns = this.getPrettyColumns();
             //String types = this.getTypes();

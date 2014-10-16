@@ -118,6 +118,10 @@ public class JspControl extends HttpServlet {
                 getServletContext().getRequestDispatcher("/jsp/" + ob + "/" + op + ".jsp").forward(request, response);
             }
         } catch (Exception ex) {
+            if (EstadoHelper.getTipo_estado() == Tipo_estado.Debug) {
+                request.setAttribute("contenido", "ERROR: " + ex.getMessage());
+                getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
+            }
             Logger.getLogger(JsonControl.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             //important to close connection

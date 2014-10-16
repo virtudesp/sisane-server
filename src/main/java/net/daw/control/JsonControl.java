@@ -17,7 +17,10 @@
  */
 package net.daw.control;
 
+import com.google.gson.Gson;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -30,6 +33,8 @@ import net.daw.control.operation.specific.implementation.TipoproductoControlOper
 import net.daw.control.route.generic.specific.implementation.DocumentoControlRouteGenSpImpl;
 import net.daw.control.route.specific.implementation.ProductoControlRouteSpImpl;
 import net.daw.control.route.specific.implementation.TipoproductoControlRouteSpImpl;
+import net.daw.helper.EstadoHelper;
+import net.daw.helper.EstadoHelper.Tipo_estado;
 
 /**
  *
@@ -79,6 +84,14 @@ public class JsonControl extends HttpServlet {
             request.setAttribute("contenido", jsonResult);
             getServletContext().getRequestDispatcher("/jsp/messageAjax.jsp").forward(request, response);
         } catch (Exception ex) {
+            if (EstadoHelper.getTipo_estado() == Tipo_estado.Debug) {
+                Map<String, String> data = new HashMap<>();
+                data.put("status", "500");
+                data.put("message", ex.getStackTrace().toString());
+                Gson gson = new Gson();
+                request.setAttribute("contenido", gson.toJson(data));
+                getServletContext().getRequestDispatcher("/jsp/messageAjax.jsp").forward(request, response);
+            }
             Logger.getLogger(JsonControl.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
         }
