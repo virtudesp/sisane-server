@@ -45,11 +45,7 @@ public class BoneConnectionPoolImpl implements ConnectionInterface {
         try {
             connectionPool = new BoneCP(config); // setup the connection pool
         } catch (SQLException e) {
-         
-                RelanzadorExcepciones.lanzar(e);
-                //throw new ServletException("Error: BoneConnectionPoolImpl: newConnection:" + e.getMessage());
-
-            
+            RelanzadorExcepciones.lanzar(e);
         }
         try {
             c = connectionPool.getConnection();
