@@ -29,6 +29,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import net.daw.helper.ExceptionBooster;
 import net.daw.helper.FilterBeanHelper;
 
 public class MysqlDataSpImpl implements DataInterface {
@@ -42,19 +43,21 @@ public class MysqlDataSpImpl implements DataInterface {
     @Override
     public int removeOne(int intId, String strTabla) throws Exception {
         PreparedStatement oPreparedStatement = null;
+        int intResult = 0;
         try {
             String strSQL = "DELETE FROM " + strTabla + " WHERE id = ?";
             oPreparedStatement = (PreparedStatement) connection.prepareStatement(strSQL);
             oPreparedStatement.setInt(1, intId);
-            int intResult = oPreparedStatement.executeUpdate();
-            return intResult;
-        } catch (SQLException e) {
-            throw new Exception("mysql.deleteOne: Error al eliminar el registro: " + e.getMessage());
+            intResult = oPreparedStatement.executeUpdate();
+
+        } catch (SQLException ex) {
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":removeOne ERROR  al eliminar el registro: " + ex.getMessage()));
         } finally {
             if (oPreparedStatement != null) {
                 oPreparedStatement.close();
             }
         }
+        return intResult;
     }
 
     @Override
@@ -72,58 +75,57 @@ public class MysqlDataSpImpl implements DataInterface {
                 oResultSet.next();
                 id = oResultSet.getInt(1);
             }
-            return id;
-        } catch (SQLException e) {
-            throw new Exception("mysql.insertOne: Error al insertar el registro: " + e.getMessage());
+        } catch (SQLException ex) {
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":insertOne ERROR  al insertar el registro: " + ex.getMessage()));
         } finally {
             if (oPreparedStatement != null) {
                 oPreparedStatement.close();
             }
         }
+        return id;
     }
 
     @Override
     public int setNull(int intId, String strTabla, String strCampo) throws Exception {
         PreparedStatement oPreparedStatement = null;
+        int intResult = 0;
         try {
             String strSQL = "UPDATE " + strTabla + " SET " + strCampo + " = null WHERE id = ?";
             oPreparedStatement = (PreparedStatement) connection.prepareStatement(strSQL);
             oPreparedStatement.setInt(1, intId);
-            int intResult = oPreparedStatement.executeUpdate();
-            return intResult;
-        } catch (SQLException e) {
-            throw new Exception("mysql.setNull: Error al modificar el registro: " + e.getMessage());
+            intResult = oPreparedStatement.executeUpdate();
+        } catch (SQLException ex) {
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":setNull ERROR  al modificar el registro: " + ex.getMessage()));
         } finally {
             if (oPreparedStatement != null) {
                 oPreparedStatement.close();
             }
-
         }
+        return intResult;
     }
 
     @Override
     public int updateOne(int intId, String strTabla, String strCampo, String strValor) throws Exception {
-
+        int intResult = 0;
         PreparedStatement oPreparedStatement = null;
         try {
             String strSQL = "UPDATE " + strTabla + " SET " + strCampo + " = '" + strValor + "' WHERE id = ?";
             oPreparedStatement = (PreparedStatement) connection.prepareStatement(strSQL);
             oPreparedStatement.setInt(1, intId);
-            int intResult = oPreparedStatement.executeUpdate();
-            return intResult;
-        } catch (SQLException e) {
-            throw new Exception("mysql.updateOne: Error al modificar el registro: " + e.getMessage());
+            intResult = oPreparedStatement.executeUpdate();
+        } catch (SQLException ex) {
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":updateOne ERROR  al modificar el registro: " + ex.getMessage()));
         } finally {
             if (oPreparedStatement != null) {
                 oPreparedStatement.close();
             }
-
         }
+        return intResult;
     }
 
     @Override
     public String getId(String strTabla, String strCampo, String strValor) throws Exception {
-
+        String strResult = null;
         Statement oStatement = null;
         ResultSet oResultSet;
         try {
@@ -131,22 +133,21 @@ public class MysqlDataSpImpl implements DataInterface {
             String strSQL = "SELECT id FROM " + strTabla + " WHERE " + strCampo + "='" + strValor + "'";
             oResultSet = oStatement.executeQuery(strSQL);
             if (oResultSet.next()) {
-                return oResultSet.getString("id");
-            } else {
-                return null;
+                strResult = oResultSet.getString("id");
             }
         } catch (SQLException ex) {
-            throw new Exception("mysql.getId: No se ha podido realizar la consulta: " + ex.getMessage());
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getId ERROR: No se ha podido realizar la consulta: " + ex.getMessage()));
         } finally {
             if (oStatement != null) {
                 oStatement.close();
             }
-
         }
+        return strResult;
     }
 
     @Override
     public String getOne(String strTabla, String strCampo, int id) throws Exception {
+        String strResult = null;
         PreparedStatement oPreparedStatement = null;
         ResultSet oResultSet;
         try {
@@ -155,18 +156,16 @@ public class MysqlDataSpImpl implements DataInterface {
             oPreparedStatement.setInt(1, id);
             oResultSet = oPreparedStatement.executeQuery();
             if (oResultSet.next()) {
-                return oResultSet.getString(strCampo);
-            } else {
-                return null;
+                strResult = oResultSet.getString(strCampo);
             }
         } catch (SQLException ex) {
-            throw new Exception("mysql.getOne: No se ha podido realizar la consulta: " + ex.getMessage());
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getOne ERROR: No se ha podido realizar la consulta: " + ex.getMessage()));
         } finally {
             if (oPreparedStatement != null) {
                 oPreparedStatement.close();
             }
-
         }
+        return strResult;
     }
 
 //    @Override
@@ -189,28 +188,26 @@ public class MysqlDataSpImpl implements DataInterface {
 //
 //        }
 //    }
-
     @Override
     public Boolean existsOne(String strTabla, int id) throws Exception {
-
         int result = 0;
         Statement oStatement = null;
         try {
             oStatement = (Statement) connection.createStatement();
-            String strSQL = "SELECT count(*) FROM " + strTabla + " WHERE 1=1";
+            String strSQL = "SELECT COUNT(*) FROM " + strTabla + " WHERE 1=1";
             ResultSet rs = oStatement.executeQuery(strSQL);
             while (rs.next()) {
                 result = rs.getInt("COUNT(*)");
             }
-            return (result > 0);
-        } catch (SQLException e) {
-            throw new Exception("mysql.existsOne: Error en la consulta: " + e.getMessage());
+        } catch (SQLException ex) {
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":existsOne ERROR: En la consulta: " + ex.getMessage()));
         } finally {
             if (oStatement != null) {
                 oStatement.close();
             }
 
         }
+        return (result > 0);
     }
 
     @Override
@@ -255,7 +252,6 @@ public class MysqlDataSpImpl implements DataInterface {
                 }
 
             }
-
 //            if (hmOrder != null) {
 //                strSQL += " ORDER BY";
 //                for (Map.Entry oPar : hmOrder.entrySet()) {
@@ -270,15 +266,15 @@ public class MysqlDataSpImpl implements DataInterface {
                     intResult++;
                 }
             }
-            return intResult;
-        } catch (SQLException e) {
-            throw new Exception("mysql.getPages: Error en la consulta: " + e.getMessage());
+        } catch (SQLException ex) {
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPages ERROR: En la consulta: " + ex.getMessage()));
         } finally {
             if (oStatement != null) {
                 oStatement.close();
             }
 
         }
+        return intResult;
     }
 
     @Override
@@ -325,24 +321,22 @@ public class MysqlDataSpImpl implements DataInterface {
             while (oResultSet.next()) {
                 intResult = oResultSet.getInt("COUNT(*)");
             }
-            return intResult;
-        } catch (SQLException e) {
-            throw new Exception("mysql.getCount: Error en la consulta: " + e.getMessage());
+        } catch (SQLException ex) {
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getCount ERROR: En la consulta: " + ex.getMessage()));
         } finally {
             if (oStatement != null) {
                 oStatement.close();
             }
-
         }
+        return intResult;
     }
 
     @Override
     public ArrayList<String> getColumnsName(String strTabla) throws Exception {
-
+        ArrayList<String> vector = null;
         Statement oStatement = null;
         try {
-            ArrayList<String> vector = new ArrayList<>();
-
+            vector = new ArrayList<>();
             oStatement = connection.createStatement();
             String strSQL = "SHOW FULL COLUMNS FROM " + strTabla;
             ResultSet oResultSet = oStatement.executeQuery(strSQL);
@@ -357,24 +351,23 @@ public class MysqlDataSpImpl implements DataInterface {
                     vector.add(oResultSet.getString("Field"));
                 }
             }
-            return vector;
-        } catch (SQLException e) {
-            throw new Exception("mysql.getColumnsName: Error en la consulta: " + e.getMessage());
+        } catch (SQLException ex) {
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getColumnsName ERROR: En la consulta: " + ex.getMessage()));
         } finally {
             if (oStatement != null) {
                 oStatement.close();
             }
 
         }
+        return vector;
     }
 
     @Override
     public ArrayList<String> getPrettyColumns(String strTabla) throws Exception {
-
+        ArrayList<String> vector = null;
         Statement oStatement = null;
         try {
-            ArrayList<String> vector = new ArrayList<>();
-
+            vector = new ArrayList<>();
             oStatement = connection.createStatement();
             //String strSQL = "SELECT id FROM " + strTabla + " WHERE 1=1 ";
             String strSQL = "SHOW FULL COLUMNS FROM " + strTabla;
@@ -389,15 +382,15 @@ public class MysqlDataSpImpl implements DataInterface {
 //                    }
 //                }
             }
-            return vector;
-        } catch (SQLException e) {
-            throw new Exception("mysql.getPrettyColumns: Error en la consulta: " + e.getMessage());
+        } catch (SQLException ex) {
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPrettyColumns ERROR: En la consulta: " + ex.getMessage()));
         } finally {
             if (oStatement != null) {
                 oStatement.close();
             }
 
         }
+        return vector;
     }
 
 //    public ArrayList<Integer> getPageFromSQL(String strSql) throws Exception {
@@ -435,12 +428,11 @@ public class MysqlDataSpImpl implements DataInterface {
 //    }
     @Override
     public ArrayList<Integer> getPage(String strTabla, int intRegsPerPage, int intPagina, ArrayList<FilterBeanHelper> alFilter, HashMap<String, String> hmOrder) throws Exception {
-
+        ArrayList<Integer> vector = null;
         Statement oStatement = null;
         try {
-            ArrayList<Integer> vector = new ArrayList<>();
+            vector = new ArrayList<>();
             int intOffset;
-
             oStatement = (Statement) connection.createStatement();
             intOffset = Math.max(((intPagina - 1) * intRegsPerPage), 0);
             String strSQL = "SELECT id FROM " + strTabla + " WHERE 1=1 ";
@@ -488,15 +480,15 @@ public class MysqlDataSpImpl implements DataInterface {
             while (oResultSet.next()) {
                 vector.add(oResultSet.getInt("id"));
             }
-            return vector;
-        } catch (SQLException e) {
-            throw new Exception("mysql.getPage: Error en la consulta: " + e.getMessage());
+
+        } catch (SQLException ex) {
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPage ERROR: En la consulta: " + ex.getMessage()));
         } finally {
             if (oStatement != null) {
                 oStatement.close();
             }
-
         }
+        return vector;
     }
 
     @Override
@@ -508,14 +500,9 @@ public class MysqlDataSpImpl implements DataInterface {
                 oStatement = (Statement) connection.createStatement();
                 String strSQL = "DELETE FROM " + strTabla + " WHERE id = " + iterador.next();
                 oStatement.executeUpdate(strSQL);
-
             }
-        } catch (SQLException e) {
-            try {
-                throw new Exception("mysql.removeSomeId: Error al eliminar el registro: " + e.getMessage());
-            } catch (Exception ex) {
-                Logger.getLogger(MysqlDataSpImpl.class.getName()).log(Level.SEVERE, null, ex);
-            }
+        } catch (SQLException ex) {
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":removeSomeId ERROR: En la consulta: " + ex.getMessage()));
         } finally {
             if (oStatement != null) {
                 oStatement.close();
@@ -530,9 +517,8 @@ public class MysqlDataSpImpl implements DataInterface {
             oStatement = (Statement) connection.createStatement();
             String strSQL = "DELETE FROM " + strTabla + " WHERE " + campo + " like " + valor;
             oStatement.executeUpdate(strSQL);
-
-        } catch (SQLException e) {
-            throw new Exception("mysql.deleteOne: Error al eliminar el registro: " + e.getMessage());
+        } catch (SQLException ex) {
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":deleteOne ERROR: En la consulta: " + ex.getMessage()));
         } finally {
             if (oStatement != null) {
                 oStatement.close();

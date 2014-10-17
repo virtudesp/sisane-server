@@ -21,12 +21,9 @@ import com.jolbox.bonecp.BoneCP;
 import com.jolbox.bonecp.BoneCPConfig;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.servlet.ServletException;
 import net.daw.connection.publicinterface.ConnectionInterface;
 import net.daw.helper.ConnectionClassHelper;
-import net.daw.helper.RelanzadorExcepciones;
+import net.daw.helper.ExceptionBooster;
 
 public class BoneConnectionPoolImpl implements ConnectionInterface {
 
@@ -44,13 +41,13 @@ public class BoneConnectionPoolImpl implements ConnectionInterface {
         config.setPartitionCount(1);
         try {
             connectionPool = new BoneCP(config); // setup the connection pool
-        } catch (SQLException e) {
-            RelanzadorExcepciones.lanzar(e);
+        } catch (SQLException ex) {
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":newConnection ERROR al crear la clase BoneCP: " + ex.getMessage()));
         }
         try {
             c = connectionPool.getConnection();
-        } catch (SQLException e) {
-            RelanzadorExcepciones.lanzar(e);
+        } catch (SQLException ex) {
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":newConnection ERROR al conectarse: " + ex.getMessage()));
         }
         return c;
     }

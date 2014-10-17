@@ -17,18 +17,17 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-
 package net.daw.helper;
 
-public class RelanzadorExcepciones {
+public class ExceptionBooster {
 
-    public static RuntimeException lanzar(Exception ex) {
-        RelanzadorExcepciones.<RuntimeException>lanzarComoUnchecked(ex);
+    public static void boost(Exception ex) {
+        ExceptionBooster.<RuntimeException>throwAsUnchecked(ex);
 
         throw new AssertionError("Esta línea  nunca se ejecutará pero Java no lo sabe");
     }
 
-    private static <T extends Exception> void lanzarComoUnchecked(Exception toThrow) throws T {
+    private static <T extends Exception> void throwAsUnchecked(Exception toThrow) throws T {
         throw (T) toThrow;
     }
 }

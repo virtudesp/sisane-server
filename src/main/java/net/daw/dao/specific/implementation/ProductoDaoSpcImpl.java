@@ -26,14 +26,15 @@ import net.daw.dao.publicinterface.MetaDaoInterface;
 import net.daw.dao.publicinterface.TableDaoInterface;
 import net.daw.dao.publicinterface.ViewDaoInterface;
 import net.daw.data.specific.implementation.MysqlDataSpImpl;
+import net.daw.helper.ExceptionBooster;
 import net.daw.helper.FilterBeanHelper;
 
-public class ProductoDaoSpcImpl implements ViewDaoInterface<ProductoBeanGenSpImpl>,TableDaoInterface<ProductoBeanGenSpImpl> , MetaDaoInterface {
+public class ProductoDaoSpcImpl implements ViewDaoInterface<ProductoBeanGenSpImpl>, TableDaoInterface<ProductoBeanGenSpImpl>, MetaDaoInterface {
 
     private final String strTableName = "producto";
     private final String strClassName = "ProductoDaoSpcImpl";
-    private final MysqlDataSpImpl oMysql;
-    private final String strView;
+    private MysqlDataSpImpl oMysql = null;
+    private String strView = null;
     private Connection connection = null;
 
     public ProductoDaoSpcImpl(String view, Connection pooledConnection) throws Exception {
@@ -41,31 +42,31 @@ public class ProductoDaoSpcImpl implements ViewDaoInterface<ProductoBeanGenSpImp
             connection = pooledConnection;
             strView = view;
             oMysql = new MysqlDataSpImpl(connection);
-        } catch (Exception e) {
-            throw new Exception(strClassName + ".constructor: Error: " + e.getMessage());
+        } catch (Exception ex) {
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":constructor ERROR: " + ex.getMessage()));
         }
     }
 
     @Override
     public int getPages(int intRegsPerPag, ArrayList<FilterBeanHelper> hmFilter) throws Exception {
-        int pages;
+        int pages = 0;
         try {
             pages = oMysql.getPages(strTableName, intRegsPerPag, hmFilter);
-            return pages;
-        } catch (Exception e) {
-            throw new Exception(strClassName + ".getPages: Error: " + e.getMessage());
+        } catch (Exception ex) {
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPages ERROR: " + ex.getMessage()));
         }
+        return pages;
     }
 
     @Override
     public int getCount(ArrayList<FilterBeanHelper> hmFilter) throws Exception {
-        int pages;
+        int pages = 0;
         try {
             pages = oMysql.getCount(strTableName, hmFilter);
-            return pages;
-        } catch (Exception e) {
-            throw new Exception(strClassName + ".getCount: Error: " + e.getMessage());
+        } catch (Exception ex) {
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getCount ERROR: " + ex.getMessage()));
         }
+        return pages;
     }
 
     @Override
@@ -79,10 +80,10 @@ public class ProductoDaoSpcImpl implements ViewDaoInterface<ProductoBeanGenSpImp
                 ProductoBeanGenSpImpl oProductoBean = new ProductoBeanGenSpImpl(iterador.next());
                 arrProducto.add(this.get(oProductoBean));
             }
-            return arrProducto;
-        } catch (Exception e) {
-            throw new Exception(strClassName + ".getPage: Error: " + e.getMessage());
+        } catch (Exception ex) {
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPage ERROR: " + ex.getMessage()));
         }
+        return arrProducto;
     }
 
     @Override
@@ -97,8 +98,8 @@ public class ProductoDaoSpcImpl implements ViewDaoInterface<ProductoBeanGenSpImp
                     oProductoBean.setPrecio(Double.parseDouble(oMysql.getOne(strTableName, "precio", oProductoBean.getId())));
                     oProductoBean.setId_tipoProducto(Integer.parseInt(oMysql.getOne(strTableName, "id_tipoproducto", oProductoBean.getId())));
                 }
-            } catch (Exception e) {
-                throw new Exception(strClassName + ".get: Error: " + e.getMessage());
+            } catch (Exception ex) {
+                ExceptionBooster.boost(new Exception(this.getClass().getName() + ":get ERROR: " + ex.getMessage()));
             }
         } else {
             oProductoBean.setId(0);
@@ -116,8 +117,8 @@ public class ProductoDaoSpcImpl implements ViewDaoInterface<ProductoBeanGenSpImp
             oMysql.updateOne(oProductoBean.getId(), strTableName, "descripcion", oProductoBean.getDescripcion());
             oMysql.updateOne(oProductoBean.getId(), strTableName, "precio", oProductoBean.getPrecio().toString());
             oMysql.updateOne(oProductoBean.getId(), strTableName, "id_tipoproducto", oProductoBean.getId_tipoProducto().toString());
-        } catch (Exception e) {
-            throw new Exception(strClassName + ".set: Error: " + e.getMessage());
+        } catch (Exception ex) {
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":set ERROR: " + ex.getMessage()));
         }
         return oProductoBean;
     }
@@ -127,8 +128,8 @@ public class ProductoDaoSpcImpl implements ViewDaoInterface<ProductoBeanGenSpImp
         int result = 0;
         try {
             result = oMysql.removeOne(oProductoBean.getId(), strTableName);
-        } catch (Exception e) {
-            throw new Exception(strClassName + ".remove: Error: " + e.getMessage());
+        } catch (Exception ex) {
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":remove ERROR: " + ex.getMessage()));
         }
         return result;
     }
@@ -138,9 +139,8 @@ public class ProductoDaoSpcImpl implements ViewDaoInterface<ProductoBeanGenSpImp
         ArrayList<String> alColumns = null;
         try {
             alColumns = oMysql.getColumnsName(strTableName);
-        } catch (Exception e) {
-            throw new Exception(strClassName + ".getColumnsNames: Error: " + e.getMessage());
-        } finally {
+        } catch (Exception ex) {
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getColumnsNames ERROR: " + ex.getMessage()));
         }
         return alColumns;
     }
@@ -150,9 +150,8 @@ public class ProductoDaoSpcImpl implements ViewDaoInterface<ProductoBeanGenSpImp
         ArrayList<String> alColumns = null;
         try {
             alColumns = oMysql.getPrettyColumns(strTableName);
-        } catch (Exception e) {
-            throw new Exception(strClassName + ".getPrettyColumnsNames: Error: " + e.getMessage());
-        } finally {
+        } catch (Exception ex) {
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPrettyColumnsNames ERROR: " + ex.getMessage()));
         }
         return alColumns;
     }
