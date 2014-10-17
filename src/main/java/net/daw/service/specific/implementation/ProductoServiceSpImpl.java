@@ -28,6 +28,7 @@ import javax.servlet.ServletException;
 import net.daw.bean.generic.specific.implementation.ProductoBeanGenSpImpl;
 import net.daw.dao.specific.implementation.ProductoDaoSpcImpl;
 import net.daw.helper.EncodingUtilHelper;
+import net.daw.helper.ExceptionBooster;
 import net.daw.helper.FilterBeanHelper;
 import net.daw.service.publicinterface.MetaServiceInterface;
 import net.daw.service.publicinterface.TableServiceInterface;
@@ -45,6 +46,7 @@ public class ProductoServiceSpImpl implements TableServiceInterface, ViewService
 
     @Override
     public String remove(Integer id) throws Exception {
+        String resultado = null;
         try {
             oConnection.setAutoCommit(false);
             ProductoDaoSpcImpl oProductoDAO = new ProductoDaoSpcImpl("Producto", oConnection);
@@ -54,17 +56,18 @@ public class ProductoServiceSpImpl implements TableServiceInterface, ViewService
             data.put("status", "200");
             data.put("message", "se ha eliminado el registro con id=" + oProducto.getId());
             Gson gson = new Gson();
-            String resultado = gson.toJson(data);
+            resultado = gson.toJson(data);
             oConnection.commit();
-            return resultado;
-        } catch (Exception e) {
+        } catch (Exception ex) {
             oConnection.rollback();
-            throw new ServletException("remove: ProductoServiceSpcImpl Error: " + e.getMessage());
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":remove ERROR: " + ex.getMessage()));
         }
+        return resultado;
     }
 
     @Override
     public String set(String jason) throws Exception {
+        String resultado = null;
         try {
             oConnection.setAutoCommit(false);
             ProductoDaoSpcImpl oProductoDAO = new ProductoDaoSpcImpl("Producto", oConnection);
@@ -76,17 +79,18 @@ public class ProductoServiceSpImpl implements TableServiceInterface, ViewService
             Map<String, String> data = new HashMap<>();
             data.put("status", "200");
             data.put("message", Integer.toString(oProducto.getId()));
-            String resultado = gson.toJson(data);
+            resultado = gson.toJson(data);
             oConnection.commit();
-            return resultado;
-        } catch (Exception e) {
+        } catch (Exception ex) {
             oConnection.rollback();
-            throw new ServletException("save: ProductoServiceSpcImpl Error: " + e.getMessage());
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":set ERROR: " + ex.getMessage()));
         }
+        return resultado;
     }
 
     @Override
     public String get(Integer id) throws Exception {
+        String data = null;
         try {
             oConnection.setAutoCommit(false);
             ProductoDaoSpcImpl oProductoDAO = new ProductoDaoSpcImpl("Producto", oConnection);
@@ -95,17 +99,18 @@ public class ProductoServiceSpImpl implements TableServiceInterface, ViewService
             GsonBuilder gsonBuilder = new GsonBuilder();
             gsonBuilder.setDateFormat("dd/MM/yyyy");
             Gson gson = gsonBuilder.create();
-            String data = gson.toJson(oProducto);
+            data = gson.toJson(oProducto);
             oConnection.commit();
-            return data;
-        } catch (Exception e) {
+        } catch (Exception ex) {
             oConnection.rollback();
-            throw new ServletException("get: ProductoServiceSpcImpl Error: " + e.getMessage());
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":get ERROR: " + ex.getMessage()));
         }
+        return data;
     }
 
     @Override
     public String getPage(int intRegsPerPag, int intPage, ArrayList<FilterBeanHelper> alFilter, HashMap<String, String> hmOrder) throws Exception {
+        String data = null;
         try {
             oConnection.setAutoCommit(false);
             ProductoDaoSpcImpl oProductoDAO = new ProductoDaoSpcImpl("Producto", oConnection);
@@ -113,104 +118,113 @@ public class ProductoServiceSpImpl implements TableServiceInterface, ViewService
             GsonBuilder gsonBuilder = new GsonBuilder();
             gsonBuilder.setDateFormat("dd/MM/yyyy");
             Gson gson = gsonBuilder.create();
-            String data = gson.toJson(oProductos);
+            data = gson.toJson(oProductos);
             data = "{\"list\":" + data + "}";
             oConnection.commit();
-            return data;
-        } catch (Exception e) {
+        } catch (Exception ex) {
             oConnection.rollback();
-            throw new ServletException("getPage: ProductoServiceSpcImpl Error: " + e.getMessage());
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPage ERROR: " + ex.getMessage()));
         }
+        return data;
     }
 
     @Override
     public String getPages(int intRegsPerPag, ArrayList<FilterBeanHelper> alFilter) throws Exception {
+        String data = null;
         try {
             oConnection.setAutoCommit(false);
             ProductoDaoSpcImpl oProductoDAO = new ProductoDaoSpcImpl("Producto", oConnection);
             int pages = oProductoDAO.getPages(intRegsPerPag, alFilter);
-            String data = "{\"data\":\"" + Integer.toString(pages) + "\"}";
+            data = "{\"data\":\"" + Integer.toString(pages) + "\"}";
             oConnection.commit();
-            return data;
-        } catch (Exception e) {
+        } catch (Exception ex) {
             oConnection.rollback();
-            throw new ServletException("getPages: ProductoServiceSpcImpl Error: " + e.getMessage());
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPages ERROR: " + ex.getMessage()));
         }
+        return data;
     }
 
     @Override
     public String getCount(ArrayList<FilterBeanHelper> alFilter) throws Exception {
+        String data = null;
         try {
             oConnection.setAutoCommit(false);
             ProductoDaoSpcImpl oProductoDAO = new ProductoDaoSpcImpl("Producto", oConnection);
             int registers = oProductoDAO.getCount(alFilter);
-            String data = "{\"data\":\"" + Integer.toString(registers) + "\"}";
+            data = "{\"data\":\"" + Integer.toString(registers) + "\"}";
             oConnection.commit();
-            return data;
-        } catch (Exception e) {
+
+        } catch (Exception ex) {
             oConnection.rollback();
-            throw new ServletException("getCount: ProductoServiceSpcImpl Error: " + e.getMessage());
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getCount ERROR: " + ex.getMessage()));
         }
+        return data;
     }
 
     @Override
     public String getPrettyColumns() throws Exception {
+        String data = null;
+        ArrayList<String> alColumns = null;
         try {
-            oConnection.setAutoCommit(false);
-            ArrayList<String> alColumns = null;
+            oConnection.setAutoCommit(false);            
             ProductoDaoSpcImpl oProductoDAO = new ProductoDaoSpcImpl("Producto", oConnection);
             alColumns = oProductoDAO.getPrettyColumnsNames();
-            String data = new Gson().toJson(alColumns);
+            data = new Gson().toJson(alColumns);
             data = "{\"data\":" + data + "}";
             oConnection.commit();
-            return data;
-        } catch (Exception e) {
+        } catch (Exception ex) {
             oConnection.rollback();
-            throw new ServletException("getPrettyColumns: ProductoServiceSpcImpl Error: " + e.getMessage());
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPrettyColumns ERROR: " + ex.getMessage()));
         }
+        return data;
     }
 
     @Override
     public String getColumns() throws Exception {
+        String data = null;
         try {
             oConnection.setAutoCommit(false);
             ArrayList<String> alColumns = null;
             ProductoDaoSpcImpl oProductoDAO = new ProductoDaoSpcImpl("Producto", oConnection);
             alColumns = oProductoDAO.getColumnsNames();
-            String data = new Gson().toJson(alColumns);
+            data = new Gson().toJson(alColumns);
             data = "{\"data\":" + data + "}";
             oConnection.commit();
-            return data;
-        } catch (Exception e) {
+
+        } catch (Exception ex) {
             oConnection.rollback();
-            throw new ServletException("getColumns: ProductoServiceSpcImpl Error: " + e.getMessage());
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getColumns ERROR: " + ex.getMessage()));
         }
+        return data;
     }
 
     @Override
     public String getAggregateViewOne(Integer id) throws Exception {
+        String data = null;
         try {
             oConnection.setAutoCommit(false);
             String columns = this.getColumns();
             String prettyColumns = this.getPrettyColumns();
             //String types = this.getTypes();
             String one = this.get(id);
-            String data = "{\"data\":{"
+            data = "{\"data\":{"
                     + "\"columns\":" + columns
                     + ",\"prettyColumns\":" + prettyColumns
                     // + ",\"types\":" + types
                     + ",\"data\":" + one
                     + "}}";
             oConnection.commit();
-            return data;
-        } catch (Exception e) {
+
+        } catch (Exception ex) {
             oConnection.rollback();
-            throw new ServletException("getAggregateViewOne: ProductoServiceSpcImpl Error: " + e.getMessage());
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getAggregateViewOne ERROR: " + ex.getMessage()));            
         }
+                    return data;
     }
 
     @Override
     public String getAggregateViewSome(int intRegsPerPag, int intPage, ArrayList<FilterBeanHelper> alFilter, HashMap<String, String> hmOrder) throws Exception {
+        String data = null;
         try {
             oConnection.setAutoCommit(false);
             String columns = this.getColumns();
@@ -219,7 +233,7 @@ public class ProductoServiceSpImpl implements TableServiceInterface, ViewService
             String page = this.getPage(intRegsPerPag, intPage, alFilter, hmOrder);
             String pages = this.getPages(intRegsPerPag, alFilter);
             String registers = this.getCount(alFilter);
-            String data = "{\"data\":{"
+            data = "{\"data\":{"
                     + "\"columns\":" + columns
                     + ",\"prettyColumns\":" + prettyColumns
                     // + ",\"types\":" + types
@@ -228,11 +242,11 @@ public class ProductoServiceSpImpl implements TableServiceInterface, ViewService
                     + ",\"registers\":" + registers
                     + "}}";
             oConnection.commit();
-            return data;
-        } catch (Exception e) {
+            
+        } catch (Exception ex) {
             oConnection.rollback();
-            throw new ServletException("getAggregateViewSome: ProductoServiceSpcImpl Error: " + e.getMessage());
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getAggregateViewSome ERROR: " + ex.getMessage()));            
         }
-    }
-
+        return data;
+    }   
 }
