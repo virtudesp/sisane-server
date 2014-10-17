@@ -21,8 +21,8 @@ import java.sql.Connection;
 
 public interface ConnectionInterface {
 
-    public Connection newConnection();
+    public Connection newConnection() throws Exception;
 
-    public void disposeConnection();
+    public void disposeConnection() throws Exception;
 
 }

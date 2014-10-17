@@ -26,7 +26,7 @@ import net.daw.helper.ConnectionClassHelper;
 public class DriverManagerConnectionImpl implements ConnectionInterface {
 
     @Override
-    public Connection newConnection() {
+    public Connection newConnection() throws Exception {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             Connection connection = DriverManager.getConnection("jdbc:mysql://" + ConnectionClassHelper.getDatabaseHost() + ":" + ConnectionClassHelper.getDatabasePort() + "/" + ConnectionClassHelper.getDatabaseName(), ConnectionClassHelper.getDatabaseLogin(), ConnectionClassHelper.getDatabasePassword());
@@ -37,7 +37,7 @@ public class DriverManagerConnectionImpl implements ConnectionInterface {
     }
 
     @Override
-    public void disposeConnection() {
+    public void disposeConnection() throws Exception {
     }
 
 }

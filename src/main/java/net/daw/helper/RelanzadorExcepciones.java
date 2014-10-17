@@ -1,6 +1,8 @@
 /*
- * Copyright (C) July 2014 Rafael Aznar
- *
+ * Copyright (C) 2014 
+ * 
+ * source:http://www.cursohibernate.es/doku.php?id=patrones:excepciones
+ * 
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
@@ -16,16 +18,17 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
-package net.daw.control.operation.generic.specific.implementation;
+package net.daw.helper;
 
-import java.lang.reflect.InvocationTargetException;
-import javax.servlet.http.HttpServletRequest;
-import net.daw.control.operation.generic.implementation.ControlOperationGenImpl;
+public class RelanzadorExcepciones {
 
-public class DocumentoControlOperationGenSpImpl extends ControlOperationGenImpl {
+    public static RuntimeException lanzar(Exception ex) {
+        RelanzadorExcepciones.<RuntimeException>lanzarComoUnchecked(ex);
 
-    public DocumentoControlOperationGenSpImpl(HttpServletRequest request) throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, Exception {
-        super(request);
+        throw new AssertionError("Esta línea  nunca se ejecutará pero Java no lo sabe");
     }
-    
+
+    private static <T extends Exception> void lanzarComoUnchecked(Exception toThrow) throws T {
+        throw (T) toThrow;
+    }
 }

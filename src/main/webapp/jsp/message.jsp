@@ -16,7 +16,5 @@
  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 --%>
 
-<div class="row">
 <h1><%=request.getAttribute("title")%></h1>
 <h5><%=request.getAttribute("message")%></h5>
-</div>

@@ -32,7 +32,7 @@ public class DataSourceConnectionImpl implements ConnectionInterface {
     InitialContext initialContext;
 
     @Override
-    public Connection newConnection() {
+    public Connection newConnection() throws Exception {
 
         try {
             initialContext = new InitialContext();
@@ -45,7 +45,7 @@ public class DataSourceConnectionImpl implements ConnectionInterface {
     }
 
     @Override
-    public void disposeConnection() {
+    public void disposeConnection() throws Exception {
         try {
             if (initialContext != null) {
                 initialContext.close();

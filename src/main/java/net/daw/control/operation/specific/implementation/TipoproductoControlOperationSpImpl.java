@@ -36,7 +36,7 @@ public class TipoproductoControlOperationSpImpl implements ControlOperationInter
     //private final String operation, object;
     private final TipoproductoServiceSpImpl oTipoproductoService;
 
-    public TipoproductoControlOperationSpImpl(HttpServletRequest request) throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+    public TipoproductoControlOperationSpImpl(HttpServletRequest request) throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, Exception {
         DataConnectionSource = new BoneConnectionPoolImpl();
         oConnection = DataConnectionSource.newConnection();
         oTipoproductoService = new TipoproductoServiceSpImpl("Tipoproducto", oConnection);
@@ -187,7 +187,7 @@ public class TipoproductoControlOperationSpImpl implements ControlOperationInter
         return result;
     }
 
-    private void closeDB() throws SQLException {
+    private void closeDB() throws SQLException, Exception {
         if (oConnection != null) {
             oConnection.close();
         }

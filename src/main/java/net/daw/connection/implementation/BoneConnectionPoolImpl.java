@@ -23,38 +23,44 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.servlet.ServletException;
 import net.daw.connection.publicinterface.ConnectionInterface;
 import net.daw.helper.ConnectionClassHelper;
+import net.daw.helper.RelanzadorExcepciones;
 
 public class BoneConnectionPoolImpl implements ConnectionInterface {
 
     private BoneCP connectionPool = null;
 
     @Override
-    public Connection newConnection() {
+    public Connection newConnection() throws Exception {
         Connection c = null;
         BoneCPConfig config = new BoneCPConfig();
         config.setJdbcUrl(ConnectionClassHelper.getConnectionChain());
-        config.setUsername("root");
-        config.setPassword("bitnami");
+        config.setUsername(ConnectionClassHelper.getDatabaseLogin());
+        config.setPassword(ConnectionClassHelper.getDatabasePassword());
         config.setMinConnectionsPerPartition(1);
         config.setMaxConnectionsPerPartition(2);
         config.setPartitionCount(1);
         try {
             connectionPool = new BoneCP(config); // setup the connection pool
-        } catch (SQLException ex) {
-            Logger.getLogger(BoneConnectionPoolImpl.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException e) {
+         
+                RelanzadorExcepciones.lanzar(e);
+                //throw new ServletException("Error: BoneConnectionPoolImpl: newConnection:" + e.getMessage());
+
+            
         }
         try {
             c = connectionPool.getConnection();
-        } catch (SQLException ex) {
-            Logger.getLogger(BoneConnectionPoolImpl.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException e) {
+            RelanzadorExcepciones.lanzar(e);
         }
         return c;
     }
 
     @Override
-    public void disposeConnection() {
+    public void disposeConnection() throws Exception {
         if (connectionPool != null) {
             connectionPool.close();
         }

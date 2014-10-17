@@ -37,7 +37,7 @@ public class ControlOperationGenImpl implements ControlOperationInterface {
     private final String operation, object;
     private final TableServiceGenImpl process;
 
-    public ControlOperationGenImpl(HttpServletRequest request) throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+    public ControlOperationGenImpl(HttpServletRequest request) throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, Exception {
         DataConnectionSource = new BoneConnectionPoolImpl();
         connection = DataConnectionSource.newConnection();
         operation = request.getParameter("op");
@@ -191,7 +191,7 @@ public class ControlOperationGenImpl implements ControlOperationInterface {
         return result;
     }
 
-    private void closeDB() throws SQLException {
+    private void closeDB() throws SQLException, Exception {
         if (connection != null) {
             connection.close();
         }

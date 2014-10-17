@@ -81,7 +81,7 @@ public class JsonControl extends HttpServlet {
                     jsonResult = oTipoproductoRoute.execute(request, oTipoproductoControlOperation);
                 }
             } else {
-                jsonResult="{\"error\" : \"No tienes sesión\"}";
+                jsonResult = "{\"error\" : \"No tienes sesión\"}";
             }
             request.setAttribute("contenido", jsonResult);
             getServletContext().getRequestDispatcher("/jsp/messageAjax.jsp").forward(request, response);
@@ -89,7 +89,14 @@ public class JsonControl extends HttpServlet {
             if (EstadoHelper.getTipo_estado() == Tipo_estado.Debug) {
                 Map<String, String> data = new HashMap<>();
                 data.put("status", "500");
-                data.put("message", ex.getStackTrace().toString());
+                data.put("message", "ERROR: " + ex.getMessage() );
+                Gson gson = new Gson();
+                request.setAttribute("contenido", gson.toJson(data));
+                getServletContext().getRequestDispatcher("/jsp/messageAjax.jsp").forward(request, response);
+            } else {
+                Map<String, String> data = new HashMap<>();
+                data.put("status", "500");
+                data.put("message", "Ha ocurrido un error en la aplicación. Contacte con el administrador.");
                 Gson gson = new Gson();
                 request.setAttribute("contenido", gson.toJson(data));
                 getServletContext().getRequestDispatcher("/jsp/messageAjax.jsp").forward(request, response);
@@ -115,7 +122,7 @@ public class JsonControl extends HttpServlet {
             processRequest(request, response);
 
         } catch (Exception ex) {
-            Logger.getLogger(JsonControl.class.getName()).log(Level.SEVERE, null, ex);
+            //Logger.getLogger(JsonControl.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
@@ -135,7 +142,7 @@ public class JsonControl extends HttpServlet {
             processRequest(request, response);
 
         } catch (Exception ex) {
-            Logger.getLogger(JsonControl.class.getName()).log(Level.SEVERE, null, ex);
+            //Logger.getLogger(JsonControl.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

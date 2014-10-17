@@ -36,7 +36,7 @@ public class ProductoControlOperationSpImpl implements ControlOperationInterface
     //private final String operation, object;
     private final ProductoServiceSpImpl oProductoService;
 
-    public ProductoControlOperationSpImpl(HttpServletRequest request) throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+    public ProductoControlOperationSpImpl(HttpServletRequest request) throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, Exception {
         DataConnectionSource = new BoneConnectionPoolImpl();
         oConnection = DataConnectionSource.newConnection();
         oProductoService = new ProductoServiceSpImpl("Producto", oConnection);
@@ -187,7 +187,7 @@ public class ProductoControlOperationSpImpl implements ControlOperationInterface
         return result;
     }
 
-    private void closeDB() throws SQLException {
+    private void closeDB() throws SQLException, Exception {
         if (oConnection != null) {
             oConnection.close();
         }

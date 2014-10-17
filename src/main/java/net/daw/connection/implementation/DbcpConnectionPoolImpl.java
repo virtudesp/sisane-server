@@ -30,7 +30,7 @@ public class DbcpConnectionPoolImpl implements ConnectionInterface {
     BasicDataSource basicDataSource = null;
 
     @Override
-    public Connection newConnection() {
+    public Connection newConnection() throws Exception {
         Connection c = null;
         basicDataSource = new BasicDataSource();
         basicDataSource.setDriverClassName("com.mysql.jdbc.Driver");
@@ -46,7 +46,7 @@ public class DbcpConnectionPoolImpl implements ConnectionInterface {
     }
 
     @Override
-    public void disposeConnection() {
+    public void disposeConnection() throws Exception {
         try {
             if (basicDataSource != null) {
                 basicDataSource.close();

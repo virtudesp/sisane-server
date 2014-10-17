@@ -57,8 +57,7 @@ public class JspControl extends HttpServlet {
                 e.printStackTrace();
                 return;
             }
-            DataConnectionSource = new BoneConnectionPoolImpl();
-            connection = DataConnectionSource.newConnection();
+
             //HTTP headers
             response.setHeader("page language", "java");
             response.setHeader("contentType", "text/html");
@@ -93,13 +92,37 @@ public class JspControl extends HttpServlet {
                     String login = request.getParameter("login");
                     String pass = request.getParameter("password");
                     if (!login.equals("") && !pass.equals("")) {
-                        oUsuario.setLogin(login);
-                        oUsuario.setPassword(pass);
-                        UsuarioDaoGenSpImpl oUsuarioDao = new UsuarioDaoGenSpImpl(connection);
-                        oUsuario = oUsuarioDao.getFromLogin(oUsuario);
-                        if (oUsuario.getId() != 0) {
-                            //oUsuario = oUsuarioDao.type(oUsuario); //fill user level -> pending
-                            request.getSession().setAttribute("usuarioBean", oUsuario);
+                        try {
+                            DataConnectionSource = new BoneConnectionPoolImpl();
+                            connection = DataConnectionSource.newConnection();
+                            oUsuario.setLogin(login);
+                            oUsuario.setPassword(pass);
+                            UsuarioDaoGenSpImpl oUsuarioDao = new UsuarioDaoGenSpImpl(connection);
+                            oUsuario = oUsuarioDao.getFromLogin(oUsuario);
+                            if (oUsuario.getId() != 0) {
+                                //oUsuario = oUsuarioDao.type(oUsuario); //fill user level -> pending
+                                request.getSession().setAttribute("usuarioBean", oUsuario);
+                            }
+                        } catch (Exception ex) {
+                            if (EstadoHelper.getTipo_estado() == Tipo_estado.Debug) {
+                                request.setAttribute("title", "Ha ocurrido un error en la aplicación (modo debug)");
+                                request.setAttribute("message", "<pre>ERROR: " + ex.getMessage() + "</pre>");
+                                request.setAttribute("contenido", "/jsp/message.jsp");
+                                getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
+                            } else {
+                                request.setAttribute("title", "Ha ocurrido un error en la aplicación");
+                                request.setAttribute("message", "Por favor, contacte con el administrador.");
+                                request.setAttribute("contenido", "/jsp/message.jsp");
+                                getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
+                            }
+                            Logger.getLogger(JsonControl.class.getName()).log(Level.SEVERE, null, ex);
+                        } finally {
+                            if (connection != null) {
+                                connection.close();
+                            }
+                            if (DataConnectionSource != null) {
+                                DataConnectionSource.disposeConnection();
+                            }
                         }
                     }
                 }
@@ -119,17 +142,19 @@ public class JspControl extends HttpServlet {
             }
         } catch (Exception ex) {
             if (EstadoHelper.getTipo_estado() == Tipo_estado.Debug) {
-                request.setAttribute("contenido", "ERROR: " + ex.getMessage());
+                request.setAttribute("title", "Ha ocurrido un error en la aplicación (modo debug)");
+                request.setAttribute("message", "<pre>ERROR: " + ex.getMessage() + "</pre>");
+                request.setAttribute("contenido", "/jsp/message.jsp");
+                getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
+            } else {
+                request.setAttribute("title", "Ha ocurrido un error en la aplicación");
+                request.setAttribute("message", "Por favor, contacte con el administrador.");
+                request.setAttribute("contenido", "/jsp/message.jsp");
                 getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
             }
             Logger.getLogger(JsonControl.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            //important to close connection
-            if (connection != null) {
-                connection.close();
-            }
-            DataConnectionSource.disposeConnection();
         }
+
     }
 
 // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -146,12 +171,14 @@ public class JspControl extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (Exception ex) {
-            if (EstadoHelper.getTipo_estado() == Tipo_estado.Debug) {
-                PrintWriter out = response.getWriter();
-                out.println("<html><body><h1>Application error</h1><strong>Message:</strong> " + ex + "<body></html>");
-            } else {
-                Logger.getLogger(JspControl.class.getName()).log(Level.SEVERE, null, ex);
-            }
+//            if (EstadoHelper.getTipo_estado() == Tipo_estado.Debug) {
+//                PrintWriter out = response.getWriter();
+//                out.println("<html><body><h1>Application error</h1><strong>Message:</strong> " + ex + "<body></html>");
+//
+//            } else {
+//                Logger.getLogger(JspControl.class
+//                        .getName()).log(Level.SEVERE, null, ex);
+//            }
 
         }
     }
@@ -169,12 +196,14 @@ public class JspControl extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (Exception ex) {
-            if (EstadoHelper.getTipo_estado() == Tipo_estado.Debug) {
-                PrintWriter out = response.getWriter();
-                out.println("<html><body><h1>Application error</h1><strong>Message:</strong> " + ex + "<body></html>");
-            } else {
-                Logger.getLogger(JspControl.class.getName()).log(Level.SEVERE, null, ex);
-            }
+//            if (EstadoHelper.getTipo_estado() == Tipo_estado.Debug) {
+//                PrintWriter out = response.getWriter();
+//                out.println("<html><body><h1>Application error</h1><strong>Message:</strong> " + ex + "<body></html>");
+//
+//            } else {
+//                Logger.getLogger(JspControl.class
+//                        .getName()).log(Level.SEVERE, null, ex);
+//            }
         }
     }
 
