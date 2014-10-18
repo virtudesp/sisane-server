@@ -27,13 +27,13 @@ import net.daw.connection.implementation.BoneConnectionPoolImpl;
 import net.daw.connection.publicinterface.ConnectionInterface;
 import net.daw.control.operation.publicinterface.ControlOperationInterface;
 import net.daw.helper.FilterBeanHelper;
+import net.daw.helper.parameterCooker;
 import net.daw.service.specific.implementation.ProductoServiceSpImpl;
 
 public class ProductoControlOperationSpImpl implements ControlOperationInterface {
 
     private ConnectionInterface DataConnectionSource = null;
     private Connection oConnection = null;
-    //private final String operation, object;
     private final ProductoServiceSpImpl oProductoService;
 
     public ProductoControlOperationSpImpl(HttpServletRequest request) throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, Exception {
@@ -44,14 +44,14 @@ public class ProductoControlOperationSpImpl implements ControlOperationInterface
 
     @Override
     public String get(HttpServletRequest request) throws Exception {
-        String result = oProductoService.get(Integer.parseInt(request.getParameter("id")));
+        String result = oProductoService.get(parameterCooker.prepareId(request));
         closeDB();
         return result;
     }
 
     @Override
     public String getaggregateviewone(HttpServletRequest request) throws Exception {
-        String result = oProductoService.getAggregateViewOne(Integer.parseInt(request.getParameter("id")));
+        String result = oProductoService.getAggregateViewOne(parameterCooker.prepareId(request));
         closeDB();
         return result;
     }
@@ -70,75 +70,12 @@ public class ProductoControlOperationSpImpl implements ControlOperationInterface
         return result;
     }
 
-    private Integer prepareRpp(HttpServletRequest request) {
-        int intRegsPerPag;
-        if (request.getParameter("rpp") == null) {
-            intRegsPerPag = 10;
-        } else {
-            intRegsPerPag = Integer.parseInt(request.getParameter("rpp"));
-        }
-        return intRegsPerPag;
-    }
-
-    private Integer preparePage(HttpServletRequest request) {
-        int intPage;
-        if (request.getParameter("page") == null) {
-            intPage = 1;
-        } else {
-            intPage = Integer.parseInt(request.getParameter("page"));
-        }
-        return intPage;
-    }
-
-    private ArrayList<FilterBeanHelper> prepareFilter(HttpServletRequest request) {
-        ArrayList<FilterBeanHelper> alFilter = new ArrayList<>();
-        if (request.getParameter("filter") != null) {
-            if (request.getParameter("filteroperator") != null) {
-                if (request.getParameter("filtervalue") != null) {
-                    FilterBeanHelper oFilterBean = new FilterBeanHelper();
-                    oFilterBean.setFilter(request.getParameter("filter"));
-                    oFilterBean.setFilterOperator(request.getParameter("filteroperator"));
-                    oFilterBean.setFilterValue(request.getParameter("filtervalue"));
-                    oFilterBean.setFilterOrigin("user");
-                    alFilter.add(oFilterBean);
-                }
-            }
-        }
-        if (request.getParameter("systemfilter") != null) {
-            if (request.getParameter("systemfilteroperator") != null) {
-                if (request.getParameter("systemfiltervalue") != null) {
-                    FilterBeanHelper oFilterBean = new FilterBeanHelper();
-                    oFilterBean.setFilter(request.getParameter("systemfilter"));
-                    oFilterBean.setFilterOperator(request.getParameter("systemfilteroperator"));
-                    oFilterBean.setFilterValue(request.getParameter("systemfiltervalue"));
-                    oFilterBean.setFilterOrigin("system");
-                    alFilter.add(oFilterBean);
-                }
-            }
-        }
-        return alFilter;
-    }
-
-    private HashMap<String, String> prepareOrder(HttpServletRequest request) {
-        HashMap<String, String> hmOrder = new HashMap<>();
-        if (request.getParameter("order") != null) {
-            if (request.getParameter("ordervalue") != null) {
-                hmOrder.put(request.getParameter("order"), request.getParameter("ordervalue"));
-            } else {
-                hmOrder = null;
-            }
-        } else {
-            hmOrder = null;
-        }
-        return hmOrder;
-    }
-
     @Override
     public String getpage(HttpServletRequest request) throws Exception {
-        Integer intRegsPerPag = prepareRpp(request);
-        Integer intPage = preparePage(request);
-        ArrayList<FilterBeanHelper> alFilter = prepareFilter(request);
-        HashMap<String, String> hmOrder = prepareOrder(request);
+        Integer intRegsPerPag = parameterCooker.prepareRpp(request);
+        Integer intPage = parameterCooker.preparePage(request);
+        ArrayList<FilterBeanHelper> alFilter = parameterCooker.prepareFilter(request);
+        HashMap<String, String> hmOrder = parameterCooker.prepareOrder(request);
         String result = oProductoService.getPage(intRegsPerPag, intPage, alFilter, hmOrder);
         closeDB();
         return result;
@@ -146,8 +83,8 @@ public class ProductoControlOperationSpImpl implements ControlOperationInterface
 
     @Override
     public String getpages(HttpServletRequest request) throws Exception {
-        Integer intRegsPerPag = prepareRpp(request);
-        ArrayList<FilterBeanHelper> alFilter = prepareFilter(request);
+        Integer intRegsPerPag = parameterCooker.prepareRpp(request);
+        ArrayList<FilterBeanHelper> alFilter = parameterCooker.prepareFilter(request);
         String result = oProductoService.getPages(intRegsPerPag, alFilter);
         closeDB();
         return result;
@@ -155,7 +92,7 @@ public class ProductoControlOperationSpImpl implements ControlOperationInterface
 
     @Override
     public String getregisters(HttpServletRequest request) throws Exception {
-        ArrayList<FilterBeanHelper> alFilter = prepareFilter(request);
+        ArrayList<FilterBeanHelper> alFilter = parameterCooker.prepareFilter(request);
         String result = oProductoService.getCount(alFilter);
         closeDB();
         return result;
@@ -163,10 +100,10 @@ public class ProductoControlOperationSpImpl implements ControlOperationInterface
 
     @Override
     public String getaggregateviewsome(HttpServletRequest request) throws Exception {
-        Integer intRegsPerPag = prepareRpp(request);
-        Integer intPage = preparePage(request);
-        ArrayList<FilterBeanHelper> alFilter = prepareFilter(request);
-        HashMap<String, String> hmOrder = prepareOrder(request);
+        Integer intRegsPerPag = parameterCooker.prepareRpp(request);
+        Integer intPage = parameterCooker.preparePage(request);
+        ArrayList<FilterBeanHelper> alFilter = parameterCooker.prepareFilter(request);
+        HashMap<String, String> hmOrder = parameterCooker.prepareOrder(request);
         String result = oProductoService.getAggregateViewSome(intRegsPerPag, intPage, alFilter, hmOrder);
         closeDB();
         return result;
@@ -174,15 +111,14 @@ public class ProductoControlOperationSpImpl implements ControlOperationInterface
 
     @Override
     public String remove(HttpServletRequest request) throws Exception {
-        String result = oProductoService.remove(Integer.parseInt(request.getParameter("id")));
+        String result = oProductoService.remove(parameterCooker.prepareId(request));
         closeDB();
         return result;
     }
 
     @Override
-    public String set(HttpServletRequest request) throws Exception {
-        String jason = request.getParameter("json").replaceAll("%2F", "/");
-        String result = oProductoService.set(jason);
+    public String set(HttpServletRequest request) throws Exception {              
+        String result = oProductoService.set(parameterCooker.prepareJson(request));
         closeDB();
         return result;
     }

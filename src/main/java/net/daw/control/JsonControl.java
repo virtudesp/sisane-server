@@ -35,6 +35,8 @@ import net.daw.control.route.specific.implementation.ProductoControlRouteSpImpl;
 import net.daw.control.route.specific.implementation.TipoproductoControlRouteSpImpl;
 import net.daw.helper.EstadoHelper;
 import net.daw.helper.EstadoHelper.Tipo_estado;
+import net.daw.helper.ExceptionBooster;
+import net.daw.helper.parameterCooker;
 
 /**
  *
@@ -65,20 +67,24 @@ public class JsonControl extends HttpServlet {
             retardo(0); //debug delay
             String jsonResult = "";
             if (request.getSession().getAttribute("usuarioBean") != null) {
-                if ("documento".equals(request.getParameter("ob"))) {
-                    DocumentoControlRouteGenSpImpl oDocumentoRoute = new DocumentoControlRouteGenSpImpl();
-                    DocumentoControlOperationGenSpImpl oDocumentoControlOperation = new DocumentoControlOperationGenSpImpl(request);
-                    jsonResult = oDocumentoRoute.execute(request, oDocumentoControlOperation);
-                }
-                if ("producto".equals(request.getParameter("ob"))) {
-                    ProductoControlRouteSpImpl oProductoRoute = new ProductoControlRouteSpImpl();
-                    ProductoControlOperationSpImpl oProductoControlOperation = new ProductoControlOperationSpImpl(request);
-                    jsonResult = oProductoRoute.execute(request, oProductoControlOperation);
-                }
-                if ("tipoproducto".equals(request.getParameter("ob"))) {
-                    TipoproductoControlRouteSpImpl oTipoproductoRoute = new TipoproductoControlRouteSpImpl();
-                    TipoproductoControlOperationSpImpl oTipoproductoControlOperation = new TipoproductoControlOperationSpImpl(request);
-                    jsonResult = oTipoproductoRoute.execute(request, oTipoproductoControlOperation);
+                switch (parameterCooker.prepareObject(request)) {
+                    case "documento":
+                        DocumentoControlRouteGenSpImpl oDocumentoRoute = new DocumentoControlRouteGenSpImpl();
+                        DocumentoControlOperationGenSpImpl oDocumentoControlOperation = new DocumentoControlOperationGenSpImpl(request);
+                        jsonResult = oDocumentoRoute.execute(request, oDocumentoControlOperation);
+                        break;
+                    case "producto":
+                        ProductoControlRouteSpImpl oProductoRoute = new ProductoControlRouteSpImpl();
+                        ProductoControlOperationSpImpl oProductoControlOperation = new ProductoControlOperationSpImpl(request);
+                        jsonResult = oProductoRoute.execute(request, oProductoControlOperation);
+                        break;
+                    case "tipoproducto":
+                        TipoproductoControlRouteSpImpl oTipoproductoRoute = new TipoproductoControlRouteSpImpl();
+                        TipoproductoControlOperationSpImpl oTipoproductoControlOperation = new TipoproductoControlOperationSpImpl(request);
+                        jsonResult = oTipoproductoRoute.execute(request, oTipoproductoControlOperation);
+                        break;
+                    default:
+                        ExceptionBooster.boost(new Exception(this.getClass().getName() + ":processRequest ERROR: no such operation"));
                 }
             } else {
                 jsonResult = "{\"error\" : \"No tienes sesión\"}";
@@ -89,7 +95,7 @@ public class JsonControl extends HttpServlet {
             if (EstadoHelper.getTipo_estado() == Tipo_estado.Debug) {
                 Map<String, String> data = new HashMap<>();
                 data.put("status", "500");
-                data.put("message", "ERROR: " + ex.getMessage() );
+                data.put("message", "ERROR: " + ex.getMessage());
                 Gson gson = new Gson();
                 request.setAttribute("contenido", gson.toJson(data));
                 getServletContext().getRequestDispatcher("/jsp/messageAjax.jsp").forward(request, response);

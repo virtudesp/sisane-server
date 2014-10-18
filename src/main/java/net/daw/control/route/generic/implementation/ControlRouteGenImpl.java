@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 rafa
+ * Copyright (C) July 2014 Rafael Aznar
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -17,58 +17,56 @@
  */
 package net.daw.control.route.generic.implementation;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import java.util.HashMap;
-import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import net.daw.control.operation.publicinterface.ControlOperationInterface;
 import net.daw.control.route.publicinterface.ControlRouteInterface;
+import net.daw.helper.ExceptionBooster;
+import net.daw.helper.parameterCooker;
 
 public class ControlRouteGenImpl implements ControlRouteInterface {
 
     @Override
-    public String execute(HttpServletRequest request,ControlOperationInterface oControl ) throws Exception {
-        String operation = request.getParameter("op");
+    public String execute(HttpServletRequest request, ControlOperationInterface oControl) throws Exception {
+        String operation = parameterCooker.prepareOperation(request);
         String jsonResult = "";
-        switch (operation) {
-            case "get":
-                jsonResult = oControl.get(request);
-                break;
-            case "getaggregateviewone":
-                jsonResult = oControl.getaggregateviewone(request);
-                break;
-            case "getprettycolumns":
-                jsonResult = oControl.getprettycolumns(request);
-                break;
-            case "getcolumns":
-                jsonResult = oControl.getcolumns(request);
-                break;
-            case "getpage":
-                jsonResult = oControl.getpage(request);
-                break;
-            case "getpages":
-                jsonResult = oControl.getpages(request);
-                break;
-            case "getregisters":
-                jsonResult = oControl.getregisters(request);
-                break;
-            case "getaggregateviewsome":
-                jsonResult = oControl.getaggregateviewsome(request);
-                break;
-            case "remove":
-                jsonResult = oControl.remove(request);
-                break;
-            case "save":
-                jsonResult = oControl.set(request);
-                break;
-            default:
-                Map<String, String> data = new HashMap<>();
-                data.put("status", "401");
-                data.put("message", "error de operación: la operación no existe");
-                Gson gson = new GsonBuilder().setDateFormat("dd/MM/yyyy").create();
-                jsonResult = gson.toJson(data);
-                break;
+        try {
+            switch (operation) {
+                case "get":
+                    jsonResult = oControl.get(request);
+                    break;
+                case "getaggregateviewone":
+                    jsonResult = oControl.getaggregateviewone(request);
+                    break;
+                case "getprettycolumns":
+                    jsonResult = oControl.getprettycolumns(request);
+                    break;
+                case "getcolumns":
+                    jsonResult = oControl.getcolumns(request);
+                    break;
+                case "getpage":
+                    jsonResult = oControl.getpage(request);
+                    break;
+                case "getpages":
+                    jsonResult = oControl.getpages(request);
+                    break;
+                case "getregisters":
+                    jsonResult = oControl.getregisters(request);
+                    break;
+                case "getaggregateviewsome":
+                    jsonResult = oControl.getaggregateviewsome(request);
+                    break;
+                case "remove":
+                    jsonResult = oControl.remove(request);
+                    break;
+                case "save":
+                    jsonResult = oControl.set(request);
+                    break;
+                default:
+                    ExceptionBooster.boost(new Exception(this.getClass().getName() + ":execute ERROR: error de operación: la operación no existe"));
+                    break;
+            }
+        } catch (Exception ex) {
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":execute ERROR: " + ex.getMessage()));
         }
         return jsonResult;
     }

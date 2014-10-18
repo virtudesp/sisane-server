@@ -90,7 +90,7 @@ public class ProductoDaoSpcImpl implements ViewDaoInterface<ProductoBeanGenSpImp
     public ProductoBeanGenSpImpl get(ProductoBeanGenSpImpl oProductoBean) throws Exception {
         if (oProductoBean.getId() > 0) {
             try {
-                if (!oMysql.existsOne("producto", oProductoBean.getId())) {
+                if (!oMysql.existsOne(strTableName, oProductoBean.getId())) {
                     oProductoBean.setId(0);
                 } else {
                     oProductoBean.setCodigo(oMysql.getOne(strTableName, "codigo", oProductoBean.getId()));

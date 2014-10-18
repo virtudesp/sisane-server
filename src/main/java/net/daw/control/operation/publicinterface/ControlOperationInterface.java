@@ -18,7 +18,6 @@
 package net.daw.control.operation.publicinterface;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 public interface ControlOperationInterface {
 

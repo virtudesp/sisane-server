@@ -18,7 +18,6 @@
 package net.daw.control;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.Connection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -32,6 +31,7 @@ import net.daw.connection.publicinterface.ConnectionInterface;
 import net.daw.dao.generic.specific.implementation.UsuarioDaoGenSpImpl;
 import net.daw.helper.EstadoHelper;
 import net.daw.helper.EstadoHelper.Tipo_estado;
+import net.daw.helper.parameterCooker;
 
 public class JspControl extends HttpServlet {
 
@@ -57,26 +57,15 @@ public class JspControl extends HttpServlet {
                 e.printStackTrace();
                 return;
             }
-
             //HTTP headers
             response.setHeader("page language", "java");
             response.setHeader("contentType", "text/html");
             response.setHeader("pageEncoding", "UTF-8");
             response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
             //parameter loading
-            String op = request.getParameter("op");
-            String ob = request.getParameter("ob");
-            String mode = request.getParameter("mode");
-            //load default values
-            if (op == null) {
-                op = "inicio";
-            }
-            if (ob == null) {
-                ob = "usuario";
-            }
-            if (mode == null) {
-                mode = "wrappered";
-            }
+            String ob = parameterCooker.prepareObject(request);
+            String op = parameterCooker.prepareOperation(request);
+            String mode = parameterCooker.prepareMode(request);
             //security check
             if (request.getSession().getAttribute("usuarioBean") == null) {
                 ob = "usuario";

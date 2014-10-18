@@ -24,7 +24,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import javax.servlet.ServletException;
 import net.daw.bean.generic.specific.implementation.ProductoBeanGenSpImpl;
 import net.daw.dao.specific.implementation.ProductoDaoSpcImpl;
 import net.daw.helper.EncodingUtilHelper;
