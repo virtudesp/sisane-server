@@ -38,8 +38,6 @@ public abstract class ViewServiceGenImpl extends MetaServiceGenImpl implements V
         super(ob, con);
     }
 
-
-
     @Override
     public String get(Integer id) throws Exception {
         try {
@@ -99,10 +97,6 @@ public abstract class ViewServiceGenImpl extends MetaServiceGenImpl implements V
         }
     }
 
-   
-
-  
-
     @Override
     public String getCount(ArrayList<FilterBeanHelper> alFilter) throws Exception {
         try {
@@ -144,10 +138,10 @@ public abstract class ViewServiceGenImpl extends MetaServiceGenImpl implements V
             throw new ServletException("getAggregateViewSome: View Error: " + e.getMessage());
         }
     }
-    
+
     @Override
-     public String getAggregateViewOne(Integer id) throws Exception{
-          try {
+    public String getAggregateViewOne(Integer id) throws Exception {
+        try {
             //falta controlar la transacción a esta altura
             String columns = this.getColumns();
             String prettyColumns = this.getPrettyColumns();
@@ -163,5 +157,5 @@ public abstract class ViewServiceGenImpl extends MetaServiceGenImpl implements V
         } catch (Exception e) {
             throw new ServletException("getAggregateViewOne: View Error: " + e.getMessage());
         }
-     }
+    }
 }

@@ -40,7 +40,7 @@ public class ProductoControlOperationSpImpl implements ControlOperationInterface
     public ProductoControlOperationSpImpl(HttpServletRequest request) throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, Exception {
         DataConnectionSource = new BoneConnectionPoolImpl();
         oConnection = DataConnectionSource.newConnection();
-        oProductoService = new ProductoServiceSpImpl("Producto", oConnection);
+        oProductoService = new ProductoServiceSpImpl(parameterCooker.prepareObject(request), oConnection);
     }
 
     @Override

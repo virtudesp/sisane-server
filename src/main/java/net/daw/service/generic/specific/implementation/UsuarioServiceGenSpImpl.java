@@ -22,8 +22,8 @@ import java.sql.Connection;
 
 public class UsuarioServiceGenSpImpl extends TableServiceGenImpl {
 
-    public UsuarioServiceGenSpImpl(Connection con) {
-        super("Usuario", con);
+    public UsuarioServiceGenSpImpl(String strObject, Connection con) {
+        super(strObject, con);
     }
 
 }

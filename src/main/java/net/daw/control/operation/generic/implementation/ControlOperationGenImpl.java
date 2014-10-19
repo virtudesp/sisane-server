@@ -18,7 +18,6 @@
 package net.daw.control.operation.generic.implementation;
 
 import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -35,13 +34,16 @@ public class ControlOperationGenImpl implements ControlOperationInterface {
 
     private ConnectionInterface DataConnectionSource = null;
     private Connection connection = null;
+    private String strObject = null;
+
     private final TableServiceGenImpl process;
 
-    public ControlOperationGenImpl(HttpServletRequest request) throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, Exception {
+    public ControlOperationGenImpl(HttpServletRequest request) throws Exception {
         DataConnectionSource = new BoneConnectionPoolImpl();
         connection = DataConnectionSource.newConnection();
-        Constructor oConstructor = Class.forName("net.daw.service.generic.specific.implementation." + Character.toUpperCase(request.getParameter("ob").charAt(0)) + request.getParameter("ob").substring(1) + "ServiceGenSpImpl").getConstructor(Connection.class);
-        process = (TableServiceGenImpl) oConstructor.newInstance(connection);
+        strObject = parameterCooker.prepareObject(request);
+        Constructor oConstructor = Class.forName("net.daw.service.generic.specific.implementation." + parameterCooker.prepareCamelCaseObject(request) + "ServiceGenSpImpl").getConstructor(String.class ,Connection.class);
+        process = (TableServiceGenImpl) oConstructor.newInstance(strObject, connection);
     }
 
     @Override
@@ -119,7 +121,7 @@ public class ControlOperationGenImpl implements ControlOperationInterface {
     }
 
     @Override
-    public String set(HttpServletRequest request) throws Exception {   
+    public String set(HttpServletRequest request) throws Exception {
         String result = process.set(parameterCooker.prepareJson(request));
         closeDB();
         return result;

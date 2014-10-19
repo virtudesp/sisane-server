@@ -38,8 +38,8 @@ public class ProductoServiceSpImpl implements TableServiceInterface, ViewService
     protected Connection oConnection = null;
     protected String strObjectName = null;
 
-    public ProductoServiceSpImpl(String ob, Connection con) {
-        strObjectName = Character.toUpperCase(ob.charAt(0)) + ob.substring(1);
+    public ProductoServiceSpImpl(String strObject, Connection con) {
+        strObjectName = strObject;
         oConnection = con;
     }
 
@@ -165,7 +165,7 @@ public class ProductoServiceSpImpl implements TableServiceInterface, ViewService
         String data = null;
         ArrayList<String> alColumns = null;
         try {
-            oConnection.setAutoCommit(false);            
+            oConnection.setAutoCommit(false);
             ProductoDaoSpcImpl oProductoDAO = new ProductoDaoSpcImpl(strObjectName, oConnection);
             alColumns = oProductoDAO.getPrettyColumnsNames();
             data = new Gson().toJson(alColumns);
@@ -216,9 +216,9 @@ public class ProductoServiceSpImpl implements TableServiceInterface, ViewService
 
         } catch (Exception ex) {
             oConnection.rollback();
-            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getAggregateViewOne ERROR: " + ex.getMessage()));            
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getAggregateViewOne ERROR: " + ex.getMessage()));
         }
-                    return data;
+        return data;
     }
 
     @Override
@@ -241,11 +241,11 @@ public class ProductoServiceSpImpl implements TableServiceInterface, ViewService
                     + ",\"registers\":" + registers
                     + "}}";
             oConnection.commit();
-            
+
         } catch (Exception ex) {
             oConnection.rollback();
-            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getAggregateViewSome ERROR: " + ex.getMessage()));            
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getAggregateViewSome ERROR: " + ex.getMessage()));
         }
         return data;
-    }   
+    }
 }

@@ -43,6 +43,16 @@ public class parameterCooker {
         return result;
     }
 
+    public static String prepareCamelCaseObject(HttpServletRequest request) {
+        String result = null;
+        if (request.getParameter("ob") == null) {
+            result = "Usuario";
+        } else {
+            result = Character.toUpperCase(request.getParameter("ob").charAt(0)) + request.getParameter("ob").substring(1);
+        }
+        return result;
+    }
+
     public static int prepareId(HttpServletRequest request) {
         int result = 0;
         if (request.getParameter("id") == null) {

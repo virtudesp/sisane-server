@@ -40,7 +40,7 @@ public class TipoproductoControlOperationSpImpl implements ControlOperationInter
     public TipoproductoControlOperationSpImpl(HttpServletRequest request) throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, Exception {
         DataConnectionSource = new BoneConnectionPoolImpl();
         oConnection = DataConnectionSource.newConnection();
-        oTipoproductoService = new TipoproductoServiceSpImpl("Tipoproducto", oConnection);
+        oTipoproductoService = new TipoproductoServiceSpImpl(parameterCooker.prepareObject(request), oConnection);
     }
 
     @Override

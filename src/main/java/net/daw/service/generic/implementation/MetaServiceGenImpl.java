@@ -15,7 +15,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-
 package net.daw.service.generic.implementation;
 
 import com.google.gson.Gson;
@@ -27,20 +26,20 @@ import javax.servlet.ServletException;
 import net.daw.dao.generic.implementation.TableDaoGenImpl;
 import net.daw.service.publicinterface.MetaServiceInterface;
 
-
 public class MetaServiceGenImpl implements MetaServiceInterface {
-        protected Connection oConnection = null;
+
+    protected Connection oConnection = null;
     protected String strObjectName = null;
 
     public MetaServiceGenImpl(String ob, Connection con) {
         strObjectName = Character.toUpperCase(ob.charAt(0)) + ob.substring(1);
         oConnection = con;
     }
-    
-       @Override
+
+    @Override
     public String getPrettyColumns() throws Exception {
         try {
-            oConnection.setAutoCommit(false);            
+            oConnection.setAutoCommit(false);
             Constructor c = Class.forName("net.daw.dao.generic.specific.implementation." + strObjectName + "DaoGenSpImpl").getConstructor(Connection.class);
             TableDaoGenImpl oDao = (TableDaoGenImpl) c.newInstance(oConnection);
             ArrayList<String> alColumns = null;

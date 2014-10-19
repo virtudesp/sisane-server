@@ -15,7 +15,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-
 package net.daw.service.generic.specific.implementation;
 
 import net.daw.service.generic.implementation.TableServiceGenImpl;
@@ -26,8 +25,8 @@ import net.daw.dao.generic.specific.implementation.DocumentoDaoGenSpImpl;
 
 public class DocumentoServiceGenSpImpl extends TableServiceGenImpl {
 
-    public DocumentoServiceGenSpImpl(Connection con) {
-        super("Documento", con);
+    public DocumentoServiceGenSpImpl(String strObject, Connection con) {
+        super(strObject, con);
     }
 
     public String getContenido(Integer id) throws Exception {
