@@ -28,9 +28,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import net.daw.control.operation.generic.specific.implementation.DocumentoControlOperationGenSpImpl;
+import net.daw.control.operation.generic.specific.implementation.TipodocumentoControlOperationGenSpImpl;
+import net.daw.control.operation.generic.specific.implementation.UsuarioControlOperationGenSpImpl;
 import net.daw.control.operation.specific.implementation.ProductoControlOperationSpImpl;
 import net.daw.control.operation.specific.implementation.TipoproductoControlOperationSpImpl;
 import net.daw.control.route.generic.specific.implementation.DocumentoControlRouteGenSpImpl;
+import net.daw.control.route.generic.specific.implementation.TipodocumentoControlRouteGenSpImpl;
+import net.daw.control.route.generic.specific.implementation.UsuarioControlRouteGenSpImpl;
 import net.daw.control.route.specific.implementation.ProductoControlRouteSpImpl;
 import net.daw.control.route.specific.implementation.TipoproductoControlRouteSpImpl;
 import net.daw.helper.EstadoHelper;
@@ -55,8 +59,23 @@ public class JsonControl extends HttpServlet {
         try {
             try {
                 Class.forName("com.mysql.jdbc.Driver");
-            } catch (Exception e) {
-                e.printStackTrace();
+            } catch (Exception ex) {
+                if (EstadoHelper.getTipo_estado() == Tipo_estado.Debug) {
+                    Map<String, String> data = new HashMap<>();
+                    data.put("status", "500");
+                    data.put("message", "ERROR: " + ex.getMessage());
+                    Gson gson = new Gson();
+                    request.setAttribute("contenido", gson.toJson(data));
+                    getServletContext().getRequestDispatcher("/jsp/messageAjax.jsp").forward(request, response);
+                } else {
+                    Map<String, String> data = new HashMap<>();
+                    data.put("status", "500");
+                    data.put("message", "Applications server error. Please, contact your administrator.");
+                    Gson gson = new Gson();
+                    request.setAttribute("contenido", gson.toJson(data));
+                    getServletContext().getRequestDispatcher("/jsp/messageAjax.jsp").forward(request, response);
+                }
+                Logger.getLogger(JsonControl.class.getName()).log(Level.SEVERE, null, ex);
                 return;
             }
             //----------------------------------------------------------------------          
@@ -69,6 +88,16 @@ public class JsonControl extends HttpServlet {
                         DocumentoControlOperationGenSpImpl oDocumentoControlOperation = new DocumentoControlOperationGenSpImpl(request);
                         jsonResult = oDocumentoRoute.execute(request, oDocumentoControlOperation);
                         break;
+                    case "tipodocumento":
+                        TipodocumentoControlRouteGenSpImpl oTipodocumentoRoute = new TipodocumentoControlRouteGenSpImpl();
+                        TipodocumentoControlOperationGenSpImpl oTipodocumentoControlOperation = new TipodocumentoControlOperationGenSpImpl(request);
+                        jsonResult = oTipodocumentoRoute.execute(request, oTipodocumentoControlOperation);
+                        break;
+                    case "usuario":
+                        UsuarioControlRouteGenSpImpl oUsuarioRoute = new UsuarioControlRouteGenSpImpl();
+                        UsuarioControlOperationGenSpImpl oUsuarioControlOperation = new UsuarioControlOperationGenSpImpl(request);
+                        jsonResult = oUsuarioRoute.execute(request, oUsuarioControlOperation);
+                        break;                        
                     case "producto":
                         ProductoControlRouteSpImpl oProductoRoute = new ProductoControlRouteSpImpl();
                         ProductoControlOperationSpImpl oProductoControlOperation = new ProductoControlOperationSpImpl(request);
