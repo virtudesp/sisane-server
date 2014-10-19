@@ -94,13 +94,13 @@ public class JspControl extends HttpServlet {
                             }
                         } catch (Exception ex) {
                             if (EstadoHelper.getTipo_estado() == Tipo_estado.Debug) {
-                                request.setAttribute("title", "Ha ocurrido un error en la aplicación (modo debug)");
+                                request.setAttribute("title", "Application server error (debug mode)");
                                 request.setAttribute("message", "<pre>ERROR: " + ex.getMessage() + "</pre>");
                                 request.setAttribute("contenido", "/jsp/message.jsp");
                                 getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
                             } else {
-                                request.setAttribute("title", "Ha ocurrido un error en la aplicación");
-                                request.setAttribute("message", "Por favor, contacte con el administrador.");
+                                request.setAttribute("title", "Application server error.");
+                                request.setAttribute("message", "Please, contact your server administrator.");
                                 request.setAttribute("contenido", "/jsp/message.jsp");
                                 getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
                             }
@@ -131,13 +131,13 @@ public class JspControl extends HttpServlet {
             }
         } catch (Exception ex) {
             if (EstadoHelper.getTipo_estado() == Tipo_estado.Debug) {
-                request.setAttribute("title", "Ha ocurrido un error en la aplicación (modo debug)");
+                request.setAttribute("title", "Application server error (debug mode)");
                 request.setAttribute("message", "<pre>ERROR: " + ex.getMessage() + "</pre>");
                 request.setAttribute("contenido", "/jsp/message.jsp");
                 getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
             } else {
-                request.setAttribute("title", "Ha ocurrido un error en la aplicación");
-                request.setAttribute("message", "Por favor, contacte con el administrador.");
+                request.setAttribute("title", "Application server error");
+                request.setAttribute("message", "Please, contact your server administrator.");
                 request.setAttribute("contenido", "/jsp/message.jsp");
                 getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
             }

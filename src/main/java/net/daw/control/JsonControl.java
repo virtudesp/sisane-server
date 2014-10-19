@@ -38,10 +38,6 @@ import net.daw.helper.EstadoHelper.Tipo_estado;
 import net.daw.helper.ExceptionBooster;
 import net.daw.helper.parameterCooker;
 
-/**
- *
- * @author rafa
- */
 public class JsonControl extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
@@ -87,7 +83,7 @@ public class JsonControl extends HttpServlet {
                         ExceptionBooster.boost(new Exception(this.getClass().getName() + ":processRequest ERROR: no such operation"));
                 }
             } else {
-                jsonResult = "{\"error\" : \"No tienes sesión\"}";
+                jsonResult = "{\"error\" : \"No active server session\"}";
             }
             request.setAttribute("contenido", jsonResult);
             getServletContext().getRequestDispatcher("/jsp/messageAjax.jsp").forward(request, response);
@@ -102,7 +98,7 @@ public class JsonControl extends HttpServlet {
             } else {
                 Map<String, String> data = new HashMap<>();
                 data.put("status", "500");
-                data.put("message", "Ha ocurrido un error en la aplicación. Contacte con el administrador.");
+                data.put("message", "Applications server error. Please, contact your administrator.");
                 Gson gson = new Gson();
                 request.setAttribute("contenido", gson.toJson(data));
                 getServletContext().getRequestDispatcher("/jsp/messageAjax.jsp").forward(request, response);

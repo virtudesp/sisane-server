@@ -31,17 +31,13 @@ import net.daw.helper.FilterBeanHelper;
 
 public class ProductoDaoSpcImpl implements ViewDaoInterface<ProductoBeanGenSpImpl>, TableDaoInterface<ProductoBeanGenSpImpl>, MetaDaoInterface {
 
-    private final String strTableName = "producto";
-    private final String strClassName = "ProductoDaoSpcImpl";
+    private String strTableName = null;
     private MysqlDataSpImpl oMysql = null;
-    private String strView = null;
-    private Connection connection = null;
 
-    public ProductoDaoSpcImpl(String view, Connection pooledConnection) throws Exception {
-        try {
-            connection = pooledConnection;
-            strView = view;
-            oMysql = new MysqlDataSpImpl(connection);
+    public ProductoDaoSpcImpl(String ob, Connection oConnection) throws Exception {       
+        try {           
+            strTableName = ob;
+            oMysql = new MysqlDataSpImpl(oConnection);
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":constructor ERROR: " + ex.getMessage()));
         }

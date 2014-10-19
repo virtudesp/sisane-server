@@ -31,17 +31,13 @@ import net.daw.helper.FilterBeanHelper;
 
 public class TipoproductoDaoSpcImpl implements ViewDaoInterface<TipoproductoBeanGenSpImpl>, TableDaoInterface<TipoproductoBeanGenSpImpl>, MetaDaoInterface {
 
-    private final String strTableName = "tipoproducto";
-    private final String strClassName = "TipoproductoDaoSpcImpl";
+    private String strTableName = null;
     private MysqlDataSpImpl oMysql = null;
-    private String strView = null;
-    private Connection connection = null;
 
-    public TipoproductoDaoSpcImpl(String view, Connection pooledConnection) throws Exception {
-        try {
-            connection = pooledConnection;
-            strView = view;
-            oMysql = new MysqlDataSpImpl(connection);
+    public TipoproductoDaoSpcImpl(String ob, Connection oConnection) throws Exception {       
+        try {           
+            strTableName = ob;
+            oMysql = new MysqlDataSpImpl(oConnection);
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":constructor ERROR: " + ex.getMessage()));
         }
@@ -92,7 +88,7 @@ public class TipoproductoDaoSpcImpl implements ViewDaoInterface<TipoproductoBean
             try {
                 if (!oMysql.existsOne(strTableName, oTipoproductoBean.getId())) {
                     oTipoproductoBean.setId(0);
-                } else {
+                } else {                    
                     oTipoproductoBean.setDescripcion(oMysql.getOne(strTableName, "descripcion", oTipoproductoBean.getId()));
                 }
             } catch (Exception ex) {

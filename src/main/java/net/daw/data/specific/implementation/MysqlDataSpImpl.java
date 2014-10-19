@@ -27,8 +27,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import net.daw.helper.ExceptionBooster;
 import net.daw.helper.FilterBeanHelper;
 
@@ -49,9 +47,8 @@ public class MysqlDataSpImpl implements DataInterface {
             oPreparedStatement = (PreparedStatement) connection.prepareStatement(strSQL);
             oPreparedStatement.setInt(1, intId);
             intResult = oPreparedStatement.executeUpdate();
-
         } catch (SQLException ex) {
-            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":removeOne ERROR  al eliminar el registro: " + ex.getMessage()));
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":removeOne ERROR removing register: " + ex.getMessage()));
         } finally {
             if (oPreparedStatement != null) {
                 oPreparedStatement.close();
@@ -74,9 +71,11 @@ public class MysqlDataSpImpl implements DataInterface {
                 oResultSet = oPreparedStatement.getGeneratedKeys();
                 oResultSet.next();
                 id = oResultSet.getInt(1);
+            } else {
+                ExceptionBooster.boost(new Exception(this.getClass().getName() + ":insertOne ERROR inserting register"));
             }
         } catch (SQLException ex) {
-            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":insertOne ERROR  al insertar el registro: " + ex.getMessage()));
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":insertOne ERROR inserting register: " + ex.getMessage()));
         } finally {
             if (oPreparedStatement != null) {
                 oPreparedStatement.close();
@@ -95,7 +94,7 @@ public class MysqlDataSpImpl implements DataInterface {
             oPreparedStatement.setInt(1, intId);
             intResult = oPreparedStatement.executeUpdate();
         } catch (SQLException ex) {
-            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":setNull ERROR  al modificar el registro: " + ex.getMessage()));
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":setNull ERROR updating register: " + ex.getMessage()));
         } finally {
             if (oPreparedStatement != null) {
                 oPreparedStatement.close();
@@ -114,7 +113,7 @@ public class MysqlDataSpImpl implements DataInterface {
             oPreparedStatement.setInt(1, intId);
             intResult = oPreparedStatement.executeUpdate();
         } catch (SQLException ex) {
-            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":updateOne ERROR  al modificar el registro: " + ex.getMessage()));
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":updateOne ERROR updating register: " + ex.getMessage()));
         } finally {
             if (oPreparedStatement != null) {
                 oPreparedStatement.close();
@@ -134,9 +133,11 @@ public class MysqlDataSpImpl implements DataInterface {
             oResultSet = oStatement.executeQuery(strSQL);
             if (oResultSet.next()) {
                 strResult = oResultSet.getString("id");
+            } else {
+                ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getId ERROR: ID not exists"));
             }
         } catch (SQLException ex) {
-            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getId ERROR: No se ha podido realizar la consulta: " + ex.getMessage()));
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getId ERROR: Can't process query: " + ex.getMessage()));
         } finally {
             if (oStatement != null) {
                 oStatement.close();
@@ -157,9 +158,11 @@ public class MysqlDataSpImpl implements DataInterface {
             oResultSet = oPreparedStatement.executeQuery();
             if (oResultSet.next()) {
                 strResult = oResultSet.getString(strCampo);
+            } else {
+                ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getOne ERROR: ID not exists: " + id));
             }
-        } catch (SQLException ex) {
-            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getOne ERROR: No se ha podido realizar la consulta: " + ex.getMessage()));
+        } catch (Exception ex) {
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getOne ERROR: Can't process query: " + ex.getMessage()));
         } finally {
             if (oPreparedStatement != null) {
                 oPreparedStatement.close();
@@ -196,11 +199,13 @@ public class MysqlDataSpImpl implements DataInterface {
             oStatement = (Statement) connection.createStatement();
             String strSQL = "SELECT COUNT(*) FROM " + strTabla + " WHERE 1=1";
             ResultSet rs = oStatement.executeQuery(strSQL);
-            while (rs.next()) {
+            if (rs.next()) {
                 result = rs.getInt("COUNT(*)");
+            } else {
+                return false;
             }
         } catch (SQLException ex) {
-            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":existsOne ERROR: En la consulta: " + ex.getMessage()));
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":existsOne ERROR:  Can't process query: " + ex.getMessage()));
         } finally {
             if (oStatement != null) {
                 oStatement.close();
@@ -250,15 +255,7 @@ public class MysqlDataSpImpl implements DataInterface {
                     }
 
                 }
-
             }
-//            if (hmOrder != null) {
-//                strSQL += " ORDER BY";
-//                for (Map.Entry oPar : hmOrder.entrySet()) {
-//                    strSQL += " " + oPar.getKey() + " " + oPar.getValue() + ",";
-//                }
-//                strSQL = strSQL.substring(0, strSQL.length() - 1);
-//            }
             ResultSet oResultSet = oStatement.executeQuery(strSQL);
             while (oResultSet.next()) {
                 intResult = oResultSet.getInt("COUNT(*)") / intRegsPerPage;
@@ -267,12 +264,11 @@ public class MysqlDataSpImpl implements DataInterface {
                 }
             }
         } catch (SQLException ex) {
-            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPages ERROR: En la consulta: " + ex.getMessage()));
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPages ERROR:  Can't process query: " + ex.getMessage()));
         } finally {
             if (oStatement != null) {
                 oStatement.close();
             }
-
         }
         return intResult;
     }
@@ -322,7 +318,7 @@ public class MysqlDataSpImpl implements DataInterface {
                 intResult = oResultSet.getInt("COUNT(*)");
             }
         } catch (SQLException ex) {
-            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getCount ERROR: En la consulta: " + ex.getMessage()));
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getCount ERROR:  Can't process query: " + ex.getMessage()));
         } finally {
             if (oStatement != null) {
                 oStatement.close();
@@ -352,7 +348,7 @@ public class MysqlDataSpImpl implements DataInterface {
                 }
             }
         } catch (SQLException ex) {
-            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getColumnsName ERROR: En la consulta: " + ex.getMessage()));
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getColumnsName ERROR:  Can't process query: " + ex.getMessage()));
         } finally {
             if (oStatement != null) {
                 oStatement.close();
@@ -383,7 +379,7 @@ public class MysqlDataSpImpl implements DataInterface {
 //                }
             }
         } catch (SQLException ex) {
-            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPrettyColumns ERROR: En la consulta: " + ex.getMessage()));
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPrettyColumns ERROR:  Can't process query: " + ex.getMessage()));
         } finally {
             if (oStatement != null) {
                 oStatement.close();
@@ -482,7 +478,7 @@ public class MysqlDataSpImpl implements DataInterface {
             }
 
         } catch (SQLException ex) {
-            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPage ERROR: En la consulta: " + ex.getMessage()));
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPage ERROR:  Can't process query: " + ex.getMessage()));
         } finally {
             if (oStatement != null) {
                 oStatement.close();
@@ -518,7 +514,7 @@ public class MysqlDataSpImpl implements DataInterface {
             String strSQL = "DELETE FROM " + strTabla + " WHERE " + campo + " like " + valor;
             oStatement.executeUpdate(strSQL);
         } catch (SQLException ex) {
-            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":deleteOne ERROR: En la consulta: " + ex.getMessage()));
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":deleteOne ERROR:  Can't process query: " + ex.getMessage()));
         } finally {
             if (oStatement != null) {
                 oStatement.close();

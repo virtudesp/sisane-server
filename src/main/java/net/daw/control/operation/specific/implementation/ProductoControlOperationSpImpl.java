@@ -26,6 +26,7 @@ import javax.servlet.http.HttpServletRequest;
 import net.daw.connection.implementation.BoneConnectionPoolImpl;
 import net.daw.connection.publicinterface.ConnectionInterface;
 import net.daw.control.operation.publicinterface.ControlOperationInterface;
+import net.daw.helper.ExceptionBooster;
 import net.daw.helper.FilterBeanHelper;
 import net.daw.helper.parameterCooker;
 import net.daw.service.specific.implementation.ProductoServiceSpImpl;
@@ -44,89 +45,154 @@ public class ProductoControlOperationSpImpl implements ControlOperationInterface
 
     @Override
     public String get(HttpServletRequest request) throws Exception {
-        String result = oProductoService.get(parameterCooker.prepareId(request));
-        closeDB();
+        String result = null;
+        try {
+            result = oProductoService.get(parameterCooker.prepareId(request));
+            closeDB();
+        } catch (Exception ex) {
+            oConnection.rollback();
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":get ERROR: " + ex.getMessage()));
+        }
         return result;
     }
 
     @Override
     public String getaggregateviewone(HttpServletRequest request) throws Exception {
-        String result = oProductoService.getAggregateViewOne(parameterCooker.prepareId(request));
-        closeDB();
+        String result = null;
+        try {
+            result = oProductoService.getAggregateViewOne(parameterCooker.prepareId(request));
+            closeDB();
+        } catch (Exception ex) {
+            oConnection.rollback();
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getaggregateviewone ERROR: " + ex.getMessage()));
+        }
         return result;
     }
 
     @Override
     public String getprettycolumns(HttpServletRequest request) throws Exception {
-        String result = oProductoService.getPrettyColumns();
-        closeDB();
+        String result = null;
+        try {
+            result = oProductoService.getPrettyColumns();
+            closeDB();
+        } catch (Exception ex) {
+            oConnection.rollback();
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getprettycolumns ERROR: " + ex.getMessage()));
+        }
         return result;
     }
 
     @Override
     public String getcolumns(HttpServletRequest request) throws Exception {
-        String result = oProductoService.getColumns();
-        closeDB();
+        String result = null;
+        try {
+            result = oProductoService.getColumns();
+            closeDB();
+        } catch (Exception ex) {
+            oConnection.rollback();
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getcolumns ERROR: " + ex.getMessage()));
+        }
         return result;
     }
 
     @Override
     public String getpage(HttpServletRequest request) throws Exception {
-        Integer intRegsPerPag = parameterCooker.prepareRpp(request);
-        Integer intPage = parameterCooker.preparePage(request);
-        ArrayList<FilterBeanHelper> alFilter = parameterCooker.prepareFilter(request);
-        HashMap<String, String> hmOrder = parameterCooker.prepareOrder(request);
-        String result = oProductoService.getPage(intRegsPerPag, intPage, alFilter, hmOrder);
-        closeDB();
+        String result = null;
+        try {
+            Integer intRegsPerPag = parameterCooker.prepareRpp(request);
+            Integer intPage = parameterCooker.preparePage(request);
+            ArrayList<FilterBeanHelper> alFilter = parameterCooker.prepareFilter(request);
+            HashMap<String, String> hmOrder = parameterCooker.prepareOrder(request);
+            result = oProductoService.getPage(intRegsPerPag, intPage, alFilter, hmOrder);
+            closeDB();
+        } catch (Exception ex) {
+            oConnection.rollback();
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getpage ERROR: " + ex.getMessage()));
+        }
         return result;
     }
 
     @Override
     public String getpages(HttpServletRequest request) throws Exception {
-        Integer intRegsPerPag = parameterCooker.prepareRpp(request);
-        ArrayList<FilterBeanHelper> alFilter = parameterCooker.prepareFilter(request);
-        String result = oProductoService.getPages(intRegsPerPag, alFilter);
-        closeDB();
+        String result = null;
+        try {
+            Integer intRegsPerPag = parameterCooker.prepareRpp(request);
+            ArrayList<FilterBeanHelper> alFilter = parameterCooker.prepareFilter(request);
+            result = oProductoService.getPages(intRegsPerPag, alFilter);
+            closeDB();
+        } catch (Exception ex) {
+            oConnection.rollback();
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getpages ERROR: " + ex.getMessage()));
+        }
         return result;
     }
 
     @Override
     public String getregisters(HttpServletRequest request) throws Exception {
-        ArrayList<FilterBeanHelper> alFilter = parameterCooker.prepareFilter(request);
-        String result = oProductoService.getCount(alFilter);
-        closeDB();
+        String result = null;
+        try {
+            ArrayList<FilterBeanHelper> alFilter = parameterCooker.prepareFilter(request);
+            result = oProductoService.getCount(alFilter);
+            closeDB();
+        } catch (Exception ex) {
+            oConnection.rollback();
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getregisters ERROR: " + ex.getMessage()));
+        }
         return result;
     }
 
     @Override
     public String getaggregateviewsome(HttpServletRequest request) throws Exception {
-        Integer intRegsPerPag = parameterCooker.prepareRpp(request);
-        Integer intPage = parameterCooker.preparePage(request);
-        ArrayList<FilterBeanHelper> alFilter = parameterCooker.prepareFilter(request);
-        HashMap<String, String> hmOrder = parameterCooker.prepareOrder(request);
-        String result = oProductoService.getAggregateViewSome(intRegsPerPag, intPage, alFilter, hmOrder);
-        closeDB();
+        String result = null;
+        try {
+            Integer intRegsPerPag = parameterCooker.prepareRpp(request);
+            Integer intPage = parameterCooker.preparePage(request);
+            ArrayList<FilterBeanHelper> alFilter = parameterCooker.prepareFilter(request);
+            HashMap<String, String> hmOrder = parameterCooker.prepareOrder(request);
+            result = oProductoService.getAggregateViewSome(intRegsPerPag, intPage, alFilter, hmOrder);
+            closeDB();
+        } catch (Exception ex) {
+            oConnection.rollback();
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getaggregateviewsome ERROR: " + ex.getMessage()));
+        }
         return result;
     }
 
     @Override
     public String remove(HttpServletRequest request) throws Exception {
-        String result = oProductoService.remove(parameterCooker.prepareId(request));
-        closeDB();
+        String result = null;
+        try {
+            result = oProductoService.remove(parameterCooker.prepareId(request));
+            closeDB();
+        } catch (Exception ex) {
+            oConnection.rollback();
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":remove ERROR: " + ex.getMessage()));
+        }
         return result;
     }
 
     @Override
-    public String set(HttpServletRequest request) throws Exception {              
-        String result = oProductoService.set(parameterCooker.prepareJson(request));
-        closeDB();
+    public String set(HttpServletRequest request) throws Exception {
+        String result = null;
+        try {
+            result = oProductoService.set(parameterCooker.prepareJson(request));
+            closeDB();
+        } catch (Exception ex) {
+            oConnection.rollback();
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":set ERROR: " + ex.getMessage()));
+        }
         return result;
     }
 
     private void closeDB() throws SQLException, Exception {
-        if (oConnection != null) {
-            oConnection.close();
+        try {
+            if (oConnection != null) {
+                oConnection.close();
+            }
+            DataConnectionSource.disposeConnection();
+        } catch (Exception ex) {
+            oConnection.rollback();
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":closeDB ERROR: " + ex.getMessage()));
         }
-        DataConnectionSource.disposeConnection();
     }
 }
