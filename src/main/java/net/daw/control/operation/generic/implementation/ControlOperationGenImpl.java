@@ -27,6 +27,7 @@ import net.daw.control.operation.publicinterface.ControlOperationInterface;
 import net.daw.service.generic.implementation.TableServiceGenImpl;
 import net.daw.connection.implementation.BoneConnectionPoolImpl;
 import net.daw.connection.publicinterface.ConnectionInterface;
+import net.daw.helper.ExceptionBooster;
 import net.daw.helper.FilterBeanHelper;
 import net.daw.helper.parameterCooker;
 
@@ -35,15 +36,18 @@ public class ControlOperationGenImpl implements ControlOperationInterface {
     private ConnectionInterface DataConnectionSource = null;
     private Connection connection = null;
     private String strObject = null;
-
-    private final TableServiceGenImpl process;
+    private TableServiceGenImpl process = null;
 
     public ControlOperationGenImpl(HttpServletRequest request) throws Exception {
-        DataConnectionSource = new BoneConnectionPoolImpl();
-        connection = DataConnectionSource.newConnection();
-        strObject = parameterCooker.prepareObject(request);
-        Constructor oConstructor = Class.forName("net.daw.service.generic.specific.implementation." + parameterCooker.prepareCamelCaseObject(request) + "ServiceGenSpImpl").getConstructor(String.class ,Connection.class);
-        process = (TableServiceGenImpl) oConstructor.newInstance(strObject, connection);
+        try {
+            DataConnectionSource = new BoneConnectionPoolImpl();
+            connection = DataConnectionSource.newConnection();
+            strObject = parameterCooker.prepareObject(request);
+            Constructor oConstructor = Class.forName("net.daw.service.generic.specific.implementation." + parameterCooker.prepareCamelCaseObject(request) + "ServiceGenSpImpl").getConstructor(String.class, Connection.class);
+            process = (TableServiceGenImpl) oConstructor.newInstance(strObject, connection);
+        } catch (Exception ex) {
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":ControlOperationGenImpl ERROR: " + ex.getMessage()));
+        }
     }
 
     @Override

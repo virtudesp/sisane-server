@@ -35,12 +35,16 @@ public class ProductoControlOperationSpImpl implements ControlOperationInterface
 
     private ConnectionInterface DataConnectionSource = null;
     private Connection oConnection = null;
-    private final ProductoServiceSpImpl oProductoService;
+    private ProductoServiceSpImpl oProductoService = null;
 
     public ProductoControlOperationSpImpl(HttpServletRequest request) throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, Exception {
-        DataConnectionSource = new BoneConnectionPoolImpl();
-        oConnection = DataConnectionSource.newConnection();
-        oProductoService = new ProductoServiceSpImpl(parameterCooker.prepareObject(request), oConnection);
+        try {
+            DataConnectionSource = new BoneConnectionPoolImpl();
+            oConnection = DataConnectionSource.newConnection();
+            oProductoService = new ProductoServiceSpImpl(parameterCooker.prepareObject(request), oConnection);
+        } catch (Exception ex) {
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":ProductoControlOperationSpImpl ERROR: " + ex.getMessage()));
+        }
     }
 
     @Override
@@ -50,7 +54,6 @@ public class ProductoControlOperationSpImpl implements ControlOperationInterface
             result = oProductoService.get(parameterCooker.prepareId(request));
             closeDB();
         } catch (Exception ex) {
-            oConnection.rollback();
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":get ERROR: " + ex.getMessage()));
         }
         return result;
@@ -63,7 +66,6 @@ public class ProductoControlOperationSpImpl implements ControlOperationInterface
             result = oProductoService.getAggregateViewOne(parameterCooker.prepareId(request));
             closeDB();
         } catch (Exception ex) {
-            oConnection.rollback();
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getaggregateviewone ERROR: " + ex.getMessage()));
         }
         return result;
@@ -76,7 +78,6 @@ public class ProductoControlOperationSpImpl implements ControlOperationInterface
             result = oProductoService.getPrettyColumns();
             closeDB();
         } catch (Exception ex) {
-            oConnection.rollback();
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getprettycolumns ERROR: " + ex.getMessage()));
         }
         return result;
@@ -89,7 +90,6 @@ public class ProductoControlOperationSpImpl implements ControlOperationInterface
             result = oProductoService.getColumns();
             closeDB();
         } catch (Exception ex) {
-            oConnection.rollback();
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getcolumns ERROR: " + ex.getMessage()));
         }
         return result;
@@ -106,7 +106,6 @@ public class ProductoControlOperationSpImpl implements ControlOperationInterface
             result = oProductoService.getPage(intRegsPerPag, intPage, alFilter, hmOrder);
             closeDB();
         } catch (Exception ex) {
-            oConnection.rollback();
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getpage ERROR: " + ex.getMessage()));
         }
         return result;
@@ -121,7 +120,6 @@ public class ProductoControlOperationSpImpl implements ControlOperationInterface
             result = oProductoService.getPages(intRegsPerPag, alFilter);
             closeDB();
         } catch (Exception ex) {
-            oConnection.rollback();
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getpages ERROR: " + ex.getMessage()));
         }
         return result;
@@ -135,7 +133,6 @@ public class ProductoControlOperationSpImpl implements ControlOperationInterface
             result = oProductoService.getCount(alFilter);
             closeDB();
         } catch (Exception ex) {
-            oConnection.rollback();
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getregisters ERROR: " + ex.getMessage()));
         }
         return result;
@@ -152,7 +149,6 @@ public class ProductoControlOperationSpImpl implements ControlOperationInterface
             result = oProductoService.getAggregateViewSome(intRegsPerPag, intPage, alFilter, hmOrder);
             closeDB();
         } catch (Exception ex) {
-            oConnection.rollback();
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getaggregateviewsome ERROR: " + ex.getMessage()));
         }
         return result;
@@ -165,7 +161,6 @@ public class ProductoControlOperationSpImpl implements ControlOperationInterface
             result = oProductoService.remove(parameterCooker.prepareId(request));
             closeDB();
         } catch (Exception ex) {
-            oConnection.rollback();
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":remove ERROR: " + ex.getMessage()));
         }
         return result;
@@ -178,7 +173,6 @@ public class ProductoControlOperationSpImpl implements ControlOperationInterface
             result = oProductoService.set(parameterCooker.prepareJson(request));
             closeDB();
         } catch (Exception ex) {
-            oConnection.rollback();
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":set ERROR: " + ex.getMessage()));
         }
         return result;
@@ -191,7 +185,6 @@ public class ProductoControlOperationSpImpl implements ControlOperationInterface
             }
             DataConnectionSource.disposeConnection();
         } catch (Exception ex) {
-            oConnection.rollback();
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":closeDB ERROR: " + ex.getMessage()));
         }
     }
