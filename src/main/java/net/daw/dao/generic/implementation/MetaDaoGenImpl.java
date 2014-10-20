@@ -21,11 +21,12 @@ import net.daw.dao.publicinterface.MetaDaoInterface;
 import java.sql.Connection;
 import java.util.ArrayList;
 import net.daw.data.specific.implementation.MysqlDataSpImpl;
+import net.daw.helper.ExceptionBooster;
 
 public class MetaDaoGenImpl<TIPO_OBJETO> implements MetaDaoInterface {
 
-    protected final MysqlDataSpImpl oMysql;
-    protected final String strView;
+    protected MysqlDataSpImpl oMysql = null;
+    protected String strView = null;
     protected Connection connection = null;
 
     public MetaDaoGenImpl(String view, Connection pooledConnection) throws Exception {
@@ -33,8 +34,8 @@ public class MetaDaoGenImpl<TIPO_OBJETO> implements MetaDaoInterface {
             connection = pooledConnection;
             strView = view;
             oMysql = new MysqlDataSpImpl(connection);
-        } catch (Exception e) {
-            throw new Exception("GenericMetaDaoImpl.constructor: Error: " + e.getMessage());
+        } catch (Exception ex) {
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":constructor ERROR: " + ex.getMessage()));
         }
     }
 
@@ -43,8 +44,8 @@ public class MetaDaoGenImpl<TIPO_OBJETO> implements MetaDaoInterface {
         ArrayList<String> alColumns = null;
         try {
             alColumns = oMysql.getColumnsName(strView);
-        } catch (Exception e) {
-            throw new Exception("GenericMetaDaoImpl.getColumnsNames: Error: " + e.getMessage());
+        } catch (Exception ex) {
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getColumnsNames ERROR: " + ex.getMessage()));
         }
         return alColumns;
     }
@@ -54,8 +55,8 @@ public class MetaDaoGenImpl<TIPO_OBJETO> implements MetaDaoInterface {
         ArrayList<String> alColumns = null;
         try {
             alColumns = oMysql.getPrettyColumns(strView);
-        } catch (Exception e) {
-            throw new Exception("GenericMetaDaoImpl.getPrettyColumnsNames: Error: " + e.getMessage());
+        } catch (Exception ex) {
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPrettyColumnsNames ERROR: " + ex.getMessage()));
         }
         return alColumns;
     }

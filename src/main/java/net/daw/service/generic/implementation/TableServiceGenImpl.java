@@ -26,10 +26,10 @@ import java.lang.reflect.Constructor;
 import java.sql.Connection;
 import java.util.HashMap;
 import java.util.Map;
-import javax.servlet.ServletException;
 import net.daw.bean.generic.implementation.BeanGenImpl;
 import net.daw.bean.publicinterface.BeanInterface;
 import net.daw.dao.generic.implementation.TableDaoGenImpl;
+import net.daw.helper.ExceptionBooster;
 
 public abstract class TableServiceGenImpl extends ViewServiceGenImpl implements TableServiceInterface, ViewServiceInterface, MetaServiceInterface {
 
@@ -39,6 +39,7 @@ public abstract class TableServiceGenImpl extends ViewServiceGenImpl implements 
 
     @Override
     public String remove(Integer id) throws Exception {
+        String resultado = null;
         try {
             oConnection.setAutoCommit(false);
             BeanGenImpl oGenericBean = (BeanGenImpl) Class.forName("net.daw.bean.generic.specific.implementation." + strObjectName + "BeanGenSpImpl").newInstance();
@@ -55,17 +56,19 @@ public abstract class TableServiceGenImpl extends ViewServiceGenImpl implements 
                 data.put("message", "error");
             }
             Gson gson = new Gson();
-            String resultado = gson.toJson(data);
-            return resultado;
-        } catch (Exception e) {
-            throw new ServletException("RemoveJson: View Error: " + e.getMessage());
+            resultado = gson.toJson(data);
+        } catch (Exception ex) {
+            oConnection.rollback();
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":remove ERROR: " + ex.getMessage()));
         } finally {
             oConnection.commit();
         }
+        return resultado;
     }
 
     @Override
     public String set(String jason) throws Exception {
+        String resultado = null;
         try {
             oConnection.setAutoCommit(false);
             BeanGenImpl oGenericBean = (BeanGenImpl) Class.forName("net.daw.bean.generic.specific.implementation." + strObjectName + "BeanGenSpImpl").newInstance();
@@ -82,13 +85,13 @@ public abstract class TableServiceGenImpl extends ViewServiceGenImpl implements 
                 data.put("status", "error");
                 data.put("message", "error");
             }
-            String resultado = gson.toJson(data);
-            return resultado;
-        } catch (Exception e) {
-            throw new ServletException("SaveJson: View Error: " + e.getMessage());
+            resultado = gson.toJson(data);
+        } catch (Exception ex) {
+            oConnection.rollback();
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":set ERROR: " + ex.getMessage()));
         } finally {
             oConnection.commit();
         }
-
+        return resultado;
     }
 }

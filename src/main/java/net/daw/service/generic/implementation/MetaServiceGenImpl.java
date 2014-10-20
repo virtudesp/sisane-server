@@ -22,8 +22,8 @@ import com.google.gson.GsonBuilder;
 import java.lang.reflect.Constructor;
 import java.sql.Connection;
 import java.util.ArrayList;
-import javax.servlet.ServletException;
 import net.daw.dao.generic.implementation.TableDaoGenImpl;
+import net.daw.helper.ExceptionBooster;
 import net.daw.service.publicinterface.MetaServiceInterface;
 
 public class MetaServiceGenImpl implements MetaServiceInterface {
@@ -38,41 +38,43 @@ public class MetaServiceGenImpl implements MetaServiceInterface {
 
     @Override
     public String getPrettyColumns() throws Exception {
+        String data = null;
         try {
             oConnection.setAutoCommit(false);
             Constructor c = Class.forName("net.daw.dao.generic.specific.implementation." + strObjectName + "DaoGenSpImpl").getConstructor(Connection.class);
             TableDaoGenImpl oDao = (TableDaoGenImpl) c.newInstance(oConnection);
             ArrayList<String> alColumns = null;
-            String data;
             alColumns = oDao.getPrettyColumnsNames();
             GsonBuilder gsonBuilder = new GsonBuilder();
             Gson gson = gsonBuilder.create();
             data = gson.toJson(alColumns);
-            return data;
-        } catch (Exception e) {
-            throw new ServletException("GetJson: View Error: " + e.getMessage());
+        } catch (Exception ex) {
+            oConnection.rollback();
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPrettyColumns ERROR: " + ex.getMessage()));
         } finally {
             oConnection.commit();
         }
+        return data;
     }
 
     @Override
     public String getColumns() throws Exception {
+        String data = null;
         try {
             oConnection.setAutoCommit(false);
             Constructor c = Class.forName("net.daw.dao.generic.specific.implementation." + strObjectName + "DaoGenSpImpl").getConstructor(Connection.class);
             TableDaoGenImpl oDao = (TableDaoGenImpl) c.newInstance(oConnection);
             ArrayList<String> alColumns = null;
-            String data;
             alColumns = oDao.getColumnsNames();
             GsonBuilder gsonBuilder = new GsonBuilder();
             Gson gson = gsonBuilder.create();
             data = gson.toJson(alColumns);
-            return data;
-        } catch (Exception e) {
-            throw new ServletException("GetJson: View Error: " + e.getMessage());
+        } catch (Exception ex) {
+            oConnection.rollback();
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getColumns ERROR: " + ex.getMessage()));
         } finally {
             oConnection.commit();
         }
+        return data;
     }
 }

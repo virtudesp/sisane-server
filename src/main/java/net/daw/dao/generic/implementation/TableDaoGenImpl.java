@@ -25,6 +25,7 @@ import java.lang.reflect.ParameterizedType;
 import java.sql.Connection;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
+import net.daw.helper.ExceptionBooster;
 
 public abstract class TableDaoGenImpl<TIPO_OBJETO> extends ViewDaoGenImpl<TIPO_OBJETO> implements TableDaoInterface<TIPO_OBJETO>, ViewDaoInterface<TIPO_OBJETO>, MetaDaoInterface {
 
@@ -36,7 +37,7 @@ public abstract class TableDaoGenImpl<TIPO_OBJETO> extends ViewDaoGenImpl<TIPO_O
     }
 
     @Override
-    public TIPO_OBJETO set(TIPO_OBJETO oBean) throws Exception {
+    public TIPO_OBJETO set(TIPO_OBJETO oBean) throws Exception {        
         Class<TIPO_OBJETO> tipo = (Class<TIPO_OBJETO>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
         Method metodo_getId = tipo.getMethod("getId");
         Method metodo_setId = tipo.getMethod("setId", Integer.class);
@@ -71,8 +72,8 @@ public abstract class TableDaoGenImpl<TIPO_OBJETO> extends ViewDaoGenImpl<TIPO_O
                     }
                 }
             }
-        } catch (Exception e) {
-            throw new Exception("GenericTableDaoImpl.set: Error: " + e.getMessage());
+        } catch (Exception ex) {
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":set ERROR: " + ex.getMessage()));
         }
         return oBean;
     }
@@ -84,8 +85,8 @@ public abstract class TableDaoGenImpl<TIPO_OBJETO> extends ViewDaoGenImpl<TIPO_O
         Method metodo_getId = tipo.getMethod("getId");
         try {
             result = oMysql.removeOne((Integer) metodo_getId.invoke(oBean), strTabla);
-        } catch (Exception e) {
-            throw new Exception("GenericTableDaoImpl.remove: Error: " + e.getMessage());
+        } catch (Exception ex) {
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":remove ERROR: " + ex.getMessage()));
         }
         return result;
     }

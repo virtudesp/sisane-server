@@ -26,10 +26,10 @@ import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import javax.servlet.ServletException;
 import net.daw.bean.generic.implementation.BeanGenImpl;
 import net.daw.bean.publicinterface.BeanInterface;
 import net.daw.dao.generic.implementation.TableDaoGenImpl;
+import net.daw.helper.ExceptionBooster;
 import net.daw.helper.FilterBeanHelper;
 
 public abstract class ViewServiceGenImpl extends MetaServiceGenImpl implements ViewServiceInterface, MetaServiceInterface {
@@ -40,8 +40,8 @@ public abstract class ViewServiceGenImpl extends MetaServiceGenImpl implements V
 
     @Override
     public String get(Integer id) throws Exception {
+        String data = null;
         try {
-            String data;
             oConnection.setAutoCommit(false);
             BeanGenImpl oGenericBean = (BeanGenImpl) Class.forName("net.daw.bean.generic.specific.implementation." + strObjectName + "BeanGenSpImpl").newInstance();
             Constructor c = Class.forName("net.daw.dao.generic.specific.implementation." + strObjectName + "DaoGenSpImpl").getConstructor(Connection.class);
@@ -52,16 +52,18 @@ public abstract class ViewServiceGenImpl extends MetaServiceGenImpl implements V
             gsonBuilder.setDateFormat("dd/MM/yyyy");
             Gson gson = gsonBuilder.excludeFieldsWithoutExposeAnnotation().create();
             data = gson.toJson(oGenericBean);
-            return data;
-        } catch (Exception e) {
-            throw new ServletException("GetJson: View Error: " + e.getMessage());
+        } catch (Exception ex) {
+            oConnection.rollback();
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":remove ERROR: " + ex.getMessage()));
         } finally {
             oConnection.commit();
         }
+        return data;
     }
 
     @Override
     public String getPage(int intRegsPerPag, int intPage, ArrayList<FilterBeanHelper> alFilter, HashMap<String, String> hmOrder) throws Exception {
+        String data = null;
         try {
             oConnection.setAutoCommit(false);
             BeanGenImpl oGenericBean = (BeanGenImpl) Class.forName("net.daw.bean.generic.specific.implementation." + strObjectName + "BeanGenSpImpl").newInstance();
@@ -71,52 +73,58 @@ public abstract class ViewServiceGenImpl extends MetaServiceGenImpl implements V
             GsonBuilder gsonBuilder = new GsonBuilder();
             gsonBuilder.setDateFormat("dd/MM/yyyy");
             Gson gson = gsonBuilder.excludeFieldsWithoutExposeAnnotation().create();
-            String data = gson.toJson(loGenericBean);
+            data = gson.toJson(loGenericBean);
             data = "{\"list\":" + data + "}";
-            return data;
-        } catch (Exception e) {
-            throw new ServletException("GetpageJson: View Error: " + e.getMessage());
+        } catch (Exception ex) {
+            oConnection.rollback();
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":remove ERROR: " + ex.getMessage()));
         } finally {
             oConnection.commit();
         }
+        return data;
     }
 
     @Override
     public String getPages(int intRegsPerPag, ArrayList<FilterBeanHelper> alFilter) throws Exception {
+        String data = null;
         try {
             oConnection.setAutoCommit(false);
             Constructor c = Class.forName("net.daw.dao.generic.specific.implementation." + strObjectName + "DaoGenSpImpl").getConstructor(Connection.class);
             TableDaoGenImpl oGenericDao = (TableDaoGenImpl) c.newInstance(oConnection);
             int pages = oGenericDao.getPages(intRegsPerPag, alFilter);
-            String data = "{\"data\":\"" + Integer.toString(pages) + "\"}";
-            return data;
-        } catch (Exception e) {
-            throw new ServletException("GetpagesJson: View Error: " + e.getMessage());
+            data = "{\"data\":\"" + Integer.toString(pages) + "\"}";
+        } catch (Exception ex) {
+            oConnection.rollback();
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":remove ERROR: " + ex.getMessage()));
         } finally {
             oConnection.commit();
         }
+        return data;
     }
 
     @Override
     public String getCount(ArrayList<FilterBeanHelper> alFilter) throws Exception {
+        String data = null;
         try {
             oConnection.setAutoCommit(false);
             Constructor c = Class.forName("net.daw.dao.generic.specific.implementation." + strObjectName + "DaoGenSpImpl").getConstructor(Connection.class);
             TableDaoGenImpl oGenericDao = (TableDaoGenImpl) c.newInstance(oConnection);
             int registers = oGenericDao.getCount(alFilter);
-            String data = "{\"data\":\"" + Integer.toString(registers) + "\"}";
+            data = "{\"data\":\"" + Integer.toString(registers) + "\"}";
             return data;
-        } catch (Exception e) {
-            throw new ServletException("GetregistersJson: View Error: " + e.getMessage());
+        } catch (Exception ex) {
+            oConnection.rollback();
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":remove ERROR: " + ex.getMessage()));
         } finally {
             oConnection.commit();
         }
+        return data;
     }
 
     @Override
     //no se utiliza por ahora
     public String getAggregateViewSome(int intRegsPerPag, int intPage, ArrayList<FilterBeanHelper> alFilter, HashMap<String, String> hmOrder) throws Exception {
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String data = null;
         try {
             //falta controlar la transacción a esta altura
             String columns = this.getColumns();
@@ -125,7 +133,7 @@ public abstract class ViewServiceGenImpl extends MetaServiceGenImpl implements V
             String page = this.getPage(intRegsPerPag, intPage, alFilter, hmOrder);
             String pages = this.getPages(intRegsPerPag, alFilter);
             String registers = this.getCount(alFilter);
-            String data = "{\"data\":{"
+            data = "{\"data\":{"
                     + "\"columns\":" + columns
                     + ",\"prettyColumns\":" + prettyColumns
                     // + ",\"types\":" + types
@@ -133,29 +141,31 @@ public abstract class ViewServiceGenImpl extends MetaServiceGenImpl implements V
                     + ",\"pages\":" + pages
                     + ",\"registers\":" + registers
                     + "}}";
-            return data;
-        } catch (Exception e) {
-            throw new ServletException("getAggregateViewSome: View Error: " + e.getMessage());
+        } catch (Exception ex) {
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":remove ERROR: " + ex.getMessage()));
         }
+        return data;
     }
 
     @Override
     public String getAggregateViewOne(Integer id) throws Exception {
+        String data = null;
         try {
             //falta controlar la transacción a esta altura
             String columns = this.getColumns();
             String prettyColumns = this.getPrettyColumns();
             //String types = this.getTypes();
             String one = this.get(id);
-            String data = "{\"data\":{"
+            data = "{\"data\":{"
                     + "\"columns\":" + columns
                     + ",\"prettyColumns\":" + prettyColumns
                     // + ",\"types\":" + types
                     + ",\"data\":" + one
                     + "}}";
             return data;
-        } catch (Exception e) {
-            throw new ServletException("getAggregateViewOne: View Error: " + e.getMessage());
+        } catch (Exception ex) {
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":remove ERROR: " + ex.getMessage()));
         }
+        return data;
     }
 }
