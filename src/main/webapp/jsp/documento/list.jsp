@@ -24,8 +24,7 @@
     ArrayList<String> alColumnsNames;
     Iterator<String> oIterador;
     String strNombreMantenimiento = "documento";
-    Connection connection = (Connection) request.getAttribute("connection");
-    DocumentoDaoGenSpImpl oDocumentoDao = new DocumentoDaoGenSpImpl(connection);
+    Connection connection = (Connection) request.getAttribute("connection");    
 %>
 <div class="row">
     <div class="col-md-12">
