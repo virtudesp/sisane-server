@@ -30,11 +30,13 @@ import javax.servlet.http.HttpServletResponse;
 import net.daw.control.operation.generic.specific.implementation.DocumentoControlOperationGenSpImpl;
 import net.daw.control.operation.generic.specific.implementation.TipodocumentoControlOperationGenSpImpl;
 import net.daw.control.operation.generic.specific.implementation.UsuarioControlOperationGenSpImpl;
+import net.daw.control.operation.specific.implementation.OrdenadorControlOperationSpImpl;
 import net.daw.control.operation.specific.implementation.ProductoControlOperationSpImpl;
 import net.daw.control.operation.specific.implementation.TipoproductoControlOperationSpImpl;
 import net.daw.control.route.generic.specific.implementation.DocumentoControlRouteGenSpImpl;
 import net.daw.control.route.generic.specific.implementation.TipodocumentoControlRouteGenSpImpl;
 import net.daw.control.route.generic.specific.implementation.UsuarioControlRouteGenSpImpl;
+import net.daw.control.route.specific.implementation.OrdenadorControlRouteSpImpl;
 import net.daw.control.route.specific.implementation.ProductoControlRouteSpImpl;
 import net.daw.control.route.specific.implementation.TipoproductoControlRouteSpImpl;
 import net.daw.helper.EstadoHelper;
@@ -97,7 +99,7 @@ public class JsonControl extends HttpServlet {
                         UsuarioControlRouteGenSpImpl oUsuarioRoute = new UsuarioControlRouteGenSpImpl();
                         UsuarioControlOperationGenSpImpl oUsuarioControlOperation = new UsuarioControlOperationGenSpImpl(request);
                         jsonResult = oUsuarioRoute.execute(request, oUsuarioControlOperation);
-                        break;                        
+                        break;
                     case "producto":
                         ProductoControlRouteSpImpl oProductoRoute = new ProductoControlRouteSpImpl();
                         ProductoControlOperationSpImpl oProductoControlOperation = new ProductoControlOperationSpImpl(request);
@@ -107,6 +109,11 @@ public class JsonControl extends HttpServlet {
                         TipoproductoControlRouteSpImpl oTipoproductoRoute = new TipoproductoControlRouteSpImpl();
                         TipoproductoControlOperationSpImpl oTipoproductoControlOperation = new TipoproductoControlOperationSpImpl(request);
                         jsonResult = oTipoproductoRoute.execute(request, oTipoproductoControlOperation);
+                        break;
+                    case "ordenador":
+                        OrdenadorControlRouteSpImpl oOrdenadorRoute = new OrdenadorControlRouteSpImpl();
+                        OrdenadorControlOperationSpImpl oOrdenadorControlOperation = new OrdenadorControlOperationSpImpl(request);
+                        jsonResult = oOrdenadorRoute.execute(request, oOrdenadorControlOperation);
                         break;
                     default:
                         ExceptionBooster.boost(new Exception(this.getClass().getName() + ":processRequest ERROR: no such operation"));

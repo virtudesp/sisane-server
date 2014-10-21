@@ -139,17 +139,17 @@
         <script src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
         -->
 
-        
+
         <script src="js/util.js" charset="UTF-8"></script>
         <script src="js/model.js" charset="UTF-8"></script>
         <script src="js/view.js" charset="UTF-8"></script>
-        <script src="js/viewSpecific.js" charset="UTF-8"></script>
+        <script src="js/viewSpecific.js" charset="UTF-8"></script>      
         <script src="js/routes.js" charset="UTF-8"></script>
         <script src="js/param.js" charset="UTF-8"></script>
         <script src="js/ajax.js" charset="UTF-8"></script>
         <script src="js/control.js" charset="UTF-8"></script> 
         <script src="js/initialization.js" charset="UTF-8"></script>
-        
+
 
         <script type="text/javascript">
 

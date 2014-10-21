@@ -430,40 +430,53 @@ public class MysqlDataSpImpl implements DataInterface {
             vector = new ArrayList<>();
             int intOffset;
             oStatement = (Statement) connection.createStatement();
-            intOffset = Math.max(((intPagina - 1) * intRegsPerPage), 0);
             String strSQL = "SELECT id FROM " + strTabla + " WHERE 1=1 ";
+            String strSQLcount = "SELECT COUNT(*) FROM " + strTabla + " WHERE 1=1 ";
             if (alFilter != null) {
+                String strSQLFilter = "";
                 Iterator iterator = alFilter.iterator();
                 while (iterator.hasNext()) {
                     FilterBeanHelper oFilterBean = (FilterBeanHelper) iterator.next();
                     switch (oFilterBean.getFilterOperator()) {
                         case "like":
-                            strSQL += " AND " + oFilterBean.getFilter() + " LIKE '%" + oFilterBean.getFilterValue() + "%'";
+                            strSQLFilter += " AND " + oFilterBean.getFilter() + " LIKE '%" + oFilterBean.getFilterValue() + "%'";
                             break;
                         case "notlike":
-                            strSQL += " AND " + oFilterBean.getFilter() + " NOT LIKE '%" + oFilterBean.getFilterValue() + "%'";
+                            strSQLFilter += " AND " + oFilterBean.getFilter() + " NOT LIKE '%" + oFilterBean.getFilterValue() + "%'";
                             break;
                         case "equals":
-                            strSQL += " AND " + oFilterBean.getFilter() + " = '" + oFilterBean.getFilterValue() + "'";
+                            strSQLFilter += " AND " + oFilterBean.getFilter() + " = '" + oFilterBean.getFilterValue() + "'";
                             break;
                         case "notequalto":
-                            strSQL += " AND " + oFilterBean.getFilter() + " <> '" + oFilterBean.getFilterValue() + "'";
+                            strSQLFilter += " AND " + oFilterBean.getFilter() + " <> '" + oFilterBean.getFilterValue() + "'";
                             break;
                         case "less":
-                            strSQL += " AND " + oFilterBean.getFilter() + " < " + oFilterBean.getFilterValue() + "";
+                            strSQLFilter += " AND " + oFilterBean.getFilter() + " < " + oFilterBean.getFilterValue() + "";
                             break;
                         case "lessorequal":
-                            strSQL += " AND " + oFilterBean.getFilter() + " <= " + oFilterBean.getFilterValue() + "";
+                            strSQLFilter += " AND " + oFilterBean.getFilter() + " <= " + oFilterBean.getFilterValue() + "";
                             break;
                         case "greater":
-                            strSQL += " AND " + oFilterBean.getFilter() + " > " + oFilterBean.getFilterValue() + "";
+                            strSQLFilter += " AND " + oFilterBean.getFilter() + " > " + oFilterBean.getFilterValue() + "";
                             break;
                         case "greaterorequal":
-                            strSQL += " AND " + oFilterBean.getFilter() + " >= " + oFilterBean.getFilterValue() + "";
+                            strSQLFilter += " AND " + oFilterBean.getFilter() + " >= " + oFilterBean.getFilterValue() + "";
                             break;
                     }
                 }
+                strSQL += strSQLFilter;
+                strSQLcount += strSQLFilter;
+            }            
+            //when limit of pages exceed, show last page
+            ResultSet oResultSet = oStatement.executeQuery(strSQLcount);
+            int intCuenta=0;
+            if (oResultSet.next()) {
+                intCuenta = oResultSet.getInt("COUNT(*)");
             }
+            int maxPaginas=new Double(intCuenta / intRegsPerPage).intValue(); 
+            intPagina=Math.min(intPagina - 1, maxPaginas)+1;
+            intOffset = Math.max(((intPagina - 1) * intRegsPerPage), 0);
+            //--                        
             if (hmOrder != null) {
                 strSQL += " ORDER BY";
                 for (Map.Entry oPar : hmOrder.entrySet()) {
@@ -472,7 +485,7 @@ public class MysqlDataSpImpl implements DataInterface {
                 strSQL = strSQL.substring(0, strSQL.length() - 1);
             }
             strSQL += " LIMIT " + intOffset + " , " + intRegsPerPage;
-            ResultSet oResultSet = oStatement.executeQuery(strSQL);
+            oResultSet = oStatement.executeQuery(strSQL);
             while (oResultSet.next()) {
                 vector.add(oResultSet.getInt("id"));
             }

@@ -17,6 +17,7 @@
  */
 package net.daw.bean.generic.specific.implementation;
 
+import com.google.gson.annotations.Expose;
 import net.daw.bean.generic.implementation.BeanGenImpl;
 import net.daw.bean.publicinterface.BeanInterface;
 
@@ -24,13 +25,18 @@ import net.daw.bean.publicinterface.BeanInterface;
  *
  * @author rafa
  */
-public class ProductoBeanGenSpImpl  extends BeanGenImpl implements BeanInterface {
+public class ProductoBeanGenSpImpl extends BeanGenImpl implements BeanInterface {
 
-
+    @Expose
     private String codigo = "";
+    @Expose
     private String descripcion = "";
+    @Expose
     private Double precio = 0.0;
-    private Integer id_tipoproducto = 0;
+    @Expose(serialize = false)
+    private Integer id_tipoproducto = 0; //importante inicializar a 0 las claves ajenas
+    @Expose(deserialize = false)
+    private TipoproductoBeanGenSpImpl obj_tipoproducto = null;
 
     public ProductoBeanGenSpImpl() {
     }
@@ -38,7 +44,6 @@ public class ProductoBeanGenSpImpl  extends BeanGenImpl implements BeanInterface
     public ProductoBeanGenSpImpl(Integer id) {
         super(id);
     }
-
 
     public String getCodigo() {
         return codigo;
@@ -64,12 +69,38 @@ public class ProductoBeanGenSpImpl  extends BeanGenImpl implements BeanInterface
         this.precio = precio;
     }
 
-    public Integer getId_tipoProducto() {
+    /**
+     * @return the id_tipoproducto
+     */
+    public Integer getId_tipoproducto() {
         return id_tipoproducto;
     }
 
-    public void setId_tipoProducto(Integer id_tipoproducto) {
+    /**
+     * @param id_tipoproducto the id_tipoproducto to set
+     */
+    public void setId_tipoproducto(Integer id_tipoproducto) {
         this.id_tipoproducto = id_tipoproducto;
     }
+
+    /**
+     * @return the obj_producto
+     */
+    public TipoproductoBeanGenSpImpl getObj_tipoproducto() {
+        return obj_tipoproducto;
+    }
+
+    /**
+     * @param obj_producto the obj_producto to set
+     */
+    public void setObj_tipoproducto(TipoproductoBeanGenSpImpl obj_tipoproducto) {
+        this.obj_tipoproducto = obj_tipoproducto;
+    }
+
+
+
+
+
+
 
 }

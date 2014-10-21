@@ -23,7 +23,7 @@
 <%
     ArrayList<String> alColumnsNames;
     Iterator<String> oIterador;
-    String strNombreMantenimiento = "documento";
+    String strNombreMantenimiento = "ordenador";
     Connection connection = (Connection) request.getAttribute("connection");
     DocumentoDaoGenSpImpl oDocumentoDao = new DocumentoDaoGenSpImpl(connection);
 %>
@@ -170,3 +170,4 @@
         </div>                
     </div>
 </div>
+

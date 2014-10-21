@@ -30,12 +30,12 @@ var control = function(clase) {
             $(place).append(vista(clase).getPanel("Alta de " + model(clase).getName(), vista(clase).getEmptyForm()));
             //id must not be enabled
             $('#id').val('0').attr("disabled", true);
-            viewSpecific(clase).doEventsLoading();
+            viewForm(clase).doEventsLoading();
             $('#submitForm').unbind('click');
             $('#submitForm').click(function() {
-                viewSpecific(clase).okValidation(function(e) {                    
-                    resultado = model(clase).saveOne({json: JSON.stringify(viewSpecific(clase).getFormValues())});
-                    vista(clase).doResultOperationNotifyToUser(place, resultado["status"], "Se ha creado el registro con id=" + resultado["message"], resultado["message"], true);                 
+                viewForm(clase).okValidation(function(e) {
+                    resultado = model(clase).saveOne({json: JSON.stringify(viewForm(clase).getFormValues())});
+                    vista(clase).doResultOperationNotifyToUser(place, resultado["status"], "Se ha creado el registro con id=" + resultado["message"], resultado["message"], true);
                     e.preventDefault();
                     return false;
                 });
@@ -55,14 +55,14 @@ var control = function(clase) {
             $(place).append(vista(clase).getPanel("Edición de " + model(clase).getName(), vista(clase).getEmptyForm()));
             var oDocumentoModel = model(clase);
             oDocumentoModel.loadAggregateViewOne(id);
-            viewSpecific(clase).loadFormValues(oDocumentoModel.getCachedOne(), oDocumentoModel.getCachedFieldNames());
+            viewForm(clase).loadFormValues(oDocumentoModel.getCachedOne(), oDocumentoModel.getCachedFieldNames());
             $('#id').attr("disabled", true);
-            viewSpecific(clase).doEventsLoading();
+            viewForm(clase).doEventsLoading();
             $('#submitForm').unbind('click');
             $('#submitForm').click(function() {
-                viewSpecific(clase).okValidation(function(e) {
-                    resultado = model(clase).saveOne({json: JSON.stringify(viewSpecific(clase).getFormValues())});
-                    vista(clase).doResultOperationNotifyToUser(place, resultado["status"], "Se ha actualizado el registro con id=" + resultado["message"], resultado["message"], true);               
+                viewForm(clase).okValidation(function(e) {
+                    resultado = model(clase).saveOne({json: JSON.stringify(viewForm(clase).getFormValues())});
+                    vista(clase).doResultOperationNotifyToUser(place, resultado["status"], "Se ha actualizado el registro con id=" + resultado["message"], resultado["message"], true);
                     e.preventDefault();
                     return false;
                 });
@@ -78,7 +78,7 @@ var control = function(clase) {
             $('#btnBorrarSi').unbind('click');
             $('#btnBorrarSi').click(function(event) {
                 resultado = model(clase).removeOne(id);
-                vista(clase).doResultOperationNotifyToUser(place, resultado["status"],  resultado["message"], resultado["message"], false);
+                vista(clase).doResultOperationNotifyToUser(place, resultado["status"], resultado["message"], resultado["message"], false);
                 return false;
             });
         },
@@ -96,10 +96,9 @@ var control = function(clase) {
             //show page links pad
             var strUrlFromParamsWithoutPage = param().getUrlStringFromParamsObject(param().getUrlObjectFromParamsWithoutParamArray(objParams, ["page"]));
             var url = 'jsp#/' + model(clase).getName() + '/list/' + strUrlFromParamsWithoutPage;
-            $("#pagination").empty().append(vista(clase).getSpinner()).html(vista(clase).getPageLinks(url, parseInt(objParams["page"]), parseInt(oDocumentoModel.getCachedPages()), 2));
+
             //visible fields select population, setting & event
             $('#selectVisibleFields').empty().populateSelectBox(util().getIntegerArray(1, oDocumentoModel.getCachedCountFields()));
-            $("#selectVisibleFields").val(objParams["vf"]);
             $('#selectVisibleFields').unbind('change');
             $("#selectVisibleFields").change(function() {
                 window.location.href = "jsp#/" + model(clase).getName() + "/list/" + param().getUrlStringFromParamsObject(param().getUrlObjectFromParamsWithoutParamArray(objParams, ['vf'])) + "&vf=" + $("#selectVisibleFields option:selected").val();
@@ -107,9 +106,18 @@ var control = function(clase) {
             });
             //show the table
             var fieldNames = oDocumentoModel.getCachedFieldNames();
+            if (fieldNames.length < objParams["vf"]) {
+                objParams["vf"] = fieldNames.length;
+            }
+            $("#selectVisibleFields").val(objParams["vf"]);
             var prettyFieldNames = oDocumentoModel.getCachedPrettyFieldNames();
             var strUrlFromParamsWithoutOrder = param().getUrlStringFromParamsObject(param().getUrlObjectFromParamsWithoutParamArray(objParams, ["order", "ordervalue"]));
             var page = oDocumentoModel.getCachedPage();
+            if (parseInt(objParams["page"]) > parseInt(oDocumentoModel.getCachedPages())){
+                objParams["page"] = parseInt(oDocumentoModel.getCachedPages());
+            }
+            $("#pagination").empty().append(vista(clase).getSpinner()).html(vista(clase).getPageLinks(url, parseInt(objParams["page"]), parseInt(oDocumentoModel.getCachedPages()), 2));
+
             $("#tableHeaders").empty().append(vista(clase).getSpinner()).html(vista(clase).getHeaderPageTable(prettyFieldNames, fieldNames, parseInt(objParams["vf"]), strUrlFromParamsWithoutOrder));
             $("#tableBody").empty().append(vista(clase).getSpinner()).html(function() {
                 return vista(clase).getBodyPageTable(page, fieldNames, parseInt(objParams["vf"]), function(id) {
@@ -120,7 +128,7 @@ var control = function(clase) {
                         botonera += '</div></div>';
                         return botonera;
                     } else {
-                        return viewSpecific(clase).loadButtons(id);
+                        return viewList(clase).loadButtons(id);
                     }
                     //mejor pasar documento como parametro y crear un repo global de código personalizado
                 });

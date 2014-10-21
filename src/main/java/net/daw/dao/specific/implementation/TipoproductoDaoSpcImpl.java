@@ -33,15 +33,19 @@ public class TipoproductoDaoSpcImpl implements ViewDaoInterface<TipoproductoBean
 
     private String strTableName = null;
     private MysqlDataSpImpl oMysql = null;
+    private Connection oConnection = null;
 
-    public TipoproductoDaoSpcImpl(String ob, Connection oConnection) throws Exception {       
-        try {           
+    public TipoproductoDaoSpcImpl(String ob, Connection oConexion) throws Exception {
+        try {
             strTableName = ob;
+            oConnection = oConexion;
             oMysql = new MysqlDataSpImpl(oConnection);
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":constructor ERROR: " + ex.getMessage()));
         }
     }
+
+
 
     @Override
     public int getPages(int intRegsPerPag, ArrayList<FilterBeanHelper> hmFilter) throws Exception {

@@ -20,7 +20,7 @@
 //http://bootstrapvalidator.com/
 //https://github.com/Eonasdan/bootstrap-datetimepicker 
 
-var viewSpecific = function(clase) {
+var viewForm = function(clase) {
     return {
         loadFormValues: function(valores, campos) {
             switch (clase) {
@@ -36,10 +36,10 @@ var viewSpecific = function(clase) {
 //                    $('#documento_form #portada').val(valores['portada']);
 
                     vista(clase).doFillForm(valores, campos);
-
                     break;
                 default:
-                    alert("Ha ocuurido un error de cliente en viewSpecific");
+                    vista(clase).doFillForm(valores, campos);
+                    break;
             }
         },
         getFormValues: function() {
@@ -62,7 +62,12 @@ var viewSpecific = function(clase) {
                     return valores;
                     break;
                 default:
-                    alert("Ha ocuurido un error de cliente en viewSpecific");
+                    var valores = [];
+                    var disabled = $('#' + clase + 'Form').find(':input:disabled').removeAttr('disabled');
+                    valores = $('#' + clase + 'Form').serializeObject();
+                    disabled.attr('disabled', 'disabled');
+                    return valores;
+                    break;
             }
         },
         doEventsLoading: function() {
@@ -132,9 +137,23 @@ var viewSpecific = function(clase) {
                     });
                     break;
                 default:
-                    alert("Ha ocuurido un error de cliente en viewSpecific");
+                    break;
             }
         },
+        okValidation: function(f) {
+            switch (clase) {
+                case 'documento':
+                    $('#documentoForm').on('success.form.bv', f);
+                    break;
+                default:
+                    $('#' + clase + 'Form').on('success.form.bv', f);
+                    break;
+            }
+        }
+    }
+}
+var viewList = function(clase) {
+    return {
         loadButtons: function(id) {
             switch (clase) {
                 case 'documento':
@@ -147,16 +166,14 @@ var viewSpecific = function(clase) {
                     return botonera;
                     break;
                 default:
-                    alert("Ha ocuurido un error de cliente en viewSpecific");
-            }
-        },
-        okValidation: function(f) {
-            switch (clase) {
-                case 'documento':
-                    $('#documentoForm').on('success.form.bv', f);
+                    var botonera = "";
+                    botonera += '<div class="btn-toolbar" role="toolbar"><div class="btn-group btn-group-xs">';
+                    botonera += '<a class="btn btn-default view" id="' + id + '"  href="jsp#/' + model(clase).getName() + '/view/' + id + '"><i class="glyphicon glyphicon-eye-open"></i></a>';
+                    botonera += '<a class="btn btn-default edit" id="' + id + '"  href="jsp#/' + model(clase).getName() + '/edit/' + id + '"><i class="glyphicon glyphicon-pencil"></i></a>';
+                    botonera += '<a class="btn btn-default remove" id="' + id + '"  href="jsp#/' + model(clase).getName() + '/remove/' + id + '"><i class="glyphicon glyphicon-remove"></i></a>';
+                    botonera += '</div></div>';
+                    return botonera;
                     break;
-                default:
-                    alert("Ha ocuurido un error de cliente en okValidation");
             }
         }
     }

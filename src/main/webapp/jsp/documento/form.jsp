@@ -134,8 +134,7 @@
     </div>
 
 </form>
-
-
+        
 
 <script type="text/javascript">
 
@@ -266,6 +265,9 @@
 // Revalidate the date when user change it
             $('#documentoForm').bootstrapValidator('revalidateField', 'cambio_group');
         });
-    });
+    });       
+}
+    
+    
 </script>
      

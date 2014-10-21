@@ -18,7 +18,7 @@
 
 
 function do_routes() {
-    
+
     Path.map("#/documento").to(function() {
         $('#indexContenidoJsp').spinner();
         control('documento').list($('#indexContenido'), param().defaultizeUrlObjectParameters({}), null);
@@ -40,7 +40,7 @@ function do_routes() {
         var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
         control('documento').view($('#indexContenido'), paramsObject['id']);
         $('#indexContenidoJsp').empty();
-        
+
         return false;
     });
 
@@ -67,7 +67,54 @@ function do_routes() {
         return false;
     });
 
+    Path.map("#/ordenador").to(function() {
+        $('#indexContenidoJsp').spinner();
+        control('ordenador').list($('#indexContenido'), param().defaultizeUrlObjectParameters({}), null);
+        //documentoControl.modalListEventsLoading(documentoObject, documentoView, $('#indexContenido'), param().defaultizeUrlObjectParameters({}), null);        
+        $('#indexContenidoJsp').empty();
+        return false;
+    });
+
+    Path.map("#/ordenador/list/:url").to(function() {
+        $('#indexContenidoJsp').spinner();
+        var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
+        control('ordenador').list($('#indexContenido'), paramsObject, null);
+        $('#indexContenidoJsp').empty();
+        return false;
+    });
+
+    Path.map("#/ordenador/view/:id").to(function() {
+        $('#indexContenidoJsp').spinner();
+        var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
+        control('ordenador').view($('#indexContenido'), paramsObject['id']);
+        $('#indexContenidoJsp').empty();
+
+        return false;
+    });
+
+    Path.map("#/ordenador/edit/:id").to(function() {
+        $('#indexContenidoJsp').spinner();
+        var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
+        control('ordenador').edit($('#indexContenido'), paramsObject['id']);
+        $('#indexContenidoJsp').empty();
+    });
+
+    Path.map("#/ordenador/new").to(function() {
+        $('#indexContenidoJsp').spinner();
+        var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
+        control('ordenador').new($('#indexContenido'));
+        $('#indexContenidoJsp').empty();
+        return false;
+    });
+
+    Path.map("#/ordenador/remove/:id").to(function() {
+        $('#indexContenidoJsp').spinner();
+        var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
+        control('ordenador').remove($('#indexContenido'), paramsObject['id']);
+        $('#indexContenidoJsp').empty();
+        return false;
+    });
 
 
-
-};
+}
+;
