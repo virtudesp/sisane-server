@@ -168,8 +168,7 @@ public class TipoproductoServiceSpImpl implements TableServiceInterface, ViewSer
             oConnection.setAutoCommit(false);
             TipoproductoDaoSpcImpl oTipoproductoDAO = new TipoproductoDaoSpcImpl(strObjectName, oConnection);
             alColumns = oTipoproductoDAO.getPrettyColumnsNames();
-            data = new Gson().toJson(alColumns);
-            data = "{\"data\":" + data + "}";
+            data = new Gson().toJson(alColumns);            
             oConnection.commit();
         } catch (Exception ex) {
             oConnection.rollback();
@@ -186,8 +185,7 @@ public class TipoproductoServiceSpImpl implements TableServiceInterface, ViewSer
             ArrayList<String> alColumns = null;
             TipoproductoDaoSpcImpl oTipoproductoDAO = new TipoproductoDaoSpcImpl(strObjectName, oConnection);
             alColumns = oTipoproductoDAO.getColumnsNames();
-            data = new Gson().toJson(alColumns);
-            data = "{\"data\":" + data + "}";
+            data = new Gson().toJson(alColumns);            
             oConnection.commit();
 
         } catch (Exception ex) {

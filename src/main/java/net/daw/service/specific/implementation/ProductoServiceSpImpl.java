@@ -169,7 +169,7 @@ public class ProductoServiceSpImpl implements TableServiceInterface, ViewService
             ProductoDaoSpcImpl oProductoDAO = new ProductoDaoSpcImpl(strObjectName, oConnection);
             alColumns = oProductoDAO.getPrettyColumnsNames();
             data = new Gson().toJson(alColumns);
-            data = "{\"data\":" + data + "}";
+            //data = "{\"data\":" + data + "}";
             oConnection.commit();
         } catch (Exception ex) {
             oConnection.rollback();
@@ -187,7 +187,7 @@ public class ProductoServiceSpImpl implements TableServiceInterface, ViewService
             ProductoDaoSpcImpl oProductoDAO = new ProductoDaoSpcImpl(strObjectName, oConnection);
             alColumns = oProductoDAO.getColumnsNames();
             data = new Gson().toJson(alColumns);
-            data = "{\"data\":" + data + "}";
+            //data = "{\"data\":" + data + "}";
             oConnection.commit();
 
         } catch (Exception ex) {
