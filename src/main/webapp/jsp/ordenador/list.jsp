@@ -98,9 +98,9 @@
                                 <div class="panel-heading">Filtro</div>
                                 <div class="panel-body">
                                     <form class="navbar-form navbar-right" role="form" action="Controller" method="post" id="empresaForm">
-                                        <select id="selectFilter" class="form-control" name="filter" width="80" style="width: 160px">
+                                        <select id="selectFilter" class="form-control" name="filter" style="width: 160px">
                                         </select>
-                                        <select id="selectFilteroperator" class="form-control" name="filteroperator" width="80" style="width: 200px">
+                                        <select id="selectFilteroperator" class="form-control" name="filteroperator" style="width: 200px">
                                             <option value="like">contiene</option>
                                             <option value="notlike">no contiene</option>
                                             <option value="equals">es igual a</option>
