@@ -266,7 +266,7 @@
             $('#documentoForm').bootstrapValidator('revalidateField', 'cambio_group');
         });
     });       
-
+}
     
     
 </script>
