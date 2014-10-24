@@ -34,7 +34,7 @@ var control = function(clase) {
             $('#submitForm').unbind('click');
             $('#submitForm').click(function() {
                 viewForm(clase).okValidation(function(e) {
-                    resultado = model(clase).saveOne({json: JSON.stringify(viewForm(clase).getFormValues())});
+                    resultado = model(clase).setOne({json: JSON.stringify(viewForm(clase).getFormValues())});
                     vista(clase).doResultOperationNotifyToUser(place, resultado["status"], "Se ha creado el registro con id=" + resultado["message"], resultado["message"], true);
                     e.preventDefault();
                     return false;
@@ -61,7 +61,7 @@ var control = function(clase) {
             $('#submitForm').unbind('click');
             $('#submitForm').click(function() {
                 viewForm(clase).okValidation(function(e) {
-                    resultado = model(clase).saveOne({json: JSON.stringify(viewForm(clase).getFormValues())});
+                    resultado = model(clase).setOne({json: JSON.stringify(viewForm(clase).getFormValues())});
                     vista(clase).doResultOperationNotifyToUser(place, resultado["status"], "Se ha actualizado el registro con id=" + resultado["message"], resultado["message"], true);
                     e.preventDefault();
                     return false;

@@ -58,7 +58,7 @@ public class OrdenadorControlRouteSpImpl implements ControlRouteInterface {
                 case "remove":
                     jsonResult = oControl.remove(request);
                     break;
-                case "save":
+                case "set":
                     jsonResult = oControl.set(request);
                     break;
                 default:

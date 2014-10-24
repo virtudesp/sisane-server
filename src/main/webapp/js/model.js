@@ -234,8 +234,8 @@ var model = function(clase) {
             });
             return one;
         },
-        saveOne: function(jsonfile) {
-            $.when(ajax().ajaxCallSync(urlJson + '&op=save', 'GET', jsonfile)).done(function(data) {
+        setOne: function(jsonfile) {
+            $.when(ajax().ajaxCallSync(urlJson + '&op=set', 'GET', jsonfile)).done(function(data) {
                 feedback = data;
             });
             return feedback;
