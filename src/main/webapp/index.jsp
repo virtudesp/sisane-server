@@ -140,29 +140,43 @@
         -->
 
 
-        <script src="js/util.js" charset="UTF-8"></script>
-        <script src="js/model.js" charset="UTF-8"></script>
-        <script src="js/view.js" charset="UTF-8"></script>
-        <script src="js/viewSpecific.js" charset="UTF-8"></script>      
-        <script src="js/routes.js" charset="UTF-8"></script>
-        <script src="js/param.js" charset="UTF-8"></script>
-        <script src="js/ajax.js" charset="UTF-8"></script>
-        <script src="js/control.js" charset="UTF-8"></script> 
-        <script src="js/initialization.js" charset="UTF-8"></script>
-
+        <script src="js/generic/view.js" charset="UTF-8"></script>    
+        <script src="js/generic/param.js" charset="UTF-8"></script>
+        <script src="js/generic/ajax.js" charset="UTF-8"></script>
+        <script src="js/generic/util.js" charset="UTF-8"></script>
+        <script src="js/generic/model.js" charset="UTF-8"></script>        
+        <script src="js/generic/control.js" charset="UTF-8"></script> 
+        <script src="js/generic/initialization.js" charset="UTF-8"></script>
 
         <script type="text/javascript">
-
             var path = '<%=request.getContextPath()%>';
+        </script>
 
-            $(document).ready(function() {
+        <script src="js/specific/documento/control.js" charset="UTF-8"></script>
+        <script src="js/specific/documento/model.js" charset="UTF-8"></script>
+        <script src="js/specific/documento/view.js" charset="UTF-8"></script>
+        <script src="js/specific/documento/routes.js" charset="UTF-8"></script>
+
+
+        <script src="js/specific/usuario/model.js" charset="UTF-8"></script>
+        <script src="js/specific/tipodocumento/model.js" charset="UTF-8"></script>
+        
+        <script type="text/javascript">
+
+            //path = '<%=request.getContextPath()%>';
+
+            $(document).ready(function () {
 
                 //$('#indexContenidoJsp').addClass('animated slideInDown');
                 //$('#menuSuperior').addClass('animated slideInLeft');
                 //$('#menuLateral').addClass('animated slideInRight');
 
                 inicializacion();
-                do_routes();
+
+
+                fDocumentoRoutes();
+
+
                 Path.listen();
 
             });
