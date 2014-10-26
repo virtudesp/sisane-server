@@ -86,7 +86,7 @@ public class JspControl extends HttpServlet {
                             connection = DataConnectionSource.newConnection();
                             oUsuario.setLogin(login);
                             oUsuario.setPassword(pass);
-                            UsuarioDaoGenSpImpl oUsuarioDao = new UsuarioDaoGenSpImpl(connection);
+                            UsuarioDaoGenSpImpl oUsuarioDao = new UsuarioDaoGenSpImpl("usuario", connection);
                             oUsuario = oUsuarioDao.getFromLogin(oUsuario);
                             if (oUsuario.getId() != 0) {
                                 //oUsuario = oUsuarioDao.type(oUsuario); //fill user level -> pending

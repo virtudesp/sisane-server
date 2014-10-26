@@ -152,7 +152,7 @@ public class TextParserHelper {
             } else if (character == '~') {
                 addCharEntity(126, result);
             } else {
-         //the char is not a special one
+                //the char is not a special one
                 //add it to the result as is
                 result.append(character);
             }

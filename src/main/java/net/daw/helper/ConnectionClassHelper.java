@@ -15,9 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-
 package net.daw.helper;
-
 
 public class ConnectionClassHelper {
 
@@ -40,8 +38,8 @@ public class ConnectionClassHelper {
     public static String getDatabaseHost() {
         return "127.0.0.1";
     }
-    
-    public static String getConnectionChain(){
+
+    public static String getConnectionChain() {
         return "jdbc:mysql://" + ConnectionClassHelper.getDatabaseHost() + ":" + ConnectionClassHelper.getDatabasePort() + "/" + ConnectionClassHelper.getDatabaseName();
     }
 }

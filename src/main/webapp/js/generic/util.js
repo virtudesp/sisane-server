@@ -16,33 +16,37 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
-var util = function() {
+var util = function () {
     var spinner = "";
     return {
-        setSpinner: function(htmlSpinner) {
+        setSpinner: function (htmlSpinner) {
             spinner = htmlSpinner;
         },
-        getSpinner: function() {
+        getSpinner: function () {
             return '<img src="images/ajax-loading.gif" alt="cargando..." />';
         },
 //        getSpinner2: function() {
 //            return '<img src="images/ajax-loading.gif" alt="cargando..." />';
 //        },
-        getForeign: function(objForeign) {
+        getForeign: function (objForeign) {
             //falta organizar con metadatos para mostrar sólo los campos relevantes
             var numKeys = Object.keys(objForeign).length;
             var strResult = "";
             for (counter = 0; counter < numKeys - 1; counter++) {
-                valor = objForeign[Object.keys(objForeign)[counter]];
-                if (valor != true && valor != false)
-                    strResult += " " + valor;
+                if (Object.keys(objForeign)[counter] != 'password') {
+                    if (Object.keys(objForeign)[counter].substring(0, 4) != 'obj_') {
+                        valor = objForeign[Object.keys(objForeign)[counter]];
+                        if (valor != true && valor != false)
+                            strResult += " " + valor;
+                    }
+                }
             }
             //if (typeof fieldContent == "string") {
             if (strResult.length > 50) //don't show too long fields
                 strResult = strResult.substr(0, 20) + " ...";
             return strResult;
         },
-        loadForm: function(modalName, headerData, bodyData, footerData, keyb) {
+        loadForm: function (modalName, headerData, bodyData, footerData, keyb) {
             $(modalName + ' .modal-header').empty().append(headerData);
             $(modalName + ' .modal-body').empty().append(bodyData);
             $(modalName + ' .modal-footer').empty().append(footerData);
@@ -50,36 +54,36 @@ var util = function() {
                 keyboard: keyb
             })
         },
-        getIntegerArray: function(min, max) {
+        getIntegerArray: function (min, max) {
             var iArray = [];
             for (var counter = min; counter <= max; counter++) {
                 iArray.push(counter);
             }
             return iArray;
         },
-        htmlEncode: function(value) {
+        htmlEncode: function (value) {
 //create a in-memory div, set it's inner text(which jQuery automatically encodes)
 //then grab the encoded contents back out.  The div never exists on the page.
             return $('<div/>').text(value).html();
         },
-        htmlDecode: function(value) {
+        htmlDecode: function (value) {
             return $('<div/>').html(value).text();
         },
-        linkBack: function() {
+        linkBack: function () {
             history.back();
             return false;
         },
-        createGhostDiv: function(id, data) {
+        createGhostDiv: function (id, data) {
             var divContainer = $('<div>').attr({
                 id: id
             });
             $('body').append(divContainer);
             $('#' + id).append(data);
         },
-        replaceAll: function(str, search, rpl) {
+        replaceAll: function (str, search, rpl) {
             return str.split(search).join(rpl);
         },
-        creoleParse: function(content, lugar) {
+        creoleParse: function (content, lugar) {
             var div = document.createElement('div');
             div.innerHTML = "";
             creole.parse(div, content);

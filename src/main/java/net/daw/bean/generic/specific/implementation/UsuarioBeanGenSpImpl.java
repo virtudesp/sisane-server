@@ -27,22 +27,11 @@ public class UsuarioBeanGenSpImpl extends BeanGenImpl implements BeanInterface {
     private String login = "";
     @Expose
     private String password = "";
-//@Expose
-//    private Enum tipoUsuario = null;
+    @Expose(serialize = false)
+    private Integer id_tipousuario = 0; //importante inicializar a 0 las claves ajenas
+    @Expose(deserialize = false)
+    private TipousuarioBeanGenSpImpl obj_tipousuario = null;
 
-//    /**
-//     * @return the tipoUsuario
-//     */
-//    public Enum getTipoUsuario() {
-//        return tipoUsuario;
-//    }
-//
-//    /**
-//     * @param tipoUsuario the tipoUsuario to set
-//     */
-//    public void setTipoUsuario(Enum tipoUsuario) {
-//        this.tipoUsuario = tipoUsuario;
-//    }
     public String getLogin() {
         return login;
     }
@@ -57,5 +46,21 @@ public class UsuarioBeanGenSpImpl extends BeanGenImpl implements BeanInterface {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Integer getId_tipousuario() {
+        return id_tipousuario;
+    }
+
+    public void setId_tipousuario(Integer id_tipousuario) {
+        this.id_tipousuario = id_tipousuario;
+    }
+
+    public TipousuarioBeanGenSpImpl getObj_tipousuario() {
+        return obj_tipousuario;
+    }
+
+    public void setObj_tipousuario(TipousuarioBeanGenSpImpl obj_tipousuario) {
+        this.obj_tipousuario = obj_tipousuario;
     }
 }

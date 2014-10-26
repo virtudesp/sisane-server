@@ -15,16 +15,16 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-package net.daw.control.operation.generic.specific.implementation;
+package net.daw.dao.generic.specific.implementation;
 
-import java.lang.reflect.InvocationTargetException;
-import javax.servlet.http.HttpServletRequest;
-import net.daw.control.operation.generic.implementation.ControlOperationGenImpl;
+import net.daw.dao.generic.implementation.TableDaoGenImpl;
+import java.sql.Connection;
+import net.daw.bean.generic.specific.implementation.TipousuarioBeanGenSpImpl;
 
-public class UsuarioControlOperationGenSpImpl extends ControlOperationGenImpl {
+public class TipousuarioDaoGenSpImpl extends TableDaoGenImpl<TipousuarioBeanGenSpImpl> {
 
-    public UsuarioControlOperationGenSpImpl(HttpServletRequest request) throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, Exception {
-        super(request);
+    public TipousuarioDaoGenSpImpl(String strObject, Connection pooledConnection) throws Exception {
+        super(strObject, pooledConnection);
     }
 
 }

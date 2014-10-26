@@ -101,7 +101,7 @@ public class ProductoDaoSpcImpl implements ViewDaoInterface<ProductoBeanGenSpImp
                     TipoproductoBeanGenSpImpl oTipoproducto = new TipoproductoBeanGenSpImpl();
                     oTipoproducto.setId(Integer.parseInt(oMysql.getOne(strTableName, "id_tipoproducto", oProductoBean.getId())));
                     TipoproductoDaoSpcImpl oTipoproductoDAO = new TipoproductoDaoSpcImpl("tipoproducto", oConnection);
-                    oTipoproducto = oTipoproductoDAO.get(oTipoproducto,1);
+                    oTipoproducto = oTipoproductoDAO.get(oTipoproducto, 1);
                     oProductoBean.setObj_tipoproducto(oTipoproducto);
 
                 }

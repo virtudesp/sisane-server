@@ -34,8 +34,8 @@ public class DocumentoServiceGenSpImpl extends TableServiceGenImpl {
         try {
             DocumentoBeanGenSpImpl oDocumentoBean = new DocumentoBeanGenSpImpl();
             oDocumentoBean.setId(id);
-            DocumentoDaoGenSpImpl oDocumentoDao = new DocumentoDaoGenSpImpl(oConnection);
-            oDocumentoBean = oDocumentoDao.get(oDocumentoBean,1);
+            DocumentoDaoGenSpImpl oDocumentoDao = new DocumentoDaoGenSpImpl(strObjectName, oConnection);
+            oDocumentoBean = oDocumentoDao.get(oDocumentoBean, 1);
             return "{\"data\":\"" + oDocumentoBean.getContenido() + "\"}";
         } catch (Exception e) {
             throw new ServletException("GetContenido: View Error: " + e.getMessage());

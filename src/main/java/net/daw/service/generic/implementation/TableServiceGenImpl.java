@@ -43,8 +43,8 @@ public abstract class TableServiceGenImpl extends ViewServiceGenImpl implements 
         try {
             oConnection.setAutoCommit(false);
             BeanGenImpl oGenericBean = (BeanGenImpl) Class.forName("net.daw.bean.generic.specific.implementation." + strObjectName + "BeanGenSpImpl").newInstance();
-            Constructor c = Class.forName("net.daw.dao.generic.specific.implementation." + strObjectName + "DaoGenSpImpl").getConstructor(Connection.class);
-            TableDaoGenImpl oGenericDao = (TableDaoGenImpl) c.newInstance(oConnection);
+            Constructor c = Class.forName("net.daw.dao.generic.specific.implementation." + strObjectName + "DaoGenSpImpl").getConstructor(String.class,Connection.class);
+            TableDaoGenImpl oGenericDao = (TableDaoGenImpl) c.newInstance(strObjectName, oConnection);
             oGenericBean.setId(id);
             Map<String, String> data = new HashMap<>();
             if (oGenericBean != null) {
@@ -72,8 +72,8 @@ public abstract class TableServiceGenImpl extends ViewServiceGenImpl implements 
         try {
             oConnection.setAutoCommit(false);
             BeanGenImpl oGenericBean = (BeanGenImpl) Class.forName("net.daw.bean.generic.specific.implementation." + strObjectName + "BeanGenSpImpl").newInstance();
-            Constructor c = Class.forName("net.daw.dao.generic.specific.implementation." + strObjectName + "DaoGenSpImpl").getConstructor(Connection.class);
-            TableDaoGenImpl oGenericDao = (TableDaoGenImpl) c.newInstance(oConnection);
+            Constructor c = Class.forName("net.daw.dao.generic.specific.implementation." + strObjectName + "DaoGenSpImpl").getConstructor(String.class,Connection.class);
+            TableDaoGenImpl oGenericDao = (TableDaoGenImpl) c.newInstance(strObjectName, oConnection);
             Gson gson = new GsonBuilder().setDateFormat("dd/MM/yyyy").excludeFieldsWithoutExposeAnnotation().create();
             oGenericBean = gson.fromJson(jason, oGenericBean.getClass());
             Map<String, String> data = new HashMap<>();

@@ -15,16 +15,28 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-package net.daw.control.operation.generic.specific.implementation;
+package net.daw.bean.generic.specific.implementation;
 
-import java.lang.reflect.InvocationTargetException;
-import javax.servlet.http.HttpServletRequest;
-import net.daw.control.operation.generic.implementation.ControlOperationGenImpl;
+import net.daw.bean.generic.implementation.BeanGenImpl;
+import net.daw.bean.publicinterface.BeanInterface;
 
-public class UsuarioControlOperationGenSpImpl extends ControlOperationGenImpl {
+public class TipousuarioBeanGenSpImpl extends BeanGenImpl implements BeanInterface {
 
-    public UsuarioControlOperationGenSpImpl(HttpServletRequest request) throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, Exception {
-        super(request);
+    private String descripcion = "";
+
+    public TipousuarioBeanGenSpImpl() {
+
     }
 
+    public TipousuarioBeanGenSpImpl(Integer id) {
+        super(id);
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
 }

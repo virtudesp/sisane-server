@@ -171,26 +171,6 @@ public class MysqlDataSpImpl implements DataInterface {
         return strResult;
     }
 
-//    @Override
-//    public String getOneFromSql(String strSQL) throws Exception {
-//        Statement oStatement = null;
-//        ResultSet oResultSet;
-//        try {
-//            oResultSet = oStatement.executeQuery(strSQL);
-//            if (oResultSet.next()) {
-//                return oResultSet.getString("strvalue");
-//            } else {
-//                return null;
-//            }
-//        } catch (SQLException ex) {
-//            throw new Exception("mysql.getOne: No se ha podido realizar la consulta: " + ex.getMessage());
-//        } finally {
-//            if (oStatement != null) {
-//                oStatement.close();
-//            }
-//
-//        }
-//    }
     @Override
     public Boolean existsOne(String strTabla, int id) throws Exception {
         int result = 0;
@@ -389,39 +369,6 @@ public class MysqlDataSpImpl implements DataInterface {
         return vector;
     }
 
-//    public ArrayList<Integer> getPageFromSQL(String strSql) throws Exception {
-////pte:currando..
-//        Statement oStatement = null;
-//        try {
-//            ArrayList<Integer> vector = new ArrayList<>();
-//            int intOffset;
-//
-//            oStatement = (Statement) connection.createStatement();
-//
-//            ResultSet oResultSet = oStatement.executeQuery(strSql);
-//
-//            ResultSetMetaData metaData = resultSet.getMetaData();
-//
-//            int count = metaData.getColumnCount();
-//            for (int i = 1; i <= count; i++) {
-//                if (metaData.getColumnName(i).equals(desiredColumnName)) {
-//                    // Whatever you want to do here.
-//                }
-//            }
-//
-//            while (oResultSet.next()) {
-//                vector.add(oResultSet.getInt("id"));
-//            }
-//            return vector;
-//        } catch (SQLException e) {
-//            throw new Exception("mysql.getPageFromSQL: Error en la consulta: " + e.getMessage());
-//        } finally {
-//            if (oStatement != null) {
-//                oStatement.close();
-//            }
-//
-//        }
-//    }
     @Override
     public ArrayList<Integer> getPage(String strTabla, int intRegsPerPage, int intPagina, ArrayList<FilterBeanHelper> alFilter, HashMap<String, String> hmOrder) throws Exception {
         ArrayList<Integer> vector = null;
@@ -466,15 +413,15 @@ public class MysqlDataSpImpl implements DataInterface {
                 }
                 strSQL += strSQLFilter;
                 strSQLcount += strSQLFilter;
-            }            
+            }
             //when limit of pages exceed, show last page
             ResultSet oResultSet = oStatement.executeQuery(strSQLcount);
-            int intCuenta=0;
+            int intCuenta = 0;
             if (oResultSet.next()) {
                 intCuenta = oResultSet.getInt("COUNT(*)");
             }
-            int maxPaginas=new Double(intCuenta / intRegsPerPage).intValue(); 
-            intPagina=Math.min(intPagina - 1, maxPaginas)+1;
+            int maxPaginas = new Double(intCuenta / intRegsPerPage).intValue();
+            intPagina = Math.min(intPagina - 1, maxPaginas) + 1;
             intOffset = Math.max(((intPagina - 1) * intRegsPerPage), 0);
             //--                        
             if (hmOrder != null) {
@@ -566,6 +513,59 @@ public class MysqlDataSpImpl implements DataInterface {
 //        } finally {
 //            oStatement.close();
 //            conexion.close();
+//        }
+//    }
+//    public ArrayList<Integer> getPageFromSQL(String strSql) throws Exception {
+////pte:currando..
+//        Statement oStatement = null;
+//        try {
+//            ArrayList<Integer> vector = new ArrayList<>();
+//            int intOffset;
+//
+//            oStatement = (Statement) connection.createStatement();
+//
+//            ResultSet oResultSet = oStatement.executeQuery(strSql);
+//
+//            ResultSetMetaData metaData = resultSet.getMetaData();
+//
+//            int count = metaData.getColumnCount();
+//            for (int i = 1; i <= count; i++) {
+//                if (metaData.getColumnName(i).equals(desiredColumnName)) {
+//                    // Whatever you want to do here.
+//                }
+//            }
+//
+//            while (oResultSet.next()) {
+//                vector.add(oResultSet.getInt("id"));
+//            }
+//            return vector;
+//        } catch (SQLException e) {
+//            throw new Exception("mysql.getPageFromSQL: Error en la consulta: " + e.getMessage());
+//        } finally {
+//            if (oStatement != null) {
+//                oStatement.close();
+//            }
+//
+//        }
+//    }    
+    //    @Override
+//    public String getOneFromSql(String strSQL) throws Exception {
+//        Statement oStatement = null;
+//        ResultSet oResultSet;
+//        try {
+//            oResultSet = oStatement.executeQuery(strSQL);
+//            if (oResultSet.next()) {
+//                return oResultSet.getString("strvalue");
+//            } else {
+//                return null;
+//            }
+//        } catch (SQLException ex) {
+//            throw new Exception("mysql.getOne: No se ha podido realizar la consulta: " + ex.getMessage());
+//        } finally {
+//            if (oStatement != null) {
+//                oStatement.close();
+//            }
+//
 //        }
 //    }
 }

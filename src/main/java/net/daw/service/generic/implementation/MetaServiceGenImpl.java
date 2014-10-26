@@ -41,8 +41,8 @@ public class MetaServiceGenImpl implements MetaServiceInterface {
         String data = null;
         try {
             oConnection.setAutoCommit(false);
-            Constructor c = Class.forName("net.daw.dao.generic.specific.implementation." + strObjectName + "DaoGenSpImpl").getConstructor(Connection.class);
-            TableDaoGenImpl oDao = (TableDaoGenImpl) c.newInstance(oConnection);
+            Constructor c = Class.forName("net.daw.dao.generic.specific.implementation." + strObjectName + "DaoGenSpImpl").getConstructor(String.class,Connection.class);
+            TableDaoGenImpl oDao = (TableDaoGenImpl) c.newInstance(strObjectName, oConnection);
             ArrayList<String> alColumns = null;
             alColumns = oDao.getPrettyColumnsNames();
             GsonBuilder gsonBuilder = new GsonBuilder();
@@ -62,8 +62,8 @@ public class MetaServiceGenImpl implements MetaServiceInterface {
         String data = null;
         try {
             oConnection.setAutoCommit(false);
-            Constructor c = Class.forName("net.daw.dao.generic.specific.implementation." + strObjectName + "DaoGenSpImpl").getConstructor(Connection.class);
-            TableDaoGenImpl oDao = (TableDaoGenImpl) c.newInstance(oConnection);
+            Constructor c = Class.forName("net.daw.dao.generic.specific.implementation." + strObjectName + "DaoGenSpImpl").getConstructor(String.class,Connection.class);
+            TableDaoGenImpl oDao = (TableDaoGenImpl) c.newInstance(strObjectName, oConnection);
             ArrayList<String> alColumns = null;
             alColumns = oDao.getColumnsNames();
             GsonBuilder gsonBuilder = new GsonBuilder();

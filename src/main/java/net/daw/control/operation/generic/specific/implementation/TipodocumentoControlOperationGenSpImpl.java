@@ -15,7 +15,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-
 package net.daw.control.operation.generic.specific.implementation;
 
 import java.lang.reflect.InvocationTargetException;
@@ -27,5 +26,5 @@ public class TipodocumentoControlOperationGenSpImpl extends ControlOperationGenI
     public TipodocumentoControlOperationGenSpImpl(HttpServletRequest request) throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, Exception {
         super(request);
     }
-    
+
 }

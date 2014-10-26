@@ -94,7 +94,7 @@ public class OrdenadorServiceSpImpl implements TableServiceInterface, ViewServic
             oConnection.setAutoCommit(false);
             OrdenadorDaoSpcImpl oOrdenadorDAO = new OrdenadorDaoSpcImpl(strObjectName, oConnection);
             OrdenadorBeanGenSpImpl oOrdenador = new OrdenadorBeanGenSpImpl(id);
-            oOrdenador = oOrdenadorDAO.get(oOrdenador,1);
+            oOrdenador = oOrdenadorDAO.get(oOrdenador, 1);
             GsonBuilder gsonBuilder = new GsonBuilder();
             gsonBuilder.setDateFormat("dd/MM/yyyy");
             Gson gson = gsonBuilder.create();

@@ -44,17 +44,17 @@ public abstract class ViewServiceGenImpl extends MetaServiceGenImpl implements V
         try {
             oConnection.setAutoCommit(false);
             BeanGenImpl oGenericBean = (BeanGenImpl) Class.forName("net.daw.bean.generic.specific.implementation." + strObjectName + "BeanGenSpImpl").newInstance();
-            Constructor c = Class.forName("net.daw.dao.generic.specific.implementation." + strObjectName + "DaoGenSpImpl").getConstructor(Connection.class);
-            TableDaoGenImpl oGenericDao = (TableDaoGenImpl) c.newInstance(oConnection);
+            Constructor c = Class.forName("net.daw.dao.generic.specific.implementation." + strObjectName + "DaoGenSpImpl").getConstructor(String.class, Connection.class);
+            TableDaoGenImpl oGenericDao = (TableDaoGenImpl) c.newInstance(strObjectName, oConnection);
             oGenericBean.setId(id);
-            oGenericBean = (BeanGenImpl) (BeanInterface) oGenericDao.get(oGenericBean,1);
+            oGenericBean = (BeanGenImpl) (BeanInterface) oGenericDao.get(oGenericBean, 1);
             GsonBuilder gsonBuilder = new GsonBuilder();
             gsonBuilder.setDateFormat("dd/MM/yyyy");
             Gson gson = gsonBuilder.excludeFieldsWithoutExposeAnnotation().create();
             data = gson.toJson(oGenericBean);
         } catch (Exception ex) {
             oConnection.rollback();
-            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":remove ERROR: " + ex.getMessage()));
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":get ERROR: " + ex.getMessage()));
         } finally {
             oConnection.commit();
         }
@@ -67,8 +67,8 @@ public abstract class ViewServiceGenImpl extends MetaServiceGenImpl implements V
         try {
             oConnection.setAutoCommit(false);
             BeanGenImpl oGenericBean = (BeanGenImpl) Class.forName("net.daw.bean.generic.specific.implementation." + strObjectName + "BeanGenSpImpl").newInstance();
-            Constructor c = Class.forName("net.daw.dao.generic.specific.implementation." + strObjectName + "DaoGenSpImpl").getConstructor(Connection.class);
-            TableDaoGenImpl oGenericDao = (TableDaoGenImpl) c.newInstance(oConnection);
+            Constructor c = Class.forName("net.daw.dao.generic.specific.implementation." + strObjectName + "DaoGenSpImpl").getConstructor(String.class, Connection.class);
+            TableDaoGenImpl oGenericDao = (TableDaoGenImpl) c.newInstance(strObjectName, oConnection);
             List<BeanInterface> loGenericBean = oGenericDao.getPage(intRegsPerPag, intPage, alFilter, hmOrder);
             GsonBuilder gsonBuilder = new GsonBuilder();
             gsonBuilder.setDateFormat("dd/MM/yyyy");
@@ -77,7 +77,7 @@ public abstract class ViewServiceGenImpl extends MetaServiceGenImpl implements V
             data = "{\"list\":" + data + "}";
         } catch (Exception ex) {
             oConnection.rollback();
-            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":remove ERROR: " + ex.getMessage()));
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPage ERROR: " + ex.getMessage()));
         } finally {
             oConnection.commit();
         }
@@ -89,13 +89,13 @@ public abstract class ViewServiceGenImpl extends MetaServiceGenImpl implements V
         String data = null;
         try {
             oConnection.setAutoCommit(false);
-            Constructor c = Class.forName("net.daw.dao.generic.specific.implementation." + strObjectName + "DaoGenSpImpl").getConstructor(Connection.class);
-            TableDaoGenImpl oGenericDao = (TableDaoGenImpl) c.newInstance(oConnection);
+            Constructor c = Class.forName("net.daw.dao.generic.specific.implementation." + strObjectName + "DaoGenSpImpl").getConstructor(String.class, Connection.class);
+            TableDaoGenImpl oGenericDao = (TableDaoGenImpl) c.newInstance(strObjectName, oConnection);
             int pages = oGenericDao.getPages(intRegsPerPag, alFilter);
             data = "{\"data\":\"" + Integer.toString(pages) + "\"}";
         } catch (Exception ex) {
             oConnection.rollback();
-            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":remove ERROR: " + ex.getMessage()));
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPages ERROR: " + ex.getMessage()));
         } finally {
             oConnection.commit();
         }
@@ -107,14 +107,14 @@ public abstract class ViewServiceGenImpl extends MetaServiceGenImpl implements V
         String data = null;
         try {
             oConnection.setAutoCommit(false);
-            Constructor c = Class.forName("net.daw.dao.generic.specific.implementation." + strObjectName + "DaoGenSpImpl").getConstructor(Connection.class);
-            TableDaoGenImpl oGenericDao = (TableDaoGenImpl) c.newInstance(oConnection);
+            Constructor c = Class.forName("net.daw.dao.generic.specific.implementation." + strObjectName + "DaoGenSpImpl").getConstructor(String.class, Connection.class);
+            TableDaoGenImpl oGenericDao = (TableDaoGenImpl) c.newInstance(strObjectName, oConnection);
             int registers = oGenericDao.getCount(alFilter);
             data = "{\"data\":\"" + Integer.toString(registers) + "\"}";
             return data;
         } catch (Exception ex) {
             oConnection.rollback();
-            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":remove ERROR: " + ex.getMessage()));
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getCount ERROR: " + ex.getMessage()));
         } finally {
             oConnection.commit();
         }
@@ -142,7 +142,7 @@ public abstract class ViewServiceGenImpl extends MetaServiceGenImpl implements V
                     + ",\"registers\":" + registers
                     + "}}";
         } catch (Exception ex) {
-            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":remove ERROR: " + ex.getMessage()));
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getAggregateViewSome ERROR: " + ex.getMessage()));
         }
         return data;
     }
@@ -164,7 +164,7 @@ public abstract class ViewServiceGenImpl extends MetaServiceGenImpl implements V
                     + "}}";
             return data;
         } catch (Exception ex) {
-            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":remove ERROR: " + ex.getMessage()));
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getAggregateViewOne ERROR: " + ex.getMessage()));
         }
         return data;
     }

@@ -37,7 +37,7 @@ public abstract class TableDaoGenImpl<TIPO_OBJETO> extends ViewDaoGenImpl<TIPO_O
     }
 
     @Override
-    public TIPO_OBJETO set(TIPO_OBJETO oBean) throws Exception {        
+    public TIPO_OBJETO set(TIPO_OBJETO oBean) throws Exception {
         Class<TIPO_OBJETO> tipo = (Class<TIPO_OBJETO>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
         Method metodo_getId = tipo.getMethod("getId");
         Method metodo_setId = tipo.getMethod("setId", Integer.class);

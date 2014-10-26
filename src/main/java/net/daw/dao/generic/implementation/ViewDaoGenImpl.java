@@ -125,13 +125,13 @@ public class ViewDaoGenImpl<TIPO_OBJETO> extends MetaDaoGenImpl<TIPO_OBJETO> imp
                                 strAjena = strAjena.substring(0, 1).toUpperCase(Locale.ENGLISH) + strAjena.substring(1);
                                 //GenericDaoImplementation oAjenaDao = (GenericDaoImplementation) Class.forName("net.daw.dao." + strAjena + "Dao").newInstance();
 
-                                Constructor c = Class.forName("net.daw.dao.generic.specific.implementation." + strAjena + "DaoGenSpImpl").getConstructor(Connection.class);
-                                TableDaoGenImpl oAjenaDao = (TableDaoGenImpl) c.newInstance(connection);
+                                Constructor c = Class.forName("net.daw.dao.generic.specific.implementation." + strAjena + "DaoGenSpImpl").getConstructor(String.class, Connection.class);
+                                TableDaoGenImpl oAjenaDao = (TableDaoGenImpl) c.newInstance(strAjena, connection);
 
                                 BeanGenImpl oAjenaBean = (BeanGenImpl) Class.forName("net.daw.bean.generic.specific.implementation." + strAjena + "BeanGenSpImpl").newInstance();
                                 int intIdAjena = (Integer) metodo_getId_Ajena.invoke(oBean);
                                 oAjenaBean.setId(intIdAjena);
-                                oAjenaBean = (BeanGenImpl) oAjenaDao.get(oAjenaBean,1);
+                                oAjenaBean = (BeanGenImpl) oAjenaDao.get(oAjenaBean, 1);
                                 //String strDescription = oAjenaDao.getDescription((Integer) metodo_getId_Ajena.invoke(oBean));
                                 method.invoke(oBean, oAjenaBean);
                             }

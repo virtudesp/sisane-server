@@ -23,8 +23,8 @@ import net.daw.bean.generic.specific.implementation.TipodocumentoBeanGenSpImpl;
 
 public class TipodocumentoDaoGenSpImpl extends TableDaoGenImpl<TipodocumentoBeanGenSpImpl> {
 
-    public TipodocumentoDaoGenSpImpl(Connection pooledConnection) throws Exception {
-        super("tipodocumento", pooledConnection);
+    public TipodocumentoDaoGenSpImpl(String strObject, Connection pooledConnection) throws Exception {
+        super(strObject, pooledConnection);
     }
 
 }

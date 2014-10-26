@@ -97,10 +97,4 @@ public class ProductoBeanGenSpImpl extends BeanGenImpl implements BeanInterface 
         this.obj_tipoproducto = obj_tipoproducto;
     }
 
-
-
-
-
-
-
 }

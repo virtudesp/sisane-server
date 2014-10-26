@@ -15,7 +15,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-
 package net.daw.dao.generic.specific.implementation;
 
 import net.daw.dao.generic.implementation.TableDaoGenImpl;
@@ -24,8 +23,8 @@ import net.daw.bean.generic.specific.implementation.DocumentoBeanGenSpImpl;
 
 public class DocumentoDaoGenSpImpl extends TableDaoGenImpl<DocumentoBeanGenSpImpl> {
 
-    public DocumentoDaoGenSpImpl(Connection pooledConnection) throws Exception {
-        super("documento", pooledConnection);
+    public DocumentoDaoGenSpImpl(String strObject, Connection pooledConnection) throws Exception {
+        super(strObject, pooledConnection);
     }
 
 //    public String getDescription(int id) throws Exception {

@@ -94,7 +94,7 @@ public class ProductoServiceSpImpl implements TableServiceInterface, ViewService
             oConnection.setAutoCommit(false);
             ProductoDaoSpcImpl oProductoDAO = new ProductoDaoSpcImpl(strObjectName, oConnection);
             ProductoBeanGenSpImpl oProducto = new ProductoBeanGenSpImpl(id);
-            oProducto = oProductoDAO.get(oProducto,1);
+            oProducto = oProductoDAO.get(oProducto, 1);
             GsonBuilder gsonBuilder = new GsonBuilder();
             gsonBuilder.setDateFormat("dd/MM/yyyy");
             Gson gson = gsonBuilder.create();

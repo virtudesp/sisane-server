@@ -23,8 +23,8 @@ import net.daw.bean.generic.specific.implementation.UsuarioBeanGenSpImpl;
 
 public class UsuarioDaoGenSpImpl extends TableDaoGenImpl<UsuarioBeanGenSpImpl> {
 
-    public UsuarioDaoGenSpImpl(Connection pooledConnection) throws Exception {
-        super("usuario", pooledConnection);
+    public UsuarioDaoGenSpImpl(String strObject, Connection pooledConnection) throws Exception {
+        super(strObject, pooledConnection);
     }
 
     public UsuarioBeanGenSpImpl getFromLogin(UsuarioBeanGenSpImpl oUsuario) throws Exception {
@@ -41,6 +41,7 @@ public class UsuarioDaoGenSpImpl extends TableDaoGenImpl<UsuarioBeanGenSpImpl> {
                 if (!pass.equals(oUsuario.getPassword())) {
                     oUsuario.setId(0);
                 }
+                oUsuario = this.get(oUsuario, 1);
             }
 
             return oUsuario;
