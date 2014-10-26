@@ -76,7 +76,7 @@ public class OrdenadorDaoSpcImpl implements ViewDaoInterface<OrdenadorBeanGenSpI
             Iterator<Integer> iterador = arrId.listIterator();
             while (iterador.hasNext()) {
                 OrdenadorBeanGenSpImpl oOrdenadorBean = new OrdenadorBeanGenSpImpl(iterador.next());
-                arrOrdenador.add(this.get(oOrdenadorBean));
+                arrOrdenador.add(this.get(oOrdenadorBean, 1));
             }
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPage ERROR: " + ex.getMessage()));
@@ -85,12 +85,12 @@ public class OrdenadorDaoSpcImpl implements ViewDaoInterface<OrdenadorBeanGenSpI
     }
 
     @Override
-    public OrdenadorBeanGenSpImpl get(OrdenadorBeanGenSpImpl oOrdenadorBean) throws Exception {
+    public OrdenadorBeanGenSpImpl get(OrdenadorBeanGenSpImpl oOrdenadorBean, Integer expand) throws Exception {
         if (oOrdenadorBean.getId() > 0) {
             try {
                 if (!oMysql.existsOne(strTableName, oOrdenadorBean.getId())) {
                     oOrdenadorBean.setId(0);
-                } else {                    
+                } else {
                     oOrdenadorBean.setDescripcion(oMysql.getOne(strTableName, "descripcion", oOrdenadorBean.getId()));
                 }
             } catch (Exception ex) {

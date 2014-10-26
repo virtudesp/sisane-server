@@ -72,7 +72,7 @@ public class ViewDaoGenImpl<TIPO_OBJETO> extends MetaDaoGenImpl<TIPO_OBJETO> imp
             while (iterador.hasNext()) {
                 Object oBean = Class.forName(tipo.getName()).newInstance();
                 metodo_setId.invoke(oBean, iterador.next());
-                arrCliente.add(this.get((TIPO_OBJETO) oBean));
+                arrCliente.add(this.get((TIPO_OBJETO) oBean, 1));
             }
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPage ERROR: " + ex.getMessage()));
@@ -131,7 +131,7 @@ public class ViewDaoGenImpl<TIPO_OBJETO> extends MetaDaoGenImpl<TIPO_OBJETO> imp
                                 BeanGenImpl oAjenaBean = (BeanGenImpl) Class.forName("net.daw.bean.generic.specific.implementation." + strAjena + "BeanGenSpImpl").newInstance();
                                 int intIdAjena = (Integer) metodo_getId_Ajena.invoke(oBean);
                                 oAjenaBean.setId(intIdAjena);
-                                oAjenaBean = (BeanGenImpl) oAjenaDao.get(oAjenaBean);
+                                oAjenaBean = (BeanGenImpl) oAjenaDao.get(oAjenaBean,1);
                                 //String strDescription = oAjenaDao.getDescription((Integer) metodo_getId_Ajena.invoke(oBean));
                                 method.invoke(oBean, oAjenaBean);
                             }
@@ -175,7 +175,7 @@ public class ViewDaoGenImpl<TIPO_OBJETO> extends MetaDaoGenImpl<TIPO_OBJETO> imp
     }
 
     @Override
-    public TIPO_OBJETO get(TIPO_OBJETO oBean) throws Exception {
+    public TIPO_OBJETO get(TIPO_OBJETO oBean, Integer expand) throws Exception {
         try {
             Class<TIPO_OBJETO> tipo = (Class<TIPO_OBJETO>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
             Method metodo_getId = tipo.getMethod("getId");
@@ -186,7 +186,10 @@ public class ViewDaoGenImpl<TIPO_OBJETO> extends MetaDaoGenImpl<TIPO_OBJETO> imp
                         metodo_setId.invoke(oBean, 0);
                     } else {
                         oBean = fill(oBean, tipo, metodo_getId);
-                        oBean = fillForeign(oBean, tipo);
+                        if (expand > 0) {
+                            oBean = fillForeign(oBean, tipo);
+                        }
+                        expand--;
                     }
                 } catch (Exception e) {
                     throw new Exception("GenericViewDaoImpl.get: Error: " + e.getMessage());

@@ -45,8 +45,6 @@ public class TipoproductoDaoSpcImpl implements ViewDaoInterface<TipoproductoBean
         }
     }
 
-
-
     @Override
     public int getPages(int intRegsPerPag, ArrayList<FilterBeanHelper> hmFilter) throws Exception {
         int pages = 0;
@@ -78,7 +76,7 @@ public class TipoproductoDaoSpcImpl implements ViewDaoInterface<TipoproductoBean
             Iterator<Integer> iterador = arrId.listIterator();
             while (iterador.hasNext()) {
                 TipoproductoBeanGenSpImpl oTipoproductoBean = new TipoproductoBeanGenSpImpl(iterador.next());
-                arrTipoproducto.add(this.get(oTipoproductoBean));
+                arrTipoproducto.add(this.get(oTipoproductoBean, 1));
             }
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPage ERROR: " + ex.getMessage()));
@@ -87,12 +85,12 @@ public class TipoproductoDaoSpcImpl implements ViewDaoInterface<TipoproductoBean
     }
 
     @Override
-    public TipoproductoBeanGenSpImpl get(TipoproductoBeanGenSpImpl oTipoproductoBean) throws Exception {
+    public TipoproductoBeanGenSpImpl get(TipoproductoBeanGenSpImpl oTipoproductoBean, Integer expand) throws Exception {
         if (oTipoproductoBean.getId() > 0) {
             try {
                 if (!oMysql.existsOne(strTableName, oTipoproductoBean.getId())) {
                     oTipoproductoBean.setId(0);
-                } else {                    
+                } else {
                     oTipoproductoBean.setDescripcion(oMysql.getOne(strTableName, "descripcion", oTipoproductoBean.getId()));
                 }
             } catch (Exception ex) {

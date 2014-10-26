@@ -29,5 +29,5 @@ public interface ViewDaoInterface<GenericBeanImplementation> {
 
     public ArrayList<GenericBeanImplementation> getPage(int intRegsPerPag, int intPage, ArrayList<FilterBeanHelper> hmFilter, HashMap<String, String> hmOrder) throws Exception;
 
-    public GenericBeanImplementation get(GenericBeanImplementation oBean) throws Exception;
+    public GenericBeanImplementation get(GenericBeanImplementation oBean, Integer expand) throws Exception;
 }

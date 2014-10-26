@@ -77,7 +77,7 @@ public class ProductoDaoSpcImpl implements ViewDaoInterface<ProductoBeanGenSpImp
             Iterator<Integer> iterador = arrId.listIterator();
             while (iterador.hasNext()) {
                 ProductoBeanGenSpImpl oProductoBean = new ProductoBeanGenSpImpl(iterador.next());
-                arrProducto.add(this.get(oProductoBean));
+                arrProducto.add(this.get(oProductoBean, 1));
             }
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPage ERROR: " + ex.getMessage()));
@@ -86,7 +86,7 @@ public class ProductoDaoSpcImpl implements ViewDaoInterface<ProductoBeanGenSpImp
     }
 
     @Override
-    public ProductoBeanGenSpImpl get(ProductoBeanGenSpImpl oProductoBean) throws Exception {
+    public ProductoBeanGenSpImpl get(ProductoBeanGenSpImpl oProductoBean, Integer expand) throws Exception {
         if (oProductoBean.getId() > 0) {
             try {
                 if (!oMysql.existsOne(strTableName, oProductoBean.getId())) {
@@ -100,10 +100,10 @@ public class ProductoDaoSpcImpl implements ViewDaoInterface<ProductoBeanGenSpImp
 
                     TipoproductoBeanGenSpImpl oTipoproducto = new TipoproductoBeanGenSpImpl();
                     oTipoproducto.setId(Integer.parseInt(oMysql.getOne(strTableName, "id_tipoproducto", oProductoBean.getId())));
-                    TipoproductoDaoSpcImpl oTipoproductoDAO = new TipoproductoDaoSpcImpl("tipoproducto",oConnection);
-                    oTipoproducto=oTipoproductoDAO.get(oTipoproducto);
+                    TipoproductoDaoSpcImpl oTipoproductoDAO = new TipoproductoDaoSpcImpl("tipoproducto", oConnection);
+                    oTipoproducto = oTipoproductoDAO.get(oTipoproducto,1);
                     oProductoBean.setObj_tipoproducto(oTipoproducto);
-                    
+
                 }
             } catch (Exception ex) {
                 ExceptionBooster.boost(new Exception(this.getClass().getName() + ":get ERROR: " + ex.getMessage()));
