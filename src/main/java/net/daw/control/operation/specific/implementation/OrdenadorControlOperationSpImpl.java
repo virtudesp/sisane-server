@@ -23,6 +23,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import javax.servlet.http.HttpServletRequest;
+import net.daw.bean.generic.specific.implementation.UsuarioBeanGenSpImpl;
 import net.daw.connection.implementation.BoneConnectionPoolImpl;
 import net.daw.connection.publicinterface.ConnectionInterface;
 import net.daw.control.operation.publicinterface.ControlOperationInterface;
@@ -51,7 +52,13 @@ public class OrdenadorControlOperationSpImpl implements ControlOperationInterfac
     public String get(HttpServletRequest request) throws Exception {
         String result = null;
         try {
-            result = oOrdenadorService.get(parameterCooker.prepareId(request));
+            //ejemplo de control de permisos simple
+            UsuarioBeanGenSpImpl oUsuario = (UsuarioBeanGenSpImpl) request.getSession().getAttribute("usuarioBean");
+            if (!oUsuario.getObj_tipousuario().getDescripcion().equalsIgnoreCase("visitante")) {
+                result = oOrdenadorService.get(parameterCooker.prepareId(request));
+            } else {
+                ExceptionBooster.boost(new Exception(this.getClass().getName() + ":get ERROR: not enought perssions"));
+            }
             closeDB();
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":get ERROR: " + ex.getMessage()));
