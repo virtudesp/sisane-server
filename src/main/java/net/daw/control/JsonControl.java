@@ -27,12 +27,14 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import net.daw.control.operation.generic.specific.implementation.CuestionarioControlOperationGenSpImpl;
 import net.daw.control.operation.generic.specific.implementation.DocumentoControlOperationGenSpImpl;
 import net.daw.control.operation.generic.specific.implementation.TipodocumentoControlOperationGenSpImpl;
 import net.daw.control.operation.generic.specific.implementation.UsuarioControlOperationGenSpImpl;
 import net.daw.control.operation.specific.implementation.OrdenadorControlOperationSpImpl;
 import net.daw.control.operation.specific.implementation.ProductoControlOperationSpImpl;
 import net.daw.control.operation.specific.implementation.TipoproductoControlOperationSpImpl;
+import net.daw.control.route.generic.specific.implementation.CuestionarioControlRouteGenSpImpl;
 import net.daw.control.route.generic.specific.implementation.DocumentoControlRouteGenSpImpl;
 import net.daw.control.route.generic.specific.implementation.TipodocumentoControlRouteGenSpImpl;
 import net.daw.control.route.generic.specific.implementation.UsuarioControlRouteGenSpImpl;
@@ -114,6 +116,11 @@ public class JsonControl extends HttpServlet {
                         OrdenadorControlRouteSpImpl oOrdenadorRoute = new OrdenadorControlRouteSpImpl();
                         OrdenadorControlOperationSpImpl oOrdenadorControlOperation = new OrdenadorControlOperationSpImpl(request);
                         jsonResult = oOrdenadorRoute.execute(request, oOrdenadorControlOperation);
+                        break;
+                    case "cuestionario":
+                        CuestionarioControlRouteGenSpImpl oCuestionarioRoute = new CuestionarioControlRouteGenSpImpl();
+                        CuestionarioControlOperationGenSpImpl oCuestionarioControlOperation = new CuestionarioControlOperationGenSpImpl(request);
+                        jsonResult = oCuestionarioRoute.execute(request, oCuestionarioControlOperation);
                         break;
                     default:
                         ExceptionBooster.boost(new Exception(this.getClass().getName() + ":processRequest ERROR: no such operation"));
