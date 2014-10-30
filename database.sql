@@ -1242,3 +1242,517 @@ INSERT INTO `publicacion` (`id`, `contenido`, `id_usuario`) VALUES
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+--
+-- Base de datos: `cuestionariodb`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `cuestionario`
+--
+
+CREATE TABLE IF NOT EXISTS `cuestionario` (
+`id` int(11) NOT NULL,
+  `tipo` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='cuestionario' AUTO_INCREMENT=21 ;
+
+--
+-- Volcado de datos para la tabla `cuestionario`
+--
+
+INSERT INTO `cuestionario` (`id`, `tipo`) VALUES
+(1, 'Deportes'),
+(2, 'Viajes'),
+(3, 'Coches'),
+(4, 'Política'),
+(5, 'Música'),
+(6, 'Bebidas'),
+(7, 'Restaurantes'),
+(8, 'Estudios'),
+(9, 'Juegos'),
+(10, 'Cine'),
+(11, 'Arte'),
+(12, 'Compras'),
+(13, 'Tecnologia'),
+(14, 'Moviles'),
+(15, 'Vacaciones'),
+(16, 'Fin de semana'),
+(17, 'Ocio'),
+(18, 'Libros'),
+(19, 'Redes sociales'),
+(20, 'Animales');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `opcion`
+--
+
+CREATE TABLE IF NOT EXISTS `opcion` (
+`id` int(11) NOT NULL,
+  `valor` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `id_pregunta` int(11) NOT NULL
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='opcion' AUTO_INCREMENT=257 ;
+
+--
+-- Volcado de datos para la tabla `opcion`
+--
+
+INSERT INTO `opcion` (`id`, `valor`, `id_pregunta`) VALUES
+(1, 'Barcelona', 1),
+(2, 'Real Madrid', 1),
+(3, 'Valencia', 1),
+(4, 'Sevilla', 1),
+(5, 'Mucho', 2),
+(6, 'Poco', 2),
+(7, 'Nada', 2),
+(8, 'Todos los meses', 2),
+(9, 'Mas de 10 veces', 3),
+(10, 'Mas de 5 veces', 3),
+(11, 'Alguna vez', 3),
+(12, 'No', 3),
+(13, 'Avion', 4),
+(14, 'Tren', 4),
+(15, 'Autobus', 4),
+(16, 'Coche', 4),
+(17, 'Hotel', 5),
+(18, 'Motel', 5),
+(19, 'Apartamento', 5),
+(20, 'Anden', 5),
+(21, 'Futbol', 6),
+(22, 'Baloncesto', 6),
+(23, 'Petanca', 6),
+(24, 'Deportes de riesgo', 6),
+(25, 'Futbol', 7),
+(26, 'Correr', 7),
+(27, 'Natacion', 7),
+(28, 'Otros', 7),
+(29, 'Alguna vez', 8),
+(30, 'Si', 8),
+(31, 'No', 8),
+(32, 'Nunca', 8),
+(33, 'Siempre', 9),
+(34, 'Si', 9),
+(35, 'Alguna vez', 9),
+(36, 'Nunca', 9),
+(37, 'Rock', 10),
+(38, 'Pop', 10),
+(39, 'Bisbal', 10),
+(40, 'Soy sordo', 10),
+(41, '00`', 11),
+(42, '90`', 11),
+(43, '80`', 11),
+(44, 'No me importa', 11),
+(45, 'MP3', 12),
+(46, 'Radio', 12),
+(47, 'CD', 12),
+(48, 'Nube', 12),
+(49, 'Siempre', 13),
+(50, 'A menudo', 13),
+(51, 'En ocasiones', 13),
+(52, 'Nunca', 13),
+(53, 'Mas de 2', 14),
+(54, 'Entre 1 y 2', 14),
+(55, 'Entre 0,5 y 1', 14),
+(56, 'Menos de medio litro', 14),
+(57, 'Mas de 4', 15),
+(58, 'Entre 3 y 2', 15),
+(59, 'El fin de semana', 15),
+(60, 'Nunca dejo de beber', 15),
+(61, 'Mucho', 16),
+(62, 'A veces', 16),
+(63, 'Nunca', 16),
+(64, 'No sabe/No contesta', 16),
+(65, 'Siempre', 17),
+(66, 'A veces', 17),
+(67, 'A menudo', 17),
+(68, 'Nunca', 17),
+(69, 'Todas las semanas', 18),
+(70, 'Todos los meses', 18),
+(71, 'Cada 3 meses', 18),
+(72, 'Una vez al año', 18),
+(73, 'Si', 19),
+(74, 'No', 19),
+(75, 'Ole', 19),
+(76, 'Olo', 19),
+(77, 'Hamburgueseria', 20),
+(78, 'Pizzeria', 20),
+(79, 'Chino', 20),
+(80, 'Indio', 20),
+(81, 'Si', 21),
+(82, 'No', 21),
+(83, 'Tal fez', 21),
+(84, 'Porque no', 21),
+(85, 'Universidad', 22),
+(86, 'Formacion Profesional', 22),
+(87, 'Bachiller', 22),
+(88, 'Graduado Escolar', 22),
+(89, 'Si', 23),
+(90, 'No', 23),
+(91, 'Siempre', 23),
+(92, 'A veces', 23),
+(93, 'Si', 24),
+(94, 'No', 24),
+(95, 'Un poco', 24),
+(96, 'Un mucho', 24),
+(97, 'Todas las semanas', 25),
+(98, 'Todos los meses', 25),
+(99, 'Cada 3 meses', 25),
+(100, 'Nunca', 25),
+(101, 'Accion', 26),
+(102, 'Comedia', 26),
+(103, 'Terror', 26),
+(104, 'Dibujos', 26),
+(105, 'Si', 27),
+(106, 'No', 27),
+(107, 'Depende', 27),
+(108, 'Me hace reir', 27),
+(109, 'Si', 28),
+(110, 'Depende', 28),
+(111, 'Me hace llorar', 28),
+(112, 'No', 28),
+(113, 'Si', 29),
+(114, 'No', 29),
+(115, 'Pff', 29),
+(116, 'Aiss', 29),
+(117, 'Claro', 30),
+(118, 'Cuando me sobra', 30),
+(119, 'No, nunca', 30),
+(120, 'He dicho nunca?', 30),
+(121, 'Todas las semanas', 31),
+(122, 'Todos los meses', 31),
+(123, 'Cada 3 meses', 31),
+(124, 'Nunca', 31),
+(125, 'Si', 32),
+(126, 'No', 32),
+(127, 'Si me obliga mi mujer', 32),
+(128, 'A veces', 32),
+(129, 'Ropa', 33),
+(130, 'Juegos', 33),
+(131, 'Libros', 33),
+(132, 'Electronica', 33),
+(133, 'Todas las semanas', 34),
+(134, 'Todos los meses', 34),
+(135, 'Cada 3 meses', 34),
+(136, 'Nunca', 34),
+(137, 'Con compañia', 35),
+(138, 'Solo', 35),
+(139, 'Con mi sombra', 35),
+(140, 'Alone in the dark', 35),
+(141, '1', 36),
+(142, '2', 36),
+(143, '3', 36),
+(144, 'Nunca', 36),
+(145, 'Si', 37),
+(146, 'No', 37),
+(147, 'Tal vez', 37),
+(148, 'Nunca', 37),
+(149, 'En ciudad', 40),
+(150, 'En espacios naturales', 40),
+(151, 'En el mar', 40),
+(152, 'En el sofá', 40),
+(153, 'Si', 41),
+(154, 'A veces', 41),
+(155, 'Tal vez', 41),
+(156, 'Nunca', 41),
+(157, 'Siempre', 42),
+(158, 'A veces', 42),
+(159, 'Tal vez', 42),
+(160, 'Nunca', 42),
+(161, 'Siempre', 43),
+(162, 'A veces', 43),
+(163, 'Tal vez', 43),
+(164, 'Nunca', 43),
+(165, 'Si', 46),
+(166, 'A veces', 46),
+(167, 'Tal vez', 46),
+(168, 'Nunca', 46),
+(169, 'Siempre', 47),
+(170, '1 por semana', 47),
+(171, '2 o mas por semana', 47),
+(172, 'Nunca', 47),
+(173, 'Si', 48),
+(174, 'A veces', 48),
+(175, 'Tal vez', 48),
+(176, 'Nunca', 48),
+(177, '2 o mas', 49),
+(178, '1', 49),
+(179, 'Ninguno', 49),
+(180, 'leer?', 49),
+(181, 'Aventura', 50),
+(182, 'Drama', 50),
+(183, 'Terror', 50),
+(184, 'Educativo', 50),
+(185, 'Si', 51),
+(186, 'A veces', 51),
+(187, 'Tal vez', 51),
+(188, 'No', 51),
+(189, 'Si', 52),
+(190, 'A veces', 52),
+(191, 'Tal vez', 52),
+(192, 'No', 52),
+(193, 'Si', 53),
+(194, 'A veces', 53),
+(195, 'Tal vez', 53),
+(196, 'No', 53),
+(197, '1 coche', 54),
+(198, '2 coches o mas', 54),
+(199, '5 ferraris bitches', 54),
+(200, 'Ninguno', 54),
+(201, 'No estoy satisfecho', 55),
+(202, 'Adios Rajoy', 55),
+(203, 'Muy satisfecho', 55),
+(204, 'Me encanta la politica', 55),
+(205, 'Mucho', 56),
+(206, 'Si', 56),
+(207, 'Un poco', 56),
+(208, 'No', 56),
+(209, 'Mucho', 57),
+(210, 'A menudo', 57),
+(211, 'A veces', 57),
+(212, 'nunca', 57),
+(213, 'Accion', 58),
+(214, 'Deportes', 58),
+(215, 'Pensar', 58),
+(216, 'League of Legends', 58),
+(217, '20 horas', 59),
+(218, '10 horas', 59),
+(219, 'Enetre 1 y 10 horas', 59),
+(220, 'No duermo', 59),
+(221, 'Sólo las 24 horas del dia, 7 dias de la semana, 4 semanas del mes, los 12 meses al año, nada mas.', 60),
+(222, 'A veces', 60),
+(223, 'Soy noob', 60),
+(224, 'No', 60),
+(225, 'Si', 61),
+(226, 'No', 61),
+(227, 'Mucho', 61),
+(228, 'Poco', 61),
+(229, 'Mucho', 62),
+(230, 'Poco', 62),
+(231, 'Si', 62),
+(232, 'No', 62),
+(233, 'Sí', 63),
+(234, 'No', 63),
+(235, 'Tendré', 63),
+(236, 'Nunca tendré', 63),
+(237, 'Mucho', 64),
+(238, 'Poco', 64),
+(239, 'Nada', 64),
+(240, 'A veces', 64),
+(241, 'Si', 65),
+(242, 'No', 65),
+(243, 'Todavía no', 65),
+(244, 'Tendré', 65),
+(245, 'IPhone', 66),
+(246, 'Nexus', 66),
+(247, 'Samsung', 66),
+(248, 'Sony', 66),
+(249, 'Sí', 67),
+(250, 'No', 67),
+(251, 'Poco', 67),
+(252, 'Mucho', 67),
+(253, 'Si', 68),
+(254, 'No', 68),
+(255, 'Mucho', 68),
+(256, 'Poco', 68);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `pregunta`
+--
+
+CREATE TABLE IF NOT EXISTS `pregunta` (
+`id` int(11) NOT NULL,
+  `descripcion` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `id_cuestionario` int(11) NOT NULL
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='pregunta' AUTO_INCREMENT=69 ;
+
+--
+-- Volcado de datos para la tabla `pregunta`
+--
+
+INSERT INTO `pregunta` (`id`, `descripcion`, `id_cuestionario`) VALUES
+(1, '¿De que equipo eres?', 1),
+(2, '¿Cuanto has viajado?', 2),
+(3, '¿Has salido de España?', 2),
+(4, '¿En que transporte has viajado?', 2),
+(5, '¿Donde te sueles alojar cuando viajas?', 2),
+(6, '¿Qué deporte te gusta mas?', 1),
+(7, '¿Qué tipo de deporte practicas?', 1),
+(8, '¿Realizas deportes al aire libre?', 1),
+(9, '¿Practicas deportes en equipo?', 1),
+(10, '¿Qué tipo de música escuchas?', 5),
+(11, '¿De qué época?', 5),
+(12, '¿Qué tipo de soporte utilizas?', 5),
+(13, '¿Escuchas música muy a menudo?', 5),
+(14, '¿Cuántos litros de agua bebes al día?', 6),
+(15, '¿Cuántas veces a la semana consumes bebidas alcohólicas?', 6),
+(16, '¿Consumes refrescos?', 6),
+(17, '¿Consumes zumos?', 6),
+(18, '¿Sales muy a menudo a comer/cenar en restaurantes?', 7),
+(19, '¿Más de una vez al mes?', 7),
+(20, '¿Qué tipo de restaurantes frecuentas más?', 7),
+(21, '¿Has realizado estudios superiores?', 8),
+(22, '¿Qué nivel de estudios tienes?', 8),
+(23, '¿Realizas cursos en escuelas independientes?', 8),
+(24, '¿Te gusta el cine?', 10),
+(25, '¿Con qué frecuencia vas al cine?', 10),
+(26, '¿Qué género de cine te gusta?', 10),
+(27, '¿Te gusta el cine español?', 10),
+(28, '¿Te gusta el arte?', 11),
+(29, '¿Sueles ir a exposiciones?', 11),
+(30, '¿Inviertes en obras de arte?', 11),
+(31, '¿Con qué frecuencia vas a museos?', 11),
+(32, '¿Te gusta ir de compras?', 12),
+(33, '¿Qué tipo de artículos compras?', 12),
+(34, '¿Con qué frecuencia vas?', 12),
+(35, '¿Sueles ir solo o en compañía?', 12),
+(36, '¿Cuántas veces al año te tomas vacaciones?', 15),
+(37, '¿Sueles viajar cuando estás de vacaciones?', 15),
+(40, '¿Prefieres pasar tus vacaciones en la ciudad o en espacios naturales?', 15),
+(41, '¿Trabajas los fines de semana?', 16),
+(42, '¿Sueles salir de noche los fines de semana?', 16),
+(43, '¿Realizas muchas actividades de ocio?', 16),
+(46, '¿Realizas muchas actividades de ocio?', 17),
+(47, '¿Con qué frecuencia?', 17),
+(48, 'Actualmente, ¿lees algún libro?', 18),
+(49, '¿Cuántos libros al mes sueles leer?', 18),
+(50, '¿Qué género literario te gusta leer?', 18),
+(51, '¿Te gustan los animales?', 20),
+(52, '¿Tienes algún animal?', 20),
+(53, '¿Tienes coche?', 3),
+(54, '¿Cuántos coches tienes?', 3),
+(55, '¿ Como de satisfecho estás con el sistema político de nuestro país?', 4),
+(56, '¿Te consideras un ciudadano activamente político?', 4),
+(57, '¿Juegas mucho a las videoconsolas?', 9),
+(58, '¿Que tipos de juegos te gustan?', 9),
+(59, '¿Cuánto tiempo le dedicas a jugar a la semana?', 9),
+(60, '¿Juegas al League Of Legends?', 9),
+(61, '¿Tiene un aparato electrónico en casa?', 13),
+(62, '¿Utilizar mucho el ordenador?', 13),
+(63, '¿Tienes tablet?', 13),
+(64, '¿Cuánto tiempo le dedicas a la tecnología?', 13),
+(65, '¿Tienes smartphone?', 14),
+(66, '¿Que marca de smartphone?', 14),
+(67, '¿Usas las Redes Sociales?', 19),
+(68, '¿Usas Tuenti? ', 19);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `respuesta`
+--
+
+CREATE TABLE IF NOT EXISTS `respuesta` (
+`id` int(11) NOT NULL,
+  `id_usuario` int(11) NOT NULL,
+  `id_pregunta` int(11) NOT NULL,
+  `id_opcion` int(11) NOT NULL
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='respuesta' AUTO_INCREMENT=2 ;
+
+
+--
+-- Estructura de tabla para la tabla `usuariocuestionario`
+--
+
+CREATE TABLE IF NOT EXISTS `usuariocuestionario` (
+  `id_cuestionario` int(11) NOT NULL,
+  `id_usuario` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Índices para tablas volcadas
+--
+
+--
+-- Indices de la tabla `cuestionario`
+--
+ALTER TABLE `cuestionario`
+ ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `opcion`
+--
+ALTER TABLE `opcion`
+ ADD PRIMARY KEY (`id`,`id_pregunta`), ADD KEY `fk_opcion_pregunta1_idx` (`id_pregunta`);
+
+--
+-- Indices de la tabla `pregunta`
+--
+ALTER TABLE `pregunta`
+ ADD PRIMARY KEY (`id`,`id_cuestionario`), ADD KEY `fk_pregunta_cuestionario1_idx` (`id_cuestionario`);
+
+--
+-- Indices de la tabla `respuesta`
+--
+ALTER TABLE `respuesta`
+ ADD PRIMARY KEY (`id`,`id_opcion`,`id_pregunta`,`id_usuario`), ADD KEY `fk_respuesta_usuario1_idx` (`id_usuario`), ADD KEY `fk_respuesta_pregunta1_idx` (`id_pregunta`), ADD KEY `fk_respuesta_opcion1_idx` (`id_opcion`);
+
+
+-- Indices de la tabla `usuariocuestionario`
+--
+ALTER TABLE `usuariocuestionario`
+ ADD PRIMARY KEY (`id_cuestionario`,`id_usuario`), ADD KEY `fk_cuestionario_has_usuario_usuario1_idx` (`id_usuario`), ADD KEY `fk_cuestionario_has_usuario_cuestionario_idx` (`id_cuestionario`);
+
+--
+-- AUTO_INCREMENT de las tablas volcadas
+--
+
+--
+-- AUTO_INCREMENT de la tabla `cuestionario`
+--
+ALTER TABLE `cuestionario`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=21;
+--
+-- AUTO_INCREMENT de la tabla `opcion`
+--
+ALTER TABLE `opcion`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=257;
+--
+-- AUTO_INCREMENT de la tabla `pregunta`
+--
+ALTER TABLE `pregunta`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=69;
+--
+-- AUTO_INCREMENT de la tabla `respuesta`
+--
+ALTER TABLE `respuesta`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+--
+--
+-- Filtros para la tabla `opcion`
+--
+ALTER TABLE `opcion`
+ADD CONSTRAINT `fk_opcion_pregunta1` FOREIGN KEY (`id_pregunta`) REFERENCES `pregunta` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Filtros para la tabla `pregunta`
+--
+ALTER TABLE `pregunta`
+ADD CONSTRAINT `fk_pregunta_cuestionario1` FOREIGN KEY (`id_cuestionario`) REFERENCES `cuestionario` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Filtros para la tabla `respuesta`
+--
+ALTER TABLE `respuesta`
+ADD CONSTRAINT `fk_respuesta_opcion1` FOREIGN KEY (`id_opcion`) REFERENCES `opcion` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+ADD CONSTRAINT `fk_respuesta_pregunta1` FOREIGN KEY (`id_pregunta`) REFERENCES `pregunta` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+ADD CONSTRAINT `fk_respuesta_usuario1` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Filtros para la tabla `usuariocuestionario`
+--
+ALTER TABLE `usuariocuestionario`
+ADD CONSTRAINT `fk_cuestionario_has_usuario_cuestionario` FOREIGN KEY (`id_cuestionario`) REFERENCES `cuestionario` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+ADD CONSTRAINT `fk_cuestionario_has_usuario_usuario1` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+
+
+
