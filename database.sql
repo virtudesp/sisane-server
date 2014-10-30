@@ -1011,7 +1011,7 @@ CREATE TABLE IF NOT EXISTS `tipoproducto` (
   `id` int(6) NOT NULL AUTO_INCREMENT,
   `descripcion` varchar(254) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=32 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=32 ;
 
 --
 -- Dumping data for table `tipoproducto`
@@ -1081,6 +1081,7 @@ CREATE TABLE IF NOT EXISTS `usuario` (
   `login` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Nombre de usuario',
   `password` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Contraseña',
   `id_tipousuario` int(11) DEFAULT NULL COMMENT 'Tipo de usuario',
+  `id_estado` int(11) DEFAULT NULL COMMENT 'Estado',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=31 ;
 
@@ -1088,37 +1089,155 @@ CREATE TABLE IF NOT EXISTS `usuario` (
 -- Dumping data for table `usuario`
 --
 
-INSERT INTO `usuario` (`id`, `login`, `password`, `id_tipousuario`) VALUES
-(1, 'pepe', 'pepe', 2),
-(2, 'juan', 'juan', 3),
-(3, 'maria', 'maria', 3),
-(4, 'antonia', 'antonia', 3),
-(5, 'edu', 'edu', 3),
-(6, 'jose', 'jose', 3),
-(7, 'silvia', 'silvia', 3),
-(8, 'pedro', 'pedro', 3),
-(9, 'raquel', 'raquel', 3),
-(10, 'daniel', 'daniel', 3),
-(11, 'rafael', 'rafael', 1),
-(12, 'juan', 'juan', 3),
-(13, 'elena', 'elena', 3),
-(14, 'luis', 'luis', 3),
-(15, 'alba', 'alba', 3),
-(16, 'amparo', 'amparo', 3),
-(17, 'ambrosio', 'ambrosio', 3),
-(18, 'luisa', 'luisa', 3),
-(19, 'leon', 'leon', 3),
-(20, 'rosa', 'rosa', 3),
-(21, 'capcom', 'capcom', 3),
-(22, 'teleco', 'teleco', 3),
-(23, 'mercadona', 'mercadona', 3),
-(24, 'vistaprint', 'vistaprint', 3),
-(25, 'google', 'google', 3),
-(26, 'konami', 'konami', 3),
-(27, 'orange', 'orange', 3),
-(28, 'samsung', 'samsung', 3),
-(29, 'gigabyte', 'gigabyte', 3),
-(30, 'microsoft', 'microsoft', 3);
+INSERT INTO `usuario` (`id`, `login`, `password`, `id_tipousuario`, `id_estado`) VALUES
+(1, 'pepe', 'pepe', 2, 1),
+(2, 'juan', 'juan', 3, 3),
+(3, 'maria', 'maria', 3, 6),
+(4, 'antonia', 'antonia', 3, 7),
+(5, 'edu', 'edu', 3, 13),
+(6, 'jose', 'jose', 3, 19),
+(7, 'silvia', 'silvia', 3, 6),
+(8, 'pedro', 'pedro', 3, 8),
+(9, 'raquel', 'raquel', 3, 15),
+(10, 'daniel', 'daniel', 3, 12),
+(11, 'rafael', 'rafael', 1, 17),
+(12, 'juan', 'juan', 3, 14),
+(13, 'elena', 'elena', 3, 19),
+(14, 'luis', 'luis', 3, 4),
+(15, 'alba', 'alba', 3, 5),
+(16, 'amparo', 'amparo', 3, 7),
+(17, 'ambrosio', 'ambrosio', 3, 8),
+(18, 'luisa', 'luisa', 3, 1),
+(19, 'leon', 'leon', 3, 3),
+(20, 'rosa', 'rosa', 3, 2),
+(21, 'capcom', 'capcom', 3, 17),
+(22, 'teleco', 'teleco', 3, 18),
+(23, 'mercadona', 'mercadona', 3, 13),
+(24, 'vistaprint', 'vistaprint', 3, 15),
+(25, 'google', 'google', 3, 16),
+(26, 'konami', 'konami', 3, 6),
+(27, 'orange', 'orange', 3, 7),
+(28, 'samsung', 'samsung', 3, 8),
+(29, 'gigabyte', 'gigabyte', 3, 10),
+(30, 'microsoft', 'microsoft', 3, 10);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `amigo`
+--
+
+CREATE TABLE IF NOT EXISTS `amigo` (
+`id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Identificador',
+  `id_usuario_1` int(11) DEFAULT NULL COMMENT 'Usuario',
+  `id_usuario_2` int(11) DEFAULT NULL COMMENT 'Amigo',
+PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `amigo`
+--
+
+INSERT INTO `amigo` (`id`, `id_usuario_1`, `id_usuario_2`) VALUES
+(1, 2, 3),
+(2, 2, 4),
+(3, 2, 5),
+(4, 3, 8),
+(5, 11, 20),
+(6, 14, 15),
+(7, 2, 15),
+(8, 3, 17),
+(9, 2, 17),
+(10, 3, 19),
+(11, 19, 2),
+(12, 19, 3),
+(13, 12, 2),
+(14, 13, 4),
+(15, 15, 20),
+(16, 5, 15),
+(17, 5, 20),
+(18, 7, 13),
+(19, 15, 6),
+(20, 15, 7);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `estado`
+--
+
+CREATE TABLE IF NOT EXISTS `estado` (
+`id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Identificador',
+  `tipo` varchar(255) DEFAULT NULL COMMENT 'Estado',
+PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `estado`
+--
+
+INSERT INTO `estado` (`id`, `tipo`) VALUES
+(1, 'Estoy contento'),
+(2, 'Estoy feliz'),
+(3, 'Estoy happy'),
+(4, 'Estoy triste'),
+(5, 'Estoy con fiebre'),
+(6, 'Tengo fiebre'),
+(7, 'En el gimnasio'),
+(8, 'De quintos'),
+(9, 'En el cine'),
+(10, 'Estudiando'),
+(11, 'En el trabajo'),
+(12, 'Durmiendo'),
+(13, 'En el baño...'),
+(14, 'En el medico'),
+(15, 'De fiesta'),
+(16, 'Confuso'),
+(17, 'Deprimido'),
+(18, 'Fantastico'),
+(19, 'OP'),
+(20, 'rafa es el mejor');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `publicacion`
+--
+
+CREATE TABLE IF NOT EXISTS `publicacion` (
+`id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Identificador',
+  `contenido` varchar(255) DEFAULT NULL COMMENT 'Contenido',
+  `id_usuario` int(11) DEFAULT NULL COMMENT 'Usuario',
+PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `publicacion`
+--
+
+INSERT INTO `publicacion` (`id`, `contenido`, `id_usuario`) VALUES
+(1, 'Esto no es twitter', 2),
+(2, 'Peliculon que hacen en antena 3', 2),
+(3, 'No tengo amigos :(', 1),
+(4, 'Escribir 20 posts es una faena', 6),
+(5, 'El nuevo cd de u2 tiene muchos temazos', 6),
+(6, 'Mucho nuevo hay por aqui', 17),
+(7, 'Hoy hace un dia de m...\r\na viciarse al lol', 3),
+(8, 'El usuario numero 5 es un cachondo', 6),
+(9, 'No ten go amigos y no se escrivir', 17),
+(10, 'Lo que hay que leer', 20),
+(11, 'Rafa seguro que es el mejor', 5),
+(12, 'Tengo al pajaro molestando todo el dia', 9),
+(13, 'No todos mis amigos me comprenden', 10),
+(14, 'No tengo casi amigos :(', 10),
+(15, 'El halloween mola, buena tarde con los colegas', 2),
+(16, 'Im the first', 1),
+(17, 'Menuda party hard que me acabo de pegar tete', 1),
+(18, 'Rusty cole se considera un realista pero filosoficamente hablando un pesimista', 13),
+(19, 'Skyler debe morir es tediosa no hay quien aguante eso', 13),
+(20, 'El Pablo Motos cada dia lo veo mas alto o sera que los invitados ...', 13);
+
+
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
