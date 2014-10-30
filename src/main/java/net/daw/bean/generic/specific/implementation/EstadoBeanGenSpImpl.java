@@ -17,6 +17,7 @@
  */
 package net.daw.bean.generic.specific.implementation;
 
+import com.google.gson.annotations.Expose;
 import net.daw.bean.generic.implementation.BeanGenImpl;
 import net.daw.bean.publicinterface.BeanInterface;
 
@@ -25,13 +26,14 @@ import net.daw.bean.publicinterface.BeanInterface;
  * @author Victor López
  */
 public class EstadoBeanGenSpImpl extends BeanGenImpl implements BeanInterface {
-    
+
+    @Expose
     private String tipo;
-    
-    public EstadoBeanGenSpImpl(){
+
+    public EstadoBeanGenSpImpl() {
     }
-    
-     public EstadoBeanGenSpImpl(Integer id) {
+
+    public EstadoBeanGenSpImpl(Integer id) {
         super(id);
     }
 
@@ -42,6 +44,5 @@ public class EstadoBeanGenSpImpl extends BeanGenImpl implements BeanInterface {
     public void setTipo(String tipo) {
         this.tipo = tipo;
     }
-    
-     
+
 }
