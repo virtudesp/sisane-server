@@ -123,7 +123,7 @@ public class ViewDaoGenImpl<TIPO_OBJETO> extends MetaDaoGenImpl<TIPO_OBJETO> imp
                                 //only two _ allowed in foreign keys
                                 String strAjena = null;
                                 if (!(method.getName().indexOf("_") == (method.getName().lastIndexOf("_")))) {
-                                    strAjena = method.getName().substring(method.getName().indexOf("_") + 1, method.getName().lastIndexOf("_"));
+                                    strAjena = method.getName().substring(method.getName().indexOf("_") + 1, method.getName().lastIndexOf("_")).toLowerCase(Locale.ENGLISH);
                                 } else {
                                     strAjena = method.getName().substring(3).toLowerCase(Locale.ENGLISH).substring(4);
                                 }
