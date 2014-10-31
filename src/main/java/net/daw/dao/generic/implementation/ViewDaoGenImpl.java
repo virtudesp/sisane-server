@@ -121,20 +121,23 @@ public class ViewDaoGenImpl<TIPO_OBJETO> extends MetaDaoGenImpl<TIPO_OBJETO> imp
                                 //prueba: method.getName().substring(method.getName().indexOf("_")+1,method.getName().lastIndexOf("_")))
                                 //ojo: en los pojos, los id_ deben preceder a los obj_ del mismo objeto siempre!
                                 //only two _ allowed in foreign keys
-                                String strAjena = null;
+                                String strAjena, strTabla = null;
+                                
                                 if (!(method.getName().indexOf("_") == (method.getName().lastIndexOf("_")))) {
-                                    strAjena = method.getName().substring(method.getName().indexOf("_") + 1, method.getName().lastIndexOf("_")).toLowerCase(Locale.ENGLISH);
+                                    strTabla = method.getName().substring(method.getName().indexOf("_") + 1, method.getName().lastIndexOf("_")).toLowerCase(Locale.ENGLISH);
+                                    strAjena = method.getName().substring(3).toLowerCase(Locale.ENGLISH).substring(4);
                                 } else {
                                     strAjena = method.getName().substring(3).toLowerCase(Locale.ENGLISH).substring(4);
+                                    strTabla=strAjena;
                                 }
                                 Method metodo_getId_Ajena = tipo.getMethod("getId_" + strAjena);
-                                strAjena = strAjena.substring(0, 1).toUpperCase(Locale.ENGLISH) + strAjena.substring(1);
+                                strTabla = strTabla.substring(0, 1).toUpperCase(Locale.ENGLISH) + strTabla.substring(1);
                                 //GenericDaoImplementation oAjenaDao = (GenericDaoImplementation) Class.forName("net.daw.dao." + strAjena + "Dao").newInstance();
 
-                                Constructor c = Class.forName("net.daw.dao.generic.specific.implementation." + strAjena + "DaoGenSpImpl").getConstructor(String.class, Connection.class);
-                                TableDaoGenImpl oAjenaDao = (TableDaoGenImpl) c.newInstance(strAjena, connection);
+                                Constructor c = Class.forName("net.daw.dao.generic.specific.implementation." + strTabla + "DaoGenSpImpl").getConstructor(String.class, Connection.class);
+                                TableDaoGenImpl oAjenaDao = (TableDaoGenImpl) c.newInstance(strTabla, connection);
 
-                                BeanGenImpl oAjenaBean = (BeanGenImpl) Class.forName("net.daw.bean.generic.specific.implementation." + strAjena + "BeanGenSpImpl").newInstance();
+                                BeanGenImpl oAjenaBean = (BeanGenImpl) Class.forName("net.daw.bean.generic.specific.implementation." + strTabla + "BeanGenSpImpl").newInstance();
                                 int intIdAjena = (Integer) metodo_getId_Ajena.invoke(oBean);
                                 oAjenaBean.setId(intIdAjena);
                                 oAjenaBean = (BeanGenImpl) oAjenaDao.get(oAjenaBean, 1);
