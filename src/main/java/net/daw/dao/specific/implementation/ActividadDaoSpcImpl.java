@@ -128,7 +128,7 @@ public class ActividadDaoSpcImpl implements ViewDaoInterface<ActividadBeanGenSpI
             oMysql.updateOne(oActividadBean.getId(), strTableName, "descripcion", oActividadBean.getFecha().toString());
             oMysql.updateOne(oActividadBean.getId(), strTableName, "descripcion", oActividadBean.getEvaluacion().toString());
             
-            oMysql.updateOne(oActividadBean.getId(), strTableName, "descripcion", oActividadBean.getActivo());
+            oMysql.updateOne(oActividadBean.getId(), strTableName, "descripcion", Integer.toString(oActividadBean.getActivo()));
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":set ERROR: " + ex.getMessage()));
         }
