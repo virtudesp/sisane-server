@@ -120,7 +120,13 @@ public class ViewDaoGenImpl<TIPO_OBJETO> extends MetaDaoGenImpl<TIPO_OBJETO> imp
                             if (method.getName().substring(3).toLowerCase(Locale.ENGLISH).substring(0, 4).equalsIgnoreCase("obj_")) {
                                 //prueba: method.getName().substring(method.getName().indexOf("_")+1,method.getName().lastIndexOf("_")))
                                 //ojo: en los pojos, los id_ deben preceder a los obj_ del mismo objeto siempre!
-                                String strAjena = method.getName().substring(3).toLowerCase(Locale.ENGLISH).substring(4);
+                                //only two _ allowed in foreign keys
+                                String strAjena = null;
+                                if (!(method.getName().indexOf("_") == (method.getName().lastIndexOf("_")))) {
+                                    strAjena = method.getName().substring(method.getName().indexOf("_") + 1, method.getName().lastIndexOf("_"));
+                                } else {
+                                    strAjena = method.getName().substring(3).toLowerCase(Locale.ENGLISH).substring(4);
+                                }
                                 Method metodo_getId_Ajena = tipo.getMethod("getId_" + strAjena);
                                 strAjena = strAjena.substring(0, 1).toUpperCase(Locale.ENGLISH) + strAjena.substring(1);
                                 //GenericDaoImplementation oAjenaDao = (GenericDaoImplementation) Class.forName("net.daw.dao." + strAjena + "Dao").newInstance();
