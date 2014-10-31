@@ -30,6 +30,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.daw.control.operation.generic.specific.implementation.CuestionarioControlOperationGenSpImpl;
 import net.daw.control.operation.generic.specific.implementation.DocumentoControlOperationGenSpImpl;
 import net.daw.control.operation.generic.specific.implementation.OpcionControlOperationGenSpImpl;
+import net.daw.control.operation.generic.specific.implementation.PreguntaControlOperationGenSpImpl;
 import net.daw.control.operation.generic.specific.implementation.TipodocumentoControlOperationGenSpImpl;
 import net.daw.control.operation.generic.specific.implementation.UsuarioControlOperationGenSpImpl;
 import net.daw.control.operation.specific.implementation.OrdenadorControlOperationSpImpl;
