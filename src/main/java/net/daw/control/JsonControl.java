@@ -37,6 +37,7 @@ import net.daw.control.operation.specific.implementation.ProductoControlOperatio
 import net.daw.control.operation.specific.implementation.TipoproductoControlOperationSpImpl;
 import net.daw.control.route.generic.specific.implementation.CuestionarioControlRouteGenSpImpl;
 import net.daw.control.route.generic.specific.implementation.DocumentoControlRouteGenSpImpl;
+import net.daw.control.route.generic.specific.implementation.PreguntaControlRouteGenSpImpl;
 import net.daw.control.route.generic.specific.implementation.OpcionControlRouteGenSpImpl;
 import net.daw.control.route.generic.specific.implementation.TipodocumentoControlRouteGenSpImpl;
 import net.daw.control.route.generic.specific.implementation.UsuarioControlRouteGenSpImpl;
@@ -127,6 +128,11 @@ public class JsonControl extends HttpServlet {
                         OpcionControlRouteGenSpImpl oOpcionRoute = new OpcionControlRouteGenSpImpl();
                         OpcionControlOperationGenSpImpl oOpcionControlOperation = new OpcionControlOperationGenSpImpl(request);
                         jsonResult = oOpcionRoute.execute(request, oOpcionControlOperation);
+                        break;
+                    case "pregunta":
+                        PreguntaControlRouteGenSpImpl oPreguntaRoute = new PreguntaControlRouteGenSpImpl();
+                        PreguntaControlOperationGenSpImpl oPreguntaControlOperation = new PreguntaControlOperationGenSpImpl(request);
+                        jsonResult = oPreguntaRoute.execute(request, oPreguntaControlOperation);
                         break;
                     default:
                         ExceptionBooster.boost(new Exception(this.getClass().getName() + ":processRequest ERROR: no such operation"));
