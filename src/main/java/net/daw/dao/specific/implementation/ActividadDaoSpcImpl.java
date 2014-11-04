@@ -100,7 +100,8 @@ public class ActividadDaoSpcImpl implements ViewDaoInterface<ActividadBeanGenSpI
                 } else {
                     oActividadBean.setEnunciado(oMysql.getOne(strTableName, "enunciado", oActividadBean.getId()));
                     
-                    String fecha = oMysql.getOne(strTableName, "fecha", oActividadBean.getId());
+                    String fecha = "";
+                    fecha = oMysql.getOne(strTableName, "fecha", oActividadBean.getId());
                     SimpleDateFormat date = new SimpleDateFormat("yyyy MMMM d", Locale.ENGLISH);
                     oActividadBean.setFecha(date.parse(fecha));
                     
