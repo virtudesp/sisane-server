@@ -30,6 +30,9 @@
             <li class="dropdown-header">División</li>
             <li><a href="#">Vacío</a></li>
             <li><a href="#">Vacío</a></li>
+            <li class="divider"></li>
+            <li class="dropdown-header">Red Social</li>
+            <li><a href="jsp#/publicacion">Publicacion</a></li>
         </ul>
     </li>    
 
