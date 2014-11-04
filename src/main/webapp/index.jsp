@@ -175,6 +175,7 @@
 
 
                 fDocumentoRoutes();
+                fUsuarioRoutes();
 
 
                 Path.listen();

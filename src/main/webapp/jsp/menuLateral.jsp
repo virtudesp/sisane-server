@@ -42,5 +42,6 @@
 
         <a  class="list-group-item" id="lnkDocumento" href="jsp#/documento">Documento</a> 
         <a  class="list-group-item" id="lnkOrdenador" href="jsp#/ordenador">Ordenador</a> 
+        <a  class="list-group-item" id="lnkOrdenador" href="jsp#/usuario">Usuario</a> 
     </div>
 </div>
