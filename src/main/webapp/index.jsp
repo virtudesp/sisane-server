@@ -186,6 +186,7 @@
 
                 fDocumentoRoutes();
                 fOpcionRoutes();
+                fPreguntaRoutes();
 
                 Path.listen();
 
