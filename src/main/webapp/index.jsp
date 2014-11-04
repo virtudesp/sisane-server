@@ -157,6 +157,11 @@
         <script src="js/specific/documento/view.js" charset="UTF-8"></script>
         <script src="js/specific/documento/routes.js" charset="UTF-8"></script>
 
+        <script src="js/specific/cuestionario/control.js" charset="UTF-8"></script>
+        <script src="js/specific/cuestionario/model.js" charset="UTF-8"></script>
+        <script src="js/specific/cuestionario/view.js" charset="UTF-8"></script>
+        <script src="js/specific/cuestionario/routes.js" charset="UTF-8"></script>
+
 
         <script src="js/specific/usuario/model.js" charset="UTF-8"></script>
         <script src="js/specific/tipodocumento/model.js" charset="UTF-8"></script>
@@ -175,6 +180,7 @@
 
 
                 fDocumentoRoutes();
+                fCuestionarioRoutes();
 
 
                 Path.listen();
