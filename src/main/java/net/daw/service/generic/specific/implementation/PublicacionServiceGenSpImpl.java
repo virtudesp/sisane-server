@@ -17,7 +17,17 @@
  */
 package net.daw.service.generic.specific.implementation;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import java.sql.Connection;
+import java.util.HashMap;
+import java.util.Map;
+import net.daw.bean.generic.specific.implementation.ProductoBeanGenSpImpl;
+import net.daw.bean.generic.specific.implementation.PublicacionBeanGenSpImpl;
+import net.daw.dao.generic.specific.implementation.PublicacionDaoGenSpImpl;
+import net.daw.dao.specific.implementation.ProductoDaoSpcImpl;
+import net.daw.helper.EncodingUtilHelper;
+import net.daw.helper.ExceptionBooster;
 import net.daw.service.generic.implementation.TableServiceGenImpl;
 
 /**
@@ -28,5 +38,18 @@ public class PublicacionServiceGenSpImpl extends TableServiceGenImpl {
 
     public PublicacionServiceGenSpImpl(String strObject, Connection con) {
         super(strObject, con);
+    }
+
+    public String duplicate(Integer id) throws Exception {
+        String jason = null;
+        PublicacionBeanGenSpImpl oPublicacion = new PublicacionBeanGenSpImpl();
+
+        Gson gson = new GsonBuilder().setDateFormat("dd/MM/yyyy").create();
+
+        jason = get(id);
+        oPublicacion = gson.fromJson(jason, oPublicacion.getClass());
+        oPublicacion.setId(0);
+        jason = gson.toJson(oPublicacion);
+        return jason = set(jason);
     }
 }

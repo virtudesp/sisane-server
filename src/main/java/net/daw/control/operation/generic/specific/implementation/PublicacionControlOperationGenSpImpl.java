@@ -18,8 +18,16 @@
 package net.daw.control.operation.generic.specific.implementation;
 
 import java.lang.reflect.InvocationTargetException;
+import java.sql.Connection;
+import java.sql.SQLException;
 import javax.servlet.http.HttpServletRequest;
+import net.daw.connection.implementation.BoneConnectionPoolImpl;
+import net.daw.connection.publicinterface.ConnectionInterface;
 import net.daw.control.operation.generic.implementation.ControlOperationGenImpl;
+import net.daw.helper.ExceptionBooster;
+import net.daw.helper.parameterCooker;
+import net.daw.service.generic.specific.implementation.PublicacionServiceGenSpImpl;
+import net.daw.service.specific.implementation.ProductoServiceSpImpl;
 
 /**
  *
@@ -27,7 +35,36 @@ import net.daw.control.operation.generic.implementation.ControlOperationGenImpl;
  */
 public class PublicacionControlOperationGenSpImpl extends ControlOperationGenImpl {
 
+    private PublicacionServiceGenSpImpl oPublicacionService = null;
+
     public PublicacionControlOperationGenSpImpl(HttpServletRequest request) throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, Exception {
         super(request);
+        try {
+            oPublicacionService = new PublicacionServiceGenSpImpl(parameterCooker.prepareObject(request), connection);
+        } catch (Exception ex) {
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":PublicacionControlOperationSpImpl ERROR: " + ex.getMessage()));
+        }
+    }
+
+    public String duplicate(HttpServletRequest request) throws Exception {
+        String result = null;
+        try {
+            result = oPublicacionService.duplicate(parameterCooker.prepareId(request));
+            closeDB();
+        } catch (Exception ex) {
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":set ERROR: " + ex.getMessage()));
+        }
+        return result;
+    }
+
+    private void closeDB() throws SQLException, Exception {
+        try {
+            if (connection != null) {
+                connection.close();
+            }
+            DataConnectionSource.disposeConnection();
+        } catch (Exception ex) {
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":closeDB ERROR: " + ex.getMessage()));
+        }
     }
 }

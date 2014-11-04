@@ -33,8 +33,8 @@ import net.daw.helper.parameterCooker;
 
 public class ControlOperationGenImpl implements ControlOperationInterface {
 
-    private ConnectionInterface DataConnectionSource = null;
-    private Connection connection = null;
+    protected ConnectionInterface DataConnectionSource = null;
+    protected Connection connection = null;
     private String strObject = null;
     private TableServiceGenImpl process = null;
 

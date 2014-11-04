@@ -17,12 +17,37 @@
  */
 package net.daw.control.route.generic.specific.implementation;
 
+import javax.servlet.http.HttpServletRequest;
+import net.daw.control.operation.generic.specific.implementation.PublicacionControlOperationGenSpImpl;
+import net.daw.control.operation.publicinterface.ControlOperationInterface;
 import net.daw.control.route.generic.implementation.ControlRouteGenImpl;
+import net.daw.helper.ExceptionBooster;
+import net.daw.helper.parameterCooker;
 
 /**
  *
  * @author al038513
  */
 public class PublicacionControlRouteGenSpImpl extends ControlRouteGenImpl {
-    
+
+    @Override
+    public String execute(HttpServletRequest request, ControlOperationInterface oControl) throws Exception {
+        PublicacionControlOperationGenSpImpl oPublicationControl = (PublicacionControlOperationGenSpImpl) oControl;
+        String operation = parameterCooker.prepareOperation(request);
+        String jsonResult = "";
+        try {
+            switch (operation) {
+                case "duplicate":
+                    jsonResult = oPublicationControl.duplicate(request);
+                    break;
+                default:
+                    super.execute(request, oControl);
+                    break;
+            }
+        } catch (Exception ex) {
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":execute ERROR: " + ex.getMessage()));
+        }
+        return jsonResult;
+    }
+
 }
