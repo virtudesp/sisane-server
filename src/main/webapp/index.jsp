@@ -161,6 +161,11 @@
         <script src="js/specific/usuario/model.js" charset="UTF-8"></script>
         <script src="js/specific/tipodocumento/model.js" charset="UTF-8"></script>
         
+        <script src="js/specific/pregunta/control.js" charset="UTF-8"></script>
+        <script src="js/specific/pregunta/model.js" charset="UTF-8"></script>
+        <script src="js/specific/pregunta/view.js" charset="UTF-8"></script>
+        <script src="js/specific/pregunta/routes.js" charset="UTF-8"></script>
+        
         <script type="text/javascript">
 
             //path = '<%=request.getContextPath()%>';
