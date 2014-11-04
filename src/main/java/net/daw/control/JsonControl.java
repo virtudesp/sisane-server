@@ -31,12 +31,14 @@ import net.daw.control.operation.generic.specific.implementation.DocumentoContro
 import net.daw.control.operation.generic.specific.implementation.TipodocumentoControlOperationGenSpImpl;
 import net.daw.control.operation.generic.specific.implementation.UsuarioControlOperationGenSpImpl;
 import net.daw.control.operation.specific.implementation.OrdenadorControlOperationSpImpl;
+import net.daw.control.operation.specific.implementation.ActividadControlOperationSpImpl;
 import net.daw.control.operation.specific.implementation.ProductoControlOperationSpImpl;
 import net.daw.control.operation.specific.implementation.TipoproductoControlOperationSpImpl;
 import net.daw.control.route.generic.specific.implementation.DocumentoControlRouteGenSpImpl;
 import net.daw.control.route.generic.specific.implementation.TipodocumentoControlRouteGenSpImpl;
 import net.daw.control.route.generic.specific.implementation.UsuarioControlRouteGenSpImpl;
 import net.daw.control.route.specific.implementation.OrdenadorControlRouteSpImpl;
+import net.daw.control.route.specific.implementation.ActividadControlRouteSpImpl;
 import net.daw.control.route.specific.implementation.ProductoControlRouteSpImpl;
 import net.daw.control.route.specific.implementation.TipoproductoControlRouteSpImpl;
 import net.daw.helper.EstadoHelper;
@@ -114,6 +116,11 @@ public class JsonControl extends HttpServlet {
                         OrdenadorControlRouteSpImpl oOrdenadorRoute = new OrdenadorControlRouteSpImpl();
                         OrdenadorControlOperationSpImpl oOrdenadorControlOperation = new OrdenadorControlOperationSpImpl(request);
                         jsonResult = oOrdenadorRoute.execute(request, oOrdenadorControlOperation);
+                        break;
+                    case "actividad":
+                        ActividadControlRouteSpImpl oActividadRoute = new ActividadControlRouteSpImpl();
+                        ActividadControlOperationSpImpl oActividadControlOperation = new ActividadControlOperationSpImpl(request);
+                        jsonResult = oActividadRoute.execute(request, oActividadControlOperation);
                         break;
                     default:
                         ExceptionBooster.boost(new Exception(this.getClass().getName() + ":processRequest ERROR: no such operation"));
