@@ -25,6 +25,7 @@
         <ul class="dropdown-menu">
             <li><a href="jsp#/documento">Documento</a></li>
             <li><a href="jsp#/opcion">Opcion</a></li>
+            <li><a href="jsp#/cuestionario">Cuestionario</a></li>
             <li><a href="#">Vacío</a></li>
             <li class="divider"></li>
             <li class="dropdown-header">División</li>
