@@ -105,7 +105,7 @@ public class ActividadDaoSpcImpl implements ViewDaoInterface<ActividadBeanGenSpI
                     SimpleDateFormat date = new SimpleDateFormat("yyyy MMMM d", Locale.ENGLISH);
                     oActividadBean.setFecha(date.parse(fecha));
                     
-                    oActividadBean.setEvaluacion(Integer.parseInt(oMysql.getOne(strTableName, "enunciado", oActividadBean.getId())));
+                    oActividadBean.setEvaluacion(Integer.parseInt(oMysql.getOne(strTableName, "evaluacion", oActividadBean.getId())));
                     oActividadBean.setActivo((byte) Integer.parseInt(oMysql.getOne(strTableName, "activo", oActividadBean.getId())));
                     
               
@@ -125,11 +125,11 @@ public class ActividadDaoSpcImpl implements ViewDaoInterface<ActividadBeanGenSpI
             if (oActividadBean.getId() == 0) {
                 oActividadBean.setId(oMysql.insertOne(strTableName));
             }
-            oMysql.updateOne(oActividadBean.getId(), strTableName, "descripcion", oActividadBean.getEnunciado());
-            oMysql.updateOne(oActividadBean.getId(), strTableName, "descripcion", oActividadBean.getFecha().toString());
-            oMysql.updateOne(oActividadBean.getId(), strTableName, "descripcion", oActividadBean.getEvaluacion().toString());
+            oMysql.updateOne(oActividadBean.getId(), strTableName, "enunciado", oActividadBean.getEnunciado());
+            oMysql.updateOne(oActividadBean.getId(), strTableName, "fecha", oActividadBean.getFecha().toString());
+            oMysql.updateOne(oActividadBean.getId(), strTableName, "evaluacion", oActividadBean.getEvaluacion().toString());
             
-            oMysql.updateOne(oActividadBean.getId(), strTableName, "descripcion", Integer.toString(oActividadBean.getActivo()));
+            oMysql.updateOne(oActividadBean.getId(), strTableName, "activo", Integer.toString(oActividadBean.getActivo()));
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":set ERROR: " + ex.getMessage()));
         }
