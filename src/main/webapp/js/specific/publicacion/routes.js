@@ -75,4 +75,12 @@ function fPublicacionRoutes() {
         $('#indexContenidoJsp').empty();
         return false;
     });
+
+    Path.map("#/publicacion/duplicate/:id").to(function () {
+        $('#indexContenidoJsp').spinner();
+        var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
+        oPublicacionControl.duplicate($('#indexContenido'), paramsObject['id'], oPublicacionModel, oPublicacionView);
+        $('#indexContenidoJsp').empty();
+        return false;
+    });
 }

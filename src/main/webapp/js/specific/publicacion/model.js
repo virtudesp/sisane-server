@@ -23,4 +23,10 @@ publicacionModel.prototype = new model('publicacion');
 publicacionModel.prototype.getClassNamePublicacion = function () {
     return this.getClassName() + "Modelo";
 };
+publicacionModel.prototype.duplicateOne = function (id) {
+    $.when(ajax().ajaxCallSync(this.urlJson + '&op=duplicate&id=' + id, 'GET', '')).done(function (data) {
+        feedback = data;
+    });
+    return feedback;
+};
 var oPublicacionModel = new publicacionModel('publicacion');
