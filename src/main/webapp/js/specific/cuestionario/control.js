@@ -22,5 +22,6 @@ var cuestionarioControl = function (strClase) {
 cuestionarioControl.prototype = new control('cuestionario');
 cuestionarioControl.prototype.getClassNameCuestionario = function () {
     return this.getClassName() + "Control";
+    
 };
 var oCuestionarioControl = new cuestionarioControl('cuestionario');
