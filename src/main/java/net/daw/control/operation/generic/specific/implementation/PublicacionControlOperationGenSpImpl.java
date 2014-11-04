@@ -1,5 +1,5 @@
 /*
- * Copyright (C) July 2014 Rafael Aznar
+ * Copyright (C) 2014 al038513
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -15,29 +15,19 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-package net.daw.bean.generic.specific.implementation;
+package net.daw.control.operation.generic.specific.implementation;
 
-import com.google.gson.annotations.Expose;
-import net.daw.bean.generic.implementation.BeanGenImpl;
-import net.daw.bean.publicinterface.BeanInterface;
+import java.lang.reflect.InvocationTargetException;
+import javax.servlet.http.HttpServletRequest;
+import net.daw.control.operation.generic.implementation.ControlOperationGenImpl;
 
-public class TipousuarioBeanGenSpImpl extends BeanGenImpl implements BeanInterface {
-    @Expose
-    private String descripcion = "";
+/**
+ *
+ * @author al038513
+ */
+public class PublicacionControlOperationGenSpImpl extends ControlOperationGenImpl {
 
-    public TipousuarioBeanGenSpImpl() {
-
-    }
-
-    public TipousuarioBeanGenSpImpl(Integer id) {
-        super(id);
-    }
-
-    public String getDescripcion() {
-        return descripcion;
-    }
-
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
+    public PublicacionControlOperationGenSpImpl(HttpServletRequest request) throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, Exception {
+        super(request);
     }
 }
