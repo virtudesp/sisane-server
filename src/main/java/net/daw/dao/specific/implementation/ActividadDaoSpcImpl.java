@@ -105,7 +105,7 @@ public class ActividadDaoSpcImpl implements ViewDaoInterface<ActividadBeanGenSpI
                     SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
                     oActividadBean.setFecha(date.parse(fecha));
                     
-                    oActividadBean.setEvaluacion(Integer.parseInt(oMysql.getOne(strTableName, "evaluacion", oActividadBean.getId())));
+                    oActividadBean.setEvaluacion(Integer.valueOf(oMysql.getOne(strTableName, "evaluacion", oActividadBean.getId())));
                     oActividadBean.setActivo((byte) Integer.parseInt(oMysql.getOne(strTableName, "activo", oActividadBean.getId())));
                     
               
