@@ -40,7 +40,8 @@
     </div>
     <div class="list-group">
 
-        <a  class="list-group-item" id="lnkDocumento" href="jsp#/documento">Documento</a> 
+        <a  class="list-group-item" id="lnkOpcion" href="jsp#/opcion">Opcion</a> 
         <a  class="list-group-item" id="lnkOrdenador" href="jsp#/ordenador">Ordenador</a> 
+        <a  class="list-group-item" id="lnkDocumento" href="jsp#/documento">Documento</a> 
     </div>
 </div>
