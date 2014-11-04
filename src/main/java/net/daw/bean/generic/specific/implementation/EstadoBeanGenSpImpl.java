@@ -1,5 +1,5 @@
 /*
- * Copyright (C) July 2014 Rafael Aznar
+ * Copyright (C) 2014 al037542
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -21,23 +21,28 @@ import com.google.gson.annotations.Expose;
 import net.daw.bean.generic.implementation.BeanGenImpl;
 import net.daw.bean.publicinterface.BeanInterface;
 
-public class TipousuarioBeanGenSpImpl extends BeanGenImpl implements BeanInterface {
+/**
+ *
+ * @author Victor López
+ */
+public class EstadoBeanGenSpImpl extends BeanGenImpl implements BeanInterface {
+
     @Expose
-    private String descripcion = "";
+    private String tipo;
 
-    public TipousuarioBeanGenSpImpl() {
-
+    public EstadoBeanGenSpImpl() {
     }
 
-    public TipousuarioBeanGenSpImpl(Integer id) {
+    public EstadoBeanGenSpImpl(Integer id) {
         super(id);
     }
 
-    public String getDescripcion() {
-        return descripcion;
+    public String getTipo() {
+        return tipo;
     }
 
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
     }
+
 }

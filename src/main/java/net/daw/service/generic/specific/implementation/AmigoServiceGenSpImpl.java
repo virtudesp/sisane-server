@@ -15,29 +15,14 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-package net.daw.bean.generic.specific.implementation;
+package net.daw.service.generic.specific.implementation;
 
-import com.google.gson.annotations.Expose;
-import net.daw.bean.generic.implementation.BeanGenImpl;
-import net.daw.bean.publicinterface.BeanInterface;
+import net.daw.service.generic.implementation.TableServiceGenImpl;
+import java.sql.Connection;
 
-public class TipousuarioBeanGenSpImpl extends BeanGenImpl implements BeanInterface {
-    @Expose
-    private String descripcion = "";
+public class AmigoServiceGenSpImpl extends TableServiceGenImpl {
 
-    public TipousuarioBeanGenSpImpl() {
-
-    }
-
-    public TipousuarioBeanGenSpImpl(Integer id) {
-        super(id);
-    }
-
-    public String getDescripcion() {
-        return descripcion;
-    }
-
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
+    public AmigoServiceGenSpImpl(String strObject, Connection con) {
+        super(strObject, con);
     }
 }

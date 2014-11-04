@@ -1,5 +1,5 @@
 /*
- * Copyright (C) July 2014 Rafael Aznar
+ * Copyright (C) 2014 al038513
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -21,23 +21,49 @@ import com.google.gson.annotations.Expose;
 import net.daw.bean.generic.implementation.BeanGenImpl;
 import net.daw.bean.publicinterface.BeanInterface;
 
-public class TipousuarioBeanGenSpImpl extends BeanGenImpl implements BeanInterface {
-    @Expose
-    private String descripcion = "";
+/**
+ *
+ * @author al038513
+ */
+public class PublicacionBeanGenSpImpl extends BeanGenImpl implements BeanInterface {
 
-    public TipousuarioBeanGenSpImpl() {
-
+    public PublicacionBeanGenSpImpl() {
     }
 
-    public TipousuarioBeanGenSpImpl(Integer id) {
+    public PublicacionBeanGenSpImpl(Integer id) {
         super(id);
     }
+    
+    @Expose
+    private String contenido;
+    @Expose(serialize = false)
+    private Integer id_usuario = 0;
+    @Expose(deserialize = false)
+    private UsuarioBeanGenSpImpl obj_usuario = null;
 
-    public String getDescripcion() {
-        return descripcion;
+    public String getContenido() {
+        return contenido;
     }
 
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
+    public void setContenido(String contenido) {
+        this.contenido = contenido;
     }
+
+    public Integer getId_usuario() {
+        return id_usuario;
+    }
+
+    public void setId_usuario(Integer id_usuario) {
+        this.id_usuario = id_usuario;
+    }
+
+    public UsuarioBeanGenSpImpl getObj_usuario() {
+        return obj_usuario;
+    }
+
+    public void setObj_usuario(UsuarioBeanGenSpImpl obj_usuario) {
+        this.obj_usuario = obj_usuario;
+    }
+    
+    
 }
