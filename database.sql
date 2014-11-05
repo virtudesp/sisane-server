@@ -2038,4 +2038,274 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=32;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 
 
+-- phpMyAdmin SQL Dump
+-- version 4.2.7.1
+-- http://www.phpmyadmin.net
+--
+-- Servidor: localhost:3306
+-- Tiempo de generación: 04-11-2014 a las 09:01:49
+-- Versión del servidor: 5.5.39
+-- Versión de PHP: 5.4.32
 
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+
+--
+-- Base de datos: `ausiasyield2014`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `tipotema`
+--
+
+CREATE TABLE IF NOT EXISTS `tipotema` (
+`id` int(6) NOT NULL COMMENT 'ID Categoría',
+  `nombre` varchar(255) DEFAULT NULL COMMENT 'Nombre categoría'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+--
+-- Índices para tablas volcadas
+--
+
+--
+-- Indices de la tabla `tipotema`
+--
+ALTER TABLE `tipotema`
+ ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT de las tablas volcadas
+--
+
+--
+-- AUTO_INCREMENT de la tabla `tipotema`
+--
+ALTER TABLE `tipotema`
+MODIFY `id` int(6) NOT NULL AUTO_INCREMENT COMMENT 'ID Categoría';
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+
+--
+-- Base de datos: `ausiasyield2014`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `tema`
+--
+
+CREATE TABLE IF NOT EXISTS `tema` (
+`id` int(6) NOT NULL COMMENT 'Id',
+  `nombre` varchar(255) DEFAULT NULL COMMENT 'Título',
+  `fechacreacion` datetime DEFAULT NULL COMMENT 'Fecha Creación',
+  `id_tipotema` int(6) NOT NULL COMMENT 'ID Categoría',
+  `id_usuario` int(6) NOT NULL COMMENT 'ID Usuario'
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=21 ;
+
+--
+-- Volcado de datos para la tabla `tema`
+--
+
+INSERT INTO `tema` (`id`, `nombre`, `fechacreacion`, `id_tipotema`, `id_usuario`) VALUES
+(1, 'Peter Lim, ¿Estafa o no?', '2014-10-30 09:43:02', 1, 2),
+(2, 'Ranking películas de terror', '2014-10-20 12:35:00', 2, 10),
+(3, '¿Que os parece este ordenador?', '2014-10-23 14:20:10', 3, 14),
+(4, '¿Xbox One, PC o Ps4?', '2014-10-30 13:17:50', 4, 16),
+(5, 'Comparación Audi tt y BMW serie 1', '2014-09-15 08:02:00', 5, 1),
+(6, 'Como montar una estantería fácilmente', '2014-10-30 14:27:50', 6, 29),
+(7, 'Especificaciones GoPro3', '2014-05-05 04:10:52', 7, 8),
+(8, 'Sorteo entrada para el cine ABC El Saler', '2014-01-30 18:15:17', 8, 8),
+(9, 'Consulta sobre hongos en los pies', '2014-07-29 09:46:10', 9, 4),
+(10, 'Duda convalidaciones de FOL', '2014-05-07 19:54:00', 10, 5),
+(11, 'Viajes a Malaysia', '2014-10-28 06:46:54', 11, 9),
+(12, 'Receta-Tarta de limón', '2014-09-20 11:50:01', 12, 10),
+(13, 'Pasarela Cibeles 2015', '2014-10-28 21:23:54', 13, 13),
+(14, 'Concierto Luz Casal en Burjassot', '2014-06-20 12:05:40', 14, 16),
+(15, 'Me falla la impresora-AYUDA', '2014-10-23 13:10:52', 15, 15),
+(16, '¿Iphone 6 es un timo o no?', '2014-09-24 09:59:02', 16, 23),
+(17, 'Conferencia Stephen Hawking', '2014-10-30 09:12:08', 17, 17),
+(18, '¿Cuál es el mejor museo de carruajes de Europa?', '2014-10-30 10:22:18', 18, 4),
+(19, 'Vendo Ford Fiesta rosa en perfectas condiciones (Valencia)', '2014-08-15 16:11:22', 19, 9),
+(20, '¿Bleach o Naruto?-Cuidado SPOILERS', '2014-10-12 09:14:18', 20, 1);
+
+--
+-- Índices para tablas volcadas
+--
+
+--
+-- Indices de la tabla `tema`
+--
+ALTER TABLE `tema`
+ ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT de las tablas volcadas
+--
+
+--
+-- AUTO_INCREMENT de la tabla `tema`
+--
+ALTER TABLE `tema`
+MODIFY `id` int(6) NOT NULL AUTO_INCREMENT COMMENT 'Id',AUTO_INCREMENT=21;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+
+-- phpMyAdmin SQL Dump
+-- version 4.2.7.1
+-- http://www.phpmyadmin.net
+--
+-- Servidor: localhost:3306
+-- Tiempo de generación: 31-10-2014 a las 08:46:21
+-- Versión del servidor: 5.5.39
+-- Versión de PHP: 5.4.32
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+
+--
+-- Base de datos: `ausiasyield2014`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `post`
+--
+
+CREATE TABLE IF NOT EXISTS `post` (
+`id` int(6) NOT NULL COMMENT 'ID',
+  `titulo` varchar(255) DEFAULT NULL COMMENT 'Título',
+  `mensaje` longtext COMMENT 'Mensaje',
+  `fechacreacion` datetime DEFAULT NULL COMMENT 'Fecha Creación',
+  `fechamodificacion` datetime DEFAULT NULL COMMENT 'Fecha Modificación',
+  `primermensaje` tinyint(1) DEFAULT '0' COMMENT 'Primer Mensaje',
+  `id_tema` int(6) NOT NULL COMMENT 'ID Tema',
+  `id_usuario` int(6) NOT NULL COMMENT 'ID Usuario'
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=36 ;
+
+--
+-- Volcado de datos para la tabla `post`
+--
+
+INSERT INTO `post` (`id`, `titulo`, `mensaje`, `fechacreacion`, `fechamodificacion`, `primermensaje`, `id_tema`, `id_usuario`) VALUES
+(1, 'Peter Lim, ¿Estafa o no?', 'Qué os parece el nuevo dueño del Valencia CF, ¿os parece un timador?\r\n\r\nSé que a mucha gente no le causa mucha confianza.', '2014-10-30 09:43:02', '2014-10-30 09:45:02', 1, 1, 2),
+(2, 'Peter Lim, ¿Estafa o no?', 'Es campechano como el Juanca', '2014-10-30 09:43:55', '2014-10-30 09:43:55', 0, 1, 15),
+(3, 'Ranking películas de terror', 'Aquí tenéis mi ranking de películas de terror:\r\n\r\n1.- El grito\r\n2.- Scream\r\n3.- La señal', '2014-10-20 12:35:00', '2014-10-20 12:35:00', 1, 2, 10),
+(4, 'Ranking películas de terror', 'No estoy de acuerdo, Scream es una película del montón', '2014-10-20 13:30:05', '2014-10-20 13:30:05', 0, 2, 15),
+(5, '¿Que os parece este ordenador?', 'No sé si comprarme el Acer R34765', '2014-10-23 14:20:10', '2014-10-23 14:20:10', 1, 3, 14),
+(6, '¿Que os parece este ordenador?', 'Si pones las especificaciones mejor', '2014-10-23 14:25:10', '2014-10-23 14:25:10', 0, 3, 2),
+(7, '¿Xbox One, PC o Ps4?', '¿Cuál os parece la mejor plataforma?', '2014-10-30 13:17:50', '2014-10-30 13:17:50', 1, 4, 16),
+(8, '¿Xbox One, PC o Ps4?', 'XBOX ONE claramente, y sino PC con Windows', '2014-10-30 13:19:50', '2014-10-30 13:19:50', 0, 4, 29),
+(9, 'Comparación Audi tt y BMW serie 1', 'Me gusta más la carrocería del BMW, pero el motor del Audi me parece más potente', '2014-09-15 08:02:00', '2014-09-15 08:03:00', 1, 5, 1),
+(10, 'Como montar una estantería fácilmente', 'https://www.youtube.com/watch?v=I7cfajBGDAo', '2014-10-30 14:27:50', '2014-10-30 14:27:50', 1, 6, 29),
+(11, 'Como montar una estantería fácilmente', 'Muy útil, gracias.', '2014-10-30 14:28:50', '2014-10-30 14:28:50', 0, 6, 28),
+(12, 'Especificaciones GoPro3', 'Los amantes de las cámaras de acción tienen un nuevo modelo a tener en el punto de mira, GoPro HERO3, una nueva gama que acaba de ser presentada con el objetivo de hacernos olvidar modelos anteriores, gracias a la rebaja de dimensiones, y mejora en especificaciones.\r\n\r\nAparece en tres versiones, Black, Silver, y White. Externamente mantienen unas líneas de diseño que ya son reconocibles, como icono de mercado. El nuevo modelo es un 30% más delgado, y pesa un 25% menos.\r\n\r\nTodos los modelos cuentan con conectividad WiFi como novedad, un aspecto que supone un plus, y que se aprovecha en el modelo Black con la incorporación de un control remoto que permite operar con la cámara a distancia. Con el mando se pueden controlar hasta 50 cámaras a la vez, y es sumergible.', '2014-05-05 04:10:52', '2014-05-05 04:10:52', 1, 7, 8),
+(13, 'Especificaciones GoPro3', 'Está muy bien se la recomendaría a mis amigos', '2014-05-05 04:15:52', '2014-05-05 04:15:52', 0, 7, 6),
+(14, 'Sorteo entrada para el cine ABC El Saler', 'Los que queráis participar escribid en el hilo', '2014-01-30 18:15:17', '2014-01-30 18:15:17', 1, 8, 8),
+(15, 'Sorteo entrada para el cine ABC El Saler', 'Me apunto', '2014-01-30 18:18:17', '2014-01-30 18:18:17', 0, 8, 21),
+(16, 'Sorteo entrada para el cine ABC El Saler', 'Yo también', '2014-01-30 18:18:28', '2014-01-30 18:18:28', 0, 8, 17),
+(17, 'Consulta sobre hongos en los pies', 'Que medicamento me recomendáis para tratar los hongos en los pies', '2014-07-29 09:46:10', '2014-07-29 09:46:10', 1, 9, 4),
+(18, 'Consulta sobre hongos en los pies', 'Silvisil cura hongos', '2014-07-29 11:46:10', '2014-07-29 14:46:10', 0, 9, 15),
+(19, 'Duda convalidaciones de FOL', 'Como puedo convalidarme la asignatura', '2014-05-07 19:54:00', '2014-05-07 19:54:00', 1, 10, 5),
+(20, 'Duda convalidaciones de FOL', 'Tienes que haber cursado un modulo similar o de las mismas caracteristicas', '2014-05-07 20:34:00', '2014-05-07 21:54:00', 0, 10, 10),
+(21, 'Viajes a Malaysia', 'Con qué agencia de viajes me recomendariais viajar a Malaysia?', '2014-10-28 06:46:54', '2014-10-28 06:46:54', 1, 11, 9),
+(22, 'Viajes a Malaysia', 'RyanAir que es de bajo coste y alta seguridad', '2014-10-28 18:46:54', '2014-10-28 18:46:54', 0, 11, 1),
+(23, 'Receta-Tarta de limón', 'Tipo de receta: Postre\r\n\r\nNúmero de partes: 3 porciones\r\n\r\nTiempo de preparación: 15 Minutos\r\nTiempo de cocción: 6 Horas\r\nListos en: 6 h, 15 m\r\nDificultad: Fácil\r\n500 grms, queso fresco de untar\r\n500 ml. Nata de montar ( crema de leche )\r\n200 ml. Leche condensada\r\n150 ml Zumo de limón ( como dos limones )\r\n2 sobres de gelatina de limon\r\n\r\nPara la base\r\n1 rulo de galletas maria\r\n4 cucharadas de mantequilla\r\n100 grms avellanas\r\n1 cucharadita de canela', '2014-09-20 11:50:01', '2014-09-20 11:50:01', 1, 12, 10),
+(24, 'Receta-Tarta de limón', 'La probaré tu tranquilo que para la proxima saldra mejor', '2014-09-20 11:52:01', '2014-09-20 12:50:01', 0, 12, 2),
+(25, 'Pasarela Cibeles 2015', 'Osea, guay, hay pasarela suuuuper larga, jijiji :P', '2014-10-28 21:23:54', '2014-10-28 21:23:54', 1, 13, 13),
+(26, 'Pasarela Cibeles 2015', 'Me esperaba algo de informacion', '2014-10-28 22:23:55', '2014-10-28 23:19:56', 0, 13, 22),
+(27, 'Concierto Luz Casal en Burjassot', 'Se sabe algo sobre artistas invitados?', '2014-06-20 12:05:40', '2014-06-20 12:09:40', 1, 14, 16),
+(28, 'Concierto Luz Casal en Burjassot', 'Todavia no hemos recibido esa informacion', '2014-06-21 12:05:40', '2014-06-21 12:05:40', 0, 14, 18),
+(29, 'Me falla la impresora-AYUDA', 'Porque mi impresora no hace pizzas?', '2014-10-23 13:10:52', '2014-10-23 13:10:52', 1, 15, 15),
+(30, 'Me falla la impresora-AYUDA', 'Prueba a romperla y luego comertela', '2014-10-23 14:10:52', '2014-10-23 14:10:52', 0, 15, 11),
+(31, '¿Iphone 6 es un timo o no?', 'Creeis que el iPhone 6 se dobla como dicen?', '2014-09-24 09:59:02', '2014-09-24 09:59:02', 1, 16, 23),
+(32, 'Conferencia Stephen Hawking', 'https://www.youtube.com/watch?v=r8q4Hun7FMA', '2014-10-30 09:12:08', '2014-10-30 09:12:08', 1, 17, 17),
+(33, '¿Cuál es el mejor museo de carruajes de Europa?', 'Cual me recomendais visitar?', '2014-10-30 10:22:18', '2014-10-30 10:22:18', 1, 18, 4),
+(34, 'Vendo Ford Fiesta rosa en perfectas condiciones (Valencia)', NULL, '2014-08-15 16:11:22', '2014-08-16 20:15:22', 1, 19, 9),
+(35, '¿Bleach o Naruto?-Cuidado SPOILERS', 'Que serie os parece mejor? en ambas mueren todos al final', '2014-10-12 09:14:18', '2014-10-21 10:15:18', 1, 20, 1);
+
+--
+-- Índices para tablas volcadas
+--
+
+--
+-- Indices de la tabla `post`
+--
+ALTER TABLE `post`
+ ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT de las tablas volcadas
+--
+
+--
+-- AUTO_INCREMENT de la tabla `post`
+--
+ALTER TABLE `post`
+MODIFY `id` int(6) NOT NULL AUTO_INCREMENT COMMENT 'ID',AUTO_INCREMENT=36;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+ALTER TABLE `usuario` ADD `ciudad` VARCHAR(255) NULL COMMENT 'Ciudad' , ADD `firma` VARCHAR(255) NULL COMMENT 'Firma' ;
+
+UPDATE `ausiasyield2014`.`usuario` SET `ciudad` = 'Valencia', `firma` = 'is my life and do what I want' WHERE `usuario`.`id` = 1; UPDATE `ausiasyield2014`.`usuario` SET `ciudad` = 'Madrid', `firma` = 'http://criticalandia.com críticas de entretenimiento, listas, opiniones...' WHERE `usuario`.`id` = 2; UPDATE `ausiasyield2014`.`usuario` SET `ciudad` = 'Barcelona', `firma` = 'If you love something, set it free. Unless it''''s a tiger.' WHERE `usuario`.`id` = 3; UPDATE `ausiasyield2014`.`usuario` SET `ciudad` = 'Sevilla', `firma` = '"El único límite a nuestros logros de mañana está en nuestras dudas de hoy."' WHERE `usuario`.`id` = 4; UPDATE `ausiasyield2014`.`usuario` SET `ciudad` = 'Zaragoza', `firma` = 'Plataforma: ORGULLLO CADISTA no.58' WHERE `usuario`.`id` = 5; UPDATE `ausiasyield2014`.`usuario` SET `ciudad` = 'Teruel', `firma` = 'Ironía: Figura literaria mediante la cual se da a entender lo contrario de lo que se dice.' WHERE `usuario`.`id` = 6; UPDATE `ausiasyield2014`.`usuario` SET `ciudad` = 'Huesca', `firma` = 'Paso de firmas' WHERE `usuario`.`id` = 7; UPDATE `ausiasyield2014`.`usuario` SET `ciudad` = 'Alicante', `firma` = 'Camisetas y calzado www.pedidoshicks.com' WHERE `usuario`.`id` = 8; UPDATE `ausiasyield2014`.`usuario` SET `ciudad` = 'Castellón', `firma` = 'PEÑA COLCHONERA Socio número 629' WHERE `usuario`.`id` = 9; UPDATE `ausiasyield2014`.`usuario` SET `ciudad` = 'Almería', `firma` = '"Obsesionado es tan sólo la palabra que usan los perezosos para describir a los dedicados"' WHERE `usuario`.`id` = 10; UPDATE `ausiasyield2014`.`usuario` SET `ciudad` = 'A Coruña', `firma` = 'Ista ye a mia tierra, a mia fabla' WHERE `usuario`.`id` = 11; UPDATE `ausiasyield2014`.`usuario` SET `ciudad` = 'Barcelona', `firma` = 'No todos los catalanes somos independentistas' WHERE `usuario`.`id` = 12; UPDATE `ausiasyield2014`.`usuario` SET `ciudad` = 'Bilbao' WHERE `usuario`.`id` = 13;
+
+UPDATE `ausiasyield2014`.`usuario` SET `ciudad` = 'Lugo', `firma` = 'Preparado para cualquier combate' WHERE `usuario`.`id` = 14; UPDATE `ausiasyield2014`.`usuario` SET `ciudad` = 'Cuenca', `firma` = 'Si tienes un Ibiza o un Cordoba, este es tu club: www.clubseatcordoba.com' WHERE `usuario`.`id` = 15; UPDATE `ausiasyield2014`.`usuario` SET `ciudad` = 'Ciudad Real', `firma` = 'No hay dos sin tres' WHERE `usuario`.`id` = 16; UPDATE `ausiasyield2014`.`usuario` SET `ciudad` = 'Guadalajara', `firma` = 'Tesis+Antítesis=Síntesis. Problema+Acción = Solución.' WHERE `usuario`.`id` = 17; UPDATE `ausiasyield2014`.`usuario` SET `ciudad` = 'Huelva', `firma` = 'Y yo me iré. y se quedará mi huerto con su verde árbol, y con su pozo blanco. Y yo me iré.. Y se quedarán los pájaros cantando' WHERE `usuario`.`id` = 18; UPDATE `ausiasyield2014`.`usuario` SET `ciudad` = 'Granada', `firma` = 'La Infanta no sabía nada y punto.' WHERE `usuario`.`id` = 19; UPDATE `ausiasyield2014`.`usuario` SET `ciudad` = 'Cádiz', `firma` = 'Viva España' WHERE `usuario`.`id` = 20; UPDATE `ausiasyield2014`.`usuario` SET `ciudad` = 'Jerez', `firma` = 'La gente cree que soy una mala persona, pero no es cierto, yo tengo el corazón de un niño...en un frasco con formol encima de mi escritorio.' WHERE `usuario`.`id` = 21; UPDATE `ausiasyield2014`.`usuario` SET `ciudad` = 'Vallecas', `firma` = 'Foreros de la Comunidad de Madrid Nº25' WHERE `usuario`.`id` = 22; UPDATE `ausiasyield2014`.`usuario` SET `ciudad` = 'Jaén', `firma` = 'Y veréis el resurgir poderoso del guerrero, sin miedo a leyes ni a nostalgias.' WHERE `usuario`.`id` = 23; UPDATE `ausiasyield2014`.`usuario` SET `ciudad` = 'Valencia', `firma` = 'Codeados.com Diseño y Desarrollo web, Imagen Corporativa, SEO, Marketing Digital' WHERE `usuario`.`id` = 24; UPDATE `ausiasyield2014`.`usuario` SET `ciudad` = 'California', `firma` = 'Viva google +' WHERE `usuario`.`id` = 25;
+
+UPDATE `ausiasyield2014`.`usuario` SET `ciudad` = 'Tokio', `firma` = 'Viva Castolo, Minanda y Ximelez' WHERE `usuario`.`id` = 26; UPDATE `ausiasyield2014`.`usuario` SET `ciudad` = 'París', `firma` = 'Viva movistar' WHERE `usuario`.`id` = 27; UPDATE `ausiasyield2014`.`usuario` SET `ciudad` = 'Cuenca', `firma` = 'Viva el iPhone 6' WHERE `usuario`.`id` = 28; UPDATE `ausiasyield2014`.`usuario` SET `ciudad` = 'Oviedo', `firma` = 'Viva gigabyte' WHERE `usuario`.`id` = 29; UPDATE `ausiasyield2014`.`usuario` SET `ciudad` = 'Albacete', `firma` = 'La xbox ONE es la MEJOR CONSOLA' WHERE `usuario`.`id` = 30;
+
+UPDATE `ausiasyield2014`.`usuario` SET `firma` = 'Buenas tardes' WHERE `usuario`.`id` = 13;
+
+--
+-- Volcado de datos para la tabla `tipotema`
+--
+
+INSERT INTO `tipotema` (`id`, `nombre`) VALUES
+(1, 'Deportes'),
+(2, 'Cine'),
+(3, 'Informática'),
+(4, 'Videojuegos'),
+(5, 'Motor'),
+(6, 'Bricolaje'),
+(7, 'Fotografía'),
+(8, 'Sorteos'),
+(9, 'Salud'),
+(10, 'Educación'),
+(11, 'Viajes'),
+(12, 'Gastronomía'),
+(13, 'Moda'),
+(14, 'Música'),
+(15, 'Tecnología'),
+(16, 'Móviles'),
+(17, 'Ciencia'),
+(18, 'Arte'),
+(19, 'Compra venta'),
+(20, 'Series');
+
+
+UPDATE `ausiasyield2014`.`post` SET `mensaje` = 'Pues eso' WHERE `post`.`id` = 34;

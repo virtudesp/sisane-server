@@ -24,7 +24,7 @@
         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Mantenimientos <b class="caret"></b></a>
         <ul class="dropdown-menu">
             <li><a href="jsp#/documento">Documento</a></li>
-            <li><a href="#">Vacío</a></li>
+            <li><a href="jsp#/usuario">Usuario</a></li>
             <li><a href="#">Vacío</a></li>
             <li class="divider"></li>
             <li class="dropdown-header">División</li>

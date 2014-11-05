@@ -28,6 +28,8 @@ import net.daw.helper.parameterCooker;
  *
  * @author al038513
  */
+
+
 public class PublicacionControlRouteGenSpImpl extends ControlRouteGenImpl {
 
     @Override
@@ -49,5 +51,4 @@ public class PublicacionControlRouteGenSpImpl extends ControlRouteGenImpl {
         }
         return jsonResult;
     }
-
 }
