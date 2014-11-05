@@ -24,6 +24,7 @@ import java.util.HashMap;
 import java.util.Map;
 import net.daw.bean.generic.specific.implementation.ProductoBeanGenSpImpl;
 import net.daw.bean.generic.specific.implementation.PublicacionBeanGenSpImpl;
+import net.daw.bean.generic.specific.implementation.UsuarioBeanGenSpImpl;
 import net.daw.dao.generic.specific.implementation.PublicacionDaoGenSpImpl;
 import net.daw.dao.specific.implementation.ProductoDaoSpcImpl;
 import net.daw.helper.EncodingUtilHelper;
@@ -43,13 +44,23 @@ public class PublicacionServiceGenSpImpl extends TableServiceGenImpl {
     public String duplicate(Integer id) throws Exception {
         String jason = null;
         PublicacionBeanGenSpImpl oPublicacion = new PublicacionBeanGenSpImpl();
+        UsuarioBeanGenSpImpl oUsuario = new UsuarioBeanGenSpImpl();
 
-        Gson gson = new GsonBuilder().setDateFormat("dd/MM/yyyy").create();
-
-        jason = get(id);
-        oPublicacion = gson.fromJson(jason, oPublicacion.getClass());
-        oPublicacion.setId(0);
-        jason = gson.toJson(oPublicacion);
-        return jason = set(jason);
+        try {
+            oConnection.setAutoCommit(false);
+            Gson gson = new GsonBuilder().setDateFormat("dd/MM/yyyy").create();
+            jason = this.get(id);
+            oPublicacion = gson.fromJson(jason, oPublicacion.getClass());
+            oUsuario = oPublicacion.getObj_usuario();
+            oPublicacion.setId(0);
+            oPublicacion.setId_usuario(oUsuario.getId());
+            jason = gson.toJson(oPublicacion);
+            jason = this.set(jason);
+            oConnection.commit();
+        } catch (Exception ex) {
+            oConnection.rollback();
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":set ERROR: " + ex.getMessage()));
+        }
+        return jason;
     }
 }
