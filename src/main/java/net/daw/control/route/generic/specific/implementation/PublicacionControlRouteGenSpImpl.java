@@ -41,7 +41,7 @@ public class PublicacionControlRouteGenSpImpl extends ControlRouteGenImpl {
                     jsonResult = oPublicationControl.duplicate(request);
                     break;
                 default:
-                    super.execute(request, oControl);
+                    jsonResult = super.execute(request, oControl);
                     break;
             }
         } catch (Exception ex) {

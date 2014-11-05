@@ -20,14 +20,8 @@ package net.daw.service.generic.specific.implementation;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import java.sql.Connection;
-import java.util.HashMap;
-import java.util.Map;
-import net.daw.bean.generic.specific.implementation.ProductoBeanGenSpImpl;
 import net.daw.bean.generic.specific.implementation.PublicacionBeanGenSpImpl;
 import net.daw.bean.generic.specific.implementation.UsuarioBeanGenSpImpl;
-import net.daw.dao.generic.specific.implementation.PublicacionDaoGenSpImpl;
-import net.daw.dao.specific.implementation.ProductoDaoSpcImpl;
-import net.daw.helper.EncodingUtilHelper;
 import net.daw.helper.ExceptionBooster;
 import net.daw.service.generic.implementation.TableServiceGenImpl;
 
