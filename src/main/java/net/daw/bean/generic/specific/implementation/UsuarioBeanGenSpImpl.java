@@ -35,6 +35,10 @@ public class UsuarioBeanGenSpImpl extends BeanGenImpl implements BeanInterface {
     private Integer id_estado = 0; //importante inicializar a 0 las claves ajenas
     @Expose(deserialize = false)
     private EstadoBeanGenSpImpl obj_estado = null;
+    @Expose
+    private String ciudad = "";
+    @Expose
+    private String firma = "";
 
     public String getLogin() {
         return login;
@@ -83,6 +87,21 @@ public class UsuarioBeanGenSpImpl extends BeanGenImpl implements BeanInterface {
     public void setObj_estado(EstadoBeanGenSpImpl obj_estado) {
         this.obj_estado = obj_estado;
     }
-    
+
+    public String getCiudad() {
+        return ciudad;
+    }
+
+    public void setCiudad(String ciudad) {
+        this.ciudad = ciudad;
+    }
+
+    public String getFirma() {
+        return firma;
+    }
+
+    public void setFirma(String firma) {
+        this.firma = firma;
+    }
     
 }
