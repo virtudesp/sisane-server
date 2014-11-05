@@ -32,6 +32,7 @@ import net.daw.control.operation.generic.specific.implementation.DocumentoContro
 import net.daw.control.operation.generic.specific.implementation.PublicacionControlOperationGenSpImpl;
 import net.daw.control.operation.generic.specific.implementation.EstadoControlOperationGenSpImpl;
 import net.daw.control.operation.generic.specific.implementation.PostControlOperationGenSpImpl;
+import net.daw.control.operation.generic.specific.implementation.TemaControlOperationGenSpImpl;
 import net.daw.control.operation.generic.specific.implementation.TipodocumentoControlOperationGenSpImpl;
 import net.daw.control.operation.generic.specific.implementation.TipotemaControlOperationGenSpImpl;
 import net.daw.control.operation.generic.specific.implementation.UsuarioControlOperationGenSpImpl;
@@ -42,6 +43,7 @@ import net.daw.control.route.generic.specific.implementation.DocumentoControlRou
 import net.daw.control.route.generic.specific.implementation.EstadoControlRouteGenSpImpl;
 import net.daw.control.route.generic.specific.implementation.PostControlRouteGenSpImpl;
 import net.daw.control.route.generic.specific.implementation.PublicacionControlRouteGenSpImpl;
+import net.daw.control.route.generic.specific.implementation.TemaControlRouteGenSpImpl;
 import net.daw.control.route.generic.specific.implementation.TipodocumentoControlRouteGenSpImpl;
 import net.daw.control.route.generic.specific.implementation.TipotemaControlRouteGenSpImpl;
 import net.daw.control.route.generic.specific.implementation.UsuarioControlRouteGenSpImpl;
@@ -143,6 +145,11 @@ public class JsonControl extends HttpServlet {
                         PostControlRouteGenSpImpl oPostRoute = new PostControlRouteGenSpImpl();
                         PostControlOperationGenSpImpl oPostControlOperation = new PostControlOperationGenSpImpl(request);
                         jsonResult = oPostRoute.execute(request, oPostControlOperation);
+                        break;
+                    case "tema":
+                        TemaControlRouteGenSpImpl oTemaRoute = new TemaControlRouteGenSpImpl();
+                        TemaControlOperationGenSpImpl oTemaControlOperation = new TemaControlOperationGenSpImpl(request);
+                        jsonResult = oTemaRoute.execute(request, oTemaControlOperation);
                         break;
                     case "tipotema":
                         TipotemaControlRouteGenSpImpl oTipotemaRoute = new TipotemaControlRouteGenSpImpl();
