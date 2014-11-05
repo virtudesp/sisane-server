@@ -35,9 +35,9 @@ public class UsuarioBeanGenSpImpl extends BeanGenImpl implements BeanInterface {
     private Integer id_estado = 0; //importante inicializar a 0 las claves ajenas
     @Expose(deserialize = false)
     private EstadoBeanGenSpImpl obj_estado = null;
-     @Expose
+    @Expose
     private String ciudad = "";
-      @Expose
+    @Expose
     private String firma = "";
 
     public String getLogin() {
