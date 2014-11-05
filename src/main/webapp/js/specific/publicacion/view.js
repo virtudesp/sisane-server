@@ -82,13 +82,13 @@ publicacionView.prototype.doEventsLoading = function () {
 
         $('#publicacionForm').append(thisObject.getEmptyModal());
 
-        oControl.list('#modal01 #modal-body', param().defaultizeUrlObjectParameters({}), true, oPublicacionModel, oPublicacionView);
+        oControl.list('#modal01 #modal-body', param().defaultizeUrlObjectParameters({}), true, oUsuarioModel, oUsuarioView);
         oControl.modalListEventsLoading('#modal01 #modal-body', param().defaultizeUrlObjectParameters({}), function (id) {
             $('#obj_usuario_id').val(id).change();
             $('#obj_usuario_desc').text(decodeURIComponent(oUsuarioModel.getMeAsAForeignKey(id)));
             $('#modal01').modal('hide');
 
-        },oPublicacionModel, oPublicacionView);
+        },oUsuarioModel, oUsuarioView);
         return false;
     });
     $('#publicacionForm #obj_tipopublicacion_button').unbind('click');
