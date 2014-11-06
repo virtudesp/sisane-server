@@ -16,7 +16,7 @@
  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 --%>
 
-<form class="form-horizontal" role="form" action="#" id="temaForm" name="formulario">
+<form class="form-horizontal" role="form" action="#" id="documentoForm" name="formulario">
     <div class="form-group">
         <label class="col-sm-2 control-label" for="id">Id:</label>
         <div class="col-sm-2">
@@ -85,14 +85,14 @@
     </div>
 
     <div class="form-group">
-        <label class="col-sm-2 control-label" for="obj_tipotema_id">Tipo de tema: </label> 
+        <label class="col-sm-2 control-label" for="obj_tipodocumento_id">Tipo de documento: </label> 
         <div class="col-sm-2">              
-            <input readonly="true"  class="form-control"  id="obj_tipotema_id" class="input-mini" name="id_tipotema" type="text" size="5" maxlength="5" />  
+            <input readonly="true"  class="form-control"  id="obj_tipodocumento_id" class="input-mini" name="id_tipodocumento" type="text" size="5" maxlength="5" />  
         </div>
         <div class="col-sm-1">              
-            <a class="btn btn-primary btn-sm" id="obj_tipotema_button" href="#"><i class="glyphicon glyphicon-search"></i></a>
+            <a class="btn btn-primary btn-sm" id="obj_tipodocumento_button" href="#"><i class="glyphicon glyphicon-search"></i></a>
         </div>        
-        <label class="col-sm-7" for="obj_usuario_desc" id="obj_tipotema_desc"></label>                     
+        <label class="col-sm-7" for="obj_usuario_desc" id="obj_tipodocumento_desc"></label>                     
     </div>
 
     <div class="form-group">
@@ -150,7 +150,7 @@
             showToday: true
         });
         //http://jqueryvalidation.org/documentation/
-        $('#temaForm')
+        $('#documentoForm')
                 .bootstrapValidator({
                     container: '#messages',
                     feedbackIcons: {
@@ -225,13 +225,13 @@
                                 }
                             }
                         },
-                        id_tipotema: {
+                        id_tipodocumento: {
                             validators: {
                                 notEmpty: {
-                                    message: 'Debe elegir un tipo de tema'
+                                    message: 'Debe elegir un tipo de documento'
                                 },
                                 integer: {
-                                    message: 'El identificador de tipo de tema debe ser un entero'
+                                    message: 'El identificador de tipo de documento debe ser un entero'
                                 }
                             }
                         },
@@ -250,20 +250,20 @@
                     }
                 })
                 .on('change', '[name="id_usuario"]', function() {
-                    $('#temaForm').bootstrapValidator('revalidateField', 'id_usuario');
+                    $('#documentoForm').bootstrapValidator('revalidateField', 'id_usuario');
                 })
 
-                .on('change', '[name="id_tipotema"]', function() {
-                    $('#temaForm').bootstrapValidator('revalidateField', 'id_tipotema');
+                .on('change', '[name="id_tipodocumento"]', function() {
+                    $('#documentoForm').bootstrapValidator('revalidateField', 'id_tipodocumento');
                 })
                 ;
         $('#alta_group').on('dp.change dp.show', function(e) {
 // Revalidate the date when user change it
-            $('#temaForm').bootstrapValidator('revalidateField', 'alta_group');
+            $('#documentoForm').bootstrapValidator('revalidateField', 'alta_group');
         });
         $('#cambio_group').on('dp.change dp.show', function(e) {
 // Revalidate the date when user change it
-            $('#temaForm').bootstrapValidator('revalidateField', 'cambio_group');
+            $('#documentoForm').bootstrapValidator('revalidateField', 'cambio_group');
         });
     });       
 

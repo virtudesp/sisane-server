@@ -17,17 +17,17 @@
  */
 
 
-var temaView = function (strClase) {
+var postView = function (strClase) {
     this.clase = strClase;
 };
-temaView.prototype = new view('tema');
-temaView.prototype.getClassNameTema = function () {
+postView.prototype = new view('post');
+postView.prototype.getClassNamePost = function () {
     return this.getClassName() + "Vista";
 };
-var oTemaView = new temaView('tema');
+var oPostView = new postView('post');
 
 
-temaView.prototype.loadButtons = function (id) {
+postView.prototype.loadButtons = function (id) {
 
     var botonera = "";
     botonera += '<div class="btn-toolbar" role="toolbar"><div class="btn-group btn-group-xs">';
@@ -38,74 +38,74 @@ temaView.prototype.loadButtons = function (id) {
     return botonera;
 
 }
-temaView.prototype.loadFormValues = function (valores, campos) {
-//                    $('#tema_form #titulo').val(valores['titulo']);
-//                    $('#tema_form #contenido').val(valores['contenido']);
-//                    $('#tema_form #alta').val(valores['alta']);
-//                    $('#tema_form #cambio').val(valores['cambio']);
-//                    $('#tema_form #hits').val(valores['hits']);
-//                    $('#tema_form #id_usuario').val(valores['id_usuario']);
-//                    $('#tema_form #etiquetas').val(valores['etiquetas']);
-//                    $('#tema_form #publicado').val(valores['publicado']);
-//                    $('#tema_form #portada').val(valores['portada']);
+postView.prototype.loadFormValues = function (valores, campos) {
+//                    $('#post_form #titulo').val(valores['titulo']);
+//                    $('#post_form #contenido').val(valores['contenido']);
+//                    $('#post_form #alta').val(valores['alta']);
+//                    $('#post_form #cambio').val(valores['cambio']);
+//                    $('#post_form #hits').val(valores['hits']);
+//                    $('#post_form #id_usuario').val(valores['id_usuario']);
+//                    $('#post_form #etiquetas').val(valores['etiquetas']);
+//                    $('#post_form #publicado').val(valores['publicado']);
+//                    $('#post_form #portada').val(valores['portada']);
     this.doFillForm(valores, campos);
 };
 
-temaView.prototype.getFormValues = function () {
+postView.prototype.getFormValues = function () {
     var valores = [];
-//                    valores['titulo'] = $('#tema_form #titulo');
-//                    valores['contenido'] = $('#tema_form #contenido');
-//                    valores['alta'] = $('#tema_form #alta');
-//                    valores['cambio'] = $('#tema_form #cambio');
-//                    valores['hits'] = $('#tema_form #hits');
-//                    valores['id_usuario'] = $('#tema_form #id_usuario');
-//                    valores['etiquetas'] = $('#tema_form #etiquetas');
-//                    valores['publicado'] = $('#tema_form #publicado');
-//                    valores['portada'] = $('#tema_form #portada');
+//                    valores['titulo'] = $('#post_form #titulo');
+//                    valores['contenido'] = $('#post_form #contenido');
+//                    valores['alta'] = $('#post_form #alta');
+//                    valores['cambio'] = $('#post_form #cambio');
+//                    valores['hits'] = $('#post_form #hits');
+//                    valores['id_usuario'] = $('#post_form #id_usuario');
+//                    valores['etiquetas'] = $('#post_form #etiquetas');
+//                    valores['publicado'] = $('#post_form #publicado');
+//                    valores['portada'] = $('#post_form #portada');
 
-    var disabled = $('#temaForm').find(':input:disabled').removeAttr('disabled');
-    valores = $('#temaForm').serializeObject();
+    var disabled = $('#postForm').find(':input:disabled').removeAttr('disabled');
+    valores = $('#postForm').serializeObject();
     disabled.attr('disabled', 'disabled');
     return valores;
 };
 
-temaView.prototype.doEventsLoading = function () {
+postView.prototype.doEventsLoading = function () {
     var thisObject = this;
-    $('#temaForm #obj_usuario_button').unbind('click');
-    $("#temaForm #obj_usuario_button").click(function () {
-        var oControl = oTemaControl;  //para probar dejar tema
-        //vista('usuario').cargaModalBuscarClaveAjena('#modal01', "tema");
+    $('#postForm #obj_usuario_button').unbind('click');
+    $("#postForm #obj_usuario_button").click(function () {
+        var oControl = oPostControl;  //para probar dejar post
+        //vista('usuario').cargaModalBuscarClaveAjena('#modal01', "post");
 
-        $("#temaForm").append(thisObject.getEmptyModal());
+        $("#postForm").append(thisObject.getEmptyModal());
         util().loadForm('#modal01', thisObject.getFormHeader('Elección de usuario'), "", thisObject.getFormFooter(), true);
 
-        $('#temaForm').append(thisObject.getEmptyModal());
+        $('#postForm').append(thisObject.getEmptyModal());
 
-        oControl.list('#modal01 #modal-body', param().defaultizeUrlObjectParameters({}), true, oTemaModel, oTemaView);
+        oControl.list('#modal01 #modal-body', param().defaultizeUrlObjectParameters({}), true, oPostModel, oPostView);
         oControl.modalListEventsLoading('#modal01 #modal-body', param().defaultizeUrlObjectParameters({}), function (id) {
             $('#obj_usuario_id').val(id).change();
             $('#obj_usuario_desc').text(decodeURIComponent(oUsuarioModel.getMeAsAForeignKey(id)));
             $('#modal01').modal('hide');
 
-        },oTemaModel, oTemaView);
+        },oPostModel, oPostView);
         return false;
     });
-    $('#temaForm #obj_tipotema_button').unbind('click');
-    $("#temaForm #obj_tipotema_button").click(function () {
-        var oControl = oTemaControl;
+    $('#postForm #obj_tipopost_button').unbind('click');
+    $("#postForm #obj_tipopost_button").click(function () {
+        var oControl = oPostControl;
 
-        $("#temaForm").append(thisObject.getEmptyModal());
-        util().loadForm('#modal01', thisObject.getFormHeader('Elección de tipo de tema'), "", thisObject.getFormFooter(), true);
+        $("#postForm").append(thisObject.getEmptyModal());
+        util().loadForm('#modal01', thisObject.getFormHeader('Elección de tipo de post'), "", thisObject.getFormFooter(), true);
 
-        $('#temaForm').append(thisObject.getEmptyModal());
+        $('#postForm').append(thisObject.getEmptyModal());
 
-        oControl.list('#modal01 #modal-body', param().defaultizeUrlObjectParameters({}), true, oTemaModel, oTemaView);
+        oControl.list('#modal01 #modal-body', param().defaultizeUrlObjectParameters({}), true, oPostModel, oPostView);
         oControl.modalListEventsLoading('#modal01 #modal-body', param().defaultizeUrlObjectParameters({}), function (id) {
-            $('#obj_tipotema_id').val(id).change();
-            $('#obj_tipotema_desc').text(decodeURIComponent(oTipotemaModel.getMeAsAForeignKey(id)));
+            $('#obj_tipopost_id').val(id).change();
+            $('#obj_tipopost_desc').text(decodeURIComponent(oTipopostModel.getMeAsAForeignKey(id)));
             $('#modal01').modal('hide');
 
-        },oTemaModel, oTemaView);
+        },oPostModel, oPostView);
         return false;
     });
     $('#contenido_button').unbind('click');
@@ -120,7 +120,7 @@ temaView.prototype.doEventsLoading = function () {
         contenido += '</div><div class="col-md-6"><div id="textoparseado"></div></div>';
         contenido += '</div>';
 
-        $('#temaForm').append(thisObject.getEmptyModal());
+        $('#postForm').append(thisObject.getEmptyModal());
 
         util().loadForm('#modal01', cabecera, contenido, pie, true);
         var texto = $('#contenido').val();
@@ -135,6 +135,6 @@ temaView.prototype.doEventsLoading = function () {
     });
 };
 
-temaView.prototype.okValidation = function (f) {
-    $('#temaForm').on('success.form.bv', f);
+postView.prototype.okValidation = function (f) {
+    $('#postForm').on('success.form.bv', f);
 };

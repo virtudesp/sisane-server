@@ -17,13 +17,13 @@
 --%>
 
 <%@page import="java.sql.Connection"%>
-<%@page import="net.daw.dao.generic.specific.implementation.TemaDaoGenSpImpl"%>
+<%@page import="net.daw.dao.generic.specific.implementation.PostDaoGenSpImpl"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.Iterator"%>
 <%
     ArrayList<String> alColumnsNames;
     Iterator<String> oIterador;
-    String strNombreMantenimiento = "tema";
+    String strNombreMantenimiento = "post";
     Connection connection = (Connection) request.getAttribute("connection");    
 %>
 <div class="row">
@@ -67,7 +67,7 @@
                                 <!-- Default panel contents -->
                                 <div class="panel-heading">Campos visibles</div>
                                 <div class="panel-body">     
-                                    <form class="navbar-form navbar-right" role="form" action="Controller" method="tema" id="visibleFieldsForm">
+                                    <form class="navbar-form navbar-right" role="form" action="Controller" method="post" id="visibleFieldsForm">
                                         <select id="selectVisibleFields" class="form-control" name="filter" width="80" style="width: 70px">
                                         </select>
                                     </form>
@@ -96,7 +96,7 @@
                                 <!-- Default panel contents -->
                                 <div class="panel-heading">Filtro</div>
                                 <div class="panel-body">
-                                    <form class="navbar-form navbar-right" role="form" action="Controller" method="tema" id="empresaForm">
+                                    <form class="navbar-form navbar-right" role="form" action="Controller" method="post" id="empresaForm">
                                         <select id="selectFilter" class="form-control" name="filter" style="width: 160px">
                                         </select>
                                         <select id="selectFilteroperator" class="form-control" name="filteroperator" width="80" style="width: 200px">

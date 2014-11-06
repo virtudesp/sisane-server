@@ -17,61 +17,61 @@
  */
 
 
-function fTemaRoutes() {
+function fPostRoutes() {
 
-//    Path.map("#/tema").to(function () {
+//    Path.map("#/post").to(function () {
 //        $('#indexContenidoJsp').spinner();
-//        control('tema').list($('#indexContenido'), param().defaultizeUrlObjectParameters({}), null);
-//        //temaControl.modalListEventsLoading(temaObject, temaView, $('#indexContenido'), param().defaultizeUrlObjectParameters({}), null);        
+//        control('post').list($('#indexContenido'), param().defaultizeUrlObjectParameters({}), null);
+//        //postControl.modalListEventsLoading(postObject, postView, $('#indexContenido'), param().defaultizeUrlObjectParameters({}), null);        
 //        $('#indexContenidoJsp').empty();
 //        return false;
 //    });
 
-    Path.map("#/tema").to(function () {
+    Path.map("#/post").to(function () {
         $('#indexContenidoJsp').spinner();
-        oTemaControl.list($('#indexContenido'), param().defaultizeUrlObjectParameters({}), null, oTemaModel, oTemaView);
-        //temaControl.modalListEventsLoading(temaObject, temaView, $('#indexContenido'), param().defaultizeUrlObjectParameters({}), null);        
+        oPostControl.list($('#indexContenido'), param().defaultizeUrlObjectParameters({}), null, oPostModel, oPostView);
+        //postControl.modalListEventsLoading(postObject, postView, $('#indexContenido'), param().defaultizeUrlObjectParameters({}), null);        
         $('#indexContenidoJsp').empty();
-        $('#indexContenidoJsp').append(oTemaControl.getClassNameTema());
+        $('#indexContenidoJsp').append(oPostControl.getClassNamePost());
         return false;
     });
 
-    Path.map("#/tema/list/:url").to(function () {
+    Path.map("#/post/list/:url").to(function () {
         $('#indexContenidoJsp').spinner();
         var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
-        oTemaControl.list($('#indexContenido'), paramsObject, null, oTemaModel, oTemaView);
-        $('#indexContenidoJsp').empty();
-        return false;
-    });
-
-    Path.map("#/tema/view/:id").to(function () {
-        $('#indexContenidoJsp').spinner();
-        var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
-        oTemaControl.view($('#indexContenido'), paramsObject['id'], oTemaModel, oTemaView);
-        $('#indexContenidoJsp').empty();
-
-        return false;
-    });
-
-    Path.map("#/tema/edit/:id").to(function () {
-        $('#indexContenidoJsp').spinner();
-        var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
-        oTemaControl.edit($('#indexContenido'), paramsObject['id'], oTemaModel, oTemaView);
-        $('#indexContenidoJsp').empty();
-    });
-
-    Path.map("#/tema/new").to(function () {
-        $('#indexContenidoJsp').spinner();
-        var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
-        oTemaControl.new($('#indexContenido'), oTemaModel, oTemaView);
+        oPostControl.list($('#indexContenido'), paramsObject, null, oPostModel, oPostView);
         $('#indexContenidoJsp').empty();
         return false;
     });
 
-    Path.map("#/tema/remove/:id").to(function () {
+    Path.map("#/post/view/:id").to(function () {
         $('#indexContenidoJsp').spinner();
         var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
-        oTemaControl.remove($('#indexContenido'), paramsObject['id'], oTemaModel, oTemaView);
+        oPostControl.view($('#indexContenido'), paramsObject['id'], oPostModel, oPostView);
+        $('#indexContenidoJsp').empty();
+
+        return false;
+    });
+
+    Path.map("#/post/edit/:id").to(function () {
+        $('#indexContenidoJsp').spinner();
+        var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
+        oPostControl.edit($('#indexContenido'), paramsObject['id'], oPostModel, oPostView);
+        $('#indexContenidoJsp').empty();
+    });
+
+    Path.map("#/post/new").to(function () {
+        $('#indexContenidoJsp').spinner();
+        var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
+        oPostControl.new($('#indexContenido'), oPostModel, oPostView);
+        $('#indexContenidoJsp').empty();
+        return false;
+    });
+
+    Path.map("#/post/remove/:id").to(function () {
+        $('#indexContenidoJsp').spinner();
+        var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
+        oPostControl.remove($('#indexContenido'), paramsObject['id'], oPostModel, oPostView);
         $('#indexContenidoJsp').empty();
         return false;
     });

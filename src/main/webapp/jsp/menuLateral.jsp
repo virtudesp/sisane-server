@@ -60,6 +60,7 @@
         <h3 class="panel-title">Foro</h3>
     </div>
     <div class="list-group">
-        <a  class="list-group-item" id="lnkTema" href="jsp#/tema">Tema</a> 
+
+        <a  class="list-group-item" id="lnkPost" href="jsp#/post">Post</a> 
     </div>
 </div>
