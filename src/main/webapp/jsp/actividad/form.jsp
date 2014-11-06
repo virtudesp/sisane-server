@@ -51,8 +51,8 @@
     
     <div class="form-group">
         <label class="col-sm-2 control-label"  for="activo">Activo:</label>
-        <div class="col-sm-2">
-            <input type="text"  class="form-control"  id="activo" name="activo" size="15" placeholder="activo" />
+        <div class="col-sm-1">
+            <input type="checkbox" id="activo" name="activo" value="true" />
         </div>
     </div>
 
@@ -120,14 +120,14 @@
                                     message: 'El valor de la evaluacion debe ser un entero'
                                 },
                                 between: {
-                                    min: 0,
-                                    max: 4,
+                                    min: 1,
+                                    max: 3,
                                     message: 'La evaluacion debe ser 1, 2 o 3'
                                 }
                             }
 
-                        },
-                        activo: {
+                        }
+                    /*    activo: {
                             validators: {
                                 notEmpty: {
                                     message: 'Debe introducir un número para el activo'
@@ -136,13 +136,13 @@
                                     message: 'El valor del activo debe ser un entero'
                                 },
                                 between: {
-                                    min: -0,
-                                    max: 2,
+                                    min: 0,
+                                    max: 1,
                                     message: 'El activo debe ser 0 o 1'
                                 }
                             }
 
-                        }
+                        } */
                         
                         
                         

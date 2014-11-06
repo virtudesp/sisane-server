@@ -156,6 +156,11 @@
         <script src="js/specific/documento/model.js" charset="UTF-8"></script>
         <script src="js/specific/documento/view.js" charset="UTF-8"></script>
         <script src="js/specific/documento/routes.js" charset="UTF-8"></script>
+        
+        <script src="js/specific/actividad/control.js" charset="UTF-8"></script>
+        <script src="js/specific/actividad/model.js" charset="UTF-8"></script>
+        <script src="js/specific/actividad/view.js" charset="UTF-8"></script>
+        <script src="js/specific/actividad/routes.js" charset="UTF-8"></script>
 
 
         <script src="js/specific/usuario/model.js" charset="UTF-8"></script>
@@ -175,6 +180,7 @@
 
 
                 fDocumentoRoutes();
+                fActividadRoutes();
 
 
                 Path.listen();
