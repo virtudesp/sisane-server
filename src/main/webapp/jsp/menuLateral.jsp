@@ -52,5 +52,6 @@
     <div class="list-group">
 
         <a  class="list-group-item" id="lnkPublicacion" href="jsp#/publicacion">Publicacion</a> 
+        <a  class="list-group-item" id="lnkPublicacion" href="jsp#/publicacion">Estado</a>
     </div>
 </div>

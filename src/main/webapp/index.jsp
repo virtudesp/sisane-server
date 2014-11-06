@@ -164,6 +164,11 @@
         <script src="js/specific/publicacion/model.js" charset="UTF-8"></script>
         <script src="js/specific/publicacion/view.js" charset="UTF-8"></script>
         <script src="js/specific/publicacion/routes.js" charset="UTF-8"></script>
+        
+        <script src="js/specific/estado/control.js" charset="UTF-8"></script>
+        <script src="js/specific/estado/model.js" charset="UTF-8"></script>
+        <script src="js/specific/estado/view.js" charset="UTF-8"></script>
+        <script src="js/specific/estado/routes.js" charset="UTF-8"></script>
 
 
         <script src="js/specific/usuario/model.js" charset="UTF-8"></script>
@@ -191,6 +196,7 @@
                 fDocumentoRoutes();
                 fUsuarioRoutes();
                 fPublicacionRoutes();
+                fEstadoRoutes();
 
 
                 Path.listen();
