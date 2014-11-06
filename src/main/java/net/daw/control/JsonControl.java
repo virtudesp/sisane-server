@@ -31,15 +31,21 @@ import net.daw.control.operation.generic.specific.implementation.AmigoControlOpe
 import net.daw.control.operation.generic.specific.implementation.DocumentoControlOperationGenSpImpl;
 import net.daw.control.operation.generic.specific.implementation.PublicacionControlOperationGenSpImpl;
 import net.daw.control.operation.generic.specific.implementation.EstadoControlOperationGenSpImpl;
+import net.daw.control.operation.generic.specific.implementation.PostControlOperationGenSpImpl;
+import net.daw.control.operation.generic.specific.implementation.TemaControlOperationGenSpImpl;
 import net.daw.control.operation.generic.specific.implementation.TipodocumentoControlOperationGenSpImpl;
+import net.daw.control.operation.generic.specific.implementation.TipotemaControlOperationGenSpImpl;
 import net.daw.control.operation.generic.specific.implementation.UsuarioControlOperationGenSpImpl;
 import net.daw.control.operation.specific.implementation.OrdenadorControlOperationSpImpl;
 import net.daw.control.operation.specific.implementation.ProductoControlOperationSpImpl;
 import net.daw.control.operation.specific.implementation.TipoproductoControlOperationSpImpl;
 import net.daw.control.route.generic.specific.implementation.DocumentoControlRouteGenSpImpl;
 import net.daw.control.route.generic.specific.implementation.EstadoControlRouteGenSpImpl;
+import net.daw.control.route.generic.specific.implementation.PostControlRouteGenSpImpl;
 import net.daw.control.route.generic.specific.implementation.PublicacionControlRouteGenSpImpl;
+import net.daw.control.route.generic.specific.implementation.TemaControlRouteGenSpImpl;
 import net.daw.control.route.generic.specific.implementation.TipodocumentoControlRouteGenSpImpl;
+import net.daw.control.route.generic.specific.implementation.TipotemaControlRouteGenSpImpl;
 import net.daw.control.route.generic.specific.implementation.UsuarioControlRouteGenSpImpl;
 import net.daw.control.route.specific.implementation.AmigoControlRouteSpImpl;
 import net.daw.control.route.specific.implementation.OrdenadorControlRouteSpImpl;
@@ -134,6 +140,21 @@ public class JsonControl extends HttpServlet {
                         PublicacionControlRouteGenSpImpl oPublicacionRoute = new PublicacionControlRouteGenSpImpl();
                         PublicacionControlOperationGenSpImpl oPublicacionControlOperation = new PublicacionControlOperationGenSpImpl(request);
                         jsonResult = oPublicacionRoute.execute(request, oPublicacionControlOperation);                   
+                        break;
+                    case "post":
+                        PostControlRouteGenSpImpl oPostRoute = new PostControlRouteGenSpImpl();
+                        PostControlOperationGenSpImpl oPostControlOperation = new PostControlOperationGenSpImpl(request);
+                        jsonResult = oPostRoute.execute(request, oPostControlOperation);
+                        break;
+                    case "tema":
+                        TemaControlRouteGenSpImpl oTemaRoute = new TemaControlRouteGenSpImpl();
+                        TemaControlOperationGenSpImpl oTemaControlOperation = new TemaControlOperationGenSpImpl(request);
+                        jsonResult = oTemaRoute.execute(request, oTemaControlOperation);
+                        break;
+                    case "tipotema":
+                        TipotemaControlRouteGenSpImpl oTipotemaRoute = new TipotemaControlRouteGenSpImpl();
+                        TipotemaControlOperationGenSpImpl oTipotemaControlOperation = new TipotemaControlOperationGenSpImpl(request);
+                        jsonResult = oTipotemaRoute.execute(request, oTipotemaControlOperation);
                         break;
                     default:
                         ExceptionBooster.boost(new Exception(this.getClass().getName() + ":processRequest ERROR: no such operation"));
