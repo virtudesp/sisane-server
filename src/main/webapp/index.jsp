@@ -176,6 +176,11 @@
         <script src="js/specific/pregunta/view.js" charset="UTF-8"></script>
         <script src="js/specific/pregunta/routes.js" charset="UTF-8"></script>
         
+        <!-- Fin Modificación Juanma Usuarios -->
+
+
+        <script src="js/specific/tipodocumento/model.js" charset="UTF-8"></script>
+
         <script type="text/javascript">
 
             //path = '<%=request.getContextPath()%>';
@@ -194,6 +199,10 @@
                 fPreguntaRoutes();
                 fCuestionarioRoutes();
               
+                fUsuarioRoutes();
+                fPublicacionRoutes();
+
+
                 Path.listen();
 
             });

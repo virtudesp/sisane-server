@@ -1,5 +1,5 @@
-/*
- * Copyright (C) July 2014 Rafael Aznar
+/* 
+ * Copyright (C) 2014 raznara
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -15,29 +15,18 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-package net.daw.bean.generic.specific.implementation;
 
-import com.google.gson.annotations.Expose;
-import net.daw.bean.generic.implementation.BeanGenImpl;
-import net.daw.bean.publicinterface.BeanInterface;
-
-public class TipousuarioBeanGenSpImpl extends BeanGenImpl implements BeanInterface {
-    @Expose
-    private String descripcion = "";
-
-    public TipousuarioBeanGenSpImpl() {
-
-    }
-
-    public TipousuarioBeanGenSpImpl(Integer id) {
-        super(id);
-    }
-
-    public String getDescripcion() {
-        return descripcion;
-    }
-
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
-    }
-}
+var publicacionModel = function (strClase) {
+    this.clase = strClase;
+};
+publicacionModel.prototype = new model('publicacion');
+publicacionModel.prototype.getClassNamePublicacion = function () {
+    return this.getClassName() + "Modelo";
+};
+publicacionModel.prototype.duplicateOne = function (id) {
+    $.when(ajax().ajaxCallSync(this.urlJson + '&op=duplicate&id=' + id, 'GET', '')).done(function (data) {
+        feedback = data;
+    });
+    return feedback;
+};
+var oPublicacionModel = new publicacionModel('publicacion');

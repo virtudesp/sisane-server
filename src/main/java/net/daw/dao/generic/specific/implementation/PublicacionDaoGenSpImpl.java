@@ -1,5 +1,5 @@
 /*
- * Copyright (C) July 2014 Rafael Aznar
+ * Copyright (C) 2014 al038513
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -15,29 +15,20 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-package net.daw.bean.generic.specific.implementation;
+package net.daw.dao.generic.specific.implementation;
 
-import com.google.gson.annotations.Expose;
-import net.daw.bean.generic.implementation.BeanGenImpl;
-import net.daw.bean.publicinterface.BeanInterface;
+import java.sql.Connection;
+import net.daw.bean.generic.specific.implementation.DocumentoBeanGenSpImpl;
+import net.daw.bean.generic.specific.implementation.PublicacionBeanGenSpImpl;
+import net.daw.dao.generic.implementation.TableDaoGenImpl;
 
-public class TipousuarioBeanGenSpImpl extends BeanGenImpl implements BeanInterface {
-    @Expose
-    private String descripcion = "";
+/**
+ *
+ * @author al038513
+ */
+public class PublicacionDaoGenSpImpl extends TableDaoGenImpl<PublicacionBeanGenSpImpl> {
 
-    public TipousuarioBeanGenSpImpl() {
-
-    }
-
-    public TipousuarioBeanGenSpImpl(Integer id) {
-        super(id);
-    }
-
-    public String getDescripcion() {
-        return descripcion;
-    }
-
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
+    public PublicacionDaoGenSpImpl(String strObject, Connection pooledConnection) throws Exception {
+        super(strObject, pooledConnection);
     }
 }

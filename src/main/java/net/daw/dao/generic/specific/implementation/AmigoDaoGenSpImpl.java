@@ -15,29 +15,20 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-package net.daw.bean.generic.specific.implementation;
+package net.daw.dao.generic.specific.implementation;
 
-import com.google.gson.annotations.Expose;
-import net.daw.bean.generic.implementation.BeanGenImpl;
-import net.daw.bean.publicinterface.BeanInterface;
+import net.daw.dao.generic.implementation.TableDaoGenImpl;
+import java.sql.Connection;
+import net.daw.bean.generic.specific.implementation.AmigoBeanGenSpImpl;
+import net.daw.dao.publicinterface.MetaDaoInterface;
+import net.daw.dao.publicinterface.TableDaoInterface;
+import net.daw.dao.publicinterface.ViewDaoInterface;
 
-public class TipousuarioBeanGenSpImpl extends BeanGenImpl implements BeanInterface {
-    @Expose
-    private String descripcion = "";
+public class AmigoDaoGenSpImpl extends TableDaoGenImpl<AmigoBeanGenSpImpl> implements TableDaoInterface<AmigoBeanGenSpImpl>, ViewDaoInterface<AmigoBeanGenSpImpl>, MetaDaoInterface {
 
-    public TipousuarioBeanGenSpImpl() {
-
+    public AmigoDaoGenSpImpl(String strObject, Connection pooledConnection) throws Exception {
+        super(strObject, pooledConnection);
     }
 
-    public TipousuarioBeanGenSpImpl(Integer id) {
-        super(id);
-    }
 
-    public String getDescripcion() {
-        return descripcion;
-    }
-
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
-    }
 }

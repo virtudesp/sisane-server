@@ -40,8 +40,12 @@ import net.daw.control.route.generic.specific.implementation.CuestionarioControl
 import net.daw.control.route.generic.specific.implementation.DocumentoControlRouteGenSpImpl;
 import net.daw.control.route.generic.specific.implementation.PreguntaControlRouteGenSpImpl;
 import net.daw.control.route.generic.specific.implementation.OpcionControlRouteGenSpImpl;
+import net.daw.control.route.generic.specific.implementation.EstadoControlRouteGenSpImpl;
+import net.daw.control.route.generic.specific.implementation.PublicacionControlRouteGenSpImpl;
+import net.daw.control.route.generic.specific.implementation.EstadoControlRouteGenSpImpl;
 import net.daw.control.route.generic.specific.implementation.TipodocumentoControlRouteGenSpImpl;
 import net.daw.control.route.generic.specific.implementation.UsuarioControlRouteGenSpImpl;
+import net.daw.control.route.specific.implementation.AmigoControlRouteSpImpl;
 import net.daw.control.route.specific.implementation.OrdenadorControlRouteSpImpl;
 import net.daw.control.route.specific.implementation.ProductoControlRouteSpImpl;
 import net.daw.control.route.specific.implementation.TipoproductoControlRouteSpImpl;
@@ -120,6 +124,20 @@ public class JsonControl extends HttpServlet {
                         OrdenadorControlRouteSpImpl oOrdenadorRoute = new OrdenadorControlRouteSpImpl();
                         OrdenadorControlOperationSpImpl oOrdenadorControlOperation = new OrdenadorControlOperationSpImpl(request);
                         jsonResult = oOrdenadorRoute.execute(request, oOrdenadorControlOperation);
+                        break;                                           
+                    case "estado":
+                        EstadoControlRouteGenSpImpl oEstadoRoute = new EstadoControlRouteGenSpImpl();
+                        EstadoControlOperationGenSpImpl oEstadoControlOperation = new EstadoControlOperationGenSpImpl(request);
+                        jsonResult = oEstadoRoute.execute(request, oEstadoControlOperation);
+                    case "amigo":
+                        AmigoControlRouteSpImpl oAmigoRoute = new AmigoControlRouteSpImpl();
+                        AmigoControlOperationGenSpImpl oAmigoControlOperation = new AmigoControlOperationGenSpImpl(request);
+                        jsonResult = oAmigoRoute.execute(request, oAmigoControlOperation);
+                         break;
+                    case "publicacion":
+                        PublicacionControlRouteGenSpImpl oPublicacionRoute = new PublicacionControlRouteGenSpImpl();
+                        PublicacionControlOperationGenSpImpl oPublicacionControlOperation = new PublicacionControlOperationGenSpImpl(request);
+                        jsonResult = oPublicacionRoute.execute(request, oPublicacionControlOperation);                   
                         break;
                     case "cuestionario":
                         CuestionarioControlRouteGenSpImpl oCuestionarioRoute = new CuestionarioControlRouteGenSpImpl();
