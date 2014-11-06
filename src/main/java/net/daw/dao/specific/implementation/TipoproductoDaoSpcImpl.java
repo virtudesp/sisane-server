@@ -91,7 +91,10 @@ public class TipoproductoDaoSpcImpl implements ViewDaoInterface<TipoproductoBean
                 if (!oMysql.existsOne(strTableName, oTipoproductoBean.getId())) {
                     oTipoproductoBean.setId(0);
                 } else {
-                    oTipoproductoBean.setDescripcion(oMysql.getOne(strTableName, "descripcion", oTipoproductoBean.getId()));
+                    expand--;
+                    if (expand > 0) {
+                        oTipoproductoBean.setDescripcion(oMysql.getOne(strTableName, "descripcion", oTipoproductoBean.getId()));
+                    }
                 }
             } catch (Exception ex) {
                 ExceptionBooster.boost(new Exception(this.getClass().getName() + ":get ERROR: " + ex.getMessage()));

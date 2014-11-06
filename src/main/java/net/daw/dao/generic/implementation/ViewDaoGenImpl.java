@@ -122,13 +122,13 @@ public class ViewDaoGenImpl<TIPO_OBJETO> extends MetaDaoGenImpl<TIPO_OBJETO> imp
                                 //ojo: en los pojos, los id_ deben preceder a los obj_ del mismo objeto siempre!
                                 //only two _ allowed in foreign keys
                                 String strAjena, strTabla = null;
-                                
+
                                 if (!(method.getName().indexOf("_") == (method.getName().lastIndexOf("_")))) {
                                     strTabla = method.getName().substring(method.getName().indexOf("_") + 1, method.getName().lastIndexOf("_")).toLowerCase(Locale.ENGLISH);
                                     strAjena = method.getName().substring(3).toLowerCase(Locale.ENGLISH).substring(4);
                                 } else {
                                     strAjena = method.getName().substring(3).toLowerCase(Locale.ENGLISH).substring(4);
-                                    strTabla=strAjena;
+                                    strTabla = strAjena;
                                 }
                                 Method metodo_getId_Ajena = tipo.getMethod("getId_" + strAjena);
                                 strTabla = strTabla.substring(0, 1).toUpperCase(Locale.ENGLISH) + strTabla.substring(1);
@@ -195,10 +195,11 @@ public class ViewDaoGenImpl<TIPO_OBJETO> extends MetaDaoGenImpl<TIPO_OBJETO> imp
                         metodo_setId.invoke(oBean, 0);
                     } else {
                         oBean = fill(oBean, tipo, metodo_getId);
+                        expand--;
                         if (expand > 0) {
                             oBean = fillForeign(oBean, tipo);
                         }
-                        expand--;
+
                     }
                 } catch (Exception e) {
                     throw new Exception("GenericViewDaoImpl.get: Error: " + e.getMessage());

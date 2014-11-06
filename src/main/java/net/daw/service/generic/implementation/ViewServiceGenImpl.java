@@ -47,7 +47,7 @@ public abstract class ViewServiceGenImpl extends MetaServiceGenImpl implements V
             Constructor c = Class.forName("net.daw.dao.generic.specific.implementation." + strObjectName + "DaoGenSpImpl").getConstructor(String.class, Connection.class);
             TableDaoGenImpl oGenericDao = (TableDaoGenImpl) c.newInstance(strObjectName, oConnection);
             oGenericBean.setId(id);
-            oGenericBean = (BeanGenImpl) (BeanInterface) oGenericDao.get(oGenericBean, 1);
+            oGenericBean = (BeanGenImpl) (BeanInterface) oGenericDao.get(oGenericBean, 2);
             GsonBuilder gsonBuilder = new GsonBuilder();
             gsonBuilder.setDateFormat("dd/MM/yyyy");
             Gson gson = gsonBuilder.excludeFieldsWithoutExposeAnnotation().create();

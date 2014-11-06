@@ -91,7 +91,10 @@ public class OrdenadorDaoSpcImpl implements ViewDaoInterface<OrdenadorBeanGenSpI
                 if (!oMysql.existsOne(strTableName, oOrdenadorBean.getId())) {
                     oOrdenadorBean.setId(0);
                 } else {
-                    oOrdenadorBean.setDescripcion(oMysql.getOne(strTableName, "descripcion", oOrdenadorBean.getId()));
+                    expand--;
+                    if (expand > 0) {
+                        oOrdenadorBean.setDescripcion(oMysql.getOne(strTableName, "descripcion", oOrdenadorBean.getId()));
+                    }
                 }
             } catch (Exception ex) {
                 ExceptionBooster.boost(new Exception(this.getClass().getName() + ":get ERROR: " + ex.getMessage()));
