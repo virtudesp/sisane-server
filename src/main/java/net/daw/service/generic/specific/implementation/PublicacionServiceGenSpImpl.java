@@ -17,7 +17,12 @@
  */
 package net.daw.service.generic.specific.implementation;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import java.sql.Connection;
+import net.daw.bean.generic.specific.implementation.PublicacionBeanGenSpImpl;
+import net.daw.bean.generic.specific.implementation.UsuarioBeanGenSpImpl;
+import net.daw.helper.ExceptionBooster;
 import net.daw.service.generic.implementation.TableServiceGenImpl;
 
 /**
@@ -28,5 +33,28 @@ public class PublicacionServiceGenSpImpl extends TableServiceGenImpl {
 
     public PublicacionServiceGenSpImpl(String strObject, Connection con) {
         super(strObject, con);
+    }
+
+    public String duplicate(Integer id) throws Exception {
+        String jason = null;
+        PublicacionBeanGenSpImpl oPublicacion = new PublicacionBeanGenSpImpl();
+        UsuarioBeanGenSpImpl oUsuario = new UsuarioBeanGenSpImpl();
+
+        try {
+            oConnection.setAutoCommit(false);
+            Gson gson = new GsonBuilder().setDateFormat("dd/MM/yyyy").create();
+            jason = this.get(id);
+            oPublicacion = gson.fromJson(jason, oPublicacion.getClass());
+            oUsuario = oPublicacion.getObj_usuario();
+            oPublicacion.setId(0);
+            oPublicacion.setId_usuario(oUsuario.getId());
+            jason = gson.toJson(oPublicacion);
+            jason = this.set(jason);
+            oConnection.commit();
+        } catch (Exception ex) {
+            oConnection.rollback();
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":set ERROR: " + ex.getMessage()));
+        }
+        return jason;
     }
 }

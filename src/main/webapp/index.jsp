@@ -159,6 +159,13 @@
         
         
         <script src="js/specific/usuario/control.js" charset="UTF-8"></script>
+
+        <script src="js/specific/publicacion/control.js" charset="UTF-8"></script>
+        <script src="js/specific/publicacion/model.js" charset="UTF-8"></script>
+        <script src="js/specific/publicacion/view.js" charset="UTF-8"></script>
+        <script src="js/specific/publicacion/routes.js" charset="UTF-8"></script>
+
+
         <script src="js/specific/usuario/model.js" charset="UTF-8"></script>
         <script src="js/specific/usuario/view.js" charset="UTF-8"></script>
         <script src="js/specific/usuario/routes.js" charset="UTF-8"></script>
@@ -167,7 +174,7 @@
 
 
         <script src="js/specific/tipodocumento/model.js" charset="UTF-8"></script>
-        
+
         <script type="text/javascript">
 
             //path = '<%=request.getContextPath()%>';
@@ -183,6 +190,7 @@
 
                 fDocumentoRoutes();
                 fUsuarioRoutes();
+                fPublicacionRoutes();
 
 
                 Path.listen();
