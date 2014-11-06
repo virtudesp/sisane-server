@@ -44,8 +44,8 @@ public class PostBeanGenSpImpl extends BeanGenImpl implements BeanInterface {
     private Boolean primermensaje = false;
     @Expose(serialize = false)
     private Integer id_tema = 0; //importante inicializar a 0 las claves ajenas
-    //@Expose(deserialize = false)
-    //private TemaBeanGenSpImpl obj_tema = null;
+    @Expose(deserialize = false)
+    private TemaBeanGenSpImpl obj_tema = null;
     @Expose(serialize = false)
     private Integer id_usuario = 0; //importante inicializar a 0 las claves ajenas
     @Expose(deserialize = false)
@@ -114,6 +114,13 @@ public class PostBeanGenSpImpl extends BeanGenImpl implements BeanInterface {
     public void setObj_usuario(UsuarioBeanGenSpImpl obj_usuario) {
         this.obj_usuario = obj_usuario;
     }
-    
+
+    public TemaBeanGenSpImpl getObj_tema() {
+        return obj_tema;
+    }
+
+    public void setObj_tema(TemaBeanGenSpImpl obj_tema) {
+        this.obj_tema = obj_tema;
+    } 
     
 }
