@@ -16,11 +16,11 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
-var documentoControl = function (strClase) {
+var temaControl = function (strClase) {
     this.clase = strClase;
 };
-documentoControl.prototype = new control('documento');
-documentoControl.prototype.getClassNameDocumento = function () {
+temaControl.prototype = new control('tema');
+temaControl.prototype.getClassNameTema = function () {
     return this.getClassName() + "Control";
 };
-var oDocumentoControl = new documentoControl('documento');
+var oTemaControl = new temaControl('tema');

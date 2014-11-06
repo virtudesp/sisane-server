@@ -17,61 +17,61 @@
  */
 
 
-function fDocumentoRoutes() {
+function fTemaRoutes() {
 
-//    Path.map("#/documento").to(function () {
+//    Path.map("#/tema").to(function () {
 //        $('#indexContenidoJsp').spinner();
-//        control('documento').list($('#indexContenido'), param().defaultizeUrlObjectParameters({}), null);
-//        //documentoControl.modalListEventsLoading(documentoObject, documentoView, $('#indexContenido'), param().defaultizeUrlObjectParameters({}), null);        
+//        control('tema').list($('#indexContenido'), param().defaultizeUrlObjectParameters({}), null);
+//        //temaControl.modalListEventsLoading(temaObject, temaView, $('#indexContenido'), param().defaultizeUrlObjectParameters({}), null);        
 //        $('#indexContenidoJsp').empty();
 //        return false;
 //    });
 
-    Path.map("#/documento").to(function () {
+    Path.map("#/tema").to(function () {
         $('#indexContenidoJsp').spinner();
-        oDocumentoControl.list($('#indexContenido'), param().defaultizeUrlObjectParameters({}), null, oDocumentoModel, oDocumentoView);
-        //documentoControl.modalListEventsLoading(documentoObject, documentoView, $('#indexContenido'), param().defaultizeUrlObjectParameters({}), null);        
+        oTemaControl.list($('#indexContenido'), param().defaultizeUrlObjectParameters({}), null, oTemaModel, oTemaView);
+        //temaControl.modalListEventsLoading(temaObject, temaView, $('#indexContenido'), param().defaultizeUrlObjectParameters({}), null);        
         $('#indexContenidoJsp').empty();
-        $('#indexContenidoJsp').append(oDocumentoControl.getClassNameDocumento());
+        $('#indexContenidoJsp').append(oTemaControl.getClassNameTema());
         return false;
     });
 
-    Path.map("#/documento/list/:url").to(function () {
+    Path.map("#/tema/list/:url").to(function () {
         $('#indexContenidoJsp').spinner();
         var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
-        oDocumentoControl.list($('#indexContenido'), paramsObject, null, oDocumentoModel, oDocumentoView);
-        $('#indexContenidoJsp').empty();
-        return false;
-    });
-
-    Path.map("#/documento/view/:id").to(function () {
-        $('#indexContenidoJsp').spinner();
-        var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
-        oDocumentoControl.view($('#indexContenido'), paramsObject['id'], oDocumentoModel, oDocumentoView);
-        $('#indexContenidoJsp').empty();
-
-        return false;
-    });
-
-    Path.map("#/documento/edit/:id").to(function () {
-        $('#indexContenidoJsp').spinner();
-        var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
-        oDocumentoControl.edit($('#indexContenido'), paramsObject['id'], oDocumentoModel, oDocumentoView);
-        $('#indexContenidoJsp').empty();
-    });
-
-    Path.map("#/documento/new").to(function () {
-        $('#indexContenidoJsp').spinner();
-        var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
-        oDocumentoControl.new($('#indexContenido'), oDocumentoModel, oDocumentoView);
+        oTemaControl.list($('#indexContenido'), paramsObject, null, oTemaModel, oTemaView);
         $('#indexContenidoJsp').empty();
         return false;
     });
 
-    Path.map("#/documento/remove/:id").to(function () {
+    Path.map("#/tema/view/:id").to(function () {
         $('#indexContenidoJsp').spinner();
         var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
-        oDocumentoControl.remove($('#indexContenido'), paramsObject['id'], oDocumentoModel, oDocumentoView);
+        oTemaControl.view($('#indexContenido'), paramsObject['id'], oTemaModel, oTemaView);
+        $('#indexContenidoJsp').empty();
+
+        return false;
+    });
+
+    Path.map("#/tema/edit/:id").to(function () {
+        $('#indexContenidoJsp').spinner();
+        var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
+        oTemaControl.edit($('#indexContenido'), paramsObject['id'], oTemaModel, oTemaView);
+        $('#indexContenidoJsp').empty();
+    });
+
+    Path.map("#/tema/new").to(function () {
+        $('#indexContenidoJsp').spinner();
+        var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
+        oTemaControl.new($('#indexContenido'), oTemaModel, oTemaView);
+        $('#indexContenidoJsp').empty();
+        return false;
+    });
+
+    Path.map("#/tema/remove/:id").to(function () {
+        $('#indexContenidoJsp').spinner();
+        var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
+        oTemaControl.remove($('#indexContenido'), paramsObject['id'], oTemaModel, oTemaView);
         $('#indexContenidoJsp').empty();
         return false;
     });
