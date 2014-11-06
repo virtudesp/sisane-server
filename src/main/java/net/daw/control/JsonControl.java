@@ -27,10 +27,13 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import net.daw.control.operation.generic.specific.implementation.AmigoControlOperationGenSpImpl;
 import net.daw.control.operation.generic.specific.implementation.CuestionarioControlOperationGenSpImpl;
 import net.daw.control.operation.generic.specific.implementation.DocumentoControlOperationGenSpImpl;
+import net.daw.control.operation.generic.specific.implementation.EstadoControlOperationGenSpImpl;
 import net.daw.control.operation.generic.specific.implementation.OpcionControlOperationGenSpImpl;
 import net.daw.control.operation.generic.specific.implementation.PreguntaControlOperationGenSpImpl;
+import net.daw.control.operation.generic.specific.implementation.PublicacionControlOperationGenSpImpl;
 import net.daw.control.operation.generic.specific.implementation.TipodocumentoControlOperationGenSpImpl;
 import net.daw.control.operation.generic.specific.implementation.UsuarioControlOperationGenSpImpl;
 import net.daw.control.operation.specific.implementation.OrdenadorControlOperationSpImpl;
@@ -129,6 +132,7 @@ public class JsonControl extends HttpServlet {
                         EstadoControlRouteGenSpImpl oEstadoRoute = new EstadoControlRouteGenSpImpl();
                         EstadoControlOperationGenSpImpl oEstadoControlOperation = new EstadoControlOperationGenSpImpl(request);
                         jsonResult = oEstadoRoute.execute(request, oEstadoControlOperation);
+                        break;
                     case "amigo":
                         AmigoControlRouteSpImpl oAmigoRoute = new AmigoControlRouteSpImpl();
                         AmigoControlOperationGenSpImpl oAmigoControlOperation = new AmigoControlOperationGenSpImpl(request);
