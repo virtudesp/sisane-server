@@ -72,7 +72,7 @@ public class ViewDaoGenImpl<TIPO_OBJETO> extends MetaDaoGenImpl<TIPO_OBJETO> imp
             while (iterador.hasNext()) {
                 Object oBean = Class.forName(tipo.getName()).newInstance();
                 metodo_setId.invoke(oBean, iterador.next());
-                arrCliente.add(this.get((TIPO_OBJETO) oBean, 1));
+                arrCliente.add(this.get((TIPO_OBJETO) oBean, 2));
             }
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPage ERROR: " + ex.getMessage()));

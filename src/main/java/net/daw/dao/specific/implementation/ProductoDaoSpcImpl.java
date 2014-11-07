@@ -77,7 +77,7 @@ public class ProductoDaoSpcImpl implements ViewDaoInterface<ProductoBeanGenSpImp
             Iterator<Integer> iterador = arrId.listIterator();
             while (iterador.hasNext()) {
                 ProductoBeanGenSpImpl oProductoBean = new ProductoBeanGenSpImpl(iterador.next());
-                arrProducto.add(this.get(oProductoBean, 1));
+                arrProducto.add(this.get(oProductoBean, 2));
             }
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPage ERROR: " + ex.getMessage()));

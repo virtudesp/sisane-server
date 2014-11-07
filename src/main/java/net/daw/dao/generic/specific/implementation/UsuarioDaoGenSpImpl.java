@@ -41,7 +41,7 @@ public class UsuarioDaoGenSpImpl extends TableDaoGenImpl<UsuarioBeanGenSpImpl> {
                 if (!pass.equals(oUsuario.getPassword())) {
                     oUsuario.setId(0);
                 }
-                oUsuario = this.get(oUsuario, 1);
+                oUsuario = this.get(oUsuario, 2);
             }
 
             return oUsuario;

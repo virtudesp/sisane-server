@@ -76,7 +76,7 @@ public class OrdenadorDaoSpcImpl implements ViewDaoInterface<OrdenadorBeanGenSpI
             Iterator<Integer> iterador = arrId.listIterator();
             while (iterador.hasNext()) {
                 OrdenadorBeanGenSpImpl oOrdenadorBean = new OrdenadorBeanGenSpImpl(iterador.next());
-                arrOrdenador.add(this.get(oOrdenadorBean, 1));
+                arrOrdenador.add(this.get(oOrdenadorBean, 2));
             }
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPage ERROR: " + ex.getMessage()));
