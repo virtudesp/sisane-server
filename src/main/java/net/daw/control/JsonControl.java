@@ -127,6 +127,7 @@ public class JsonControl extends HttpServlet {
                         EstadoControlRouteGenSpImpl oEstadoRoute = new EstadoControlRouteGenSpImpl();
                         EstadoControlOperationGenSpImpl oEstadoControlOperation = new EstadoControlOperationGenSpImpl(request);
                         jsonResult = oEstadoRoute.execute(request, oEstadoControlOperation);
+                        break;
                     case "amigo":
                         AmigoControlRouteSpImpl oAmigoRoute = new AmigoControlRouteSpImpl();
                         AmigoControlOperationGenSpImpl oAmigoControlOperation = new AmigoControlOperationGenSpImpl(request);
