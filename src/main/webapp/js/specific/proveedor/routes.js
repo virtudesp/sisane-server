@@ -60,10 +60,10 @@ function fProveedorRoutes() {
         $('#indexContenidoJsp').empty();
     });
 
-    Path.map("#/proveedor/new").to(function () {
+    Path.map("#/proveedor/new/:url").to(function () {
         $('#indexContenidoJsp').spinner();
         var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
-        oProveedorControl.new($('#indexContenido'), oProveedorModel, oProveedorView);
+        oProveedorControl.new($('#indexContenido'), paramsObject, oProveedorModel, oProveedorView);
         $('#indexContenidoJsp').empty();
         return false;
     });

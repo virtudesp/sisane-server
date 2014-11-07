@@ -60,10 +60,10 @@ function fEstadoRoutes() {
         $('#indexContenidoJsp').empty();
     });
 
-    Path.map("#/estado/new").to(function () {
+    Path.map("#/estado/new/:url").to(function () {
         $('#indexContenidoJsp').spinner();
         var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
-        oEstadoControl.new($('#indexContenido'), oEstadoModel, oEstadoView);
+        oEstadoControl.new($('#indexContenido'), paramsObject, oEstadoModel, oEstadoView);
         $('#indexContenidoJsp').empty();
         return false;
     });

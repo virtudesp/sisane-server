@@ -60,10 +60,10 @@ function fPublicacionRoutes() {
         $('#indexContenidoJsp').empty();
     });
 
-    Path.map("#/publicacion/new").to(function () {
+    Path.map("#/publicacion/new/:url").to(function () {
         $('#indexContenidoJsp').spinner();
         var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
-        oPublicacionControl.new($('#indexContenido'), oPublicacionModel, oPublicacionView);
+        oPublicacionControl.new($('#indexContenido'), paramsObject, oPublicacionModel, oPublicacionView);
         $('#indexContenidoJsp').empty();
         return false;
     });

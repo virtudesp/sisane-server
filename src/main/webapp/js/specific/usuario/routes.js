@@ -60,10 +60,10 @@ function fUsuarioRoutes() {
         $('#indexContenidoJsp').empty();
     });
 
-    Path.map("#/usuario/new").to(function () {
+    Path.map("#/usuario/new/:url").to(function () {
         $('#indexContenidoJsp').spinner();
         var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
-        oUsuarioControl.new($('#indexContenido'), oUsuarioModel, oUsuarioView);
+        oUsuarioControl.new($('#indexContenido'), paramsObject, oUsuarioModel, oUsuarioView);
         $('#indexContenidoJsp').empty();
         return false;
     });
