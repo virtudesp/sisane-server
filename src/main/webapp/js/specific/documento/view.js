@@ -73,7 +73,7 @@ documentoView.prototype.doEventsLoading = function () {
     var thisObject = this;
     $('#documentoForm #obj_usuario_button').unbind('click');
     $("#documentoForm #obj_usuario_button").click(function () {
-        var oControl = oDocumentoControl;  //para probar dejar documento
+        var oControl = oUsuarioControl;  //para probar dejar documento
         //vista('usuario').cargaModalBuscarClaveAjena('#modal01', "documento");
 
         $("#documentoForm").append(thisObject.getEmptyModal());
@@ -81,13 +81,13 @@ documentoView.prototype.doEventsLoading = function () {
 
         $('#documentoForm').append(thisObject.getEmptyModal());
 
-        oControl.list('#modal01 #modal-body', param().defaultizeUrlObjectParameters({}), true, oDocumentoModel, oDocumentoView);
+        oControl.list('#modal01 #modal-body', param().defaultizeUrlObjectParameters({}), true, oUsuarioModel, oUsuarioView);
         oControl.modalListEventsLoading('#modal01 #modal-body', param().defaultizeUrlObjectParameters({}), function (id) {
             $('#obj_usuario_id').val(id).change();
             $('#obj_usuario_desc').text(decodeURIComponent(oUsuarioModel.getMeAsAForeignKey(id)));
             $('#modal01').modal('hide');
 
-        },oDocumentoModel, oDocumentoView);
+        },oUsuarioModel, oUsuarioView);
         return false;
     });
     $('#documentoForm #obj_tipodocumento_button').unbind('click');
