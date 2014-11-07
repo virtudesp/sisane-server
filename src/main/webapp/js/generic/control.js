@@ -24,12 +24,21 @@ var control = function (strClase) {
 control.prototype.getClassName = function () {
     return this.clase;
 };
-control.prototype.new = function (place, oModel, oView) {
+control.prototype.new = function (place, objParams, oModel, oView) {
     var thisObject = this;
     $(place).empty();
     $(place).append(oView.getPanel("Alta de " + this.clase, oView.getEmptyForm()));
     //id must not be enabled
     $('#id').val('0').attr("disabled", true);
+    //soporte de claves ajenas
+    for (var name in objParams) {
+        var selector = name.replace('id_', 'obj_');
+        $('#' + selector + "_id").val(objParams[name]).attr("disabled", true);
+        $('#' + selector + "_button").attr("disabled", true).hide();
+        var oModelo = "o" + name.replace('id_', '').charAt(0).toUpperCase() + name.replace('id_', '').slice(1) + "Model";
+        $('#' + selector + '_desc').text(decodeURIComponent(window[oModelo].getMeAsAForeignKey(objParams[name])));
+    }
+    //--
     oView.doEventsLoading();
     $('#submitForm').unbind('click');
     $('#submitForm').click(function () {
@@ -158,13 +167,13 @@ control.prototype.list = function (place, objParams, callback, oModel, oView) {
         window.location.href = 'jsp#/' + thisObject.clase + '/list/' + param().getUrlStringFromParamsObject(param().getUrlObjectFromParamsWithoutParamArray(objParams, ['filter', 'filteroperator', 'filtervalue'])) + "&filter=" + filter + "&filteroperator=" + filteroperator + "&filtervalue=" + filtervalue;
         return false;
     });
-    
-    if (objParams["systemfilter"]){
-        $('#newButton').prop("href", 'jsp#/' + thisObject.clase + '/new?' + param().getStrSystemFilters(objParams))
+
+    if (objParams["systemfilter"]) {
+        $('#newButton').prop("href", 'jsp#/' + thisObject.clase + '/new/' + param().getStrSystemFilters(objParams))
     }
-    
-    
-    
+
+
+
 };
 control.prototype.modalListEventsLoading = function (place, objParams, callbackFunction, oModel, oView) {
     var thisObject = this;

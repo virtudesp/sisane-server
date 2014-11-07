@@ -60,10 +60,10 @@ function fDocumentoRoutes() {
         $('#indexContenidoJsp').empty();
     });
 
-    Path.map("#/documento/new").to(function () {
+    Path.map("#/documento/new/:url").to(function () {
         $('#indexContenidoJsp').spinner();
         var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
-        oDocumentoControl.new($('#indexContenido'), oDocumentoModel, oDocumentoView);
+        oDocumentoControl.new($('#indexContenido'), paramsObject, oDocumentoModel, oDocumentoView);
         $('#indexContenidoJsp').empty();
         return false;
     });
