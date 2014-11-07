@@ -1915,10 +1915,10 @@ CREATE TABLE IF NOT EXISTS `proveedor` (
   `nombre` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Nombre Proveedor',
   `telefono` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Telefono Proveedor',
   `direccion` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Dirección Proveedor',
-  `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Correo Electronico',
-  `web` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Sitio web',
-  `fax` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Número Fax',
-  `localidad` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Localidad'
+  `email` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Correo Electronico',
+  `web` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Sitio web',
+  `fax` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Número Fax',
+  `localidad` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Localidad'
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=22 ;
 
 --

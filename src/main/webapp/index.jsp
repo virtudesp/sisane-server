@@ -177,7 +177,16 @@
         
         <!-- Fin Modificación Juanma Usuarios -->
 
-
+        <script src="js/specific/proveedor/control.js" charset="UTF-8"></script>
+        <script src="js/specific/proveedor/model.js" charset="UTF-8"></script>
+        <script src="js/specific/proveedor/view.js" charset="UTF-8"></script>
+        <script src="js/specific/proveedor/routes.js" charset="UTF-8"></script>
+        
+        <script src="js/specific/cliente/control.js" charset="UTF-8"></script>
+        <script src="js/specific/cliente/model.js" charset="UTF-8"></script>
+        <script src="js/specific/cliente/view.js" charset="UTF-8"></script>
+        <script src="js/specific/cliente/routes.js" charset="UTF-8"></script>
+        
         <script src="js/specific/tipodocumento/model.js" charset="UTF-8"></script>
 
         <script type="text/javascript">
@@ -197,6 +206,8 @@
                 fUsuarioRoutes();
                 fPublicacionRoutes();
                 fEstadoRoutes();
+                fProveedorRoutes();
+                fClienteRoutes();
 
 
                 Path.listen();
