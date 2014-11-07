@@ -158,6 +158,13 @@ control.prototype.list = function (place, objParams, callback, oModel, oView) {
         window.location.href = 'jsp#/' + thisObject.clase + '/list/' + param().getUrlStringFromParamsObject(param().getUrlObjectFromParamsWithoutParamArray(objParams, ['filter', 'filteroperator', 'filtervalue'])) + "&filter=" + filter + "&filteroperator=" + filteroperator + "&filtervalue=" + filtervalue;
         return false;
     });
+    
+    if (objParams["systemfilter"]){
+        $('#newButton').prop("href", 'jsp#/' + thisObject.clase + '/new?' + param().getStrSystemFilters(objParams))
+    }
+    
+    
+    
 };
 control.prototype.modalListEventsLoading = function (place, objParams, callbackFunction, oModel, oView) {
     var thisObject = this;
