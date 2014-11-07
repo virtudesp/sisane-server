@@ -149,7 +149,7 @@ control.prototype.list = function (place, objParams, callback, oModel, oView) {
     //regs per page links
     $('#nrpp').empty().append(oView.getRppLinks(objParams));
     //filter population & event
-    $('#selectFilter').empty().populateSelectBox(fieldNames, prettyFieldNames);
+    $('#selectFilter').empty().populateSelectBox(util().replaceObjxId(fieldNames), prettyFieldNames);
     $('#btnFiltrar').unbind('click');
     $("#btnFiltrar").click(function (event) {
         filter = $("#selectFilter option:selected").val();
