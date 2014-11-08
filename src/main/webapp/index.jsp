@@ -177,7 +177,12 @@
         
         <!-- Fin Modificación Juanma Usuarios -->
 
-        <!-- FORO -->
+        <!-- FORO -->        
+        <script src="js/specific/tema/control.js" charset="UTF-8"></script>
+        <script src="js/specific/tema/model.js" charset="UTF-8"></script>
+        <script src="js/specific/tema/view.js" charset="UTF-8"></script>
+        <script src="js/specific/tema/routes.js" charset="UTF-8"></script>
+        
         <script src="js/specific/post/control.js" charset="UTF-8"></script>
         <script src="js/specific/post/model.js" charset="UTF-8"></script>
         <script src="js/specific/post/view.js" charset="UTF-8"></script>
@@ -213,6 +218,7 @@
                 fUsuarioRoutes();
                 fPublicacionRoutes();
                 fPostRoutes();
+                fTemaRoutes();
                 fEstadoRoutes();
                 fProveedorRoutes();
                 fClienteRoutes();

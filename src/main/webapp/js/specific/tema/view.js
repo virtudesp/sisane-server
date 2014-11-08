@@ -17,17 +17,16 @@
  */
 
 
-var postView = function (strClase) {
+var temaView = function (strClase) {
     this.clase = strClase;
 };
-postView.prototype = new view('post');
-postView.prototype.getClassNamePost = function () {
+temaView.prototype = new view('tema');
+temaView.prototype.getClassNameTema = function () {
     return this.getClassName() + "Vista";
 };
-var oPostView = new postView('post');
+var oTemaView = new temaView('tema');
 
-
-postView.prototype.printValue = function (value, valor, recortar) {
+temaView.prototype.printValue = function (value, valor, recortar) {
     var thisObject = this;
     var strResult = "";
     if (/obj_/.test(valor)) {
@@ -47,13 +46,13 @@ postView.prototype.printValue = function (value, valor, recortar) {
             default:
                 strResult = decodeURIComponent(value[valor]);
                 
-                if (/mensaje/.test(valor)) {                    
-                } else {
-                    if (recortar) 
-                        if (strResult.length > 50) //don't show too long fields
-                            strResult = strResult.substr(0, 20) + " ...";
-                }            
-
+                if (recortar) 
+                    if (strResult.length > 50) //don't show too long fields
+                        strResult = strResult.substr(0, 20) + " ...";
+                
+                if (/nombre/.test(valor)) {
+                    strResult = '<a href="jsp#/post/list/' + 'systemfilter=id_tema&systemfilteroperator=equals&systemfiltervalue=' + value.id + '">' + decodeURIComponent(value[valor]) + '</a>';
+                }
             };
     };
     return strResult;
