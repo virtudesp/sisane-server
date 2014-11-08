@@ -31,13 +31,11 @@ control.prototype.new = function (place, objParams, oModel, oView) {
     //id must not be enabled
     $('#id').val('0').attr("disabled", true);
     //soporte de claves ajenas
-    for (var name in objParams) {
-        var selector = name.replace('id_', 'obj_');
-        $('#' + selector + "_id").val(objParams[name]).attr("disabled", true);
-        $('#' + selector + "_button").attr("disabled", true).hide();
-        var oModelo = "o" + name.replace('id_', '').charAt(0).toUpperCase() + name.replace('id_', '').slice(1) + "Model";
-        $('#' + selector + '_desc').text(decodeURIComponent(window[oModelo].getMeAsAForeignKey(objParams[name])));
-    }
+    var selector = objParams["systemfilter"].replace('id_', 'obj_');
+    $('#' + selector + "_id").val(objParams["systemfiltervalue"]).attr("disabled", true);
+    $('#' + selector + "_button").attr("disabled", true).hide();
+    var oModelo = "o" + objParams["systemfilter"].replace('id_', '').charAt(0).toUpperCase() + objParams["systemfilter"].replace('id_', '').slice(1) + "Model";
+    $('#' + selector + '_desc').text(decodeURIComponent(window[oModelo].getMeAsAForeignKey(objParams["systemfiltervalue"])));
     //--
     oView.doEventsLoading();
     $('#submitForm').unbind('click');
@@ -169,7 +167,8 @@ control.prototype.list = function (place, objParams, callback, oModel, oView) {
     });
 
     if (objParams["systemfilter"]) {
-        $('#newButton').prop("href", 'jsp#/' + thisObject.clase + '/new/' + param().getStrSystemFilters(objParams))
+        //$('#newButton').prop("href", 'jsp#/' + thisObject.clase + '/new/' + param().getStrSystemFilters(objParams))
+        $('#newButton').prop("href", 'jsp#/' + thisObject.clase + '/new/' + 'systemfilter=' + objParams["systemfilter"] + '&systemfilteroperator=' + objParams["systemfilteroperator"] + '&systemfiltervalue=' + objParams["systemfiltervalue"]);
     }
 
 
