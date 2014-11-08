@@ -71,9 +71,9 @@ usuarioView.prototype.getFormValues = function () {
 
 usuarioView.prototype.doEventsLoading = function () {
     var thisObject = this;
-    $('#usuarioForm #obj_usuario_button').unbind('click');
-    $("#usuarioForm #obj_usuario_button").click(function () {
-        var oControl = oUsuarioControl;  //para probar dejar usuario
+    $('#usuarioForm #obj_estado_button').unbind('click');
+    $("#usuarioForm #obj_estado_button").click(function () {
+        var oControl = oEstadoControl;  //para probar dejar usuario
         //vista('usuario').cargaModalBuscarClaveAjena('#modal01', "usuario");
 
         $("#usuarioForm").append(thisObject.getEmptyModal());
@@ -81,13 +81,13 @@ usuarioView.prototype.doEventsLoading = function () {
 
         $('#usuarioForm').append(thisObject.getEmptyModal());
 
-        oControl.list('#modal01 #modal-body', param().defaultizeUrlObjectParameters({}), true, oUsuarioModel, oUsuarioView);
+        oControl.list('#modal01 #modal-body', param().defaultizeUrlObjectParameters({}), true, oEstadoModel, oEstadoView);
         oControl.modalListEventsLoading('#modal01 #modal-body', param().defaultizeUrlObjectParameters({}), function (id) {
-            $('#obj_usuario_id').val(id).change();
-            $('#obj_usuario_desc').text(decodeURIComponent(oUsuarioModel.getMeAsAForeignKey(id)));
+            $('#obj_estado_id').val(id).change();
+            $('#obj_estado_desc').text(decodeURIComponent(oEstadoModel.getMeAsAForeignKey(id)));
             $('#modal01').modal('hide');
 
-        },oUsuarioModel, oUsuarioView);
+        },oEstadoModel, oEstadoView);
         return false;
     });
     $('#usuarioForm #obj_tipousuario_button').unbind('click');
@@ -102,7 +102,7 @@ usuarioView.prototype.doEventsLoading = function () {
         oControl.list('#modal01 #modal-body', param().defaultizeUrlObjectParameters({}), true, oUsuarioModel, oUsuarioView);
         oControl.modalListEventsLoading('#modal01 #modal-body', param().defaultizeUrlObjectParameters({}), function (id) {
             $('#obj_tipousuario_id').val(id).change();
-            $('#obj_tipousuario_desc').text(decodeURIComponent(oTipousuarioModel.getMeAsAForeignKey(id)));
+            $('#obj_tipousuario_desc').text(decodeURIComponent(oUsuarioModel.getMeAsAForeignKey(id)));
             $('#modal01').modal('hide');
 
         },oUsuarioModel, oUsuarioView);
