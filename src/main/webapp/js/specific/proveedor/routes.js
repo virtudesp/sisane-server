@@ -59,7 +59,13 @@ function fProveedorRoutes() {
         oProveedorControl.edit($('#indexContenido'), paramsObject['id'], oProveedorModel, oProveedorView);
         $('#indexContenidoJsp').empty();
     });
-
+    Path.map("#/proveedor/new").to(function () {
+        $('#indexContenidoJsp').spinner();
+        //var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
+        oProveedorControl.new($('#indexContenido'), null, oProveedorModel, oProveedorView);
+        $('#indexContenidoJsp').empty();
+        return false;
+    });
     Path.map("#/proveedor/new/:url").to(function () {
         $('#indexContenidoJsp').spinner();
         var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));

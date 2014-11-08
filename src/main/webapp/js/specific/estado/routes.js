@@ -59,7 +59,12 @@ function fEstadoRoutes() {
         oEstadoControl.edit($('#indexContenido'), paramsObject['id'], oEstadoModel, oEstadoView);
         $('#indexContenidoJsp').empty();
     });
-
+    Path.map("#/estado/new").to(function () {
+        $('#indexContenidoJsp').spinner();        
+        oEstadoControl.new($('#indexContenido'), null, oEstadoModel, oEstadoView);
+        $('#indexContenidoJsp').empty();
+        return false;
+    });
     Path.map("#/estado/new/:url").to(function () {
         $('#indexContenidoJsp').spinner();
         var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));

@@ -59,7 +59,13 @@ function fPublicacionRoutes() {
         oPublicacionControl.edit($('#indexContenido'), paramsObject['id'], oPublicacionModel, oPublicacionView);
         $('#indexContenidoJsp').empty();
     });
-
+    Path.map("#/publicacion/new").to(function () {
+        $('#indexContenidoJsp').spinner();
+        //var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
+        oPublicacionControl.new($('#indexContenido'), null, oPublicacionModel, oPublicacionView);
+        $('#indexContenidoJsp').empty();
+        return false;
+    });
     Path.map("#/publicacion/new/:url").to(function () {
         $('#indexContenidoJsp').spinner();
         var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
