@@ -29,6 +29,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Locale;
 import net.daw.bean.generic.implementation.BeanGenImpl;
+import net.daw.helper.AppConfigurationHelper;
 import net.daw.helper.ExceptionBooster;
 import net.daw.helper.FilterBeanHelper;
 
@@ -72,7 +73,7 @@ public class ViewDaoGenImpl<TIPO_OBJETO> extends MetaDaoGenImpl<TIPO_OBJETO> imp
             while (iterador.hasNext()) {
                 Object oBean = Class.forName(tipo.getName()).newInstance();
                 metodo_setId.invoke(oBean, iterador.next());
-                arrCliente.add(this.get((TIPO_OBJETO) oBean, 2));
+                arrCliente.add(this.get((TIPO_OBJETO) oBean, AppConfigurationHelper.getJsonDepth()));
             }
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPage ERROR: " + ex.getMessage()));
@@ -140,7 +141,7 @@ public class ViewDaoGenImpl<TIPO_OBJETO> extends MetaDaoGenImpl<TIPO_OBJETO> imp
                                 BeanGenImpl oAjenaBean = (BeanGenImpl) Class.forName("net.daw.bean.generic.specific.implementation." + strTabla + "BeanGenSpImpl").newInstance();
                                 int intIdAjena = (Integer) metodo_getId_Ajena.invoke(oBean);
                                 oAjenaBean.setId(intIdAjena);
-                                oAjenaBean = (BeanGenImpl) oAjenaDao.get(oAjenaBean, 1);
+                                oAjenaBean = (BeanGenImpl) oAjenaDao.get(oAjenaBean, AppConfigurationHelper.getJsonDepth());
                                 //String strDescription = oAjenaDao.getDescription((Integer) metodo_getId_Ajena.invoke(oBean));
                                 method.invoke(oBean, oAjenaBean);
                             }

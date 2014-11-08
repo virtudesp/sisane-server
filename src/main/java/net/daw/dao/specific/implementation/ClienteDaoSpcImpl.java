@@ -27,6 +27,7 @@ import net.daw.dao.publicinterface.MetaDaoInterface;
 import net.daw.dao.publicinterface.TableDaoInterface;
 import net.daw.dao.publicinterface.ViewDaoInterface;
 import net.daw.data.specific.implementation.MysqlDataSpImpl;
+import net.daw.helper.AppConfigurationHelper;
 import net.daw.helper.ExceptionBooster;
 import net.daw.helper.FilterBeanHelper;
 
@@ -77,7 +78,7 @@ public class ClienteDaoSpcImpl implements ViewDaoInterface<ClienteBeanGenSpImpl>
             Iterator<Integer> iterador = arrId.listIterator();
             while (iterador.hasNext()) {
                 ClienteBeanGenSpImpl oClienteBean = new ClienteBeanGenSpImpl(iterador.next());
-                arrCliente.add(this.get(oClienteBean, 1));
+                arrCliente.add(this.get(oClienteBean, AppConfigurationHelper.getJsonDepth()));
             }
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPage ERROR: " + ex.getMessage()));

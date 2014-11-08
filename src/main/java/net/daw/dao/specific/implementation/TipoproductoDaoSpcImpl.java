@@ -26,6 +26,7 @@ import net.daw.dao.publicinterface.MetaDaoInterface;
 import net.daw.dao.publicinterface.TableDaoInterface;
 import net.daw.dao.publicinterface.ViewDaoInterface;
 import net.daw.data.specific.implementation.MysqlDataSpImpl;
+import net.daw.helper.AppConfigurationHelper;
 import net.daw.helper.ExceptionBooster;
 import net.daw.helper.FilterBeanHelper;
 
@@ -76,7 +77,7 @@ public class TipoproductoDaoSpcImpl implements ViewDaoInterface<TipoproductoBean
             Iterator<Integer> iterador = arrId.listIterator();
             while (iterador.hasNext()) {
                 TipoproductoBeanGenSpImpl oTipoproductoBean = new TipoproductoBeanGenSpImpl(iterador.next());
-                arrTipoproducto.add(this.get(oTipoproductoBean, 2));
+                arrTipoproducto.add(this.get(oTipoproductoBean, AppConfigurationHelper.getJsonDepth()));
             }
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPage ERROR: " + ex.getMessage()));

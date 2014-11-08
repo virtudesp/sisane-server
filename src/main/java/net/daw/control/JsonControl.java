@@ -54,7 +54,7 @@ import net.daw.control.route.specific.implementation.TipoproductoControlRouteSpI
 import net.daw.helper.EstadoHelper;
 import net.daw.helper.EstadoHelper.Tipo_estado;
 import net.daw.helper.ExceptionBooster;
-import net.daw.helper.parameterCooker;
+import net.daw.helper.ParameterCooker;
 
 public class JsonControl extends HttpServlet {
 
@@ -96,7 +96,7 @@ public class JsonControl extends HttpServlet {
             retardo(0); //debug delay
             String jsonResult = "";
             if (request.getSession().getAttribute("usuarioBean") != null) {
-                switch (parameterCooker.prepareObject(request)) {
+                switch (ParameterCooker.prepareObject(request)) {
                     case "documento":
                         DocumentoControlRouteGenSpImpl oDocumentoRoute = new DocumentoControlRouteGenSpImpl();
                         DocumentoControlOperationGenSpImpl oDocumentoControlOperation = new DocumentoControlOperationGenSpImpl(request);

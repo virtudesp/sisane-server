@@ -26,6 +26,7 @@ import java.util.List;
 import java.util.Map;
 import net.daw.bean.generic.specific.implementation.OrdenadorBeanGenSpImpl;
 import net.daw.dao.specific.implementation.OrdenadorDaoSpcImpl;
+import net.daw.helper.AppConfigurationHelper;
 import net.daw.helper.EncodingUtilHelper;
 import net.daw.helper.ExceptionBooster;
 import net.daw.helper.FilterBeanHelper;
@@ -94,7 +95,7 @@ public class OrdenadorServiceSpImpl implements TableServiceInterface, ViewServic
             oConnection.setAutoCommit(false);
             OrdenadorDaoSpcImpl oOrdenadorDAO = new OrdenadorDaoSpcImpl(strObjectName, oConnection);
             OrdenadorBeanGenSpImpl oOrdenador = new OrdenadorBeanGenSpImpl(id);
-            oOrdenador = oOrdenadorDAO.get(oOrdenador, 2);
+            oOrdenador = oOrdenadorDAO.get(oOrdenador, AppConfigurationHelper.getJsonDepth());
             GsonBuilder gsonBuilder = new GsonBuilder();
             gsonBuilder.setDateFormat("dd/MM/yyyy");
             Gson gson = gsonBuilder.create();

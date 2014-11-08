@@ -26,6 +26,7 @@ import java.util.List;
 import java.util.Map;
 import net.daw.bean.generic.specific.implementation.ProductoBeanGenSpImpl;
 import net.daw.dao.specific.implementation.ProductoDaoSpcImpl;
+import net.daw.helper.AppConfigurationHelper;
 import net.daw.helper.EncodingUtilHelper;
 import net.daw.helper.ExceptionBooster;
 import net.daw.helper.FilterBeanHelper;
@@ -94,7 +95,7 @@ public class ProductoServiceSpImpl implements TableServiceInterface, ViewService
             oConnection.setAutoCommit(false);
             ProductoDaoSpcImpl oProductoDAO = new ProductoDaoSpcImpl(strObjectName, oConnection);
             ProductoBeanGenSpImpl oProducto = new ProductoBeanGenSpImpl(id);
-            oProducto = oProductoDAO.get(oProducto, 2);
+            oProducto = oProductoDAO.get(oProducto, AppConfigurationHelper.getJsonDepth());
             GsonBuilder gsonBuilder = new GsonBuilder();
             gsonBuilder.setDateFormat("dd/MM/yyyy");
             Gson gson = gsonBuilder.create();

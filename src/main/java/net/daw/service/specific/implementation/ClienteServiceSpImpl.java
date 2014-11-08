@@ -26,6 +26,7 @@ import java.util.List;
 import java.util.Map;
 import net.daw.bean.generic.specific.implementation.ClienteBeanGenSpImpl;
 import net.daw.dao.specific.implementation.ClienteDaoSpcImpl;
+import net.daw.helper.AppConfigurationHelper;
 import net.daw.helper.EncodingUtilHelper;
 import net.daw.helper.ExceptionBooster;
 import net.daw.helper.FilterBeanHelper;
@@ -94,7 +95,7 @@ public class ClienteServiceSpImpl implements TableServiceInterface, ViewServiceI
             oConnection.setAutoCommit(false);
             ClienteDaoSpcImpl oClienteDAO = new ClienteDaoSpcImpl(strObjectName, oConnection);
             ClienteBeanGenSpImpl oCliente = new ClienteBeanGenSpImpl(id);
-            oCliente = oClienteDAO.get(oCliente, 1);
+            oCliente = oClienteDAO.get(oCliente, AppConfigurationHelper.getJsonDepth());
             GsonBuilder gsonBuilder = new GsonBuilder();
             gsonBuilder.setDateFormat("dd/MM/yyyy");
             Gson gson = gsonBuilder.create();

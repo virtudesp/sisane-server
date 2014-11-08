@@ -28,7 +28,7 @@ import net.daw.connection.publicinterface.ConnectionInterface;
 import net.daw.control.operation.publicinterface.ControlOperationInterface;
 import net.daw.helper.ExceptionBooster;
 import net.daw.helper.FilterBeanHelper;
-import net.daw.helper.parameterCooker;
+import net.daw.helper.ParameterCooker;
 import net.daw.service.specific.implementation.ProveedorServiceSpImpl;
 
 public class ProveedorControlOperationSpImpl implements ControlOperationInterface {
@@ -41,7 +41,7 @@ public class ProveedorControlOperationSpImpl implements ControlOperationInterfac
         try {
             DataConnectionSource = new BoneConnectionPoolImpl();
             oConnection = DataConnectionSource.newConnection();
-            oProveedorService = new ProveedorServiceSpImpl(parameterCooker.prepareObject(request), oConnection);
+            oProveedorService = new ProveedorServiceSpImpl(ParameterCooker.prepareObject(request), oConnection);
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":ProveedorControlOperationSpImpl ERROR: " + ex.getMessage()));
         }
@@ -51,7 +51,7 @@ public class ProveedorControlOperationSpImpl implements ControlOperationInterfac
     public String get(HttpServletRequest request) throws Exception {
         String result = null;
         try {
-            result = oProveedorService.get(parameterCooker.prepareId(request));
+            result = oProveedorService.get(ParameterCooker.prepareId(request));
             closeDB();
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":get ERROR: " + ex.getMessage()));
@@ -63,7 +63,7 @@ public class ProveedorControlOperationSpImpl implements ControlOperationInterfac
     public String getaggregateviewone(HttpServletRequest request) throws Exception {
         String result = null;
         try {
-            result = oProveedorService.getAggregateViewOne(parameterCooker.prepareId(request));
+            result = oProveedorService.getAggregateViewOne(ParameterCooker.prepareId(request));
             closeDB();
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getaggregateviewone ERROR: " + ex.getMessage()));
@@ -99,10 +99,10 @@ public class ProveedorControlOperationSpImpl implements ControlOperationInterfac
     public String getpage(HttpServletRequest request) throws Exception {
         String result = null;
         try {
-            Integer intRegsPerPag = parameterCooker.prepareRpp(request);
-            Integer intPage = parameterCooker.preparePage(request);
-            ArrayList<FilterBeanHelper> alFilter = parameterCooker.prepareFilter(request);
-            HashMap<String, String> hmOrder = parameterCooker.prepareOrder(request);
+            Integer intRegsPerPag = ParameterCooker.prepareRpp(request);
+            Integer intPage = ParameterCooker.preparePage(request);
+            ArrayList<FilterBeanHelper> alFilter = ParameterCooker.prepareFilter(request);
+            HashMap<String, String> hmOrder = ParameterCooker.prepareOrder(request);
             result = oProveedorService.getPage(intRegsPerPag, intPage, alFilter, hmOrder);
             closeDB();
         } catch (Exception ex) {
@@ -115,8 +115,8 @@ public class ProveedorControlOperationSpImpl implements ControlOperationInterfac
     public String getpages(HttpServletRequest request) throws Exception {
         String result = null;
         try {
-            Integer intRegsPerPag = parameterCooker.prepareRpp(request);
-            ArrayList<FilterBeanHelper> alFilter = parameterCooker.prepareFilter(request);
+            Integer intRegsPerPag = ParameterCooker.prepareRpp(request);
+            ArrayList<FilterBeanHelper> alFilter = ParameterCooker.prepareFilter(request);
             result = oProveedorService.getPages(intRegsPerPag, alFilter);
             closeDB();
         } catch (Exception ex) {
@@ -129,7 +129,7 @@ public class ProveedorControlOperationSpImpl implements ControlOperationInterfac
     public String getregisters(HttpServletRequest request) throws Exception {
         String result = null;
         try {
-            ArrayList<FilterBeanHelper> alFilter = parameterCooker.prepareFilter(request);
+            ArrayList<FilterBeanHelper> alFilter = ParameterCooker.prepareFilter(request);
             result = oProveedorService.getCount(alFilter);
             closeDB();
         } catch (Exception ex) {
@@ -142,10 +142,10 @@ public class ProveedorControlOperationSpImpl implements ControlOperationInterfac
     public String getaggregateviewsome(HttpServletRequest request) throws Exception {
         String result = null;
         try {
-            Integer intRegsPerPag = parameterCooker.prepareRpp(request);
-            Integer intPage = parameterCooker.preparePage(request);
-            ArrayList<FilterBeanHelper> alFilter = parameterCooker.prepareFilter(request);
-            HashMap<String, String> hmOrder = parameterCooker.prepareOrder(request);
+            Integer intRegsPerPag = ParameterCooker.prepareRpp(request);
+            Integer intPage = ParameterCooker.preparePage(request);
+            ArrayList<FilterBeanHelper> alFilter = ParameterCooker.prepareFilter(request);
+            HashMap<String, String> hmOrder = ParameterCooker.prepareOrder(request);
             result = oProveedorService.getAggregateViewSome(intRegsPerPag, intPage, alFilter, hmOrder);
             closeDB();
         } catch (Exception ex) {
@@ -158,7 +158,7 @@ public class ProveedorControlOperationSpImpl implements ControlOperationInterfac
     public String remove(HttpServletRequest request) throws Exception {
         String result = null;
         try {
-            result = oProveedorService.remove(parameterCooker.prepareId(request));
+            result = oProveedorService.remove(ParameterCooker.prepareId(request));
             closeDB();
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":remove ERROR: " + ex.getMessage()));
@@ -170,7 +170,7 @@ public class ProveedorControlOperationSpImpl implements ControlOperationInterfac
     public String set(HttpServletRequest request) throws Exception {
         String result = null;
         try {
-            result = oProveedorService.set(parameterCooker.prepareJson(request));
+            result = oProveedorService.set(ParameterCooker.prepareJson(request));
             closeDB();
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":set ERROR: " + ex.getMessage()));

@@ -25,7 +25,7 @@ import net.daw.connection.implementation.BoneConnectionPoolImpl;
 import net.daw.connection.publicinterface.ConnectionInterface;
 import net.daw.control.operation.generic.implementation.ControlOperationGenImpl;
 import net.daw.helper.ExceptionBooster;
-import net.daw.helper.parameterCooker;
+import net.daw.helper.ParameterCooker;
 import net.daw.service.generic.specific.implementation.PublicacionServiceGenSpImpl;
 import net.daw.service.specific.implementation.ProductoServiceSpImpl;
 
@@ -40,7 +40,7 @@ public class PublicacionControlOperationGenSpImpl extends ControlOperationGenImp
     public PublicacionControlOperationGenSpImpl(HttpServletRequest request) throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, Exception {
         super(request);
         try {
-            oPublicacionService = new PublicacionServiceGenSpImpl(parameterCooker.prepareObject(request), connection);
+            oPublicacionService = new PublicacionServiceGenSpImpl(ParameterCooker.prepareObject(request), connection);
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":PublicacionControlOperationSpImpl ERROR: " + ex.getMessage()));
         }
@@ -49,7 +49,7 @@ public class PublicacionControlOperationGenSpImpl extends ControlOperationGenImp
     public String duplicate(HttpServletRequest request) throws Exception {
         String result = null;
         try {
-            result = oPublicacionService.duplicate(parameterCooker.prepareId(request));
+            result = oPublicacionService.duplicate(ParameterCooker.prepareId(request));
             closeDB();
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":set ERROR: " + ex.getMessage()));

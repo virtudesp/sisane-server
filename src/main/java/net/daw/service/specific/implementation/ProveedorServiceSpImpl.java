@@ -26,6 +26,7 @@ import java.util.List;
 import java.util.Map;
 import net.daw.bean.generic.specific.implementation.ProveedorBeanGenSpImpl;
 import net.daw.dao.specific.implementation.ProveedorDaoSpcImpl;
+import net.daw.helper.AppConfigurationHelper;
 import net.daw.helper.EncodingUtilHelper;
 import net.daw.helper.ExceptionBooster;
 import net.daw.helper.FilterBeanHelper;
@@ -94,7 +95,7 @@ public class ProveedorServiceSpImpl implements TableServiceInterface, ViewServic
             oConnection.setAutoCommit(false);
             ProveedorDaoSpcImpl oProveedorDAO = new ProveedorDaoSpcImpl(strObjectName, oConnection);
             ProveedorBeanGenSpImpl oProveedor = new ProveedorBeanGenSpImpl(id);
-            oProveedor = oProveedorDAO.get(oProveedor, 1);
+            oProveedor = oProveedorDAO.get(oProveedor, AppConfigurationHelper.getJsonDepth());
             GsonBuilder gsonBuilder = new GsonBuilder();
             gsonBuilder.setDateFormat("dd/MM/yyyy");
             Gson gson = gsonBuilder.create();

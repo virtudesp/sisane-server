@@ -31,7 +31,7 @@ import net.daw.connection.publicinterface.ConnectionInterface;
 import net.daw.dao.generic.specific.implementation.UsuarioDaoGenSpImpl;
 import net.daw.helper.EstadoHelper;
 import net.daw.helper.EstadoHelper.Tipo_estado;
-import net.daw.helper.parameterCooker;
+import net.daw.helper.ParameterCooker;
 
 public class JspControl extends HttpServlet {
 
@@ -63,9 +63,9 @@ public class JspControl extends HttpServlet {
             response.setHeader("pageEncoding", "UTF-8");
             response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
             //parameter loading
-            String ob = parameterCooker.prepareObject(request);
-            String op = parameterCooker.prepareOperation(request);
-            String mode = parameterCooker.prepareMode(request);
+            String ob = ParameterCooker.prepareObject(request);
+            String op = ParameterCooker.prepareOperation(request);
+            String mode = ParameterCooker.prepareMode(request);
             //security check
             if (request.getSession().getAttribute("usuarioBean") == null) {
                 ob = "usuario";

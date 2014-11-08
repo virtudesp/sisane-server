@@ -22,12 +22,7 @@ import net.daw.control.operation.generic.specific.implementation.PublicacionCont
 import net.daw.control.operation.publicinterface.ControlOperationInterface;
 import net.daw.control.route.generic.implementation.ControlRouteGenImpl;
 import net.daw.helper.ExceptionBooster;
-import net.daw.helper.parameterCooker;
-
-/**
- *
- * @author al038513
- */
+import net.daw.helper.ParameterCooker;
 
 
 public class PublicacionControlRouteGenSpImpl extends ControlRouteGenImpl {
@@ -35,7 +30,7 @@ public class PublicacionControlRouteGenSpImpl extends ControlRouteGenImpl {
     @Override
     public String execute(HttpServletRequest request, ControlOperationInterface oControl) throws Exception {
         PublicacionControlOperationGenSpImpl oPublicationControl = (PublicacionControlOperationGenSpImpl) oControl;
-        String operation = parameterCooker.prepareOperation(request);
+        String operation = ParameterCooker.prepareOperation(request);
         String jsonResult = "";
         try {
             switch (operation) {

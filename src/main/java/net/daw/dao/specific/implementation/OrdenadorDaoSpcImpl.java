@@ -26,6 +26,7 @@ import net.daw.dao.publicinterface.MetaDaoInterface;
 import net.daw.dao.publicinterface.TableDaoInterface;
 import net.daw.dao.publicinterface.ViewDaoInterface;
 import net.daw.data.specific.implementation.MysqlDataSpImpl;
+import net.daw.helper.AppConfigurationHelper;
 import net.daw.helper.ExceptionBooster;
 import net.daw.helper.FilterBeanHelper;
 
@@ -76,7 +77,7 @@ public class OrdenadorDaoSpcImpl implements ViewDaoInterface<OrdenadorBeanGenSpI
             Iterator<Integer> iterador = arrId.listIterator();
             while (iterador.hasNext()) {
                 OrdenadorBeanGenSpImpl oOrdenadorBean = new OrdenadorBeanGenSpImpl(iterador.next());
-                arrOrdenador.add(this.get(oOrdenadorBean, 2));
+                arrOrdenador.add(this.get(oOrdenadorBean, AppConfigurationHelper.getJsonDepth()));
             }
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPage ERROR: " + ex.getMessage()));
