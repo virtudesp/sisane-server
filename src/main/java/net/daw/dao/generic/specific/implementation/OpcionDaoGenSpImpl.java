@@ -27,17 +27,4 @@ public class OpcionDaoGenSpImpl extends TableDaoGenImpl<OpcionBeanGenSpImpl> {
         super(strObject, pooledConnection);
     }
 
-//    public String getDescription(int id) throws Exception {
-//        OpcionBean oOpcionBean = new OpcionBean();
-//        oOpcionBean.setId(id);
-//        oOpcionBean = this.get(oOpcionBean);
-//        String description;
-//        if (oOpcionBean.getTitulo().length() > 20) {
-//            description = oOpcionBean.getTitulo().substring(0, 19) + "...";
-//        } else {
-//            description = oOpcionBean.getTitulo();
-//        }
-//        description += " (" + oOpcionBean.getHits().toString() + " hits)";
-//        return description;
-//    }
 }
