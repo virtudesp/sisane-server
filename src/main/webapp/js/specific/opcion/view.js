@@ -34,6 +34,7 @@ opcionView.prototype.loadButtons = function (id) {
     botonera += '<a class="btn btn-default view" id="' + id + '"  href="jsp#/' + this.clase + '/view/' + id + '"><i class="glyphicon glyphicon-eye-open"></i></a>';
     botonera += '<a class="btn btn-default edit" id="' + id + '"  href="jsp#/' + this.clase + '/edit/' + id + '"><i class="glyphicon glyphicon-pencil"></i></a>';
     botonera += '<a class="btn btn-default remove" id="' + id + '"  href="jsp#/' + this.clase + '/remove/' + id + '"><i class="glyphicon glyphicon-remove"></i></a>';
+    //botonera += 
     botonera += '</div></div>';
     return botonera;
 
@@ -73,21 +74,25 @@ opcionView.prototype.doEventsLoading = function () {
     var thisObject = this;
     $('#opcionForm #obj_pregunta_button').unbind('click');
     $("#opcionForm #obj_pregunta_button").click(function () {
-        var oControl = oOpcionControl;  //para probar dejar opcion
+        var oControl = oPreguntaControl;  //para probar dejar opcion
         //vista('usuario').cargaModalBuscarClaveAjena('#modal01', "opcion");
 
-        $("#opcionForm").append(thisObject.getEmptyModal());
-        util().loadForm('#modal01', thisObject.getFormHeader('Elección de usuario'), "", thisObject.getFormFooter(), true);
+        
+        //$("#opcionForm").append(thisObject.getEmptyModal());
+        
+        
+        
+        util().loadForm('#modal01', thisObject.getFormHeader('Elección de pregunta'), "", thisObject.getFormFooter(), true);
 
         $('#opcionForm').append(thisObject.getEmptyModal());
 
-        oControl.list('#modal01 #modal-body', param().defaultizeUrlObjectParameters({}), true, oOpcionModel, oOpcionView);
+        oControl.list('#modal01 #modal-body', param().defaultizeUrlObjectParameters({}), true, oPreguntaModel, oPreguntaView);
         oControl.modalListEventsLoading('#modal01 #modal-body', param().defaultizeUrlObjectParameters({}), function (id) {
             $('#obj_pregunta_id').val(id).change();
-            $('#obj_pregunta_desc').text(decodeURIComponent(oUsuarioModel.getMeAsAForeignKey(id)));
+            $('#obj_pregunta_desc').text(decodeURIComponent(oPreguntaModel.getMeAsAForeignKey(id)));
             $('#modal01').modal('hide');
 
-        },oOpcionModel, oOpcionView);
+        },oPreguntaModel, oPreguntaView);
         return false;
     });
 };

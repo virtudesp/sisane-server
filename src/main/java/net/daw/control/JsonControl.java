@@ -49,6 +49,7 @@ import net.daw.control.route.generic.specific.implementation.EstadoControlRouteG
 import net.daw.control.route.generic.specific.implementation.TipodocumentoControlRouteGenSpImpl;
 import net.daw.control.route.generic.specific.implementation.UsuarioControlRouteGenSpImpl;
 import net.daw.control.route.specific.implementation.AmigoControlRouteSpImpl;
+import net.daw.control.route.specific.implementation.OpcionControlRouteSpImpl;
 import net.daw.control.route.specific.implementation.OrdenadorControlRouteSpImpl;
 import net.daw.control.route.specific.implementation.ProductoControlRouteSpImpl;
 import net.daw.control.route.specific.implementation.TipoproductoControlRouteSpImpl;

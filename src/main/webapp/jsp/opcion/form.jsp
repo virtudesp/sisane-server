@@ -33,14 +33,14 @@
     
 
     <div class="form-group">
-        <label class="col-sm-2 control-label" for="obj_pregunta">Pregunta: </label> 
+        <label class="col-sm-2 control-label" for="obj_pregunta_id">Pregunta: </label> 
         <div class="col-sm-2">              
-            <input class="form-control"  id="obj_pregunta" class="input-mini" name="id_pregunta" type="text" size="5" maxlength="5" />  
+            <input readonly="true" class="form-control"  id="obj_pregunta_id" class="input-mini" name="id_pregunta" type="text" size="5" maxlength="5" />  
         </div>
         <div class="col-sm-1">              
             <a class="btn btn-primary btn-sm" id="obj_pregunta_button" href="#"><i class="glyphicon glyphicon-search"></i></a>
         </div>        
-        <label class="col-sm-7" for="obj_usuario_desc" id="obj_pregunta_desc"></label>                     
+        <label class="col-sm-7" for="obj_pregunta_desc" id="obj_pregunta_desc"></label>                     
     </div>
     
     <div class="form-group">
@@ -58,19 +58,22 @@
 </form>
         
 
+<!-- Modals -->
+<div id="modal01" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header" id="modal-header"></div>
+            <div class="modal-body" id="modal-body"></div>
+            <div class="modal-footer" id="modal-footer"></div>
+        </div>
+    </div>
+</div>
+
+
+
 <script type="text/javascript">
 
     $(document).ready(function() {
-        $('#alta_group').datetimepicker({
-            pickTime: false,
-            language: 'es',
-            showToday: true
-        });
-        $('#cambio_group').datetimepicker({
-            pickTime: false,
-            language: 'es',
-            showToday: true
-        });
         //http://jqueryvalidation.org/documentation/
         $('#opcionForm')
                 .bootstrapValidator({
@@ -92,28 +95,6 @@
                                 }
                             }
                         },
-                        alta_group: {
-                            validators: {
-                                notEmpty: {
-                                    message: 'Debe introducir una fecha de alta'
-                                },
-                                date: {
-                                    format: 'DD/MM/YYYY',
-                                    message: 'La fecha de alta no tiene formato DD/MM/YYYY'
-                                }
-                            }
-                        },
-                        cambio_group: {
-                            validators: {
-                                notEmpty: {
-                                    message: 'Debe introducir una fecha de cambio'
-                                },
-                                date: {
-                                    format: 'DD/MM/YYYY',
-                                    message: 'La fecha de cambio no tiene formato DD/MM/YYYY'
-                                }
-                            }
-                        },
                         id_pregunta: {
                             validators: {
                                 notEmpty: {
@@ -126,19 +107,6 @@
                         }
                     }
                 })
-                
-                .on('change', '[name="id_pregunta"]', function() {
-                    $('#opcionForm').bootstrapValidator('revalidateField', 'id_pregunta');
-                })
-                ;
-        $('#alta_group').on('dp.change dp.show', function(e) {
-// Revalidate the date when user change it
-            $('#opcionForm').bootstrapValidator('revalidateField', 'alta_group');
-        });
-        $('#cambio_group').on('dp.change dp.show', function(e) {
-// Revalidate the date when user change it
-            $('#opcionForm').bootstrapValidator('revalidateField', 'cambio_group');
-        });
     });       
 
     
