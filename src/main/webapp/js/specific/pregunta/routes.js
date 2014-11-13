@@ -17,7 +17,7 @@
  */
 
 
-function fDocumentoRoutes() {
+function fPreguntaRoutes() {
 
 //    Path.map("#/documento").to(function () {
 //        $('#indexContenidoJsp').spinner();

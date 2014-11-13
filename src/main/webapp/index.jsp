@@ -186,6 +186,7 @@
 
                 fDocumentoRoutes();
                 fCuestionarioRoutes();
+                fPreguntaRoutes();
 
 
                 Path.listen();
