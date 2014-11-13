@@ -26,6 +26,7 @@ import java.util.List;
 import java.util.Map;
 import net.daw.bean.generic.specific.implementation.TipoproductoBeanGenSpImpl;
 import net.daw.dao.specific.implementation.TipoproductoDaoSpcImpl;
+import net.daw.helper.AppConfigurationHelper;
 import net.daw.helper.EncodingUtilHelper;
 import net.daw.helper.ExceptionBooster;
 import net.daw.helper.FilterBeanHelper;
@@ -94,7 +95,7 @@ public class TipoproductoServiceSpImpl implements TableServiceInterface, ViewSer
             oConnection.setAutoCommit(false);
             TipoproductoDaoSpcImpl oTipoproductoDAO = new TipoproductoDaoSpcImpl(strObjectName, oConnection);
             TipoproductoBeanGenSpImpl oTipoproducto = new TipoproductoBeanGenSpImpl(id);
-            oTipoproducto = oTipoproductoDAO.get(oTipoproducto, 1);
+            oTipoproducto = oTipoproductoDAO.get(oTipoproducto, AppConfigurationHelper.getJsonDepth());
             GsonBuilder gsonBuilder = new GsonBuilder();
             gsonBuilder.setDateFormat("dd/MM/yyyy");
             Gson gson = gsonBuilder.create();

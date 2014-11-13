@@ -21,13 +21,13 @@ import javax.servlet.http.HttpServletRequest;
 import net.daw.control.operation.publicinterface.ControlOperationInterface;
 import net.daw.control.route.publicinterface.ControlRouteInterface;
 import net.daw.helper.ExceptionBooster;
-import net.daw.helper.parameterCooker;
+import net.daw.helper.ParameterCooker;
 
 public class OrdenadorControlRouteSpImpl implements ControlRouteInterface {
 
     @Override
     public String execute(HttpServletRequest request, ControlOperationInterface oControl) throws Exception {
-        String operation = parameterCooker.prepareOperation(request);
+        String operation = ParameterCooker.prepareOperation(request);
         String jsonResult = "";
         try {
             switch (operation) {

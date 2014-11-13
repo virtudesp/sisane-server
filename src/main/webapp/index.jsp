@@ -162,6 +162,15 @@
         <script src="js/specific/opcion/view.js" charset="UTF-8"></script>
         <script src="js/specific/opcion/routes.js" charset="UTF-8"></script>
 
+        <script src="js/specific/publicacion/control.js" charset="UTF-8"></script>
+        <script src="js/specific/publicacion/model.js" charset="UTF-8"></script>
+        <script src="js/specific/publicacion/view.js" charset="UTF-8"></script>
+        <script src="js/specific/publicacion/routes.js" charset="UTF-8"></script>
+        
+        <script src="js/specific/estado/control.js" charset="UTF-8"></script>
+        <script src="js/specific/estado/model.js" charset="UTF-8"></script>
+        <script src="js/specific/estado/view.js" charset="UTF-8"></script>
+        <script src="js/specific/estado/routes.js" charset="UTF-8"></script>
         <script src="js/specific/cuestionario/control.js" charset="UTF-8"></script>
         <script src="js/specific/cuestionario/model.js" charset="UTF-8"></script>
         <script src="js/specific/cuestionario/view.js" charset="UTF-8"></script>
@@ -186,7 +195,16 @@
         <script src="js/specific/publicacion/routes.js" charset="UTF-8"></script>
         <!-- Fin Modificación Juanma Usuarios -->
 
-
+        <script src="js/specific/proveedor/control.js" charset="UTF-8"></script>
+        <script src="js/specific/proveedor/model.js" charset="UTF-8"></script>
+        <script src="js/specific/proveedor/view.js" charset="UTF-8"></script>
+        <script src="js/specific/proveedor/routes.js" charset="UTF-8"></script>
+        
+        <script src="js/specific/cliente/control.js" charset="UTF-8"></script>
+        <script src="js/specific/cliente/model.js" charset="UTF-8"></script>
+        <script src="js/specific/cliente/view.js" charset="UTF-8"></script>
+        <script src="js/specific/cliente/routes.js" charset="UTF-8"></script>
+        
         <script src="js/specific/tipodocumento/model.js" charset="UTF-8"></script>
 
         <script type="text/javascript">
@@ -209,6 +227,9 @@
               
                 fUsuarioRoutes();
                 fPublicacionRoutes();
+                fEstadoRoutes();
+                fProveedorRoutes();
+                fClienteRoutes();
 
 
                 Path.listen();

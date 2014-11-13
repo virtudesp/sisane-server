@@ -26,6 +26,7 @@ import net.daw.dao.publicinterface.MetaDaoInterface;
 import net.daw.dao.publicinterface.TableDaoInterface;
 import net.daw.dao.publicinterface.ViewDaoInterface;
 import net.daw.data.specific.implementation.MysqlDataSpImpl;
+import net.daw.helper.AppConfigurationHelper;
 import net.daw.helper.ExceptionBooster;
 import net.daw.helper.FilterBeanHelper;
 
@@ -76,7 +77,7 @@ public class OrdenadorDaoSpcImpl implements ViewDaoInterface<OrdenadorBeanGenSpI
             Iterator<Integer> iterador = arrId.listIterator();
             while (iterador.hasNext()) {
                 OrdenadorBeanGenSpImpl oOrdenadorBean = new OrdenadorBeanGenSpImpl(iterador.next());
-                arrOrdenador.add(this.get(oOrdenadorBean, 1));
+                arrOrdenador.add(this.get(oOrdenadorBean, AppConfigurationHelper.getJsonDepth()));
             }
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPage ERROR: " + ex.getMessage()));
@@ -91,7 +92,10 @@ public class OrdenadorDaoSpcImpl implements ViewDaoInterface<OrdenadorBeanGenSpI
                 if (!oMysql.existsOne(strTableName, oOrdenadorBean.getId())) {
                     oOrdenadorBean.setId(0);
                 } else {
-                    oOrdenadorBean.setDescripcion(oMysql.getOne(strTableName, "descripcion", oOrdenadorBean.getId()));
+                    expand--;
+                    if (expand > 0) {
+                        oOrdenadorBean.setDescripcion(oMysql.getOne(strTableName, "descripcion", oOrdenadorBean.getId()));
+                    }
                 }
             } catch (Exception ex) {
                 ExceptionBooster.boost(new Exception(this.getClass().getName() + ":get ERROR: " + ex.getMessage()));

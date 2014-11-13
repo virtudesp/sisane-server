@@ -97,6 +97,14 @@ var util = function () {
             codigo = codigo.replace("<table>", '<table class="table table-bordered"><tbody>');
             codigo = codigo.replace("</table>", '</tbody></table>');
             lugar.empty().append(codigo);
+        },
+        replaceObjxId: function (arrFields) {
+          
+            var arrayLength = arrFields.length;
+            for (var i = 0; i < arrayLength; i++) {
+                arrFields[i] = arrFields[i].replace('obj', 'id');  
+            }
+            return arrFields;
         }
     }
 }

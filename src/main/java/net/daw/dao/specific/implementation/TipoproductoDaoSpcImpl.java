@@ -26,6 +26,7 @@ import net.daw.dao.publicinterface.MetaDaoInterface;
 import net.daw.dao.publicinterface.TableDaoInterface;
 import net.daw.dao.publicinterface.ViewDaoInterface;
 import net.daw.data.specific.implementation.MysqlDataSpImpl;
+import net.daw.helper.AppConfigurationHelper;
 import net.daw.helper.ExceptionBooster;
 import net.daw.helper.FilterBeanHelper;
 
@@ -76,7 +77,7 @@ public class TipoproductoDaoSpcImpl implements ViewDaoInterface<TipoproductoBean
             Iterator<Integer> iterador = arrId.listIterator();
             while (iterador.hasNext()) {
                 TipoproductoBeanGenSpImpl oTipoproductoBean = new TipoproductoBeanGenSpImpl(iterador.next());
-                arrTipoproducto.add(this.get(oTipoproductoBean, 1));
+                arrTipoproducto.add(this.get(oTipoproductoBean, AppConfigurationHelper.getJsonDepth()));
             }
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPage ERROR: " + ex.getMessage()));
@@ -91,7 +92,10 @@ public class TipoproductoDaoSpcImpl implements ViewDaoInterface<TipoproductoBean
                 if (!oMysql.existsOne(strTableName, oTipoproductoBean.getId())) {
                     oTipoproductoBean.setId(0);
                 } else {
-                    oTipoproductoBean.setDescripcion(oMysql.getOne(strTableName, "descripcion", oTipoproductoBean.getId()));
+                    expand--;
+                    if (expand > 0) {
+                        oTipoproductoBean.setDescripcion(oMysql.getOne(strTableName, "descripcion", oTipoproductoBean.getId()));
+                    }
                 }
             } catch (Exception ex) {
                 ExceptionBooster.boost(new Exception(this.getClass().getName() + ":get ERROR: " + ex.getMessage()));

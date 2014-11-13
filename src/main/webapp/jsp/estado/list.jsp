@@ -17,14 +17,14 @@
 --%>
 
 <%@page import="java.sql.Connection"%>
-<%@page import="net.daw.dao.generic.specific.implementation.DocumentoDaoGenSpImpl"%>
+<%@page import="net.daw.dao.generic.specific.implementation.EstadoDaoGenSpImpl"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.Iterator"%>
 <%
     ArrayList<String> alColumnsNames;
     Iterator<String> oIterador;
-    String strNombreMantenimiento = "ordenador";
-    Connection connection = (Connection) request.getAttribute("connection");   
+    String strNombreMantenimiento = "estado";
+    Connection connection = (Connection) request.getAttribute("connection");    
 %>
 <div class="row">
     <div class="col-md-12">
@@ -99,7 +99,7 @@
                                     <form class="navbar-form navbar-right" role="form" action="Controller" method="post" id="empresaForm">
                                         <select id="selectFilter" class="form-control" name="filter" style="width: 160px">
                                         </select>
-                                        <select id="selectFilteroperator" class="form-control" name="filteroperator" style="width: 200px">
+                                        <select id="selectFilteroperator" class="form-control" name="filteroperator" width="80" style="width: 200px">
                                             <option value="like">contiene</option>
                                             <option value="notlike">no contiene</option>
                                             <option value="equals">es igual a</option>
@@ -139,6 +139,7 @@
     </div>
 
 </div>
+                                    
 </div>
 <div class="row">
     <div class="col-md-12" id="menuLateralList">
@@ -169,4 +170,3 @@
         </div>                
     </div>
 </div>
-

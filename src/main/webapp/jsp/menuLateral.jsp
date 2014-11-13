@@ -39,6 +39,12 @@
         <h3 class="panel-title">Mantenimientos</h3>
     </div>
     <div class="list-group">
+
+        <a  class="list-group-item" id="lnkDocumento" href="jsp#/documento">Documento</a> 
+        <a  class="list-group-item" id="lnkOrdenador" href="jsp#/ordenador">Ordenador</a> 
+        <a  class="list-group-item" id="lnkOrdenador" href="jsp#/usuario">Usuario</a> 
+        <a  class="list-group-item" id="lnkProveedor" href="jsp#/proveedor">Proveedor</a> 
+        <a  class="list-group-item" id="lnkCliente" href="jsp#/cliente">Cliente</a> 
  
         <a  class="list-group-item" id="lnkDocumento" href="jsp#/documento">Documento</a>
         <a  class="list-group-item" id="lnkCuestionario" href="jsp#/cuestionario">Cuestionario</a> 
@@ -54,5 +60,6 @@
     <div class="list-group">
 
         <a  class="list-group-item" id="lnkPublicacion" href="jsp#/publicacion">Publicacion</a> 
+        <a  class="list-group-item" id="lnkPublicacion" href="jsp#/estado">Estado</a>
     </div>
 </div>
