@@ -178,6 +178,11 @@
         <!-- Fin Modificación Juanma Usuarios -->
 
         <!-- FORO -->        
+        <script src="js/specific/tipotema/control.js" charset="UTF-8"></script>
+        <script src="js/specific/tipotema/model.js" charset="UTF-8"></script>
+        <script src="js/specific/tipotema/view.js" charset="UTF-8"></script>
+        <script src="js/specific/tipotema/routes.js" charset="UTF-8"></script>
+        
         <script src="js/specific/tema/control.js" charset="UTF-8"></script>
         <script src="js/specific/tema/model.js" charset="UTF-8"></script>
         <script src="js/specific/tema/view.js" charset="UTF-8"></script>
@@ -225,6 +230,7 @@
                 fPostRoutes();
                 fMensajeprivadoRoutes();
                 fTemaRoutes();
+                fTipotemaRoutes();
                 fEstadoRoutes();
                 fProveedorRoutes();
                 fClienteRoutes();
