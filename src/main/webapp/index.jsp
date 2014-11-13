@@ -169,7 +169,11 @@
         <script src="js/specific/estado/model.js" charset="UTF-8"></script>
         <script src="js/specific/estado/view.js" charset="UTF-8"></script>
         <script src="js/specific/estado/routes.js" charset="UTF-8"></script>
-
+        
+        <script src="js/specific/amigo/control.js" charset="UTF-8"></script>
+        <script src="js/specific/amigo/model.js" charset="UTF-8"></script>
+        <script src="js/specific/amigo/view.js" charset="UTF-8"></script>
+        <script src="js/specific/amigo/routes.js" charset="UTF-8"></script>
 
         <script src="js/specific/usuario/model.js" charset="UTF-8"></script>
         <script src="js/specific/usuario/view.js" charset="UTF-8"></script>
@@ -208,6 +212,7 @@
                 fEstadoRoutes();
                 fProveedorRoutes();
                 fClienteRoutes();
+                fAmigoRoutes();
 
 
                 Path.listen();
