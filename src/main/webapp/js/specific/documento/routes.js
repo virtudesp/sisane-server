@@ -59,11 +59,17 @@ function fDocumentoRoutes() {
         oDocumentoControl.edit($('#indexContenido'), paramsObject['id'], oDocumentoModel, oDocumentoView);
         $('#indexContenidoJsp').empty();
     });
-
     Path.map("#/documento/new").to(function () {
         $('#indexContenidoJsp').spinner();
+        //var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
+        oDocumentoControl.new($('#indexContenido'), null, oDocumentoModel, oDocumentoView);
+        $('#indexContenidoJsp').empty();
+        return false;
+    });
+    Path.map("#/documento/new/:url").to(function () {
+        $('#indexContenidoJsp').spinner();
         var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
-        oDocumentoControl.new($('#indexContenido'), oDocumentoModel, oDocumentoView);
+        oDocumentoControl.new($('#indexContenido'), paramsObject, oDocumentoModel, oDocumentoView);
         $('#indexContenidoJsp').empty();
         return false;
     });

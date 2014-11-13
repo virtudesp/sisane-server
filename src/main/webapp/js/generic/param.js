@@ -16,9 +16,9 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
-var param = function() {
+var param = function () {
     return {
-        getUrlObjectFromUrlString: function(url) {
+        getUrlObjectFromUrlString: function (url) {
             if (typeof url == 'undefined') {
                 return {};
             } else {
@@ -39,21 +39,30 @@ var param = function() {
             return b;
         }
         ,
-        getUrlObjectFromParamsWithoutParamArray: function(urlObj, nameParameterArray) {
+        getUrlObjectFromParamsWithoutParamArray: function (urlObj, nameParameterArray) {
             var newUrlObj = jQuery.extend(true, {}, urlObj); //http://stackoverflow.com/questions/122102/what-is-the-most-efficient-way-to-clone-an-object
-            $.each(nameParameterArray, function() {
+            $.each(nameParameterArray, function () {
                 delete newUrlObj[this];
             })
             return newUrlObj;
         },
-        getUrlStringFromParamsObject: function(urlObj) {
+        getUrlStringFromParamsObject: function (urlObj) {
             var result = "";
             for (var key in urlObj) {
                 result += "&" + key + "=" + urlObj[key];
             }
             return result.substring(1);
         },
-        validateUrlObjectParameters: function(objParams) {
+        getStrSystemFilters: function (objFields) {
+            strResult = "";
+            if (objFields['systemfilter'] != "") {
+                strResult += objFields['systemfilter'];
+                strResult += "=";
+                strResult += objFields['systemfiltervalue'];
+            }
+            return strResult;
+        },
+        validateUrlObjectParameters: function (objParams) {
             //security borders comprobation, pendent of moving
             if (objParams["vf"] > 20) {
                 objParams["vf"] = 20;
@@ -66,7 +75,7 @@ var param = function() {
             }
             return objParams;
         },
-        defaultizeUrlObjectParameters: function(objParams) {
+        defaultizeUrlObjectParameters: function (objParams) {
             if (typeof objParams["page"] == 'undefined')
                 objParams["page"] = 1;
             if (typeof objParams["id"] == 'undefined')

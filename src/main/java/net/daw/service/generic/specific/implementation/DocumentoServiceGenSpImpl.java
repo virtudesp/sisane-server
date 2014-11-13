@@ -22,6 +22,7 @@ import java.sql.Connection;
 import javax.servlet.ServletException;
 import net.daw.bean.generic.specific.implementation.DocumentoBeanGenSpImpl;
 import net.daw.dao.generic.specific.implementation.DocumentoDaoGenSpImpl;
+import net.daw.helper.AppConfigurationHelper;
 
 public class DocumentoServiceGenSpImpl extends TableServiceGenImpl {
 
@@ -35,7 +36,7 @@ public class DocumentoServiceGenSpImpl extends TableServiceGenImpl {
             DocumentoBeanGenSpImpl oDocumentoBean = new DocumentoBeanGenSpImpl();
             oDocumentoBean.setId(id);
             DocumentoDaoGenSpImpl oDocumentoDao = new DocumentoDaoGenSpImpl(strObjectName, oConnection);
-            oDocumentoBean = oDocumentoDao.get(oDocumentoBean, 1);
+            oDocumentoBean = oDocumentoDao.get(oDocumentoBean, AppConfigurationHelper.getJsonDepth());
             return "{\"data\":\"" + oDocumentoBean.getContenido() + "\"}";
         } catch (Exception e) {
             throw new ServletException("GetContenido: View Error: " + e.getMessage());

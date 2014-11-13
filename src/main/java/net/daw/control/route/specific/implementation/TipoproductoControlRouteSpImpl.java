@@ -22,13 +22,13 @@ import net.daw.control.operation.publicinterface.ControlOperationInterface;
 import net.daw.control.operation.specific.implementation.TipoproductoControlOperationSpImpl;
 import net.daw.control.route.publicinterface.ControlRouteInterface;
 import net.daw.helper.ExceptionBooster;
-import net.daw.helper.parameterCooker;
+import net.daw.helper.ParameterCooker;
 
 public class TipoproductoControlRouteSpImpl implements ControlRouteInterface {
 
     @Override
     public String execute(HttpServletRequest request, ControlOperationInterface oControl) throws Exception {
-        String operation = parameterCooker.prepareOperation(request);
+        String operation = ParameterCooker.prepareOperation(request);
         TipoproductoControlOperationSpImpl oControlOperation = new TipoproductoControlOperationSpImpl(request);
         String jsonResult = "";
         try {

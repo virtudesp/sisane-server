@@ -27,6 +27,7 @@ import net.daw.dao.publicinterface.MetaDaoInterface;
 import net.daw.dao.publicinterface.TableDaoInterface;
 import net.daw.dao.publicinterface.ViewDaoInterface;
 import net.daw.data.specific.implementation.MysqlDataSpImpl;
+import net.daw.helper.AppConfigurationHelper;
 import net.daw.helper.ExceptionBooster;
 import net.daw.helper.FilterBeanHelper;
 
@@ -77,7 +78,7 @@ public class ProductoDaoSpcImpl implements ViewDaoInterface<ProductoBeanGenSpImp
             Iterator<Integer> iterador = arrId.listIterator();
             while (iterador.hasNext()) {
                 ProductoBeanGenSpImpl oProductoBean = new ProductoBeanGenSpImpl(iterador.next());
-                arrProducto.add(this.get(oProductoBean, 1));
+                arrProducto.add(this.get(oProductoBean, AppConfigurationHelper.getJsonDepth()));
             }
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPage ERROR: " + ex.getMessage()));
@@ -92,18 +93,20 @@ public class ProductoDaoSpcImpl implements ViewDaoInterface<ProductoBeanGenSpImp
                 if (!oMysql.existsOne(strTableName, oProductoBean.getId())) {
                     oProductoBean.setId(0);
                 } else {
-                    oProductoBean.setCodigo(oMysql.getOne(strTableName, "codigo", oProductoBean.getId()));
-                    oProductoBean.setDescripcion(oMysql.getOne(strTableName, "descripcion", oProductoBean.getId()));
-                    oProductoBean.setPrecio(Double.parseDouble(oMysql.getOne(strTableName, "precio", oProductoBean.getId())));
+                    expand--;
+                    if (expand > 0) {
+                        oProductoBean.setCodigo(oMysql.getOne(strTableName, "codigo", oProductoBean.getId()));
+                        oProductoBean.setDescripcion(oMysql.getOne(strTableName, "descripcion", oProductoBean.getId()));
+                        oProductoBean.setPrecio(Double.parseDouble(oMysql.getOne(strTableName, "precio", oProductoBean.getId())));
 
-                    oProductoBean.setId_tipoproducto(Integer.parseInt(oMysql.getOne(strTableName, "id_tipoproducto", oProductoBean.getId())));
+                        oProductoBean.setId_tipoproducto(Integer.parseInt(oMysql.getOne(strTableName, "id_tipoproducto", oProductoBean.getId())));
 
-                    TipoproductoBeanGenSpImpl oTipoproducto = new TipoproductoBeanGenSpImpl();
-                    oTipoproducto.setId(Integer.parseInt(oMysql.getOne(strTableName, "id_tipoproducto", oProductoBean.getId())));
-                    TipoproductoDaoSpcImpl oTipoproductoDAO = new TipoproductoDaoSpcImpl("tipoproducto", oConnection);
-                    oTipoproducto = oTipoproductoDAO.get(oTipoproducto, 1);
-                    oProductoBean.setObj_tipoproducto(oTipoproducto);
-
+                        TipoproductoBeanGenSpImpl oTipoproducto = new TipoproductoBeanGenSpImpl();
+                        oTipoproducto.setId(Integer.parseInt(oMysql.getOne(strTableName, "id_tipoproducto", oProductoBean.getId())));
+                        TipoproductoDaoSpcImpl oTipoproductoDAO = new TipoproductoDaoSpcImpl("tipoproducto", oConnection);
+                        oTipoproducto = oTipoproductoDAO.get(oTipoproducto, AppConfigurationHelper.getJsonDepth());
+                        oProductoBean.setObj_tipoproducto(oTipoproducto);
+                    }
                 }
             } catch (Exception ex) {
                 ExceptionBooster.boost(new Exception(this.getClass().getName() + ":get ERROR: " + ex.getMessage()));

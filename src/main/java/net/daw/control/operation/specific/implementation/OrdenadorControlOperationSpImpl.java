@@ -23,12 +23,13 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import javax.servlet.http.HttpServletRequest;
+import net.daw.bean.generic.specific.implementation.UsuarioBeanGenSpImpl;
 import net.daw.connection.implementation.BoneConnectionPoolImpl;
 import net.daw.connection.publicinterface.ConnectionInterface;
 import net.daw.control.operation.publicinterface.ControlOperationInterface;
 import net.daw.helper.ExceptionBooster;
 import net.daw.helper.FilterBeanHelper;
-import net.daw.helper.parameterCooker;
+import net.daw.helper.ParameterCooker;
 import net.daw.service.specific.implementation.OrdenadorServiceSpImpl;
 
 public class OrdenadorControlOperationSpImpl implements ControlOperationInterface {
@@ -41,7 +42,7 @@ public class OrdenadorControlOperationSpImpl implements ControlOperationInterfac
         try {
             DataConnectionSource = new BoneConnectionPoolImpl();
             oConnection = DataConnectionSource.newConnection();
-            oOrdenadorService = new OrdenadorServiceSpImpl(parameterCooker.prepareObject(request), oConnection);
+            oOrdenadorService = new OrdenadorServiceSpImpl(ParameterCooker.prepareObject(request), oConnection);
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":OrdenadorControlOperationSpImpl ERROR: " + ex.getMessage()));
         }
@@ -51,7 +52,13 @@ public class OrdenadorControlOperationSpImpl implements ControlOperationInterfac
     public String get(HttpServletRequest request) throws Exception {
         String result = null;
         try {
-            result = oOrdenadorService.get(parameterCooker.prepareId(request));
+            //ejemplo de control de permisos simple
+            UsuarioBeanGenSpImpl oUsuario = (UsuarioBeanGenSpImpl) request.getSession().getAttribute("usuarioBean");
+            if (!oUsuario.getObj_tipousuario().getDescripcion().equalsIgnoreCase("visitante")) {
+                result = oOrdenadorService.get(ParameterCooker.prepareId(request));
+            } else {
+                ExceptionBooster.boost(new Exception(this.getClass().getName() + ":get ERROR: not enought perssions"));
+            }
             closeDB();
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":get ERROR: " + ex.getMessage()));
@@ -63,7 +70,7 @@ public class OrdenadorControlOperationSpImpl implements ControlOperationInterfac
     public String getaggregateviewone(HttpServletRequest request) throws Exception {
         String result = null;
         try {
-            result = oOrdenadorService.getAggregateViewOne(parameterCooker.prepareId(request));
+            result = oOrdenadorService.getAggregateViewOne(ParameterCooker.prepareId(request));
             closeDB();
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getaggregateviewone ERROR: " + ex.getMessage()));
@@ -99,10 +106,10 @@ public class OrdenadorControlOperationSpImpl implements ControlOperationInterfac
     public String getpage(HttpServletRequest request) throws Exception {
         String result = null;
         try {
-            Integer intRegsPerPag = parameterCooker.prepareRpp(request);
-            Integer intPage = parameterCooker.preparePage(request);
-            ArrayList<FilterBeanHelper> alFilter = parameterCooker.prepareFilter(request);
-            HashMap<String, String> hmOrder = parameterCooker.prepareOrder(request);
+            Integer intRegsPerPag = ParameterCooker.prepareRpp(request);
+            Integer intPage = ParameterCooker.preparePage(request);
+            ArrayList<FilterBeanHelper> alFilter = ParameterCooker.prepareFilter(request);
+            HashMap<String, String> hmOrder = ParameterCooker.prepareOrder(request);
             result = oOrdenadorService.getPage(intRegsPerPag, intPage, alFilter, hmOrder);
             closeDB();
         } catch (Exception ex) {
@@ -115,8 +122,8 @@ public class OrdenadorControlOperationSpImpl implements ControlOperationInterfac
     public String getpages(HttpServletRequest request) throws Exception {
         String result = null;
         try {
-            Integer intRegsPerPag = parameterCooker.prepareRpp(request);
-            ArrayList<FilterBeanHelper> alFilter = parameterCooker.prepareFilter(request);
+            Integer intRegsPerPag = ParameterCooker.prepareRpp(request);
+            ArrayList<FilterBeanHelper> alFilter = ParameterCooker.prepareFilter(request);
             result = oOrdenadorService.getPages(intRegsPerPag, alFilter);
             closeDB();
         } catch (Exception ex) {
@@ -129,7 +136,7 @@ public class OrdenadorControlOperationSpImpl implements ControlOperationInterfac
     public String getregisters(HttpServletRequest request) throws Exception {
         String result = null;
         try {
-            ArrayList<FilterBeanHelper> alFilter = parameterCooker.prepareFilter(request);
+            ArrayList<FilterBeanHelper> alFilter = ParameterCooker.prepareFilter(request);
             result = oOrdenadorService.getCount(alFilter);
             closeDB();
         } catch (Exception ex) {
@@ -142,10 +149,10 @@ public class OrdenadorControlOperationSpImpl implements ControlOperationInterfac
     public String getaggregateviewsome(HttpServletRequest request) throws Exception {
         String result = null;
         try {
-            Integer intRegsPerPag = parameterCooker.prepareRpp(request);
-            Integer intPage = parameterCooker.preparePage(request);
-            ArrayList<FilterBeanHelper> alFilter = parameterCooker.prepareFilter(request);
-            HashMap<String, String> hmOrder = parameterCooker.prepareOrder(request);
+            Integer intRegsPerPag = ParameterCooker.prepareRpp(request);
+            Integer intPage = ParameterCooker.preparePage(request);
+            ArrayList<FilterBeanHelper> alFilter = ParameterCooker.prepareFilter(request);
+            HashMap<String, String> hmOrder = ParameterCooker.prepareOrder(request);
             result = oOrdenadorService.getAggregateViewSome(intRegsPerPag, intPage, alFilter, hmOrder);
             closeDB();
         } catch (Exception ex) {
@@ -158,7 +165,7 @@ public class OrdenadorControlOperationSpImpl implements ControlOperationInterfac
     public String remove(HttpServletRequest request) throws Exception {
         String result = null;
         try {
-            result = oOrdenadorService.remove(parameterCooker.prepareId(request));
+            result = oOrdenadorService.remove(ParameterCooker.prepareId(request));
             closeDB();
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":remove ERROR: " + ex.getMessage()));
@@ -170,7 +177,7 @@ public class OrdenadorControlOperationSpImpl implements ControlOperationInterfac
     public String set(HttpServletRequest request) throws Exception {
         String result = null;
         try {
-            result = oOrdenadorService.set(parameterCooker.prepareJson(request));
+            result = oOrdenadorService.set(ParameterCooker.prepareJson(request));
             closeDB();
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":set ERROR: " + ex.getMessage()));

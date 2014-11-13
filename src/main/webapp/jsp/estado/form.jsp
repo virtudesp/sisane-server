@@ -16,7 +16,7 @@
  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 --%>
 
-<form class="form-horizontal" role="form" action="#" id="ordenadorForm" name="formulario">
+<form class="form-horizontal" role="form" action="#" id="estadoForm" name="formulario">
     <div class="form-group">
         <label class="col-sm-2 control-label" for="id">Id:</label>
         <div class="col-sm-2">
@@ -24,11 +24,12 @@
         </div>
     </div>
     <div class="form-group">
-        <label class="col-sm-2 control-label"  for="descripcion">Descripción:</label>
+        <label class="col-sm-2 control-label"  for="tipo">Estado:</label>
         <div class="col-sm-6">
-            <input type="text" id="descripcion" class="form-control"  name="descripcion" size="15" placeholder="descripcion" />
+            <input type="text" id="tipo" class="form-control"  name="tipo" size="15" placeholder="estado" />
         </div>
     </div>
+     
 
     <div class="form-group">
         <div class="col-sm-offset-2 col-sm-10">
@@ -43,15 +44,14 @@
     </div>
 
 </form>
-
-
+        
 
 <script type="text/javascript">
 
     $(document).ready(function() {
-
+        
         //http://jqueryvalidation.org/documentation/
-        $('#ordenadorForm')
+        $('#estadoForm')
                 .bootstrapValidator({
                     container: '#messages',
                     feedbackIcons: {
@@ -60,22 +60,24 @@
                         validating: 'glyphicon glyphicon-refresh'
                     },
                     fields: {
-                        descripcion: {
+                        tipo: {
                             validators: {
                                 notEmpty: {
-                                    message: 'Debe introducir una descripción'
+                                    message: 'Debe introducir un título'
                                 },
                                 stringLength: {
                                     max: 255,
-                                    message: 'La descripción debe tener como máximo 255 caracteres'
+                                    message: 'El título debe tener como máximo 255 caracteres'
                                 }
                             }
                         }
-                    }
-                })
-               
-                ;
 
-    });
+                    }
+                });
+                
+    });       
+
+    
+    
 </script>
      
