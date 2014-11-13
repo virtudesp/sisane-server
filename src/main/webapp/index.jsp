@@ -187,6 +187,11 @@
         <script src="js/specific/post/model.js" charset="UTF-8"></script>
         <script src="js/specific/post/view.js" charset="UTF-8"></script>
         <script src="js/specific/post/routes.js" charset="UTF-8"></script>
+        
+        <script src="js/specific/mensajeprivado/control.js" charset="UTF-8"></script>
+        <script src="js/specific/mensajeprivado/model.js" charset="UTF-8"></script>
+        <script src="js/specific/mensajeprivado/view.js" charset="UTF-8"></script>
+        <script src="js/specific/mensajeprivado/routes.js" charset="UTF-8"></script>
         <!-- FIN FORO -->
 
         <script src="js/specific/proveedor/control.js" charset="UTF-8"></script>
@@ -218,6 +223,7 @@
                 fUsuarioRoutes();
                 fPublicacionRoutes();
                 fPostRoutes();
+                fMensajeprivadoRoutes();
                 fTemaRoutes();
                 fEstadoRoutes();
                 fProveedorRoutes();

@@ -2309,3 +2309,89 @@ INSERT INTO `tipotema` (`id`, `nombre`) VALUES
 
 
 UPDATE `ausiasyield2014`.`post` SET `mensaje` = 'Pues eso' WHERE `post`.`id` = 34;
+
+-- phpMyAdmin SQL Dump
+-- version 4.2.7.1
+-- http://www.phpmyadmin.net
+--
+-- Servidor: localhost:3306
+-- Tiempo de generación: 13-11-2014 a las 07:40:23
+-- Versión del servidor: 5.5.39
+-- Versión de PHP: 5.4.32
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+
+--
+-- Base de datos: `ausiasyield2014`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `mensajeprivado`
+--
+
+CREATE TABLE IF NOT EXISTS `mensajeprivado` (
+`id` int(6) NOT NULL COMMENT 'ID',
+  `id_usuario_1` int(6) DEFAULT NULL COMMENT 'ID Usuario envía',
+  `id_usuario_2` int(6) DEFAULT NULL COMMENT 'ID Usuario recibe',
+  `asunto` varchar(255) DEFAULT NULL COMMENT 'Asunto',
+  `mensaje` longtext COMMENT 'Mensaje',
+  `leido` tinyint(1) DEFAULT NULL COMMENT 'Leído'
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=21 ;
+
+--
+-- Volcado de datos para la tabla `mensajeprivado`
+--
+
+INSERT INTO `mensajeprivado` (`id`, `id_usuario_1`, `id_usuario_2`, `asunto`, `mensaje`, `leido`) VALUES
+(1, 1, 29, 'Lorem ipsum dolor sit amet', 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.', 0),
+(2, 4, 23, 'Donec quam felis', 'Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo.', 1),
+(3, 2, 7, 'Nullam dictum felis eu pede mollis pretium', 'Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus.', 1),
+(4, 15, 16, 'Phasellus viverra nulla ut metus varius laoreet', 'Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus.', 0),
+(5, 8, 9, 'Maecenas tempus, tellus eget condimentum rhoncus', 'Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. Maecenas nec odio et ante tincidunt tempus.', 1),
+(6, 18, 12, 'Donec vitae sapien ut libero venenatis faucibus', 'Donec vitae sapien ut libero venenatis faucibus. Nullam quis ante. Etiam sit amet orci eget eros faucibus tincidunt. Duis leo. Sed fringilla mauris sit amet nibh. Donec sodales sagittis magna. Sed consequat, leo eget bibendum sodales, augue velit cursus nunc, ', 0),
+(7, 11, 6, 'Sed consequat, leo eget bibendum sodales', 'Sed consequat, leo eget bibendum sodales, augue velit cursus nunc, quis gravida magna mi a libero. Fusce vulputate eleifend sapien. Vestibulum purus quam, scelerisque ut, mollis sed, nonummy id, metus. Nullam accumsan lorem in dui. Cras ultricies mi eu turpis hendrerit fringilla.', 1),
+(8, 30, 29, 'Maecenas nec odio et ante tincidunt tempus', 'Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut libero venenatis faucibus. Nullam quis ante. Etiam sit amet orci eget eros faucibus tincidunt. Duis leo. Sed fringilla mauris sit amet nibh. Donec sodales sagittis magna.', 1),
+(9, 13, 14, 'Aenean imperdiet. Etiam ultricies nisi vel augue', 'Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem.', 0),
+(10, 6, 5, 'Vivamus elementum semper nisi', 'Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum.', 1),
+(11, 19, 24, 'Nulla consequat massa quis enim', 'Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus.', 1),
+(12, 24, 23, 'Vestibulum ante ipsum primis in faucibus', 'Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; In ac dui quis mi consectetuer lacinia. Nam pretium turpis et arcu. Duis arcu tortor, suscipit eget, imperdiet nec, imperdiet iaculis, ipsum. Sed aliquam ultrices mauris. Integer ante arcu, accumsan a, consectetuer eget, posuere ut, mauris. Praesent adipiscing. Phasellus ullamcorper ipsum rutrum nunc. Nunc nonummy metus. Vestibulum volutpat pretium libero. Cras id dui. Aenean ut ', 0),
+(13, 17, 15, 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit', 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem.', 0),
+(14, 15, 9, 'Quis autem vel eum iure reprehenderit', 'Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?', 1),
+(15, 3, 27, 'At vero eos et accusamus et iusto odio', 'At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio.', 1),
+(16, 25, 29, 'Nam libero tempore, cum soluta nobis est eligendi', 'Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae.', 1),
+(17, 6, 1, 'Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet', 'Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur?', 1),
+(18, 17, 11, 'Nemo enim ipsam voluptatem', 'Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.', 0),
+(19, 22, 21, 'Sed ut perspiciatis unde omnis iste natus error', 'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.', 1),
+(20, 28, 29, 'Y, viéndole don Quijote de aquella manera', 'Y, viéndole don Quijote de aquella manera, con muestras de tanta tristeza, le dijo: Sábete, Sancho, que no es un hombre más que otro si no hace más que otro.', 1);
+
+--
+-- Índices para tablas volcadas
+--
+
+--
+-- Indices de la tabla `mensajeprivado`
+--
+ALTER TABLE `mensajeprivado`
+ ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT de las tablas volcadas
+--
+
+--
+-- AUTO_INCREMENT de la tabla `mensajeprivado`
+--
+ALTER TABLE `mensajeprivado`
+MODIFY `id` int(6) NOT NULL AUTO_INCREMENT COMMENT 'ID',AUTO_INCREMENT=21;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

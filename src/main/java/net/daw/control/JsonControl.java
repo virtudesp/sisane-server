@@ -32,6 +32,7 @@ import net.daw.control.operation.generic.specific.implementation.DocumentoContro
 import net.daw.control.operation.generic.specific.implementation.EstadoControlOperationGenSpImpl;
 import net.daw.control.operation.generic.specific.implementation.PublicacionControlOperationGenSpImpl;
 import net.daw.control.operation.generic.specific.implementation.EstadoControlOperationGenSpImpl;
+import net.daw.control.operation.generic.specific.implementation.MensajeprivadoControlOperationGenSpImpl;
 import net.daw.control.operation.generic.specific.implementation.PostControlOperationGenSpImpl;
 import net.daw.control.operation.generic.specific.implementation.TemaControlOperationGenSpImpl;
 import net.daw.control.operation.generic.specific.implementation.TipodocumentoControlOperationGenSpImpl;
@@ -48,6 +49,7 @@ import net.daw.control.route.generic.specific.implementation.PostControlRouteGen
 import net.daw.control.route.generic.specific.implementation.PublicacionControlRouteGenSpImpl;
 import net.daw.control.route.generic.specific.implementation.TemaControlRouteGenSpImpl;
 import net.daw.control.route.generic.specific.implementation.EstadoControlRouteGenSpImpl;
+import net.daw.control.route.generic.specific.implementation.MensajeprivadoControlRouteGenSpImpl;
 import net.daw.control.route.generic.specific.implementation.TipodocumentoControlRouteGenSpImpl;
 import net.daw.control.route.generic.specific.implementation.TipotemaControlRouteGenSpImpl;
 import net.daw.control.route.generic.specific.implementation.UsuarioControlRouteGenSpImpl;
@@ -172,6 +174,11 @@ public class JsonControl extends HttpServlet {
                         TipotemaControlRouteGenSpImpl oTipotemaRoute = new TipotemaControlRouteGenSpImpl();
                         TipotemaControlOperationGenSpImpl oTipotemaControlOperation = new TipotemaControlOperationGenSpImpl(request);
                         jsonResult = oTipotemaRoute.execute(request, oTipotemaControlOperation);
+                        break;
+                    case "mensajeprivado":
+                        MensajeprivadoControlRouteGenSpImpl oMensajeprivadoRoute = new MensajeprivadoControlRouteGenSpImpl();
+                        MensajeprivadoControlOperationGenSpImpl oMensajeprivadoControlOperation = new MensajeprivadoControlOperationGenSpImpl(request);
+                        jsonResult = oMensajeprivadoRoute.execute(request, oMensajeprivadoControlOperation);
                         break;
                     default:
                         ExceptionBooster.boost(new Exception(this.getClass().getName() + ":processRequest ERROR: no such operation"));
