@@ -44,6 +44,6 @@
         <a  class="list-group-item" id="lnkOrdenador" href="jsp#/ordenador">Ordenador</a>
         <a  class="list-group-item" id="lnkOrdenador" href="jsp#/cuestionario">Cuestionario</a> 
         <a  class="list-group-item" id="lnkOrdenador" href="jsp#/ordenador">Ordenador</a> 
-        <a  class="list-group-item" id="lnkOrdenador" href="jsp#/pregunta">Cuestionarios</a> 
+        <a  class="list-group-item" id="lnkOrdenador" href="jsp#/pregunta">Pregunta</a> 
     </div>
 </div>
