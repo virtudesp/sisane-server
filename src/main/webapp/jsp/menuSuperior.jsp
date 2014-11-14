@@ -37,6 +37,7 @@
             <li class="dropdown-header">Red Social</li>
             <li><a href="jsp#/publicacion">Publicacion</a></li>
             <li><a href="jsp#/estado">Estado</a></li>
+            <li><a href="jsp#/amigo">Amigo</a></li>
         </ul>
     </li>    
 
