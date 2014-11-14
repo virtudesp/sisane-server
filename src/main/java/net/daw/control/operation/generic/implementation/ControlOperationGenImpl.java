@@ -35,8 +35,8 @@ public class ControlOperationGenImpl implements ControlOperationInterface {
 
     protected ConnectionInterface DataConnectionSource = null;
     protected Connection connection = null;
-    private String strObject = null;
-    private TableServiceGenImpl process = null;
+    protected String strObject = null;
+    protected TableServiceGenImpl process = null;
 
     public ControlOperationGenImpl(HttpServletRequest request) throws Exception {
         try {
