@@ -16,11 +16,11 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
-var amigoControl = function (strClase) {
+var opcionControl = function (strClase) {
     this.clase = strClase;
 };
-amigoControl.prototype = new control('amigo');  // Crea un objeto para el control genérico
-amigoControl.prototype.getClassNameAmigo = function () {  // Dentro de esta funcion iria los métodos a añadir
+opcionControl.prototype = new control('opcion');
+opcionControl.prototype.getClassNameOpcion = function () {
     return this.getClassName() + "Control";
 };
-var oAmigoControl = new amigoControl('amigo');
+var oOpcionControl = new opcionControl('opcion');

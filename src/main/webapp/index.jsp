@@ -157,8 +157,10 @@
         <script src="js/specific/documento/view.js" charset="UTF-8"></script>
         <script src="js/specific/documento/routes.js" charset="UTF-8"></script>
         
-        
-        <script src="js/specific/usuario/control.js" charset="UTF-8"></script>
+        <script src="js/specific/opcion/control.js" charset="UTF-8"></script>
+        <script src="js/specific/opcion/model.js" charset="UTF-8"></script>
+        <script src="js/specific/opcion/view.js" charset="UTF-8"></script>
+        <script src="js/specific/opcion/routes.js" charset="UTF-8"></script>
 
         <script src="js/specific/publicacion/control.js" charset="UTF-8"></script>
         <script src="js/specific/publicacion/model.js" charset="UTF-8"></script>
@@ -169,28 +171,28 @@
         <script src="js/specific/estado/model.js" charset="UTF-8"></script>
         <script src="js/specific/estado/view.js" charset="UTF-8"></script>
         <script src="js/specific/estado/routes.js" charset="UTF-8"></script>
-
         <script src="js/specific/cuestionario/control.js" charset="UTF-8"></script>
         <script src="js/specific/cuestionario/model.js" charset="UTF-8"></script>
         <script src="js/specific/cuestionario/view.js" charset="UTF-8"></script>
         <script src="js/specific/cuestionario/routes.js" charset="UTF-8"></script>
 
-        
-        <script src="js/specific/amigo/control.js" charset="UTF-8"></script>
-        <script src="js/specific/amigo/model.js" charset="UTF-8"></script>
-        <script src="js/specific/amigo/view.js" charset="UTF-8"></script>
-        <script src="js/specific/amigo/routes.js" charset="UTF-8"></script>
 
+         <script src="js/specific/usuario/control.js" charset="UTF-8"></script>
         <script src="js/specific/usuario/model.js" charset="UTF-8"></script>
+        <script src="js/specific/usuario/view.js" charset="UTF-8"></script>
+        <script src="js/specific/usuario/routes.js" charset="UTF-8"></script>
+        
         <script src="js/specific/tipodocumento/model.js" charset="UTF-8"></script>
         
         <script src="js/specific/pregunta/control.js" charset="UTF-8"></script>
         <script src="js/specific/pregunta/model.js" charset="UTF-8"></script>
         <script src="js/specific/pregunta/view.js" charset="UTF-8"></script>
         <script src="js/specific/pregunta/routes.js" charset="UTF-8"></script>
-        <script src="js/specific/usuario/view.js" charset="UTF-8"></script>
-        <script src="js/specific/usuario/routes.js" charset="UTF-8"></script>
         
+        <script src="js/specific/publicacion/control.js" charset="UTF-8"></script>
+        <script src="js/specific/publicacion/model.js" charset="UTF-8"></script>
+        <script src="js/specific/publicacion/view.js" charset="UTF-8"></script>
+        <script src="js/specific/publicacion/routes.js" charset="UTF-8"></script>
         <!-- Fin Modificación Juanma Usuarios -->
 
         <script src="js/specific/proveedor/control.js" charset="UTF-8"></script>
@@ -219,14 +221,15 @@
 
 
                 fDocumentoRoutes();
-                fCuestionarioRoutes();
+                fOpcionRoutes();
                 fPreguntaRoutes();
+                fCuestionarioRoutes();
+              
                 fUsuarioRoutes();
                 fPublicacionRoutes();
                 fEstadoRoutes();
                 fProveedorRoutes();
                 fClienteRoutes();
-                fAmigoRoutes();
 
 
                 Path.listen();
