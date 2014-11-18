@@ -17,17 +17,17 @@
  */
 
 
-var usuarioView = function (strClase) {
+var tipousuarioView = function (strClase) {
     this.clase = strClase;
 };
-usuarioView.prototype = new view('usuario');
-usuarioView.prototype.getClassNameUsuario = function () {
+tipousuarioView.prototype = new view('tipousuario');
+tipousuarioView.prototype.getClassNameTipousuario = function () {
     return this.getClassName() + "Vista";
 };
-var oUsuarioView = new usuarioView('usuario');
+var oTipousuarioView = new tipousuarioView('tipousuario');
 
 
-usuarioView.prototype.loadButtons = function (id) {
+tipousuarioView.prototype.loadButtons = function (id) {
 
     var botonera = "";
     botonera += '<div class="btn-toolbar" role="toolbar"><div class="btn-group btn-group-xs">';
@@ -38,71 +38,71 @@ usuarioView.prototype.loadButtons = function (id) {
     return botonera;
 
 }
-usuarioView.prototype.loadFormValues = function (valores, campos) {
-//                    $('#usuario_form #titulo').val(valores['titulo']);
-//                    $('#usuario_form #contenido').val(valores['contenido']);
-//                    $('#usuario_form #alta').val(valores['alta']);
-//                    $('#usuario_form #cambio').val(valores['cambio']);
-//                    $('#usuario_form #hits').val(valores['hits']);
-//                    $('#usuario_form #id_usuario').val(valores['id_usuario']);
-//                    $('#usuario_form #etiquetas').val(valores['etiquetas']);
-//                    $('#usuario_form #publicado').val(valores['publicado']);
-//                    $('#usuario_form #portada').val(valores['portada']);
+tipousuarioView.prototype.loadFormValues = function (valores, campos) {
+//                    $('#tipousuario_form #titulo').val(valores['titulo']);
+//                    $('#tipousuario_form #contenido').val(valores['contenido']);
+//                    $('#tipousuario_form #alta').val(valores['alta']);
+//                    $('#tipousuario_form #cambio').val(valores['cambio']);
+//                    $('#tipousuario_form #hits').val(valores['hits']);
+//                    $('#tipousuario_form #id_usuario').val(valores['id_usuario']);
+//                    $('#tipousuario_form #etiquetas').val(valores['etiquetas']);
+//                    $('#tipousuario_form #publicado').val(valores['publicado']);
+//                    $('#tipousuario_form #portada').val(valores['portada']);
     this.doFillForm(valores, campos);
 };
 
-usuarioView.prototype.getFormValues = function () {
+tipousuarioView.prototype.getFormValues = function () {
     var valores = [];
-//                    valores['titulo'] = $('#usuario_form #titulo');
-//                    valores['contenido'] = $('#usuario_form #contenido');
-//                    valores['alta'] = $('#usuario_form #alta');
-//                    valores['cambio'] = $('#usuario_form #cambio');
-//                    valores['hits'] = $('#usuario_form #hits');
-//                    valores['id_usuario'] = $('#usuario_form #id_usuario');
-//                    valores['etiquetas'] = $('#usuario_form #etiquetas');
-//                    valores['publicado'] = $('#usuario_form #publicado');
-//                    valores['portada'] = $('#usuario_form #portada');
+//                    valores['titulo'] = $('#tipousuario_form #titulo');
+//                    valores['contenido'] = $('#tipousuario_form #contenido');
+//                    valores['alta'] = $('#tipousuario_form #alta');
+//                    valores['cambio'] = $('#tipousuario_form #cambio');
+//                    valores['hits'] = $('#tipousuario_form #hits');
+//                    valores['id_usuario'] = $('#tipousuario_form #id_usuario');
+//                    valores['etiquetas'] = $('#tipousuario_form #etiquetas');
+//                    valores['publicado'] = $('#tipousuario_form #publicado');
+//                    valores['portada'] = $('#tipousuario_form #portada');
 
-    var disabled = $('#usuarioForm').find(':input:disabled').removeAttr('disabled');
-    valores = $('#usuarioForm').serializeObject();
+    var disabled = $('#tipousuarioForm').find(':input:disabled').removeAttr('disabled');
+    valores = $('#tipousuarioForm').serializeObject();
     disabled.attr('disabled', 'disabled');
     return valores;
 };
 
-usuarioView.prototype.doEventsLoading = function () {
+tipousuarioView.prototype.doEventsLoading = function () {
     var thisObject = this;
-    $('#usuarioForm #obj_estado_button').unbind('click');
-    $("#usuarioForm #obj_estado_button").click(function () {
-        var oControl = oEstadoControl;  //para probar dejar usuario
-        //vista('usuario').cargaModalBuscarClaveAjena('#modal01', "usuario");
+    $('#tipousuarioForm #obj_usuario_button').unbind('click');
+    $("#tipousuarioForm #obj_usuario_button").click(function () {
+        var oControl = oUsuarioControl;  //para probar dejar tipousuario
+        //vista('usuario').cargaModalBuscarClaveAjena('#modal01', "tipousuario");
 
-        $("#usuarioForm").append(thisObject.getEmptyModal());
+        $("#tipousuarioForm").append(thisObject.getEmptyModal());
         util().loadForm('#modal01', thisObject.getFormHeader('Elección de usuario'), "", thisObject.getFormFooter(), true);
 
-        $('#usuarioForm').append(thisObject.getEmptyModal());
+        $('#tipousuarioForm').append(thisObject.getEmptyModal());
 
-        oControl.list('#modal01 #modal-body', param().defaultizeUrlObjectParameters({}), true, oEstadoModel, oEstadoView);
+        oControl.list('#modal01 #modal-body', param().defaultizeUrlObjectParameters({}), true, oUsuarioModel, oUsuarioView);
         oControl.modalListEventsLoading('#modal01 #modal-body', param().defaultizeUrlObjectParameters({}), function (id) {
-            $('#obj_estado_id').val(id).change();
-            $('#obj_estado_desc').text(decodeURIComponent(oEstadoModel.getMeAsAForeignKey(id)));
+            $('#obj_usuario_id').val(id).change();
+            $('#obj_usuario_desc').text(decodeURIComponent(oUsuarioModel.getMeAsAForeignKey(id)));
             $('#modal01').modal('hide');
 
-        },oEstadoModel, oEstadoView);
+        },oUsuarioModel, oUsuarioView);
         return false;
     });
-    $('#usuarioForm #obj_tipousuario_button').unbind('click');
-    $("#usuarioForm #obj_tipousuario_button").click(function () {
+    $('#tipousuarioForm #obj_tipotipousuario_button').unbind('click');
+    $("#tipousuarioForm #obj_tipotipousuario_button").click(function () {
         var oControl = oTipousuarioControl;
 
-        $("#usuarioForm").append(thisObject.getEmptyModal());
-        util().loadForm('#modal01', thisObject.getFormHeader('Elección de tipo de usuario'), "", thisObject.getFormFooter(), true);
+        $("#tipousuarioForm").append(thisObject.getEmptyModal());
+        util().loadForm('#modal01', thisObject.getFormHeader('Elección de tipo de tipousuario'), "", thisObject.getFormFooter(), true);
 
-        $('#usuarioForm').append(thisObject.getEmptyModal());
+        $('#tipousuarioForm').append(thisObject.getEmptyModal());
 
         oControl.list('#modal01 #modal-body', param().defaultizeUrlObjectParameters({}), true, oTipousuarioModel, oTipousuarioView);
         oControl.modalListEventsLoading('#modal01 #modal-body', param().defaultizeUrlObjectParameters({}), function (id) {
-            $('#obj_tipousuario_id').val(id).change();
-            $('#obj_tipousuario_desc').text(decodeURIComponent(oTipousuarioModel.getMeAsAForeignKey(id)));
+            $('#obj_tipotipousuario_id').val(id).change();
+            $('#obj_tipotipousuario_desc').text(decodeURIComponent(oTipotipousuarioModel.getMeAsAForeignKey(id)));
             $('#modal01').modal('hide');
 
         },oTipousuarioModel, oTipousuarioView);
@@ -120,7 +120,7 @@ usuarioView.prototype.doEventsLoading = function () {
         contenido += '</div><div class="col-md-6"><div id="textoparseado"></div></div>';
         contenido += '</div>';
 
-        $('#usuarioForm').append(thisObject.getEmptyModal());
+        $('#tipousuarioForm').append(thisObject.getEmptyModal());
 
         util().loadForm('#modal01', cabecera, contenido, pie, true);
         var texto = $('#contenido').val();
@@ -135,6 +135,6 @@ usuarioView.prototype.doEventsLoading = function () {
     });
 };
 
-usuarioView.prototype.okValidation = function (f) {
-    $('#usuarioForm').on('success.form.bv', f);
+tipousuarioView.prototype.okValidation = function (f) {
+    $('#tipousuarioForm').on('success.form.bv', f);
 };
