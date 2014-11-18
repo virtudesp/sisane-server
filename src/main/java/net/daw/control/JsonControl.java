@@ -28,10 +28,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import net.daw.control.operation.generic.specific.implementation.AmigoControlOperationGenSpImpl;
+import net.daw.control.operation.generic.specific.implementation.CuestionarioControlOperationGenSpImpl;
 import net.daw.control.operation.generic.specific.implementation.DocumentoControlOperationGenSpImpl;
 import net.daw.control.operation.generic.specific.implementation.EstadoControlOperationGenSpImpl;
+import net.daw.control.operation.generic.specific.implementation.OpcionControlOperationGenSpImpl;
+import net.daw.control.operation.generic.specific.implementation.PreguntaControlOperationGenSpImpl;
 import net.daw.control.operation.generic.specific.implementation.PublicacionControlOperationGenSpImpl;
-import net.daw.control.operation.generic.specific.implementation.EstadoControlOperationGenSpImpl;
 import net.daw.control.operation.generic.specific.implementation.TipodocumentoControlOperationGenSpImpl;
 import net.daw.control.operation.generic.specific.implementation.UsuarioControlOperationGenSpImpl;
 import net.daw.control.operation.specific.implementation.OrdenadorControlOperationSpImpl;
@@ -40,7 +42,10 @@ import net.daw.control.operation.specific.implementation.ClienteControlOperation
 import net.daw.control.operation.specific.implementation.ImpuestoControlOperationSpImpl;
 import net.daw.control.operation.specific.implementation.ProveedorControlOperationSpImpl;
 import net.daw.control.operation.specific.implementation.TipoproductoControlOperationSpImpl;
+import net.daw.control.route.generic.specific.implementation.CuestionarioControlRouteGenSpImpl;
 import net.daw.control.route.generic.specific.implementation.DocumentoControlRouteGenSpImpl;
+import net.daw.control.route.generic.specific.implementation.PreguntaControlRouteGenSpImpl;
+import net.daw.control.route.generic.specific.implementation.OpcionControlRouteGenSpImpl;
 import net.daw.control.route.generic.specific.implementation.EstadoControlRouteGenSpImpl;
 import net.daw.control.route.generic.specific.implementation.PublicacionControlRouteGenSpImpl;
 import net.daw.control.route.generic.specific.implementation.EstadoControlRouteGenSpImpl;
@@ -154,12 +159,28 @@ public class JsonControl extends HttpServlet {
                         PublicacionControlOperationGenSpImpl oPublicacionControlOperation = new PublicacionControlOperationGenSpImpl(request);
                         jsonResult = oPublicacionRoute.execute(request, oPublicacionControlOperation);
                         break;
+
                     case "impuesto":
                         ImpuestoControlRouteSpImpl oImpuestoRoute = new ImpuestoControlRouteSpImpl();
                         ImpuestoControlOperationSpImpl oImpuestoControlOperation = new ImpuestoControlOperationSpImpl(request);
                         jsonResult = oImpuestoRoute.execute(request, oImpuestoControlOperation);
                         break;
                         
+                    case "cuestionario":
+                        CuestionarioControlRouteGenSpImpl oCuestionarioRoute = new CuestionarioControlRouteGenSpImpl();
+                        CuestionarioControlOperationGenSpImpl oCuestionarioControlOperation = new CuestionarioControlOperationGenSpImpl(request);
+                        jsonResult = oCuestionarioRoute.execute(request, oCuestionarioControlOperation);
+                    case "opcion":
+                        OpcionControlRouteGenSpImpl oOpcionRoute = new OpcionControlRouteGenSpImpl();
+                        OpcionControlOperationGenSpImpl oOpcionControlOperation = new OpcionControlOperationGenSpImpl(request);
+                        jsonResult = oOpcionRoute.execute(request, oOpcionControlOperation);
+                        break;
+                    case "pregunta":
+                        PreguntaControlRouteGenSpImpl oPreguntaRoute = new PreguntaControlRouteGenSpImpl();
+                        PreguntaControlOperationGenSpImpl oPreguntaControlOperation = new PreguntaControlOperationGenSpImpl(request);
+                        jsonResult = oPreguntaRoute.execute(request, oPreguntaControlOperation);
+                        break;
+
                     default:
                         ExceptionBooster.boost(new Exception(this.getClass().getName() + ":processRequest ERROR: no such operation"));
                 }

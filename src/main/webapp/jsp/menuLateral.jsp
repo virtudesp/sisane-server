@@ -45,6 +45,11 @@
         <a  class="list-group-item" id="lnkOrdenador" href="jsp#/usuario">Usuario</a> 
         <a  class="list-group-item" id="lnkProveedor" href="jsp#/proveedor">Proveedor</a> 
         <a  class="list-group-item" id="lnkCliente" href="jsp#/cliente">Cliente</a> 
+ 
+        <a  class="list-group-item" id="lnkDocumento" href="jsp#/documento">Documento</a>
+        <a  class="list-group-item" id="lnkCuestionario" href="jsp#/cuestionario">Cuestionario</a> 
+        <a  class="list-group-item" id="lnkPregunta" href="jsp#/pregunta">Pregunta</a>
+        <a  class="list-group-item" id="lnkOpcion" href="jsp#/opcion">Opcion</a>
         <a  class="list-group-item" id="lnkImpuesto" href="jsp#/impuesto">Impuesto</a> 
     </div>
 </div>
