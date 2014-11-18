@@ -96,4 +96,7 @@
                 ;
 
     });
+    .on('change', '[name="id_usuario"]', function () {
+        $('#publicacionForm').bootstrapValidator('revalidateField', 'id_usuario');
+    });
 </script>
