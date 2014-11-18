@@ -2395,3 +2395,23 @@ MODIFY `id` int(6) NOT NULL AUTO_INCREMENT COMMENT 'ID',AUTO_INCREMENT=21;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+
+
+/****************************************************************************************/
+
+ALTER TABLE `tema` CHANGE `nombre` `nombre` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'Título del tema';
+
+ALTER TABLE `tema` CHANGE `fechacreacion` `fechacreacion` DATETIME NULL DEFAULT NULL COMMENT 'Fecha de creación'; 
+
+ALTER TABLE `tema` CHANGE `id_tipotema` `id_tipotema` INT(6) NOT NULL COMMENT 'Categoría';
+
+ALTER TABLE `tema` CHANGE `id_usuario` `id_usuario` INT(6) NOT NULL COMMENT 'Creador del tema';
+
+
+
+
+ALTER TABLE `post` CHANGE `id` `id` INT(6) NOT NULL AUTO_INCREMENT COMMENT 'ID', CHANGE `titulo` `titulo` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'Título', CHANGE `mensaje` `mensaje` LONGTEXT CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'Mensaje', CHANGE `fechacreacion` `fechacreacion` DATETIME NULL DEFAULT NULL COMMENT 'Fecha de creación', CHANGE `fechamodificacion` `fechamodificacion` DATETIME NULL DEFAULT NULL COMMENT 'Fecha de modificación', CHANGE `primermensaje` `primermensaje` TINYINT(1) NULL DEFAULT '0' COMMENT 'Primer mensaje', CHANGE `id_tema` `id_tema` INT(6) NOT NULL COMMENT 'Tema', CHANGE `id_usuario` `id_usuario` INT(6) NOT NULL COMMENT 'Usuario';
+
+
+ALTER TABLE `mensajeprivado` CHANGE `id` `id` INT(6) NOT NULL AUTO_INCREMENT COMMENT 'ID', CHANGE `id_usuario_1` `id_usuario_1` INT(6) NULL DEFAULT NULL COMMENT 'Usuario envía', CHANGE `id_usuario_2` `id_usuario_2` INT(6) NULL DEFAULT NULL COMMENT 'Usuario recibe', CHANGE `asunto` `asunto` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'Asunto', CHANGE `mensaje` `mensaje` LONGTEXT CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'Mensaje', CHANGE `leido` `leido` TINYINT(1) NULL DEFAULT NULL COMMENT 'Leído';
