@@ -19,9 +19,6 @@ package net.daw.service.generic.specific.implementation;
 
 import net.daw.service.generic.implementation.TableServiceGenImpl;
 import java.sql.Connection;
-import javax.servlet.ServletException;
-import net.daw.bean.generic.specific.implementation.OpcionBeanGenSpImpl;
-import net.daw.dao.generic.specific.implementation.OpcionDaoGenSpImpl;
 
 public class OpcionServiceGenSpImpl extends TableServiceGenImpl {
 
