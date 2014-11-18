@@ -35,6 +35,7 @@ import net.daw.control.operation.generic.specific.implementation.OpcionControlOp
 import net.daw.control.operation.generic.specific.implementation.PreguntaControlOperationGenSpImpl;
 import net.daw.control.operation.generic.specific.implementation.PublicacionControlOperationGenSpImpl;
 import net.daw.control.operation.generic.specific.implementation.TipodocumentoControlOperationGenSpImpl;
+import net.daw.control.operation.generic.specific.implementation.TipousuarioControlOperationGenSpImpl;
 import net.daw.control.operation.generic.specific.implementation.UsuarioControlOperationGenSpImpl;
 import net.daw.control.operation.specific.implementation.OrdenadorControlOperationSpImpl;
 import net.daw.control.operation.specific.implementation.ProductoControlOperationSpImpl;
@@ -49,6 +50,7 @@ import net.daw.control.route.generic.specific.implementation.EstadoControlRouteG
 import net.daw.control.route.generic.specific.implementation.PublicacionControlRouteGenSpImpl;
 import net.daw.control.route.generic.specific.implementation.EstadoControlRouteGenSpImpl;
 import net.daw.control.route.generic.specific.implementation.TipodocumentoControlRouteGenSpImpl;
+import net.daw.control.route.generic.specific.implementation.TipousuarioControlRouteGenSpImpl;
 import net.daw.control.route.generic.specific.implementation.UsuarioControlRouteGenSpImpl;
 import net.daw.control.route.specific.implementation.AmigoControlRouteSpImpl;
 import net.daw.control.route.specific.implementation.OrdenadorControlRouteSpImpl;
@@ -111,6 +113,11 @@ public class JsonControl extends HttpServlet {
                         TipodocumentoControlRouteGenSpImpl oTipodocumentoRoute = new TipodocumentoControlRouteGenSpImpl();
                         TipodocumentoControlOperationGenSpImpl oTipodocumentoControlOperation = new TipodocumentoControlOperationGenSpImpl(request);
                         jsonResult = oTipodocumentoRoute.execute(request, oTipodocumentoControlOperation);
+                        break;
+                    case "tipousuario":
+                        TipousuarioControlRouteGenSpImpl oTipousuarioRoute = new TipousuarioControlRouteGenSpImpl();
+                        TipousuarioControlOperationGenSpImpl oTipousuarioControlOperation = new TipousuarioControlOperationGenSpImpl(request);
+                        jsonResult = oTipousuarioRoute.execute(request, oTipousuarioControlOperation);
                         break;
                     case "usuario":
                         UsuarioControlRouteGenSpImpl oUsuarioRoute = new UsuarioControlRouteGenSpImpl();

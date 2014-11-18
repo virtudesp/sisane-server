@@ -193,6 +193,11 @@
         <script src="js/specific/publicacion/model.js" charset="UTF-8"></script>
         <script src="js/specific/publicacion/view.js" charset="UTF-8"></script>
         <script src="js/specific/publicacion/routes.js" charset="UTF-8"></script>
+        
+        <script src="js/specific/tipousuario/control.js" charset="UTF-8"></script>
+        <script src="js/specific/tipousuario/model.js" charset="UTF-8"></script>
+        <script src="js/specific/tipousuario/view.js" charset="UTF-8"></script>
+        <script src="js/specific/tipousuario/routes.js" charset="UTF-8"></script>
         <!-- Fin Modificación Juanma Usuarios -->
 
         <script src="js/specific/proveedor/control.js" charset="UTF-8"></script>
