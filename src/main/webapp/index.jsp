@@ -187,6 +187,11 @@
         <script src="js/specific/cliente/view.js" charset="UTF-8"></script>
         <script src="js/specific/cliente/routes.js" charset="UTF-8"></script>
         
+        <script src="js/specific/impuesto/control.js" charset="UTF-8"></script>
+        <script src="js/specific/impuesto/model.js" charset="UTF-8"></script>
+        <script src="js/specific/impuesto/view.js" charset="UTF-8"></script>
+        <script src="js/specific/impuesto/routes.js" charset="UTF-8"></script>
+        
         <script src="js/specific/tipodocumento/model.js" charset="UTF-8"></script>
 
         <script type="text/javascript">
@@ -208,6 +213,7 @@
                 fEstadoRoutes();
                 fProveedorRoutes();
                 fClienteRoutes();
+                fImpuestoRoutes();
 
 
                 Path.listen();

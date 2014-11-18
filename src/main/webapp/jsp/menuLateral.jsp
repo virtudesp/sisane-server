@@ -45,6 +45,7 @@
         <a  class="list-group-item" id="lnkOrdenador" href="jsp#/usuario">Usuario</a> 
         <a  class="list-group-item" id="lnkProveedor" href="jsp#/proveedor">Proveedor</a> 
         <a  class="list-group-item" id="lnkCliente" href="jsp#/cliente">Cliente</a> 
+        <a  class="list-group-item" id="lnkImpuesto" href="jsp#/impuesto">Impuesto</a> 
     </div>
 </div>
 
