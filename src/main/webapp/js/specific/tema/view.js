@@ -29,12 +29,24 @@ var oTemaView = new temaView('tema');
 temaView.prototype.printValue = function (value, valor, recortar) {
     var thisObject = this;
     var strResult = "";
-    if (/obj_/.test(valor)) {
+    if (/obj_usuario/.test(valor)) {
+        if (value[valor].id > 0) {
+            strResult = '<a href="jsp#/' + valor.substring(4) + '/view/' + value[valor].id + '">' + /*value[valor].id + ":" +*/ value[valor].login + '</a>';
+        } else {
+            strResult = '???';
+        }
+    } else if (/obj_tipotema/.test(valor)) {
+        if (value[valor].id > 0) {
+            strResult = '<a href="jsp#/' + valor.substring(4) + '/view/' + value[valor].id + '">' + /*value[valor].id + ":" +*/ value[valor].nombre + '</a>';
+        } else {
+            strResult = '???';
+        }        
+    } else if (/obj_/.test(valor)) {
         if (value[valor].id > 0) {
             strResult = '<a href="jsp#/' + valor.substring(4) + '/view/' + value[valor].id + '">' + value[valor].id + ":" + util().getForeign(value[valor]) + '</a>';
         } else {
             strResult = '???';
-        }
+        }      
     } else {
         switch (value[valor]) {
             case true:

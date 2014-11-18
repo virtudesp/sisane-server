@@ -24,3 +24,57 @@ postControl.prototype.getClassNamePost = function () {
     return this.getClassName() + "Control";
 };
 var oPostControl = new postControl('post');
+
+
+postControl.prototype.edit = function (place, id, oModel, oView) {
+    var thisObject = this;
+    $(place).empty();
+    $(place).append(oView.getPanel("Edición de " + this.clase, oView.getEmptyForm()));
+    var oDocumentoModel = oModel;
+    oDocumentoModel.loadAggregateViewOne(id);
+    oView.loadFormValues(oDocumentoModel.getCachedOne(), oDocumentoModel.getCachedFieldNames());
+    $('#id').attr("disabled", true);
+    if (oDocumentoModel.getCachedOne().primermensaje == false) {
+        $('#primermensaje').removeAttr("checked");
+        $('#primermensaje').attr("unchecked");
+        $('#primermensaje').attr("value","false");
+    } else {
+        $('#primermensaje').removeAttr("unchecked");
+        $('#primermensaje').attr("checked");
+        $('#primermensaje').attr("value","true");
+    }
+    $('#submitForm').unbind('click');
+    $('#submitForm').click(function () {
+        oView.okValidation(function (e) {
+            resultado = oModel.setOne({json: JSON.stringify(oView.getFormValues())});
+            oView.doResultOperationNotifyToUser(place, resultado["status"], "Se ha actualizado el registro con id=" + resultado["message"], resultado["message"], true);
+            e.preventDefault();
+            return false;
+        });
+    });
+};
+
+postControl.prototype.new = function (place, objParams, oModel, oView) {
+    var thisObject = this;
+    $(place).empty();
+    $(place).append(oView.getPanel("Alta de " + this.clase, oView.getEmptyForm()));
+    //id must not be enabled
+    $('#id').val('0').attr("disabled", true);
+    //soporte de claves ajenas
+    var selector = objParams["systemfilter"].replace('id_', 'obj_');
+    $('#' + selector + "_id").val(objParams["systemfiltervalue"]).attr("disabled", true);
+    $('#' + selector + "_button").attr("disabled", true).hide();
+    var oModelo = "o" + objParams["systemfilter"].replace('id_', '').charAt(0).toUpperCase() + objParams["systemfilter"].replace('id_', '').slice(1) + "Model";
+    $('#' + selector + '_desc').text(decodeURIComponent(window[oModelo].getMeAsAForeignKey(objParams["systemfiltervalue"])));
+    //--
+    oView.doEventsLoading();
+    $('#submitForm').unbind('click');
+    $('#submitForm').click(function () {
+        oView.okValidation(function (e) {
+            resultado = oModel.setOne({json: JSON.stringify(oView.getFormValues())});
+            oView.doResultOperationNotifyToUser(place, resultado["status"], "Se ha creado el registro con id=" + resultado["message"], resultado["message"], true);
+            e.preventDefault();
+            return false;
+        });
+    });
+};

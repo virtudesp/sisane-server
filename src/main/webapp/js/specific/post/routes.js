@@ -59,11 +59,17 @@ function fPostRoutes() {
         oPostControl.edit($('#indexContenido'), paramsObject['id'], oPostModel, oPostView);
         $('#indexContenidoJsp').empty();
     });
-
     Path.map("#/post/new").to(function () {
         $('#indexContenidoJsp').spinner();
+        //var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
+        oPostControl.new($('#indexContenido'), null, oPostModel, oPostView);
+        $('#indexContenidoJsp').empty();
+        return false;
+    });
+    Path.map("#/post/new/:url").to(function () {
+        $('#indexContenidoJsp').spinner();
         var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
-        oPostControl.new($('#indexContenido'), oPostModel, oPostView);
+        oPostControl.new($('#indexContenido'), paramsObject, oPostModel, oPostView);
         $('#indexContenidoJsp').empty();
         return false;
     });

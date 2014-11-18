@@ -34,7 +34,7 @@ mensajeprivadoView.prototype.printValue = function (value, valor, recortar) {
         if (value[valor].id > 0) {
             val = valor.substring(4);
             val = val.substring(0, val.length-2);
-            strResult = '<a href="jsp#/' + val + '/view/' + value[valor].id + '">' + value[valor].id + ":" + util().getForeign(value[valor]) + '</a>';
+            strResult = '<a href="jsp#/' + val + '/view/' + value[valor].id + '">' + /*value[valor].id + ":" +*/ value[valor].login + '</a>';
         } else {
             strResult = '???';
         }

@@ -24,27 +24,17 @@
         </div>
     </div>
     <div class="form-group">
-        <label class="col-sm-2 control-label"  for="titulo">Titulo:</label>
+        <label class="col-sm-2 control-label"  for="nombre">Titulo del tema:</label>
         <div class="col-sm-6">
-            <input type="text" id="titulo" class="form-control"  name="titulo" size="15" placeholder="titulo" />
+            <input type="text" id="nombre" class="form-control"  name="nombre" size="15" placeholder="Título del tema" />
         </div>
     </div>
-    <div class="form-group">
-        <label class="col-sm-2 control-label" for="contenido">Contenido:</label>
-        <div class="col-sm-9">
-            <textarea type="text"  class="form-control pull-left"  id="contenido" name="contenido" size="15" placeholder="contenido"></textarea>
-        </div>
-        <div class="col-sm-1">
-            <a class="btn btn-primary btn-sm" id="contenido_button" href="#"><i class="glyphicon glyphicon-pencil"></i></a>
-        </div>
-    </div>
-
     
     <div class="form-group">
-        <label class="col-sm-2 control-label" for="alta_group">Alta:</label> 
+        <label class="col-sm-2 control-label" for="fechacreacion">Fecha de creación</label> 
         <div class="col-sm-3">           
-            <div class='input-group date' id='alta_group'>
-                <input type='text' class="form-control" id='alta' name="alta_group" placeholder="Fecha de alta" />
+            <div class='input-group date' id='fechacreacion_group'>
+                <input type='text' class="form-control" id='fechacreacion' name="fechacreacion" placeholder="Fecha de creación" />
                 <span class="input-group-addon">
                     <span class="glyphicon glyphicon-calendar"></span>
                 </span>
@@ -53,26 +43,16 @@
     </div>
 
     <div class="form-group">
-        <label class="col-sm-2 control-label" for="cambio_group">Cambio:</label> 
-        <div class="col-sm-3">      
-            <div class='input-group date' id='cambio_group'>
-                <input type='text' class="form-control" id='cambio' name="cambio_group" placeholder="Fecha de cambio" />
-                <span class="input-group-addon">
-                    <span class="glyphicon glyphicon-calendar"></span>
-                </span>
-            </div>
+        <label class="col-sm-2 control-label" for="obj_tipotema_id">Categoría: </label> 
+        <div class="col-sm-2">              
+            <input readonly="true"  class="form-control"  id="obj_tipotema_id" class="input-mini" name="id_tipotema" type="text" size="5" maxlength="5" />  
         </div>
+        <div class="col-sm-1">              
+            <a class="btn btn-primary btn-sm" id="obj_tipotema_button" href="#"><i class="glyphicon glyphicon-search"></i></a>
+        </div>        
+        <label class="col-sm-7" for="obj_tipotema_desc" id="obj_tipotema_desc"></label>                     
     </div>
-
-    <div class="form-group">
-        <label class="col-sm-2 control-label"  for="hits">Hits:</label>
-        <div class="col-sm-2">
-            <input type="text"  class="form-control"  id="hits" name="hits" size="15" placeholder="hits" />
-        </div>
-    </div>
-
-
-
+    
     <div class="form-group">
         <label class="col-sm-2 control-label" for="obj_usuario_id">Usuario: </label> 
         <div class="col-sm-2">              
@@ -83,43 +63,6 @@
         </div>        
         <label class="col-sm-7" for="obj_usuario_desc" id="obj_usuario_desc"></label>                     
     </div>
-
-    <div class="form-group">
-        <label class="col-sm-2 control-label" for="obj_tipodocumento_id">Tipo de documento: </label> 
-        <div class="col-sm-2">              
-            <input readonly="true"  class="form-control"  id="obj_tipodocumento_id" class="input-mini" name="id_tipodocumento" type="text" size="5" maxlength="5" />  
-        </div>
-        <div class="col-sm-1">              
-            <a class="btn btn-primary btn-sm" id="obj_tipodocumento_button" href="#"><i class="glyphicon glyphicon-search"></i></a>
-        </div>        
-        <label class="col-sm-7" for="obj_usuario_desc" id="obj_tipodocumento_desc"></label>                     
-    </div>
-
-    <div class="form-group">
-        <label class="col-sm-2 control-label"  for="etiquetas">Etiquetas:</label>
-        <div class="col-sm-10">
-            <input type="text"  class="form-control"  id="etiquetas" name="etiquetas" size="15" placeholder="etiquetas" />
-        </div>
-    </div>
-
-    <div class="form-group">
-        <label class="col-sm-2 control-label"  for="publicado">Publicado:</label>
-        <div class="col-sm-1">
-            <input type="checkbox" id="publicado" name="publicado" value="true" />
-        </div>
-    </div>
-    <div class="form-group">
-        <label class="col-sm-2 control-label"  for="portada">Portada:</label>
-        <div class="col-sm-1">
-            <input type="checkbox" id="portada" name="portada" value="true" />
-        </div>
-    </div>
-    <div class="form-group">
-        <label class="col-sm-2 control-label"  for="destacado">Destacado:</label>
-        <div class="col-sm-1">
-            <input type="checkbox" id="portada" name="destacado" value="true" />
-        </div>
-    </div> 
 
     <div class="form-group">
         <div class="col-sm-offset-2 col-sm-10">

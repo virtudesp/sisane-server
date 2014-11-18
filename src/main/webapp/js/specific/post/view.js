@@ -30,7 +30,19 @@ var oPostView = new postView('post');
 postView.prototype.printValue = function (value, valor, recortar) {
     var thisObject = this;
     var strResult = "";
-    if (/obj_/.test(valor)) {
+    if (/obj_tema/.test(valor)) {
+        if (value[valor].id > 0) {
+            strResult = '<a href="jsp#/' + valor.substring(4) + '/view/' + value[valor].id + '">' + /*value[valor].id + ":" +*/ value[valor].nombre + '</a>';
+        } else {
+            strResult = '???';
+        }        
+    } else if (/obj_usuario/.test(valor)) {
+        if (value[valor].id > 0) {
+            strResult = '<a href="jsp#/' + valor.substring(4) + '/view/' + value[valor].id + '">' + /*value[valor].id + ":" +*/ value[valor].login + '</a>';
+        } else {
+            strResult = '???';
+        }
+    } else if (/obj_/.test(valor)) {
         if (value[valor].id > 0) {
             strResult = '<a href="jsp#/' + valor.substring(4) + '/view/' + value[valor].id + '">' + value[valor].id + ":" + util().getForeign(value[valor]) + '</a>';
         } else {
@@ -58,3 +70,13 @@ postView.prototype.printValue = function (value, valor, recortar) {
     };
     return strResult;
 };
+
+/*postView.prototype.getEmptyForm = function () {
+    $.when(ajax().ajaxCallSync(path + '/jsp?ob=' + this.clase + '&op=form&mode=1', 'GET', '')).done(function (data) {
+        form = data;
+    });
+    return form;
+};
+postView.prototype.getPanel = function (titulo, contenido) {
+    return '<div class="panel panel-default"><div class="panel-heading"><h1>' + titulo + '</h1></div><div class="panel-body">' + contenido + '</div></div>';
+};*/

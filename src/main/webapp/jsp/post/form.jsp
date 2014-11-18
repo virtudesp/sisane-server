@@ -16,63 +16,73 @@
  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 --%>
 
-<form class="form-horizontal" role="form" action="#" id="documentoForm" name="formulario">
+<form class="form-horizontal" role="form" action="#" id="postForm" name="formulario">
     <div class="form-group">
         <label class="col-sm-2 control-label" for="id">Id:</label>
         <div class="col-sm-2">
             <input type="text" id="id" class="form-control"  name="id" placeholder="id" />
         </div>
     </div>
+    
     <div class="form-group">
-        <label class="col-sm-2 control-label"  for="titulo">Titulo:</label>
+        <label class="col-sm-2 control-label"  for="titulo">Titulo del post:</label>
         <div class="col-sm-6">
-            <input type="text" id="titulo" class="form-control"  name="titulo" size="15" placeholder="titulo" />
+            <input type="text" id="titulo" class="form-control"  name="titulo" size="15" placeholder="Título del post" />
         </div>
-    </div>
+    </div>    
+    
     <div class="form-group">
-        <label class="col-sm-2 control-label" for="contenido">Contenido:</label>
+        <label class="col-sm-2 control-label" for="mensaje">Mensaje:</label>
         <div class="col-sm-9">
-            <textarea type="text"  class="form-control pull-left"  id="contenido" name="contenido" size="15" placeholder="contenido"></textarea>
+            <textarea type="text"  class="form-control pull-left"  id="mensaje" name="mensaje" size="15" placeholder="Mensaje"></textarea>
         </div>
         <div class="col-sm-1">
             <a class="btn btn-primary btn-sm" id="contenido_button" href="#"><i class="glyphicon glyphicon-pencil"></i></a>
         </div>
     </div>
-
     
     <div class="form-group">
-        <label class="col-sm-2 control-label" for="alta_group">Alta:</label> 
+        <label class="col-sm-2 control-label" for="fechacreacion">Fecha de creación</label> 
         <div class="col-sm-3">           
-            <div class='input-group date' id='alta_group'>
-                <input type='text' class="form-control" id='alta' name="alta_group" placeholder="Fecha de alta" />
+            <div class='input-group date' id='fechacreacion_group'>
+                <input type='text' class="form-control" id='fechacreacion' name="fechacreacion" placeholder="Fecha de creación" />
                 <span class="input-group-addon">
                     <span class="glyphicon glyphicon-calendar"></span>
                 </span>
             </div>
         </div>
     </div>
-
+    
     <div class="form-group">
-        <label class="col-sm-2 control-label" for="cambio_group">Cambio:</label> 
-        <div class="col-sm-3">      
-            <div class='input-group date' id='cambio_group'>
-                <input type='text' class="form-control" id='cambio' name="cambio_group" placeholder="Fecha de cambio" />
+        <label class="col-sm-2 control-label" for="fechamodificacion">Fecha de modificación</label> 
+        <div class="col-sm-3">           
+            <div class='input-group date' id='fechamodificacion_group'>
+                <input type='text' class="form-control" id='fechamodificacion' name="fechamodificacion" placeholder="Fecha de modificación" />
                 <span class="input-group-addon">
                     <span class="glyphicon glyphicon-calendar"></span>
                 </span>
             </div>
         </div>
     </div>
+    
+    <div class="form-group">
+        <label class="col-sm-2 control-label"  for="primermensaje">Primer mensaje:</label>
+        <div class="col-sm-1">
+            <input type="checkbox" id="primermensaje" name="primermensaje" value="" />
+        </div>
+    </div> 
 
     <div class="form-group">
-        <label class="col-sm-2 control-label"  for="hits">Hits:</label>
-        <div class="col-sm-2">
-            <input type="text"  class="form-control"  id="hits" name="hits" size="15" placeholder="hits" />
+        <label class="col-sm-2 control-label" for="obj_tema_id">Tema: </label> 
+        <div class="col-sm-2">              
+            <input readonly="true"  class="form-control"  id="obj_tema_id" class="input-mini" name="id_tema" type="text" size="5" maxlength="5" />  
         </div>
+        <div class="col-sm-1">              
+            <a class="btn btn-primary btn-sm" id="obj_tema_button" href="#"><i class="glyphicon glyphicon-search"></i></a>
+        </div>        
+        <label class="col-sm-7" for="obj_tema_desc" id="obj_tema_desc"></label>                     
     </div>
-
-
-
+    
     <div class="form-group">
         <label class="col-sm-2 control-label" for="obj_usuario_id">Usuario: </label> 
         <div class="col-sm-2">              
@@ -83,43 +93,6 @@
         </div>        
         <label class="col-sm-7" for="obj_usuario_desc" id="obj_usuario_desc"></label>                     
     </div>
-
-    <div class="form-group">
-        <label class="col-sm-2 control-label" for="obj_tipodocumento_id">Tipo de documento: </label> 
-        <div class="col-sm-2">              
-            <input readonly="true"  class="form-control"  id="obj_tipodocumento_id" class="input-mini" name="id_tipodocumento" type="text" size="5" maxlength="5" />  
-        </div>
-        <div class="col-sm-1">              
-            <a class="btn btn-primary btn-sm" id="obj_tipodocumento_button" href="#"><i class="glyphicon glyphicon-search"></i></a>
-        </div>        
-        <label class="col-sm-7" for="obj_usuario_desc" id="obj_tipodocumento_desc"></label>                     
-    </div>
-
-    <div class="form-group">
-        <label class="col-sm-2 control-label"  for="etiquetas">Etiquetas:</label>
-        <div class="col-sm-10">
-            <input type="text"  class="form-control"  id="etiquetas" name="etiquetas" size="15" placeholder="etiquetas" />
-        </div>
-    </div>
-
-    <div class="form-group">
-        <label class="col-sm-2 control-label"  for="publicado">Publicado:</label>
-        <div class="col-sm-1">
-            <input type="checkbox" id="publicado" name="publicado" value="true" />
-        </div>
-    </div>
-    <div class="form-group">
-        <label class="col-sm-2 control-label"  for="portada">Portada:</label>
-        <div class="col-sm-1">
-            <input type="checkbox" id="portada" name="portada" value="true" />
-        </div>
-    </div>
-    <div class="form-group">
-        <label class="col-sm-2 control-label"  for="destacado">Destacado:</label>
-        <div class="col-sm-1">
-            <input type="checkbox" id="portada" name="destacado" value="true" />
-        </div>
-    </div> 
 
     <div class="form-group">
         <div class="col-sm-offset-2 col-sm-10">
@@ -139,18 +112,18 @@
 <script type="text/javascript">
 
     $(document).ready(function() {
-        $('#alta_group').datetimepicker({
+        $('#fechacreacion_group').datetimepicker({
             pickTime: false,
             language: 'es',
             showToday: true
         });
-        $('#cambio_group').datetimepicker({
+        $('#fechamodificacion_group').datetimepicker({
             pickTime: false,
             language: 'es',
             showToday: true
         });
         //http://jqueryvalidation.org/documentation/
-        $('#documentoForm')
+        $('#postForm')
                 .bootstrapValidator({
                     container: '#messages',
                     feedbackIcons: {
@@ -162,58 +135,42 @@
                         titulo: {
                             validators: {
                                 notEmpty: {
-                                    message: 'Debe introducir un título'
+                                    message: 'Debe introducir un título al post'
                                 },
                                 stringLength: {
                                     max: 255,
-                                    message: 'El título debe tener como máximo 255 caracteres'
+                                    message: 'El título del post debe tener como máximo 255 caracteres'
                                 }
                             }
                         },
-                        contenido: {
+                        mensaje: {
                             validators: {
                                 notEmpty: {
                                     message: 'Debe introducir contenido'
                                 }
                             }
                         },
-                        alta_group: {
+                        fechacreacion: {
                             validators: {
                                 notEmpty: {
-                                    message: 'Debe introducir una fecha de alta'
+                                    message: 'Debe introducir una fecha de creación'
                                 },
                                 date: {
                                     format: 'DD/MM/YYYY',
-                                    message: 'La fecha de alta no tiene formato DD/MM/YYYY'
+                                    message: 'La fecha de creación no tiene formato DD/MM/YYYY'
                                 }
                             }
                         },
-                        cambio_group: {
+                        fechamodificacion: {
                             validators: {
                                 notEmpty: {
-                                    message: 'Debe introducir una fecha de cambio'
+                                    message: 'Debe introducir una fecha de modificación'
                                 },
                                 date: {
                                     format: 'DD/MM/YYYY',
-                                    message: 'La fecha de cambio no tiene formato DD/MM/YYYY'
+                                    message: 'La fecha de modificaciñón no tiene formato DD/MM/YYYY'
                                 }
                             }
-                        },
-                        hits: {
-                            validators: {
-                                notEmpty: {
-                                    message: 'Debe introducir un número de hits'
-                                },
-                                integer: {
-                                    message: 'El valor de hits debe ser un entero'
-                                },
-                                between: {
-                                    min: -0,
-                                    max: 99999999,
-                                    message: 'El número de hits debe ser un entero entre 0 y 99999999'
-                                }
-                            }
-
                         },
                         id_usuario: {
                             validators: {
@@ -225,45 +182,33 @@
                                 }
                             }
                         },
-                        id_tipodocumento: {
+                        id_tema: {
                             validators: {
                                 notEmpty: {
-                                    message: 'Debe elegir un tipo de documento'
+                                    message: 'Debe elegir un tema'
                                 },
                                 integer: {
-                                    message: 'El identificador de tipo de documento debe ser un entero'
-                                }
-                            }
-                        },
-                        etiquetas: {
-                            validators: {
-                                notEmpty: {
-                                    message: 'Debe introducir una etiqueta'
-                                },
-                                stringLength: {
-                                    max: 100,
-                                    message: 'La longitud de las etiquetas debe ser de 100 caracteres como mucho'
+                                    message: 'El identificador del tema debe ser un entero'
                                 }
                             }
                         }
-
                     }
                 })
                 .on('change', '[name="id_usuario"]', function() {
-                    $('#documentoForm').bootstrapValidator('revalidateField', 'id_usuario');
+                    $('#postForm').bootstrapValidator('revalidateField', 'id_usuario');
                 })
 
-                .on('change', '[name="id_tipodocumento"]', function() {
-                    $('#documentoForm').bootstrapValidator('revalidateField', 'id_tipodocumento');
+                .on('change', '[name="id_tema"]', function() {
+                    $('#postForm').bootstrapValidator('revalidateField', 'id_tema');
                 })
                 ;
-        $('#alta_group').on('dp.change dp.show', function(e) {
+        $('#fechacreacion_group').on('dp.change dp.show', function(e) {
 // Revalidate the date when user change it
-            $('#documentoForm').bootstrapValidator('revalidateField', 'alta_group');
+            $('#postForm').bootstrapValidator('revalidateField', 'fechacreacion_group');
         });
-        $('#cambio_group').on('dp.change dp.show', function(e) {
+        $('#fechamodificacion_group').on('dp.change dp.show', function(e) {
 // Revalidate the date when user change it
-            $('#documentoForm').bootstrapValidator('revalidateField', 'cambio_group');
+            $('#postForm').bootstrapValidator('revalidateField', 'modificacion_group');
         });
     });       
 
