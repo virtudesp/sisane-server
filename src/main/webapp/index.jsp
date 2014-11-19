@@ -200,6 +200,28 @@
         <script src="js/specific/tipousuario/routes.js" charset="UTF-8"></script>
         <!-- Fin Modificación Juanma Usuarios -->
 
+        <!-- FORO -->        
+        <script src="js/specific/tipotema/control.js" charset="UTF-8"></script>
+        <script src="js/specific/tipotema/model.js" charset="UTF-8"></script>
+        <script src="js/specific/tipotema/view.js" charset="UTF-8"></script>
+        <script src="js/specific/tipotema/routes.js" charset="UTF-8"></script>
+        
+        <script src="js/specific/tema/control.js" charset="UTF-8"></script>
+        <script src="js/specific/tema/model.js" charset="UTF-8"></script>
+        <script src="js/specific/tema/view.js" charset="UTF-8"></script>
+        <script src="js/specific/tema/routes.js" charset="UTF-8"></script>
+        
+        <script src="js/specific/post/control.js" charset="UTF-8"></script>
+        <script src="js/specific/post/model.js" charset="UTF-8"></script>
+        <script src="js/specific/post/view.js" charset="UTF-8"></script>
+        <script src="js/specific/post/routes.js" charset="UTF-8"></script>
+        
+        <script src="js/specific/mensajeprivado/control.js" charset="UTF-8"></script>
+        <script src="js/specific/mensajeprivado/model.js" charset="UTF-8"></script>
+        <script src="js/specific/mensajeprivado/view.js" charset="UTF-8"></script>
+        <script src="js/specific/mensajeprivado/routes.js" charset="UTF-8"></script>
+        <!-- FIN FORO -->
+
         <script src="js/specific/proveedor/control.js" charset="UTF-8"></script>
         <script src="js/specific/proveedor/model.js" charset="UTF-8"></script>
         <script src="js/specific/proveedor/view.js" charset="UTF-8"></script>
@@ -232,6 +254,10 @@
               
                 fUsuarioRoutes();
                 fPublicacionRoutes();
+                fPostRoutes();
+                fMensajeprivadoRoutes();
+                fTemaRoutes();
+                fTipotemaRoutes();
                 fEstadoRoutes();
                 fProveedorRoutes();
                 fClienteRoutes();
