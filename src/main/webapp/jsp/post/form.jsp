@@ -40,37 +40,6 @@
             <a class="btn btn-primary btn-sm" id="contenido_button" href="#"><i class="glyphicon glyphicon-pencil"></i></a>
         </div>
     </div>
-    
-    <div class="form-group">
-        <label class="col-sm-2 control-label" for="fechacreacion">Fecha de creación</label> 
-        <div class="col-sm-3">           
-            <div class='input-group date' id='fechacreacion_group'>
-                <input type='text' class="form-control" id='fechacreacion' name="fechacreacion" placeholder="Fecha de creación" />
-                <span class="input-group-addon">
-                    <span class="glyphicon glyphicon-calendar"></span>
-                </span>
-            </div>
-        </div>
-    </div>
-    
-    <div class="form-group">
-        <label class="col-sm-2 control-label" for="fechamodificacion">Fecha de modificación</label> 
-        <div class="col-sm-3">           
-            <div class='input-group date' id='fechamodificacion_group'>
-                <input type='text' class="form-control" id='fechamodificacion' name="fechamodificacion" placeholder="Fecha de modificación" />
-                <span class="input-group-addon">
-                    <span class="glyphicon glyphicon-calendar"></span>
-                </span>
-            </div>
-        </div>
-    </div>
-    
-    <div class="form-group">
-        <label class="col-sm-2 control-label"  for="primermensaje">Primer mensaje:</label>
-        <div class="col-sm-1">
-            <input type="checkbox" id="primermensaje" name="primermensaje" value="" />
-        </div>
-    </div> 
 
     <div class="form-group">
         <label class="col-sm-2 control-label" for="obj_tema_id">Tema: </label> 
@@ -112,16 +81,6 @@
 <script type="text/javascript">
 
     $(document).ready(function() {
-        $('#fechacreacion_group').datetimepicker({
-            pickTime: false,
-            language: 'es',
-            showToday: true
-        });
-        $('#fechamodificacion_group').datetimepicker({
-            pickTime: false,
-            language: 'es',
-            showToday: true
-        });
         //http://jqueryvalidation.org/documentation/
         $('#postForm')
                 .bootstrapValidator({
@@ -147,28 +106,6 @@
                             validators: {
                                 notEmpty: {
                                     message: 'Debe introducir contenido'
-                                }
-                            }
-                        },
-                        fechacreacion: {
-                            validators: {
-                                notEmpty: {
-                                    message: 'Debe introducir una fecha de creación'
-                                },
-                                date: {
-                                    format: 'DD/MM/YYYY',
-                                    message: 'La fecha de creación no tiene formato DD/MM/YYYY'
-                                }
-                            }
-                        },
-                        fechamodificacion: {
-                            validators: {
-                                notEmpty: {
-                                    message: 'Debe introducir una fecha de modificación'
-                                },
-                                date: {
-                                    format: 'DD/MM/YYYY',
-                                    message: 'La fecha de modificaciñón no tiene formato DD/MM/YYYY'
                                 }
                             }
                         },
@@ -202,14 +139,6 @@
                     $('#postForm').bootstrapValidator('revalidateField', 'id_tema');
                 })
                 ;
-        $('#fechacreacion_group').on('dp.change dp.show', function(e) {
-// Revalidate the date when user change it
-            $('#postForm').bootstrapValidator('revalidateField', 'fechacreacion_group');
-        });
-        $('#fechamodificacion_group').on('dp.change dp.show', function(e) {
-// Revalidate the date when user change it
-            $('#postForm').bootstrapValidator('revalidateField', 'modificacion_group');
-        });
     });       
 
     

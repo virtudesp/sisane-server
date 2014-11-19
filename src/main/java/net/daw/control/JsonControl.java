@@ -44,6 +44,7 @@ import net.daw.control.operation.specific.implementation.OrdenadorControlOperati
 import net.daw.control.operation.specific.implementation.ProductoControlOperationSpImpl;
 import net.daw.control.operation.specific.implementation.ClienteControlOperationSpImpl;
 import net.daw.control.operation.specific.implementation.MensajeprivadoControlOperationSpImpl;
+import net.daw.control.operation.specific.implementation.PostControlOperationSpImpl;
 import net.daw.control.operation.specific.implementation.ProveedorControlOperationSpImpl;
 import net.daw.control.operation.specific.implementation.TemaControlOperationSpImpl;
 import net.daw.control.operation.specific.implementation.TipoproductoControlOperationSpImpl;
@@ -64,6 +65,7 @@ import net.daw.control.route.specific.implementation.OrdenadorControlRouteSpImpl
 import net.daw.control.route.specific.implementation.ProductoControlRouteSpImpl;
 import net.daw.control.route.specific.implementation.ClienteControlRouteSpImpl;
 import net.daw.control.route.specific.implementation.MensajeprivadoControlRouteSpImpl;
+import net.daw.control.route.specific.implementation.PostControlRouteSpImpl;
 import net.daw.control.route.specific.implementation.ProveedorControlRouteSpImpl;
 import net.daw.control.route.specific.implementation.TemaControlRouteSpImpl;
 import net.daw.control.route.specific.implementation.TipoproductoControlRouteSpImpl;
@@ -174,8 +176,8 @@ public class JsonControl extends HttpServlet {
                         jsonResult = oPublicacionRoute.execute(request, oPublicacionControlOperation);
                         break;
                     case "post":
-                        PostControlRouteGenSpImpl oPostRoute = new PostControlRouteGenSpImpl();
-                        PostControlOperationGenSpImpl oPostControlOperation = new PostControlOperationGenSpImpl(request);
+                        PostControlRouteSpImpl oPostRoute = new PostControlRouteSpImpl();
+                        PostControlOperationSpImpl oPostControlOperation = new PostControlOperationSpImpl(request);
                         jsonResult = oPostRoute.execute(request, oPostControlOperation);
                         break;
                     case "tema":

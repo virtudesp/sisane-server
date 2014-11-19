@@ -16,7 +16,7 @@
  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 --%>
 
-<form class="form-horizontal" role="form" action="#" id="documentoForm" name="formulario">
+<form class="form-horizontal" role="form" action="#" id="temaForm" name="formulario">
     <div class="form-group">
         <label class="col-sm-2 control-label" for="id">Id:</label>
         <div class="col-sm-2">
@@ -27,18 +27,6 @@
         <label class="col-sm-2 control-label"  for="nombre">Titulo del tema:</label>
         <div class="col-sm-6">
             <input type="text" id="nombre" class="form-control"  name="nombre" size="15" placeholder="Título del tema" />
-        </div>
-    </div>
-    
-    <div class="form-group">
-        <label class="col-sm-2 control-label" for="fechacreacion">Fecha de creación</label> 
-        <div class="col-sm-3">           
-            <div class='input-group date' id='fechacreacion_group'>
-                <input type='text' class="form-control" id='fechacreacion' name="fechacreacion" placeholder="Fecha de creación" />
-                <span class="input-group-addon">
-                    <span class="glyphicon glyphicon-calendar"></span>
-                </span>
-            </div>
         </div>
     </div>
 
@@ -82,18 +70,8 @@
 <script type="text/javascript">
 
     $(document).ready(function() {
-        $('#alta_group').datetimepicker({
-            pickTime: false,
-            language: 'es',
-            showToday: true
-        });
-        $('#cambio_group').datetimepicker({
-            pickTime: false,
-            language: 'es',
-            showToday: true
-        });
         //http://jqueryvalidation.org/documentation/
-        $('#documentoForm')
+        $('#temaForm')
                 .bootstrapValidator({
                     container: '#messages',
                     feedbackIcons: {
@@ -102,61 +80,16 @@
                         validating: 'glyphicon glyphicon-refresh'
                     },
                     fields: {
-                        titulo: {
+                        nombre: {
                             validators: {
                                 notEmpty: {
-                                    message: 'Debe introducir un título'
+                                    message: 'Debe introducir un título de tema'
                                 },
                                 stringLength: {
                                     max: 255,
-                                    message: 'El título debe tener como máximo 255 caracteres'
+                                    message: 'El título del tema debe tener como máximo 255 caracteres'
                                 }
                             }
-                        },
-                        contenido: {
-                            validators: {
-                                notEmpty: {
-                                    message: 'Debe introducir contenido'
-                                }
-                            }
-                        },
-                        alta_group: {
-                            validators: {
-                                notEmpty: {
-                                    message: 'Debe introducir una fecha de alta'
-                                },
-                                date: {
-                                    format: 'DD/MM/YYYY',
-                                    message: 'La fecha de alta no tiene formato DD/MM/YYYY'
-                                }
-                            }
-                        },
-                        cambio_group: {
-                            validators: {
-                                notEmpty: {
-                                    message: 'Debe introducir una fecha de cambio'
-                                },
-                                date: {
-                                    format: 'DD/MM/YYYY',
-                                    message: 'La fecha de cambio no tiene formato DD/MM/YYYY'
-                                }
-                            }
-                        },
-                        hits: {
-                            validators: {
-                                notEmpty: {
-                                    message: 'Debe introducir un número de hits'
-                                },
-                                integer: {
-                                    message: 'El valor de hits debe ser un entero'
-                                },
-                                between: {
-                                    min: -0,
-                                    max: 99999999,
-                                    message: 'El número de hits debe ser un entero entre 0 y 99999999'
-                                }
-                            }
-
                         },
                         id_usuario: {
                             validators: {
@@ -168,7 +101,7 @@
                                 }
                             }
                         },
-                        id_tipodocumento: {
+                        id_tipotema: {
                             validators: {
                                 notEmpty: {
                                     message: 'Debe elegir un tipo de documento'
@@ -177,37 +110,17 @@
                                     message: 'El identificador de tipo de documento debe ser un entero'
                                 }
                             }
-                        },
-                        etiquetas: {
-                            validators: {
-                                notEmpty: {
-                                    message: 'Debe introducir una etiqueta'
-                                },
-                                stringLength: {
-                                    max: 100,
-                                    message: 'La longitud de las etiquetas debe ser de 100 caracteres como mucho'
-                                }
-                            }
                         }
-
                     }
                 })
                 .on('change', '[name="id_usuario"]', function() {
-                    $('#documentoForm').bootstrapValidator('revalidateField', 'id_usuario');
+                    $('#temaForm').bootstrapValidator('revalidateField', 'id_usuario');
                 })
 
-                .on('change', '[name="id_tipodocumento"]', function() {
-                    $('#documentoForm').bootstrapValidator('revalidateField', 'id_tipodocumento');
+                .on('change', '[name="id_tipotema"]', function() {
+                    $('#temaForm').bootstrapValidator('revalidateField', 'id_tipotema');
                 })
                 ;
-        $('#alta_group').on('dp.change dp.show', function(e) {
-// Revalidate the date when user change it
-            $('#documentoForm').bootstrapValidator('revalidateField', 'alta_group');
-        });
-        $('#cambio_group').on('dp.change dp.show', function(e) {
-// Revalidate the date when user change it
-            $('#documentoForm').bootstrapValidator('revalidateField', 'cambio_group');
-        });
     });       
 
     

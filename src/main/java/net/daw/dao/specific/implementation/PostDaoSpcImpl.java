@@ -24,11 +24,9 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
+import net.daw.bean.generic.specific.implementation.PostBeanGenSpImpl;
 import net.daw.bean.generic.specific.implementation.TemaBeanGenSpImpl;
-import net.daw.bean.generic.specific.implementation.TipoproductoBeanGenSpImpl;
-import net.daw.bean.generic.specific.implementation.TipotemaBeanGenSpImpl;
 import net.daw.bean.generic.specific.implementation.UsuarioBeanGenSpImpl;
-import net.daw.dao.generic.specific.implementation.TipotemaDaoGenSpImpl;
 import net.daw.dao.generic.specific.implementation.UsuarioDaoGenSpImpl;
 import net.daw.dao.publicinterface.MetaDaoInterface;
 import net.daw.dao.publicinterface.TableDaoInterface;
@@ -38,13 +36,13 @@ import net.daw.helper.AppConfigurationHelper;
 import net.daw.helper.ExceptionBooster;
 import net.daw.helper.FilterBeanHelper;
 
-public class TemaDaoSpcImpl implements ViewDaoInterface<TemaBeanGenSpImpl>, TableDaoInterface<TemaBeanGenSpImpl>, MetaDaoInterface {
+public class PostDaoSpcImpl implements ViewDaoInterface<PostBeanGenSpImpl>, TableDaoInterface<PostBeanGenSpImpl>, MetaDaoInterface {
 
     private String strTableName = null;
     private MysqlDataSpImpl oMysql = null;
     private Connection oConnection = null;
 
-    public TemaDaoSpcImpl(String ob, Connection oConexion) throws Exception {
+    public PostDaoSpcImpl(String ob, Connection oConexion) throws Exception {
         try {
             strTableName = ob;
             oConnection = oConexion;
@@ -77,93 +75,98 @@ public class TemaDaoSpcImpl implements ViewDaoInterface<TemaBeanGenSpImpl>, Tabl
     }
 
     @Override
-    public ArrayList<TemaBeanGenSpImpl> getPage(int intRegsPerPag, int intPage, ArrayList<FilterBeanHelper> hmFilter, HashMap<String, String> hmOrder) throws Exception {
+    public ArrayList<PostBeanGenSpImpl> getPage(int intRegsPerPag, int intPage, ArrayList<FilterBeanHelper> hmFilter, HashMap<String, String> hmOrder) throws Exception {
         ArrayList<Integer> arrId;
-        ArrayList<TemaBeanGenSpImpl> arrTema = new ArrayList<>();
+        ArrayList<PostBeanGenSpImpl> arrPost = new ArrayList<>();
         try {
             arrId = oMysql.getPage(strTableName, intRegsPerPag, intPage, hmFilter, hmOrder);
             Iterator<Integer> iterador = arrId.listIterator();
             while (iterador.hasNext()) {
-                TemaBeanGenSpImpl oTemaBean = new TemaBeanGenSpImpl(iterador.next());
-                arrTema.add(this.get(oTemaBean, AppConfigurationHelper.getJsonDepth()));
+                PostBeanGenSpImpl oPostBean = new PostBeanGenSpImpl(iterador.next());
+                arrPost.add(this.get(oPostBean, AppConfigurationHelper.getJsonDepth()));
             }
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPage ERROR: " + ex.getMessage()));
         }
-        return arrTema;
+        return arrPost;
     }
 
     @Override
-    public TemaBeanGenSpImpl get(TemaBeanGenSpImpl oTemaBean, Integer expand) throws Exception {
-        if (oTemaBean.getId() > 0) {
+    public PostBeanGenSpImpl get(PostBeanGenSpImpl oPostBean, Integer expand) throws Exception {
+        if (oPostBean.getId() > 0) {
             try {
-                if (!oMysql.existsOne(strTableName, oTemaBean.getId())) {
-                    oTemaBean.setId(0);
+                if (!oMysql.existsOne(strTableName, oPostBean.getId())) {
+                    oPostBean.setId(0);
                 } else {
                     expand--;
                     if (expand > 0) {
-                        oTemaBean.setNombre(oMysql.getOne(strTableName, "nombre", oTemaBean.getId()));
+                        oPostBean.setTitulo(oMysql.getOne(strTableName, "titulo", oPostBean.getId()));
+                        oPostBean.setMensaje(oMysql.getOne(strTableName, "mensaje", oPostBean.getId()));
                         
                         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                        String dateInString = oMysql.getOne(strTableName, "fechacreacion", oTemaBean.getId());         
-                        oTemaBean.setFechacreacion(formatter.parse(dateInString));                        
+                        String dateInString = oMysql.getOne(strTableName, "fechacreacion", oPostBean.getId());  
+                        String dateInString2 = oMysql.getOne(strTableName, "fechamodificacion", oPostBean.getId());         
+                        oPostBean.setFechacreacion(formatter.parse(dateInString));   
+                        oPostBean.setFechamodificacion(formatter.parse(dateInString2));                        
                         
-                        oTemaBean.setId_tipotema(Integer.parseInt(oMysql.getOne(strTableName, "id_tipotema", oTemaBean.getId())));
-                        oTemaBean.setId_usuario(Integer.parseInt(oMysql.getOne(strTableName, "id_usuario", oTemaBean.getId())));
+                        oPostBean.setId_tema(Integer.parseInt(oMysql.getOne(strTableName, "id_tema", oPostBean.getId())));
+                        oPostBean.setId_usuario(Integer.parseInt(oMysql.getOne(strTableName, "id_usuario", oPostBean.getId())));
 
-                        TipotemaBeanGenSpImpl oTipotema = new TipotemaBeanGenSpImpl();
-                        oTipotema.setId(Integer.parseInt(oMysql.getOne(strTableName, "id_tipotema", oTemaBean.getId())));
-                        TipotemaDaoGenSpImpl oTipotemaDAO = new TipotemaDaoGenSpImpl("tipotema", oConnection);
-                        oTipotema = oTipotemaDAO.get(oTipotema, AppConfigurationHelper.getJsonDepth());
-                        oTemaBean.setObj_tipotema(oTipotema);
+                        TemaBeanGenSpImpl oTema = new TemaBeanGenSpImpl();
+                        oTema.setId(Integer.parseInt(oMysql.getOne(strTableName, "id_tema", oPostBean.getId())));
+                        TemaDaoSpcImpl oTemaDAO = new TemaDaoSpcImpl("tema", oConnection);
+                        oTema = oTemaDAO.get(oTema, AppConfigurationHelper.getJsonDepth());
+                        oPostBean.setObj_tema(oTema);
 
                         UsuarioBeanGenSpImpl oUsuario = new UsuarioBeanGenSpImpl();
-                        oUsuario.setId(Integer.parseInt(oMysql.getOne(strTableName, "id_usuario", oTemaBean.getId())));
+                        oUsuario.setId(Integer.parseInt(oMysql.getOne(strTableName, "id_usuario", oPostBean.getId())));
                         UsuarioDaoGenSpImpl oUsuarioDAO = new UsuarioDaoGenSpImpl("usuario", oConnection);
                         oUsuario = oUsuarioDAO.get(oUsuario, AppConfigurationHelper.getJsonDepth());
-                        oTemaBean.setObj_usuario(oUsuario);
+                        oPostBean.setObj_usuario(oUsuario);
                     }
                 }
             } catch (Exception ex) {
                 ExceptionBooster.boost(new Exception(this.getClass().getName() + ":get ERROR: " + ex.getMessage()));
             }
         } else {
-            oTemaBean.setId(0);
+            oPostBean.setId(0);
         }
-        return oTemaBean;
+        return oPostBean;
     }
 
     @Override
-    public TemaBeanGenSpImpl set(TemaBeanGenSpImpl oTemaBean) throws Exception {
+    public PostBeanGenSpImpl set(PostBeanGenSpImpl oPostBean) throws Exception {
         try {
-            if (oTemaBean.getId() == 0) {
-                oTemaBean.setId(oMysql.insertOne(strTableName));
+            if (oPostBean.getId() == 0) {
+                oPostBean.setId(oMysql.insertOne(strTableName));
             }
-            oMysql.updateOne(oTemaBean.getId(), strTableName, "nombre", oTemaBean.getNombre());
-                        
+            oMysql.updateOne(oPostBean.getId(), strTableName, "titulo", oPostBean.getTitulo());
+            oMysql.updateOne(oPostBean.getId(), strTableName, "mensaje", oPostBean.getMensaje());
+            
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");      
             Date newDate = new Date();       
             String date = formatter.format(newDate);
             
-            if (oMysql.getOne(strTableName, "fechacreacion", oTemaBean.getId()) != null) {
-                oMysql.updateOne(oTemaBean.getId(), strTableName, "fechacreacion", oMysql.getOne(strTableName, "fechacreacion", oTemaBean.getId()));
+            if (oMysql.getOne(strTableName, "fechacreacion", oPostBean.getId()) != null) {
+                oMysql.updateOne(oPostBean.getId(), strTableName, "fechacreacion", oMysql.getOne(strTableName, "fechacreacion", oPostBean.getId()));
             } else {
-                oMysql.updateOne(oTemaBean.getId(), strTableName, "fechacreacion", date);
+                oMysql.updateOne(oPostBean.getId(), strTableName, "fechacreacion", date);
             }
             
-            oMysql.updateOne(oTemaBean.getId(), strTableName, "id_usuario", oTemaBean.getId_usuario().toString());
-            oMysql.updateOne(oTemaBean.getId(), strTableName, "id_tipotema", oTemaBean.getId_tipotema().toString());
+            oMysql.updateOne(oPostBean.getId(), strTableName, "fechamodificacion", date);
+            oMysql.updateOne(oPostBean.getId(), strTableName, "id_tema", oPostBean.getId_tema().toString());
+            oMysql.updateOne(oPostBean.getId(), strTableName, "id_usuario", oPostBean.getId_usuario().toString());
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":set ERROR: " + ex.getMessage()));
         }
-        return oTemaBean;
+        return oPostBean;
     }
 
     @Override
-    public int remove(TemaBeanGenSpImpl oTemaBean) throws Exception {
+    public int remove(PostBeanGenSpImpl oPostBean) throws Exception {
         int result = 0;
         try {
-            result = oMysql.removeOne(oTemaBean.getId(), strTableName);
+            result = oMysql.removeOne(oPostBean.getId(), strTableName);
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":remove ERROR: " + ex.getMessage()));
         }

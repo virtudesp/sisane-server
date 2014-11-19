@@ -7039,3 +7039,5 @@ ALTER TABLE `post` CHANGE `id` `id` INT(6) NOT NULL AUTO_INCREMENT COMMENT 'ID',
 
 
 ALTER TABLE `mensajeprivado` CHANGE `id` `id` INT(6) NOT NULL AUTO_INCREMENT COMMENT 'ID', CHANGE `id_usuario_1` `id_usuario_1` INT(6) NULL DEFAULT NULL COMMENT 'Usuario envía', CHANGE `id_usuario_2` `id_usuario_2` INT(6) NULL DEFAULT NULL COMMENT 'Usuario recibe', CHANGE `asunto` `asunto` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'Asunto', CHANGE `mensaje` `mensaje` LONGTEXT CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'Mensaje', CHANGE `leido` `leido` TINYINT(1) NULL DEFAULT NULL COMMENT 'Leído';
+
+ALTER TABLE `post` DROP `primermensaje`;

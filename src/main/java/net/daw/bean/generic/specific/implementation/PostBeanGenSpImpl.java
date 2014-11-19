@@ -40,8 +40,6 @@ public class PostBeanGenSpImpl extends BeanGenImpl implements BeanInterface {
     private Date fechacreacion = new Date();
     @Expose
     private Date fechamodificacion = new Date();
-    @Expose
-    private Boolean primermensaje = false;
     @Expose(serialize = false)
     private Integer id_tema = 0; //importante inicializar a 0 las claves ajenas
     @Expose(deserialize = false)
@@ -81,14 +79,6 @@ public class PostBeanGenSpImpl extends BeanGenImpl implements BeanInterface {
 
     public void setFechamodificacion(Date fechamodificacion) {
         this.fechamodificacion = fechamodificacion;
-    }
-
-    public Boolean getPrimermensaje() {
-        return primermensaje;
-    }
-
-    public void setPrimermensaje(Boolean primermensaje) {
-        this.primermensaje = primermensaje;
     }
 
     public Integer getId_tema() {
