@@ -28,7 +28,7 @@ import net.daw.connection.publicinterface.ConnectionInterface;
 import net.daw.control.operation.publicinterface.ControlOperationInterface;
 import net.daw.helper.ExceptionBooster;
 import net.daw.helper.FilterBeanHelper;
-import net.daw.helper.parameterCooker;
+import net.daw.helper.ParameterCooker;
 import net.daw.service.specific.implementation.ActividadServiceSpImpl;
 
 /**
@@ -45,7 +45,7 @@ public class ActividadControlOperationSpImpl implements ControlOperationInterfac
         try {
             DataConnectionSource = new BoneConnectionPoolImpl();
             oConnection = DataConnectionSource.newConnection();
-            oActividadService = new ActividadServiceSpImpl(parameterCooker.prepareObject(request), oConnection);
+            oActividadService = new ActividadServiceSpImpl(ParameterCooker.prepareObject(request), oConnection);
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":ActividadControlOperationSpImpl ERROR: " + ex.getMessage()));
         }
@@ -55,7 +55,7 @@ public class ActividadControlOperationSpImpl implements ControlOperationInterfac
     public String get(HttpServletRequest request) throws Exception {
         String result = null;
         try {
-            result = oActividadService.get(parameterCooker.prepareId(request));
+            result = oActividadService.get(ParameterCooker.prepareId(request));
             closeDB();
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":get ERROR: " + ex.getMessage()));
@@ -67,7 +67,7 @@ public class ActividadControlOperationSpImpl implements ControlOperationInterfac
     public String getaggregateviewone(HttpServletRequest request) throws Exception {
         String result = null;
         try {
-            result = oActividadService.getAggregateViewOne(parameterCooker.prepareId(request));
+            result = oActividadService.getAggregateViewOne(ParameterCooker.prepareId(request));
             closeDB();
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getaggregateviewone ERROR: " + ex.getMessage()));
@@ -103,10 +103,10 @@ public class ActividadControlOperationSpImpl implements ControlOperationInterfac
     public String getpage(HttpServletRequest request) throws Exception {
         String result = null;
         try {
-            Integer intRegsPerPag = parameterCooker.prepareRpp(request);
-            Integer intPage = parameterCooker.preparePage(request);
-            ArrayList<FilterBeanHelper> alFilter = parameterCooker.prepareFilter(request);
-            HashMap<String, String> hmOrder = parameterCooker.prepareOrder(request);
+            Integer intRegsPerPag = ParameterCooker.prepareRpp(request);
+            Integer intPage = ParameterCooker.preparePage(request);
+            ArrayList<FilterBeanHelper> alFilter = ParameterCooker.prepareFilter(request);
+            HashMap<String, String> hmOrder = ParameterCooker.prepareOrder(request);
             result = oActividadService.getPage(intRegsPerPag, intPage, alFilter, hmOrder);
             closeDB();
         } catch (Exception ex) {
@@ -119,8 +119,8 @@ public class ActividadControlOperationSpImpl implements ControlOperationInterfac
     public String getpages(HttpServletRequest request) throws Exception {
         String result = null;
         try {
-            Integer intRegsPerPag = parameterCooker.prepareRpp(request);
-            ArrayList<FilterBeanHelper> alFilter = parameterCooker.prepareFilter(request);
+            Integer intRegsPerPag = ParameterCooker.prepareRpp(request);
+            ArrayList<FilterBeanHelper> alFilter = ParameterCooker.prepareFilter(request);
             result = oActividadService.getPages(intRegsPerPag, alFilter);
             closeDB();
         } catch (Exception ex) {
@@ -133,7 +133,7 @@ public class ActividadControlOperationSpImpl implements ControlOperationInterfac
     public String getregisters(HttpServletRequest request) throws Exception {
         String result = null;
         try {
-            ArrayList<FilterBeanHelper> alFilter = parameterCooker.prepareFilter(request);
+            ArrayList<FilterBeanHelper> alFilter = ParameterCooker.prepareFilter(request);
             result = oActividadService.getCount(alFilter);
             closeDB();
         } catch (Exception ex) {
@@ -146,10 +146,10 @@ public class ActividadControlOperationSpImpl implements ControlOperationInterfac
     public String getaggregateviewsome(HttpServletRequest request) throws Exception {
         String result = null;
         try {
-            Integer intRegsPerPag = parameterCooker.prepareRpp(request);
-            Integer intPage = parameterCooker.preparePage(request);
-            ArrayList<FilterBeanHelper> alFilter = parameterCooker.prepareFilter(request);
-            HashMap<String, String> hmOrder = parameterCooker.prepareOrder(request);
+            Integer intRegsPerPag = ParameterCooker.prepareRpp(request);
+            Integer intPage = ParameterCooker.preparePage(request);
+            ArrayList<FilterBeanHelper> alFilter = ParameterCooker.prepareFilter(request);
+            HashMap<String, String> hmOrder = ParameterCooker.prepareOrder(request);
             result = oActividadService.getAggregateViewSome(intRegsPerPag, intPage, alFilter, hmOrder);
             closeDB();
         } catch (Exception ex) {
@@ -162,7 +162,7 @@ public class ActividadControlOperationSpImpl implements ControlOperationInterfac
     public String remove(HttpServletRequest request) throws Exception {
         String result = null;
         try {
-            result = oActividadService.remove(parameterCooker.prepareId(request));
+            result = oActividadService.remove(ParameterCooker.prepareId(request));
             closeDB();
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":remove ERROR: " + ex.getMessage()));
@@ -174,7 +174,7 @@ public class ActividadControlOperationSpImpl implements ControlOperationInterfac
     public String set(HttpServletRequest request) throws Exception {
         String result = null;
         try {
-            result = oActividadService.set(parameterCooker.prepareJson(request));
+            result = oActividadService.set(ParameterCooker.prepareJson(request));
             closeDB();
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":set ERROR: " + ex.getMessage()));
