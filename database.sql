@@ -1948,6 +1948,157 @@ INSERT INTO `proveedor` (`id`, `nia`, `nombre`, `telefono`, `direccion`, `email`
 (20, '00.000.018-B', 'Moreno Suministros Industriales', '93699336', 'Carretera de Terrassa 106 08191', 'comercial@ferreteriamoreno.com', 'www.ferreteriamoreno.com', '936999092', 'Rubí (Barcelona)'),
 (21, '00.000.004-B', 'Ferrokey', '917280377', 'Herrera Oria 63 segunda planta 28034', 'info@ferroket.com', 'www.ferroket.com', '913580421', 'MADRID');
 
+
+--
+-- Estructura de tabla para la tabla `actividad`
+--
+
+CREATE TABLE IF NOT EXISTS `actividad` (
+`id` int(11) NOT NULL COMMENT 'Numero',
+  `enunciado` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Enunciado',
+  `fecha` date DEFAULT NULL COMMENT 'Fecha Actividad',
+  `evaluacion` int(11) DEFAULT NULL COMMENT 'Evaluacion',
+  `activo` tinyint(1) DEFAULT NULL COMMENT '¿ Activo ?'
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=22 ;
+
+--
+-- Volcado de datos para la tabla `actividad`
+--
+
+INSERT INTO `actividad` (`id`, `enunciado`, `fecha`, `evaluacion`, `activo`) VALUES
+(1, 'Actividad 01', '2014-10-09', 1, 1),
+(2, 'Actividad 02', '2014-11-12', 1, 0),
+(3, 'Actividad 03', '2014-11-05', 2, 1),
+(4, 'Actividad 04', '2014-11-18', 2, 1),
+(5, 'Actividad 05', '2014-11-02', 3, 1),
+(6, 'Actividad 06', '2014-11-28', 3, 1),
+(7, 'Actividad 07', '2014-10-03', 1, 1),
+(8, 'Actividad 08', '2014-12-03', 1, 1),
+(9, 'Actividad 09', '2014-11-03', 1, 1),
+(10, 'Actividad 10', '2014-12-08', 1, 1),
+(11, 'Actividad 11', '2014-12-13', 2, 1),
+(12, 'Actividad 12', '2014-12-13', 2, 1),
+(13, 'Actividad 13', '2014-12-05', 3, 1),
+(14, 'Actividad 14', '2014-12-24', 3, 1),
+(15, 'Actividad 15', '2014-12-18', 3, 1),
+(16, 'Actividad 16', '2014-12-09', 2, 1),
+(17, 'Actividad 17', '2014-08-03', 2, 1),
+(18, 'Actividad 18', '2014-12-21', 3, 1),
+(19, 'Actividad 19', '2014-11-21', 2, 1),
+(21, 'Actividad 20', '2014-11-06', 2, 0);
+
+--
+-- Estructura de tabla para la tabla `entrega`
+--
+
+CREATE TABLE IF NOT EXISTS `entrega` (
+`id` int(11) NOT NULL COMMENT 'Id',
+  `nota` int(2) DEFAULT NULL COMMENT 'Nota',
+  `fecha` date DEFAULT NULL COMMENT 'Fecha Entrega',
+  `id_documento` int(11) DEFAULT NULL COMMENT 'Num Documento',
+  `id_actividad` int(11) DEFAULT NULL COMMENT 'Num Actividad'
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=21 ;
+
+--
+-- Volcado de datos para la tabla `entrega`
+--
+
+INSERT INTO `entrega` (`id`, `nota`, `fecha`, `id_documento`, `id_actividad`) VALUES
+(1, 5, '2014-10-09', 1, 1),
+(2, 4, '2014-10-15', 2, 2),
+(3, 5, '2014-10-07', 3, 3),
+(4, 4, '2014-10-16', 4, 4),
+(5, 5, '2014-10-15', 5, 5),
+(6, 6, '2014-10-16', 6, 6),
+(7, 7, '2014-10-17', 7, 7),
+(8, 6, '2014-01-15', 8, 8),
+(9, 9, '2014-11-15', 9, 9),
+(10, 4, '2014-10-05', 10, 10),
+(11, 4, '2014-10-12', 11, 11),
+(12, 4, '2014-10-15', 12, 12),
+(13, 4, '2014-05-15', 13, 13),
+(14, 4, '2014-06-15', 14, 14),
+(15, 4, '2014-10-08', 15, 15),
+(16, 4, '2014-10-13', 16, 16),
+(17, 5, '2014-07-17', 17, 17),
+(18, 4, '2014-03-15', 18, 18),
+(19, 4, '2014-02-02', 19, 19),
+(20, 7, '2014-04-25', 20, 20);
+
+--
+-- Estructura de tabla para la tabla `metadocumento`
+--
+
+CREATE TABLE IF NOT EXISTS `metadocumento` (
+`id` int(11) NOT NULL COMMENT 'Id',
+  `titulo` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Tiulo Documento',
+  `fecha` date DEFAULT NULL COMMENT 'Fecha Documento'
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=21 ;
+
+--
+-- Volcado de datos para la tabla `metadocumento`
+--
+
+INSERT INTO `metadocumento` (`id`, `titulo`, `fecha`) VALUES
+(1, 'Victor', '2013-11-29'),
+(2, 'Cristian', '2013-11-29'),
+(3, 'Enrique', '2013-11-28'),
+(4, 'Jordi', '2013-11-26'),
+(5, 'Alvaro', '2013-11-30'),
+(6, 'Jacobo', '2013-11-19'),
+(7, 'Pilar', '2014-10-07'),
+(8, 'Pablo', '2013-11-12'),
+(9, 'Pedro', '2013-11-13'),
+(10, 'Juancarlos', '2013-10-14'),
+(11, 'Andres', '2013-10-15'),
+(12, 'Raul', '2013-10-16'),
+(13, 'Cristina', '2013-10-17'),
+(14, 'Antonio', '2013-10-18'),
+(15, 'Jose', '2013-10-19'),
+(16, 'Ramon', '2013-10-20'),
+(17, 'Andrea', '2013-10-21'),
+(18, 'Laura', '2013-10-22'),
+(19, 'Marta', '2013-10-23'),
+(20, 'Silvia', '2013-10-24');
+
+--
+-- Estructura de tabla para la tabla `metadocumentos`
+--
+
+CREATE TABLE IF NOT EXISTS `metadocumentos` (
+`id` int(11) NOT NULL COMMENT 'Id Documento',
+  `orden` int(11) DEFAULT NULL COMMENT 'Orden Documento',
+  `id_documento` int(11) DEFAULT NULL COMMENT 'Numero de Documento',
+  `id_metadocumento` int(11) DEFAULT NULL COMMENT 'Numero de Metadocumento'
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=21 ;
+
+--
+-- Volcado de datos para la tabla `metadocumentos`
+--
+
+INSERT INTO `metadocumentos` (`id`, `orden`, `id_documento`, `id_metadocumento`) VALUES
+(1, 8, 1, 1),
+(2, 8, 2, 2),
+(3, 8, 3, 3),
+(4, 7, 4, 4),
+(5, 8, 5, 5),
+(6, 7, 6, 6),
+(7, 8, 7, 7),
+(8, 7, 8, 8),
+(9, 8, 9, 9),
+(10, 7, 10, 10),
+(11, 8, 11, 11),
+(12, 7, 12, 12),
+(13, 8, 13, 13),
+(14, 7, 14, 14),
+(15, 8, 15, 15),
+(16, 7, 16, 16),
+(17, 8, 17, 17),
+(18, 7, 18, 18),
+(19, 8, 19, 19),
+(20, 7, 20, 20);
+
+
 --
 -- Índices para tablas volcadas
 --
@@ -1994,6 +2145,32 @@ ALTER TABLE `proveedor`
 ALTER TABLE `tipoproducto`
  ADD PRIMARY KEY (`id`,`id_impuesto`);
 
+
+--
+-- Indices de la tabla `actividad`
+--
+ALTER TABLE `actividad`
+ ADD PRIMARY KEY (`id`);
+
+
+--
+-- Indices de la tabla `entrega`
+--
+ALTER TABLE `entrega`
+ ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `metadocumento`
+--
+ALTER TABLE `metadocumento`
+ ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `metadocumentos`
+--
+ALTER TABLE `metadocumentos`
+ ADD PRIMARY KEY (`id`);
+
 --
 -- AUTO_INCREMENT de las tablas volcadas
 --
@@ -2033,6 +2210,31 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Identificador',AUTO_INCREME
 --
 ALTER TABLE `tipoproducto`
 MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=32;
+
+--
+-- AUTO_INCREMENT de la tabla `actividad`
+--
+ALTER TABLE `actividad`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Numero',AUTO_INCREMENT=22;
+
+--
+-- AUTO_INCREMENT de la tabla `entrega`
+--
+ALTER TABLE `entrega`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Id',AUTO_INCREMENT=21;
+
+--
+-- AUTO_INCREMENT de la tabla `metadocumento`
+--
+ALTER TABLE `metadocumento`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Id',AUTO_INCREMENT=21;
+
+--
+-- AUTO_INCREMENT de la tabla `metadocumentos`
+--
+ALTER TABLE `metadocumentos`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Id Documento',AUTO_INCREMENT=21;
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
