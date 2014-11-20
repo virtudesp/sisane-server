@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import javax.servlet.http.HttpServletRequest;
 
-public class parameterCooker {
+public class ParameterCooker {
 
     public static String prepareMode(HttpServletRequest request) {
         String result = null;

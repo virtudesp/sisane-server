@@ -28,7 +28,7 @@ import net.daw.connection.publicinterface.ConnectionInterface;
 import net.daw.control.operation.publicinterface.ControlOperationInterface;
 import net.daw.helper.ExceptionBooster;
 import net.daw.helper.FilterBeanHelper;
-import net.daw.helper.parameterCooker;
+import net.daw.helper.ParameterCooker;
 import net.daw.service.specific.implementation.TipoproductoServiceSpImpl;
 
 public class TipoproductoControlOperationSpImpl implements ControlOperationInterface {
@@ -41,7 +41,7 @@ public class TipoproductoControlOperationSpImpl implements ControlOperationInter
         try {
             DataConnectionSource = new BoneConnectionPoolImpl();
             oConnection = DataConnectionSource.newConnection();
-            oTipoproductoService = new TipoproductoServiceSpImpl(parameterCooker.prepareObject(request), oConnection);
+            oTipoproductoService = new TipoproductoServiceSpImpl(ParameterCooker.prepareObject(request), oConnection);
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":TipoproductoControlOperationSpImpl ERROR: " + ex.getMessage()));
         }
@@ -51,7 +51,7 @@ public class TipoproductoControlOperationSpImpl implements ControlOperationInter
     public String get(HttpServletRequest request) throws Exception {
         String result = null;
         try {
-            result = oTipoproductoService.get(parameterCooker.prepareId(request));
+            result = oTipoproductoService.get(ParameterCooker.prepareId(request));
             closeDB();
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":get ERROR: " + ex.getMessage()));
@@ -63,7 +63,7 @@ public class TipoproductoControlOperationSpImpl implements ControlOperationInter
     public String getaggregateviewone(HttpServletRequest request) throws Exception {
         String result = null;
         try {
-            result = oTipoproductoService.getAggregateViewOne(parameterCooker.prepareId(request));
+            result = oTipoproductoService.getAggregateViewOne(ParameterCooker.prepareId(request));
             closeDB();
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getaggregateviewone ERROR: " + ex.getMessage()));
@@ -99,10 +99,10 @@ public class TipoproductoControlOperationSpImpl implements ControlOperationInter
     public String getpage(HttpServletRequest request) throws Exception {
         String result = null;
         try {
-            Integer intRegsPerPag = parameterCooker.prepareRpp(request);
-            Integer intPage = parameterCooker.preparePage(request);
-            ArrayList<FilterBeanHelper> alFilter = parameterCooker.prepareFilter(request);
-            HashMap<String, String> hmOrder = parameterCooker.prepareOrder(request);
+            Integer intRegsPerPag = ParameterCooker.prepareRpp(request);
+            Integer intPage = ParameterCooker.preparePage(request);
+            ArrayList<FilterBeanHelper> alFilter = ParameterCooker.prepareFilter(request);
+            HashMap<String, String> hmOrder = ParameterCooker.prepareOrder(request);
             result = oTipoproductoService.getPage(intRegsPerPag, intPage, alFilter, hmOrder);
             closeDB();
         } catch (Exception ex) {
@@ -115,8 +115,8 @@ public class TipoproductoControlOperationSpImpl implements ControlOperationInter
     public String getpages(HttpServletRequest request) throws Exception {
         String result = null;
         try {
-            Integer intRegsPerPag = parameterCooker.prepareRpp(request);
-            ArrayList<FilterBeanHelper> alFilter = parameterCooker.prepareFilter(request);
+            Integer intRegsPerPag = ParameterCooker.prepareRpp(request);
+            ArrayList<FilterBeanHelper> alFilter = ParameterCooker.prepareFilter(request);
             result = oTipoproductoService.getPages(intRegsPerPag, alFilter);
             closeDB();
         } catch (Exception ex) {
@@ -129,7 +129,7 @@ public class TipoproductoControlOperationSpImpl implements ControlOperationInter
     public String getregisters(HttpServletRequest request) throws Exception {
         String result = null;
         try {
-            ArrayList<FilterBeanHelper> alFilter = parameterCooker.prepareFilter(request);
+            ArrayList<FilterBeanHelper> alFilter = ParameterCooker.prepareFilter(request);
             result = oTipoproductoService.getCount(alFilter);
             closeDB();
         } catch (Exception ex) {
@@ -142,10 +142,10 @@ public class TipoproductoControlOperationSpImpl implements ControlOperationInter
     public String getaggregateviewsome(HttpServletRequest request) throws Exception {
         String result = null;
         try {
-            Integer intRegsPerPag = parameterCooker.prepareRpp(request);
-            Integer intPage = parameterCooker.preparePage(request);
-            ArrayList<FilterBeanHelper> alFilter = parameterCooker.prepareFilter(request);
-            HashMap<String, String> hmOrder = parameterCooker.prepareOrder(request);
+            Integer intRegsPerPag = ParameterCooker.prepareRpp(request);
+            Integer intPage = ParameterCooker.preparePage(request);
+            ArrayList<FilterBeanHelper> alFilter = ParameterCooker.prepareFilter(request);
+            HashMap<String, String> hmOrder = ParameterCooker.prepareOrder(request);
             result = oTipoproductoService.getAggregateViewSome(intRegsPerPag, intPage, alFilter, hmOrder);
             closeDB();
         } catch (Exception ex) {
@@ -158,7 +158,7 @@ public class TipoproductoControlOperationSpImpl implements ControlOperationInter
     public String remove(HttpServletRequest request) throws Exception {
         String result = null;
         try {
-            result = oTipoproductoService.remove(parameterCooker.prepareId(request));
+            result = oTipoproductoService.remove(ParameterCooker.prepareId(request));
             closeDB();
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":remove ERROR: " + ex.getMessage()));
@@ -170,7 +170,7 @@ public class TipoproductoControlOperationSpImpl implements ControlOperationInter
     public String set(HttpServletRequest request) throws Exception {
         String result = null;
         try {
-            result = oTipoproductoService.set(parameterCooker.prepareJson(request));
+            result = oTipoproductoService.set(ParameterCooker.prepareJson(request));
             closeDB();
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":set ERROR: " + ex.getMessage()));

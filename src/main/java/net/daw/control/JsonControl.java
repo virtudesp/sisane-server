@@ -27,24 +27,45 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import net.daw.control.operation.generic.specific.implementation.AmigoControlOperationGenSpImpl;
+import net.daw.control.operation.generic.specific.implementation.CuestionarioControlOperationGenSpImpl;
 import net.daw.control.operation.generic.specific.implementation.DocumentoControlOperationGenSpImpl;
+import net.daw.control.operation.generic.specific.implementation.EstadoControlOperationGenSpImpl;
+import net.daw.control.operation.generic.specific.implementation.OpcionControlOperationGenSpImpl;
+import net.daw.control.operation.generic.specific.implementation.PreguntaControlOperationGenSpImpl;
+import net.daw.control.operation.generic.specific.implementation.PublicacionControlOperationGenSpImpl;
 import net.daw.control.operation.generic.specific.implementation.TipodocumentoControlOperationGenSpImpl;
+import net.daw.control.operation.generic.specific.implementation.TipousuarioControlOperationGenSpImpl;
 import net.daw.control.operation.generic.specific.implementation.UsuarioControlOperationGenSpImpl;
 import net.daw.control.operation.specific.implementation.OrdenadorControlOperationSpImpl;
 import net.daw.control.operation.specific.implementation.ActividadControlOperationSpImpl;
 import net.daw.control.operation.specific.implementation.ProductoControlOperationSpImpl;
+import net.daw.control.operation.specific.implementation.ClienteControlOperationSpImpl;
+import net.daw.control.operation.specific.implementation.ImpuestoControlOperationSpImpl;
+import net.daw.control.operation.specific.implementation.ProveedorControlOperationSpImpl;
 import net.daw.control.operation.specific.implementation.TipoproductoControlOperationSpImpl;
+import net.daw.control.route.generic.specific.implementation.CuestionarioControlRouteGenSpImpl;
 import net.daw.control.route.generic.specific.implementation.DocumentoControlRouteGenSpImpl;
+import net.daw.control.route.generic.specific.implementation.PreguntaControlRouteGenSpImpl;
+import net.daw.control.route.generic.specific.implementation.OpcionControlRouteGenSpImpl;
+import net.daw.control.route.generic.specific.implementation.EstadoControlRouteGenSpImpl;
+import net.daw.control.route.generic.specific.implementation.PublicacionControlRouteGenSpImpl;
+import net.daw.control.route.generic.specific.implementation.EstadoControlRouteGenSpImpl;
 import net.daw.control.route.generic.specific.implementation.TipodocumentoControlRouteGenSpImpl;
+import net.daw.control.route.generic.specific.implementation.TipousuarioControlRouteGenSpImpl;
 import net.daw.control.route.generic.specific.implementation.UsuarioControlRouteGenSpImpl;
+import net.daw.control.route.specific.implementation.AmigoControlRouteSpImpl;
 import net.daw.control.route.specific.implementation.OrdenadorControlRouteSpImpl;
 import net.daw.control.route.specific.implementation.ActividadControlRouteSpImpl;
 import net.daw.control.route.specific.implementation.ProductoControlRouteSpImpl;
+import net.daw.control.route.specific.implementation.ClienteControlRouteSpImpl;
+import net.daw.control.route.specific.implementation.ImpuestoControlRouteSpImpl;
+import net.daw.control.route.specific.implementation.ProveedorControlRouteSpImpl;
 import net.daw.control.route.specific.implementation.TipoproductoControlRouteSpImpl;
 import net.daw.helper.EstadoHelper;
 import net.daw.helper.EstadoHelper.Tipo_estado;
 import net.daw.helper.ExceptionBooster;
-import net.daw.helper.parameterCooker;
+import net.daw.helper.ParameterCooker;
 
 public class JsonControl extends HttpServlet {
 
@@ -86,7 +107,7 @@ public class JsonControl extends HttpServlet {
             retardo(0); //debug delay
             String jsonResult = "";
             if (request.getSession().getAttribute("usuarioBean") != null) {
-                switch (parameterCooker.prepareObject(request)) {
+                switch (ParameterCooker.prepareObject(request)) {
                     case "documento":
                         DocumentoControlRouteGenSpImpl oDocumentoRoute = new DocumentoControlRouteGenSpImpl();
                         DocumentoControlOperationGenSpImpl oDocumentoControlOperation = new DocumentoControlOperationGenSpImpl(request);
@@ -96,6 +117,11 @@ public class JsonControl extends HttpServlet {
                         TipodocumentoControlRouteGenSpImpl oTipodocumentoRoute = new TipodocumentoControlRouteGenSpImpl();
                         TipodocumentoControlOperationGenSpImpl oTipodocumentoControlOperation = new TipodocumentoControlOperationGenSpImpl(request);
                         jsonResult = oTipodocumentoRoute.execute(request, oTipodocumentoControlOperation);
+                        break;
+                    case "tipousuario":
+                        TipousuarioControlRouteGenSpImpl oTipousuarioRoute = new TipousuarioControlRouteGenSpImpl();
+                        TipousuarioControlOperationGenSpImpl oTipousuarioControlOperation = new TipousuarioControlOperationGenSpImpl(request);
+                        jsonResult = oTipousuarioRoute.execute(request, oTipousuarioControlOperation);
                         break;
                     case "usuario":
                         UsuarioControlRouteGenSpImpl oUsuarioRoute = new UsuarioControlRouteGenSpImpl();
@@ -107,6 +133,16 @@ public class JsonControl extends HttpServlet {
                         ProductoControlOperationSpImpl oProductoControlOperation = new ProductoControlOperationSpImpl(request);
                         jsonResult = oProductoRoute.execute(request, oProductoControlOperation);
                         break;
+                    case "cliente":
+                        ClienteControlRouteSpImpl oClienteRoute = new ClienteControlRouteSpImpl();
+                        ClienteControlOperationSpImpl oClienteControlOperation = new ClienteControlOperationSpImpl(request);
+                        jsonResult = oClienteRoute.execute(request, oClienteControlOperation);
+                        break;
+                    case "proveedor":
+                        ProveedorControlRouteSpImpl oProveedorRoute = new ProveedorControlRouteSpImpl();
+                        ProveedorControlOperationSpImpl oProveedorControlOperation = new ProveedorControlOperationSpImpl(request);
+                        jsonResult = oProveedorRoute.execute(request, oProveedorControlOperation);
+                        break;
                     case "tipoproducto":
                         TipoproductoControlRouteSpImpl oTipoproductoRoute = new TipoproductoControlRouteSpImpl();
                         TipoproductoControlOperationSpImpl oTipoproductoControlOperation = new TipoproductoControlOperationSpImpl(request);
@@ -117,6 +153,43 @@ public class JsonControl extends HttpServlet {
                         OrdenadorControlOperationSpImpl oOrdenadorControlOperation = new OrdenadorControlOperationSpImpl(request);
                         jsonResult = oOrdenadorRoute.execute(request, oOrdenadorControlOperation);
                         break;
+                    case "estado":
+                        EstadoControlRouteGenSpImpl oEstadoRoute = new EstadoControlRouteGenSpImpl();
+                        EstadoControlOperationGenSpImpl oEstadoControlOperation = new EstadoControlOperationGenSpImpl(request);
+                        jsonResult = oEstadoRoute.execute(request, oEstadoControlOperation);
+                        break;
+                    case "amigo":
+                        AmigoControlRouteSpImpl oAmigoRoute = new AmigoControlRouteSpImpl();
+                        AmigoControlOperationGenSpImpl oAmigoControlOperation = new AmigoControlOperationGenSpImpl(request);
+                        jsonResult = oAmigoRoute.execute(request, oAmigoControlOperation);
+                        break;
+                    case "publicacion":
+                        PublicacionControlRouteGenSpImpl oPublicacionRoute = new PublicacionControlRouteGenSpImpl();
+                        PublicacionControlOperationGenSpImpl oPublicacionControlOperation = new PublicacionControlOperationGenSpImpl(request);
+                        jsonResult = oPublicacionRoute.execute(request, oPublicacionControlOperation);
+                        break;
+
+                    case "impuesto":
+                        ImpuestoControlRouteSpImpl oImpuestoRoute = new ImpuestoControlRouteSpImpl();
+                        ImpuestoControlOperationSpImpl oImpuestoControlOperation = new ImpuestoControlOperationSpImpl(request);
+                        jsonResult = oImpuestoRoute.execute(request, oImpuestoControlOperation);
+                        break;
+                        
+                    case "cuestionario":
+                        CuestionarioControlRouteGenSpImpl oCuestionarioRoute = new CuestionarioControlRouteGenSpImpl();
+                        CuestionarioControlOperationGenSpImpl oCuestionarioControlOperation = new CuestionarioControlOperationGenSpImpl(request);
+                        jsonResult = oCuestionarioRoute.execute(request, oCuestionarioControlOperation);
+                    case "opcion":
+                        OpcionControlRouteGenSpImpl oOpcionRoute = new OpcionControlRouteGenSpImpl();
+                        OpcionControlOperationGenSpImpl oOpcionControlOperation = new OpcionControlOperationGenSpImpl(request);
+                        jsonResult = oOpcionRoute.execute(request, oOpcionControlOperation);
+                        break;
+                    case "pregunta":
+                        PreguntaControlRouteGenSpImpl oPreguntaRoute = new PreguntaControlRouteGenSpImpl();
+                        PreguntaControlOperationGenSpImpl oPreguntaControlOperation = new PreguntaControlOperationGenSpImpl(request);
+                        jsonResult = oPreguntaRoute.execute(request, oPreguntaControlOperation);
+                        break;
+
                     case "actividad":
                         ActividadControlRouteSpImpl oActividadRoute = new ActividadControlRouteSpImpl();
                         ActividadControlOperationSpImpl oActividadControlOperation = new ActividadControlOperationSpImpl(request);

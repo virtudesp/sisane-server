@@ -157,15 +157,70 @@
         <script src="js/specific/documento/view.js" charset="UTF-8"></script>
         <script src="js/specific/documento/routes.js" charset="UTF-8"></script>
         
+        <script src="js/specific/opcion/control.js" charset="UTF-8"></script>
+        <script src="js/specific/opcion/model.js" charset="UTF-8"></script>
+        <script src="js/specific/opcion/view.js" charset="UTF-8"></script>
+        <script src="js/specific/opcion/routes.js" charset="UTF-8"></script>
+
+        <script src="js/specific/publicacion/control.js" charset="UTF-8"></script>
+        <script src="js/specific/publicacion/model.js" charset="UTF-8"></script>
+        <script src="js/specific/publicacion/view.js" charset="UTF-8"></script>
+        <script src="js/specific/publicacion/routes.js" charset="UTF-8"></script>
+        
+        <script src="js/specific/estado/control.js" charset="UTF-8"></script>
+        <script src="js/specific/estado/model.js" charset="UTF-8"></script>
+        <script src="js/specific/estado/view.js" charset="UTF-8"></script>
+        <script src="js/specific/estado/routes.js" charset="UTF-8"></script>
+        <script src="js/specific/cuestionario/control.js" charset="UTF-8"></script>
+        <script src="js/specific/cuestionario/model.js" charset="UTF-8"></script>
+        <script src="js/specific/cuestionario/view.js" charset="UTF-8"></script>
+        <script src="js/specific/cuestionario/routes.js" charset="UTF-8"></script>
         <script src="js/specific/actividad/control.js" charset="UTF-8"></script>
         <script src="js/specific/actividad/model.js" charset="UTF-8"></script>
         <script src="js/specific/actividad/view.js" charset="UTF-8"></script>
         <script src="js/specific/actividad/routes.js" charset="UTF-8"></script>
 
 
+         <script src="js/specific/usuario/control.js" charset="UTF-8"></script>
         <script src="js/specific/usuario/model.js" charset="UTF-8"></script>
+        <script src="js/specific/usuario/view.js" charset="UTF-8"></script>
+        <script src="js/specific/usuario/routes.js" charset="UTF-8"></script>
+        
         <script src="js/specific/tipodocumento/model.js" charset="UTF-8"></script>
         
+        <script src="js/specific/pregunta/control.js" charset="UTF-8"></script>
+        <script src="js/specific/pregunta/model.js" charset="UTF-8"></script>
+        <script src="js/specific/pregunta/view.js" charset="UTF-8"></script>
+        <script src="js/specific/pregunta/routes.js" charset="UTF-8"></script>
+        
+        <script src="js/specific/publicacion/control.js" charset="UTF-8"></script>
+        <script src="js/specific/publicacion/model.js" charset="UTF-8"></script>
+        <script src="js/specific/publicacion/view.js" charset="UTF-8"></script>
+        <script src="js/specific/publicacion/routes.js" charset="UTF-8"></script>
+        
+        <script src="js/specific/tipousuario/control.js" charset="UTF-8"></script>
+        <script src="js/specific/tipousuario/model.js" charset="UTF-8"></script>
+        <script src="js/specific/tipousuario/view.js" charset="UTF-8"></script>
+        <script src="js/specific/tipousuario/routes.js" charset="UTF-8"></script>
+        <!-- Fin Modificación Juanma Usuarios -->
+
+        <script src="js/specific/proveedor/control.js" charset="UTF-8"></script>
+        <script src="js/specific/proveedor/model.js" charset="UTF-8"></script>
+        <script src="js/specific/proveedor/view.js" charset="UTF-8"></script>
+        <script src="js/specific/proveedor/routes.js" charset="UTF-8"></script>
+        
+        <script src="js/specific/cliente/control.js" charset="UTF-8"></script>
+        <script src="js/specific/cliente/model.js" charset="UTF-8"></script>
+        <script src="js/specific/cliente/view.js" charset="UTF-8"></script>
+        <script src="js/specific/cliente/routes.js" charset="UTF-8"></script>
+        
+        <script src="js/specific/impuesto/control.js" charset="UTF-8"></script>
+        <script src="js/specific/impuesto/model.js" charset="UTF-8"></script>
+        <script src="js/specific/impuesto/view.js" charset="UTF-8"></script>
+        <script src="js/specific/impuesto/routes.js" charset="UTF-8"></script>
+        
+        <script src="js/specific/tipodocumento/model.js" charset="UTF-8"></script>
+
         <script type="text/javascript">
 
             //path = '<%=request.getContextPath()%>';
@@ -180,6 +235,16 @@
 
 
                 fDocumentoRoutes();
+                fOpcionRoutes();
+                fPreguntaRoutes();
+                fCuestionarioRoutes();
+              
+                fUsuarioRoutes();
+                fPublicacionRoutes();
+                fEstadoRoutes();
+                fProveedorRoutes();
+                fClienteRoutes();
+                fImpuestoRoutes();
                 fActividadRoutes();
 
 

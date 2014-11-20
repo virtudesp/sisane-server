@@ -20,6 +20,7 @@ package net.daw.dao.generic.specific.implementation;
 import net.daw.dao.generic.implementation.TableDaoGenImpl;
 import java.sql.Connection;
 import net.daw.bean.generic.specific.implementation.UsuarioBeanGenSpImpl;
+import net.daw.helper.AppConfigurationHelper;
 
 public class UsuarioDaoGenSpImpl extends TableDaoGenImpl<UsuarioBeanGenSpImpl> {
 
@@ -41,7 +42,7 @@ public class UsuarioDaoGenSpImpl extends TableDaoGenImpl<UsuarioBeanGenSpImpl> {
                 if (!pass.equals(oUsuario.getPassword())) {
                     oUsuario.setId(0);
                 }
-                oUsuario = this.get(oUsuario, 1);
+                oUsuario = this.get(oUsuario, AppConfigurationHelper.getJsonDepth());
             }
 
             return oUsuario;

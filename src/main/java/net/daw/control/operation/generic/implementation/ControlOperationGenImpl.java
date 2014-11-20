@@ -29,21 +29,21 @@ import net.daw.connection.implementation.BoneConnectionPoolImpl;
 import net.daw.connection.publicinterface.ConnectionInterface;
 import net.daw.helper.ExceptionBooster;
 import net.daw.helper.FilterBeanHelper;
-import net.daw.helper.parameterCooker;
+import net.daw.helper.ParameterCooker;
 
 public class ControlOperationGenImpl implements ControlOperationInterface {
 
-    private ConnectionInterface DataConnectionSource = null;
-    private Connection connection = null;
-    private String strObject = null;
-    private TableServiceGenImpl process = null;
+    protected ConnectionInterface DataConnectionSource = null;
+    protected Connection connection = null;
+    protected String strObject = null;
+    protected TableServiceGenImpl process = null;
 
     public ControlOperationGenImpl(HttpServletRequest request) throws Exception {
         try {
             DataConnectionSource = new BoneConnectionPoolImpl();
             connection = DataConnectionSource.newConnection();
-            strObject = parameterCooker.prepareObject(request);
-            Constructor oConstructor = Class.forName("net.daw.service.generic.specific.implementation." + parameterCooker.prepareCamelCaseObject(request) + "ServiceGenSpImpl").getConstructor(String.class, Connection.class);
+            strObject = ParameterCooker.prepareObject(request);
+            Constructor oConstructor = Class.forName("net.daw.service.generic.specific.implementation." + ParameterCooker.prepareCamelCaseObject(request) + "ServiceGenSpImpl").getConstructor(String.class, Connection.class);
             process = (TableServiceGenImpl) oConstructor.newInstance(strObject, connection);
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":ControlOperationGenImpl ERROR: " + ex.getMessage()));
@@ -52,14 +52,14 @@ public class ControlOperationGenImpl implements ControlOperationInterface {
 
     @Override
     public String get(HttpServletRequest request) throws Exception {
-        String result = process.get(parameterCooker.prepareId(request));
+        String result = process.get(ParameterCooker.prepareId(request));
         closeDB();
         return result;
     }
 
     @Override
     public String getaggregateviewone(HttpServletRequest request) throws Exception {
-        String result = process.getAggregateViewOne(parameterCooker.prepareId(request));
+        String result = process.getAggregateViewOne(ParameterCooker.prepareId(request));
         closeDB();
         return result;
     }
@@ -80,10 +80,10 @@ public class ControlOperationGenImpl implements ControlOperationInterface {
 
     @Override
     public String getpage(HttpServletRequest request) throws Exception {
-        Integer intRegsPerPag = parameterCooker.prepareRpp(request);
-        Integer intPage = parameterCooker.preparePage(request);
-        ArrayList<FilterBeanHelper> alFilter = parameterCooker.prepareFilter(request);
-        HashMap<String, String> hmOrder = parameterCooker.prepareOrder(request);
+        Integer intRegsPerPag = ParameterCooker.prepareRpp(request);
+        Integer intPage = ParameterCooker.preparePage(request);
+        ArrayList<FilterBeanHelper> alFilter = ParameterCooker.prepareFilter(request);
+        HashMap<String, String> hmOrder = ParameterCooker.prepareOrder(request);
         String result = process.getPage(intRegsPerPag, intPage, alFilter, hmOrder);
         closeDB();
         return result;
@@ -91,8 +91,8 @@ public class ControlOperationGenImpl implements ControlOperationInterface {
 
     @Override
     public String getpages(HttpServletRequest request) throws Exception {
-        Integer intRegsPerPag = parameterCooker.prepareRpp(request);
-        ArrayList<FilterBeanHelper> alFilter = parameterCooker.prepareFilter(request);
+        Integer intRegsPerPag = ParameterCooker.prepareRpp(request);
+        ArrayList<FilterBeanHelper> alFilter = ParameterCooker.prepareFilter(request);
         String result = process.getPages(intRegsPerPag, alFilter);
         closeDB();
         return result;
@@ -100,7 +100,7 @@ public class ControlOperationGenImpl implements ControlOperationInterface {
 
     @Override
     public String getregisters(HttpServletRequest request) throws Exception {
-        ArrayList<FilterBeanHelper> alFilter = parameterCooker.prepareFilter(request);
+        ArrayList<FilterBeanHelper> alFilter = ParameterCooker.prepareFilter(request);
         String result = process.getCount(alFilter);
         closeDB();
         return result;
@@ -108,10 +108,10 @@ public class ControlOperationGenImpl implements ControlOperationInterface {
 
     @Override
     public String getaggregateviewsome(HttpServletRequest request) throws Exception {
-        Integer intRegsPerPag = parameterCooker.prepareRpp(request);
-        Integer intPage = parameterCooker.preparePage(request);
-        ArrayList<FilterBeanHelper> alFilter = parameterCooker.prepareFilter(request);
-        HashMap<String, String> hmOrder = parameterCooker.prepareOrder(request);
+        Integer intRegsPerPag = ParameterCooker.prepareRpp(request);
+        Integer intPage = ParameterCooker.preparePage(request);
+        ArrayList<FilterBeanHelper> alFilter = ParameterCooker.prepareFilter(request);
+        HashMap<String, String> hmOrder = ParameterCooker.prepareOrder(request);
         String result = process.getAggregateViewSome(intRegsPerPag, intPage, alFilter, hmOrder);
         closeDB();
         return result;
@@ -119,19 +119,19 @@ public class ControlOperationGenImpl implements ControlOperationInterface {
 
     @Override
     public String remove(HttpServletRequest request) throws Exception {
-        String result = process.remove(parameterCooker.prepareId(request));
+        String result = process.remove(ParameterCooker.prepareId(request));
         closeDB();
         return result;
     }
 
     @Override
     public String set(HttpServletRequest request) throws Exception {
-        String result = process.set(parameterCooker.prepareJson(request));
+        String result = process.set(ParameterCooker.prepareJson(request));
         closeDB();
         return result;
     }
 
-    private void closeDB() throws SQLException, Exception {
+    protected void closeDB() throws SQLException, Exception {
         if (connection != null) {
             connection.close();
         }

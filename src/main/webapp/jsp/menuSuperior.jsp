@@ -24,12 +24,22 @@
         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Mantenimientos <b class="caret"></b></a>
         <ul class="dropdown-menu">
             <li><a href="jsp#/documento">Documento</a></li>
-            <li><a href="#">Vacío</a></li>
+            <li><a href="jsp#/cuestionario">Cuestionario</a></li>
+            <li><a href="jsp#/pregunta">Pregunta</a></li>
+            <li><a href="jsp#/opcion">Opcion</a></li>
+            <li><a href="jsp#/usuario">Usuario</a></li>
+            <li><a href="jsp#/proveedor">Proveedor</a></li>
+            <li><a href="jsp#/cliente">Cliente</a></li>
+            <li><a href="jsp#/impuesto">Impuesto</a></li>
             <li><a href="#">Vacío</a></li>
             <li class="divider"></li>
             <li class="dropdown-header">División</li>
             <li><a href="#">Vacío</a></li>
             <li><a href="#">Vacío</a></li>
+            <li class="divider"></li>
+            <li class="dropdown-header">Red Social</li>
+            <li><a href="jsp#/publicacion">Publicacion</a></li>
+            <li><a href="jsp#/estado">Estado</a></li>
         </ul>
     </li>    
 
