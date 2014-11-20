@@ -18,6 +18,7 @@
 package net.daw.dao.specific.implementation;
 
 import java.sql.Connection;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -99,8 +100,11 @@ public class MensajeprivadoDaoSpcImpl implements ViewDaoInterface<Mensajeprivado
                     if (expand > 0) {
                         oMensajeprivadoBean.setMensaje(oMysql.getOne(strTableName, "mensaje", oMensajeprivadoBean.getId()));
                         oMensajeprivadoBean.setAsunto(oMysql.getOne(strTableName, "asunto", oMensajeprivadoBean.getId()));
-                        oMensajeprivadoBean.setLeido(Boolean.parseBoolean(oMysql.getOne(strTableName, "leido", oMensajeprivadoBean.getId())));
 
+                        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                        String dateInString = oMysql.getOne(strTableName, "fechaenvio", oMensajeprivadoBean.getId());         
+                        oMensajeprivadoBean.setFechaenvio(formatter.parse(dateInString));   
+                        
                         oMensajeprivadoBean.setId_usuario_1(Integer.parseInt(oMysql.getOne(strTableName, "id_usuario_1", oMensajeprivadoBean.getId())));
                         oMensajeprivadoBean.setId_usuario_2(Integer.parseInt(oMysql.getOne(strTableName, "id_usuario_2", oMensajeprivadoBean.getId())));
 
@@ -134,7 +138,7 @@ public class MensajeprivadoDaoSpcImpl implements ViewDaoInterface<Mensajeprivado
             }
             oMysql.updateOne(oMensajeprivadoBean.getId(), strTableName, "mensaje", oMensajeprivadoBean.getMensaje());
             oMysql.updateOne(oMensajeprivadoBean.getId(), strTableName, "asunto", oMensajeprivadoBean.getAsunto());
-            oMysql.updateOne(oMensajeprivadoBean.getId(), strTableName, "leido", oMensajeprivadoBean.getLeido().toString());
+            oMysql.updateOne(oMensajeprivadoBean.getId(), strTableName, "fechaenvio", oMensajeprivadoBean.getFechaenvio().toString());
             oMysql.updateOne(oMensajeprivadoBean.getId(), strTableName, "id_usuario_1", oMensajeprivadoBean.getId_usuario_1().toString());
             oMysql.updateOne(oMensajeprivadoBean.getId(), strTableName, "id_usuario_2", oMensajeprivadoBean.getId_usuario_2().toString());
         } catch (Exception ex) {

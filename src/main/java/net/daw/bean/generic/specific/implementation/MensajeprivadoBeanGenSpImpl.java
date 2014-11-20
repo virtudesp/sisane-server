@@ -18,6 +18,7 @@
 package net.daw.bean.generic.specific.implementation;
 
 import com.google.gson.annotations.Expose;
+import java.util.Date;
 import net.daw.bean.generic.implementation.BeanGenImpl;
 import net.daw.bean.publicinterface.BeanInterface;
 
@@ -32,7 +33,7 @@ public class MensajeprivadoBeanGenSpImpl extends BeanGenImpl implements BeanInte
     @Expose
     private String asunto = "";
     @Expose
-    private Boolean leido = false;
+    private Date fechaenvio = new Date();
     @Expose(serialize = false)
     private Integer id_usuario_1 = 0; //id_usuario_1 //importante inicializar a 0 las claves ajenas
     @Expose(deserialize = false)
@@ -65,12 +66,12 @@ public class MensajeprivadoBeanGenSpImpl extends BeanGenImpl implements BeanInte
         this.asunto = asunto;
     }
 
-    public Boolean getLeido() {
-        return leido;
+    public Date getFechaenvio() {
+        return fechaenvio;
     }
 
-    public void setLeido(Boolean leido) {
-        this.leido = leido;
+    public void setFechaenvio(Date fechaenvio) {
+        this.fechaenvio = fechaenvio;
     }
 
     public Integer getId_usuario_1() {

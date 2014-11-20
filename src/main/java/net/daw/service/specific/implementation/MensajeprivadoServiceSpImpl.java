@@ -72,7 +72,7 @@ public class MensajeprivadoServiceSpImpl implements TableServiceInterface, ViewS
             oConnection.setAutoCommit(false);
             MensajeprivadoDaoSpcImpl oMensajeprivadoDAO = new MensajeprivadoDaoSpcImpl(strObjectName, oConnection);
             MensajeprivadoBeanGenSpImpl oMensajeprivado = new MensajeprivadoBeanGenSpImpl();
-            Gson gson = new GsonBuilder().setDateFormat("dd/MM/yyyy").create();
+            Gson gson = new GsonBuilder().setDateFormat("dd/MM/yyyy HH:mm:ss").create();
             jason = EncodingUtilHelper.decodeURIComponent(jason);
             oMensajeprivado = gson.fromJson(jason, oMensajeprivado.getClass());
             oMensajeprivado = oMensajeprivadoDAO.set(oMensajeprivado);
@@ -97,7 +97,7 @@ public class MensajeprivadoServiceSpImpl implements TableServiceInterface, ViewS
             MensajeprivadoBeanGenSpImpl oMensajeprivado = new MensajeprivadoBeanGenSpImpl(id);
             oMensajeprivado = oMensajeprivadoDAO.get(oMensajeprivado, AppConfigurationHelper.getJsonDepth());
             GsonBuilder gsonBuilder = new GsonBuilder();
-            gsonBuilder.setDateFormat("dd/MM/yyyy");
+            gsonBuilder.setDateFormat("dd/MM/yyyy HH:mm:ss");
             Gson gson = gsonBuilder.create();
             data = gson.toJson(oMensajeprivado);
             oConnection.commit();
@@ -116,7 +116,7 @@ public class MensajeprivadoServiceSpImpl implements TableServiceInterface, ViewS
             MensajeprivadoDaoSpcImpl oMensajeprivadoDAO = new MensajeprivadoDaoSpcImpl(strObjectName, oConnection);
             List<MensajeprivadoBeanGenSpImpl> oMensajeprivados = oMensajeprivadoDAO.getPage(intRegsPerPag, intPage, alFilter, hmOrder);
             GsonBuilder gsonBuilder = new GsonBuilder();
-            gsonBuilder.setDateFormat("dd/MM/yyyy");
+            gsonBuilder.setDateFormat("dd/MM/yyyy HH:mm:ss");
             Gson gson = gsonBuilder.create();
             data = gson.toJson(oMensajeprivados);
             data = "{\"list\":" + data + "}";
