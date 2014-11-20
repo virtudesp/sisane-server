@@ -17,75 +17,75 @@
  */
 
 
-function fProveedorRoutes() {
+function fImpuestoRoutes() {
 
-//    Path.map("#/proveedor").to(function () {
+//    Path.map("#/impuesto").to(function () {
 //        $('#indexContenidoJsp').spinner();
-//        control('proveedor').list($('#indexContenido'), param().defaultizeUrlObjectParameters({}), null);
-//        //proveedorControl.modalListEventsLoading(proveedorObject, proveedorView, $('#indexContenido'), param().defaultizeUrlObjectParameters({}), null);        
+//        control('impuesto').list($('#indexContenido'), param().defaultizeUrlObjectParameters({}), null);
+//        //impuestoControl.modalListEventsLoading(impuestoObject, impuestoView, $('#indexContenido'), param().defaultizeUrlObjectParameters({}), null);        
 //        $('#indexContenidoJsp').empty();
 //        return false;
 //    });
 
-    Path.map("#/proveedor").to(function () {
+    Path.map("#/impuesto").to(function () {
         $('#indexContenidoJsp').spinner();
-        oProveedorControl.list($('#indexContenido'), param().defaultizeUrlObjectParameters({}), null, oProveedorModel, oProveedorView);
-        //proveedorControl.modalListEventsLoading(proveedorObject, proveedorView, $('#indexContenido'), param().defaultizeUrlObjectParameters({}), null);        
+        oImpuestoControl.list($('#indexContenido'), param().defaultizeUrlObjectParameters({}), null, oImpuestoModel, oImpuestoView);
+        //impuestoControl.modalListEventsLoading(impuestoObject, impuestoView, $('#indexContenido'), param().defaultizeUrlObjectParameters({}), null);        
         $('#indexContenidoJsp').empty();
-        $('#indexContenidoJsp').append(oProveedorControl.getClassNameProveedor());
+        $('#indexContenidoJsp').append(oImpuestoControl.getClassNameImpuesto());
         return false;
     });
 
-    Path.map("#/proveedor/list/:url").to(function () {
+    Path.map("#/impuesto/list/:url").to(function () {
         $('#indexContenidoJsp').spinner();
         var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
-        oProveedorControl.list($('#indexContenido'), paramsObject, null, oProveedorModel, oProveedorView);
+        oImpuestoControl.list($('#indexContenido'), paramsObject, null, oImpuestoModel, oImpuestoView);
         $('#indexContenidoJsp').empty();
         return false;
     });
 
-    Path.map("#/proveedor/view/:id").to(function () {
+    Path.map("#/impuesto/view/:id").to(function () {
         $('#indexContenidoJsp').spinner();
         var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
-        oProveedorControl.view($('#indexContenido'), paramsObject['id'], oProveedorModel, oProveedorView);
+        oImpuestoControl.view($('#indexContenido'), paramsObject['id'], oImpuestoModel, oImpuestoView);
         $('#indexContenidoJsp').empty();
 
         return false;
     });
 
-    Path.map("#/proveedor/edit/:id").to(function () {
+    Path.map("#/impuesto/edit/:id").to(function () {
         $('#indexContenidoJsp').spinner();
         var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
-        oProveedorControl.edit($('#indexContenido'), paramsObject['id'], oProveedorModel, oProveedorView);
+        oImpuestoControl.edit($('#indexContenido'), paramsObject['id'], oImpuestoModel, oImpuestoView);
         $('#indexContenidoJsp').empty();
     });
-    Path.map("#/proveedor/new").to(function () {
+    Path.map("#/impuesto/new").to(function () {
         $('#indexContenidoJsp').spinner();
         //var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
-        oProveedorControl.new($('#indexContenido'), null, oProveedorModel, oProveedorView);
+        oImpuestoControl.new($('#indexContenido'), null, oImpuestoModel, oImpuestoView);
         $('#indexContenidoJsp').empty();
         return false;
     });
-    Path.map("#/proveedor/new/:url").to(function () {
+    Path.map("#/impuesto/new/:url").to(function () {
         $('#indexContenidoJsp').spinner();
         var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
-        oProveedorControl.new($('#indexContenido'), paramsObject, oProveedorModel, oProveedorView);
-        $('#indexContenidoJsp').empty();
-        return false;
-    });
-
-    Path.map("#/proveedor/remove/:id").to(function () {
-        $('#indexContenidoJsp').spinner();
-        var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
-        oProveedorControl.remove($('#indexContenido'), paramsObject['id'], oProveedorModel, oProveedorView);
+        oImpuestoControl.new($('#indexContenido'), paramsObject, oImpuestoModel, oImpuestoView);
         $('#indexContenidoJsp').empty();
         return false;
     });
 
-    Path.map("#/proveedor/duplicate/:id").to(function () {
+    Path.map("#/impuesto/remove/:id").to(function () {
         $('#indexContenidoJsp').spinner();
         var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
-        oProveedorControl.duplicate($('#indexContenido'), paramsObject['id'], oProveedorModel, oProveedorView);
+        oImpuestoControl.remove($('#indexContenido'), paramsObject['id'], oImpuestoModel, oImpuestoView);
+        $('#indexContenidoJsp').empty();
+        return false;
+    });
+
+    Path.map("#/impuesto/duplicate/:id").to(function () {
+        $('#indexContenidoJsp').spinner();
+        var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
+        oImpuestoControl.duplicate($('#indexContenido'), paramsObject['id'], oImpuestoModel, oImpuestoView);
         $('#indexContenidoJsp').empty();
         return false;
     });
