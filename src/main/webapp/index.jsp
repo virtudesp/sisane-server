@@ -175,6 +175,10 @@
         <script src="js/specific/cuestionario/model.js" charset="UTF-8"></script>
         <script src="js/specific/cuestionario/view.js" charset="UTF-8"></script>
         <script src="js/specific/cuestionario/routes.js" charset="UTF-8"></script>
+        <script src="js/specific/actividad/control.js" charset="UTF-8"></script>
+        <script src="js/specific/actividad/model.js" charset="UTF-8"></script>
+        <script src="js/specific/actividad/view.js" charset="UTF-8"></script>
+        <script src="js/specific/actividad/routes.js" charset="UTF-8"></script>
 
 
          <script src="js/specific/usuario/control.js" charset="UTF-8"></script>
@@ -241,6 +245,7 @@
                 fProveedorRoutes();
                 fClienteRoutes();
                 fImpuestoRoutes();
+                fActividadRoutes();
 
 
                 Path.listen();

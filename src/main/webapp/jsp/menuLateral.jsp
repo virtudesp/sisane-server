@@ -51,6 +51,7 @@
         <a  class="list-group-item" id="lnkPregunta" href="jsp#/pregunta">Pregunta</a>
         <a  class="list-group-item" id="lnkOpcion" href="jsp#/opcion">Opcion</a>
         <a  class="list-group-item" id="lnkImpuesto" href="jsp#/impuesto">Impuesto</a> 
+        <a  class="list-group-item" id="lnkActividad" href="jsp#/actividad">Actividad</a> 
     </div>
 </div>
 

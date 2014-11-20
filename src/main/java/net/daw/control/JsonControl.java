@@ -38,6 +38,7 @@ import net.daw.control.operation.generic.specific.implementation.TipodocumentoCo
 import net.daw.control.operation.generic.specific.implementation.TipousuarioControlOperationGenSpImpl;
 import net.daw.control.operation.generic.specific.implementation.UsuarioControlOperationGenSpImpl;
 import net.daw.control.operation.specific.implementation.OrdenadorControlOperationSpImpl;
+import net.daw.control.operation.specific.implementation.ActividadControlOperationSpImpl;
 import net.daw.control.operation.specific.implementation.ProductoControlOperationSpImpl;
 import net.daw.control.operation.specific.implementation.ClienteControlOperationSpImpl;
 import net.daw.control.operation.specific.implementation.ImpuestoControlOperationSpImpl;
@@ -55,6 +56,7 @@ import net.daw.control.route.generic.specific.implementation.TipousuarioControlR
 import net.daw.control.route.generic.specific.implementation.UsuarioControlRouteGenSpImpl;
 import net.daw.control.route.specific.implementation.AmigoControlRouteSpImpl;
 import net.daw.control.route.specific.implementation.OrdenadorControlRouteSpImpl;
+import net.daw.control.route.specific.implementation.ActividadControlRouteSpImpl;
 import net.daw.control.route.specific.implementation.ProductoControlRouteSpImpl;
 import net.daw.control.route.specific.implementation.ClienteControlRouteSpImpl;
 import net.daw.control.route.specific.implementation.ImpuestoControlRouteSpImpl;
@@ -188,6 +190,11 @@ public class JsonControl extends HttpServlet {
                         jsonResult = oPreguntaRoute.execute(request, oPreguntaControlOperation);
                         break;
 
+                    case "actividad":
+                        ActividadControlRouteSpImpl oActividadRoute = new ActividadControlRouteSpImpl();
+                        ActividadControlOperationSpImpl oActividadControlOperation = new ActividadControlOperationSpImpl(request);
+                        jsonResult = oActividadRoute.execute(request, oActividadControlOperation);
+                        break;
                     default:
                         ExceptionBooster.boost(new Exception(this.getClass().getName() + ":processRequest ERROR: no such operation"));
                 }
