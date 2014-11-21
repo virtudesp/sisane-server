@@ -195,4 +195,9 @@ public class OrdenadorControlOperationSpImpl implements ControlOperationInterfac
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":closeDB ERROR: " + ex.getMessage()));
         }
     }
+
+    @Override
+    public String updateOne(HttpServletRequest request) throws Exception {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

@@ -130,6 +130,17 @@ public class ControlOperationGenImpl implements ControlOperationInterface {
         closeDB();
         return result;
     }
+    @Override
+    public String updateOne(HttpServletRequest request) throws Exception {
+        int id = Integer.parseInt(request.getParameter("id"));
+        String tabla = request.getParameter("ob");
+        String campo = request.getParameter("campo");
+        String valor = request.getParameter("valor");
+        
+        String result = process.updateOne(id, tabla, campo, valor);
+        
+        return result;
+    }
 
     private void closeDB() throws SQLException, Exception {
         if (connection != null) {
@@ -137,4 +148,5 @@ public class ControlOperationGenImpl implements ControlOperationInterface {
         }
         DataConnectionSource.disposeConnection();
     }
+
 }

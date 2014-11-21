@@ -24,12 +24,15 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import java.lang.reflect.Constructor;
 import java.sql.Connection;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import net.daw.bean.generic.implementation.BeanGenImpl;
 import net.daw.bean.publicinterface.BeanInterface;
 import net.daw.dao.generic.implementation.TableDaoGenImpl;
+import net.daw.helper.AppConfigurationHelper;
 import net.daw.helper.ExceptionBooster;
+import net.daw.helper.FilterBeanHelper;
 
 public abstract class TableServiceGenImpl extends ViewServiceGenImpl implements TableServiceInterface, ViewServiceInterface, MetaServiceInterface {
 
@@ -94,4 +97,25 @@ public abstract class TableServiceGenImpl extends ViewServiceGenImpl implements 
         }
         return resultado;
     }
+    
+    
+    @Override
+    public String updateOne(int intId, String strTabla, String strCampo, String strValor) throws Exception {
+        String data = null;
+        try {
+            oConnection.setAutoCommit(false);
+            Constructor c = Class.forName("net.daw.dao.generic.specific.implementation." + strObjectName + "DaoGenSpImpl").getConstructor(String.class, Connection.class);
+            TableDaoGenImpl oGenericDao = (TableDaoGenImpl) c.newInstance(strObjectName, oConnection);
+            int update = oGenericDao.updateOne(intId, strTabla, strCampo, strValor);
+            data = "{\"data\":\"" + Integer.toString(update) + "\"}";
+        } catch (Exception ex) {
+            oConnection.rollback();
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPages ERROR: " + ex.getMessage()));
+        } finally {
+            oConnection.commit();
+        }
+        return data;
+    }
+    
+    
 }
