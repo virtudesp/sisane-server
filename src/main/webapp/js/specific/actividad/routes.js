@@ -17,7 +17,7 @@
  */
 
 
-function fCuestionarioRoutes() {
+function fActividadRoutes() {
 
 //    Path.map("#/documento").to(function () {
 //        $('#indexContenidoJsp').spinner();
@@ -27,61 +27,52 @@ function fCuestionarioRoutes() {
 //        return false;
 //    });
 
-    Path.map("#/cuestionario").to(function () {
+    Path.map("#/actividad").to(function () {
         $('#indexContenidoJsp').spinner();
-        oCuestionarioControl.list($('#indexContenido'), param().defaultizeUrlObjectParameters({}), null, oCuestionarioModel, oCuestionarioView);
+        oActividadControl.list($('#indexContenido'), param().defaultizeUrlObjectParameters({}), null, oActividadModel, oActividadView);
         //documentoControl.modalListEventsLoading(documentoObject, documentoView, $('#indexContenido'), param().defaultizeUrlObjectParameters({}), null);        
         $('#indexContenidoJsp').empty();
-        $('#indexContenidoJsp').append(oCuestionarioControl.getClassNameCuestionario());
+        $('#indexContenidoJsp').append(oActividadControl.getClassNameActividad());
         return false;
     });
 
-    Path.map("#/cuestionario/list/:url").to(function () {
+    Path.map("#/actividad/list/:url").to(function () {
         $('#indexContenidoJsp').spinner();
         var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
-        oCuestionarioControl.list($('#indexContenido'), paramsObject, null, oCuestionarioModel, oCuestionarioView);
+        oActividadControl.list($('#indexContenido'), paramsObject, null, oActividadModel, oActividadView);
         $('#indexContenidoJsp').empty();
         return false;
     });
 
-    Path.map("#/cuestionario/view/:id").to(function () {
+    Path.map("#/actividad/view/:id").to(function () {
         $('#indexContenidoJsp').spinner();
         var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
-        oCuestionarioControl.view($('#indexContenido'), paramsObject['id'], oCuestionarioModel, oCuestionarioView);
+        oActividadControl.view($('#indexContenido'), paramsObject['id'], oActividadModel, oActividadView);
         $('#indexContenidoJsp').empty();
 
         return false;
     });
 
-    Path.map("#/cuestionario/edit/:id").to(function () {
+    Path.map("#/actividad/edit/:id").to(function () {
         $('#indexContenidoJsp').spinner();
         var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
-        oCuestionarioControl.edit($('#indexContenido'), paramsObject['id'], oCuestionarioModel, oCuestionarioView);
+        oActividadControl.edit($('#indexContenido'), paramsObject['id'], oActividadModel, oActividadView);
         $('#indexContenidoJsp').empty();
     });
 
-    Path.map("#/cuestionario/new").to(function () {
+    Path.map("#/actividad/new").to(function () {
         $('#indexContenidoJsp').spinner();
         var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
-        oCuestionarioControl.new($('#indexContenido'), oCuestionarioModel, oCuestionarioView);
+        oActividadControl.new($('#indexContenido'), oActividadModel, oActividadView);
         $('#indexContenidoJsp').empty();
         return false;
     });
 
-    Path.map("#/cuestionario/remove/:id").to(function () {
+    Path.map("#/actividad/remove/:id").to(function () {
         $('#indexContenidoJsp').spinner();
         var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
-        oCuestionarioControl.remove($('#indexContenido'), paramsObject['id'], oCuestionarioModel, oCuestionarioView);
+        oActividadControl.remove($('#indexContenido'), paramsObject['id'], oActividadModel, oActividadView);
         $('#indexContenidoJsp').empty();
         return false;
     });
-    
-        Path.map("#/cuestionario/preguntas/:id").to(function () {
-        $('#indexContenidoJsp').spinner();
-        var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
-        oCuestionarioControl.remove($('#indexContenido'), paramsObject['id'], oCuestionarioModel, oCuestionarioView);
-        $('#indexContenidoJsp').empty();
-        return false;
-    });
-    
 }

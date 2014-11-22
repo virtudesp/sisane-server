@@ -17,71 +17,62 @@
  */
 
 
-function fCuestionarioRoutes() {
+function fOpcionRoutes() {
 
-//    Path.map("#/documento").to(function () {
+//    Path.map("#/opcion").to(function () {
 //        $('#indexContenidoJsp').spinner();
-//        control('documento').list($('#indexContenido'), param().defaultizeUrlObjectParameters({}), null);
-//        //documentoControl.modalListEventsLoading(documentoObject, documentoView, $('#indexContenido'), param().defaultizeUrlObjectParameters({}), null);        
+//        control('opcion').list($('#indexContenido'), param().defaultizeUrlObjectParameters({}), null);
+//        //opcionControl.modalListEventsLoading(opcionObject, opcionView, $('#indexContenido'), param().defaultizeUrlObjectParameters({}), null);        
 //        $('#indexContenidoJsp').empty();
 //        return false;
 //    });
 
-    Path.map("#/cuestionario").to(function () {
+    Path.map("#/opcion").to(function () {
         $('#indexContenidoJsp').spinner();
-        oCuestionarioControl.list($('#indexContenido'), param().defaultizeUrlObjectParameters({}), null, oCuestionarioModel, oCuestionarioView);
-        //documentoControl.modalListEventsLoading(documentoObject, documentoView, $('#indexContenido'), param().defaultizeUrlObjectParameters({}), null);        
+        oOpcionControl.list($('#indexContenido'), param().defaultizeUrlObjectParameters({}), null, oOpcionModel, oOpcionView);
+        //opcionControl.modalListEventsLoading(opcionObject, opcionView, $('#indexContenido'), param().defaultizeUrlObjectParameters({}), null);        
         $('#indexContenidoJsp').empty();
-        $('#indexContenidoJsp').append(oCuestionarioControl.getClassNameCuestionario());
+        $('#indexContenidoJsp').append(oOpcionControl.getClassNameOpcion());
         return false;
     });
 
-    Path.map("#/cuestionario/list/:url").to(function () {
+    Path.map("#/opcion/list/:url").to(function () {
         $('#indexContenidoJsp').spinner();
         var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
-        oCuestionarioControl.list($('#indexContenido'), paramsObject, null, oCuestionarioModel, oCuestionarioView);
-        $('#indexContenidoJsp').empty();
-        return false;
-    });
-
-    Path.map("#/cuestionario/view/:id").to(function () {
-        $('#indexContenidoJsp').spinner();
-        var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
-        oCuestionarioControl.view($('#indexContenido'), paramsObject['id'], oCuestionarioModel, oCuestionarioView);
-        $('#indexContenidoJsp').empty();
-
-        return false;
-    });
-
-    Path.map("#/cuestionario/edit/:id").to(function () {
-        $('#indexContenidoJsp').spinner();
-        var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
-        oCuestionarioControl.edit($('#indexContenido'), paramsObject['id'], oCuestionarioModel, oCuestionarioView);
-        $('#indexContenidoJsp').empty();
-    });
-
-    Path.map("#/cuestionario/new").to(function () {
-        $('#indexContenidoJsp').spinner();
-        var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
-        oCuestionarioControl.new($('#indexContenido'), oCuestionarioModel, oCuestionarioView);
+        oOpcionControl.list($('#indexContenido'), paramsObject, null, oOpcionModel, oOpcionView);
         $('#indexContenidoJsp').empty();
         return false;
     });
 
-    Path.map("#/cuestionario/remove/:id").to(function () {
+    Path.map("#/opcion/view/:id").to(function () {
         $('#indexContenidoJsp').spinner();
         var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
-        oCuestionarioControl.remove($('#indexContenido'), paramsObject['id'], oCuestionarioModel, oCuestionarioView);
+        oOpcionControl.view($('#indexContenido'), paramsObject['id'], oOpcionModel, oOpcionView);
+        $('#indexContenidoJsp').empty();
+
+        return false;
+    });
+
+    Path.map("#/opcion/edit/:id").to(function () {
+        $('#indexContenidoJsp').spinner();
+        var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
+        oOpcionControl.edit($('#indexContenido'), paramsObject['id'], oOpcionModel, oOpcionView);
+        $('#indexContenidoJsp').empty();
+    });
+
+    Path.map("#/opcion/new").to(function () {
+        $('#indexContenidoJsp').spinner();
+        var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
+        oOpcionControl.new($('#indexContenido'), oOpcionModel, oOpcionView);
         $('#indexContenidoJsp').empty();
         return false;
     });
-    
-        Path.map("#/cuestionario/preguntas/:id").to(function () {
+
+    Path.map("#/opcion/remove/:id").to(function () {
         $('#indexContenidoJsp').spinner();
         var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
-        oCuestionarioControl.remove($('#indexContenido'), paramsObject['id'], oCuestionarioModel, oCuestionarioView);
+        oOpcionControl.remove($('#indexContenido'), paramsObject['id'], oOpcionModel, oOpcionView);
         $('#indexContenidoJsp').empty();
         return false;
     });
-    
 }

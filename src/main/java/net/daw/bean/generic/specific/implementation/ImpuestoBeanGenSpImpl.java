@@ -15,16 +15,41 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-package net.daw.dao.generic.specific.implementation;
+package net.daw.bean.generic.specific.implementation;
 
-import net.daw.dao.generic.implementation.TableDaoGenImpl;
-import java.sql.Connection;
-import net.daw.bean.generic.specific.implementation.OpcionBeanGenSpImpl;
+import net.daw.bean.generic.implementation.BeanGenImpl;
+import net.daw.bean.publicinterface.BeanInterface;
 
-public class OpcionDaoGenSpImpl extends TableDaoGenImpl<OpcionBeanGenSpImpl> {
+public class ImpuestoBeanGenSpImpl extends BeanGenImpl implements BeanInterface {
 
-    public OpcionDaoGenSpImpl(String strObject, Connection pooledConnection) throws Exception {
-        super(strObject, pooledConnection);
+    private String nombre;
+    private String valor;
+
+
+    public ImpuestoBeanGenSpImpl() {
     }
 
+    public ImpuestoBeanGenSpImpl(int id) {
+        super(id);
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getValor() {
+        return valor;
+    }
+
+    public void setValor(String valor) {
+        this.valor = valor;
+    }
+
+    
+    
+    
 }

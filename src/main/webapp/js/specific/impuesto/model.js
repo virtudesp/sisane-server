@@ -1,5 +1,5 @@
-/*
- * Copyright (C) July 2014 Rafael Aznar
+/* 
+ * Copyright (C) 2014 raznara
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -15,16 +15,12 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-package net.daw.dao.generic.specific.implementation;
 
-import net.daw.dao.generic.implementation.TableDaoGenImpl;
-import java.sql.Connection;
-import net.daw.bean.generic.specific.implementation.OpcionBeanGenSpImpl;
-
-public class OpcionDaoGenSpImpl extends TableDaoGenImpl<OpcionBeanGenSpImpl> {
-
-    public OpcionDaoGenSpImpl(String strObject, Connection pooledConnection) throws Exception {
-        super(strObject, pooledConnection);
-    }
-
-}
+var impuestoModel = function (strClase) {
+    this.clase = strClase;
+};
+impuestoModel.prototype = new model('impuesto');
+impuestoModel.prototype.getClassNameImpuesto = function () {
+    return this.getClassName() + "Modelo";
+};
+var oImpuestoModel = new impuestoModel('impuesto');

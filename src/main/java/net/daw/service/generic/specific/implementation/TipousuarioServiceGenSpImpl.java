@@ -15,16 +15,19 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-package net.daw.dao.generic.specific.implementation;
+package net.daw.service.generic.specific.implementation;
 
-import net.daw.dao.generic.implementation.TableDaoGenImpl;
+import net.daw.service.generic.implementation.TableServiceGenImpl;
 import java.sql.Connection;
-import net.daw.bean.generic.specific.implementation.OpcionBeanGenSpImpl;
+import javax.servlet.ServletException;
+import net.daw.bean.generic.specific.implementation.EstadoBeanGenSpImpl;
+import net.daw.dao.generic.specific.implementation.EstadoDaoGenSpImpl;
 
-public class OpcionDaoGenSpImpl extends TableDaoGenImpl<OpcionBeanGenSpImpl> {
+public class TipousuarioServiceGenSpImpl extends TableServiceGenImpl {
 
-    public OpcionDaoGenSpImpl(String strObject, Connection pooledConnection) throws Exception {
-        super(strObject, pooledConnection);
+    public TipousuarioServiceGenSpImpl(String strObject, Connection con) {
+        super(strObject, con);
     }
-
 }
+
+  

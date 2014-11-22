@@ -16,7 +16,7 @@
  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 --%>
 
-<form class="form-horizontal" role="form" action="#" id="publicacionForm" name="formulario">
+<form class="form-horizontal" role="form" action="#" id="opcionForm" name="formulario">
     <div class="form-group">
         <label class="col-sm-2 control-label" for="id">Id:</label>
         <div class="col-sm-2">
@@ -24,21 +24,25 @@
         </div>
     </div>
     <div class="form-group">
-        <label class="col-sm-2 control-label"  for="contenido">Contenido:</label>
+        <label class="col-sm-2 control-label"  for="titulo">Valor:</label>
         <div class="col-sm-6">
-            <input type="text" id="contenido" class="form-control"  name="contenido" size="15" placeholder="contenido" />
+            <input type="text" id="valor" class="form-control"  name="valor" size="15" placeholder="valor del cuestionario" />
         </div>
     </div>
+    
+    
+
     <div class="form-group">
-        <label class="col-sm-2 control-label" for="obj_usuario_id">Usuario: </label> 
+        <label class="col-sm-2 control-label" for="obj_pregunta_id">Pregunta: </label> 
         <div class="col-sm-2">              
-            <input readonly="true"  class="form-control"  id="obj_usuario_id" class="input-mini" name="id_usuario" type="text" size="5" maxlength="5" />  
+            <input readonly="true" class="form-control"  id="obj_pregunta_id" class="input-mini" name="id_pregunta" type="text" size="5" maxlength="5" />  
         </div>
         <div class="col-sm-1">              
-            <a class="btn btn-primary btn-sm" id="obj_usuario_button" href="#"><i class="glyphicon glyphicon-search"></i></a>
+            <a class="btn btn-primary btn-sm" id="obj_pregunta_button" href="#"><i class="glyphicon glyphicon-search"></i></a>
         </div>        
-        <label class="col-sm-7" for="obj_usuario_desc" id="obj_usuario_desc"></label>                     
+        <label class="col-sm-7" for="obj_pregunta_desc" id="obj_pregunta_desc"></label>                     
     </div>
+    
     <div class="form-group">
         <div class="col-sm-offset-2 col-sm-10">
             <div id="messages"></div>
@@ -52,15 +56,26 @@
     </div>
 
 </form>
+        
+
+<!-- Modals -->
+<div id="modal01" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header" id="modal-header"></div>
+            <div class="modal-body" id="modal-body"></div>
+            <div class="modal-footer" id="modal-footer"></div>
+        </div>
+    </div>
+</div>
 
 
 
 <script type="text/javascript">
 
-    $(document).ready(function () {
-
+    $(document).ready(function() {
         //http://jqueryvalidation.org/documentation/
-        $('#publicacionForm')
+        $('#opcionForm')
                 .bootstrapValidator({
                     container: '#messages',
                     feedbackIcons: {
@@ -69,34 +84,32 @@
                         validating: 'glyphicon glyphicon-refresh'
                     },
                     fields: {
-                        contenido: {
+                        valor: {
                             validators: {
                                 notEmpty: {
-                                    message: 'Debe introducir una descripción'
+                                    message: 'Debe introducir un valor'
                                 },
                                 stringLength: {
                                     max: 255,
-                                    message: 'La descripción debe tener como máximo 255 caracteres'
+                                    message: 'El título debe tener como máximo 255 caracteres'
                                 }
                             }
                         },
-                        id_usuario: {
+                        id_pregunta: {
                             validators: {
                                 notEmpty: {
-                                    message: 'Debe elegir un usuario'
+                                    message: 'Debe elegir una pregunta'
                                 },
                                 integer: {
-                                    message: 'El identificador de usuario debe ser un entero'
+                                    message: 'El identificador de pregunta debe ser un entero'
                                 }
                             }
                         }
                     }
                 })
+    });       
 
-                ;
-
-    });
-    .on('change', '[name="id_usuario"]', function () {
-        $('#publicacionForm').bootstrapValidator('revalidateField', 'id_usuario');
-    });
+    
+    
 </script>
+     
