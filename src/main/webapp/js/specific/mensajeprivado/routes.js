@@ -63,7 +63,15 @@ function fMensajeprivadoRoutes() {
     Path.map("#/mensajeprivado/new").to(function () {
         $('#indexContenidoJsp').spinner();
         var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
-        oMensajeprivadoControl.new($('#indexContenido'), oMensajeprivadoModel, oMensajeprivadoView);
+        oMensajeprivadoControl.new($('#indexContenido'), null, oMensajeprivadoModel, oMensajeprivadoView);
+        $('#indexContenidoJsp').empty();
+        return false;
+    });
+
+    Path.map("#/mensajeprivado/new/:id").to(function () {
+        $('#indexContenidoJsp').spinner();
+        var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
+        oMensajeprivadoControl.new($('#indexContenido'), paramsObject['id'], oMensajeprivadoModel, oMensajeprivadoView);
         $('#indexContenidoJsp').empty();
         return false;
     });

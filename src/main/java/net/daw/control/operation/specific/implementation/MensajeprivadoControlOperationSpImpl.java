@@ -23,6 +23,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import javax.servlet.http.HttpServletRequest;
+import net.daw.bean.generic.specific.implementation.UsuarioBeanGenSpImpl;
 import net.daw.connection.implementation.BoneConnectionPoolImpl;
 import net.daw.connection.publicinterface.ConnectionInterface;
 import net.daw.control.operation.publicinterface.ControlOperationInterface;
@@ -103,7 +104,9 @@ public class MensajeprivadoControlOperationSpImpl implements ControlOperationInt
             Integer intPage = ParameterCooker.preparePage(request);
             ArrayList<FilterBeanHelper> alFilter = ParameterCooker.prepareFilter(request);
             HashMap<String, String> hmOrder = ParameterCooker.prepareOrder(request);
-            result = oMensajeprivadoService.getPage(intRegsPerPag, intPage, alFilter, hmOrder);
+            
+            UsuarioBeanGenSpImpl user = (UsuarioBeanGenSpImpl) request.getSession().getAttribute("usuarioBean");
+            result = oMensajeprivadoService.getPageId(intRegsPerPag, intPage, alFilter, hmOrder, user.getId(), user.getId_tipousuario());
             closeDB();
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getpage ERROR: " + ex.getMessage()));
@@ -117,7 +120,9 @@ public class MensajeprivadoControlOperationSpImpl implements ControlOperationInt
         try {
             Integer intRegsPerPag = ParameterCooker.prepareRpp(request);
             ArrayList<FilterBeanHelper> alFilter = ParameterCooker.prepareFilter(request);
-            result = oMensajeprivadoService.getPages(intRegsPerPag, alFilter);
+            
+            UsuarioBeanGenSpImpl user = (UsuarioBeanGenSpImpl) request.getSession().getAttribute("usuarioBean");
+            result = oMensajeprivadoService.getPagesId(intRegsPerPag, alFilter, user.getId(), user.getId_tipousuario());
             closeDB();
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getpages ERROR: " + ex.getMessage()));
@@ -146,7 +151,9 @@ public class MensajeprivadoControlOperationSpImpl implements ControlOperationInt
             Integer intPage = ParameterCooker.preparePage(request);
             ArrayList<FilterBeanHelper> alFilter = ParameterCooker.prepareFilter(request);
             HashMap<String, String> hmOrder = ParameterCooker.prepareOrder(request);
-            result = oMensajeprivadoService.getAggregateViewSome(intRegsPerPag, intPage, alFilter, hmOrder);
+            
+            UsuarioBeanGenSpImpl user = (UsuarioBeanGenSpImpl) request.getSession().getAttribute("usuarioBean");
+            result = oMensajeprivadoService.getAggregateViewSomeId(intRegsPerPag, intPage, alFilter, hmOrder, user.getId(), user.getId_tipousuario());
             closeDB();
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getaggregateviewsome ERROR: " + ex.getMessage()));

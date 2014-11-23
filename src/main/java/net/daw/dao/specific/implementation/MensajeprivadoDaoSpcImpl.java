@@ -20,6 +20,7 @@ package net.daw.dao.specific.implementation;
 import java.sql.Connection;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import net.daw.bean.generic.specific.implementation.MensajeprivadoBeanGenSpImpl;
@@ -133,12 +134,25 @@ public class MensajeprivadoDaoSpcImpl implements ViewDaoInterface<Mensajeprivado
     @Override
     public MensajeprivadoBeanGenSpImpl set(MensajeprivadoBeanGenSpImpl oMensajeprivadoBean) throws Exception {
         try {
+            Boolean isNew = false;
+            
             if (oMensajeprivadoBean.getId() == 0) {
                 oMensajeprivadoBean.setId(oMysql.insertOne(strTableName));
+                isNew = true;
             }
             oMysql.updateOne(oMensajeprivadoBean.getId(), strTableName, "mensaje", oMensajeprivadoBean.getMensaje());
             oMysql.updateOne(oMensajeprivadoBean.getId(), strTableName, "asunto", oMensajeprivadoBean.getAsunto());
-            oMysql.updateOne(oMensajeprivadoBean.getId(), strTableName, "fechaenvio", oMensajeprivadoBean.getFechaenvio().toString());
+            
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");      
+            Date newDate = new Date();       
+            String date = formatter.format(newDate);
+            
+            if (isNew == false) {
+                oMysql.updateOne(oMensajeprivadoBean.getId(), strTableName, "fechaenvio", oMysql.getOne(strTableName, "fechaenvio", oMensajeprivadoBean.getId()));
+            } else {
+                oMysql.updateOne(oMensajeprivadoBean.getId(), strTableName, "fechaenvio", date);
+            }
+            
             oMysql.updateOne(oMensajeprivadoBean.getId(), strTableName, "id_usuario_1", oMensajeprivadoBean.getId_usuario_1().toString());
             oMysql.updateOne(oMensajeprivadoBean.getId(), strTableName, "id_usuario_2", oMensajeprivadoBean.getId_usuario_2().toString());
         } catch (Exception ex) {
@@ -178,6 +192,32 @@ public class MensajeprivadoDaoSpcImpl implements ViewDaoInterface<Mensajeprivado
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPrettyColumnsNames ERROR: " + ex.getMessage()));
         }
         return alColumns;
+    }
+    
+    public ArrayList<MensajeprivadoBeanGenSpImpl> getPageId(int intRegsPerPag, int intPage, ArrayList<FilterBeanHelper> hmFilter, HashMap<String, String> hmOrder, int idusuario) throws Exception {
+        ArrayList<Integer> arrId;
+        ArrayList<MensajeprivadoBeanGenSpImpl> arrMensajeprivado = new ArrayList<>();
+        try {
+            arrId = oMysql.getPageMensajePrivado(strTableName, intRegsPerPag, intPage, hmFilter, hmOrder, idusuario);
+            Iterator<Integer> iterador = arrId.listIterator();
+            while (iterador.hasNext()) {
+                MensajeprivadoBeanGenSpImpl oMensajeprivadoBean = new MensajeprivadoBeanGenSpImpl(iterador.next());
+                arrMensajeprivado.add(this.get(oMensajeprivadoBean, AppConfigurationHelper.getJsonDepth()));
+            }
+        } catch (Exception ex) {
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPage ERROR: " + ex.getMessage()));
+        }
+        return arrMensajeprivado;
+    }
+    
+    public int getPagesId(int intRegsPerPag, ArrayList<FilterBeanHelper> hmFilter, int idusuario) throws Exception {
+        int pages = 0;
+        try {
+            pages = oMysql.getPagesMensajePrivado(strTableName, intRegsPerPag, hmFilter, idusuario);
+        } catch (Exception ex) {
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPages ERROR: " + ex.getMessage()));
+        }
+        return pages;
     }
 
 }

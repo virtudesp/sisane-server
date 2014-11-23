@@ -75,6 +75,8 @@ public class PostServiceSpImpl implements TableServiceInterface, ViewServiceInte
             Gson gson = new GsonBuilder().setDateFormat("dd/MM/yyyy HH:mm:ss").create();
             jason = EncodingUtilHelper.decodeURIComponent(jason);
             oPost = gson.fromJson(jason, oPost.getClass());
+            
+            resultado = gson.toJson(oPost);
             oPost = oPostDAO.set(oPost);
             Map<String, String> data = new HashMap<>();
             data.put("status", "200");

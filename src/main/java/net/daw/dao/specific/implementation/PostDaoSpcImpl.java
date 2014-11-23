@@ -137,9 +137,13 @@ public class PostDaoSpcImpl implements ViewDaoInterface<PostBeanGenSpImpl>, Tabl
     @Override
     public PostBeanGenSpImpl set(PostBeanGenSpImpl oPostBean) throws Exception {
         try {
+            Boolean isNew = false;
+            
             if (oPostBean.getId() == 0) {
                 oPostBean.setId(oMysql.insertOne(strTableName));
+                isNew = true;
             }
+            
             oMysql.updateOne(oPostBean.getId(), strTableName, "titulo", oPostBean.getTitulo());
             oMysql.updateOne(oPostBean.getId(), strTableName, "mensaje", oPostBean.getMensaje());
             
@@ -147,7 +151,7 @@ public class PostDaoSpcImpl implements ViewDaoInterface<PostBeanGenSpImpl>, Tabl
             Date newDate = new Date();       
             String date = formatter.format(newDate);
             
-            if (oMysql.getOne(strTableName, "fechacreacion", oPostBean.getId()) != null) {
+            if (isNew == false) {
                 oMysql.updateOne(oPostBean.getId(), strTableName, "fechacreacion", oMysql.getOne(strTableName, "fechacreacion", oPostBean.getId()));
             } else {
                 oMysql.updateOne(oPostBean.getId(), strTableName, "fechacreacion", date);

@@ -249,4 +249,78 @@ public class MensajeprivadoServiceSpImpl implements TableServiceInterface, ViewS
         }
         return data;
     }
+    
+    public String getAggregateViewSomeId(int intRegsPerPag, int intPage, ArrayList<FilterBeanHelper> alFilter, HashMap<String, String> hmOrder, int idusuario, int tipousuario) throws Exception {
+        String data = null;
+        try {
+            oConnection.setAutoCommit(false);
+            String columns = this.getColumns();
+            String prettyColumns = this.getPrettyColumns();
+            //String types = this.getTypes();
+            String page = this.getPageId(intRegsPerPag, intPage, alFilter, hmOrder, idusuario, tipousuario);
+            String pages = this.getPagesId(intRegsPerPag, alFilter, idusuario, tipousuario);
+            String registers = this.getCount(alFilter);
+            data = "{\"data\":{"
+                    + "\"columns\":" + columns
+                    + ",\"prettyColumns\":" + prettyColumns
+                    // + ",\"types\":" + types
+                    + ",\"page\":" + page
+                    + ",\"pages\":" + pages
+                    + ",\"registers\":" + registers
+                    + "}}";
+            oConnection.commit();
+
+        } catch (Exception ex) {
+            oConnection.rollback();
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getAggregateViewSome ERROR: " + ex.getMessage()));
+        }
+        return data;
+    }
+    
+    public String getPageId(int intRegsPerPag, int intPage, ArrayList<FilterBeanHelper> alFilter, HashMap<String, String> hmOrder, int id, int idtipousuario) throws Exception {
+        String data = null;
+        try {
+            oConnection.setAutoCommit(false);
+            MensajeprivadoDaoSpcImpl oMensajeprivadoDAO = new MensajeprivadoDaoSpcImpl(strObjectName, oConnection);
+            List<MensajeprivadoBeanGenSpImpl> oMensajeprivados;
+            
+            if (idtipousuario != 1) {                
+                oMensajeprivados = oMensajeprivadoDAO.getPageId(intRegsPerPag, intPage, alFilter, hmOrder, id);
+            } else {
+                oMensajeprivados = oMensajeprivadoDAO.getPage(intRegsPerPag, intPage, alFilter, hmOrder);
+            }
+            
+            GsonBuilder gsonBuilder = new GsonBuilder();
+            gsonBuilder.setDateFormat("dd/MM/yyyy HH:mm:ss");
+            Gson gson = gsonBuilder.create();
+            data = gson.toJson(oMensajeprivados);
+            data = "{\"list\":" + data + "}";
+            oConnection.commit();
+        } catch (Exception ex) {
+            oConnection.rollback();
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPage ERROR: " + ex.getMessage()));
+        }
+        return data;
+    }
+    
+    public String getPagesId(int intRegsPerPag, ArrayList<FilterBeanHelper> alFilter, int idusuario, int idtipousuario) throws Exception {
+        String data = null;
+        try {
+            oConnection.setAutoCommit(false);
+            MensajeprivadoDaoSpcImpl oMensajeprivadoDAO = new MensajeprivadoDaoSpcImpl(strObjectName, oConnection);
+            int pages;
+            
+            if (idtipousuario != 1) {                
+                pages = oMensajeprivadoDAO.getPagesId(intRegsPerPag, alFilter, idusuario);
+            } else {
+                pages = oMensajeprivadoDAO.getPages(intRegsPerPag, alFilter);
+            }
+            data = "{\"data\":\"" + Integer.toString(pages) + "\"}";
+            oConnection.commit();
+        } catch (Exception ex) {
+            oConnection.rollback();
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPages ERROR: " + ex.getMessage()));
+        }
+        return data;
+    }
 }

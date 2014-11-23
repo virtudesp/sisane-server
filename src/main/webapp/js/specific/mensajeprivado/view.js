@@ -26,6 +26,69 @@ mensajeprivadoView.prototype.getClassNameMensajeprivado = function () {
 };
 var oMensajeprivadoView = new mensajeprivadoView('mensajeprivado');
 
+mensajeprivadoView.prototype.doEventsLoading = function () {
+    var thisObject = this;
+    $('#mensajeprivadoForm #obj_usuario_1_button').unbind('click');
+    $("#mensajeprivadoForm #obj_usuario_1_button").click(function () {
+        var oControl = oUsuarioControl;  //para probar dejar documento
+        //vista('usuario').cargaModalBuscarClaveAjena('#modal01', "documento");
+
+        $("#mensajeprivadoForm").append(thisObject.getEmptyModal());
+        util().loadForm('#modal01', thisObject.getFormHeader('Elección de usuario'), "", thisObject.getFormFooter(), true);
+
+        $('#mensajeprivadoForm').append(thisObject.getEmptyModal());
+
+        oControl.list('#modal01 #modal-body', param().defaultizeUrlObjectParameters({}), true, oUsuarioModel, oUsuarioView);
+        oControl.modalListEventsLoading('#modal01 #modal-body', param().defaultizeUrlObjectParameters({}), function (id) {
+            $('#obj_usuario_1_id').val(id).change();
+            $('#obj_usuario_1_desc').text(decodeURIComponent(oUsuarioModel.getMeAsAForeignKey(id)));
+            $('#modal01').modal('hide');
+
+        },oUsuarioModel, oUsuarioView);
+        return false;
+    });
+    $('#mensajeprivadoForm #obj_usuario_2_button').unbind('click');
+    $("#mensajeprivadoForm #obj_usuario_2_button").click(function () {
+        var oControl = oUsuarioControl;  //para probar dejar documento
+        //vista('usuario').cargaModalBuscarClaveAjena('#modal01', "documento");
+
+        $("#mensajeprivadoForm").append(thisObject.getEmptyModal());
+        util().loadForm('#modal01', thisObject.getFormHeader('Elección de usuario'), "", thisObject.getFormFooter(), true);
+
+        $('#mensajeprivadoForm').append(thisObject.getEmptyModal());
+
+        oControl.list('#modal01 #modal-body', param().defaultizeUrlObjectParameters({}), true, oUsuarioModel, oUsuarioView);
+        oControl.modalListEventsLoading('#modal01 #modal-body', param().defaultizeUrlObjectParameters({}), function (id) {
+            $('#obj_usuario_2_id').val(id).change();
+            $('#obj_usuario_2_desc').text(decodeURIComponent(oUsuarioModel.getMeAsAForeignKey(id)));
+            $('#modal01').modal('hide');
+
+        },oUsuarioModel, oUsuarioView);
+        return false;
+    });
+};
+
+mensajeprivadoView.prototype.loadButtons = function (id) {
+    var page = oMensajeprivadoModel.getCachedPage();
+    var pagelength = page.length;
+    var idNow = id;
+    var id_usuario_1;
+    
+    for (var i=0;i<pagelength;i++) {
+        if (page[i]["id"] == idNow) {
+            id_usuario_1 = page[i]["id_usuario_1"];
+        }
+    }
+    
+    var botonera = "";
+    botonera += '<div class="btn-toolbar" role="toolbar"><div class="btn-group btn-group-xs">';
+    botonera += '<a class="btn btn-default view" id="' + id + '"  href="jsp#/' + this.clase + '/view/' + id + '"><i class="glyphicon glyphicon-eye-open"></i></a>';
+    botonera += '<a class="btn btn-default edit" id="' + id + '"  href="jsp#/' + this.clase + '/edit/' + id + '"><i class="glyphicon glyphicon-pencil"></i></a>';
+    botonera += '<a class="btn btn-default remove" id="' + id + '"  href="jsp#/' + this.clase + '/remove/' + id + '"><i class="glyphicon glyphicon-remove"></i></a>';
+    botonera += '<a class="btn btn-default mp" id="' + id + '"  href="jsp#/' + "mensajeprivado" + '/new/' + id_usuario_1 + '"><i class="glyphicon glyphicon-envelope"></i></a>';
+    botonera += '</div></div>';
+    return botonera;
+};
 
 mensajeprivadoView.prototype.printValue = function (value, valor, recortar) {
     var thisObject = this;
@@ -34,7 +97,7 @@ mensajeprivadoView.prototype.printValue = function (value, valor, recortar) {
         if (value[valor].id > 0) {
             val = valor.substring(4);
             val = val.substring(0, val.length-2);
-            strResult = '<a href="jsp#/' + val + '/view/' + value[valor].id + '">' + /*value[valor].id + ":" +*/ value[valor].login + '</a>';
+            strResult = '<a href="jsp#/' + val + '/view/' + value[valor].id + '">' + value[valor].id + ":" + value[valor].login + '</a>';
         } else {
             strResult = '???';
         }

@@ -31,13 +31,13 @@ temaView.prototype.printValue = function (value, valor, recortar) {
     var strResult = "";
     if (/obj_usuario/.test(valor)) {
         if (value[valor].id > 0) {
-            strResult = '<a href="jsp#/' + valor.substring(4) + '/view/' + value[valor].id + '">' + /*value[valor].id + ":" +*/ value[valor].login + '</a>';
+            strResult = '<a href="jsp#/' + valor.substring(4) + '/view/' + value[valor].id + '">' + value[valor].id + ":" + value[valor].login + '</a>';
         } else {
             strResult = '???';
         }
     } else if (/obj_tipotema/.test(valor)) {
         if (value[valor].id > 0) {
-            strResult = '<a href="jsp#/' + valor.substring(4) + '/view/' + value[valor].id + '">' + /*value[valor].id + ":" +*/ value[valor].nombre + '</a>';
+            strResult = '<a href="jsp#/' + valor.substring(4) + '/view/' + value[valor].id + '">' + value[valor].id + ":" + value[valor].nombre + '</a>';
         } else {
             strResult = '???';
         }        
