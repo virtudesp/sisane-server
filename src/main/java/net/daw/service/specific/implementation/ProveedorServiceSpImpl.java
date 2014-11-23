@@ -249,4 +249,9 @@ public class ProveedorServiceSpImpl implements TableServiceInterface, ViewServic
         }
         return data;
     }
+
+    @Override
+    public String updateOne(int intId, String strTabla, String strCampo, String strValor) throws Exception {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }
