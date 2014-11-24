@@ -63,7 +63,7 @@ function fPedidoRoutes() {
     Path.map("#/pedido/new").to(function () {
         $('#indexContenidoJsp').spinner();
         var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
-        oPedidoControl.new($('#indexContenido'), oPedidoModel, oPedidoView);
+        oPedidoControl.new($('#indexContenido'), null,oPedidoModel, oPedidoView);
         $('#indexContenidoJsp').empty();
         return false;
     });
