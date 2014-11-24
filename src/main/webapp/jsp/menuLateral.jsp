@@ -70,6 +70,15 @@
 
 <div class="panel panel-primary">
     <div class="panel-heading">
+        <h3 class="panel-title">Global</h3>
+    </div>
+    <div class="list-group">
+        <a  class="list-group-item" id="lnkOrdenador" href="jsp?op=cambia">Cambia el campo</a>
+    </div>
+</div>
+
+<div class="panel panel-primary">
+    <div class="panel-heading">
         <h3 class="panel-title">Foro</h3>
     </div>
     <div class="list-group">
@@ -77,9 +86,6 @@
         <a  class="list-group-item" id="lnkTema" href="jsp#/tema">Tema</a> 
         <a  class="list-group-item" id="lnkPost" href="jsp#/post">Post</a> 
         <a  class="list-group-item" id="lnkMensajeprivado" href="jsp#/mensajeprivado">Mensaje privado</a> 
-        <h3 class="panel-title">Global</h3>
-    </div>
-    <div class="list-group">
-        <a  class="list-group-item" id="lnkOrdenador" href="jsp?op=cambia">Cambia el campo</a>
+
     </div>
 </div>
