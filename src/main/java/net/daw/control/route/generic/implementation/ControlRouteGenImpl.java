@@ -37,6 +37,9 @@ public class ControlRouteGenImpl implements ControlRouteInterface {
                 case "getaggregateviewone":
                     jsonResult = oControl.getaggregateviewone(request);
                     break;
+                case "updateone":
+                    jsonResult = oControl.updateOne(request);
+                    break;    
                 case "getprettycolumns":
                     jsonResult = oControl.getprettycolumns(request);
                     break;

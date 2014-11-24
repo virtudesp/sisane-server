@@ -25,70 +25,27 @@
         </div>
     </div>
     <div class="form-group">
-        <label class="col-sm-2 control-label"  for="titulo">Nombre de Usuario:</label>
+        <label class="col-sm-2 control-label"  for="login">Nombre de Usuario:</label>
         <div class="col-sm-6">
-            <input type="text" id="titulo" class="form-control"  name="titulo" size="15" placeholder="titulo" />
+            <input type="text" id="login" class="form-control"  name="login" size="15" placeholder="Pon aquí tu nombre de usuario" />
         </div>
     </div>
     <div class="form-group">
-        <label class="col-sm-2 control-label"  for="titulo">contraseña:</label>
+        <label class="col-sm-2 control-label"  for="password">Contraseña:</label>
         <div class="col-sm-6">
-            <input type="text" id="titulo" class="form-control"  name="titulo" size="15" placeholder="titulo" />
+            <input type="text" id="password" class="form-control"  name="password" size="15" placeholder="Pon aquí tu contraseña" />
         </div>
     </div>
-    <div class="form-group">
-        <label class="col-sm-2 control-label" for="contenido">Contraseña:</label>
-        <div class="col-sm-9">
-            <textarea type="text"  class="form-control pull-left"  id="contenido" name="contenido" size="15" placeholder="contenido"></textarea>
-        </div>
-        <div class="col-sm-1">
-            <a class="btn btn-primary btn-sm" id="contenido_button" href="#"><i class="glyphicon glyphicon-pencil"></i></a>
-        </div>
-    </div>
-
     
     <div class="form-group">
-        <label class="col-sm-2 control-label" for="alta_group">Alta:</label> 
-        <div class="col-sm-3">           
-            <div class='input-group date' id='alta_group'>
-                <input type='text' class="form-control" id='alta' name="alta_group" placeholder="Fecha de alta" />
-                <span class="input-group-addon">
-                    <span class="glyphicon glyphicon-calendar"></span>
-                </span>
-            </div>
-        </div>
-    </div>
-
-    <div class="form-group">
-        <label class="col-sm-2 control-label" for="cambio_group">Cambio:</label> 
-        <div class="col-sm-3">      
-            <div class='input-group date' id='cambio_group'>
-                <input type='text' class="form-control" id='cambio' name="cambio_group" placeholder="Fecha de cambio" />
-                <span class="input-group-addon">
-                    <span class="glyphicon glyphicon-calendar"></span>
-                </span>
-            </div>
-        </div>
-    </div>
-
-    <div class="form-group">
-        <label class="col-sm-2 control-label"  for="hits">Hits:</label>
-        <div class="col-sm-2">
-            <input type="text"  class="form-control"  id="hits" name="hits" size="15" placeholder="hits" />
-        </div>
-    </div>
-
-
-
-    <div class="form-group">
-        <label class="col-sm-2 control-label" for="obj_usuario_id">Usuario: </label> 
+        <label class="col-sm-2 control-label" for="obj_estado_id">Estado: </label> 
         <div class="col-sm-2">              
-            <input readonly="true"  class="form-control"  id="obj_usuario_id" class="input-mini" name="id_usuario" type="text" size="5" maxlength="5" />  
+            <input readonly="true"  class="form-control"  id="obj_estado_id" class="input-mini" name="id_estado" type="text" size="5" maxlength="5" />  
         </div>
         <div class="col-sm-1">              
-            <a class="btn btn-primary btn-sm" id="obj_usuario_button" href="#"><i class="glyphicon glyphicon-search"></i></a>
+            <a class="btn btn-primary btn-sm" id="obj_estado_button" href="#"><i class="glyphicon glyphicon-search"></i></a>
         </div>        
-        <label class="col-sm-7" for="obj_usuario_desc" id="obj_usuario_desc"></label>                     
+        <label class="col-sm-7" for="obj_estado_desc" id="obj_estado_desc"></label>                     
     </div>
 
     <div class="form-group">
@@ -103,30 +60,18 @@
     </div>
 
     <div class="form-group">
-        <label class="col-sm-2 control-label"  for="etiquetas">Etiquetas:</label>
+        <label class="col-sm-2 control-label"  for="ciudad">Ciudad:</label>
         <div class="col-sm-10">
-            <input type="text"  class="form-control"  id="etiquetas" name="etiquetas" size="15" placeholder="etiquetas" />
+            <input type="text"  class="form-control"  id="ciudad" name="ciudad" size="15" placeholder="¿Dónde vives?" />
         </div>
     </div>
 
     <div class="form-group">
-        <label class="col-sm-2 control-label"  for="publicado">Publicado:</label>
-        <div class="col-sm-1">
-            <input type="checkbox" id="publicado" name="publicado" value="true" />
+        <label class="col-sm-2 control-label"  for="firma">Firma:</label>
+        <div class="col-sm-10">
+            <input type="text"  class="form-control"  id="firma" name="firma" size="15" placeholder="Ponga una firma" />
         </div>
     </div>
-    <div class="form-group">
-        <label class="col-sm-2 control-label"  for="portada">Portada:</label>
-        <div class="col-sm-1">
-            <input type="checkbox" id="portada" name="portada" value="true" />
-        </div>
-    </div>
-    <div class="form-group">
-        <label class="col-sm-2 control-label"  for="destacado">Destacado:</label>
-        <div class="col-sm-1">
-            <input type="checkbox" id="portada" name="destacado" value="true" />
-        </div>
-    </div> 
 
     <div class="form-group">
         <div class="col-sm-offset-2 col-sm-10">

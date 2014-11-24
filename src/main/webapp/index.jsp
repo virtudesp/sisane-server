@@ -175,6 +175,10 @@
         <script src="js/specific/cuestionario/model.js" charset="UTF-8"></script>
         <script src="js/specific/cuestionario/view.js" charset="UTF-8"></script>
         <script src="js/specific/cuestionario/routes.js" charset="UTF-8"></script>
+        <script src="js/specific/actividad/control.js" charset="UTF-8"></script>
+        <script src="js/specific/actividad/model.js" charset="UTF-8"></script>
+        <script src="js/specific/actividad/view.js" charset="UTF-8"></script>
+        <script src="js/specific/actividad/routes.js" charset="UTF-8"></script>
 
 
          <script src="js/specific/usuario/control.js" charset="UTF-8"></script>
@@ -193,6 +197,11 @@
         <script src="js/specific/publicacion/model.js" charset="UTF-8"></script>
         <script src="js/specific/publicacion/view.js" charset="UTF-8"></script>
         <script src="js/specific/publicacion/routes.js" charset="UTF-8"></script>
+        
+        <script src="js/specific/tipousuario/control.js" charset="UTF-8"></script>
+        <script src="js/specific/tipousuario/model.js" charset="UTF-8"></script>
+        <script src="js/specific/tipousuario/view.js" charset="UTF-8"></script>
+        <script src="js/specific/tipousuario/routes.js" charset="UTF-8"></script>
         <!-- Fin Modificación Juanma Usuarios -->
 
         <script src="js/specific/proveedor/control.js" charset="UTF-8"></script>
@@ -204,6 +213,11 @@
         <script src="js/specific/cliente/model.js" charset="UTF-8"></script>
         <script src="js/specific/cliente/view.js" charset="UTF-8"></script>
         <script src="js/specific/cliente/routes.js" charset="UTF-8"></script>
+        
+        <script src="js/specific/impuesto/control.js" charset="UTF-8"></script>
+        <script src="js/specific/impuesto/model.js" charset="UTF-8"></script>
+        <script src="js/specific/impuesto/view.js" charset="UTF-8"></script>
+        <script src="js/specific/impuesto/routes.js" charset="UTF-8"></script>
         
         <script src="js/specific/pedido/control.js" charset="UTF-8"></script>
         <script src="js/specific/pedido/model.js" charset="UTF-8"></script>
@@ -235,7 +249,8 @@
                 fEstadoRoutes();
                 fProveedorRoutes();
                 fClienteRoutes();
-                fPedidoRoutes();
+                fImpuestoRoutes();
+                fActividadRoutes();
 
 
                 Path.listen();

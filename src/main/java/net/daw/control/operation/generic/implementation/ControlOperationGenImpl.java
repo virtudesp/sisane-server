@@ -35,8 +35,8 @@ public class ControlOperationGenImpl implements ControlOperationInterface {
 
     protected ConnectionInterface DataConnectionSource = null;
     protected Connection connection = null;
-    private String strObject = null;
-    private TableServiceGenImpl process = null;
+    protected String strObject = null;
+    protected TableServiceGenImpl process = null;
 
     public ControlOperationGenImpl(HttpServletRequest request) throws Exception {
         try {
@@ -130,11 +130,23 @@ public class ControlOperationGenImpl implements ControlOperationInterface {
         closeDB();
         return result;
     }
+    @Override
+    public String updateOne(HttpServletRequest request) throws Exception {
+        int id = Integer.parseInt(request.getParameter("id"));
+        String tabla = request.getParameter("ob");
+        String campo = request.getParameter("campo");
+        String valor = request.getParameter("valor");
+        
+        String result = process.updateOne(id, tabla, campo, valor);
+        
+        return result;
+    }
 
-    private void closeDB() throws SQLException, Exception {
+    protected void closeDB() throws SQLException, Exception {
         if (connection != null) {
             connection.close();
         }
         DataConnectionSource.disposeConnection();
     }
+
 }

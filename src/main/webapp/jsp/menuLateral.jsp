@@ -39,7 +39,6 @@
         <h3 class="panel-title">Mantenimientos</h3>
     </div>
     <div class="list-group">
-
         <a  class="list-group-item" id="lnkDocumento" href="jsp#/documento">Documento</a> 
         <a  class="list-group-item" id="lnkOrdenador" href="jsp#/ordenador">Ordenador</a> 
         <a  class="list-group-item" id="lnkOrdenador" href="jsp#/usuario">Usuario</a> 
@@ -51,6 +50,8 @@
         <a  class="list-group-item" id="lnkCuestionario" href="jsp#/cuestionario">Cuestionario</a> 
         <a  class="list-group-item" id="lnkPregunta" href="jsp#/pregunta">Pregunta</a>
         <a  class="list-group-item" id="lnkOpcion" href="jsp#/opcion">Opcion</a>
+        <a  class="list-group-item" id="lnkImpuesto" href="jsp#/impuesto">Impuesto</a> 
+        <a  class="list-group-item" id="lnkActividad" href="jsp#/actividad">Actividad</a> 
     </div>
 </div>
 
@@ -62,5 +63,14 @@
 
         <a  class="list-group-item" id="lnkPublicacion" href="jsp#/publicacion">Publicacion</a> 
         <a  class="list-group-item" id="lnkPublicacion" href="jsp#/estado">Estado</a>
+    </div>
+</div>
+
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        <h3 class="panel-title">Global</h3>
+    </div>
+    <div class="list-group">
+        <a  class="list-group-item" id="lnkOrdenador" href="jsp?op=cambia">Cambia el campo</a>
     </div>
 </div>
