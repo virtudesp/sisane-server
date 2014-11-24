@@ -1928,10 +1928,10 @@ INSERT INTO `publicacion` (`id`, `contenido`, `id_usuario`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `respuesta` (
-`id` int(11) NOT NULL,
-  `id_usuario` int(11) NOT NULL,
-  `id_pregunta` int(11) NOT NULL,
-  `id_opcion` int(11) NOT NULL
+`id` int(11) NOT NULL COMMENT 'Identificador',
+  `id_usuario` int(11) NOT NULL COMMENT 'Id. Usuario',
+  `id_pregunta` int(11) NOT NULL COMMENT 'Id. Pregunta',
+  `id_opcion` int(11) NOT NULL COMMENT 'Id. Opción'
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='respuesta' AUTO_INCREMENT=2 ;
 
 -- --------------------------------------------------------

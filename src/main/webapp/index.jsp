@@ -228,6 +228,10 @@
         <script src="js/specific/detalle_pedido/model.js" charset="UTF-8"></script>
         <script src="js/specific/detalle_pedido/view.js" charset="UTF-8"></script>
         <script src="js/specific/detalle_pedido/routes.js" charset="UTF-8"></script>
+         <script src="js/specific/respuesta/control.js" charset="UTF-8"></script>
+        <script src="js/specific/respuesta/model.js" charset="UTF-8"></script>
+        <script src="js/specific/respuesta/view.js" charset="UTF-8"></script>
+        <script src="js/specific/respuesta/routes.js" charset="UTF-8"></script>
         
         <script src="js/specific/tipodocumento/model.js" charset="UTF-8"></script>
 
@@ -258,6 +262,7 @@
                 fActividadRoutes();
                 fPedidoRoutes();
                 fDetalle_pedidoRoutes();
+                fRespuestaRoutes();
 
 
                 Path.listen();
