@@ -2478,3 +2478,23 @@ MODIFY `id` int(6) NOT NULL AUTO_INCREMENT COMMENT 'Identificador',AUTO_INCREMEN
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+ALTER TABLE `tema` CHANGE `nombre` `nombre` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'Título del tema';
+
+ALTER TABLE `tema` CHANGE `fechacreacion` `fechacreacion` DATETIME NULL DEFAULT NULL COMMENT 'Fecha de creación'; 
+
+ALTER TABLE `tema` CHANGE `id_tipotema` `id_tipotema` INT(6) NOT NULL COMMENT 'Categoría';
+
+ALTER TABLE `tema` CHANGE `id_usuario` `id_usuario` INT(6) NOT NULL COMMENT 'Creador del tema';
+
+
+
+ALTER TABLE `post` DROP `primermensaje`;
+ALTER TABLE `mensajeprivado` DROP `leido`;
+
+ALTER TABLE `mensajeprivado` ADD `fechaenvio` DATETIME NULL COMMENT 'Fecha de envío' AFTER `id`;
+
+UPDATE `ausiasyield2014`.`mensajeprivado` SET `fechaenvio` = '2014-11-11 08:33:19' WHERE `mensajeprivado`.`id` = 1; UPDATE `ausiasyield2014`.`mensajeprivado` SET `fechaenvio` = '2014-11-04 06:45:15' WHERE `mensajeprivado`.`id` = 2; UPDATE `ausiasyield2014`.`mensajeprivado` SET `fechaenvio` = '2014-11-10 07:57:13' WHERE `mensajeprivado`.`id` = 3; UPDATE `ausiasyield2014`.`mensajeprivado` SET `fechaenvio` = '2014-11-03 12:08:32' WHERE `mensajeprivado`.`id` = 4; UPDATE `ausiasyield2014`.`mensajeprivado` SET `fechaenvio` = '2014-11-14 08:38:25' WHERE `mensajeprivado`.`id` = 5; UPDATE `ausiasyield2014`.`mensajeprivado` SET `fechaenvio` = '2014-11-19 05:24:42' WHERE `mensajeprivado`.`id` = 6; UPDATE `ausiasyield2014`.`mensajeprivado` SET `fechaenvio` = '2014-11-16 12:32:12' WHERE `mensajeprivado`.`id` = 7; UPDATE `ausiasyield2014`.`mensajeprivado` SET `fechaenvio` = '2014-11-12 12:27:30' WHERE `mensajeprivado`.`id` = 8; UPDATE `ausiasyield2014`.`mensajeprivado` SET `fechaenvio` = '2014-11-19 04:24:21' WHERE `mensajeprivado`.`id` = 9; UPDATE `ausiasyield2014`.`mensajeprivado` SET `fechaenvio` = '2014-11-14 08:30:05' WHERE `mensajeprivado`.`id` = 10; UPDATE `ausiasyield2014`.`mensajeprivado` SET `fechaenvio` = '2014-11-01 06:35:22' WHERE `mensajeprivado`.`id` = 11; UPDATE `ausiasyield2014`.`mensajeprivado` SET `fechaenvio` = '2014-11-09 05:08:21' WHERE `mensajeprivado`.`id` = 12; UPDATE `ausiasyield2014`.`mensajeprivado` SET `fechaenvio` = '2014-11-17 17:21:30' WHERE `mensajeprivado`.`id` = 13; UPDATE `ausiasyield2014`.`mensajeprivado` SET `asunto` = '' WHERE `mensajeprivado`.`id` = 18;
+UPDATE `ausiasyield2014`.`mensajeprivado` SET `fechaenvio` = '2014-11-15 00:22:28' WHERE `mensajeprivado`.`id` = 14; UPDATE `ausiasyield2014`.`mensajeprivado` SET `fechaenvio` = '2014-11-12 23:17:59' WHERE `mensajeprivado`.`id` = 15; UPDATE `ausiasyield2014`.`mensajeprivado` SET `fechaenvio` = '2014-11-02 21:13:40' WHERE `mensajeprivado`.`id` = 16; UPDATE `ausiasyield2014`.`mensajeprivado` SET `fechaenvio` = '2014-11-13 10:39:10' WHERE `mensajeprivado`.`id` = 17; UPDATE `ausiasyield2014`.`mensajeprivado` SET `fechaenvio` = '2014-11-14 15:13:34' WHERE `mensajeprivado`.`id` = 18; UPDATE `ausiasyield2014`.`mensajeprivado` SET `fechaenvio` = '2014-11-17 08:36:28' WHERE `mensajeprivado`.`id` = 19; UPDATE `ausiasyield2014`.`mensajeprivado` SET `fechaenvio` = '2014-11-09 09:43:32' WHERE `mensajeprivado`.`id` = 20;
+
+UPDATE `ausiasyield2014`.`mensajeprivado` SET `asunto` = 'Buenas tardes' WHERE `mensajeprivado`.`id` = 18;
