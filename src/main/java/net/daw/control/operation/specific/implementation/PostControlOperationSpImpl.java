@@ -23,6 +23,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import javax.servlet.http.HttpServletRequest;
+import net.daw.bean.generic.specific.implementation.UsuarioBeanGenSpImpl;
 import net.daw.connection.implementation.BoneConnectionPoolImpl;
 import net.daw.connection.publicinterface.ConnectionInterface;
 import net.daw.control.operation.publicinterface.ControlOperationInterface;
@@ -170,7 +171,8 @@ public class PostControlOperationSpImpl implements ControlOperationInterface {
     public String set(HttpServletRequest request) throws Exception {
         String result = null;
         try {
-            result = oPostService.set(ParameterCooker.prepareJson(request));
+            UsuarioBeanGenSpImpl user = (UsuarioBeanGenSpImpl) request.getSession().getAttribute("usuarioBean");
+            result = oPostService.set2(ParameterCooker.prepareJson(request), user.getId(), user.getId_tipousuario());
             closeDB();
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":set ERROR: " + ex.getMessage()));

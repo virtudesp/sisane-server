@@ -69,3 +69,44 @@ temaView.prototype.printValue = function (value, valor, recortar) {
     };
     return strResult;
 };
+
+temaView.prototype.doEventsLoading = function () {
+    var thisObject = this;
+    $('#temaForm #obj_usuario_button').unbind('click');
+    $("#temaForm #obj_usuario_button").click(function () {
+        var oControl = oUsuarioControl;  //para probar dejar documento
+        //vista('usuario').cargaModalBuscarClaveAjena('#modal01', "documento");
+
+        $("#temaForm").append(thisObject.getEmptyModal());
+        util().loadForm('#modal01', thisObject.getFormHeader('Elección de usuario'), "", thisObject.getFormFooter(), true);
+
+        $('#temaForm').append(thisObject.getEmptyModal());
+
+        oControl.list('#modal01 #modal-body', param().defaultizeUrlObjectParameters({}), true, oUsuarioModel, oUsuarioView);
+        oControl.modalListEventsLoading('#modal01 #modal-body', param().defaultizeUrlObjectParameters({}), function (id) {
+            $('#obj_usuario_id').val(id).change();
+            $('#obj_usuario_desc').text(decodeURIComponent(oUsuarioModel.getMeAsAForeignKey(id)));
+            $('#modal01').modal('hide');
+
+        },oUsuarioModel, oUsuarioView);
+        return false;
+    });
+    $('#temaForm #obj_tipotema_button').unbind('click');
+    $("#temaForm #obj_tipotema_button").click(function () {
+        var oControl = oTemaControl;
+
+        $("#temaForm").append(thisObject.getEmptyModal());
+        util().loadForm('#modal01', thisObject.getFormHeader('Elección de tema'), "", thisObject.getFormFooter(), true);
+
+        $('#temaForm').append(thisObject.getEmptyModal());
+
+        oControl.list('#modal01 #modal-body', param().defaultizeUrlObjectParameters({}), true, oTipotemaModel, oTipotemaView);
+        oControl.modalListEventsLoading('#modal01 #modal-body', param().defaultizeUrlObjectParameters({}), function (id) {
+            $('#obj_tipotema_id').val(id).change();
+            $('#obj_tipotema_desc').text(decodeURIComponent(oTipotemaModel.getMeAsAForeignKey(id)));
+            $('#modal01').modal('hide');
+
+        },oTipotemaModel, oTipotemaView);
+        return false;
+    });
+};

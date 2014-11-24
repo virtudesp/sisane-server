@@ -63,7 +63,7 @@ function fTipotemaRoutes() {
     Path.map("#/tipotema/new").to(function () {
         $('#indexContenidoJsp').spinner();
         var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
-        oTipotemaControl.new($('#indexContenido'), oTipotemaModel, oTipotemaView);
+        oTipotemaControl.new($('#indexContenido'), null, oTipotemaModel, oTipotemaView);
         $('#indexContenidoJsp').empty();
         return false;
     });

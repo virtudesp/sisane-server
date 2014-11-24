@@ -447,15 +447,15 @@ public class MysqlDataSpImpl implements DataInterface {
         return vector;
     }
     
-    public ArrayList<Integer> getPageMensajePrivado(String strTabla, int intRegsPerPage, int intPagina, ArrayList<FilterBeanHelper> alFilter, HashMap<String, String> hmOrder, int id) throws Exception {
+    public ArrayList<Integer> getPageWhereThingOrThing(String strTabla, int intRegsPerPage, int intPagina, ArrayList<FilterBeanHelper> alFilter, HashMap<String, String> hmOrder, int value1, int value2, String column1, String column2) throws Exception {
         ArrayList<Integer> vector = null;
         Statement oStatement = null;
         try {
             vector = new ArrayList<>();
             int intOffset;
             oStatement = (Statement) connection.createStatement();
-            String strSQL = "SELECT id FROM " + strTabla + " WHERE id_usuario_1=" + id + " OR id_usuario_2=" + id + " ";
-            String strSQLcount = "SELECT COUNT(*) FROM " + strTabla + " WHERE id_usuario_1=" + id + " OR id_usuario_2=" + id + " ";
+            String strSQL = "SELECT id FROM " + strTabla + " WHERE " + column1 + "=" + value1 + " OR " + column2 + "=" + value2 + " ";
+            String strSQLcount = "SELECT COUNT(*) FROM " + strTabla + " WHERE " + column1 + "=" + value1 + " OR " + column2 + "=" + value2 + " ";
             if (alFilter != null) {
                 String strSQLFilter = "";
                 Iterator iterator = alFilter.iterator();
@@ -524,13 +524,13 @@ public class MysqlDataSpImpl implements DataInterface {
         return vector;
     }
     
-    public int getPagesMensajePrivado(String strTabla, int intRegsPerPage, ArrayList<FilterBeanHelper> alFilter, int id) throws Exception {
+    public int getPagesMensajePrivado(String strTabla, int intRegsPerPage, ArrayList<FilterBeanHelper> alFilter, int value1, int value2, String column1, String column2) throws Exception {
 
         int intResult = 0;
         Statement oStatement = null;
         try {
             oStatement = (Statement) connection.createStatement();
-            String strSQL = "SELECT count(*) FROM " + strTabla + " WHERE id_usuario_1=" + id + " OR id_usuario_2=" + id;
+            String strSQL = "SELECT count(*) FROM " + strTabla + " WHERE " + column1 + "=" + value1 + " OR " + column2 + "=" + value2;
             if (alFilter != null) {
                 Iterator iterator = alFilter.iterator();
                 while (iterator.hasNext()) {

@@ -63,7 +63,7 @@ function fTemaRoutes() {
     Path.map("#/tema/new").to(function () {
         $('#indexContenidoJsp').spinner();
         var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
-        oTemaControl.new($('#indexContenido'), oTemaModel, oTemaView);
+        oTemaControl.new($('#indexContenido'), null, oTemaModel, oTemaView);
         $('#indexContenidoJsp').empty();
         return false;
     });

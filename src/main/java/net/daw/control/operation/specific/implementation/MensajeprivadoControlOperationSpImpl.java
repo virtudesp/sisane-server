@@ -177,7 +177,8 @@ public class MensajeprivadoControlOperationSpImpl implements ControlOperationInt
     public String set(HttpServletRequest request) throws Exception {
         String result = null;
         try {
-            result = oMensajeprivadoService.set(ParameterCooker.prepareJson(request));
+            UsuarioBeanGenSpImpl user = (UsuarioBeanGenSpImpl) request.getSession().getAttribute("usuarioBean");
+            result = oMensajeprivadoService.set2(ParameterCooker.prepareJson(request), user.getId(), user.getId_tipousuario());
             closeDB();
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":set ERROR: " + ex.getMessage()));

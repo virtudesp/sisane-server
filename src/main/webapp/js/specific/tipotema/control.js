@@ -47,3 +47,30 @@ tipotemaControl.prototype.edit = function (place, id, oModel, oView) {
         });
     });
 };
+
+tipotemaControl.prototype.new = function (place, objParams, oModel, oView) {
+    var thisObject = this;
+    $(place).empty();
+    $(place).append(oView.getPanel("Alta de " + this.clase, oView.getEmptyForm()));
+    
+    //id must not be enabled
+    $('#id').val('0').attr("disabled", true);
+        
+    oView.doEventsLoading();
+    //soporte de claves ajenas
+    /*var selector = objParams["systemfilter"].replace('id_', 'obj_');
+    $('#' + selector + "_id").val(objParams["systemfiltervalue"]).attr("disabled", true);
+    $('#' + selector + "_button").attr("disabled", true).hide();
+    var oModelo = "o" + objParams["systemfilter"].replace('id_', '').charAt(0).toUpperCase() + objParams["systemfilter"].replace('id_', '').slice(1) + "Model";
+    $('#' + selector + '_desc').text(decodeURIComponent(window[oModelo].getMeAsAForeignKey(objParams["systemfiltervalue"])));*/
+    //--
+    $('#submitForm').unbind('click');
+    $('#submitForm').click(function () {
+        oView.okValidation(function (e) {
+            resultado = oModel.setOne({json: JSON.stringify(oView.getFormValues())});
+            oView.doResultOperationNotifyToUser(place, resultado["status"], "Se ha creado el registro con id=" + resultado["message"], resultado["message"], true);
+            e.preventDefault();
+            return false;
+        });
+    });
+};

@@ -75,13 +75,40 @@ public class PostServiceSpImpl implements TableServiceInterface, ViewServiceInte
             Gson gson = new GsonBuilder().setDateFormat("dd/MM/yyyy HH:mm:ss").create();
             jason = EncodingUtilHelper.decodeURIComponent(jason);
             oPost = gson.fromJson(jason, oPost.getClass());
-            
-            resultado = gson.toJson(oPost);
             oPost = oPostDAO.set(oPost);
             Map<String, String> data = new HashMap<>();
             data.put("status", "200");
             data.put("message", Integer.toString(oPost.getId()));
             resultado = gson.toJson(data);
+            oConnection.commit();
+        } catch (Exception ex) {
+            oConnection.rollback();
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":set ERROR: " + ex.getMessage()));
+        }
+        return resultado;
+    }
+    
+    public String set2(String jason, int idusuario, int idtipousuario) throws Exception {
+        String resultado = null;
+        try {
+            oConnection.setAutoCommit(false);
+            PostDaoSpcImpl oPostDAO = new PostDaoSpcImpl(strObjectName, oConnection);
+            PostBeanGenSpImpl oPost = new PostBeanGenSpImpl();
+            Gson gson = new GsonBuilder().setDateFormat("dd/MM/yyyy HH:mm:ss").create();
+            jason = EncodingUtilHelper.decodeURIComponent(jason);
+            oPost = gson.fromJson(jason, oPost.getClass());
+            
+            if (idusuario != oPost.getId_usuario() && idtipousuario != 1) {
+                Map<String, String> data = new HashMap<>();
+                data.put("message", "Su ID no corresponde al usuario que ha creado el post");
+                resultado = gson.toJson(data);
+            } else {
+                oPost = oPostDAO.set(oPost);
+                Map<String, String> data = new HashMap<>();
+                data.put("status", "200");
+                data.put("message", Integer.toString(oPost.getId()));
+                resultado = gson.toJson(data);
+            }
             oConnection.commit();
         } catch (Exception ex) {
             oConnection.rollback();

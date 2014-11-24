@@ -87,6 +87,39 @@ public class MensajeprivadoServiceSpImpl implements TableServiceInterface, ViewS
         }
         return resultado;
     }
+    
+    public String set2(String jason, int idusuario, int idtipousuario) throws Exception {
+        String resultado = null;
+        try {
+            oConnection.setAutoCommit(false);
+            MensajeprivadoDaoSpcImpl oMensajeprivadoDAO = new MensajeprivadoDaoSpcImpl(strObjectName, oConnection);
+            MensajeprivadoBeanGenSpImpl oMensajeprivado = new MensajeprivadoBeanGenSpImpl();
+            Gson gson = new GsonBuilder().setDateFormat("dd/MM/yyyy HH:mm:ss").create();
+            jason = EncodingUtilHelper.decodeURIComponent(jason);
+            oMensajeprivado = gson.fromJson(jason, oMensajeprivado.getClass());
+            
+            if (idusuario != oMensajeprivado.getId_usuario_1() && idtipousuario != 1) {
+                Map<String, String> data = new HashMap<>();
+                data.put("message", "Su ID no corresponde al usuario que envía");
+                resultado = gson.toJson(data);
+            } else if (oMensajeprivado.getId_usuario_1() == oMensajeprivado.getId_usuario_2()) {
+                Map<String, String> data = new HashMap<>();
+                data.put("message", "No puedes mandarte un mensaje privado a tí mismo");
+                resultado = gson.toJson(data);
+            } else {                
+                oMensajeprivado = oMensajeprivadoDAO.set(oMensajeprivado);
+                Map<String, String> data = new HashMap<>();
+                data.put("status", "200");
+                data.put("message", Integer.toString(oMensajeprivado.getId()));
+                resultado = gson.toJson(data);
+            }
+            oConnection.commit();
+        } catch (Exception ex) {
+            oConnection.rollback();
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":set ERROR: " + ex.getMessage()));
+        }
+        return resultado;
+    }
 
     @Override
     public String get(Integer id) throws Exception {

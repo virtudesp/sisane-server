@@ -198,7 +198,7 @@ public class MensajeprivadoDaoSpcImpl implements ViewDaoInterface<Mensajeprivado
         ArrayList<Integer> arrId;
         ArrayList<MensajeprivadoBeanGenSpImpl> arrMensajeprivado = new ArrayList<>();
         try {
-            arrId = oMysql.getPageMensajePrivado(strTableName, intRegsPerPag, intPage, hmFilter, hmOrder, idusuario);
+            arrId = oMysql.getPageWhereThingOrThing(strTableName, intRegsPerPag, intPage, hmFilter, hmOrder, idusuario, idusuario, "id_usuario_1", "id_usuario_2");
             Iterator<Integer> iterador = arrId.listIterator();
             while (iterador.hasNext()) {
                 MensajeprivadoBeanGenSpImpl oMensajeprivadoBean = new MensajeprivadoBeanGenSpImpl(iterador.next());
@@ -213,7 +213,7 @@ public class MensajeprivadoDaoSpcImpl implements ViewDaoInterface<Mensajeprivado
     public int getPagesId(int intRegsPerPag, ArrayList<FilterBeanHelper> hmFilter, int idusuario) throws Exception {
         int pages = 0;
         try {
-            pages = oMysql.getPagesMensajePrivado(strTableName, intRegsPerPag, hmFilter, idusuario);
+            pages = oMysql.getPagesMensajePrivado(strTableName, intRegsPerPag, hmFilter, idusuario, idusuario, "id_usuario_1", "id_usuario_2");
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPages ERROR: " + ex.getMessage()));
         }
