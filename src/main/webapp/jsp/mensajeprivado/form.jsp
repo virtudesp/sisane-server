@@ -67,9 +67,6 @@
         <div class="col-sm-9">
             <textarea type="text"  class="form-control pull-left"  id="mensaje" name="mensaje" size="15" placeholder="Mensaje"></textarea>
         </div>
-        <div class="col-sm-1">
-            <a class="btn btn-primary btn-sm" id="mensaje_button" href="#"><i class="glyphicon glyphicon-pencil"></i></a>
-        </div>
     </div>
 
     <div class="form-group">
