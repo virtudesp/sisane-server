@@ -198,6 +198,12 @@
         <script src="js/specific/publicacion/view.js" charset="UTF-8"></script>
         <script src="js/specific/publicacion/routes.js" charset="UTF-8"></script>
         
+        <script src="js/specific/entrega/control.js" charset="UTF-8"></script>
+        <script src="js/specific/entrega/model.js" charset="UTF-8"></script>
+        <script src="js/specific/entrega/view.js" charset="UTF-8"></script>
+        <script src="js/specific/entrega/routes.js" charset="UTF-8"></script>
+        
+        
         <script src="js/specific/tipousuario/control.js" charset="UTF-8"></script>
         <script src="js/specific/tipousuario/model.js" charset="UTF-8"></script>
         <script src="js/specific/tipousuario/view.js" charset="UTF-8"></script>
@@ -246,6 +252,7 @@
                 fClienteRoutes();
                 fImpuestoRoutes();
                 fActividadRoutes();
+                fEntregaRoutes();
 
 
                 Path.listen();
