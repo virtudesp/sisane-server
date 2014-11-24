@@ -210,6 +210,11 @@
         <script src="js/specific/cliente/view.js" charset="UTF-8"></script>
         <script src="js/specific/cliente/routes.js" charset="UTF-8"></script>
         
+        <script src="js/specific/detalle_pedido/control.js" charset="UTF-8"></script>
+        <script src="js/specific/detalle_pedido/model.js" charset="UTF-8"></script>
+        <script src="js/specific/detalle_pedido/view.js" charset="UTF-8"></script>
+        <script src="js/specific/detalle_pedido/routes.js" charset="UTF-8"></script>
+        
         <script src="js/specific/tipodocumento/model.js" charset="UTF-8"></script>
 
         <script type="text/javascript">
@@ -235,6 +240,7 @@
                 fEstadoRoutes();
                 fProveedorRoutes();
                 fClienteRoutes();
+                fDetalle_pedidoRoutes();
 
 
                 Path.listen();
