@@ -40,5 +40,7 @@ public interface ControlOperationInterface {
     public String remove(HttpServletRequest request) throws Exception;
 
     public String set(HttpServletRequest request) throws Exception;
+    
+    public String updateOne(HttpServletRequest request) throws Exception;
 
 }
