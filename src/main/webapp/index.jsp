@@ -251,6 +251,7 @@
                 fClienteRoutes();
                 fImpuestoRoutes();
                 fActividadRoutes();
+                fPedidoRoutes();
 
 
                 Path.listen();
