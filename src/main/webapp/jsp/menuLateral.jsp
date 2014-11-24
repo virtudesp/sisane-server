@@ -52,6 +52,7 @@
         <a  class="list-group-item" id="lnkOpcion" href="jsp#/opcion">Opcion</a>
         <a  class="list-group-item" id="lnkImpuesto" href="jsp#/impuesto">Impuesto</a> 
         <a  class="list-group-item" id="lnkActividad" href="jsp#/actividad">Actividad</a> 
+        <a  class="list-group-item" id="lnkDetallePedido" href="jsp#/detalle_pedido">DetallePedido</a>
     </div>
 </div>
 

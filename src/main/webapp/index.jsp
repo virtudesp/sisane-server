@@ -224,6 +224,11 @@
         <script src="js/specific/pedido/view.js" charset="UTF-8"></script>
         <script src="js/specific/pedido/routes.js" charset="UTF-8"></script>
         
+         <script src="js/specific/detalle_pedido/control.js" charset="UTF-8"></script>
+        <script src="js/specific/detalle_pedido/model.js" charset="UTF-8"></script>
+        <script src="js/specific/detalle_pedido/view.js" charset="UTF-8"></script>
+        <script src="js/specific/detalle_pedido/routes.js" charset="UTF-8"></script>
+        
         <script src="js/specific/tipodocumento/model.js" charset="UTF-8"></script>
 
         <script type="text/javascript">
@@ -252,6 +257,7 @@
                 fImpuestoRoutes();
                 fActividadRoutes();
                 fPedidoRoutes();
+                fDetalle_pedidoRoutes();
 
 
                 Path.listen();

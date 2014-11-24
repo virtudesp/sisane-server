@@ -43,6 +43,7 @@ import net.daw.control.operation.specific.implementation.ActividadControlOperati
 import net.daw.control.operation.specific.implementation.ProductoControlOperationSpImpl;
 import net.daw.control.operation.specific.implementation.ClienteControlOperationSpImpl;
 import net.daw.control.operation.specific.implementation.ImpuestoControlOperationSpImpl;
+import net.daw.control.operation.specific.implementation.DetallePedidoControlOperationSpImpl;
 import net.daw.control.operation.specific.implementation.ProveedorControlOperationSpImpl;
 import net.daw.control.operation.specific.implementation.TipoproductoControlOperationSpImpl;
 import net.daw.control.route.generic.specific.implementation.CuestionarioControlRouteGenSpImpl;
@@ -61,7 +62,11 @@ import net.daw.control.route.specific.implementation.OrdenadorControlRouteSpImpl
 import net.daw.control.route.specific.implementation.ActividadControlRouteSpImpl;
 import net.daw.control.route.specific.implementation.ProductoControlRouteSpImpl;
 import net.daw.control.route.specific.implementation.ClienteControlRouteSpImpl;
+
+import net.daw.control.route.specific.implementation.DetallePedidoControlRouteSpImpl;
+
 import net.daw.control.route.specific.implementation.ImpuestoControlRouteSpImpl;
+
 import net.daw.control.route.specific.implementation.ProveedorControlRouteSpImpl;
 import net.daw.control.route.specific.implementation.TipoproductoControlRouteSpImpl;
 import net.daw.helper.EstadoHelper;
@@ -192,6 +197,12 @@ public class JsonControl extends HttpServlet {
                         PreguntaControlOperationGenSpImpl oPreguntaControlOperation = new PreguntaControlOperationGenSpImpl(request);
                         jsonResult = oPreguntaRoute.execute(request, oPreguntaControlOperation);
                         break;
+
+                    case "detalle_pedido":
+                        DetallePedidoControlRouteSpImpl oDetallePedidoRoute = new DetallePedidoControlRouteSpImpl();
+                        DetallePedidoControlOperationSpImpl oDetallePedidoControlOperation = new DetallePedidoControlOperationSpImpl(request);
+                        jsonResult = oDetallePedidoRoute.execute(request, oDetallePedidoControlOperation);
+                        break;
                     case "actividad":
                         ActividadControlRouteSpImpl oActividadRoute = new ActividadControlRouteSpImpl();
                         ActividadControlOperationSpImpl oActividadControlOperation = new ActividadControlOperationSpImpl(request);
@@ -201,6 +212,7 @@ public class JsonControl extends HttpServlet {
                         PedidoControlRouteGenSpImpl oPedidoRoute = new PedidoControlRouteGenSpImpl();
                         PedidoControlOperationGenSpImpl oPedidoControlOperation = new PedidoControlOperationGenSpImpl(request);
                         jsonResult = oPedidoRoute.execute(request, oPedidoControlOperation);
+
                         break;
                     default:
                         ExceptionBooster.boost(new Exception(this.getClass().getName() + ":processRequest ERROR: no such operation"));
