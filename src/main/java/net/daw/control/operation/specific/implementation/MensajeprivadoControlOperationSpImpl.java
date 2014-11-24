@@ -102,11 +102,20 @@ public class MensajeprivadoControlOperationSpImpl implements ControlOperationInt
         try {
             Integer intRegsPerPag = ParameterCooker.prepareRpp(request);
             Integer intPage = ParameterCooker.preparePage(request);
-            ArrayList<FilterBeanHelper> alFilter = ParameterCooker.prepareFilter(request);
+            UsuarioBeanGenSpImpl user = (UsuarioBeanGenSpImpl) request.getSession().getAttribute("usuarioBean");
+            
+            ArrayList<FilterBeanHelper> alFilter = new ArrayList<FilterBeanHelper>();
+            FilterBeanHelper oFilterBean = new FilterBeanHelper();
+            
+            if (user.getId_tipousuario() != 1) {
+                oFilterBean.setFilter("id_usuario_2");
+                oFilterBean.setFilterOperator("equals");
+                oFilterBean.setFilterValue(user.getId().toString());
+                alFilter.add(oFilterBean);
+            }
             HashMap<String, String> hmOrder = ParameterCooker.prepareOrder(request);
             
-            UsuarioBeanGenSpImpl user = (UsuarioBeanGenSpImpl) request.getSession().getAttribute("usuarioBean");
-            result = oMensajeprivadoService.getPageId(intRegsPerPag, intPage, alFilter, hmOrder, user.getId(), user.getId_tipousuario());
+            result = oMensajeprivadoService.getPage(intRegsPerPag, intPage, alFilter, hmOrder);
             closeDB();
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getpage ERROR: " + ex.getMessage()));
@@ -119,10 +128,20 @@ public class MensajeprivadoControlOperationSpImpl implements ControlOperationInt
         String result = null;
         try {
             Integer intRegsPerPag = ParameterCooker.prepareRpp(request);
-            ArrayList<FilterBeanHelper> alFilter = ParameterCooker.prepareFilter(request);
-            
             UsuarioBeanGenSpImpl user = (UsuarioBeanGenSpImpl) request.getSession().getAttribute("usuarioBean");
-            result = oMensajeprivadoService.getPagesId(intRegsPerPag, alFilter, user.getId(), user.getId_tipousuario());
+            
+            ArrayList<FilterBeanHelper> alFilter = new ArrayList<FilterBeanHelper>();
+            FilterBeanHelper oFilterBean = new FilterBeanHelper();
+            
+            if (user.getId_tipousuario() != 1) {
+                oFilterBean.setFilter("id_usuario_2");
+                oFilterBean.setFilterOperator("equals");
+                oFilterBean.setFilterValue(user.getId().toString());
+                alFilter.add(oFilterBean);
+            }
+            
+            
+            result = oMensajeprivadoService.getPages(intRegsPerPag, alFilter);
             closeDB();
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getpages ERROR: " + ex.getMessage()));
@@ -149,10 +168,19 @@ public class MensajeprivadoControlOperationSpImpl implements ControlOperationInt
         try {
             Integer intRegsPerPag = ParameterCooker.prepareRpp(request);
             Integer intPage = ParameterCooker.preparePage(request);
-            ArrayList<FilterBeanHelper> alFilter = ParameterCooker.prepareFilter(request);
+            UsuarioBeanGenSpImpl user = (UsuarioBeanGenSpImpl) request.getSession().getAttribute("usuarioBean");
+            
+            ArrayList<FilterBeanHelper> alFilter = new ArrayList<FilterBeanHelper>();
+            FilterBeanHelper oFilterBean = new FilterBeanHelper();
+            
+            if (user.getId_tipousuario() != 1) {
+                oFilterBean.setFilter("id_usuario_2");
+                oFilterBean.setFilterOperator("equals");
+                oFilterBean.setFilterValue(user.getId().toString());
+                alFilter.add(oFilterBean);
+            }
             HashMap<String, String> hmOrder = ParameterCooker.prepareOrder(request);
             
-            UsuarioBeanGenSpImpl user = (UsuarioBeanGenSpImpl) request.getSession().getAttribute("usuarioBean");
             result = oMensajeprivadoService.getAggregateViewSomeId(intRegsPerPag, intPage, alFilter, hmOrder, user.getId(), user.getId_tipousuario());
             closeDB();
         } catch (Exception ex) {

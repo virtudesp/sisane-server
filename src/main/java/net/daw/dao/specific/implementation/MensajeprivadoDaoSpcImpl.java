@@ -193,31 +193,5 @@ public class MensajeprivadoDaoSpcImpl implements ViewDaoInterface<Mensajeprivado
         }
         return alColumns;
     }
-    
-    public ArrayList<MensajeprivadoBeanGenSpImpl> getPageId(int intRegsPerPag, int intPage, ArrayList<FilterBeanHelper> hmFilter, HashMap<String, String> hmOrder, int idusuario) throws Exception {
-        ArrayList<Integer> arrId;
-        ArrayList<MensajeprivadoBeanGenSpImpl> arrMensajeprivado = new ArrayList<>();
-        try {
-            arrId = oMysql.getPageWhereThingOrThing(strTableName, intRegsPerPag, intPage, hmFilter, hmOrder, idusuario, idusuario, "id_usuario_1", "id_usuario_2");
-            Iterator<Integer> iterador = arrId.listIterator();
-            while (iterador.hasNext()) {
-                MensajeprivadoBeanGenSpImpl oMensajeprivadoBean = new MensajeprivadoBeanGenSpImpl(iterador.next());
-                arrMensajeprivado.add(this.get(oMensajeprivadoBean, AppConfigurationHelper.getJsonDepth()));
-            }
-        } catch (Exception ex) {
-            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPage ERROR: " + ex.getMessage()));
-        }
-        return arrMensajeprivado;
-    }
-    
-    public int getPagesId(int intRegsPerPag, ArrayList<FilterBeanHelper> hmFilter, int idusuario) throws Exception {
-        int pages = 0;
-        try {
-            pages = oMysql.getPagesMensajePrivado(strTableName, intRegsPerPag, hmFilter, idusuario, idusuario, "id_usuario_1", "id_usuario_2");
-        } catch (Exception ex) {
-            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPages ERROR: " + ex.getMessage()));
-        }
-        return pages;
-    }
 
 }
