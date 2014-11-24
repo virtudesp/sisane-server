@@ -202,7 +202,7 @@ public class JsonControl extends HttpServlet {
                         DetallePedidoControlRouteSpImpl oDetallePedidoRoute = new DetallePedidoControlRouteSpImpl();
                         DetallePedidoControlOperationSpImpl oDetallePedidoControlOperation = new DetallePedidoControlOperationSpImpl(request);
                         jsonResult = oDetallePedidoRoute.execute(request, oDetallePedidoControlOperation);
-
+                        break;
                     case "actividad":
                         ActividadControlRouteSpImpl oActividadRoute = new ActividadControlRouteSpImpl();
                         ActividadControlOperationSpImpl oActividadControlOperation = new ActividadControlOperationSpImpl(request);
