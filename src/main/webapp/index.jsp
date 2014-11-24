@@ -175,6 +175,10 @@
         <script src="js/specific/cuestionario/model.js" charset="UTF-8"></script>
         <script src="js/specific/cuestionario/view.js" charset="UTF-8"></script>
         <script src="js/specific/cuestionario/routes.js" charset="UTF-8"></script>
+        <script src="js/specific/actividad/control.js" charset="UTF-8"></script>
+        <script src="js/specific/actividad/model.js" charset="UTF-8"></script>
+        <script src="js/specific/actividad/view.js" charset="UTF-8"></script>
+        <script src="js/specific/actividad/routes.js" charset="UTF-8"></script>
 
 
          <script src="js/specific/usuario/control.js" charset="UTF-8"></script>
@@ -232,6 +236,25 @@
         <script src="js/specific/cliente/view.js" charset="UTF-8"></script>
         <script src="js/specific/cliente/routes.js" charset="UTF-8"></script>
         
+        <script src="js/specific/impuesto/control.js" charset="UTF-8"></script>
+        <script src="js/specific/impuesto/model.js" charset="UTF-8"></script>
+        <script src="js/specific/impuesto/view.js" charset="UTF-8"></script>
+        <script src="js/specific/impuesto/routes.js" charset="UTF-8"></script>
+        
+        <script src="js/specific/pedido/control.js" charset="UTF-8"></script>
+        <script src="js/specific/pedido/model.js" charset="UTF-8"></script>
+        <script src="js/specific/pedido/view.js" charset="UTF-8"></script>
+        <script src="js/specific/pedido/routes.js" charset="UTF-8"></script>
+        
+         <script src="js/specific/detalle_pedido/control.js" charset="UTF-8"></script>
+        <script src="js/specific/detalle_pedido/model.js" charset="UTF-8"></script>
+        <script src="js/specific/detalle_pedido/view.js" charset="UTF-8"></script>
+        <script src="js/specific/detalle_pedido/routes.js" charset="UTF-8"></script>
+         <script src="js/specific/respuesta/control.js" charset="UTF-8"></script>
+        <script src="js/specific/respuesta/model.js" charset="UTF-8"></script>
+        <script src="js/specific/respuesta/view.js" charset="UTF-8"></script>
+        <script src="js/specific/respuesta/routes.js" charset="UTF-8"></script>
+        
         <script src="js/specific/tipodocumento/model.js" charset="UTF-8"></script>
 
         <script type="text/javascript">
@@ -261,6 +284,11 @@
                 fEstadoRoutes();
                 fProveedorRoutes();
                 fClienteRoutes();
+                fImpuestoRoutes();
+                fActividadRoutes();
+                fPedidoRoutes();
+                fDetalle_pedidoRoutes();
+                fRespuestaRoutes();
 
 
                 Path.listen();

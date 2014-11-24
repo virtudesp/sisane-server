@@ -81,4 +81,12 @@ function fProveedorRoutes() {
         $('#indexContenidoJsp').empty();
         return false;
     });
+
+    Path.map("#/proveedor/duplicate/:id").to(function () {
+        $('#indexContenidoJsp').spinner();
+        var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
+        oProveedorControl.duplicate($('#indexContenido'), paramsObject['id'], oProveedorModel, oProveedorView);
+        $('#indexContenidoJsp').empty();
+        return false;
+    });
 }

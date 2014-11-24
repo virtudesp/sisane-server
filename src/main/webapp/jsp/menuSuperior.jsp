@@ -30,6 +30,8 @@
             <li><a href="jsp#/usuario">Usuario</a></li>
             <li><a href="jsp#/proveedor">Proveedor</a></li>
             <li><a href="jsp#/cliente">Cliente</a></li>
+            <li><a href="jsp#/impuesto">Impuesto</a></li>
+            <li><a href="jsp#/pedido">Pedido</a></li>
             <li><a href="#">Vacío</a></li>
             <li class="divider"></li>
             <li class="dropdown-header">División</li>

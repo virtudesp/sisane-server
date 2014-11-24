@@ -90,4 +90,16 @@ public abstract class TableDaoGenImpl<TIPO_OBJETO> extends ViewDaoGenImpl<TIPO_O
         }
         return result;
     }
+
+    @Override
+    public int updateOne(int intId, String strTabla, String strCampo, String strValor) throws Exception {
+        int pages = 0;
+        try {
+            pages = oMysql.updateOne(intId, strTabla, strCampo, strValor);
+        } catch (Exception ex) {
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":updateOne ERROR: " + ex.getMessage()));
+        }
+        return pages;
+    }
 }
+

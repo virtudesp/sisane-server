@@ -39,17 +39,21 @@
         <h3 class="panel-title">Mantenimientos</h3>
     </div>
     <div class="list-group">
-
         <a  class="list-group-item" id="lnkDocumento" href="jsp#/documento">Documento</a> 
         <a  class="list-group-item" id="lnkOrdenador" href="jsp#/ordenador">Ordenador</a> 
         <a  class="list-group-item" id="lnkOrdenador" href="jsp#/usuario">Usuario</a> 
         <a  class="list-group-item" id="lnkProveedor" href="jsp#/proveedor">Proveedor</a> 
         <a  class="list-group-item" id="lnkCliente" href="jsp#/cliente">Cliente</a> 
+        <a  class="list-group-item" id="lnkPedido" href="jsp#/pedido">Pedido</a>
  
         <a  class="list-group-item" id="lnkDocumento" href="jsp#/documento">Documento</a>
         <a  class="list-group-item" id="lnkCuestionario" href="jsp#/cuestionario">Cuestionario</a> 
         <a  class="list-group-item" id="lnkPregunta" href="jsp#/pregunta">Pregunta</a>
+        <a  class="list-group-item" id="lnkRespuesta" href="jsp#/respuesta">Respuesta</a>
         <a  class="list-group-item" id="lnkOpcion" href="jsp#/opcion">Opcion</a>
+        <a  class="list-group-item" id="lnkImpuesto" href="jsp#/impuesto">Impuesto</a> 
+        <a  class="list-group-item" id="lnkActividad" href="jsp#/actividad">Actividad</a> 
+        <a  class="list-group-item" id="lnkDetallePedido" href="jsp#/detalle_pedido">DetallePedido</a>
     </div>
 </div>
 
@@ -73,5 +77,9 @@
         <a  class="list-group-item" id="lnkTema" href="jsp#/tema">Tema</a> 
         <a  class="list-group-item" id="lnkPost" href="jsp#/post">Post</a> 
         <a  class="list-group-item" id="lnkMensajeprivado" href="jsp#/mensajeprivado">Mensaje privado</a> 
+        <h3 class="panel-title">Global</h3>
+    </div>
+    <div class="list-group">
+        <a  class="list-group-item" id="lnkOrdenador" href="jsp?op=cambia">Cambia el campo</a>
     </div>
 </div>
