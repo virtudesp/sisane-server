@@ -51,7 +51,7 @@ cuestionarioView.prototype.getBodyPageTable = function (page, fieldNames, visibl
             numField++;
             if (numField <= visibleFields) {
                 tabla += '<td>';
-                if ('tipo' == valor) {
+                if ("tipo" == valor) {
                     tabla += '<a href="jsp#/pregunta/list/systemfilter=id_cuestionario&systemfilteroperator=equals&systemfiltervalue=' + value.id + '">';
                     tabla += thisObject.printValue(value, valor, true);
                     tabla += "</a>";
