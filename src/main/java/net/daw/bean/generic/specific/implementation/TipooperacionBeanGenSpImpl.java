@@ -34,10 +34,7 @@ public class TipooperacionBeanGenSpImpl extends BeanGenImpl implements BeanInter
     private Integer id_operacion = 0;
     @Expose(deserialize = false)
     private OperacionBeanGenSpImpl obj_operacion = null;
-    @Expose(serialize = false)
-    private Integer id_objeto = 0;
-    @Expose(deserialize = false)
-    private ObjetoBeanGenSpImpl obj_objeto = null;
+   
     
 
     public Integer getId_operacion() {
@@ -56,21 +53,7 @@ public class TipooperacionBeanGenSpImpl extends BeanGenImpl implements BeanInter
         this.obj_operacion = obj_operacion;
     }
 
-    public Integer getId_objeto() {
-        return id_objeto;
-    }
-
-    public void setId_objeto(Integer id_objeto) {
-        this.id_objeto = id_objeto;
-    }
-
-    public ObjetoBeanGenSpImpl getObj_objeto() {
-        return obj_objeto;
-    }
-
-    public void setObj_objeto(ObjetoBeanGenSpImpl obj_objeto) {
-        this.obj_objeto = obj_objeto;
-    }
+  
 
 
 }

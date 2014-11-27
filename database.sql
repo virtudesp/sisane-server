@@ -2178,9 +2178,9 @@ CREATE TABLE IF NOT EXISTS `objeto` (
 
 CREATE TABLE IF NOT EXISTS `operacion` (
   `id` int(6) NOT NULL COMMENT 'ID Operación',
-  `descripcion` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Descripción'
+  `descripcion` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Descripción',
+  `id_objeto` int(6) NOT NULL COMMENT 'ID Objeto'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
 -- --------------------------------------------------------
 
 --
@@ -2202,10 +2202,10 @@ CREATE TABLE IF NOT EXISTS `permiso` (
 
 CREATE TABLE IF NOT EXISTS `tipooperacion` (
   `id` int(6) NOT NULL COMMENT 'Identificador',
-  `id_operacion` int(6) NOT NULL COMMENT 'ID Operación',
-  `id_objeto` int(6) NOT NULL COMMENT 'ID Objeto'
+  `id_operacion` int(6) NOT NULL COMMENT 'ID Operación'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+--
 --
 -- Índices para tablas volcadas
 --

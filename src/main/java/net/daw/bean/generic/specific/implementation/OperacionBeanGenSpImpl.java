@@ -32,6 +32,10 @@ public class OperacionBeanGenSpImpl extends BeanGenImpl implements BeanInterface
     }
 
     private String descripcion = "";
+    @Expose(serialize = false)
+    private Integer id_objeto = 0;
+    @Expose(deserialize = false)
+    private ObjetoBeanGenSpImpl obj_objeto = null;
 
     public String getDescripcion() {
         return descripcion;
@@ -39,6 +43,22 @@ public class OperacionBeanGenSpImpl extends BeanGenImpl implements BeanInterface
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
+    }
+
+    public Integer getId_objeto() {
+        return id_objeto;
+    }
+
+    public void setId_objeto(Integer id_objeto) {
+        this.id_objeto = id_objeto;
+    }
+
+    public ObjetoBeanGenSpImpl getObj_objeto() {
+        return obj_objeto;
+    }
+
+    public void setObj_objeto(ObjetoBeanGenSpImpl obj_objeto) {
+        this.obj_objeto = obj_objeto;
     }
 
 }
