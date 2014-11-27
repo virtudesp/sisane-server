@@ -231,10 +231,6 @@
         <script src="js/specific/proveedor/view.js" charset="UTF-8"></script>
         <script src="js/specific/proveedor/routes.js" charset="UTF-8"></script>
         
-        <script src="js/specific/cliente/control.js" charset="UTF-8"></script>
-        <script src="js/specific/cliente/model.js" charset="UTF-8"></script>
-        <script src="js/specific/cliente/view.js" charset="UTF-8"></script>
-        <script src="js/specific/cliente/routes.js" charset="UTF-8"></script>
         
         <script src="js/specific/impuesto/control.js" charset="UTF-8"></script>
         <script src="js/specific/impuesto/model.js" charset="UTF-8"></script>
@@ -283,7 +279,6 @@
                 fTipotemaRoutes();
                 fEstadoRoutes();
                 fProveedorRoutes();
-                fClienteRoutes();
                 fImpuestoRoutes();
                 fActividadRoutes();
                 fPedidoRoutes();

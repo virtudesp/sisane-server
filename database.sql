@@ -1244,37 +1244,37 @@ CREATE TABLE IF NOT EXISTS `pedido` (
 `id` int(11) NOT NULL COMMENT 'Identificador',
   `fecha` date DEFAULT NULL COMMENT 'Fecha Pedido',
   `observaciones` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Observaciones',
-  `id_cliente` int(11) NOT NULL COMMENT 'Id Cliente'
+  `id_usuario` int(11) NOT NULL COMMENT 'Id Usuario'
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=24 ;
 
 --
 -- Volcado de datos para la tabla `pedido`
 --
 
-INSERT INTO `pedido` (`id`, `fecha`, `observaciones`, `id_cliente`) VALUES
+INSERT INTO `pedido` (`id`, `fecha`, `observaciones`, `id_usuario`) VALUES
 (1, '2014-07-10', NULL, 1),
-(2, '2013-11-06', 'Reclamación cliente', 15),
-(3, '2014-02-15', NULL, 25),
-(4, '2012-05-01', NULL, 43),
-(5, '2014-12-18', NULL, 2),
-(6, '2014-02-20', NULL, 60),
-(7, '2013-09-11', 'Entrega atrasada', 48),
-(8, '2014-07-07', 'Cliente se declara insolvente', 23),
-(9, '2011-08-02', NULL, 77),
-(10, '2012-06-16', 'Reclamación cliente', 57),
-(11, '2014-11-26', NULL, 15),
-(12, '2013-08-31', NULL, 82),
-(13, '2014-02-22', NULL, 89),
-(14, '2013-01-03', NULL, 115),
-(15, '2011-03-12', 'Reclamación cliente', 22),
-(16, '2013-06-30', NULL, 22),
-(17, '2014-07-28', NULL, 99),
-(18, '2014-09-11', 'Reclamación cliente', 44),
-(19, '2011-09-04', 'Reclamación cliente', 35),
-(20, '2011-02-07', NULL, 22),
-(21, '2014-01-13', NULL, 25),
-(22, '2012-10-17', NULL, 55),
-(23, '2014-04-12', 'Reclamación cliente', 38);
+(2, '2013-11-06', 'Reclamación cliente', 2),
+(3, '2014-02-15', NULL, 3),
+(4, '2012-05-01', NULL, 4),
+(5, '2014-12-18', NULL, 5),
+(6, '2014-02-20', NULL, 6),
+(7, '2013-09-11', 'Entrega atrasada', 7),
+(8, '2014-07-07', 'Cliente se declara insolvente', 8),
+(9, '2011-08-02', NULL, 9),
+(10, '2012-06-16', 'Reclamación cliente', 10),
+(11, '2014-11-26', NULL, 24),
+(12, '2013-08-31', NULL, 12),
+(13, '2014-02-22', NULL, 13),
+(14, '2013-01-03', NULL, 14),
+(15, '2011-03-12', 'Reclamación cliente', 15),
+(16, '2013-06-30', NULL, 16),
+(17, '2014-07-28', NULL, 17),
+(18, '2014-09-11', 'Reclamación cliente', 18),
+(19, '2011-09-04', 'Reclamación cliente', 19),
+(20, '2011-02-07', NULL, 20),
+(21, '2014-01-13', NULL, 21),
+(22, '2012-10-17', NULL, 22),
+(23, '2014-04-12', 'Reclamación cliente', 23);
 
 -- --------------------------------------------------------
 
@@ -2257,7 +2257,7 @@ ALTER TABLE `ordenador`
 -- Indices de la tabla `pedido`
 --
 ALTER TABLE `pedido`
- ADD PRIMARY KEY (`id`,`id_cliente`);
+ ADD PRIMARY KEY (`id`,`id_usuario`);
 
 --
 -- Indices de la tabla `post`
