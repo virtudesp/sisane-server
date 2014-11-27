@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost:3306
--- Tiempo de generación: 24-11-2014 a las 04:08:31
+-- Tiempo de generación: 27-11-2014 a las 07:58:36
 -- Versión del servidor: 5.5.39
 -- Versión de PHP: 5.4.32
 
@@ -668,7 +668,7 @@ CREATE TABLE IF NOT EXISTS `documento` (
   `portada` tinyint(1) DEFAULT NULL COMMENT 'Portada',
   `destacado` tinyint(1) DEFAULT NULL COMMENT 'Destacado',
   `id_tipodocumento` int(6) DEFAULT NULL COMMENT 'Tipo'
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=50 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=49 ;
 
 --
 -- Volcado de datos para la tabla `documento`
@@ -830,38 +830,38 @@ INSERT INTO `impuesto` (`id`, `nombre`, `valor`) VALUES
 
 CREATE TABLE IF NOT EXISTS `mensajeprivado` (
 `id` int(6) NOT NULL COMMENT 'ID',
+  `fechaenvio` datetime DEFAULT NULL COMMENT 'Fecha de envío',
   `id_usuario_1` int(6) DEFAULT NULL COMMENT 'ID Usuario envía',
   `id_usuario_2` int(6) DEFAULT NULL COMMENT 'ID Usuario recibe',
   `asunto` varchar(255) DEFAULT NULL COMMENT 'Asunto',
-  `mensaje` longtext COMMENT 'Mensaje',
-  `leido` tinyint(1) DEFAULT NULL COMMENT 'Leído'
+  `mensaje` longtext COMMENT 'Mensaje'
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=21 ;
 
 --
 -- Volcado de datos para la tabla `mensajeprivado`
 --
 
-INSERT INTO `mensajeprivado` (`id`, `id_usuario_1`, `id_usuario_2`, `asunto`, `mensaje`, `leido`) VALUES
-(1, 1, 29, 'Lorem ipsum dolor sit amet', 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.', 0),
-(2, 4, 23, 'Donec quam felis', 'Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo.', 1),
-(3, 2, 7, 'Nullam dictum felis eu pede mollis pretium', 'Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus.', 1),
-(4, 15, 16, 'Phasellus viverra nulla ut metus varius laoreet', 'Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus.', 0),
-(5, 8, 9, 'Maecenas tempus, tellus eget condimentum rhoncus', 'Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. Maecenas nec odio et ante tincidunt tempus.', 1),
-(6, 18, 12, 'Donec vitae sapien ut libero venenatis faucibus', 'Donec vitae sapien ut libero venenatis faucibus. Nullam quis ante. Etiam sit amet orci eget eros faucibus tincidunt. Duis leo. Sed fringilla mauris sit amet nibh. Donec sodales sagittis magna. Sed consequat, leo eget bibendum sodales, augue velit cursus nunc, ', 0),
-(7, 11, 6, 'Sed consequat, leo eget bibendum sodales', 'Sed consequat, leo eget bibendum sodales, augue velit cursus nunc, quis gravida magna mi a libero. Fusce vulputate eleifend sapien. Vestibulum purus quam, scelerisque ut, mollis sed, nonummy id, metus. Nullam accumsan lorem in dui. Cras ultricies mi eu turpis hendrerit fringilla.', 1),
-(8, 30, 29, 'Maecenas nec odio et ante tincidunt tempus', 'Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut libero venenatis faucibus. Nullam quis ante. Etiam sit amet orci eget eros faucibus tincidunt. Duis leo. Sed fringilla mauris sit amet nibh. Donec sodales sagittis magna.', 1),
-(9, 13, 14, 'Aenean imperdiet. Etiam ultricies nisi vel augue', 'Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem.', 0),
-(10, 6, 5, 'Vivamus elementum semper nisi', 'Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum.', 1),
-(11, 19, 24, 'Nulla consequat massa quis enim', 'Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus.', 1),
-(12, 24, 23, 'Vestibulum ante ipsum primis in faucibus', 'Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; In ac dui quis mi consectetuer lacinia. Nam pretium turpis et arcu. Duis arcu tortor, suscipit eget, imperdiet nec, imperdiet iaculis, ipsum. Sed aliquam ultrices mauris. Integer ante arcu, accumsan a, consectetuer eget, posuere ut, mauris. Praesent adipiscing. Phasellus ullamcorper ipsum rutrum nunc. Nunc nonummy metus. Vestibulum volutpat pretium libero. Cras id dui. Aenean ut ', 0),
-(13, 17, 15, 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit', 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem.', 0),
-(14, 15, 9, 'Quis autem vel eum iure reprehenderit', 'Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?', 1),
-(15, 3, 27, 'At vero eos et accusamus et iusto odio', 'At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio.', 1),
-(16, 25, 29, 'Nam libero tempore, cum soluta nobis est eligendi', 'Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae.', 1),
-(17, 6, 1, 'Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet', 'Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur?', 1),
-(18, 17, 11, 'Nemo enim ipsam voluptatem', 'Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.', 0),
-(19, 22, 21, 'Sed ut perspiciatis unde omnis iste natus error', 'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.', 1),
-(20, 28, 29, 'Y, viéndole don Quijote de aquella manera', 'Y, viéndole don Quijote de aquella manera, con muestras de tanta tristeza, le dijo: Sábete, Sancho, que no es un hombre más que otro si no hace más que otro.', 1);
+INSERT INTO `mensajeprivado` (`id`, `fechaenvio`, `id_usuario_1`, `id_usuario_2`, `asunto`, `mensaje`) VALUES
+(1, '2014-11-11 08:33:19', 1, 29, 'Lorem ipsum dolor sit amet', 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.'),
+(2, '2014-11-04 06:45:15', 4, 23, 'Donec quam felis', 'Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo.'),
+(3, '2014-11-10 07:57:13', 2, 7, 'Nullam dictum felis eu pede mollis pretium', 'Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus.'),
+(4, '2014-11-03 12:08:32', 15, 16, 'Phasellus viverra nulla ut metus varius laoreet', 'Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus.'),
+(5, '2014-11-14 08:38:25', 8, 9, 'Maecenas tempus, tellus eget condimentum rhoncus', 'Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. Maecenas nec odio et ante tincidunt tempus.'),
+(6, '2014-11-19 05:24:42', 18, 12, 'Donec vitae sapien ut libero venenatis faucibus', 'Donec vitae sapien ut libero venenatis faucibus. Nullam quis ante. Etiam sit amet orci eget eros faucibus tincidunt. Duis leo. Sed fringilla mauris sit amet nibh. Donec sodales sagittis magna. Sed consequat, leo eget bibendum sodales, augue velit cursus nunc, '),
+(7, '2014-11-16 12:32:12', 11, 6, 'Sed consequat, leo eget bibendum sodales', 'Sed consequat, leo eget bibendum sodales, augue velit cursus nunc, quis gravida magna mi a libero. Fusce vulputate eleifend sapien. Vestibulum purus quam, scelerisque ut, mollis sed, nonummy id, metus. Nullam accumsan lorem in dui. Cras ultricies mi eu turpis hendrerit fringilla.'),
+(8, '2014-11-12 12:27:30', 30, 29, 'Maecenas nec odio et ante tincidunt tempus', 'Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut libero venenatis faucibus. Nullam quis ante. Etiam sit amet orci eget eros faucibus tincidunt. Duis leo. Sed fringilla mauris sit amet nibh. Donec sodales sagittis magna.'),
+(9, '2014-11-19 04:24:21', 13, 14, 'Aenean imperdiet. Etiam ultricies nisi vel augue', 'Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem.'),
+(10, '2014-11-14 08:30:05', 6, 5, 'Vivamus elementum semper nisi', 'Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum.'),
+(11, '2014-11-01 06:35:22', 19, 24, 'Nulla consequat massa quis enim', 'Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus.'),
+(12, '2014-11-09 05:08:21', 24, 23, 'Vestibulum ante ipsum primis in faucibus', 'Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; In ac dui quis mi consectetuer lacinia. Nam pretium turpis et arcu. Duis arcu tortor, suscipit eget, imperdiet nec, imperdiet iaculis, ipsum. Sed aliquam ultrices mauris. Integer ante arcu, accumsan a, consectetuer eget, posuere ut, mauris. Praesent adipiscing. Phasellus ullamcorper ipsum rutrum nunc. Nunc nonummy metus. Vestibulum volutpat pretium libero. Cras id dui. Aenean ut '),
+(13, '2014-11-17 17:21:30', 17, 15, 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit', 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem.'),
+(14, '2014-11-15 00:22:28', 15, 9, 'Quis autem vel eum iure reprehenderit', 'Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?'),
+(15, '2014-11-12 23:17:59', 3, 27, 'At vero eos et accusamus et iusto odio', 'At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio.'),
+(16, '2014-11-02 21:13:40', 25, 29, 'Nam libero tempore, cum soluta nobis est eligendi', 'Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae.'),
+(17, '2014-11-13 10:39:10', 6, 1, 'Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet', 'Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur?'),
+(18, '2014-11-14 15:13:34', 17, 11, 'Buenas tardes', 'Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.'),
+(19, '2014-11-17 08:36:28', 22, 21, 'Sed ut perspiciatis unde omnis iste natus error', 'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.'),
+(20, '2014-11-09 09:43:32', 28, 29, 'Y, viéndole don Quijote de aquella manera', 'Y, viéndole don Quijote de aquella manera, con muestras de tanta tristeza, le dijo: Sábete, Sancho, que no es un hombre más que otro si no hace más que otro.');
 
 -- --------------------------------------------------------
 
@@ -939,6 +939,17 @@ INSERT INTO `metadocumentos` (`id`, `orden`, `id_documento`, `id_metadocumento`)
 (18, 7, 18, 18),
 (19, 8, 19, 19),
 (20, 7, 20, 20);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `objeto`
+--
+
+CREATE TABLE IF NOT EXISTS `objeto` (
+  `id` int(6) NOT NULL COMMENT 'ID Objeto',
+  `descripcion` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Descripción'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -1217,6 +1228,17 @@ INSERT INTO `opcion` (`id`, `valor`, `id_pregunta`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `operacion`
+--
+
+CREATE TABLE IF NOT EXISTS `operacion` (
+  `id` int(6) NOT NULL COMMENT 'ID Operación',
+  `descripcion` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Descripción'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `ordenador`
 --
 
@@ -1279,6 +1301,19 @@ INSERT INTO `pedido` (`id`, `fecha`, `observaciones`, `id_cliente`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `permiso`
+--
+
+CREATE TABLE IF NOT EXISTS `permiso` (
+  `id` int(6) NOT NULL COMMENT 'ID Permiso',
+  `id_tipousuario` int(6) NOT NULL COMMENT 'ID Tipo de usuario',
+  `id_tipooperacion` int(6) NOT NULL COMMENT 'ID Tipo Operación',
+  `permitido` tinyint(1) DEFAULT NULL COMMENT 'Permitido'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `post`
 --
 
@@ -1288,7 +1323,6 @@ CREATE TABLE IF NOT EXISTS `post` (
   `mensaje` longtext COMMENT 'Mensaje',
   `fechacreacion` datetime DEFAULT NULL COMMENT 'Fecha Creación',
   `fechamodificacion` datetime DEFAULT NULL COMMENT 'Fecha Modificación',
-  `primermensaje` tinyint(1) DEFAULT '0' COMMENT 'Primer Mensaje',
   `id_tema` int(6) NOT NULL COMMENT 'ID Tema',
   `id_usuario` int(6) NOT NULL COMMENT 'ID Usuario'
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=36 ;
@@ -1297,42 +1331,42 @@ CREATE TABLE IF NOT EXISTS `post` (
 -- Volcado de datos para la tabla `post`
 --
 
-INSERT INTO `post` (`id`, `titulo`, `mensaje`, `fechacreacion`, `fechamodificacion`, `primermensaje`, `id_tema`, `id_usuario`) VALUES
-(1, 'Peter Lim, ¿Estafa o no?', 'Qué os parece el nuevo dueño del Valencia CF, ¿os parece un timador?\r\n\r\nSé que a mucha gente no le causa mucha confianza.', '2014-10-30 09:43:02', '2014-10-30 09:45:02', 1, 1, 2),
-(2, 'Peter Lim, ¿Estafa o no?', 'Es campechano como el Juanca', '2014-10-30 09:43:55', '2014-10-30 09:43:55', 0, 1, 15),
-(3, 'Ranking películas de terror', 'Aquí tenéis mi ranking de películas de terror:\r\n\r\n1.- El grito\r\n2.- Scream\r\n3.- La señal', '2014-10-20 12:35:00', '2014-10-20 12:35:00', 1, 2, 10),
-(4, 'Ranking películas de terror', 'No estoy de acuerdo, Scream es una película del montón', '2014-10-20 13:30:05', '2014-10-20 13:30:05', 0, 2, 15),
-(5, '¿Que os parece este ordenador?', 'No sé si comprarme el Acer R34765', '2014-10-23 14:20:10', '2014-10-23 14:20:10', 1, 3, 14),
-(6, '¿Que os parece este ordenador?', 'Si pones las especificaciones mejor', '2014-10-23 14:25:10', '2014-10-23 14:25:10', 0, 3, 2),
-(7, '¿Xbox One, PC o Ps4?', '¿Cuál os parece la mejor plataforma?', '2014-10-30 13:17:50', '2014-10-30 13:17:50', 1, 4, 16),
-(8, '¿Xbox One, PC o Ps4?', 'XBOX ONE claramente, y sino PC con Windows', '2014-10-30 13:19:50', '2014-10-30 13:19:50', 0, 4, 29),
-(9, 'Comparación Audi tt y BMW serie 1', 'Me gusta más la carrocería del BMW, pero el motor del Audi me parece más potente', '2014-09-15 08:02:00', '2014-09-15 08:03:00', 1, 5, 1),
-(10, 'Como montar una estantería fácilmente', 'https://www.youtube.com/watch?v=I7cfajBGDAo', '2014-10-30 14:27:50', '2014-10-30 14:27:50', 1, 6, 29),
-(11, 'Como montar una estantería fácilmente', 'Muy útil, gracias.', '2014-10-30 14:28:50', '2014-10-30 14:28:50', 0, 6, 28),
-(12, 'Especificaciones GoPro3', 'Los amantes de las cámaras de acción tienen un nuevo modelo a tener en el punto de mira, GoPro HERO3, una nueva gama que acaba de ser presentada con el objetivo de hacernos olvidar modelos anteriores, gracias a la rebaja de dimensiones, y mejora en especificaciones.Aparece en tres versiones, Black, Silver, y White. Externamente mantienen unas líneas de diseño que ya son reconocibles, como icono de mercado. El nuevo modelo es un 30&#37; más delgado, y pesa un 25&#37; menos.Todos los modelos cuentan con conectividad WiFi como novedad, un aspecto que supone un plus, y que se aprovecha en el modelo Black con la incorporación de un control remoto que permite operar con la cámara a distancia. Con el mando se pueden controlar hasta 50 cámaras a la vez, y es sumergible.', '2014-05-05 04:10:52', '2014-05-05 04:10:52', 1, 7, 8),
-(13, 'Especificaciones GoPro3', 'Está muy bien se la recomendaría a mis amigos', '2014-05-05 04:15:52', '2014-05-05 04:15:52', 0, 7, 6),
-(14, 'Sorteo entrada para el cine ABC El Saler', 'Los que queráis participar escribid en el hilo', '2014-01-30 18:15:17', '2014-01-30 18:15:17', 1, 8, 8),
-(15, 'Sorteo entrada para el cine ABC El Saler', 'Me apunto', '2014-01-30 18:18:17', '2014-01-30 18:18:17', 0, 8, 21),
-(16, 'Sorteo entrada para el cine ABC El Saler', 'Yo también', '2014-01-30 18:18:28', '2014-01-30 18:18:28', 0, 8, 17),
-(17, 'Consulta sobre hongos en los pies', 'Que medicamento me recomendáis para tratar los hongos en los pies', '2014-07-29 09:46:10', '2014-07-29 09:46:10', 1, 9, 4),
-(18, 'Consulta sobre hongos en los pies', 'Silvisil cura hongos', '2014-07-29 11:46:10', '2014-07-29 14:46:10', 0, 9, 15),
-(19, 'Duda convalidaciones de FOL', 'Como puedo convalidarme la asignatura', '2014-05-07 19:54:00', '2014-05-07 19:54:00', 1, 10, 5),
-(20, 'Duda convalidaciones de FOL', 'Tienes que haber cursado un modulo similar o de las mismas caracteristicas', '2014-05-07 20:34:00', '2014-05-07 21:54:00', 0, 10, 10),
-(21, 'Viajes a Malaysia', 'Con qué agencia de viajes me recomendariais viajar a Malaysia?', '2014-10-28 06:46:54', '2014-10-28 06:46:54', 1, 11, 9),
-(22, 'Viajes a Malaysia', 'RyanAir que es de bajo coste y alta seguridad', '2014-10-28 18:46:54', '2014-10-28 18:46:54', 0, 11, 1),
-(23, 'Receta-Tarta de limón', 'Tipo de receta: Postre\r\n\r\nNúmero de partes: 3 porciones\r\n\r\nTiempo de preparación: 15 Minutos\r\nTiempo de cocción: 6 Horas\r\nListos en: 6 h, 15 m\r\nDificultad: Fácil\r\n500 grms, queso fresco de untar\r\n500 ml. Nata de montar ( crema de leche )\r\n200 ml. Leche condensada\r\n150 ml Zumo de limón ( como dos limones )\r\n2 sobres de gelatina de limon\r\n\r\nPara la base\r\n1 rulo de galletas maria\r\n4 cucharadas de mantequilla\r\n100 grms avellanas\r\n1 cucharadita de canela', '2014-09-20 11:50:01', '2014-09-20 11:50:01', 1, 12, 10),
-(24, 'Receta-Tarta de limón', 'La probaré tu tranquilo que para la proxima saldra mejor', '2014-09-20 11:52:01', '2014-09-20 12:50:01', 0, 12, 2),
-(25, 'Pasarela Cibeles 2015', 'Osea, guay, hay pasarela suuuuper larga, jijiji :P', '2014-10-28 21:23:54', '2014-10-28 21:23:54', 1, 13, 13),
-(26, 'Pasarela Cibeles 2015', 'Me esperaba algo de informacion', '2014-10-28 22:23:55', '2014-10-28 23:19:56', 0, 13, 22),
-(27, 'Concierto Luz Casal en Burjassot', 'Se sabe algo sobre artistas invitados?', '2014-06-20 12:05:40', '2014-06-20 12:09:40', 1, 14, 16),
-(28, 'Concierto Luz Casal en Burjassot', 'Todavia no hemos recibido esa informacion', '2014-06-21 12:05:40', '2014-06-21 12:05:40', 0, 14, 18),
-(29, 'Me falla la impresora-AYUDA', 'Porque mi impresora no hace pizzas?', '2014-10-23 13:10:52', '2014-10-23 13:10:52', 1, 15, 15),
-(30, 'Me falla la impresora-AYUDA', 'Prueba a romperla y luego comertela', '2014-10-23 14:10:52', '2014-10-23 14:10:52', 0, 15, 11),
-(31, '¿Iphone 6 es un timo o no?', 'Creeis que el iPhone 6 se dobla como dicen?', '2014-09-24 09:59:02', '2014-09-24 09:59:02', 1, 16, 23),
-(32, 'Conferencia Stephen Hawking', 'https://www.youtube.com/watch?v=r8q4Hun7FMA', '2014-10-30 09:12:08', '2014-10-30 09:12:08', 1, 17, 17),
-(33, '¿Cuál es el mejor museo de carruajes de Europa?', 'Cual me recomendais visitar?', '2014-10-30 10:22:18', '2014-10-30 10:22:18', 1, 18, 4),
-(34, 'Vendo Ford Fiesta rosa en perfectas condiciones (Valencia)', 'Pues eso', '2014-08-15 16:11:22', '2014-08-16 20:15:22', 1, 19, 9),
-(35, '¿Bleach o Naruto?-Cuidado SPOILERS', 'Que serie os parece mejor? en ambas mueren todos al final', '2014-10-12 09:14:18', '2014-10-21 10:15:18', 1, 20, 1);
+INSERT INTO `post` (`id`, `titulo`, `mensaje`, `fechacreacion`, `fechamodificacion`, `id_tema`, `id_usuario`) VALUES
+(1, 'Peter Lim, ¿Estafa o no?', 'Qué os parece el nuevo dueño del Valencia CF, ¿os parece un timador?\r\n\r\nSé que a mucha gente no le causa mucha confianza.', '2014-10-30 09:43:02', '2014-10-30 09:45:02', 1, 2),
+(2, 'Peter Lim, ¿Estafa o no?', 'Es campechano como el Juanca', '2014-10-30 09:43:55', '2014-10-30 09:43:55', 1, 15),
+(3, 'Ranking películas de terror', 'Aquí tenéis mi ranking de películas de terror:\r\n\r\n1.- El grito\r\n2.- Scream\r\n3.- La señal', '2014-10-20 12:35:00', '2014-10-20 12:35:00', 2, 10),
+(4, 'Ranking películas de terror', 'No estoy de acuerdo, Scream es una película del montón', '2014-10-20 13:30:05', '2014-10-20 13:30:05', 2, 15),
+(5, '¿Que os parece este ordenador?', 'No sé si comprarme el Acer R34765', '2014-10-23 14:20:10', '2014-10-23 14:20:10', 3, 14),
+(6, '¿Que os parece este ordenador?', 'Si pones las especificaciones mejor', '2014-10-23 14:25:10', '2014-10-23 14:25:10', 3, 2),
+(7, '¿Xbox One, PC o Ps4?', '¿Cuál os parece la mejor plataforma?', '2014-10-30 13:17:50', '2014-10-30 13:17:50', 4, 16),
+(8, '¿Xbox One, PC o Ps4?', 'XBOX ONE claramente, y sino PC con Windows', '2014-10-30 13:19:50', '2014-10-30 13:19:50', 4, 29),
+(9, 'Comparación Audi tt y BMW serie 1', 'Me gusta más la carrocería del BMW, pero el motor del Audi me parece más potente', '2014-09-15 08:02:00', '2014-09-15 08:03:00', 5, 1),
+(10, 'Como montar una estantería fácilmente', 'https://www.youtube.com/watch?v=I7cfajBGDAo', '2014-10-30 14:27:50', '2014-10-30 14:27:50', 6, 29),
+(11, 'Como montar una estantería fácilmente', 'Muy útil, gracias.', '2014-10-30 14:28:50', '2014-10-30 14:28:50', 6, 28),
+(12, 'Especificaciones GoPro3', 'Los amantes de las cámaras de acción tienen un nuevo modelo a tener en el punto de mira, GoPro HERO3, una nueva gama que acaba de ser presentada con el objetivo de hacernos olvidar modelos anteriores, gracias a la rebaja de dimensiones, y mejora en especificaciones.Aparece en tres versiones, Black, Silver, y White. Externamente mantienen unas líneas de diseño que ya son reconocibles, como icono de mercado. El nuevo modelo es un 30&#37; más delgado, y pesa un 25&#37; menos.Todos los modelos cuentan con conectividad WiFi como novedad, un aspecto que supone un plus, y que se aprovecha en el modelo Black con la incorporación de un control remoto que permite operar con la cámara a distancia. Con el mando se pueden controlar hasta 50 cámaras a la vez, y es sumergible.', '2014-05-05 04:10:52', '2014-05-05 04:10:52', 7, 8),
+(13, 'Especificaciones GoPro3', 'Está muy bien se la recomendaría a mis amigos', '2014-05-05 04:15:52', '2014-05-05 04:15:52', 7, 6),
+(14, 'Sorteo entrada para el cine ABC El Saler', 'Los que queráis participar escribid en el hilo', '2014-01-30 18:15:17', '2014-01-30 18:15:17', 8, 8),
+(15, 'Sorteo entrada para el cine ABC El Saler', 'Me apunto', '2014-01-30 18:18:17', '2014-01-30 18:18:17', 8, 21),
+(16, 'Sorteo entrada para el cine ABC El Saler', 'Yo también', '2014-01-30 18:18:28', '2014-01-30 18:18:28', 8, 17),
+(17, 'Consulta sobre hongos en los pies', 'Que medicamento me recomendáis para tratar los hongos en los pies', '2014-07-29 09:46:10', '2014-07-29 09:46:10', 9, 4),
+(18, 'Consulta sobre hongos en los pies', 'Silvisil cura hongos', '2014-07-29 11:46:10', '2014-07-29 14:46:10', 9, 15),
+(19, 'Duda convalidaciones de FOL', 'Como puedo convalidarme la asignatura', '2014-05-07 19:54:00', '2014-05-07 19:54:00', 10, 5),
+(20, 'Duda convalidaciones de FOL', 'Tienes que haber cursado un modulo similar o de las mismas caracteristicas', '2014-05-07 20:34:00', '2014-05-07 21:54:00', 10, 10),
+(21, 'Viajes a Malaysia', 'Con qué agencia de viajes me recomendariais viajar a Malaysia?', '2014-10-28 06:46:54', '2014-10-28 06:46:54', 11, 9),
+(22, 'Viajes a Malaysia', 'RyanAir que es de bajo coste y alta seguridad', '2014-10-28 18:46:54', '2014-10-28 18:46:54', 11, 1),
+(23, 'Receta-Tarta de limón', 'Tipo de receta: Postre\r\n\r\nNúmero de partes: 3 porciones\r\n\r\nTiempo de preparación: 15 Minutos\r\nTiempo de cocción: 6 Horas\r\nListos en: 6 h, 15 m\r\nDificultad: Fácil\r\n500 grms, queso fresco de untar\r\n500 ml. Nata de montar ( crema de leche )\r\n200 ml. Leche condensada\r\n150 ml Zumo de limón ( como dos limones )\r\n2 sobres de gelatina de limon\r\n\r\nPara la base\r\n1 rulo de galletas maria\r\n4 cucharadas de mantequilla\r\n100 grms avellanas\r\n1 cucharadita de canela', '2014-09-20 11:50:01', '2014-09-20 11:50:01', 12, 10),
+(24, 'Receta-Tarta de limón', 'La probaré tu tranquilo que para la proxima saldra mejor', '2014-09-20 11:52:01', '2014-09-20 12:50:01', 12, 2),
+(25, 'Pasarela Cibeles 2015', 'Osea, guay, hay pasarela suuuuper larga, jijiji :P', '2014-10-28 21:23:54', '2014-10-28 21:23:54', 13, 13),
+(26, 'Pasarela Cibeles 2015', 'Me esperaba algo de informacion', '2014-10-28 22:23:55', '2014-10-28 23:19:56', 13, 22),
+(27, 'Concierto Luz Casal en Burjassot', 'Se sabe algo sobre artistas invitados?', '2014-06-20 12:05:40', '2014-06-20 12:09:40', 14, 16),
+(28, 'Concierto Luz Casal en Burjassot', 'Todavia no hemos recibido esa informacion', '2014-06-21 12:05:40', '2014-06-21 12:05:40', 14, 18),
+(29, 'Me falla la impresora-AYUDA', 'Porque mi impresora no hace pizzas?', '2014-10-23 13:10:52', '2014-10-23 13:10:52', 15, 15),
+(30, 'Me falla la impresora-AYUDA', 'Prueba a romperla y luego comertela', '2014-10-23 14:10:52', '2014-10-23 14:10:52', 15, 11),
+(31, '¿Iphone 6 es un timo o no?', 'Creeis que el iPhone 6 se dobla como dicen?', '2014-09-24 09:59:02', '2014-09-24 09:59:02', 16, 23),
+(32, 'Conferencia Stephen Hawking', 'https://www.youtube.com/watch?v=r8q4Hun7FMA', '2014-10-30 09:12:08', '2014-10-30 09:12:08', 17, 17),
+(33, '¿Cuál es el mejor museo de carruajes de Europa?', 'Cual me recomendais visitar?', '2014-10-30 10:22:18', '2014-10-30 10:22:18', 18, 4),
+(34, 'Vendo Ford Fiesta rosa en perfectas condiciones (Valencia)', 'Pues eso', '2014-08-15 16:11:22', '2014-08-16 20:15:22', 19, 9),
+(35, '¿Bleach o Naruto?-Cuidado SPOILERS', 'Que serie os parece mejor? en ambas mueren todos al final', '2014-10-12 09:14:18', '2014-10-21 10:15:18', 20, 1);
 
 -- --------------------------------------------------------
 
@@ -1928,11 +1962,11 @@ INSERT INTO `publicacion` (`id`, `contenido`, `id_usuario`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `respuesta` (
-`id` int(11) NOT NULL COMMENT 'Identificador',
+`id` int(11) NOT NULL,
   `id_usuario` int(11) NOT NULL COMMENT 'Id. Usuario',
   `id_pregunta` int(11) NOT NULL COMMENT 'Id. Pregunta',
   `id_opcion` int(11) NOT NULL COMMENT 'Id. Opción'
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='respuesta' AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='respuesta' AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -1942,10 +1976,10 @@ CREATE TABLE IF NOT EXISTS `respuesta` (
 
 CREATE TABLE IF NOT EXISTS `tema` (
 `id` int(6) NOT NULL COMMENT 'Id',
-  `nombre` varchar(255) DEFAULT NULL COMMENT 'Título',
-  `fechacreacion` datetime DEFAULT NULL COMMENT 'Fecha Creación',
-  `id_tipotema` int(6) NOT NULL COMMENT 'ID Categoría',
-  `id_usuario` int(6) NOT NULL COMMENT 'ID Usuario'
+  `nombre` varchar(255) DEFAULT NULL COMMENT 'Título del tema',
+  `fechacreacion` datetime DEFAULT NULL COMMENT 'Fecha de creación',
+  `id_tipotema` int(6) NOT NULL COMMENT 'Categoría',
+  `id_usuario` int(6) NOT NULL COMMENT 'Creador del tema'
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=21 ;
 
 --
@@ -2001,6 +2035,18 @@ INSERT INTO `tipodocumento` (`id`, `descripcion`, `privado`) VALUES
 (8, 'solicitud', 1),
 (9, 'bolsa de trabajo', 1),
 (10, 'idiomas', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `tipooperacion`
+--
+
+CREATE TABLE IF NOT EXISTS `tipooperacion` (
+  `id` int(6) NOT NULL COMMENT 'Identificador',
+  `id_operacion` int(6) NOT NULL COMMENT 'ID Operación',
+  `id_objeto` int(6) NOT NULL COMMENT 'ID Objeto'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -2242,6 +2288,12 @@ ALTER TABLE `metadocumentos`
  ADD PRIMARY KEY (`id`);
 
 --
+-- Indices de la tabla `objeto`
+--
+ALTER TABLE `objeto`
+ ADD PRIMARY KEY (`id`);
+
+--
 -- Indices de la tabla `opcion`
 --
 ALTER TABLE `opcion`
@@ -2308,6 +2360,12 @@ ALTER TABLE `tipodocumento`
  ADD PRIMARY KEY (`id`);
 
 --
+-- Indices de la tabla `tipooperacion`
+--
+ALTER TABLE `tipooperacion`
+ ADD PRIMARY KEY (`id`);
+
+--
 -- Indices de la tabla `tipoproducto`
 --
 ALTER TABLE `tipoproducto`
@@ -2369,7 +2427,7 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Identificador',AUTO_INCREME
 -- AUTO_INCREMENT de la tabla `documento`
 --
 ALTER TABLE `documento`
-MODIFY `id` int(6) NOT NULL AUTO_INCREMENT COMMENT 'Num.',AUTO_INCREMENT=50;
+MODIFY `id` int(6) NOT NULL AUTO_INCREMENT COMMENT 'Num.',AUTO_INCREMENT=49;
 --
 -- AUTO_INCREMENT de la tabla `entrega`
 --
@@ -2444,7 +2502,7 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Identificador',AUTO_INCREME
 -- AUTO_INCREMENT de la tabla `respuesta`
 --
 ALTER TABLE `respuesta`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT de la tabla `tema`
 --
@@ -2478,23 +2536,3 @@ MODIFY `id` int(6) NOT NULL AUTO_INCREMENT COMMENT 'Identificador',AUTO_INCREMEN
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-
-ALTER TABLE `tema` CHANGE `nombre` `nombre` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'Título del tema';
-
-ALTER TABLE `tema` CHANGE `fechacreacion` `fechacreacion` DATETIME NULL DEFAULT NULL COMMENT 'Fecha de creación'; 
-
-ALTER TABLE `tema` CHANGE `id_tipotema` `id_tipotema` INT(6) NOT NULL COMMENT 'Categoría';
-
-ALTER TABLE `tema` CHANGE `id_usuario` `id_usuario` INT(6) NOT NULL COMMENT 'Creador del tema';
-
-
-
-ALTER TABLE `post` DROP `primermensaje`;
-ALTER TABLE `mensajeprivado` DROP `leido`;
-
-ALTER TABLE `mensajeprivado` ADD `fechaenvio` DATETIME NULL COMMENT 'Fecha de envío' AFTER `id`;
-
-UPDATE `ausiasyield2014`.`mensajeprivado` SET `fechaenvio` = '2014-11-11 08:33:19' WHERE `mensajeprivado`.`id` = 1; UPDATE `ausiasyield2014`.`mensajeprivado` SET `fechaenvio` = '2014-11-04 06:45:15' WHERE `mensajeprivado`.`id` = 2; UPDATE `ausiasyield2014`.`mensajeprivado` SET `fechaenvio` = '2014-11-10 07:57:13' WHERE `mensajeprivado`.`id` = 3; UPDATE `ausiasyield2014`.`mensajeprivado` SET `fechaenvio` = '2014-11-03 12:08:32' WHERE `mensajeprivado`.`id` = 4; UPDATE `ausiasyield2014`.`mensajeprivado` SET `fechaenvio` = '2014-11-14 08:38:25' WHERE `mensajeprivado`.`id` = 5; UPDATE `ausiasyield2014`.`mensajeprivado` SET `fechaenvio` = '2014-11-19 05:24:42' WHERE `mensajeprivado`.`id` = 6; UPDATE `ausiasyield2014`.`mensajeprivado` SET `fechaenvio` = '2014-11-16 12:32:12' WHERE `mensajeprivado`.`id` = 7; UPDATE `ausiasyield2014`.`mensajeprivado` SET `fechaenvio` = '2014-11-12 12:27:30' WHERE `mensajeprivado`.`id` = 8; UPDATE `ausiasyield2014`.`mensajeprivado` SET `fechaenvio` = '2014-11-19 04:24:21' WHERE `mensajeprivado`.`id` = 9; UPDATE `ausiasyield2014`.`mensajeprivado` SET `fechaenvio` = '2014-11-14 08:30:05' WHERE `mensajeprivado`.`id` = 10; UPDATE `ausiasyield2014`.`mensajeprivado` SET `fechaenvio` = '2014-11-01 06:35:22' WHERE `mensajeprivado`.`id` = 11; UPDATE `ausiasyield2014`.`mensajeprivado` SET `fechaenvio` = '2014-11-09 05:08:21' WHERE `mensajeprivado`.`id` = 12; UPDATE `ausiasyield2014`.`mensajeprivado` SET `fechaenvio` = '2014-11-17 17:21:30' WHERE `mensajeprivado`.`id` = 13; UPDATE `ausiasyield2014`.`mensajeprivado` SET `asunto` = '' WHERE `mensajeprivado`.`id` = 18;
-UPDATE `ausiasyield2014`.`mensajeprivado` SET `fechaenvio` = '2014-11-15 00:22:28' WHERE `mensajeprivado`.`id` = 14; UPDATE `ausiasyield2014`.`mensajeprivado` SET `fechaenvio` = '2014-11-12 23:17:59' WHERE `mensajeprivado`.`id` = 15; UPDATE `ausiasyield2014`.`mensajeprivado` SET `fechaenvio` = '2014-11-02 21:13:40' WHERE `mensajeprivado`.`id` = 16; UPDATE `ausiasyield2014`.`mensajeprivado` SET `fechaenvio` = '2014-11-13 10:39:10' WHERE `mensajeprivado`.`id` = 17; UPDATE `ausiasyield2014`.`mensajeprivado` SET `fechaenvio` = '2014-11-14 15:13:34' WHERE `mensajeprivado`.`id` = 18; UPDATE `ausiasyield2014`.`mensajeprivado` SET `fechaenvio` = '2014-11-17 08:36:28' WHERE `mensajeprivado`.`id` = 19; UPDATE `ausiasyield2014`.`mensajeprivado` SET `fechaenvio` = '2014-11-09 09:43:32' WHERE `mensajeprivado`.`id` = 20;
-
-UPDATE `ausiasyield2014`.`mensajeprivado` SET `asunto` = 'Buenas tardes' WHERE `mensajeprivado`.`id` = 18;
