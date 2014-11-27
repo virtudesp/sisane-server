@@ -73,7 +73,6 @@ public class PermisoBeanGenSpImpl extends BeanGenImpl implements BeanInterface {
         this.obj_tipooperacion = obj_tipooperacion;
     }
     
-    
     public Boolean getPermitido() {
         return permitido;
     }
