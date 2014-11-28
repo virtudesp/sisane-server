@@ -2159,6 +2159,53 @@ INSERT INTO `usuario` (`id`, `login`, `password`, `id_tipousuario`, `id_estado`,
 (29, 'gigabyte', 'gigabyte', 3, 10, 'Oviedo', 'Viva gigabyte'),
 (30, 'microsoft', 'microsoft', 3, 10, 'Albacete', 'La xbox ONE es la MEJOR CONSOLA');
 
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `objeto`
+--
+
+CREATE TABLE IF NOT EXISTS `objeto` (
+  `id` int(6) NOT NULL COMMENT 'ID Objeto',
+  `descripcion` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Descripción'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `operacion`
+--
+
+CREATE TABLE IF NOT EXISTS `operacion` (
+  `id` int(6) NOT NULL COMMENT 'ID Operación',
+  `descripcion` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Descripción',
+  `id_objeto` int(6) NOT NULL COMMENT 'ID Objeto'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `permiso`
+--
+
+CREATE TABLE IF NOT EXISTS `permiso` (
+  `id` int(6) NOT NULL COMMENT 'ID Permiso',
+  `id_tipousuario` int(6) NOT NULL COMMENT 'ID Tipo de usuario',
+  `id_tipooperacion` int(6) NOT NULL COMMENT 'ID Tipo Operación',
+  `permitido` tinyint(1) DEFAULT NULL COMMENT 'Permitido'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `tipooperacion`
+--
+
+CREATE TABLE IF NOT EXISTS `tipooperacion` (
+  `id` int(6) NOT NULL COMMENT 'Identificador',
+  `id_operacion` int(6) NOT NULL COMMENT 'ID Operación'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
 --
 -- Índices para tablas volcadas
 --
@@ -2198,6 +2245,31 @@ ALTER TABLE `cuestionario`
 --
 ALTER TABLE `detalle_pedido`
  ADD PRIMARY KEY (`id`,`id_pedido`,`id_producto`);
+
+--
+-- Indices de la tabla `objeto`
+--
+ALTER TABLE `objeto`
+ ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `tipooperacion`
+--
+ALTER TABLE `tipooperacion`
+ ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `permiso`
+--
+ALTER TABLE `permiso`
+ ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `operacion`
+--
+ALTER TABLE `operacion`
+ ADD PRIMARY KEY (`id`);
+
 
 --
 -- Indices de la tabla `documento`
