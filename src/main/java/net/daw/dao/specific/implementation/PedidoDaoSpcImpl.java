@@ -18,11 +18,13 @@
 package net.daw.dao.specific.implementation;
 
 import java.sql.Connection;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
-import net.daw.bean.generic.specific.implementation.ClienteBeanGenSpImpl;
+import net.daw.bean.generic.specific.implementation.UsuarioBeanGenSpImpl;
 import net.daw.bean.generic.specific.implementation.PedidoBeanGenSpImpl;
+import net.daw.dao.generic.specific.implementation.UsuarioDaoGenSpImpl;
 import net.daw.dao.publicinterface.MetaDaoInterface;
 import net.daw.dao.publicinterface.TableDaoInterface;
 import net.daw.dao.publicinterface.ViewDaoInterface;
@@ -95,14 +97,16 @@ public class PedidoDaoSpcImpl implements ViewDaoInterface<PedidoBeanGenSpImpl>, 
                 } else {
                     expand--;
                     if (expand > 0) {
-                        /*oPedidoBean.setFecha((oMysql.getOne(strTableName, "cantidad", oPedidoBean.getId())));*/
-                        oPedidoBean.setId_cliente(Integer.parseInt(oMysql.getOne(strTableName, "id_cliente", oPedidoBean.getId())));
+                        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+                        String dateInString = oMysql.getOne(strTableName, "fecha", oPedidoBean.getId());
+                        oPedidoBean.setFecha(formatter.parse(dateInString));
+                        oPedidoBean.setId_usuario(Integer.parseInt(oMysql.getOne(strTableName, "id_usuario", oPedidoBean.getId())));
 
-                        ClienteBeanGenSpImpl oCliente = new ClienteBeanGenSpImpl();
-                        oCliente.setId(Integer.parseInt(oMysql.getOne(strTableName, "id_cliente", oPedidoBean.getId())));
-                        ClienteDaoSpcImpl oClienteDAO = new ClienteDaoSpcImpl("cliente", oConnection);
-                        oCliente = oClienteDAO.get(oCliente, AppConfigurationHelper.getJsonDepth());
-                        oPedidoBean.setObj_cliente(oCliente);
+                        UsuarioBeanGenSpImpl oUsuario = new UsuarioBeanGenSpImpl();
+                        oUsuario.setId(Integer.parseInt(oMysql.getOne(strTableName, "id_usuario", oPedidoBean.getId())));
+                        UsuarioDaoGenSpImpl oUsuarioDAO = new UsuarioDaoGenSpImpl("usuario", oConnection);
+                        oUsuario = oUsuarioDAO.get(oUsuario, AppConfigurationHelper.getJsonDepth());
+                        oPedidoBean.setObj_usuario(oUsuario);
                     }
 
                 }
@@ -122,7 +126,7 @@ public class PedidoDaoSpcImpl implements ViewDaoInterface<PedidoBeanGenSpImpl>, 
                 oPedidoBean.setId(oMysql.insertOne(strTableName));
             }
             /* oMysql.updateOne(oPedidoBean.getId(), strTableName, "fecha", oPedidoBean.getFecha();*/
-            oMysql.updateOne(oPedidoBean.getId(), strTableName, "id_cliente", oPedidoBean.getId_cliente().toString());
+            oMysql.updateOne(oPedidoBean.getId(), strTableName, "id_usuario", oPedidoBean.getId_usuario().toString());
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":set ERROR: " + ex.getMessage()));
         }

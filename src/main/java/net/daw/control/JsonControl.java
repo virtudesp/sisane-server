@@ -45,7 +45,6 @@ import net.daw.control.operation.generic.specific.implementation.UsuarioControlO
 import net.daw.control.operation.specific.implementation.OrdenadorControlOperationSpImpl;
 import net.daw.control.operation.specific.implementation.ActividadControlOperationSpImpl;
 import net.daw.control.operation.specific.implementation.ProductoControlOperationSpImpl;
-import net.daw.control.operation.specific.implementation.ClienteControlOperationSpImpl;
 import net.daw.control.operation.specific.implementation.MensajeprivadoControlOperationSpImpl;
 import net.daw.control.operation.specific.implementation.PostControlOperationSpImpl;
 import net.daw.control.operation.specific.implementation.ImpuestoControlOperationSpImpl;
@@ -71,7 +70,6 @@ import net.daw.control.route.specific.implementation.AmigoControlRouteSpImpl;
 import net.daw.control.route.specific.implementation.OrdenadorControlRouteSpImpl;
 import net.daw.control.route.specific.implementation.ActividadControlRouteSpImpl;
 import net.daw.control.route.specific.implementation.ProductoControlRouteSpImpl;
-import net.daw.control.route.specific.implementation.ClienteControlRouteSpImpl;
 import net.daw.control.route.specific.implementation.MensajeprivadoControlRouteSpImpl;
 import net.daw.control.route.specific.implementation.PostControlRouteSpImpl;
 
@@ -152,11 +150,6 @@ public class JsonControl extends HttpServlet {
                         ProductoControlRouteSpImpl oProductoRoute = new ProductoControlRouteSpImpl();
                         ProductoControlOperationSpImpl oProductoControlOperation = new ProductoControlOperationSpImpl(request);
                         jsonResult = oProductoRoute.execute(request, oProductoControlOperation);
-                        break;
-                    case "cliente":
-                        ClienteControlRouteSpImpl oClienteRoute = new ClienteControlRouteSpImpl();
-                        ClienteControlOperationSpImpl oClienteControlOperation = new ClienteControlOperationSpImpl(request);
-                        jsonResult = oClienteRoute.execute(request, oClienteControlOperation);
                         break;
                     case "proveedor":
                         ProveedorControlRouteSpImpl oProveedorRoute = new ProveedorControlRouteSpImpl();

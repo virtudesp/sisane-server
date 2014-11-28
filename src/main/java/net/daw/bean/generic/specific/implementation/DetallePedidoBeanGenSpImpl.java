@@ -36,15 +36,13 @@ public class DetallePedidoBeanGenSpImpl extends BeanGenImpl implements BeanInter
     @Expose(serialize = false)
     private Integer id_producto = 0; //importante inicializar a 0 las claves ajenas
     @Expose(deserialize = false)
-    private ProductoBeanGenSpImpl obj_producto = null;
-    
-  /*  private Integer id_cliente = 0;
+    private ProductoBeanGenSpImpl obj_producto = null;  
+    private Integer id_usuario = 0;
     @Expose (deserialize = false)
-    private ClienteBeanGenSpImpl obj_cliente = null;
-    
+    private UsuarioBeanGenSpImpl obj_usuario = null;   
     private Integer id_tipoproducto = 0; //importante inicializar a 0 las claves ajenas
     @Expose(deserialize = false)
-    private TipoproductoBeanGenSpImpl obj_tipoproducto = null;*/
+    private TipoproductoBeanGenSpImpl obj_tipoproducto = null;
 
     public DetallePedidoBeanGenSpImpl() {
     }
@@ -93,24 +91,20 @@ public class DetallePedidoBeanGenSpImpl extends BeanGenImpl implements BeanInter
         this.obj_producto = obj_producto;
     }
 
-    
-    
-    
-    /*
-    public Integer getId_cliente() {
-        return id_cliente;
+    public Integer getId_usuario() {
+        return id_usuario;
     }
 
-    public void setId_cliente(Integer id_cliente) {
-        this.id_cliente = id_cliente;
+    public void setId_usuario(Integer id_usuario) {
+        this.id_usuario = id_usuario;
     }
 
-    public ClienteBeanGenSpImpl getObj_cliente() {
-        return obj_cliente;
+    public UsuarioBeanGenSpImpl getObj_usuario() {
+        return obj_usuario;
     }
 
-    public void setObj_cliente(ClienteBeanGenSpImpl obj_cliente) {
-        this.obj_cliente = obj_cliente;
+    public void setObj_usuario(UsuarioBeanGenSpImpl obj_usuario) {
+        this.obj_usuario = obj_usuario;
     }
 
     public Integer getId_tipoproducto() {
@@ -127,6 +121,6 @@ public class DetallePedidoBeanGenSpImpl extends BeanGenImpl implements BeanInter
 
     public void setObj_tipoproducto(TipoproductoBeanGenSpImpl obj_tipoproducto) {
         this.obj_tipoproducto = obj_tipoproducto;
-    }*/
+    }
 
 }
