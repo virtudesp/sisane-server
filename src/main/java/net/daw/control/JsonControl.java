@@ -30,6 +30,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.daw.control.operation.generic.specific.implementation.AmigoControlOperationGenSpImpl;
 import net.daw.control.operation.generic.specific.implementation.CuestionarioControlOperationGenSpImpl;
 import net.daw.control.operation.generic.specific.implementation.DocumentoControlOperationGenSpImpl;
+import net.daw.control.operation.generic.specific.implementation.EntregaControlOperationGenSpImpl;
 import net.daw.control.operation.generic.specific.implementation.EstadoControlOperationGenSpImpl;
 import net.daw.control.operation.generic.specific.implementation.OpcionControlOperationGenSpImpl;
 import net.daw.control.operation.generic.specific.implementation.PedidoControlOperationGenSpImpl;
@@ -45,15 +46,18 @@ import net.daw.control.operation.generic.specific.implementation.UsuarioControlO
 import net.daw.control.operation.specific.implementation.OrdenadorControlOperationSpImpl;
 import net.daw.control.operation.specific.implementation.ActividadControlOperationSpImpl;
 import net.daw.control.operation.specific.implementation.ProductoControlOperationSpImpl;
-import net.daw.control.operation.specific.implementation.MensajeprivadoControlOperationSpImpl;
-import net.daw.control.operation.specific.implementation.PostControlOperationSpImpl;
+
+import net.daw.control.operation.specific.implementation.EntregaControlOperationSpImpl;
 import net.daw.control.operation.specific.implementation.ImpuestoControlOperationSpImpl;
 import net.daw.control.operation.specific.implementation.DetallePedidoControlOperationSpImpl;
+import net.daw.control.operation.specific.implementation.MensajeprivadoControlOperationSpImpl;
+import net.daw.control.operation.specific.implementation.PostControlOperationSpImpl;
 import net.daw.control.operation.specific.implementation.ProveedorControlOperationSpImpl;
 import net.daw.control.operation.specific.implementation.TemaControlOperationSpImpl;
 import net.daw.control.operation.specific.implementation.TipoproductoControlOperationSpImpl;
 import net.daw.control.route.generic.specific.implementation.CuestionarioControlRouteGenSpImpl;
 import net.daw.control.route.generic.specific.implementation.DocumentoControlRouteGenSpImpl;
+import net.daw.control.route.generic.specific.implementation.EntregaControlRouteGenSpImpl;
 import net.daw.control.route.generic.specific.implementation.PreguntaControlRouteGenSpImpl;
 import net.daw.control.route.generic.specific.implementation.OpcionControlRouteGenSpImpl;
 import net.daw.control.route.generic.specific.implementation.EstadoControlRouteGenSpImpl;
@@ -70,13 +74,12 @@ import net.daw.control.route.specific.implementation.AmigoControlRouteSpImpl;
 import net.daw.control.route.specific.implementation.OrdenadorControlRouteSpImpl;
 import net.daw.control.route.specific.implementation.ActividadControlRouteSpImpl;
 import net.daw.control.route.specific.implementation.ProductoControlRouteSpImpl;
+import net.daw.control.route.specific.implementation.ClienteControlRouteSpImpl;
+import net.daw.control.route.specific.implementation.EntregaControlRouteSpImpl;
 import net.daw.control.route.specific.implementation.MensajeprivadoControlRouteSpImpl;
 import net.daw.control.route.specific.implementation.PostControlRouteSpImpl;
-
 import net.daw.control.route.specific.implementation.DetallePedidoControlRouteSpImpl;
-
 import net.daw.control.route.specific.implementation.ImpuestoControlRouteSpImpl;
-
 import net.daw.control.route.specific.implementation.ProveedorControlRouteSpImpl;
 import net.daw.control.route.specific.implementation.TemaControlRouteSpImpl;
 import net.daw.control.route.specific.implementation.TipoproductoControlRouteSpImpl;
@@ -233,6 +236,11 @@ public class JsonControl extends HttpServlet {
                         ActividadControlRouteSpImpl oActividadRoute = new ActividadControlRouteSpImpl();
                         ActividadControlOperationSpImpl oActividadControlOperation = new ActividadControlOperationSpImpl(request);
                         jsonResult = oActividadRoute.execute(request, oActividadControlOperation);
+                        break;
+                    case "entrega":
+                        EntregaControlRouteSpImpl oEntregaRoute = new EntregaControlRouteSpImpl();
+                        EntregaControlOperationSpImpl oEntregaControlOperation = new EntregaControlOperationSpImpl(request);
+                        jsonResult = oEntregaRoute.execute(request, oEntregaControlOperation);
                         break;
                     case "pedido":
                         PedidoControlRouteGenSpImpl oPedidoRoute = new PedidoControlRouteGenSpImpl();
