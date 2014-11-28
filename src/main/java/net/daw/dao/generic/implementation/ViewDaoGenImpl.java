@@ -135,7 +135,17 @@ public class ViewDaoGenImpl<TIPO_OBJETO> extends MetaDaoGenImpl<TIPO_OBJETO> imp
                                 strTabla = strTabla.substring(0, 1).toUpperCase(Locale.ENGLISH) + strTabla.substring(1);
                                 //GenericDaoImplementation oAjenaDao = (GenericDaoImplementation) Class.forName("net.daw.dao." + strAjena + "Dao").newInstance();
 
-                                Constructor c = Class.forName("net.daw.dao.generic.specific.implementation." + strTabla + "DaoGenSpImpl").getConstructor(String.class, Connection.class);
+                                //rafa: aqui intentamos crear el DAO de la clave ajena generico-específico y si no espcífico
+                                //pte porque da error
+                                Constructor c;
+                                try {
+                                    c = Class.forName("net.daw.dao.generic.specific.implementation." + strTabla + "DaoGenSpImpl").getConstructor(String.class, Connection.class);
+                                } catch (ClassNotFoundException | NoSuchMethodException | SecurityException ex) {
+                                    //aqui da el error--> pte d eestudiar
+                                    c =  Class.forName("net.daw.dao.specific.implementation." + strTabla + "DaoSpcImpl").getConstructor(String.class, Connection.class);
+                                }
+                                //------------------------------------
+
                                 TableDaoGenImpl oAjenaDao = (TableDaoGenImpl) c.newInstance(strTabla, connection);
 
                                 BeanGenImpl oAjenaBean = (BeanGenImpl) Class.forName("net.daw.bean.generic.specific.implementation." + strTabla + "BeanGenSpImpl").newInstance();

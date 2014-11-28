@@ -24,6 +24,15 @@ import java.util.Date;
 
 public class EntregaBeanGenSpImpl extends BeanGenImpl implements BeanInterface {
 
+     public EntregaBeanGenSpImpl() {
+    }
+
+    public EntregaBeanGenSpImpl(Integer id) {
+        super(id);
+    }
+    
+    
+    
     @Expose
     private Integer nota;
     @Expose
@@ -36,6 +45,11 @@ public class EntregaBeanGenSpImpl extends BeanGenImpl implements BeanInterface {
     private Integer id_actividad = 0; //importante inicializar a 0 las claves ajenas
     @Expose(deserialize = false)
     private ActividadBeanGenSpImpl obj_actividad = null;
+
+   
+    
+
+
 
     public Integer getNota() {
         return nota;

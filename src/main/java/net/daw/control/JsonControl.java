@@ -43,6 +43,7 @@ import net.daw.control.operation.specific.implementation.OrdenadorControlOperati
 import net.daw.control.operation.specific.implementation.ActividadControlOperationSpImpl;
 import net.daw.control.operation.specific.implementation.ProductoControlOperationSpImpl;
 import net.daw.control.operation.specific.implementation.ClienteControlOperationSpImpl;
+import net.daw.control.operation.specific.implementation.EntregaControlOperationSpImpl;
 import net.daw.control.operation.specific.implementation.ImpuestoControlOperationSpImpl;
 import net.daw.control.operation.specific.implementation.ProveedorControlOperationSpImpl;
 import net.daw.control.operation.specific.implementation.TipoproductoControlOperationSpImpl;
@@ -63,6 +64,7 @@ import net.daw.control.route.specific.implementation.OrdenadorControlRouteSpImpl
 import net.daw.control.route.specific.implementation.ActividadControlRouteSpImpl;
 import net.daw.control.route.specific.implementation.ProductoControlRouteSpImpl;
 import net.daw.control.route.specific.implementation.ClienteControlRouteSpImpl;
+import net.daw.control.route.specific.implementation.EntregaControlRouteSpImpl;
 import net.daw.control.route.specific.implementation.ImpuestoControlRouteSpImpl;
 import net.daw.control.route.specific.implementation.ProveedorControlRouteSpImpl;
 import net.daw.control.route.specific.implementation.TipoproductoControlRouteSpImpl;
@@ -162,11 +164,6 @@ public class JsonControl extends HttpServlet {
                         EstadoControlOperationGenSpImpl oEstadoControlOperation = new EstadoControlOperationGenSpImpl(request);
                         jsonResult = oEstadoRoute.execute(request, oEstadoControlOperation);
                         break;
-                    case "entrega":
-                        EntregaControlRouteGenSpImpl oEntregaRoute = new EntregaControlRouteGenSpImpl();
-                        EntregaControlOperationGenSpImpl oEntregaControlOperation = new EntregaControlOperationGenSpImpl(request);
-                        jsonResult = oEntregaRoute.execute(request, oEntregaControlOperation);
-                        break;
                     case "amigo":
                         AmigoControlRouteSpImpl oAmigoRoute = new AmigoControlRouteSpImpl();
                         AmigoControlOperationGenSpImpl oAmigoControlOperation = new AmigoControlOperationGenSpImpl(request);
@@ -204,7 +201,12 @@ public class JsonControl extends HttpServlet {
                         ActividadControlOperationSpImpl oActividadControlOperation = new ActividadControlOperationSpImpl(request);
                         jsonResult = oActividadRoute.execute(request, oActividadControlOperation);
                         break;
-                     case "pedido":
+                    case "entrega":
+                        EntregaControlRouteSpImpl oEntregaRoute = new EntregaControlRouteSpImpl();
+                        EntregaControlOperationSpImpl oEntregaControlOperation = new EntregaControlOperationSpImpl(request);
+                        jsonResult = oEntregaRoute.execute(request, oEntregaControlOperation);
+                        break;
+                    case "pedido":
                         PedidoControlRouteGenSpImpl oPedidoRoute = new PedidoControlRouteGenSpImpl();
                         PedidoControlOperationGenSpImpl oPedidoControlOperation = new PedidoControlOperationGenSpImpl(request);
                         jsonResult = oPedidoRoute.execute(request, oPedidoControlOperation);
