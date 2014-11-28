@@ -24,12 +24,17 @@
         </div>
     </div>
     <div class="form-group">
-        <label class="col-sm-2 control-label"  for="descripcion">Descripción:</label>
+        <label class="col-sm-2 control-label"  for="usuario">Usuario:</label>
         <div class="col-sm-6">
-            <input type="text" id="descripcion" class="form-control"  name="descripcion" size="15" placeholder="descripcion" />
+            <input type="text" id="usuario" class="form-control"  name="usuario" size="15" placeholder="usuario" />
         </div>
     </div>
-
+    <div class="form-group">
+        <label class="col-sm-2 control-label"  for="amigo">Amigo:</label>
+        <div class="col-sm-6">
+            <input type="text" id="amigo" class="form-control"  name="amigo" size="15" placeholder="amigo" />
+        </div>
+    </div>
     <div class="form-group">
         <div class="col-sm-offset-2 col-sm-10">
             <div id="messages"></div>
