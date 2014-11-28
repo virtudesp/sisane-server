@@ -15,7 +15,11 @@
  along with this program; if not, write to the Free Software
  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 --%>
- 
+<%@page import="net.daw.bean.generic.specific.implementation.UsuarioBeanGenSpImpl"%>
+<%UsuarioBeanGenSpImpl user = (UsuarioBeanGenSpImpl) request.getSession().getAttribute("usuarioBean");%>
+<%
+        int id = user.getId();
+%>
 
 <form class="form-horizontal" role="form" action="#" id="usuarioForm" name="formulario">
     <div class="form-group">

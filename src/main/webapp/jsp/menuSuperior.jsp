@@ -29,7 +29,6 @@
             <li><a href="jsp#/opcion">Opcion</a></li>
             <li><a href="jsp#/usuario">Usuario</a></li>
             <li><a href="jsp#/proveedor">Proveedor</a></li>
-            <li><a href="jsp#/cliente">Cliente</a></li>
             <li><a href="jsp#/impuesto">Impuesto</a></li>
             <li><a href="jsp#/pedido">Pedido</a></li>
             <li><a href="#">Vacío</a></li>

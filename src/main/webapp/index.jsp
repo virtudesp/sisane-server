@@ -210,15 +210,33 @@
         <script src="js/specific/tipousuario/routes.js" charset="UTF-8"></script>
         <!-- Fin Modificación Juanma Usuarios -->
 
+        <!-- FORO -->        
+        <script src="js/specific/tipotema/control.js" charset="UTF-8"></script>
+        <script src="js/specific/tipotema/model.js" charset="UTF-8"></script>
+        <script src="js/specific/tipotema/view.js" charset="UTF-8"></script>
+        <script src="js/specific/tipotema/routes.js" charset="UTF-8"></script>
+        
+        <script src="js/specific/tema/control.js" charset="UTF-8"></script>
+        <script src="js/specific/tema/model.js" charset="UTF-8"></script>
+        <script src="js/specific/tema/view.js" charset="UTF-8"></script>
+        <script src="js/specific/tema/routes.js" charset="UTF-8"></script>
+        
+        <script src="js/specific/post/control.js" charset="UTF-8"></script>
+        <script src="js/specific/post/model.js" charset="UTF-8"></script>
+        <script src="js/specific/post/view.js" charset="UTF-8"></script>
+        <script src="js/specific/post/routes.js" charset="UTF-8"></script>
+        
+        <script src="js/specific/mensajeprivado/control.js" charset="UTF-8"></script>
+        <script src="js/specific/mensajeprivado/model.js" charset="UTF-8"></script>
+        <script src="js/specific/mensajeprivado/view.js" charset="UTF-8"></script>
+        <script src="js/specific/mensajeprivado/routes.js" charset="UTF-8"></script>
+        <!-- FIN FORO -->
+
         <script src="js/specific/proveedor/control.js" charset="UTF-8"></script>
         <script src="js/specific/proveedor/model.js" charset="UTF-8"></script>
         <script src="js/specific/proveedor/view.js" charset="UTF-8"></script>
         <script src="js/specific/proveedor/routes.js" charset="UTF-8"></script>
         
-        <script src="js/specific/cliente/control.js" charset="UTF-8"></script>
-        <script src="js/specific/cliente/model.js" charset="UTF-8"></script>
-        <script src="js/specific/cliente/view.js" charset="UTF-8"></script>
-        <script src="js/specific/cliente/routes.js" charset="UTF-8"></script>
         
         <script src="js/specific/impuesto/control.js" charset="UTF-8"></script>
         <script src="js/specific/impuesto/model.js" charset="UTF-8"></script>
@@ -229,6 +247,15 @@
         <script src="js/specific/pedido/model.js" charset="UTF-8"></script>
         <script src="js/specific/pedido/view.js" charset="UTF-8"></script>
         <script src="js/specific/pedido/routes.js" charset="UTF-8"></script>
+        
+         <script src="js/specific/detalle_pedido/control.js" charset="UTF-8"></script>
+        <script src="js/specific/detalle_pedido/model.js" charset="UTF-8"></script>
+        <script src="js/specific/detalle_pedido/view.js" charset="UTF-8"></script>
+        <script src="js/specific/detalle_pedido/routes.js" charset="UTF-8"></script>
+         <script src="js/specific/respuesta/control.js" charset="UTF-8"></script>
+        <script src="js/specific/respuesta/model.js" charset="UTF-8"></script>
+        <script src="js/specific/respuesta/view.js" charset="UTF-8"></script>
+        <script src="js/specific/respuesta/routes.js" charset="UTF-8"></script>
         
         <script src="js/specific/tipodocumento/model.js" charset="UTF-8"></script>
 
@@ -252,13 +279,18 @@
               
                 fUsuarioRoutes();
                 fPublicacionRoutes();
+                fPostRoutes();
+                fMensajeprivadoRoutes();
+                fTemaRoutes();
+                fTipotemaRoutes();
                 fEstadoRoutes();
                 fProveedorRoutes();
-                fClienteRoutes();
                 fImpuestoRoutes();
                 fActividadRoutes();
                 fEntregaRoutes();
                 fPedidoRoutes();
+                fDetalle_pedidoRoutes();
+                fRespuestaRoutes();
 
 
                 Path.listen();

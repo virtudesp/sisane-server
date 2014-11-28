@@ -1244,37 +1244,37 @@ CREATE TABLE IF NOT EXISTS `pedido` (
 `id` int(11) NOT NULL COMMENT 'Identificador',
   `fecha` date DEFAULT NULL COMMENT 'Fecha Pedido',
   `observaciones` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Observaciones',
-  `id_cliente` int(11) NOT NULL COMMENT 'Id Cliente'
+  `id_usuario` int(11) NOT NULL COMMENT 'Id Usuario'
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=24 ;
 
 --
 -- Volcado de datos para la tabla `pedido`
 --
 
-INSERT INTO `pedido` (`id`, `fecha`, `observaciones`, `id_cliente`) VALUES
+INSERT INTO `pedido` (`id`, `fecha`, `observaciones`, `id_usuario`) VALUES
 (1, '2014-07-10', NULL, 1),
-(2, '2013-11-06', 'Reclamación cliente', 15),
-(3, '2014-02-15', NULL, 25),
-(4, '2012-05-01', NULL, 43),
-(5, '2014-12-18', NULL, 2),
-(6, '2014-02-20', NULL, 60),
-(7, '2013-09-11', 'Entrega atrasada', 48),
-(8, '2014-07-07', 'Cliente se declara insolvente', 23),
-(9, '2011-08-02', NULL, 77),
-(10, '2012-06-16', 'Reclamación cliente', 57),
-(11, '2014-11-26', NULL, 15),
-(12, '2013-08-31', NULL, 82),
-(13, '2014-02-22', NULL, 89),
-(14, '2013-01-03', NULL, 115),
-(15, '2011-03-12', 'Reclamación cliente', 22),
-(16, '2013-06-30', NULL, 22),
-(17, '2014-07-28', NULL, 99),
-(18, '2014-09-11', 'Reclamación cliente', 44),
-(19, '2011-09-04', 'Reclamación cliente', 35),
-(20, '2011-02-07', NULL, 22),
-(21, '2014-01-13', NULL, 25),
-(22, '2012-10-17', NULL, 55),
-(23, '2014-04-12', 'Reclamación cliente', 38);
+(2, '2013-11-06', 'Reclamación cliente', 2),
+(3, '2014-02-15', NULL, 3),
+(4, '2012-05-01', NULL, 4),
+(5, '2014-12-18', NULL, 5),
+(6, '2014-02-20', NULL, 6),
+(7, '2013-09-11', 'Entrega atrasada', 7),
+(8, '2014-07-07', 'Cliente se declara insolvente', 8),
+(9, '2011-08-02', NULL, 9),
+(10, '2012-06-16', 'Reclamación cliente', 10),
+(11, '2014-11-26', NULL, 24),
+(12, '2013-08-31', NULL, 12),
+(13, '2014-02-22', NULL, 13),
+(14, '2013-01-03', NULL, 14),
+(15, '2011-03-12', 'Reclamación cliente', 15),
+(16, '2013-06-30', NULL, 16),
+(17, '2014-07-28', NULL, 17),
+(18, '2014-09-11', 'Reclamación cliente', 18),
+(19, '2011-09-04', 'Reclamación cliente', 19),
+(20, '2011-02-07', NULL, 20),
+(21, '2014-01-13', NULL, 21),
+(22, '2012-10-17', NULL, 22),
+(23, '2014-04-12', 'Reclamación cliente', 23);
 
 -- --------------------------------------------------------
 
@@ -1928,10 +1928,10 @@ INSERT INTO `publicacion` (`id`, `contenido`, `id_usuario`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `respuesta` (
-`id` int(11) NOT NULL,
-  `id_usuario` int(11) NOT NULL,
-  `id_pregunta` int(11) NOT NULL,
-  `id_opcion` int(11) NOT NULL
+`id` int(11) NOT NULL COMMENT 'Identificador',
+  `id_usuario` int(11) NOT NULL COMMENT 'Id. Usuario',
+  `id_pregunta` int(11) NOT NULL COMMENT 'Id. Pregunta',
+  `id_opcion` int(11) NOT NULL COMMENT 'Id. Opción'
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='respuesta' AUTO_INCREMENT=2 ;
 
 -- --------------------------------------------------------
@@ -2159,6 +2159,53 @@ INSERT INTO `usuario` (`id`, `login`, `password`, `id_tipousuario`, `id_estado`,
 (29, 'gigabyte', 'gigabyte', 3, 10, 'Oviedo', 'Viva gigabyte'),
 (30, 'microsoft', 'microsoft', 3, 10, 'Albacete', 'La xbox ONE es la MEJOR CONSOLA');
 
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `objeto`
+--
+
+CREATE TABLE IF NOT EXISTS `objeto` (
+  `id` int(6) NOT NULL COMMENT 'ID Objeto',
+  `descripcion` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Descripción'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `operacion`
+--
+
+CREATE TABLE IF NOT EXISTS `operacion` (
+  `id` int(6) NOT NULL COMMENT 'ID Operación',
+  `descripcion` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Descripción',
+  `id_objeto` int(6) NOT NULL COMMENT 'ID Objeto'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `permiso`
+--
+
+CREATE TABLE IF NOT EXISTS `permiso` (
+  `id` int(6) NOT NULL COMMENT 'ID Permiso',
+  `id_tipousuario` int(6) NOT NULL COMMENT 'ID Tipo de usuario',
+  `id_tipooperacion` int(6) NOT NULL COMMENT 'ID Tipo Operación',
+  `permitido` tinyint(1) DEFAULT NULL COMMENT 'Permitido'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `tipooperacion`
+--
+
+CREATE TABLE IF NOT EXISTS `tipooperacion` (
+  `id` int(6) NOT NULL COMMENT 'Identificador',
+  `id_operacion` int(6) NOT NULL COMMENT 'ID Operación'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
 --
 -- Índices para tablas volcadas
 --
@@ -2198,6 +2245,31 @@ ALTER TABLE `cuestionario`
 --
 ALTER TABLE `detalle_pedido`
  ADD PRIMARY KEY (`id`,`id_pedido`,`id_producto`);
+
+--
+-- Indices de la tabla `objeto`
+--
+ALTER TABLE `objeto`
+ ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `tipooperacion`
+--
+ALTER TABLE `tipooperacion`
+ ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `permiso`
+--
+ALTER TABLE `permiso`
+ ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `operacion`
+--
+ALTER TABLE `operacion`
+ ADD PRIMARY KEY (`id`);
+
 
 --
 -- Indices de la tabla `documento`
@@ -2257,7 +2329,7 @@ ALTER TABLE `ordenador`
 -- Indices de la tabla `pedido`
 --
 ALTER TABLE `pedido`
- ADD PRIMARY KEY (`id`,`id_cliente`);
+ ADD PRIMARY KEY (`id`,`id_usuario`);
 
 --
 -- Indices de la tabla `post`
@@ -2478,3 +2550,23 @@ MODIFY `id` int(6) NOT NULL AUTO_INCREMENT COMMENT 'Identificador',AUTO_INCREMEN
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+ALTER TABLE `tema` CHANGE `nombre` `nombre` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'Título del tema';
+
+ALTER TABLE `tema` CHANGE `fechacreacion` `fechacreacion` DATETIME NULL DEFAULT NULL COMMENT 'Fecha de creación'; 
+
+ALTER TABLE `tema` CHANGE `id_tipotema` `id_tipotema` INT(6) NOT NULL COMMENT 'Categoría';
+
+ALTER TABLE `tema` CHANGE `id_usuario` `id_usuario` INT(6) NOT NULL COMMENT 'Creador del tema';
+
+
+
+ALTER TABLE `post` DROP `primermensaje`;
+ALTER TABLE `mensajeprivado` DROP `leido`;
+
+ALTER TABLE `mensajeprivado` ADD `fechaenvio` DATETIME NULL COMMENT 'Fecha de envío' AFTER `id`;
+
+UPDATE `ausiasyield2014`.`mensajeprivado` SET `fechaenvio` = '2014-11-11 08:33:19' WHERE `mensajeprivado`.`id` = 1; UPDATE `ausiasyield2014`.`mensajeprivado` SET `fechaenvio` = '2014-11-04 06:45:15' WHERE `mensajeprivado`.`id` = 2; UPDATE `ausiasyield2014`.`mensajeprivado` SET `fechaenvio` = '2014-11-10 07:57:13' WHERE `mensajeprivado`.`id` = 3; UPDATE `ausiasyield2014`.`mensajeprivado` SET `fechaenvio` = '2014-11-03 12:08:32' WHERE `mensajeprivado`.`id` = 4; UPDATE `ausiasyield2014`.`mensajeprivado` SET `fechaenvio` = '2014-11-14 08:38:25' WHERE `mensajeprivado`.`id` = 5; UPDATE `ausiasyield2014`.`mensajeprivado` SET `fechaenvio` = '2014-11-19 05:24:42' WHERE `mensajeprivado`.`id` = 6; UPDATE `ausiasyield2014`.`mensajeprivado` SET `fechaenvio` = '2014-11-16 12:32:12' WHERE `mensajeprivado`.`id` = 7; UPDATE `ausiasyield2014`.`mensajeprivado` SET `fechaenvio` = '2014-11-12 12:27:30' WHERE `mensajeprivado`.`id` = 8; UPDATE `ausiasyield2014`.`mensajeprivado` SET `fechaenvio` = '2014-11-19 04:24:21' WHERE `mensajeprivado`.`id` = 9; UPDATE `ausiasyield2014`.`mensajeprivado` SET `fechaenvio` = '2014-11-14 08:30:05' WHERE `mensajeprivado`.`id` = 10; UPDATE `ausiasyield2014`.`mensajeprivado` SET `fechaenvio` = '2014-11-01 06:35:22' WHERE `mensajeprivado`.`id` = 11; UPDATE `ausiasyield2014`.`mensajeprivado` SET `fechaenvio` = '2014-11-09 05:08:21' WHERE `mensajeprivado`.`id` = 12; UPDATE `ausiasyield2014`.`mensajeprivado` SET `fechaenvio` = '2014-11-17 17:21:30' WHERE `mensajeprivado`.`id` = 13; UPDATE `ausiasyield2014`.`mensajeprivado` SET `asunto` = '' WHERE `mensajeprivado`.`id` = 18;
+UPDATE `ausiasyield2014`.`mensajeprivado` SET `fechaenvio` = '2014-11-15 00:22:28' WHERE `mensajeprivado`.`id` = 14; UPDATE `ausiasyield2014`.`mensajeprivado` SET `fechaenvio` = '2014-11-12 23:17:59' WHERE `mensajeprivado`.`id` = 15; UPDATE `ausiasyield2014`.`mensajeprivado` SET `fechaenvio` = '2014-11-02 21:13:40' WHERE `mensajeprivado`.`id` = 16; UPDATE `ausiasyield2014`.`mensajeprivado` SET `fechaenvio` = '2014-11-13 10:39:10' WHERE `mensajeprivado`.`id` = 17; UPDATE `ausiasyield2014`.`mensajeprivado` SET `fechaenvio` = '2014-11-14 15:13:34' WHERE `mensajeprivado`.`id` = 18; UPDATE `ausiasyield2014`.`mensajeprivado` SET `fechaenvio` = '2014-11-17 08:36:28' WHERE `mensajeprivado`.`id` = 19; UPDATE `ausiasyield2014`.`mensajeprivado` SET `fechaenvio` = '2014-11-09 09:43:32' WHERE `mensajeprivado`.`id` = 20;
+
+UPDATE `ausiasyield2014`.`mensajeprivado` SET `asunto` = 'Buenas tardes' WHERE `mensajeprivado`.`id` = 18;

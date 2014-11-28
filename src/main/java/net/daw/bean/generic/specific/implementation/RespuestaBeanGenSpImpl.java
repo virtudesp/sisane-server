@@ -22,33 +22,30 @@ import net.daw.bean.publicinterface.BeanInterface;
 import com.google.gson.annotations.Expose;
 import java.util.Date;
 
-public class PedidoBeanGenSpImpl extends BeanGenImpl implements BeanInterface {
+public class RespuestaBeanGenSpImpl extends BeanGenImpl implements BeanInterface {
 
-    @Expose
-    private Date fecha = new Date();
-    @Expose(serialize = false)
-    private Integer id_usuario = 0;
-    @Expose (deserialize = false)
-    private UsuarioBeanGenSpImpl obj_usuario = null;
-    
-    @Expose
-    private String observaciones = "";
-   
-    
-     public PedidoBeanGenSpImpl() {
+    public RespuestaBeanGenSpImpl() {
     }
 
-    public PedidoBeanGenSpImpl(int id) {
+    public RespuestaBeanGenSpImpl(Integer id) {
         super(id);
     }
 
-    public Date getFecha() {
-        return fecha;
-    }
+   
+    @Expose(serialize = false)
+    private Integer id_usuario = 0 ;
+    @Expose(deserialize = false)
+    private UsuarioBeanGenSpImpl obj_usuario= null;
+     @Expose(serialize = false)
+    private Integer id_pregunta = 0 ;
+    @Expose(deserialize = false)
+    private PreguntaBeanGenSpImpl obj_pregunta = null;
+     @Expose(serialize = false)
+    private Integer id_opcion = 0 ;
+    @Expose(deserialize = false)
+    private OpcionBeanGenSpImpl obj_opcion = null;
 
-    public void setFecha(Date fecha) {
-        this.fecha = fecha;
-    }
+   
 
     public Integer getId_usuario() {
         return id_usuario;
@@ -66,12 +63,35 @@ public class PedidoBeanGenSpImpl extends BeanGenImpl implements BeanInterface {
         this.obj_usuario = obj_usuario;
     }
 
-    public String getObservaciones() {
-        return observaciones;
+    public Integer getId_pregunta() {
+        return id_pregunta;
     }
 
-    public void setObservaciones(String observaciones) {
-        this.observaciones = observaciones;
+    public void setId_pregunta(Integer id_pregunta) {
+        this.id_pregunta = id_pregunta;
     }
-    
+
+    public PreguntaBeanGenSpImpl getObj_pregunta() {
+        return obj_pregunta;
+    }
+
+    public void setObj_pregunta(PreguntaBeanGenSpImpl obj_pregunta) {
+        this.obj_pregunta = obj_pregunta;
+    }
+
+    public Integer getId_opcion() {
+        return id_opcion;
+    }
+
+    public void setId_opcion(Integer id_opcion) {
+        this.id_opcion = id_opcion;
+    }
+
+    public OpcionBeanGenSpImpl getObj_opcion() {
+        return obj_opcion;
+    }
+
+    public void setObj_opcion(OpcionBeanGenSpImpl obj_opcion) {
+        this.obj_opcion = obj_opcion;
+    }
 }

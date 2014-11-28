@@ -20,34 +20,67 @@ package net.daw.bean.generic.specific.implementation;
 import net.daw.bean.generic.implementation.BeanGenImpl;
 import net.daw.bean.publicinterface.BeanInterface;
 import com.google.gson.annotations.Expose;
+import java.time.ZonedDateTime;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
-public class PedidoBeanGenSpImpl extends BeanGenImpl implements BeanInterface {
+public class TemaBeanGenSpImpl extends BeanGenImpl implements BeanInterface {
 
-    @Expose
-    private Date fecha = new Date();
-    @Expose(serialize = false)
-    private Integer id_usuario = 0;
-    @Expose (deserialize = false)
-    private UsuarioBeanGenSpImpl obj_usuario = null;
-    
-    @Expose
-    private String observaciones = "";
-   
-    
-     public PedidoBeanGenSpImpl() {
+    public TemaBeanGenSpImpl() {
     }
 
-    public PedidoBeanGenSpImpl(int id) {
+    public TemaBeanGenSpImpl(Integer id) {
         super(id);
     }
 
-    public Date getFecha() {
-        return fecha;
+    @Expose
+    private String nombre = "";
+    
+    @Expose
+    private Date fechacreacion = new Date();
+    
+    @Expose(serialize = false)
+    private Integer id_tipotema = 0; //importante inicializar a 0 las claves ajenas
+    @Expose(deserialize = false)
+    private TipotemaBeanGenSpImpl obj_tipotema = null;
+    
+    @Expose(serialize = false)
+    private Integer id_usuario = 0; //importante inicializar a 0 las claves ajenas
+    @Expose(deserialize = false)
+    private UsuarioBeanGenSpImpl obj_usuario = null;
+
+    public String getNombre() {
+        return nombre;
     }
 
-    public void setFecha(Date fecha) {
-        this.fecha = fecha;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public Date getFechacreacion() {
+        return fechacreacion;
+    }
+
+    public void setFechacreacion(Date fechacreacion) {
+        this.fechacreacion = fechacreacion;
+    }
+    
+    
+    public Integer getId_tipotema() {
+        return id_tipotema;
+    }
+
+    public void setId_tipotema(Integer id_tipotema) {
+        this.id_tipotema = id_tipotema;
+    }
+
+    public TipotemaBeanGenSpImpl getObj_tipotema() {
+        return obj_tipotema;
+    }
+
+    public void setObj_tipotema(TipotemaBeanGenSpImpl obj_tipotema) {
+        this.obj_tipotema = obj_tipotema;
     }
 
     public Integer getId_usuario() {
@@ -66,12 +99,6 @@ public class PedidoBeanGenSpImpl extends BeanGenImpl implements BeanInterface {
         this.obj_usuario = obj_usuario;
     }
 
-    public String getObservaciones() {
-        return observaciones;
-    }
-
-    public void setObservaciones(String observaciones) {
-        this.observaciones = observaciones;
-    }
+    
     
 }
