@@ -167,6 +167,11 @@
         <script src="js/specific/publicacion/view.js" charset="UTF-8"></script>
         <script src="js/specific/publicacion/routes.js" charset="UTF-8"></script>
         
+        <script src="js/specific/amigo/control.js" charset="UTF-8"></script>
+        <script src="js/specific/amigo/model.js" charset="UTF-8"></script>
+        <script src="js/specific/amigo/view.js" charset="UTF-8"></script>
+        <script src="js/specific/amigo/routes.js" charset="UTF-8"></script>
+        
         <script src="js/specific/estado/control.js" charset="UTF-8"></script>
         <script src="js/specific/estado/model.js" charset="UTF-8"></script>
         <script src="js/specific/estado/view.js" charset="UTF-8"></script>
@@ -274,7 +279,7 @@
                 fOpcionRoutes();
                 fPreguntaRoutes();
                 fCuestionarioRoutes();
-              
+                fAmigoRoutes();
                 fUsuarioRoutes();
                 fPublicacionRoutes();
                 fPostRoutes();

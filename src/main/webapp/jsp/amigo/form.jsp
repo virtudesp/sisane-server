@@ -24,17 +24,26 @@
         </div>
     </div>
     <div class="form-group">
-        <label class="col-sm-2 control-label"  for="usuario">Usuario:</label>
-        <div class="col-sm-6">
-            <input type="text" id="usuario" class="form-control"  name="usuario" size="15" placeholder="usuario" />
+        <label class="col-sm-2 control-label" for="obj_usuario_1_id">Usuario que envía petición: </label> 
+        <div class="col-sm-2">              
+            <input readonly="true" class="form-control"  id="obj_usuario_1_id" class="input-mini" name="id_usuario_1" type="text" size="5" maxlength="5" />  
         </div>
+        <div class="col-sm-1">              
+            <a class="btn btn-primary btn-sm" id="obj_usuario_1_button" href="#"><i class="glyphicon glyphicon-search"></i></a>
+        </div>        
+        <label class="col-sm-7" for="obj_usuario_desc" id="obj_usuario_1_desc"></label>                     
     </div>
+        
     <div class="form-group">
-        <label class="col-sm-2 control-label"  for="amigo">Amigo:</label>
-        <div class="col-sm-6">
-            <input type="text" id="amigo" class="form-control"  name="amigo" size="15" placeholder="amigo" />
+        <label class="col-sm-2 control-label" for="obj_usuario_2_id">Usuario a seguir: </label> 
+        <div class="col-sm-2">              
+            <input readonly="true"  class="form-control"  id="obj_usuario_2_id" class="input-mini" name="id_usuario_2" type="text" size="5" maxlength="5" />  
         </div>
-    </div>
+        <div class="col-sm-1">              
+            <a class="btn btn-primary btn-sm" id="obj_usuario_2_button" href="#"><i class="glyphicon glyphicon-search"></i></a>
+        </div>        
+        <label class="col-sm-7" for="obj_usuario_desc" id="obj_usuario_2_desc"></label>                     
+    </div>   
     <div class="form-group">
         <div class="col-sm-offset-2 col-sm-10">
             <div id="messages"></div>

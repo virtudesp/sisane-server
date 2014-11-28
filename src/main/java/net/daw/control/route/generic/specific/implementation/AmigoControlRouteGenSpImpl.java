@@ -19,6 +19,6 @@ package net.daw.control.route.generic.specific.implementation;
 
 import net.daw.control.route.generic.implementation.ControlRouteGenImpl;
 
-public class EstadoControlRouteGenSpImpl extends ControlRouteGenImpl {
+public class AmigoControlRouteGenSpImpl extends ControlRouteGenImpl {
 
 }
