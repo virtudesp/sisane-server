@@ -22,5 +22,7 @@ public interface TableDaoInterface<GenericBeanImplementation> {
     public GenericBeanImplementation set(GenericBeanImplementation oBean) throws Exception;
 
     public int remove(GenericBeanImplementation oBean) throws Exception;
+    
+    public int updateOne(int intId, String strTabla, String strCampo, String strValor) throws Exception;
 
 }

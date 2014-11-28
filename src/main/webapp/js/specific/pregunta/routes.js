@@ -19,10 +19,10 @@
 
 function fPreguntaRoutes() {
 
-//    Path.map("#/documento").to(function () {
+//    Path.map("#/pregunta").to(function () {
 //        $('#indexContenidoJsp').spinner();
-//        control('documento').list($('#indexContenido'), param().defaultizeUrlObjectParameters({}), null);
-//        //documentoControl.modalListEventsLoading(documentoObject, documentoView, $('#indexContenido'), param().defaultizeUrlObjectParameters({}), null);        
+//        control('pregunta').list($('#indexContenido'), param().defaultizeUrlObjectParameters({}), null);
+//        //preguntaControl.modalListEventsLoading(preguntaObject, preguntaView, $('#indexContenido'), param().defaultizeUrlObjectParameters({}), null);        
 //        $('#indexContenidoJsp').empty();
 //        return false;
 //    });
@@ -30,7 +30,7 @@ function fPreguntaRoutes() {
     Path.map("#/pregunta").to(function () {
         $('#indexContenidoJsp').spinner();
         oPreguntaControl.list($('#indexContenido'), param().defaultizeUrlObjectParameters({}), null, oPreguntaModel, oPreguntaView);
-        //documentoControl.modalListEventsLoading(documentoObject, documentoView, $('#indexContenido'), param().defaultizeUrlObjectParameters({}), null);        
+        //preguntaControl.modalListEventsLoading(preguntaObject, preguntaView, $('#indexContenido'), param().defaultizeUrlObjectParameters({}), null);        
         $('#indexContenidoJsp').empty();
         $('#indexContenidoJsp').append(oPreguntaControl.getClassNamePregunta());
         return false;

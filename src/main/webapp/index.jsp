@@ -157,8 +157,10 @@
         <script src="js/specific/documento/view.js" charset="UTF-8"></script>
         <script src="js/specific/documento/routes.js" charset="UTF-8"></script>
         
-        
-        <script src="js/specific/usuario/control.js" charset="UTF-8"></script>
+        <script src="js/specific/opcion/control.js" charset="UTF-8"></script>
+        <script src="js/specific/opcion/model.js" charset="UTF-8"></script>
+        <script src="js/specific/opcion/view.js" charset="UTF-8"></script>
+        <script src="js/specific/opcion/routes.js" charset="UTF-8"></script>
 
         <script src="js/specific/publicacion/control.js" charset="UTF-8"></script>
         <script src="js/specific/publicacion/model.js" charset="UTF-8"></script>
@@ -169,29 +171,60 @@
         <script src="js/specific/estado/model.js" charset="UTF-8"></script>
         <script src="js/specific/estado/view.js" charset="UTF-8"></script>
         <script src="js/specific/estado/routes.js" charset="UTF-8"></script>
-
         <script src="js/specific/cuestionario/control.js" charset="UTF-8"></script>
         <script src="js/specific/cuestionario/model.js" charset="UTF-8"></script>
         <script src="js/specific/cuestionario/view.js" charset="UTF-8"></script>
         <script src="js/specific/cuestionario/routes.js" charset="UTF-8"></script>
+        <script src="js/specific/actividad/control.js" charset="UTF-8"></script>
+        <script src="js/specific/actividad/model.js" charset="UTF-8"></script>
+        <script src="js/specific/actividad/view.js" charset="UTF-8"></script>
+        <script src="js/specific/actividad/routes.js" charset="UTF-8"></script>
 
-        
-        <script src="js/specific/amigo/control.js" charset="UTF-8"></script>
-        <script src="js/specific/amigo/model.js" charset="UTF-8"></script>
-        <script src="js/specific/amigo/view.js" charset="UTF-8"></script>
-        <script src="js/specific/amigo/routes.js" charset="UTF-8"></script>
 
+         <script src="js/specific/usuario/control.js" charset="UTF-8"></script>
         <script src="js/specific/usuario/model.js" charset="UTF-8"></script>
+        <script src="js/specific/usuario/view.js" charset="UTF-8"></script>
+        <script src="js/specific/usuario/routes.js" charset="UTF-8"></script>
+        
         <script src="js/specific/tipodocumento/model.js" charset="UTF-8"></script>
         
         <script src="js/specific/pregunta/control.js" charset="UTF-8"></script>
         <script src="js/specific/pregunta/model.js" charset="UTF-8"></script>
         <script src="js/specific/pregunta/view.js" charset="UTF-8"></script>
         <script src="js/specific/pregunta/routes.js" charset="UTF-8"></script>
-        <script src="js/specific/usuario/view.js" charset="UTF-8"></script>
-        <script src="js/specific/usuario/routes.js" charset="UTF-8"></script>
         
+        <script src="js/specific/publicacion/control.js" charset="UTF-8"></script>
+        <script src="js/specific/publicacion/model.js" charset="UTF-8"></script>
+        <script src="js/specific/publicacion/view.js" charset="UTF-8"></script>
+        <script src="js/specific/publicacion/routes.js" charset="UTF-8"></script>
+        
+        <script src="js/specific/tipousuario/control.js" charset="UTF-8"></script>
+        <script src="js/specific/tipousuario/model.js" charset="UTF-8"></script>
+        <script src="js/specific/tipousuario/view.js" charset="UTF-8"></script>
+        <script src="js/specific/tipousuario/routes.js" charset="UTF-8"></script>
         <!-- Fin Modificación Juanma Usuarios -->
+
+        <!-- FORO -->        
+        <script src="js/specific/tipotema/control.js" charset="UTF-8"></script>
+        <script src="js/specific/tipotema/model.js" charset="UTF-8"></script>
+        <script src="js/specific/tipotema/view.js" charset="UTF-8"></script>
+        <script src="js/specific/tipotema/routes.js" charset="UTF-8"></script>
+        
+        <script src="js/specific/tema/control.js" charset="UTF-8"></script>
+        <script src="js/specific/tema/model.js" charset="UTF-8"></script>
+        <script src="js/specific/tema/view.js" charset="UTF-8"></script>
+        <script src="js/specific/tema/routes.js" charset="UTF-8"></script>
+        
+        <script src="js/specific/post/control.js" charset="UTF-8"></script>
+        <script src="js/specific/post/model.js" charset="UTF-8"></script>
+        <script src="js/specific/post/view.js" charset="UTF-8"></script>
+        <script src="js/specific/post/routes.js" charset="UTF-8"></script>
+        
+        <script src="js/specific/mensajeprivado/control.js" charset="UTF-8"></script>
+        <script src="js/specific/mensajeprivado/model.js" charset="UTF-8"></script>
+        <script src="js/specific/mensajeprivado/view.js" charset="UTF-8"></script>
+        <script src="js/specific/mensajeprivado/routes.js" charset="UTF-8"></script>
+        <!-- FIN FORO -->
 
         <script src="js/specific/proveedor/control.js" charset="UTF-8"></script>
         <script src="js/specific/proveedor/model.js" charset="UTF-8"></script>
@@ -202,6 +235,25 @@
         <script src="js/specific/cliente/model.js" charset="UTF-8"></script>
         <script src="js/specific/cliente/view.js" charset="UTF-8"></script>
         <script src="js/specific/cliente/routes.js" charset="UTF-8"></script>
+        
+        <script src="js/specific/impuesto/control.js" charset="UTF-8"></script>
+        <script src="js/specific/impuesto/model.js" charset="UTF-8"></script>
+        <script src="js/specific/impuesto/view.js" charset="UTF-8"></script>
+        <script src="js/specific/impuesto/routes.js" charset="UTF-8"></script>
+        
+        <script src="js/specific/pedido/control.js" charset="UTF-8"></script>
+        <script src="js/specific/pedido/model.js" charset="UTF-8"></script>
+        <script src="js/specific/pedido/view.js" charset="UTF-8"></script>
+        <script src="js/specific/pedido/routes.js" charset="UTF-8"></script>
+        
+         <script src="js/specific/detalle_pedido/control.js" charset="UTF-8"></script>
+        <script src="js/specific/detalle_pedido/model.js" charset="UTF-8"></script>
+        <script src="js/specific/detalle_pedido/view.js" charset="UTF-8"></script>
+        <script src="js/specific/detalle_pedido/routes.js" charset="UTF-8"></script>
+         <script src="js/specific/respuesta/control.js" charset="UTF-8"></script>
+        <script src="js/specific/respuesta/model.js" charset="UTF-8"></script>
+        <script src="js/specific/respuesta/view.js" charset="UTF-8"></script>
+        <script src="js/specific/respuesta/routes.js" charset="UTF-8"></script>
         
         <script src="js/specific/tipodocumento/model.js" charset="UTF-8"></script>
 
@@ -219,14 +271,24 @@
 
 
                 fDocumentoRoutes();
-                fCuestionarioRoutes();
+                fOpcionRoutes();
                 fPreguntaRoutes();
+                fCuestionarioRoutes();
+              
                 fUsuarioRoutes();
                 fPublicacionRoutes();
+                fPostRoutes();
+                fMensajeprivadoRoutes();
+                fTemaRoutes();
+                fTipotemaRoutes();
                 fEstadoRoutes();
                 fProveedorRoutes();
                 fClienteRoutes();
-                fAmigoRoutes();
+                fImpuestoRoutes();
+                fActividadRoutes();
+                fPedidoRoutes();
+                fDetalle_pedidoRoutes();
+                fRespuestaRoutes();
 
 
                 Path.listen();

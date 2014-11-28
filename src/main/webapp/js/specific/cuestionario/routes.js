@@ -76,16 +76,12 @@ function fCuestionarioRoutes() {
         return false;
     });
     
-    
-//    Path.map("#/cuestionario/preguntascuestionario/:id").to(function () {
-//        $('#indexContenidoJsp').spinner();
-//        var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
-//        paramsObject['systemfilter']= 'id_cuestionario';
-//        paramsObject['systemfilteroperator']= 'equals';
-//        paramsObject['systemfiltervalue']= 'id_cuestionario';
-//        oCuestionarioControl.list($('#indexContenido'), paramsObject['id'], oCuestionarioModel, oCuestionarioView);
-//        $('#indexContenidoJsp').empty();
-//        return false;
-//    });
+        Path.map("#/cuestionario/preguntas/:id").to(function () {
+        $('#indexContenidoJsp').spinner();
+        var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
+        oCuestionarioControl.remove($('#indexContenido'), paramsObject['id'], oCuestionarioModel, oCuestionarioView);
+        $('#indexContenidoJsp').empty();
+        return false;
+    });
     
 }

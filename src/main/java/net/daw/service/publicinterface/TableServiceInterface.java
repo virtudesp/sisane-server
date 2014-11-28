@@ -22,5 +22,7 @@ public interface TableServiceInterface {
     public String remove(Integer id) throws Exception;
 
     public String set(String jason) throws Exception;
+    
+    public String updateOne(int intId, String strTabla, String strCampo, String strValor) throws Exception;
 
 }

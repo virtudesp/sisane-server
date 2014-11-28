@@ -17,7 +17,7 @@
  */
 
 
-function fAmigoRoutes() {
+function fDocumentoRoutes() {
 
 //    Path.map("#/documento").to(function () {
 //        $('#indexContenidoJsp').spinner();
@@ -27,51 +27,57 @@ function fAmigoRoutes() {
 //        return false;
 //    });
 
-    Path.map("#/amigo").to(function () {
+    Path.map("#/documento").to(function () {
         $('#indexContenidoJsp').spinner();
-        oAmigoControl.list($('#indexContenido'), param().defaultizeUrlObjectParameters({}), null, oAmigoModel, oAmigoView);
+        oDocumentoControl.list($('#indexContenido'), param().defaultizeUrlObjectParameters({}), null, oDocumentoModel, oDocumentoView);
         //documentoControl.modalListEventsLoading(documentoObject, documentoView, $('#indexContenido'), param().defaultizeUrlObjectParameters({}), null);        
         $('#indexContenidoJsp').empty();
-        $('#indexContenidoJsp').append(oAmigoControl.getClassNameAmigo());
+        $('#indexContenidoJsp').append(oDocumentoControl.getClassNameDocumento());
         return false;
     });
 
-    Path.map("#/amigo/list/:url").to(function () {
+    Path.map("#/documento/list/:url").to(function () {
         $('#indexContenidoJsp').spinner();
         var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
-        oAmigoControl.list($('#indexContenido'), paramsObject, null, oAmigoModel, oAmigoView);
+        oDocumentoControl.list($('#indexContenido'), paramsObject, null, oDocumentoModel, oDocumentoView);
         $('#indexContenidoJsp').empty();
         return false;
     });
 
-    Path.map("#/amigo/view/:id").to(function () {
+    Path.map("#/documento/view/:id").to(function () {
         $('#indexContenidoJsp').spinner();
         var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
-        oAmigoControl.view($('#indexContenido'), paramsObject['id'], oAmigoModel, oAmigoView);
+        oDocumentoControl.view($('#indexContenido'), paramsObject['id'], oDocumentoModel, oDocumentoView);
         $('#indexContenidoJsp').empty();
 
         return false;
     });
 
-    Path.map("#/amigo/edit/:id").to(function () {
+    Path.map("#/documento/edit/:id").to(function () {
         $('#indexContenidoJsp').spinner();
         var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
-        oAmigoControl.edit($('#indexContenido'), paramsObject['id'], oAmigoModel, oAmigoView);
+        oDocumentoControl.edit($('#indexContenido'), paramsObject['id'], oDocumentoModel, oDocumentoView);
         $('#indexContenidoJsp').empty();
     });
-
-    Path.map("#/amigo/new").to(function () {
+    Path.map("#/documento/new").to(function () {
+        $('#indexContenidoJsp').spinner();
+        //var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
+        oDocumentoControl.new($('#indexContenido'), null, oDocumentoModel, oDocumentoView);
+        $('#indexContenidoJsp').empty();
+        return false;
+    });
+    Path.map("#/documento/new/:url").to(function () {
         $('#indexContenidoJsp').spinner();
         var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
-        oAmigoControl.new($('#indexContenido'), oAmigoModel, oAmigoView);
+        oDocumentoControl.new($('#indexContenido'), paramsObject, oDocumentoModel, oDocumentoView);
         $('#indexContenidoJsp').empty();
         return false;
     });
 
-    Path.map("#/amigo/remove/:id").to(function () {
+    Path.map("#/documento/remove/:id").to(function () {
         $('#indexContenidoJsp').spinner();
         var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
-        oAmigoControl.remove($('#indexContenido'), paramsObject['id'], oAmigoModel, oAmigoView);
+        oDocumentoControl.remove($('#indexContenido'), paramsObject['id'], oDocumentoModel, oDocumentoView);
         $('#indexContenidoJsp').empty();
         return false;
     });

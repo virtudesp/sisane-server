@@ -35,15 +35,10 @@ import net.daw.service.specific.implementation.ProductoServiceSpImpl;
  */
 public class PublicacionControlOperationGenSpImpl extends ControlOperationGenImpl {
 
-    private PublicacionServiceGenSpImpl oPublicacionService = null;
+    private PublicacionServiceGenSpImpl oPublicacionService = (PublicacionServiceGenSpImpl) process;
 
     public PublicacionControlOperationGenSpImpl(HttpServletRequest request) throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, Exception {
         super(request);
-        try {
-            oPublicacionService = new PublicacionServiceGenSpImpl(ParameterCooker.prepareObject(request), connection);
-        } catch (Exception ex) {
-            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":PublicacionControlOperationSpImpl ERROR: " + ex.getMessage()));
-        }
     }
 
     public String duplicate(HttpServletRequest request) throws Exception {
@@ -55,16 +50,5 @@ public class PublicacionControlOperationGenSpImpl extends ControlOperationGenImp
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":set ERROR: " + ex.getMessage()));
         }
         return result;
-    }
-
-    private void closeDB() throws SQLException, Exception {
-        try {
-            if (connection != null) {
-                connection.close();
-            }
-            DataConnectionSource.disposeConnection();
-        } catch (Exception ex) {
-            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":closeDB ERROR: " + ex.getMessage()));
-        }
     }
 }
