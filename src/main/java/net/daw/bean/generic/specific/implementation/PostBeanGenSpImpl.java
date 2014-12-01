@@ -20,7 +20,6 @@ package net.daw.bean.generic.specific.implementation;
 import net.daw.bean.generic.implementation.BeanGenImpl;
 import net.daw.bean.publicinterface.BeanInterface;
 import com.google.gson.annotations.Expose;
-import java.time.ZonedDateTime;
 import java.util.Date;
 
 public class PostBeanGenSpImpl extends BeanGenImpl implements BeanInterface {

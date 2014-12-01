@@ -38,9 +38,16 @@
             <li><a href="#">Vacío</a></li>
             <li class="divider"></li>
             <li class="dropdown-header">Red Social</li>
+            <li><a href="jsp#/estado">Estado</a></li>
             <li><a href="jsp#/publicacion">Publicacion</a></li>
             <li><a href="jsp#/estado">Estado</a></li>
             <li><a href="jsp#/amigo">Amigo</a></li>
+            <li class="divider"></li>
+            <li class="dropdown-header">Facturacion</li>
+            <li><a href="jsp#/pedido">Pedido</a></li>
+            <li><a href="jsp#/detalle_pedido">Detalle Pedido</a></li>
+            <li><a href="jsp#/impuesto">Impuesto</a></li>
+            <li><a href="jsp#/proveedor">Proveedor</a></li>
         </ul>
     </li>    
 
