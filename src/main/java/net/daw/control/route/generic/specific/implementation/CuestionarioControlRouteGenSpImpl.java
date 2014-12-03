@@ -38,7 +38,7 @@ public class CuestionarioControlRouteGenSpImpl extends ControlRouteGenImpl {
         String jsonResult = "";
         try {
             switch (operation) {
-                case "getAllPreguntas":
+                case "getallpreguntas":
                     jsonResult = oCuestionarioControl.getAllPreguntas(request);
                     break;
                 default:
