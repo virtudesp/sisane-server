@@ -40,11 +40,9 @@
     </div>
     <div class="list-group">
         <a  class="list-group-item" id="lnkDocumento" href="jsp#/documento">Documento</a> 
-        <a  class="list-group-item" id="lnkOrdenador" href="jsp#/ordenador">Ordenador</a> 
         <a  class="list-group-item" id="lnkOrdenador" href="jsp#/usuario">Usuario</a> 
         <a  class="list-group-item" id="lnkProveedor" href="jsp#/proveedor">Proveedor</a> 
         <a  class="list-group-item" id="lnkPedido" href="jsp#/pedido">Pedido</a>
- 
         <a  class="list-group-item" id="lnkDocumento" href="jsp#/documento">Documento</a>
         <a  class="list-group-item" id="lnkCuestionario" href="jsp#/cuestionario">Cuestionario</a> 
         <a  class="list-group-item" id="lnkPregunta" href="jsp#/pregunta">Pregunta</a>
@@ -70,14 +68,6 @@
     </div>
 </div>
 
-<div class="panel panel-primary">
-    <div class="panel-heading">
-        <h3 class="panel-title">Global</h3>
-    </div>
-    <div class="list-group">
-        <a  class="list-group-item" id="lnkOrdenador" href="jsp?op=cambia">Cambia el campo</a>
-    </div>
-</div>
 
 <div class="panel panel-primary">
     <div class="panel-heading">
