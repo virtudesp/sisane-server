@@ -20,10 +20,7 @@ package net.daw.bean.generic.specific.implementation;
 import net.daw.bean.generic.implementation.BeanGenImpl;
 import net.daw.bean.publicinterface.BeanInterface;
 import com.google.gson.annotations.Expose;
-import java.time.ZonedDateTime;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 
 public class TemaBeanGenSpImpl extends BeanGenImpl implements BeanInterface {
 
