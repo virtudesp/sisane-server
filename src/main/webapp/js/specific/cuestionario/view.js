@@ -25,6 +25,7 @@ cuestionarioView.prototype.getClassNameCuestionario = function () {
     return this.getClassName() + "Vista";
 };
 var oCuestionarioView = new cuestionarioView('cuestionario');
+
 cuestionarioView.prototype.loadButtons = function (id) {
 //
     var botonera = "";
@@ -68,4 +69,8 @@ cuestionarioView.prototype.getBodyPageTable = function (page, fieldNames, visibl
         tabla += '</tr>';
     });
     return tabla;
+};
+
+cuestionarioView.prototype.getCuestionarioForm = function (jason) {
+return jason;
 };
