@@ -117,6 +117,12 @@ view.prototype.getEmptyList = function () {
     });
     return form;
 };
+view.prototype.getEmptyView = function (operacion) {
+    $.when(ajax().ajaxCallSync(path + '/jsp?ob=' + this.clase + '&op=' & operacion & '&mode=1', 'GET', '')).done(function (data) {
+        form = data;
+    });
+    return form;
+};
 //        getEmptyDiv: function() {
 //            return '<div id="content"></div>';
 //        },
