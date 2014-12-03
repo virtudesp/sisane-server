@@ -573,6 +573,8 @@ public class MysqlDataSpImpl implements DataInterface {
 //    SQL libres en pruebas
 //---------------------------------------
 //---------------------------------------
+    
+    
     @Override
     public ArrayList<Integer> getPageSQL(String id_tabla, String strTablas, String strWheres, String strOrders, int intRegsPerPage, int intPagina) throws Exception {
         ArrayList<Integer> vector = null;
