@@ -32,7 +32,7 @@ function fPublicacionRoutes() {
         oPublicacionControl.list($('#indexContenido'), param().defaultizeUrlObjectParameters({}), null, oPublicacionModel, oPublicacionView);
         //publicacionControl.modalListEventsLoading(publicacionObject, publicacionView, $('#indexContenido'), param().defaultizeUrlObjectParameters({}), null);        
         $('#indexContenidoJsp').empty();
-        $('#indexContenidoJsp').append(oPublicacionControl.getClassNamePublicacion());
+        //$('#indexContenidoJsp').append(oPublicacionControl.getClassNamePublicacion());
         return false;
     });
 

@@ -32,7 +32,7 @@ function fOpcionRoutes() {
         oOpcionControl.list($('#indexContenido'), param().defaultizeUrlObjectParameters({}), null, oOpcionModel, oOpcionView);
         //opcionControl.modalListEventsLoading(opcionObject, opcionView, $('#indexContenido'), param().defaultizeUrlObjectParameters({}), null);        
         $('#indexContenidoJsp').empty();
-        $('#indexContenidoJsp').append(oOpcionControl.getClassNameOpcion());
+        //$('#indexContenidoJsp').append(oOpcionControl.getClassNameOpcion());
         return false;
     });
 

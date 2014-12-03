@@ -32,7 +32,7 @@ function fEstadoRoutes() {
         oEstadoControl.list($('#indexContenido'), param().defaultizeUrlObjectParameters({}), null, oEstadoModel, oEstadoView);
         //estadoControl.modalListEventsLoading(estadoObject, estadoView, $('#indexContenido'), param().defaultizeUrlObjectParameters({}), null);        
         $('#indexContenidoJsp').empty();
-        $('#indexContenidoJsp').append(oEstadoControl.getClassNameEstado());
+        //$('#indexContenidoJsp').append(oEstadoControl.getClassNameEstado());
         return false;
     });
 

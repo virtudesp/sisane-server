@@ -32,7 +32,7 @@ function fTemaRoutes() {
         oTemaControl.list($('#indexContenido'), param().defaultizeUrlObjectParameters({}), null, oTemaModel, oTemaView);
         //temaControl.modalListEventsLoading(temaObject, temaView, $('#indexContenido'), param().defaultizeUrlObjectParameters({}), null);        
         $('#indexContenidoJsp').empty();
-        $('#indexContenidoJsp').append(oTemaControl.getClassNameTema());
+        //$('#indexContenidoJsp').append(oTemaControl.getClassNameTema());
         return false;
     });
 

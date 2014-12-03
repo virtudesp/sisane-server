@@ -32,7 +32,7 @@ function fDetalle_pedidoRoutes() {
         oDetalle_pedidoControl.list($('#indexContenido'), param().defaultizeUrlObjectParameters({}), null, oDetalle_pedidoModel, oDetalle_pedidoView);
         //detalle_pedidoControl.modalListEventsLoading(detalle_pedidoObject, detalle_pedidoView, $('#indexContenido'), param().defaultizeUrlObjectParameters({}), null);        
         $('#indexContenidoJsp').empty();
-        $('#indexContenidoJsp').append(oDetalle_pedidoControl.getClassNameDetalle_pedido());
+        //$('#indexContenidoJsp').append(oDetalle_pedidoControl.getClassNameDetalle_pedido());
         return false;
     });
 

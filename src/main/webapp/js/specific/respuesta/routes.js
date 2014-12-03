@@ -32,7 +32,7 @@ function fRespuestaRoutes() {
         oRespuestaControl.list($('#indexContenido'), param().defaultizeUrlObjectParameters({}), null, oRespuestaModel, oRespuestaView);
         //documentoControl.modalListEventsLoading(documentoObject, documentoView, $('#indexContenido'), param().defaultizeUrlObjectParameters({}), null);        
         $('#indexContenidoJsp').empty();
-        $('#indexContenidoJsp').append(oRespuestaControl.getClassNameRespuesta());
+        //$('#indexContenidoJsp').append(oRespuestaControl.getClassNameRespuesta());
         return false;
     });
 

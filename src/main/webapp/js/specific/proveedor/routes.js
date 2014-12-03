@@ -32,7 +32,7 @@ function fProveedorRoutes() {
         oProveedorControl.list($('#indexContenido'), param().defaultizeUrlObjectParameters({}), null, oProveedorModel, oProveedorView);
         //proveedorControl.modalListEventsLoading(proveedorObject, proveedorView, $('#indexContenido'), param().defaultizeUrlObjectParameters({}), null);        
         $('#indexContenidoJsp').empty();
-        $('#indexContenidoJsp').append(oProveedorControl.getClassNameProveedor());
+        //$('#indexContenidoJsp').append(oProveedorControl.getClassNameProveedor());
         return false;
     });
 
