@@ -481,7 +481,6 @@ public class MysqlDataSpImpl implements DataInterface {
             }
         }
     }
-
 //    @Override
 //    public ArrayList<String> getColumnsName(String strTabla) throws Exception {
 //        Connection conexion = ConnectionSource.getDataSource().getConnection();

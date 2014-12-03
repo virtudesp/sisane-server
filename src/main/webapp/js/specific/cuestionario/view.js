@@ -25,52 +25,46 @@ cuestionarioView.prototype.getClassNameCuestionario = function () {
     return this.getClassName() + "Vista";
 };
 var oCuestionarioView = new cuestionarioView('cuestionario');
-
-
 cuestionarioView.prototype.loadButtons = function (id) {
 //
     var botonera = "";
     botonera += '<div class="btn-toolbar" role="toolbar"><div class="btn-group btn-group-xs">';
-    botonera += '<a class="btn btn-default view" id="' + id + '"  href="jsp#/' + this.clase + '/view/' + id + '"><i class="glyphicon glyphicon-eye-open"></i></a>';   
+    botonera += '<a class="btn btn-default view" id="' + id + '"  href="jsp#/' + this.clase + '/view/' + id + '"><i class="glyphicon glyphicon-eye-open"></i></a>';
     botonera += '<a class="btn btn-default edit" id="' + id + '"  href="jsp#/' + this.clase + '/edit/' + id + '"><i class="glyphicon glyphicon-pencil"></i></a>';
-    botonera += '<a class="btn btn-default remove" id="' + id + '"  href="jsp#/' + this.clase + '/remove/' + id + '"><i class="glyphicon glyphicon-remove"></i></a>';
     botonera += '<a class="btn btn-default remove" id="' + id + '"  href="jsp#/' + this.clase + '/remove/' + id + '"><i class="glyphicon glyphicon-remove"></i></a>';
     botonera += '</div></div>';
     return botonera;
 };
-//cuestionarioView.prototype.loadFormValues = function (valores, campos) {
-////                    $('#documento_form #titulo').val(valores['titulo']);
-////                    $('#documento_form #contenido').val(valores['contenido']);
-////                    $('#documento_form #alta').val(valores['alta']);
-////                    $('#documento_form #cambio').val(valores['cambio']);
-////                    $('#documento_form #hits').val(valores['hits']);
-////                    $('#documento_form #id_usuario').val(valores['id_usuario']);
-////                    $('#documento_form #etiquetas').val(valores['etiquetas']);
-////                    $('#documento_form #publicado').val(valores['publicado']);
-////                    $('#documento_form #portada').val(valores['portada']);
-//    this.doFillForm(valores, campos);
-//};
-//
-//cuestionarioView.prototype.getFormValues = function () {
-//    var valores = [];
-////                    valores['titulo'] = $('#documento_form #titulo');
-////                    valores['contenido'] = $('#documento_form #contenido');
-////                    valores['alta'] = $('#documento_form #alta');
-////                    valores['cambio'] = $('#documento_form #cambio');
-////                    valores['hits'] = $('#documento_form #hits');
-////                    valores['id_usuario'] = $('#documento_form #id_usuario');
-////                    valores['etiquetas'] = $('#documento_form #etiquetas');
-////                    valores['publicado'] = $('#documento_form #publicado');
-////                    valores['portada'] = $('#documento_form #portada');
-//
-//    var disabled = $('#cuestionariooForm').find(':input:disabled').removeAttr('disabled');
-//    valores = $('#cuestionarioForm').serializeObject();
-//    disabled.attr('disabled', 'disabled');
-//    return valores;
-//};
-
-
-
-//documentoView.prototype.okValidation = function (f) {
-//    $('#documentoForm').on('success.form.bv', f);
-//};
+cuestionarioView.prototype.getBodyPageTable = function (page, fieldNames, visibleFields, tdbuttons) {
+    var thisObject = this;
+    var tabla = "";
+    $.each(page, function (index, value) {
+        tabla += '<tr>';
+        var numField = 0;
+        var id;
+        var strClaveAjena;
+        $.each(fieldNames, function (index, valor) {
+            if ("id" == valor) {
+                id = value[valor];
+            }
+            ;
+            numField++;
+            if (numField <= visibleFields) {
+                tabla += '<td>';
+                if ("tipo" == valor) {
+                    tabla += '<a href="jsp#/pregunta/list/systemfilter=id_cuestionario&systemfilteroperator=equals&systemfiltervalue=' + value.id + '">';
+                    tabla += thisObject.printValue(value, valor, true);
+                    tabla += "</a>";
+                } else {
+                    tabla += thisObject.printValue(value, valor, true);
+                }
+                tabla += '</td>';
+            }
+        });
+        tabla += '<td>';
+        tabla += tdbuttons(id);
+        tabla += '</td>';
+        tabla += '</tr>';
+    });
+    return tabla;
+};
