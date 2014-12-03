@@ -570,13 +570,10 @@ public class MysqlDataSpImpl implements DataInterface {
 
 //---------------------------------------
 //---------------------------------------
-//    en orbras....
+//    SQL libres en pruebas
 //---------------------------------------
 //---------------------------------------
-    
-    
-    
-    
+    @Override
     public ArrayList<Integer> getPageSQL(String id_tabla, String strTablas, String strWheres, String strOrders, int intRegsPerPage, int intPagina) throws Exception {
         ArrayList<Integer> vector = null;
         Statement oStatement = null;
@@ -602,20 +599,16 @@ public class MysqlDataSpImpl implements DataInterface {
             //--                        
             if (!strOrders.isEmpty()) {
                 strSQL += " ORDER BY ";
-//                for (Map.Entry oPar : hmOrder.entrySet()) {
-//                    strSQL += " " + oPar.getKey() + " " + oPar.getValue() + ",";
-//                }
-//                strSQL = strSQL.substring(0, strSQL.length() - 1);
-                strSQL += strWheres;
+                strSQL += strOrders;
             }
             strSQL += " LIMIT " + intOffset + " , " + intRegsPerPage;
             oResultSet = oStatement.executeQuery(strSQL);
             while (oResultSet.next()) {
-                vector.add(oResultSet.getInt("id"));
+                vector.add(oResultSet.getInt(id_tabla));
             }
 
         } catch (SQLException ex) {
-            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPage ERROR:  Can't process query: " + ex.getMessage()));
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPageSQL ERROR:  Can't process query: " + ex.getMessage()));
         } finally {
             if (oStatement != null) {
                 oStatement.close();
@@ -624,45 +617,16 @@ public class MysqlDataSpImpl implements DataInterface {
         return vector;
     }
 
-    public int getPagesSQL(String strTabla, int intRegsPerPage, ArrayList<FilterBeanHelper> alFilter) throws Exception {
+    @Override
+    public int getPagesSQL(String strTablas, String strWheres, int intRegsPerPage) throws Exception {
 
         int intResult = 0;
         Statement oStatement = null;
         try {
             oStatement = (Statement) connection.createStatement();
-            String strSQL = "SELECT count(*) FROM " + strTabla + " WHERE 1=1";
-            if (alFilter != null) {
-                Iterator iterator = alFilter.iterator();
-                while (iterator.hasNext()) {
-                    FilterBeanHelper oFilterBean = (FilterBeanHelper) iterator.next();
-                    switch (oFilterBean.getFilterOperator()) {
-                        case "like":
-                            strSQL += " AND " + oFilterBean.getFilter() + " LIKE '%" + oFilterBean.getFilterValue() + "%'";
-                            break;
-                        case "notlike":
-                            strSQL += " AND " + oFilterBean.getFilter() + " NOT LIKE '%" + oFilterBean.getFilterValue() + "%'";
-                            break;
-                        case "equals":
-                            strSQL += " AND " + oFilterBean.getFilter() + " = '" + oFilterBean.getFilterValue() + "'";
-                            break;
-                        case "notequalto":
-                            strSQL += " AND " + oFilterBean.getFilter() + " <> '" + oFilterBean.getFilterValue() + "'";
-                            break;
-                        case "less":
-                            strSQL += " AND " + oFilterBean.getFilter() + " < " + oFilterBean.getFilterValue() + "";
-                            break;
-                        case "lessorequal":
-                            strSQL += " AND " + oFilterBean.getFilter() + " <= " + oFilterBean.getFilterValue() + "";
-                            break;
-                        case "greater":
-                            strSQL += " AND " + oFilterBean.getFilter() + " > " + oFilterBean.getFilterValue() + "";
-                            break;
-                        case "greaterorequal":
-                            strSQL += " AND " + oFilterBean.getFilter() + " >= " + oFilterBean.getFilterValue() + "";
-                            break;
-                    }
-
-                }
+            String strSQL = "SELECT COUNT(*) FROM " + strTablas + " WHERE 1=1 ";
+            if (!strWheres.isEmpty()) {
+                strSQL += strWheres;
             }
             ResultSet oResultSet = oStatement.executeQuery(strSQL);
             while (oResultSet.next()) {
@@ -672,7 +636,7 @@ public class MysqlDataSpImpl implements DataInterface {
                 }
             }
         } catch (SQLException ex) {
-            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPages ERROR:  Can't process query: " + ex.getMessage()));
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPagesSQL ERROR:  Can't process query: " + ex.getMessage()));
         } finally {
             if (oStatement != null) {
                 oStatement.close();
@@ -681,51 +645,23 @@ public class MysqlDataSpImpl implements DataInterface {
         return intResult;
     }
 
-    public int getCountSQL(String strTabla, ArrayList<FilterBeanHelper> alFilter) throws Exception {
+    @Override
+    public int getCountSQL(String strTablas, String strWheres) throws Exception {
 
         int intResult = 0;
         Statement oStatement = null;
         try {
             oStatement = (Statement) connection.createStatement();
-            String strSQL = "SELECT count(*) FROM " + strTabla + " WHERE 1=1";
-            if (alFilter != null) {
-                Iterator iterator = alFilter.iterator();
-                while (iterator.hasNext()) {
-                    FilterBeanHelper oFilterBean = (FilterBeanHelper) iterator.next();
-                    switch (oFilterBean.getFilterOperator()) {
-                        case "like":
-                            strSQL += " AND " + oFilterBean.getFilter() + " LIKE '%" + oFilterBean.getFilterValue() + "%'";
-                            break;
-                        case "notlike":
-                            strSQL += " AND " + oFilterBean.getFilter() + " NOT LIKE '%" + oFilterBean.getFilterValue() + "%'";
-                            break;
-                        case "equals":
-                            strSQL += " AND " + oFilterBean.getFilter() + " = '" + oFilterBean.getFilterValue() + "'";
-                            break;
-                        case "notequalto":
-                            strSQL += " AND " + oFilterBean.getFilter() + " <> '" + oFilterBean.getFilterValue() + "'";
-                            break;
-                        case "less":
-                            strSQL += " AND " + oFilterBean.getFilter() + " < " + oFilterBean.getFilterValue() + "";
-                            break;
-                        case "lessorequal":
-                            strSQL += " AND " + oFilterBean.getFilter() + " <= " + oFilterBean.getFilterValue() + "";
-                            break;
-                        case "greater":
-                            strSQL += " AND " + oFilterBean.getFilter() + " > " + oFilterBean.getFilterValue() + "";
-                            break;
-                        case "greaterorequal":
-                            strSQL += " AND " + oFilterBean.getFilter() + " >= " + oFilterBean.getFilterValue() + "";
-                            break;
-                    }
-                }
+            String strSQL = "SELECT COUNT(*) FROM " + strTablas + " WHERE 1=1 ";
+            if (!strWheres.isEmpty()) {
+                strSQL += strWheres;
             }
             ResultSet oResultSet = oStatement.executeQuery(strSQL);
             while (oResultSet.next()) {
                 intResult = oResultSet.getInt("COUNT(*)");
             }
         } catch (SQLException ex) {
-            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getCount ERROR:  Can't process query: " + ex.getMessage()));
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getCountSQL ERROR:  Can't process query: " + ex.getMessage()));
         } finally {
             if (oStatement != null) {
                 oStatement.close();
