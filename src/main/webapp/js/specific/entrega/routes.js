@@ -17,61 +17,67 @@
  */
 
 
-function fClienteRoutes() {
+function fEntregaRoutes() {
 
-//    Path.map("#/cliente").to(function () {
+//    Path.map("#/entrega").to(function () {
 //        $('#indexContenidoJsp').spinner();
-//        control('cliente').list($('#indexContenido'), param().defaultizeUrlObjectParameters({}), null);
-//        //clienteControl.modalListEventsLoading(clienteObject, clienteView, $('#indexContenido'), param().defaultizeUrlObjectParameters({}), null);        
+//        control('entrega').list($('#indexContenido'), param().defaultizeUrlObjectParameters({}), null);
+//        //entregaControl.modalListEventsLoading(entregaObject, entregaView, $('#indexContenido'), param().defaultizeUrlObjectParameters({}), null);        
 //        $('#indexContenidoJsp').empty();
 //        return false;
 //    });
 
-    Path.map("#/cliente").to(function () {
+    Path.map("#/entrega").to(function () {
         $('#indexContenidoJsp').spinner();
-        oClienteControl.list($('#indexContenido'), param().defaultizeUrlObjectParameters({}), null, oClienteModel, oClienteView);
-        //clienteControl.modalListEventsLoading(clienteObject, clienteView, $('#indexContenido'), param().defaultizeUrlObjectParameters({}), null);        
+        oEntregaControl.list($('#indexContenido'), param().defaultizeUrlObjectParameters({}), null, oEntregaModel, oEntregaView);
+        //entregaControl.modalListEventsLoading(entregaObject, entregaView, $('#indexContenido'), param().defaultizeUrlObjectParameters({}), null);        
         $('#indexContenidoJsp').empty();
-        $('#indexContenidoJsp').append(oClienteControl.getClassNameCliente());
+        //$('#indexContenidoJsp').append(oEntregaControl.getClassNameEntrega());
         return false;
     });
 
-    Path.map("#/cliente/list/:url").to(function () {
+    Path.map("#/entrega/list/:url").to(function () {
         $('#indexContenidoJsp').spinner();
         var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
-        oClienteControl.list($('#indexContenido'), paramsObject, null, oClienteModel, oClienteView);
-        $('#indexContenidoJsp').empty();
-        return false;
-    });
-
-    Path.map("#/cliente/view/:id").to(function () {
-        $('#indexContenidoJsp').spinner();
-        var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
-        oClienteControl.view($('#indexContenido'), paramsObject['id'], oClienteModel, oClienteView);
-        $('#indexContenidoJsp').empty();
-
-        return false;
-    });
-
-    Path.map("#/cliente/edit/:id").to(function () {
-        $('#indexContenidoJsp').spinner();
-        var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
-        oClienteControl.edit($('#indexContenido'), paramsObject['id'], oClienteModel, oClienteView);
-        $('#indexContenidoJsp').empty();
-    });
-
-    Path.map("#/cliente/new").to(function () {
-        $('#indexContenidoJsp').spinner();
-        var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
-        oClienteControl.new($('#indexContenido'), oClienteModel, oClienteView);
+        oEntregaControl.list($('#indexContenido'), paramsObject, null, oEntregaModel, oEntregaView);
         $('#indexContenidoJsp').empty();
         return false;
     });
 
-    Path.map("#/cliente/remove/:id").to(function () {
+    Path.map("#/entrega/view/:id").to(function () {
         $('#indexContenidoJsp').spinner();
         var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
-        oClienteControl.remove($('#indexContenido'), paramsObject['id'], oClienteModel, oClienteView);
+        oEntregaControl.view($('#indexContenido'), paramsObject['id'], oEntregaModel, oEntregaView);
+        $('#indexContenidoJsp').empty();
+
+        return false;
+    });
+
+    Path.map("#/entrega/edit/:id").to(function () {
+        $('#indexContenidoJsp').spinner();
+        var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
+        oEntregaControl.edit($('#indexContenido'), paramsObject['id'], oEntregaModel, oEntregaView);
+        $('#indexContenidoJsp').empty();
+    });
+    Path.map("#/entrega/new").to(function () {
+        $('#indexContenidoJsp').spinner();
+        //var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
+        oEntregaControl.new($('#indexContenido'), null, oEntregaModel, oEntregaView);
+        $('#indexContenidoJsp').empty();
+        return false;
+    });
+    Path.map("#/entrega/new/:url").to(function () {
+        $('#indexContenidoJsp').spinner();
+        var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
+        oEntregaControl.new($('#indexContenido'), paramsObject, oEntregaModel, oEntregaView);
+        $('#indexContenidoJsp').empty();
+        return false;
+    });
+
+    Path.map("#/entrega/remove/:id").to(function () {
+        $('#indexContenidoJsp').spinner();
+        var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
+        oEntregaControl.remove($('#indexContenido'), paramsObject['id'], oEntregaModel, oEntregaView);
         $('#indexContenidoJsp').empty();
         return false;
     });

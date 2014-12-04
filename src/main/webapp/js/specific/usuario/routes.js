@@ -32,7 +32,7 @@ function fUsuarioRoutes() {
         oUsuarioControl.list($('#indexContenido'), param().defaultizeUrlObjectParameters({}), null, oUsuarioModel, oUsuarioView);
         //usuarioControl.modalListEventsLoading(usuarioObject, usuarioView, $('#indexContenido'), param().defaultizeUrlObjectParameters({}), null);        
         $('#indexContenidoJsp').empty();
-        $('#indexContenidoJsp').append(oUsuarioControl.getClassNameUsuario());
+        //$('#indexContenidoJsp').append(oUsuarioControl.getClassNameUsuario());
         return false;
     });
 

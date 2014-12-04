@@ -32,7 +32,7 @@ function fPreguntaRoutes() {
         oPreguntaControl.list($('#indexContenido'), param().defaultizeUrlObjectParameters({}), null, oPreguntaModel, oPreguntaView);
         //preguntaControl.modalListEventsLoading(preguntaObject, preguntaView, $('#indexContenido'), param().defaultizeUrlObjectParameters({}), null);        
         $('#indexContenidoJsp').empty();
-        $('#indexContenidoJsp').append(oPreguntaControl.getClassNamePregunta());
+        //$('#indexContenidoJsp').append(oPreguntaControl.getClassNamePregunta());
         return false;
     });
 

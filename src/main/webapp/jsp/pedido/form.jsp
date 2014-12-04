@@ -52,14 +52,14 @@
 
     
     <div class="form-group">
-        <label class="col-sm-2 control-label" for="obj_cliente_id">Id_cliente: </label> 
+        <label class="col-sm-2 control-label" for="obj_usuario_id">Id_usuario: </label> 
         <div class="col-sm-2">              
-            <input readonly="true"  class="form-control"  id="obj_cliente_id" class="input-mini" name="id_usuario" type="text" size="5" maxlength="5" />  
+            <input readonly="true"  class="form-control"  id="obj_usuario_id" class="input-mini" name="id_usuario" type="text" size="5" maxlength="5" />  
         </div>
         <div class="col-sm-1">              
-            <a class="btn btn-primary btn-sm" id="obj_cliente_button" href="#"><i class="glyphicon glyphicon-search"></i></a>
+            <a class="btn btn-primary btn-sm" id="obj_usuario_button" href="#"><i class="glyphicon glyphicon-search"></i></a>
         </div>        
-        <label class="col-sm-7" for="obj_cliente_desc" id="obj_cliente_desc"></label>                     
+        <label class="col-sm-7" for="obj_usuario_desc" id="obj_usuario_desc"></label>                     
     </div>
 
   </form>
@@ -114,10 +114,10 @@
                                 }
                             }
                         },
-                        id_cliente: {
+                        id_usuario: {
                             validators: {
                                 notEmpty: {
-                                    message: 'Debe elegir un cliente'
+                                    message: 'Debe elegir un usuario'
                                 },
                                 integer: {
                                     message: 'El identificador de usuario debe ser un entero'

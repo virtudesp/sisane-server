@@ -1,5 +1,5 @@
 /*
- * Copyright (C) July 2014 Rafael Aznar
+ * Copyright (C) 2014 al037805
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -24,9 +24,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import net.daw.bean.generic.specific.implementation.ClienteBeanGenSpImpl;
-import net.daw.dao.specific.implementation.ClienteDaoSpcImpl;
-import net.daw.helper.AppConfigurationHelper;
+import net.daw.bean.generic.specific.implementation.EntregaBeanGenSpImpl;
+import net.daw.dao.specific.implementation.EntregaDaoSpcImpl;
 import net.daw.helper.EncodingUtilHelper;
 import net.daw.helper.ExceptionBooster;
 import net.daw.helper.FilterBeanHelper;
@@ -34,12 +33,16 @@ import net.daw.service.publicinterface.MetaServiceInterface;
 import net.daw.service.publicinterface.TableServiceInterface;
 import net.daw.service.publicinterface.ViewServiceInterface;
 
-public class ClienteServiceSpImpl implements TableServiceInterface, ViewServiceInterface, MetaServiceInterface {
-
+/**
+ *
+ * @author al037805
+ */
+public class EntregaServiceSpImpl implements TableServiceInterface, ViewServiceInterface, MetaServiceInterface {
+    
     protected Connection oConnection = null;
     protected String strObjectName = null;
 
-    public ClienteServiceSpImpl(String strObject, Connection con) {
+    public EntregaServiceSpImpl(String strObject, Connection con) {
         strObjectName = strObject;
         oConnection = con;
     }
@@ -49,12 +52,12 @@ public class ClienteServiceSpImpl implements TableServiceInterface, ViewServiceI
         String resultado = null;
         try {
             oConnection.setAutoCommit(false);
-            ClienteDaoSpcImpl oClienteDAO = new ClienteDaoSpcImpl(strObjectName, oConnection);
-            ClienteBeanGenSpImpl oCliente = new ClienteBeanGenSpImpl(id);
+            EntregaDaoSpcImpl oEntregaDAO = new EntregaDaoSpcImpl(strObjectName, oConnection);
+            EntregaBeanGenSpImpl oEntrega = new EntregaBeanGenSpImpl(id);
             Map<String, String> data = new HashMap<>();
-            oClienteDAO.remove(oCliente);
+            oEntregaDAO.remove(oEntrega);
             data.put("status", "200");
-            data.put("message", "se ha eliminado el registro con id=" + oCliente.getId());
+            data.put("message", "se ha eliminado el registro con id=" + oEntrega.getId());
             Gson gson = new Gson();
             resultado = gson.toJson(data);
             oConnection.commit();
@@ -70,15 +73,15 @@ public class ClienteServiceSpImpl implements TableServiceInterface, ViewServiceI
         String resultado = null;
         try {
             oConnection.setAutoCommit(false);
-            ClienteDaoSpcImpl oClienteDAO = new ClienteDaoSpcImpl(strObjectName, oConnection);
-            ClienteBeanGenSpImpl oCliente = new ClienteBeanGenSpImpl();
+            EntregaDaoSpcImpl oEntregaDAO = new EntregaDaoSpcImpl(strObjectName, oConnection);
+            EntregaBeanGenSpImpl oEntrega = new EntregaBeanGenSpImpl();
             Gson gson = new GsonBuilder().setDateFormat("dd/MM/yyyy").create();
             jason = EncodingUtilHelper.decodeURIComponent(jason);
-            oCliente = gson.fromJson(jason, oCliente.getClass());
-            oCliente = oClienteDAO.set(oCliente);
+            oEntrega = gson.fromJson(jason, oEntrega.getClass());
+            oEntrega = oEntregaDAO.set(oEntrega);
             Map<String, String> data = new HashMap<>();
             data.put("status", "200");
-            data.put("message", Integer.toString(oCliente.getId()));
+            data.put("message", Integer.toString(oEntrega.getId()));
             resultado = gson.toJson(data);
             oConnection.commit();
         } catch (Exception ex) {
@@ -93,13 +96,13 @@ public class ClienteServiceSpImpl implements TableServiceInterface, ViewServiceI
         String data = null;
         try {
             oConnection.setAutoCommit(false);
-            ClienteDaoSpcImpl oClienteDAO = new ClienteDaoSpcImpl(strObjectName, oConnection);
-            ClienteBeanGenSpImpl oCliente = new ClienteBeanGenSpImpl(id);
-            oCliente = oClienteDAO.get(oCliente, AppConfigurationHelper.getJsonDepth());
+            EntregaDaoSpcImpl oEntregaDAO = new EntregaDaoSpcImpl(strObjectName, oConnection);
+            EntregaBeanGenSpImpl oEntrega = new EntregaBeanGenSpImpl(id);
+            oEntrega = oEntregaDAO.get(oEntrega, 1);
             GsonBuilder gsonBuilder = new GsonBuilder();
             gsonBuilder.setDateFormat("dd/MM/yyyy");
             Gson gson = gsonBuilder.create();
-            data = gson.toJson(oCliente);
+            data = gson.toJson(oEntrega);
             oConnection.commit();
         } catch (Exception ex) {
             oConnection.rollback();
@@ -113,12 +116,12 @@ public class ClienteServiceSpImpl implements TableServiceInterface, ViewServiceI
         String data = null;
         try {
             oConnection.setAutoCommit(false);
-            ClienteDaoSpcImpl oClienteDAO = new ClienteDaoSpcImpl(strObjectName, oConnection);
-            List<ClienteBeanGenSpImpl> oClientes = oClienteDAO.getPage(intRegsPerPag, intPage, alFilter, hmOrder);
+            EntregaDaoSpcImpl oEntregaDAO = new EntregaDaoSpcImpl(strObjectName, oConnection);
+            List<EntregaBeanGenSpImpl> oEntregas = oEntregaDAO.getPage(intRegsPerPag, intPage, alFilter, hmOrder);
             GsonBuilder gsonBuilder = new GsonBuilder();
             gsonBuilder.setDateFormat("dd/MM/yyyy");
             Gson gson = gsonBuilder.create();
-            data = gson.toJson(oClientes);
+            data = gson.toJson(oEntregas);
             data = "{\"list\":" + data + "}";
             oConnection.commit();
         } catch (Exception ex) {
@@ -133,8 +136,8 @@ public class ClienteServiceSpImpl implements TableServiceInterface, ViewServiceI
         String data = null;
         try {
             oConnection.setAutoCommit(false);
-            ClienteDaoSpcImpl oClienteDAO = new ClienteDaoSpcImpl(strObjectName, oConnection);
-            int pages = oClienteDAO.getPages(intRegsPerPag, alFilter);
+            EntregaDaoSpcImpl oEntregaDAO = new EntregaDaoSpcImpl(strObjectName, oConnection);
+            int pages = oEntregaDAO.getPages(intRegsPerPag, alFilter);
             data = "{\"data\":\"" + Integer.toString(pages) + "\"}";
             oConnection.commit();
         } catch (Exception ex) {
@@ -149,8 +152,8 @@ public class ClienteServiceSpImpl implements TableServiceInterface, ViewServiceI
         String data = null;
         try {
             oConnection.setAutoCommit(false);
-            ClienteDaoSpcImpl oClienteDAO = new ClienteDaoSpcImpl(strObjectName, oConnection);
-            int registers = oClienteDAO.getCount(alFilter);
+            EntregaDaoSpcImpl oEntregaDAO = new EntregaDaoSpcImpl(strObjectName, oConnection);
+            int registers = oEntregaDAO.getCount(alFilter);
             data = "{\"data\":\"" + Integer.toString(registers) + "\"}";
             oConnection.commit();
 
@@ -167,8 +170,8 @@ public class ClienteServiceSpImpl implements TableServiceInterface, ViewServiceI
         ArrayList<String> alColumns = null;
         try {
             oConnection.setAutoCommit(false);
-            ClienteDaoSpcImpl oClienteDAO = new ClienteDaoSpcImpl(strObjectName, oConnection);
-            alColumns = oClienteDAO.getPrettyColumnsNames();
+            EntregaDaoSpcImpl oEntregaDAO = new EntregaDaoSpcImpl(strObjectName, oConnection);
+            alColumns = oEntregaDAO.getPrettyColumnsNames();
             data = new Gson().toJson(alColumns);
             //data = "{\"data\":" + data + "}";
             oConnection.commit();
@@ -185,8 +188,8 @@ public class ClienteServiceSpImpl implements TableServiceInterface, ViewServiceI
         try {
             oConnection.setAutoCommit(false);
             ArrayList<String> alColumns = null;
-            ClienteDaoSpcImpl oClienteDAO = new ClienteDaoSpcImpl(strObjectName, oConnection);
-            alColumns = oClienteDAO.getColumnsNames();
+            EntregaDaoSpcImpl oEntregaDAO = new EntregaDaoSpcImpl(strObjectName, oConnection);
+            alColumns = oEntregaDAO.getColumnsNames();
             data = new Gson().toJson(alColumns);
             //data = "{\"data\":" + data + "}";
             oConnection.commit();
@@ -254,4 +257,5 @@ public class ClienteServiceSpImpl implements TableServiceInterface, ViewServiceI
     public String updateOne(int intId, String strTabla, String strCampo, String strValor) throws Exception {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+    
 }

@@ -167,6 +167,11 @@
         <script src="js/specific/publicacion/view.js" charset="UTF-8"></script>
         <script src="js/specific/publicacion/routes.js" charset="UTF-8"></script>
         
+        <script src="js/specific/amigo/control.js" charset="UTF-8"></script>
+        <script src="js/specific/amigo/model.js" charset="UTF-8"></script>
+        <script src="js/specific/amigo/view.js" charset="UTF-8"></script>
+        <script src="js/specific/amigo/routes.js" charset="UTF-8"></script>
+        
         <script src="js/specific/estado/control.js" charset="UTF-8"></script>
         <script src="js/specific/estado/model.js" charset="UTF-8"></script>
         <script src="js/specific/estado/view.js" charset="UTF-8"></script>
@@ -198,6 +203,12 @@
         <script src="js/specific/publicacion/view.js" charset="UTF-8"></script>
         <script src="js/specific/publicacion/routes.js" charset="UTF-8"></script>
         
+        <script src="js/specific/entrega/control.js" charset="UTF-8"></script>
+        <script src="js/specific/entrega/model.js" charset="UTF-8"></script>
+        <script src="js/specific/entrega/view.js" charset="UTF-8"></script>
+        <script src="js/specific/entrega/routes.js" charset="UTF-8"></script>
+        
+        
         <script src="js/specific/tipousuario/control.js" charset="UTF-8"></script>
         <script src="js/specific/tipousuario/model.js" charset="UTF-8"></script>
         <script src="js/specific/tipousuario/view.js" charset="UTF-8"></script>
@@ -225,16 +236,19 @@
         <script src="js/specific/mensajeprivado/view.js" charset="UTF-8"></script>
         <script src="js/specific/mensajeprivado/routes.js" charset="UTF-8"></script>
         <!-- FIN FORO -->
+               
+        <!-- PROPUESTAS Y VOTACIONES -->        
+        <script src="js/specific/tipopropuesta/control.js" charset="UTF-8"></script>
+        <script src="js/specific/tipopropuesta/model.js" charset="UTF-8"></script>
+        <script src="js/specific/tipopropuesta/view.js" charset="UTF-8"></script>
+        <script src="js/specific/tipopropuesta/routes.js" charset="UTF-8"></script>
+        <!--FIN PROPUESTAS Y VOTACIONES-->
 
         <script src="js/specific/proveedor/control.js" charset="UTF-8"></script>
         <script src="js/specific/proveedor/model.js" charset="UTF-8"></script>
         <script src="js/specific/proveedor/view.js" charset="UTF-8"></script>
         <script src="js/specific/proveedor/routes.js" charset="UTF-8"></script>
         
-        <script src="js/specific/cliente/control.js" charset="UTF-8"></script>
-        <script src="js/specific/cliente/model.js" charset="UTF-8"></script>
-        <script src="js/specific/cliente/view.js" charset="UTF-8"></script>
-        <script src="js/specific/cliente/routes.js" charset="UTF-8"></script>
         
         <script src="js/specific/impuesto/control.js" charset="UTF-8"></script>
         <script src="js/specific/impuesto/model.js" charset="UTF-8"></script>
@@ -274,7 +288,7 @@
                 fOpcionRoutes();
                 fPreguntaRoutes();
                 fCuestionarioRoutes();
-              
+                fAmigoRoutes();
                 fUsuarioRoutes();
                 fPublicacionRoutes();
                 fPostRoutes();
@@ -283,12 +297,13 @@
                 fTipotemaRoutes();
                 fEstadoRoutes();
                 fProveedorRoutes();
-                fClienteRoutes();
                 fImpuestoRoutes();
                 fActividadRoutes();
+                fEntregaRoutes();
                 fPedidoRoutes();
                 fDetalle_pedidoRoutes();
                 fRespuestaRoutes();
+                fTipopropuestaRoutes();
 
 
                 Path.listen();

@@ -29,7 +29,6 @@
             <li><a href="jsp#/opcion">Opcion</a></li>
             <li><a href="jsp#/usuario">Usuario</a></li>
             <li><a href="jsp#/proveedor">Proveedor</a></li>
-            <li><a href="jsp#/cliente">Cliente</a></li>
             <li><a href="jsp#/impuesto">Impuesto</a></li>
             <li><a href="jsp#/pedido">Pedido</a></li>
             <li><a href="#">Vacío</a></li>
@@ -41,6 +40,10 @@
             <li class="dropdown-header">Red Social</li>
             <li><a href="jsp#/publicacion">Publicacion</a></li>
             <li><a href="jsp#/estado">Estado</a></li>
+            <li><a href="jsp#/amigo">Amigo</a></li>
+            <li class="divider"></li>
+            <li class="dropdown-header">Propuestas y votaciones</li>
+            <li><a href="jsp#/tipopropuesta">Tipo propuesta</a></li>
         </ul>
     </li>    
 

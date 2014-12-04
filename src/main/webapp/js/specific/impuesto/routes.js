@@ -32,7 +32,7 @@ function fImpuestoRoutes() {
         oImpuestoControl.list($('#indexContenido'), param().defaultizeUrlObjectParameters({}), null, oImpuestoModel, oImpuestoView);
         //impuestoControl.modalListEventsLoading(impuestoObject, impuestoView, $('#indexContenido'), param().defaultizeUrlObjectParameters({}), null);        
         $('#indexContenidoJsp').empty();
-        $('#indexContenidoJsp').append(oImpuestoControl.getClassNameImpuesto());
+        //$('#indexContenidoJsp').append(oImpuestoControl.getClassNameImpuesto());
         return false;
     });
 

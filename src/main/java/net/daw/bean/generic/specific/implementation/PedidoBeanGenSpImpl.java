@@ -27,9 +27,9 @@ public class PedidoBeanGenSpImpl extends BeanGenImpl implements BeanInterface {
     @Expose
     private Date fecha = new Date();
     @Expose(serialize = false)
-    private Integer id_cliente = 0;
+    private Integer id_usuario = 0;
     @Expose (deserialize = false)
-    private ClienteBeanGenSpImpl obj_cliente = null;
+    private UsuarioBeanGenSpImpl obj_usuario = null;
     
     @Expose
     private String observaciones = "";
@@ -50,20 +50,20 @@ public class PedidoBeanGenSpImpl extends BeanGenImpl implements BeanInterface {
         this.fecha = fecha;
     }
 
-    public Integer getId_cliente() {
-        return id_cliente;
+    public Integer getId_usuario() {
+        return id_usuario;
     }
 
-    public void setId_cliente(Integer id_cliente) {
-        this.id_cliente = id_cliente;
+    public void setId_usuario(Integer id_usuario) {
+        this.id_usuario = id_usuario;
     }
 
-    public ClienteBeanGenSpImpl getObj_cliente() {
-        return obj_cliente;
+    public UsuarioBeanGenSpImpl getObj_usuario() {
+        return obj_usuario;
     }
 
-    public void setObj_cliente(ClienteBeanGenSpImpl obj_cliente) {
-        this.obj_cliente = obj_cliente;
+    public void setObj_usuario(UsuarioBeanGenSpImpl obj_usuario) {
+        this.obj_usuario = obj_usuario;
     }
 
     public String getObservaciones() {

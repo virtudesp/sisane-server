@@ -1,5 +1,5 @@
-/* 
- * Copyright (C) 2014 raznara
+/*
+ * Copyright (C) July 2014 Rafael Aznar
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -15,12 +15,19 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
+package net.daw.service.generic.specific.implementation;
 
-var clienteModel = function (strClase) {
-    this.clase = strClase;
-};
-clienteModel.prototype = new model('cliente');
-clienteModel.prototype.getClassNameCliente = function () {
-    return this.getClassName() + "Modelo";
-};
-var oClienteModel = new clienteModel('cliente');
+import net.daw.service.generic.implementation.TableServiceGenImpl;
+import java.sql.Connection;
+import javax.servlet.ServletException;
+import net.daw.bean.generic.specific.implementation.EstadoBeanGenSpImpl;
+import net.daw.dao.generic.specific.implementation.EstadoDaoGenSpImpl;
+
+public class TipopropuestaServiceGenSpImpl extends TableServiceGenImpl {
+
+    public TipopropuestaServiceGenSpImpl(String strObject, Connection con) {
+        super(strObject, con);
+    }
+}
+
+  

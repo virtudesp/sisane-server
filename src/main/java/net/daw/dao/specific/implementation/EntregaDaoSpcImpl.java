@@ -18,11 +18,16 @@
 package net.daw.dao.specific.implementation;
 
 import java.sql.Connection;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
-import net.daw.bean.generic.specific.implementation.ClienteBeanGenSpImpl;
+import java.util.Locale;
+import net.daw.bean.generic.specific.implementation.ActividadBeanGenSpImpl;
+import net.daw.bean.generic.specific.implementation.DocumentoBeanGenSpImpl;
+import net.daw.bean.generic.specific.implementation.EntregaBeanGenSpImpl;
 import net.daw.bean.generic.specific.implementation.TipoproductoBeanGenSpImpl;
+import net.daw.dao.generic.specific.implementation.DocumentoDaoGenSpImpl;
 import net.daw.dao.publicinterface.MetaDaoInterface;
 import net.daw.dao.publicinterface.TableDaoInterface;
 import net.daw.dao.publicinterface.ViewDaoInterface;
@@ -31,13 +36,13 @@ import net.daw.helper.AppConfigurationHelper;
 import net.daw.helper.ExceptionBooster;
 import net.daw.helper.FilterBeanHelper;
 
-public class ClienteDaoSpcImpl implements ViewDaoInterface<ClienteBeanGenSpImpl>, TableDaoInterface<ClienteBeanGenSpImpl>, MetaDaoInterface {
+public class EntregaDaoSpcImpl implements ViewDaoInterface<EntregaBeanGenSpImpl>, TableDaoInterface<EntregaBeanGenSpImpl>, MetaDaoInterface {
 
     private String strTableName = null;
     private MysqlDataSpImpl oMysql = null;
     private Connection oConnection = null;
 
-    public ClienteDaoSpcImpl(String ob, Connection oConexion) throws Exception {
+    public EntregaDaoSpcImpl(String ob, Connection oConexion) throws Exception {
         try {
             strTableName = ob;
             oConnection = oConexion;
@@ -70,68 +75,92 @@ public class ClienteDaoSpcImpl implements ViewDaoInterface<ClienteBeanGenSpImpl>
     }
 
     @Override
-    public ArrayList<ClienteBeanGenSpImpl> getPage(int intRegsPerPag, int intPage, ArrayList<FilterBeanHelper> hmFilter, HashMap<String, String> hmOrder) throws Exception {
+    public ArrayList<EntregaBeanGenSpImpl> getPage(int intRegsPerPag, int intPage, ArrayList<FilterBeanHelper> hmFilter, HashMap<String, String> hmOrder) throws Exception {
         ArrayList<Integer> arrId;
-        ArrayList<ClienteBeanGenSpImpl> arrCliente = new ArrayList<>();
+        ArrayList<EntregaBeanGenSpImpl> arrEntrega = new ArrayList<>();
         try {
             arrId = oMysql.getPage(strTableName, intRegsPerPag, intPage, hmFilter, hmOrder);
             Iterator<Integer> iterador = arrId.listIterator();
             while (iterador.hasNext()) {
-                ClienteBeanGenSpImpl oClienteBean = new ClienteBeanGenSpImpl(iterador.next());
-                arrCliente.add(this.get(oClienteBean, AppConfigurationHelper.getJsonDepth()));
+                EntregaBeanGenSpImpl oEntregaBean = new EntregaBeanGenSpImpl(iterador.next());
+                arrEntrega.add(this.get(oEntregaBean, AppConfigurationHelper.getJsonDepth()));
             }
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPage ERROR: " + ex.getMessage()));
         }
-        return arrCliente;
+        return arrEntrega;
     }
 
     @Override
-    public ClienteBeanGenSpImpl get(ClienteBeanGenSpImpl oClienteBean, Integer expand) throws Exception {
-        if (oClienteBean.getId() > 0) {
+    public EntregaBeanGenSpImpl get(EntregaBeanGenSpImpl oEntregaBean, Integer expand) throws Exception {
+        if (oEntregaBean.getId() > 0) {
             try {
-                if (!oMysql.existsOne(strTableName, oClienteBean.getId())) {
-                    oClienteBean.setId(0);
+                if (!oMysql.existsOne(strTableName, oEntregaBean.getId())) {
+                    oEntregaBean.setId(0);
                 } else {
-                    oClienteBean.setNombre(oMysql.getOne(strTableName, "nombre", oClienteBean.getId()));
-                    oClienteBean.setApe1(oMysql.getOne(strTableName, "ape1", oClienteBean.getId()));
-                    oClienteBean.setApe2(oMysql.getOne(strTableName, "ape2", oClienteBean.getId()));
-                    oClienteBean.setEmail(oMysql.getOne(strTableName, "email", oClienteBean.getId()));
-                   
+                    oEntregaBean.setNota(Integer.parseInt(oMysql.getOne(strTableName, "nota", oEntregaBean.getId())));
+
+                    String fecha = "";
+                    fecha = oMysql.getOne(strTableName, "fecha", oEntregaBean.getId());
+                    SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+                    oEntregaBean.setFecha(date.parse(fecha));
+
+                    oEntregaBean.setId_documento(Integer.parseInt(oMysql.getOne(strTableName, "id_documento", oEntregaBean.getId())));
+                    
+                    DocumentoBeanGenSpImpl oDocumento = new DocumentoBeanGenSpImpl();
+                    oDocumento.setId(Integer.parseInt(oMysql.getOne(strTableName, "id_documento", oEntregaBean.getId())));
+                    DocumentoDaoGenSpImpl oDocumentoDAO = new DocumentoDaoGenSpImpl("documento", oConnection);
+                    oDocumento = oDocumentoDAO.get(oDocumento, AppConfigurationHelper.getJsonDepth());
+                    oEntregaBean.setObj_documento(oDocumento);
+                    
+                    
+                    oEntregaBean.setId_documento(Integer.parseInt(oMysql.getOne(strTableName, "id_actividad", oEntregaBean.getId())));
+                    ActividadBeanGenSpImpl oActividad = new ActividadBeanGenSpImpl();
+                    oActividad.setId(Integer.parseInt(oMysql.getOne(strTableName, "id_actividad", oEntregaBean.getId())));
+                    ActividadDaoSpcImpl oActividadDAO = new ActividadDaoSpcImpl("actividad", oConnection);
+                    oActividad = oActividadDAO.get(oActividad, AppConfigurationHelper.getJsonDepth());
+                    oEntregaBean.setObj_actividad(oActividad);
+                    
+                    
+                    
 
                 }
             } catch (Exception ex) {
                 ExceptionBooster.boost(new Exception(this.getClass().getName() + ":get ERROR: " + ex.getMessage()));
             }
         } else {
-            oClienteBean.setId(0);
+            oEntregaBean.setId(0);
         }
-        return oClienteBean;
+        return oEntregaBean;
     }
 
     @Override
-    public ClienteBeanGenSpImpl set(ClienteBeanGenSpImpl oClienteBean) throws Exception {
+    public EntregaBeanGenSpImpl set(EntregaBeanGenSpImpl oEntregaBean) throws Exception {
         try {
-            if (oClienteBean.getId() == 0) {
-                oClienteBean.setId(oMysql.insertOne(strTableName));
+            if (oEntregaBean.getId() == 0) {
+                oEntregaBean.setId(oMysql.insertOne(strTableName));
             }
+
+            oMysql.updateOne(oEntregaBean.getId(), strTableName, "nota", oEntregaBean.getNota().toString());
             
-            oMysql.updateOne(oClienteBean.getId(), strTableName, "nombre", oClienteBean.getNombre());
-            oMysql.updateOne(oClienteBean.getId(), strTableName, "ape1", oClienteBean.getApe1());
-            oMysql.updateOne(oClienteBean.getId(), strTableName, "ape2", oClienteBean.getApe2());
-            oMysql.updateOne(oClienteBean.getId(), strTableName, "email", oClienteBean.getEmail());
-          
+            SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);       
+            oMysql.updateOne(oEntregaBean.getId(), strTableName, "fecha", date.format(oEntregaBean.getFecha()));
+            
+            oMysql.updateOne(oEntregaBean.getId(), strTableName, "id_documento", oEntregaBean.getId_documento().toString());
+            oMysql.updateOne(oEntregaBean.getId(), strTableName, "id_actividad", oEntregaBean.getId_actividad().toString());
+            
+      
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":set ERROR: " + ex.getMessage()));
         }
-        return oClienteBean;
+        return oEntregaBean;
     }
 
     @Override
-    public int remove(ClienteBeanGenSpImpl oClienteBean) throws Exception {
+    public int remove(EntregaBeanGenSpImpl oEntregaBean) throws Exception {
         int result = 0;
         try {
-            result = oMysql.removeOne(oClienteBean.getId(), strTableName);
+            result = oMysql.removeOne(oEntregaBean.getId(), strTableName);
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":remove ERROR: " + ex.getMessage()));
         }

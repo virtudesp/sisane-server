@@ -40,17 +40,22 @@ public interface DataInterface {
 
     public int updateOne(int intId, String strTabla, String strCampo, String strValor) throws Exception;
 
-    public int getPages(String strTabla, int intRegsPerPage, ArrayList<FilterBeanHelper> alFilter) throws Exception;
-
-    public int getCount(String strTabla, ArrayList<FilterBeanHelper> alFilter) throws Exception;
-
-    public ArrayList<Integer> getPage(String strTabla, int intRegsPerPage, int intPagina, ArrayList<FilterBeanHelper> alFilter, HashMap<String, String> hmOrder) throws Exception;
-
     public int removeOne(int intId, String strTabla) throws Exception;
 
     public void removeSomeId(String strTabla, ArrayList<Integer> Ids) throws SQLException;
 
     public void removeSomeCondition(String strTabla, String campo, String valor) throws Exception;
+    
+    public ArrayList<Integer> getPage(String strTabla, int intRegsPerPage, int intPagina, ArrayList<FilterBeanHelper> alFilter, HashMap<String, String> hmOrder) throws Exception;
 
-    //public String getOneFromSql(String strSQL) throws Exception;
+    public int getPages(String strTabla, int intRegsPerPage, ArrayList<FilterBeanHelper> alFilter) throws Exception;
+
+    public int getCount(String strTabla, ArrayList<FilterBeanHelper> alFilter) throws Exception;
+
+    public ArrayList<Integer> getPageSQL(String id_tabla, String strTablas, String strWheres, String strOrders, int intRegsPerPage, int intPagina) throws Exception;
+
+    public int getPagesSQL(String strTablas, String strWheres, int intRegsPerPage) throws Exception;
+
+    public int getCountSQL(String strTablas, String strWheres) throws Exception;
+
 }

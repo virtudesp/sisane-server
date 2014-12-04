@@ -1,5 +1,5 @@
 /*
- * Copyright (C) July 2014 Rafael Aznar
+ * Copyright (C) 2014 al037805
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -29,21 +29,25 @@ import net.daw.control.operation.publicinterface.ControlOperationInterface;
 import net.daw.helper.ExceptionBooster;
 import net.daw.helper.FilterBeanHelper;
 import net.daw.helper.ParameterCooker;
-import net.daw.service.specific.implementation.ClienteServiceSpImpl;
+import net.daw.service.specific.implementation.EntregaServiceSpImpl;
 
-public class ClienteControlOperationSpImpl implements ControlOperationInterface {
-
+/**
+ *
+ * @author al037805
+ */
+public class EntregaControlOperationSpImpl implements ControlOperationInterface{
+    
     private ConnectionInterface DataConnectionSource = null;
     private Connection oConnection = null;
-    private ClienteServiceSpImpl oClienteService = null;
+    private EntregaServiceSpImpl oEntregaService = null;
 
-    public ClienteControlOperationSpImpl(HttpServletRequest request) throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, Exception {
+    public EntregaControlOperationSpImpl(HttpServletRequest request) throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, Exception {
         try {
             DataConnectionSource = new BoneConnectionPoolImpl();
             oConnection = DataConnectionSource.newConnection();
-            oClienteService = new ClienteServiceSpImpl(ParameterCooker.prepareObject(request), oConnection);
+            oEntregaService = new EntregaServiceSpImpl(ParameterCooker.prepareObject(request), oConnection);
         } catch (Exception ex) {
-            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":ClienteControlOperationSpImpl ERROR: " + ex.getMessage()));
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":EntregaControlOperationSpImpl ERROR: " + ex.getMessage()));
         }
     }
 
@@ -51,7 +55,7 @@ public class ClienteControlOperationSpImpl implements ControlOperationInterface 
     public String get(HttpServletRequest request) throws Exception {
         String result = null;
         try {
-            result = oClienteService.get(ParameterCooker.prepareId(request));
+            result = oEntregaService.get(ParameterCooker.prepareId(request));
             closeDB();
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":get ERROR: " + ex.getMessage()));
@@ -63,7 +67,7 @@ public class ClienteControlOperationSpImpl implements ControlOperationInterface 
     public String getaggregateviewone(HttpServletRequest request) throws Exception {
         String result = null;
         try {
-            result = oClienteService.getAggregateViewOne(ParameterCooker.prepareId(request));
+            result = oEntregaService.getAggregateViewOne(ParameterCooker.prepareId(request));
             closeDB();
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getaggregateviewone ERROR: " + ex.getMessage()));
@@ -75,7 +79,7 @@ public class ClienteControlOperationSpImpl implements ControlOperationInterface 
     public String getprettycolumns(HttpServletRequest request) throws Exception {
         String result = null;
         try {
-            result = oClienteService.getPrettyColumns();
+            result = oEntregaService.getPrettyColumns();
             closeDB();
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getprettycolumns ERROR: " + ex.getMessage()));
@@ -87,7 +91,7 @@ public class ClienteControlOperationSpImpl implements ControlOperationInterface 
     public String getcolumns(HttpServletRequest request) throws Exception {
         String result = null;
         try {
-            result = oClienteService.getColumns();
+            result = oEntregaService.getColumns();
             closeDB();
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getcolumns ERROR: " + ex.getMessage()));
@@ -103,7 +107,7 @@ public class ClienteControlOperationSpImpl implements ControlOperationInterface 
             Integer intPage = ParameterCooker.preparePage(request);
             ArrayList<FilterBeanHelper> alFilter = ParameterCooker.prepareFilter(request);
             HashMap<String, String> hmOrder = ParameterCooker.prepareOrder(request);
-            result = oClienteService.getPage(intRegsPerPag, intPage, alFilter, hmOrder);
+            result = oEntregaService.getPage(intRegsPerPag, intPage, alFilter, hmOrder);
             closeDB();
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getpage ERROR: " + ex.getMessage()));
@@ -117,7 +121,7 @@ public class ClienteControlOperationSpImpl implements ControlOperationInterface 
         try {
             Integer intRegsPerPag = ParameterCooker.prepareRpp(request);
             ArrayList<FilterBeanHelper> alFilter = ParameterCooker.prepareFilter(request);
-            result = oClienteService.getPages(intRegsPerPag, alFilter);
+            result = oEntregaService.getPages(intRegsPerPag, alFilter);
             closeDB();
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getpages ERROR: " + ex.getMessage()));
@@ -130,7 +134,7 @@ public class ClienteControlOperationSpImpl implements ControlOperationInterface 
         String result = null;
         try {
             ArrayList<FilterBeanHelper> alFilter = ParameterCooker.prepareFilter(request);
-            result = oClienteService.getCount(alFilter);
+            result = oEntregaService.getCount(alFilter);
             closeDB();
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getregisters ERROR: " + ex.getMessage()));
@@ -146,7 +150,7 @@ public class ClienteControlOperationSpImpl implements ControlOperationInterface 
             Integer intPage = ParameterCooker.preparePage(request);
             ArrayList<FilterBeanHelper> alFilter = ParameterCooker.prepareFilter(request);
             HashMap<String, String> hmOrder = ParameterCooker.prepareOrder(request);
-            result = oClienteService.getAggregateViewSome(intRegsPerPag, intPage, alFilter, hmOrder);
+            result = oEntregaService.getAggregateViewSome(intRegsPerPag, intPage, alFilter, hmOrder);
             closeDB();
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getaggregateviewsome ERROR: " + ex.getMessage()));
@@ -158,7 +162,7 @@ public class ClienteControlOperationSpImpl implements ControlOperationInterface 
     public String remove(HttpServletRequest request) throws Exception {
         String result = null;
         try {
-            result = oClienteService.remove(ParameterCooker.prepareId(request));
+            result = oEntregaService.remove(ParameterCooker.prepareId(request));
             closeDB();
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":remove ERROR: " + ex.getMessage()));
@@ -170,7 +174,7 @@ public class ClienteControlOperationSpImpl implements ControlOperationInterface 
     public String set(HttpServletRequest request) throws Exception {
         String result = null;
         try {
-            result = oClienteService.set(ParameterCooker.prepareJson(request));
+            result = oEntregaService.set(ParameterCooker.prepareJson(request));
             closeDB();
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":set ERROR: " + ex.getMessage()));
@@ -193,4 +197,7 @@ public class ClienteControlOperationSpImpl implements ControlOperationInterface 
     public String updateOne(HttpServletRequest request) throws Exception {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+    
+    
+    
 }

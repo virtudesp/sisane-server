@@ -17,13 +17,13 @@
 --%>
 
 <%@page import="java.sql.Connection"%>
-<%@page import="net.daw.dao.specific.implementation.ClienteDaoSpcImpl"%>
+<%@page import="net.daw.dao.specific.implementation.EntregaDaoSpcImpl"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.Iterator"%>
 <%
     ArrayList<String> alColumnsNames;
     Iterator<String> oIterador;
-    String strNombreMantenimiento = "cliente";
+    String strNombreMantenimiento = "entrega";
     Connection connection = (Connection) request.getAttribute("connection");    
 %>
 <div class="row">
@@ -125,7 +125,7 @@
                                 <div class="panel-body">
                                     <br />
                                     <div class="text-center">
-                                        <a class="btn btn-primary" href='jsp#/<%=strNombreMantenimiento%>/new'>Crear un nuevo <%=strNombreMantenimiento%></a> 
+                                        <a id="newButton" class="btn btn-primary" href='jsp#/<%=strNombreMantenimiento%>/new'>Crear un nuevo <%=strNombreMantenimiento%></a> 
                                     </div>
                                     <br />
                                 </div>
