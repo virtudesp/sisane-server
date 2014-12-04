@@ -240,6 +240,7 @@ public class JsonControl extends HttpServlet {
                         PropuestaControlRouteSpImpl oPropuestaRoute = new PropuestaControlRouteSpImpl();
                         PropuestaControlOperationSpImpl oPropuestaControlOperation = new PropuestaControlOperationSpImpl(request);
                         jsonResult = oPropuestaRoute.execute(request, oPropuestaControlOperation);
+                        break;
                     case "entrega":
                         EntregaControlRouteSpImpl oEntregaRoute = new EntregaControlRouteSpImpl();
                         EntregaControlOperationSpImpl oEntregaControlOperation = new EntregaControlOperationSpImpl(request);
