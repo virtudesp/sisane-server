@@ -44,6 +44,7 @@ import net.daw.control.operation.generic.specific.implementation.TipousuarioCont
 import net.daw.control.operation.generic.specific.implementation.UsuarioControlOperationGenSpImpl;
 import net.daw.control.operation.specific.implementation.OrdenadorControlOperationSpImpl;
 import net.daw.control.operation.specific.implementation.ActividadControlOperationSpImpl;
+import net.daw.control.operation.specific.implementation.PropuestaControlOperationSpImpl;
 import net.daw.control.operation.specific.implementation.ProductoControlOperationSpImpl;
 import net.daw.control.operation.specific.implementation.ClienteControlOperationSpImpl;
 import net.daw.control.operation.specific.implementation.MensajeprivadoControlOperationSpImpl;
@@ -70,6 +71,7 @@ import net.daw.control.route.generic.specific.implementation.UsuarioControlRoute
 import net.daw.control.route.specific.implementation.AmigoControlRouteSpImpl;
 import net.daw.control.route.specific.implementation.OrdenadorControlRouteSpImpl;
 import net.daw.control.route.specific.implementation.ActividadControlRouteSpImpl;
+import net.daw.control.route.specific.implementation.PropuestaControlRouteSpImpl;
 import net.daw.control.route.specific.implementation.ProductoControlRouteSpImpl;
 import net.daw.control.route.specific.implementation.ClienteControlRouteSpImpl;
 import net.daw.control.route.specific.implementation.MensajeprivadoControlRouteSpImpl;
@@ -240,6 +242,11 @@ public class JsonControl extends HttpServlet {
                         ActividadControlRouteSpImpl oActividadRoute = new ActividadControlRouteSpImpl();
                         ActividadControlOperationSpImpl oActividadControlOperation = new ActividadControlOperationSpImpl(request);
                         jsonResult = oActividadRoute.execute(request, oActividadControlOperation);
+                        break;
+                    case "propuesta":
+                        PropuestaControlRouteSpImpl oPropuestaRoute = new PropuestaControlRouteSpImpl();
+                        PropuestaControlOperationSpImpl oPropuestaControlOperation = new PropuestaControlOperationSpImpl(request);
+                        jsonResult = oPropuestaRoute.execute(request, oPropuestaControlOperation);
                         break;
                     case "pedido":
                         PedidoControlRouteGenSpImpl oPedidoRoute = new PedidoControlRouteGenSpImpl();
