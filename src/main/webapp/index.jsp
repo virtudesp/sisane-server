@@ -236,6 +236,13 @@
         <script src="js/specific/mensajeprivado/view.js" charset="UTF-8"></script>
         <script src="js/specific/mensajeprivado/routes.js" charset="UTF-8"></script>
         <!-- FIN FORO -->
+               
+        <!-- PROPUESTAS Y VOTACIONES -->        
+        <script src="js/specific/tipopropuesta/control.js" charset="UTF-8"></script>
+        <script src="js/specific/tipopropuesta/model.js" charset="UTF-8"></script>
+        <script src="js/specific/tipopropuesta/view.js" charset="UTF-8"></script>
+        <script src="js/specific/tipopropuesta/routes.js" charset="UTF-8"></script>
+        <!--FIN PROPUESTAS Y VOTACIONES-->
 
         <script src="js/specific/proveedor/control.js" charset="UTF-8"></script>
         <script src="js/specific/proveedor/model.js" charset="UTF-8"></script>
@@ -296,6 +303,7 @@
                 fPedidoRoutes();
                 fDetalle_pedidoRoutes();
                 fRespuestaRoutes();
+                fTipopropuestaRoutes();
 
 
                 Path.listen();
