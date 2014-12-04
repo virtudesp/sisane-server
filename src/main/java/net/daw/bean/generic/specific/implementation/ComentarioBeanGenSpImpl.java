@@ -33,10 +33,10 @@ public class ComentarioBeanGenSpImpl extends BeanGenImpl implements BeanInterfac
     @Expose
     private String contenido = "";
     
-    /*@Expose(serialize = false)
+    @Expose(serialize = false)
     private Integer id_propuesta = 0; //importante inicializar a 0 las claves ajenas
     @Expose(deserialize = false)
-    private PropuestaBeanGenSpImpl obj_propuesta = null;*/
+    private PropuestaBeanGenSpImpl obj_propuesta = null;
     
     @Expose(serialize = false)
     private Integer id_usuario = 0; //importante inicializar a 0 las claves ajenas
@@ -65,6 +65,22 @@ public class ComentarioBeanGenSpImpl extends BeanGenImpl implements BeanInterfac
 
     public void setObj_usuario(UsuarioBeanGenSpImpl obj_usuario) {
         this.obj_usuario = obj_usuario;
+    }
+
+    public Integer getId_propuesta() {
+        return id_propuesta;
+    }
+
+    public void setId_propuesta(Integer id_propuesta) {
+        this.id_propuesta = id_propuesta;
+    }
+
+    public PropuestaBeanGenSpImpl getObj_propuesta() {
+        return obj_propuesta;
+    }
+
+    public void setObj_propuesta(PropuestaBeanGenSpImpl obj_propuesta) {
+        this.obj_propuesta = obj_propuesta;
     }
 
    
