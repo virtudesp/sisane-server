@@ -96,7 +96,7 @@ public class CuestionarioServiceGenSpImpl extends TableServiceGenImpl {
                 }
             }
 
-            jason = gson.toJson(resultado);
+            jason = "{\"data\":" + gson.toJson(resultado) + "}";
 
             oConnection.commit();
         } catch (Exception ex) {

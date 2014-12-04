@@ -30,8 +30,8 @@ cuestionarioControl.prototype.make = function (place, id, oModel, oView) {
     var oCuestionarioView = oView;
     data = oCuestionarioModel.getGenericOperation("getallpreguntas", id);
     formularioHTML = oCuestionarioView.getCuestionarioForm(data);
-    $(place).append(oView.getPanel("Realizar " + this.clase, oCuestionarioView.getEmptyView("cuestionarioForm")));
-    $('#contenido').html(formularioHTML);
+    $(place).append(oView.getPanel("Realizar " + this.clase, oCuestionarioView.getEmptyView("cuestionarioForm", 1)));
+    $("#formularioCuestionario").html(formularioHTML);
 };
 
 var oCuestionarioControl = new cuestionarioControl('cuestionario');
