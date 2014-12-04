@@ -135,7 +135,7 @@ public class PropuestaBeanGenSpImpl extends BeanGenImpl implements BeanInterface
     public void setObj_usuario(UsuarioBeanGenSpImpl obj_usuario) {
         this.obj_usuario = obj_usuario;
     }
-    
+
     /**
      * @return the obj_tipopropuesta
      */
@@ -146,7 +146,7 @@ public class PropuestaBeanGenSpImpl extends BeanGenImpl implements BeanInterface
     /**
      * @param obj_tipopropuesta the obj_tipopropuesta to set
      */
-    public void setObj_tipopropuesta(UsuarioBeanGenSpImpl obj_tipopropuesta) {
+    public void setObj_tipopropuesta(TipopropuestaBeanGenSpImpl obj_tipopropuesta) {
         this.obj_tipopropuesta = obj_tipopropuesta;
     }
     
