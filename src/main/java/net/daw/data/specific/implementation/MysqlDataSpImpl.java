@@ -57,8 +57,8 @@ public class MysqlDataSpImpl implements DataInterface {
         return intResult;
     }
 
-    @Override
-    public int insertOne(String strTabla) throws Exception {
+@Override
+        public int insertOne(String strTabla) throws Exception {
 
         ResultSet oResultSet;
         java.sql.PreparedStatement oPreparedStatement = null;
@@ -85,7 +85,7 @@ public class MysqlDataSpImpl implements DataInterface {
     }
 
     @Override
-    public int setNull(int intId, String strTabla, String strCampo) throws Exception {
+        public int setNull(int intId, String strTabla, String strCampo) throws Exception {
         PreparedStatement oPreparedStatement = null;
         int intResult = 0;
         try {
@@ -104,7 +104,7 @@ public class MysqlDataSpImpl implements DataInterface {
     }
 
     @Override
-    public int updateOne(int intId, String strTabla, String strCampo, String strValor) throws Exception {
+        public int updateOne(int intId, String strTabla, String strCampo, String strValor) throws Exception {
         int intResult = 0;
         PreparedStatement oPreparedStatement = null;
         try {
@@ -123,7 +123,7 @@ public class MysqlDataSpImpl implements DataInterface {
     }
 
     @Override
-    public String getId(String strTabla, String strCampo, String strValor) throws Exception {
+        public String getId(String strTabla, String strCampo, String strValor) throws Exception {
         String strResult = null;
         Statement oStatement = null;
         ResultSet oResultSet;
@@ -147,7 +147,7 @@ public class MysqlDataSpImpl implements DataInterface {
     }
 
     @Override
-    public String getOne(String strTabla, String strCampo, int id) throws Exception {
+        public String getOne(String strTabla, String strCampo, int id) throws Exception {
         String strResult = null;
         PreparedStatement oPreparedStatement = null;
         ResultSet oResultSet;
@@ -172,7 +172,7 @@ public class MysqlDataSpImpl implements DataInterface {
     }
 
     @Override
-    public Boolean existsOne(String strTabla, int id) throws Exception {
+        public Boolean existsOne(String strTabla, int id) throws Exception {
         int result = 0;
         Statement oStatement = null;
         try {
@@ -196,7 +196,7 @@ public class MysqlDataSpImpl implements DataInterface {
     }
 
     @Override
-    public int getPages(String strTabla, int intRegsPerPage, ArrayList<FilterBeanHelper> alFilter) throws Exception {
+        public int getPages(String strTabla, int intRegsPerPage, ArrayList<FilterBeanHelper> alFilter) throws Exception {
 
         int intResult = 0;
         Statement oStatement = null;
@@ -254,7 +254,7 @@ public class MysqlDataSpImpl implements DataInterface {
     }
 
     @Override
-    public int getCount(String strTabla, ArrayList<FilterBeanHelper> alFilter) throws Exception {
+        public int getCount(String strTabla, ArrayList<FilterBeanHelper> alFilter) throws Exception {
 
         int intResult = 0;
         Statement oStatement = null;
@@ -308,7 +308,7 @@ public class MysqlDataSpImpl implements DataInterface {
     }
 
     @Override
-    public ArrayList<String> getColumnsName(String strTabla) throws Exception {
+        public ArrayList<String> getColumnsName(String strTabla) throws Exception {
         ArrayList<String> vector = null;
         Statement oStatement = null;
         try {
@@ -339,7 +339,7 @@ public class MysqlDataSpImpl implements DataInterface {
     }
 
     @Override
-    public ArrayList<String> getPrettyColumns(String strTabla) throws Exception {
+        public ArrayList<String> getPrettyColumns(String strTabla) throws Exception {
         ArrayList<String> vector = null;
         Statement oStatement = null;
         try {
@@ -370,7 +370,7 @@ public class MysqlDataSpImpl implements DataInterface {
     }
 
     @Override
-    public ArrayList<Integer> getPage(String strTabla, int intRegsPerPage, int intPagina, ArrayList<FilterBeanHelper> alFilter, HashMap<String, String> hmOrder) throws Exception {
+        public ArrayList<Integer> getPage(String strTabla, int intRegsPerPage, int intPagina, ArrayList<FilterBeanHelper> alFilter, HashMap<String, String> hmOrder) throws Exception {
         ArrayList<Integer> vector = null;
         Statement oStatement = null;
         try {
@@ -448,7 +448,7 @@ public class MysqlDataSpImpl implements DataInterface {
     }
 
     @Override
-    public void removeSomeId(String strTabla, ArrayList<Integer> Ids) throws SQLException {
+        public void removeSomeId(String strTabla, ArrayList<Integer> Ids) throws SQLException {
         Statement oStatement = null;
         try {
             Iterator<Integer> iterador = Ids.listIterator();
@@ -467,7 +467,7 @@ public class MysqlDataSpImpl implements DataInterface {
     }
 
     @Override
-    public void removeSomeCondition(String strTabla, String campo, String valor) throws Exception {
+        public void removeSomeCondition(String strTabla, String campo, String valor) throws Exception {
         Statement oStatement = null;
         try {
             oStatement = (Statement) connection.createStatement();

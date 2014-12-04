@@ -23,6 +23,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import net.daw.bean.generic.specific.implementation.ProveedorBeanGenSpImpl;
 import net.daw.bean.generic.specific.implementation.TipoproductoBeanGenSpImpl;
+import net.daw.bean.generic.specific.implementation.UsuarioBeanGenSpImpl;
+import net.daw.dao.generic.specific.implementation.UsuarioDaoGenSpImpl;
 import net.daw.dao.publicinterface.MetaDaoInterface;
 import net.daw.dao.publicinterface.TableDaoInterface;
 import net.daw.dao.publicinterface.ViewDaoInterface;
@@ -93,15 +95,32 @@ public class ProveedorDaoSpcImpl implements ViewDaoInterface<ProveedorBeanGenSpI
                 if (!oMysql.existsOne(strTableName, oProveedorBean.getId())) {
                     oProveedorBean.setId(0);
                 } else {
-                    oProveedorBean.setNia(oMysql.getOne(strTableName, "nia", oProveedorBean.getId()));
-                    oProveedorBean.setNombre(oMysql.getOne(strTableName, "nombre", oProveedorBean.getId()));
-                    oProveedorBean.setTelefono(oMysql.getOne(strTableName, "telefono", oProveedorBean.getId()));
-                    oProveedorBean.setDireccion(oMysql.getOne(strTableName, "direccion", oProveedorBean.getId()));
-                    oProveedorBean.setEmail(oMysql.getOne(strTableName, "email", oProveedorBean.getId()));
-                    oProveedorBean.setWeb(oMysql.getOne(strTableName, "web", oProveedorBean.getId()));
-                    oProveedorBean.setFax(oMysql.getOne(strTableName, "fax", oProveedorBean.getId()));
-                    oProveedorBean.setLocalidad(oMysql.getOne(strTableName, "localidad", oProveedorBean.getId()));
+                    expand--;
+                    if (expand > 0) {
+                        oProveedorBean.setNia(oMysql.getOne(strTableName, "nia", oProveedorBean.getId()));
+                        oProveedorBean.setNombre(oMysql.getOne(strTableName, "nombre", oProveedorBean.getId()));
+                        oProveedorBean.setTelefono(oMysql.getOne(strTableName, "telefono", oProveedorBean.getId()));
+                        oProveedorBean.setDireccion(oMysql.getOne(strTableName, "direccion", oProveedorBean.getId()));
+                        oProveedorBean.setEmail(oMysql.getOne(strTableName, "email", oProveedorBean.getId()));
+                        oProveedorBean.setWeb(oMysql.getOne(strTableName, "web", oProveedorBean.getId()));
+                        oProveedorBean.setFax(oMysql.getOne(strTableName, "fax", oProveedorBean.getId()));
+                        oProveedorBean.setLocalidad(oMysql.getOne(strTableName, "localidad", oProveedorBean.getId()));
 
+                        oProveedorBean.setId_usuario_1(Integer.parseInt(oMysql.getOne(strTableName, "id_usuario_1", oProveedorBean.getId())));
+                        oProveedorBean.setId_usuario_2(Integer.parseInt(oMysql.getOne(strTableName, "id_usuario_2", oProveedorBean.getId())));
+
+                        UsuarioBeanGenSpImpl oUsuario1 = new UsuarioBeanGenSpImpl();
+                        oUsuario1.setId(Integer.parseInt(oMysql.getOne(strTableName, "id_usuario_1", oProveedorBean.getId())));
+                        UsuarioDaoGenSpImpl oUsuarioDAO1 = new UsuarioDaoGenSpImpl("usuario", oConnection);
+                        oUsuario1 = oUsuarioDAO1.get(oUsuario1, AppConfigurationHelper.getJsonDepth());
+                        oProveedorBean.setObj_usuario_1(oUsuario1);
+
+                        UsuarioBeanGenSpImpl oUsuario2 = new UsuarioBeanGenSpImpl();
+                        oUsuario2.setId(Integer.parseInt(oMysql.getOne(strTableName, "id_usuario_2", oProveedorBean.getId())));
+                        UsuarioDaoGenSpImpl oUsuarioDAO2 = new UsuarioDaoGenSpImpl("usuario", oConnection);
+                        oUsuario2 = oUsuarioDAO2.get(oUsuario2, AppConfigurationHelper.getJsonDepth());
+                        oProveedorBean.setObj_usuario_2(oUsuario2);
+                    }
                 }
             } catch (Exception ex) {
                 ExceptionBooster.boost(new Exception(this.getClass().getName() + ":get ERROR: " + ex.getMessage()));

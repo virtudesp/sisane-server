@@ -43,6 +43,7 @@ import net.daw.control.operation.generic.specific.implementation.TipodocumentoCo
 import net.daw.control.operation.generic.specific.implementation.TipotemaControlOperationGenSpImpl;
 import net.daw.control.operation.generic.specific.implementation.TipousuarioControlOperationGenSpImpl;
 import net.daw.control.operation.generic.specific.implementation.UsuarioControlOperationGenSpImpl;
+import net.daw.control.operation.generic.specific.implementation.VUsuarioProveedorControlOperationGenSpimpl;
 import net.daw.control.operation.specific.implementation.OrdenadorControlOperationSpImpl;
 import net.daw.control.operation.specific.implementation.ActividadControlOperationSpImpl;
 import net.daw.control.operation.specific.implementation.ProductoControlOperationSpImpl;
@@ -70,6 +71,7 @@ import net.daw.control.route.generic.specific.implementation.TipodocumentoContro
 import net.daw.control.route.generic.specific.implementation.TipotemaControlRouteGenSpImpl;
 import net.daw.control.route.generic.specific.implementation.TipousuarioControlRouteGenSpImpl;
 import net.daw.control.route.generic.specific.implementation.UsuarioControlRouteGenSpImpl;
+import net.daw.control.route.generic.specific.implementation.V_Usuario_ProveedorControlRouteGenSpImpl;
 import net.daw.control.route.specific.implementation.AmigoControlRouteSpImpl;
 import net.daw.control.route.specific.implementation.OrdenadorControlRouteSpImpl;
 import net.daw.control.route.specific.implementation.ActividadControlRouteSpImpl;
@@ -252,6 +254,11 @@ public class JsonControl extends HttpServlet {
                         RespuestaControlRouteGenSpImpl oRespuestaRoute = new RespuestaControlRouteGenSpImpl();
                         RespuestaControlOperationGenSpImpl oRespuestaControlOperation = new RespuestaControlOperationGenSpImpl(request);
                         jsonResult = oRespuestaRoute.execute(request, oRespuestaControlOperation);
+                        break;
+                    case "V_Usuario_Proveedor":
+                        V_Usuario_ProveedorControlRouteGenSpImpl oV_Usuario_ProveedorRoute = new V_Usuario_ProveedorControlRouteGenSpImpl();
+                        VUsuarioProveedorControlOperationGenSpimpl oV_Usuario_ProveedorOperation = new VUsuarioProveedorControlOperationGenSpimpl(request);
+                        jsonResult = oV_Usuario_ProveedorRoute.execute(request, oV_Usuario_ProveedorOperation);
                         break;
                     default:
                         ExceptionBooster.boost(new Exception(this.getClass().getName() + ":processRequest ERROR: no such operation"));
