@@ -242,6 +242,11 @@
         <script src="js/specific/tipopropuesta/model.js" charset="UTF-8"></script>
         <script src="js/specific/tipopropuesta/view.js" charset="UTF-8"></script>
         <script src="js/specific/tipopropuesta/routes.js" charset="UTF-8"></script>
+        
+        <script src="js/specific/comentario/control.js" charset="UTF-8"></script>
+        <script src="js/specific/comentario/model.js" charset="UTF-8"></script>
+        <script src="js/specific/comentario/view.js" charset="UTF-8"></script>
+        <script src="js/specific/comentario/routes.js" charset="UTF-8"></script>
         <!--FIN PROPUESTAS Y VOTACIONES-->
 
         <script src="js/specific/proveedor/control.js" charset="UTF-8"></script>
@@ -264,10 +269,13 @@
         <script src="js/specific/detalle_pedido/model.js" charset="UTF-8"></script>
         <script src="js/specific/detalle_pedido/view.js" charset="UTF-8"></script>
         <script src="js/specific/detalle_pedido/routes.js" charset="UTF-8"></script>
+        
          <script src="js/specific/respuesta/control.js" charset="UTF-8"></script>
         <script src="js/specific/respuesta/model.js" charset="UTF-8"></script>
         <script src="js/specific/respuesta/view.js" charset="UTF-8"></script>
         <script src="js/specific/respuesta/routes.js" charset="UTF-8"></script>
+        
+        
         
         <script src="js/specific/tipodocumento/model.js" charset="UTF-8"></script>
 
@@ -303,7 +311,11 @@
                 fPedidoRoutes();
                 fDetalle_pedidoRoutes();
                 fRespuestaRoutes();
+
+                fComentarioRoutes();
+
                 fTipopropuestaRoutes();
+
 
 
                 Path.listen();

@@ -88,6 +88,7 @@
         <h3 class="panel-title">Propuestas y votaciones</h3>
     </div>
     <div class="list-group">
+        <a  class="list-group-item" id="lnkTipotema" href="jsp#/comentario">Comentarios</a> 
         <a  class="list-group-item" id="lnkTipopropuesta" href="jsp#/tipopropuesta">Tipo propuesta</a>
     </div>
 </div>
