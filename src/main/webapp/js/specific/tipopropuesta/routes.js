@@ -17,67 +17,75 @@
  */
 
 
-function fEntregaRoutes() {
+function fTipopropuestaRoutes() {
 
-//    Path.map("#/entrega").to(function () {
+//    Path.map("#/tipopropuesta").to(function () {
 //        $('#indexContenidoJsp').spinner();
-//        control('entrega').list($('#indexContenido'), param().defaultizeUrlObjectParameters({}), null);
-//        //entregaControl.modalListEventsLoading(entregaObject, entregaView, $('#indexContenido'), param().defaultizeUrlObjectParameters({}), null);        
+//        control('tipopropuesta').list($('#indexContenido'), param().defaultizeUrlObjectParameters({}), null);
+//        //tipopropuestaControl.modalListEventsLoading(tipopropuestaObject, tipopropuestaView, $('#indexContenido'), param().defaultizeUrlObjectParameters({}), null);        
 //        $('#indexContenidoJsp').empty();
 //        return false;
 //    });
 
-    Path.map("#/entrega").to(function () {
+    Path.map("#/tipopropuesta").to(function () {
         $('#indexContenidoJsp').spinner();
-        oEntregaControl.list($('#indexContenido'), param().defaultizeUrlObjectParameters({}), null, oEntregaModel, oEntregaView);
-        //entregaControl.modalListEventsLoading(entregaObject, entregaView, $('#indexContenido'), param().defaultizeUrlObjectParameters({}), null);        
+        oTipopropuestaControl.list($('#indexContenido'), param().defaultizeUrlObjectParameters({}), null, oTipopropuestaModel, oTipopropuestaView);
+        //tipopropuestaControl.modalListEventsLoading(tipopropuestaObject, tipopropuestaView, $('#indexContenido'), param().defaultizeUrlObjectParameters({}), null);        
         $('#indexContenidoJsp').empty();
-        //$('#indexContenidoJsp').append(oEntregaControl.getClassNameEntrega());
+        $('#indexContenidoJsp').append(oTipopropuestaControl.getClassNameTipopropuesta());
         return false;
     });
 
-    Path.map("#/entrega/list/:url").to(function () {
+    Path.map("#/tipopropuesta/list/:url").to(function () {
         $('#indexContenidoJsp').spinner();
         var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
-        oEntregaControl.list($('#indexContenido'), paramsObject, null, oEntregaModel, oEntregaView);
+        oTipopropuestaControl.list($('#indexContenido'), paramsObject, null, oTipopropuestaModel, oTipopropuestaView);
         $('#indexContenidoJsp').empty();
         return false;
     });
 
-    Path.map("#/entrega/view/:id").to(function () {
+    Path.map("#/tipopropuesta/view/:id").to(function () {
         $('#indexContenidoJsp').spinner();
         var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
-        oEntregaControl.view($('#indexContenido'), paramsObject['id'], oEntregaModel, oEntregaView);
+        oTipopropuestaControl.view($('#indexContenido'), paramsObject['id'], oTipopropuestaModel, oTipopropuestaView);
         $('#indexContenidoJsp').empty();
 
         return false;
     });
 
-    Path.map("#/entrega/edit/:id").to(function () {
+    Path.map("#/tipopropuesta/edit/:id").to(function () {
         $('#indexContenidoJsp').spinner();
         var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
-        oEntregaControl.edit($('#indexContenido'), paramsObject['id'], oEntregaModel, oEntregaView);
+        oTipopropuestaControl.edit($('#indexContenido'), paramsObject['id'], oTipopropuestaModel, oTipopropuestaView);
         $('#indexContenidoJsp').empty();
     });
-    Path.map("#/entrega/new").to(function () {
+    Path.map("#/tipopropuesta/new").to(function () {
         $('#indexContenidoJsp').spinner();
         //var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
-        oEntregaControl.new($('#indexContenido'), null, oEntregaModel, oEntregaView);
+        oTipopropuestaControl.new($('#indexContenido'), null, oTipopropuestaModel, oTipopropuestaView);
         $('#indexContenidoJsp').empty();
         return false;
     });
-    Path.map("#/entrega/new/:url").to(function () {
+    Path.map("#/tipopropuesta/new/:url").to(function () {
         $('#indexContenidoJsp').spinner();
         var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
-        oEntregaControl.new($('#indexContenido'), paramsObject, oEntregaModel, oEntregaView);
+        oTipopropuestaControl.new($('#indexContenido'), paramsObject, oTipopropuestaModel, oTipopropuestaView);
         $('#indexContenidoJsp').empty();
         return false;
     });
 
-    Path.map("#/entrega/remove/:id").to(function () {
+    Path.map("#/tipopropuesta/remove/:id").to(function () {
         $('#indexContenidoJsp').spinner();
         var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
-        oEntregaControl.remove($('#indexContenido'), paramsObject['id'], oEntregaModel, oEntregaView);
+        oTipopropuestaControl.remove($('#indexContenido'), paramsObject['id'], oTipopropuestaModel, oTipopropuestaView);
+        $('#indexContenidoJsp').empty();
+        return false;
+    });
+
+    Path.map("#/tipopropuesta/duplicate/:id").to(function () {
+        $('#indexContenidoJsp').spinner();
+        var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
+        oTipopropuestaControl.duplicate($('#indexContenido'), paramsObject['id'], oTipopropuestaModel, oTipopropuestaView);
         $('#indexContenidoJsp').empty();
         return false;
     });

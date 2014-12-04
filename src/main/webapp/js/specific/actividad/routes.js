@@ -32,7 +32,7 @@ function fActividadRoutes() {
         oActividadControl.list($('#indexContenido'), param().defaultizeUrlObjectParameters({}), null, oActividadModel, oActividadView);
         //documentoControl.modalListEventsLoading(documentoObject, documentoView, $('#indexContenido'), param().defaultizeUrlObjectParameters({}), null);        
         $('#indexContenidoJsp').empty();
-        $('#indexContenidoJsp').append(oActividadControl.getClassNameActividad());
+        //$('#indexContenidoJsp').append(oActividadControl.getClassNameActividad());
         return false;
     });
 

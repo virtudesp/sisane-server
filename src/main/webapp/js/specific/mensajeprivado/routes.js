@@ -32,7 +32,7 @@ function fMensajeprivadoRoutes() {
         oMensajeprivadoControl.list($('#indexContenido'), param().defaultizeUrlObjectParameters({}), null, oMensajeprivadoModel, oMensajeprivadoView);
         //mensajeprivadoControl.modalListEventsLoading(mensajeprivadoObject, mensajeprivadoView, $('#indexContenido'), param().defaultizeUrlObjectParameters({}), null);        
         $('#indexContenidoJsp').empty();
-        $('#indexContenidoJsp').append(oMensajeprivadoControl.getClassNameMensajeprivado());
+        //$('#indexContenidoJsp').append(oMensajeprivadoControl.getClassNameMensajeprivado());
         return false;
     });
 

@@ -30,16 +30,14 @@ import javax.servlet.http.HttpServletResponse;
 import net.daw.control.operation.generic.specific.implementation.AmigoControlOperationGenSpImpl;
 import net.daw.control.operation.generic.specific.implementation.CuestionarioControlOperationGenSpImpl;
 import net.daw.control.operation.generic.specific.implementation.DocumentoControlOperationGenSpImpl;
-import net.daw.control.operation.generic.specific.implementation.EntregaControlOperationGenSpImpl;
-import net.daw.control.operation.generic.specific.implementation.EstadoControlOperationGenSpImpl;
 import net.daw.control.operation.generic.specific.implementation.OpcionControlOperationGenSpImpl;
 import net.daw.control.operation.generic.specific.implementation.PedidoControlOperationGenSpImpl;
 import net.daw.control.operation.generic.specific.implementation.PreguntaControlOperationGenSpImpl;
 import net.daw.control.operation.generic.specific.implementation.PublicacionControlOperationGenSpImpl;
 import net.daw.control.operation.generic.specific.implementation.EstadoControlOperationGenSpImpl;
-import net.daw.control.operation.generic.specific.implementation.PostControlOperationGenSpImpl;
 import net.daw.control.operation.generic.specific.implementation.RespuestaControlOperationGenSpImpl;
 import net.daw.control.operation.generic.specific.implementation.TipodocumentoControlOperationGenSpImpl;
+import net.daw.control.operation.generic.specific.implementation.TipopropuestaControlOperationGenSpImpl;
 import net.daw.control.operation.generic.specific.implementation.TipotemaControlOperationGenSpImpl;
 import net.daw.control.operation.generic.specific.implementation.TipousuarioControlOperationGenSpImpl;
 import net.daw.control.operation.generic.specific.implementation.UsuarioControlOperationGenSpImpl;
@@ -58,16 +56,14 @@ import net.daw.control.operation.specific.implementation.TemaControlOperationSpI
 import net.daw.control.operation.specific.implementation.TipoproductoControlOperationSpImpl;
 import net.daw.control.route.generic.specific.implementation.CuestionarioControlRouteGenSpImpl;
 import net.daw.control.route.generic.specific.implementation.DocumentoControlRouteGenSpImpl;
-import net.daw.control.route.generic.specific.implementation.EntregaControlRouteGenSpImpl;
 import net.daw.control.route.generic.specific.implementation.PreguntaControlRouteGenSpImpl;
 import net.daw.control.route.generic.specific.implementation.OpcionControlRouteGenSpImpl;
-import net.daw.control.route.generic.specific.implementation.EstadoControlRouteGenSpImpl;
-import net.daw.control.route.generic.specific.implementation.PostControlRouteGenSpImpl;
 import net.daw.control.route.generic.specific.implementation.PublicacionControlRouteGenSpImpl;
 import net.daw.control.route.generic.specific.implementation.EstadoControlRouteGenSpImpl;
 import net.daw.control.route.generic.specific.implementation.PedidoControlRouteGenSpImpl;
 import net.daw.control.route.generic.specific.implementation.RespuestaControlRouteGenSpImpl;
 import net.daw.control.route.generic.specific.implementation.TipodocumentoControlRouteGenSpImpl;
+import net.daw.control.route.generic.specific.implementation.TipopropuestaControlRouteGenSpImpl;
 import net.daw.control.route.generic.specific.implementation.TipotemaControlRouteGenSpImpl;
 import net.daw.control.route.generic.specific.implementation.TipousuarioControlRouteGenSpImpl;
 import net.daw.control.route.generic.specific.implementation.UsuarioControlRouteGenSpImpl;
@@ -75,7 +71,6 @@ import net.daw.control.route.specific.implementation.AmigoControlRouteSpImpl;
 import net.daw.control.route.specific.implementation.OrdenadorControlRouteSpImpl;
 import net.daw.control.route.specific.implementation.ActividadControlRouteSpImpl;
 import net.daw.control.route.specific.implementation.ProductoControlRouteSpImpl;
-import net.daw.control.route.specific.implementation.ClienteControlRouteSpImpl;
 import net.daw.control.route.specific.implementation.EntregaControlRouteSpImpl;
 import net.daw.control.route.specific.implementation.MensajeprivadoControlRouteSpImpl;
 import net.daw.control.route.generic.specific.implementation.ComentarioControlRouteGenSpImpl;
@@ -255,11 +250,20 @@ public class JsonControl extends HttpServlet {
                         RespuestaControlOperationGenSpImpl oRespuestaControlOperation = new RespuestaControlOperationGenSpImpl(request);
                         jsonResult = oRespuestaRoute.execute(request, oRespuestaControlOperation);
                         break;
+
                     case "comentario":
                         ComentarioControlRouteGenSpImpl oComentarioRoute = new ComentarioControlRouteGenSpImpl();
                         ComentarioControlOperationGenSpImpl oComentarioControlOperation = new ComentarioControlOperationGenSpImpl(request);
                         jsonResult = oComentarioRoute.execute(request, oComentarioControlOperation);
                         break;  
+
+                    case "tipopropuesta":
+                        TipopropuestaControlRouteGenSpImpl oTipopropuestaRoute = new TipopropuestaControlRouteGenSpImpl();
+                        TipopropuestaControlOperationGenSpImpl oTipopropuestaRouteControlOperation = new TipopropuestaControlOperationGenSpImpl(request);
+                        jsonResult = oTipopropuestaRoute.execute(request, oTipopropuestaRouteControlOperation);
+                        break;
+                        
+
                     default:
                         ExceptionBooster.boost(new Exception(this.getClass().getName() + ":processRequest ERROR: no such operation"));
                 }

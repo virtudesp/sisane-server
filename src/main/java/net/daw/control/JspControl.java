@@ -118,9 +118,7 @@ public class JspControl extends HttpServlet {
                 if (op.equalsIgnoreCase("logout")) {
                     request.getSession().invalidate();
                 }
-                if (op.equals("cambia")){
-                    getServletContext().getRequestDispatcher("/jsp/formulariocambiar.jsp").forward(request, response);
-                }
+
                 
             }
             //delivering jsp page

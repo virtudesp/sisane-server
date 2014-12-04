@@ -32,7 +32,7 @@ function fTipousuarioRoutes() {
         oTipousuarioControl.list($('#indexContenido'), param().defaultizeUrlObjectParameters({}), null, oTipousuarioModel, oTipousuarioView);
         //tipousuarioControl.modalListEventsLoading(tipousuarioObject, tipousuarioView, $('#indexContenido'), param().defaultizeUrlObjectParameters({}), null);        
         $('#indexContenidoJsp').empty();
-        $('#indexContenidoJsp').append(oTipousuarioControl.getClassNameTipousuario());
+        //$('#indexContenidoJsp').append(oTipousuarioControl.getClassNameTipousuario());
         return false;
     });
 

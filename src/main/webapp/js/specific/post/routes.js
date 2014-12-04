@@ -32,7 +32,7 @@ function fPostRoutes() {
         oPostControl.list($('#indexContenido'), param().defaultizeUrlObjectParameters({}), null, oPostModel, oPostView);
         //postControl.modalListEventsLoading(postObject, postView, $('#indexContenido'), param().defaultizeUrlObjectParameters({}), null);        
         $('#indexContenidoJsp').empty();
-        $('#indexContenidoJsp').append(oPostControl.getClassNamePost());
+        //$('#indexContenidoJsp').append(oPostControl.getClassNamePost());
         return false;
     });
 

@@ -32,7 +32,7 @@ function fCuestionarioRoutes() {
         oCuestionarioControl.list($('#indexContenido'), param().defaultizeUrlObjectParameters({}), null, oCuestionarioModel, oCuestionarioView);
         //documentoControl.modalListEventsLoading(documentoObject, documentoView, $('#indexContenido'), param().defaultizeUrlObjectParameters({}), null);        
         $('#indexContenidoJsp').empty();
-        $('#indexContenidoJsp').append(oCuestionarioControl.getClassNameCuestionario());
+        //$('#indexContenidoJsp').append(oCuestionarioControl.getClassNameCuestionario());
         return false;
     });
 

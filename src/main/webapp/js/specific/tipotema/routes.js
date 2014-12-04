@@ -32,7 +32,7 @@ function fTipotemaRoutes() {
         oTipotemaControl.list($('#indexContenido'), param().defaultizeUrlObjectParameters({}), null, oTipotemaModel, oTipotemaView);
         //tipotemaControl.modalListEventsLoading(tipotemaObject, tipotemaView, $('#indexContenido'), param().defaultizeUrlObjectParameters({}), null);        
         $('#indexContenidoJsp').empty();
-        $('#indexContenidoJsp').append(oTipotemaControl.getClassNameTipotema());
+        //$('#indexContenidoJsp').append(oTipotemaControl.getClassNameTipotema());
         return false;
     });
 
