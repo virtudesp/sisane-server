@@ -573,22 +573,15 @@ public class MysqlDataSpImpl implements DataInterface {
 //    SQL libres en pruebas
 //---------------------------------------
 //---------------------------------------
-    
-    
     @Override
-    public ArrayList<Integer> getPageSQL(String id_tabla, String strTablas, String strWheres, String strOrders, int intRegsPerPage, int intPagina) throws Exception {
+    public ArrayList<Integer> getPageSQL(String strSQL, int intRegsPerPage, int intPagina) throws Exception {
         ArrayList<Integer> vector = null;
         Statement oStatement = null;
         try {
             vector = new ArrayList<>();
             int intOffset;
             oStatement = (Statement) connection.createStatement();
-            String strSQL = "SELECT " + id_tabla + " FROM " + strTablas + " WHERE 1=1 ";
-            String strSQLcount = "SELECT COUNT(*) FROM " + strTablas + " WHERE 1=1 ";
-            if (!strWheres.isEmpty()) {
-                strSQL += strWheres;
-                strSQLcount += strWheres;
-            }
+            String strSQLcount = "SELECT COUNT(*) " + strSQL.substring(strSQL.indexOf("FROM"), strSQL.length());
             //when limit of pages exceed, show last page
             ResultSet oResultSet = oStatement.executeQuery(strSQLcount);
             int intCuenta = 0;
@@ -599,16 +592,11 @@ public class MysqlDataSpImpl implements DataInterface {
             intPagina = Math.min(intPagina - 1, maxPaginas) + 1;
             intOffset = Math.max(((intPagina - 1) * intRegsPerPage), 0);
             //--                        
-            if (!strOrders.isEmpty()) {
-                strSQL += " ORDER BY ";
-                strSQL += strOrders;
-            }
             strSQL += " LIMIT " + intOffset + " , " + intRegsPerPage;
             oResultSet = oStatement.executeQuery(strSQL);
             while (oResultSet.next()) {
-                vector.add(oResultSet.getInt(id_tabla));
+                vector.add(oResultSet.getInt("id"));
             }
-
         } catch (SQLException ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPageSQL ERROR:  Can't process query: " + ex.getMessage()));
         } finally {
@@ -620,16 +608,14 @@ public class MysqlDataSpImpl implements DataInterface {
     }
 
     @Override
-    public int getPagesSQL(String strTablas, String strWheres, int intRegsPerPage) throws Exception {
+    public int getPagesSQL(String strSQL, int intRegsPerPage) throws Exception {
 
         int intResult = 0;
         Statement oStatement = null;
         try {
             oStatement = (Statement) connection.createStatement();
-            String strSQL = "SELECT COUNT(*) FROM " + strTablas + " WHERE 1=1 ";
-            if (!strWheres.isEmpty()) {
-                strSQL += strWheres;
-            }
+            strSQL = "SELECT COUNT(*) " + strSQL.substring(strSQL.indexOf("FROM"), strSQL.length());
+
             ResultSet oResultSet = oStatement.executeQuery(strSQL);
             while (oResultSet.next()) {
                 intResult = oResultSet.getInt("COUNT(*)") / intRegsPerPage;
@@ -648,16 +634,12 @@ public class MysqlDataSpImpl implements DataInterface {
     }
 
     @Override
-    public int getCountSQL(String strTablas, String strWheres) throws Exception {
-
+    public int getCountSQL(String strSQL) throws Exception {
         int intResult = 0;
         Statement oStatement = null;
         try {
             oStatement = (Statement) connection.createStatement();
-            String strSQL = "SELECT COUNT(*) FROM " + strTablas + " WHERE 1=1 ";
-            if (!strWheres.isEmpty()) {
-                strSQL += strWheres;
-            }
+            strSQL = "SELECT COUNT(*) " + strSQL.substring(strSQL.indexOf("FROM"), strSQL.length());
             ResultSet oResultSet = oStatement.executeQuery(strSQL);
             while (oResultSet.next()) {
                 intResult = oResultSet.getInt("COUNT(*)");

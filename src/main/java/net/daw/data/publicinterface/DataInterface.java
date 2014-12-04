@@ -45,17 +45,17 @@ public interface DataInterface {
     public void removeSomeId(String strTabla, ArrayList<Integer> Ids) throws SQLException;
 
     public void removeSomeCondition(String strTabla, String campo, String valor) throws Exception;
-    
+
     public ArrayList<Integer> getPage(String strTabla, int intRegsPerPage, int intPagina, ArrayList<FilterBeanHelper> alFilter, HashMap<String, String> hmOrder) throws Exception;
 
     public int getPages(String strTabla, int intRegsPerPage, ArrayList<FilterBeanHelper> alFilter) throws Exception;
 
     public int getCount(String strTabla, ArrayList<FilterBeanHelper> alFilter) throws Exception;
 
-    public ArrayList<Integer> getPageSQL(String id_tabla, String strTablas, String strWheres, String strOrders, int intRegsPerPage, int intPagina) throws Exception;
+    public ArrayList<Integer> getPageSQL(String strSQL, int intRegsPerPage, int intPagina) throws Exception;
 
-    public int getPagesSQL(String strTablas, String strWheres, int intRegsPerPage) throws Exception;
+    public int getPagesSQL(String strSQL, int intRegsPerPage) throws Exception;
 
-    public int getCountSQL(String strTablas, String strWheres) throws Exception;
+    public int getCountSQL(String strSQL) throws Exception;
 
 }
