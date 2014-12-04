@@ -30,8 +30,17 @@ cuestionarioControl.prototype.make = function (place, id, oModel, oView) {
     var oCuestionarioView = oView;
     data = oCuestionarioModel.getGenericOperation("getallpreguntas", id);
     formularioHTML = oCuestionarioView.getCuestionarioForm(data);
-    $(place).append(oView.getPanel("Realizar " + this.clase, oCuestionarioView.getEmptyView("cuestionarioForm", 1)));
+    $(place).append(oView.getPanel("Realizar cuestionario de " + data[0].obj_pregunta.obj_cuestionario.tipo,
+    oCuestionarioView.getEmptyView("cuestionarioForm", 1)));
     $("#formularioCuestionario").html(formularioHTML);
+
+    $('#submitForm').click(function () {
+        var valores = [];
+        valores = $('#cuestionarioForm').serializeObject();
+        resultado = {json: JSON.stringify(valores)};
+        oView.doResultOperationNotifyToUser(place, JSON.stringify(resultado));
+        return false;
+    });
 };
 
 var oCuestionarioControl = new cuestionarioControl('cuestionario');

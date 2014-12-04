@@ -72,23 +72,23 @@ cuestionarioView.prototype.getBodyPageTable = function (page, fieldNames, visibl
 };
 
 cuestionarioView.prototype.getCuestionarioForm = function (jason) {
-    formulario = "<form action='' method='get' >";
+    formulario = "<form id='cuestionarioForm' action='' method='get' >";
+    formulario += "<input type='hidden' name='usuario' value='<%=user.getId()%>'><br> ";
     pregunta = "";
     for (i = 0; i < jason.length; i++) {
         if (pregunta != jason[i].obj_pregunta.descripcion) {
             pregunta = jason[i].obj_pregunta.descripcion
             idpregunta = jason[i].id_pregunta;
-            formulario += "<label for=pregunta_" + idpregunta + ">" + pregunta + "</label> <br/>";
+            formulario += "<br/><label for=pregunta_" + idpregunta + ">" + pregunta + "</label> <br/>";
 
             for (j = 0; j < jason.length; j++) {
                 if (jason[j].id_pregunta == idpregunta) {
                     formulario += "<input type='radio'  class='col-md-offset-1 col-md-1' name='pregunta_" + idpregunta + "' \n\
                     value='" + jason[j].id + "'>" + jason[j].valor + "<br/>";
-
                 }
             }
         }
     }
-    formulario += "<br/><input type='submit' class='btn btn-success'/>";
+    formulario += "<br/><br/><input type='submit' id='submitForm' class='btn btn-success'/>";
     return formulario += "</form><br/>";
 };
