@@ -27,8 +27,8 @@ import net.daw.dao.generic.implementation.TableDaoGenImpl;
  */
 public class CuestionarioDaoGenSpImpl extends TableDaoGenImpl<CuestionarioBeanGenSpImpl> {
 
-    public CuestionarioDaoGenSpImpl(String view, Connection pooledConnection) throws Exception {
-        super(view, pooledConnection);
+    public CuestionarioDaoGenSpImpl(String view, String pojo, Connection pooledConnection) throws Exception {
+        super(view, pojo, pooledConnection);
     }
     
 }

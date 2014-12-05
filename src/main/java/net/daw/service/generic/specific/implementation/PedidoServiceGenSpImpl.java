@@ -22,8 +22,8 @@ import java.sql.Connection;
 
 public class PedidoServiceGenSpImpl extends TableServiceGenImpl {
 
-    public PedidoServiceGenSpImpl(String strObject, Connection con) {
-        super(strObject, con);
+    public PedidoServiceGenSpImpl(String strObject, String pojo, Connection con) {
+        super(strObject, pojo, con);
     }
 
 }

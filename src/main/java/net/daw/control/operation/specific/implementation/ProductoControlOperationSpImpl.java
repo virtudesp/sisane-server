@@ -41,7 +41,7 @@ public class ProductoControlOperationSpImpl implements ControlOperationInterface
         try {
             DataConnectionSource = new BoneConnectionPoolImpl();
             oConnection = DataConnectionSource.newConnection();
-            oProductoService = new ProductoServiceSpImpl(ParameterCooker.prepareObject(request), oConnection);
+            oProductoService = new ProductoServiceSpImpl(ParameterCooker.prepareObject(request), ParameterCooker.prepareObject(request), oConnection);
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":ProductoControlOperationSpImpl ERROR: " + ex.getMessage()));
         }

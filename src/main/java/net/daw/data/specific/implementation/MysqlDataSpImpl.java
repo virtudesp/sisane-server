@@ -21,6 +21,7 @@ import net.daw.data.publicinterface.DataInterface;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -173,88 +174,49 @@ public class MysqlDataSpImpl implements DataInterface {
 
     @Override
     public Boolean existsOne(String strTabla, int id) throws Exception {
-        int result = 0;
-        Statement oStatement = null;
-        try {
-            oStatement = (Statement) connection.createStatement();
-            String strSQL = "SELECT COUNT(*) FROM " + strTabla + " WHERE 1=1";
-            ResultSet rs = oStatement.executeQuery(strSQL);
-            if (rs.next()) {
-                result = rs.getInt("COUNT(*)");
-            } else {
-                return false;
-            }
-        } catch (SQLException ex) {
-            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":existsOne ERROR:  Can't process query: " + ex.getMessage()));
-        } finally {
-            if (oStatement != null) {
-                oStatement.close();
-            }
 
-        }
-        return (result > 0);
-    }
-
-    @Override
-    public ArrayList<String> getColumnsName(String strTabla) throws Exception {
-        ArrayList<String> vector = null;
-        Statement oStatement = null;
-        try {
-            vector = new ArrayList<>();
-            oStatement = connection.createStatement();
-            String strSQL = "SHOW FULL COLUMNS FROM " + strTabla;
-            ResultSet oResultSet = oStatement.executeQuery(strSQL);
-            while (oResultSet.next()) {
-                if (oResultSet.getString("Field").length() >= 4) {
-                    if (oResultSet.getString("Field").substring(0, 3).equalsIgnoreCase("id_")) {
-                        vector.add("obj_" + oResultSet.getString("Field").substring(3));
-                    } else {
-                        vector.add(oResultSet.getString("Field"));
-                    }
-                } else {
-                    vector.add(oResultSet.getString("Field"));
+        if (strTabla.substring(0, 6).equalsIgnoreCase("SELECT")) {
+            int intResult = 0;
+            Statement oStatement = null;
+            try {
+                oStatement = (Statement) connection.createStatement();
+                String strSQL = "SELECT COUNT(*) " + strTabla.substring(strTabla.indexOf("FROM"), strTabla.length());
+                ResultSet oResultSet = oStatement.executeQuery(strSQL);
+                while (oResultSet.next()) {
+                    intResult = oResultSet.getInt("COUNT(*)");
+                }
+            } catch (SQLException ex) {
+                ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getCountSQL ERROR:  Can't process query: " + ex.getMessage()));
+            } finally {
+                if (oStatement != null) {
+                    oStatement.close();
                 }
             }
-        } catch (SQLException ex) {
-            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getColumnsName ERROR:  Can't process query: " + ex.getMessage()));
-        } finally {
-            if (oStatement != null) {
-                oStatement.close();
+            return intResult > 0;
+        } else {
+
+            int result = 0;
+            Statement oStatement = null;
+            try {
+                oStatement = (Statement) connection.createStatement();
+                String strSQL = "SELECT COUNT(*) FROM " + strTabla + " WHERE 1=1";
+                ResultSet rs = oStatement.executeQuery(strSQL);
+                if (rs.next()) {
+                    result = rs.getInt("COUNT(*)");
+                } else {
+                    return false;
+                }
+            } catch (SQLException ex) {
+                ExceptionBooster.boost(new Exception(this.getClass().getName() + ":existsOne ERROR:  Can't process query: " + ex.getMessage()));
+            } finally {
+                if (oStatement != null) {
+                    oStatement.close();
+                }
+
             }
+            return (result > 0);
 
         }
-        return vector;
-    }
-
-    @Override
-    public ArrayList<String> getPrettyColumns(String strTabla) throws Exception {
-        ArrayList<String> vector = null;
-        Statement oStatement = null;
-        try {
-            vector = new ArrayList<>();
-            oStatement = connection.createStatement();
-            //String strSQL = "SELECT id FROM " + strTabla + " WHERE 1=1 ";
-            String strSQL = "SHOW FULL COLUMNS FROM " + strTabla;
-            ResultSet oResultSet = oStatement.executeQuery(strSQL);
-            while (oResultSet.next()) {
-                vector.add(oResultSet.getString("Comment")); //COLUMNS.Comment COLUMN_COMMENT
-//                if (desc) {
-//                    if (oResultSet.getString("COLUMN_NAME").length() >= 4) {
-//                        if (oResultSet.getString("COLUMN_NAME").substring(0, 3).equalsIgnoreCase("id_")) {
-//                            vector.add("desc_" + oResultSet.getString("COLUMN_NAME").substring(3));
-//                        }
-//                    }
-//                }
-            }
-        } catch (SQLException ex) {
-            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPrettyColumns ERROR:  Can't process query: " + ex.getMessage()));
-        } finally {
-            if (oStatement != null) {
-                oStatement.close();
-            }
-
-        }
-        return vector;
     }
 
     @Override
@@ -289,6 +251,142 @@ public class MysqlDataSpImpl implements DataInterface {
             if (oStatement != null) {
                 oStatement.close();
             }
+        }
+    }
+
+    @Override
+    public ArrayList<String> getColumnsName(String strTabla) throws Exception {
+        ArrayList<String> vector = null;
+        Statement oStatement = null;
+
+        if (strTabla.substring(0, 6).equalsIgnoreCase("SELECT")) {
+            vector = new ArrayList<>();
+            String strResult = null;
+            PreparedStatement oPreparedStatement = null;
+            ResultSet oResultSet;
+            try {
+
+                oPreparedStatement = connection.prepareStatement(strTabla);
+                oResultSet = oPreparedStatement.executeQuery();
+                //oResultSet = oStatement.executeQuery(strTabla);
+                ResultSetMetaData rsmd = oResultSet.getMetaData();
+                int numberOfColumns = rsmd.getColumnCount();
+                for (int contador = 1; contador <= numberOfColumns; contador++) {
+                    if (rsmd.getColumnName(contador).length() >= 4) {
+                        if (rsmd.getColumnName(contador).substring(0, 3).equalsIgnoreCase("id_")) {
+                            vector.add("obj_" + rsmd.getColumnName(contador).substring(3));
+                        } else {
+                            vector.add(rsmd.getColumnName(contador));
+                        }
+
+                    } else {
+                        vector.add(rsmd.getColumnName(contador));
+                    }
+                }
+            } catch (SQLException ex) {
+                ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getColumnsName ERROR:  Can't process query: " + ex.getMessage()));
+            } finally {
+                if (oStatement != null) {
+                    oStatement.close();
+                }
+
+            }
+            return vector;
+        } else {
+
+            try {
+                vector = new ArrayList<>();
+                oStatement = connection.createStatement();
+                String strSQL = "SHOW FULL COLUMNS FROM " + strTabla;
+                ResultSet oResultSet = oStatement.executeQuery(strSQL);
+                while (oResultSet.next()) {
+                    if (oResultSet.getString("Field").length() >= 4) {
+                        if (oResultSet.getString("Field").substring(0, 3).equalsIgnoreCase("id_")) {
+                            vector.add("obj_" + oResultSet.getString("Field").substring(3));
+                        } else {
+                            vector.add(oResultSet.getString("Field"));
+                        }
+                    } else {
+                        vector.add(oResultSet.getString("Field"));
+                    }
+                }
+            } catch (SQLException ex) {
+                ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getColumnsName ERROR:  Can't process query: " + ex.getMessage()));
+            } finally {
+                if (oStatement != null) {
+                    oStatement.close();
+                }
+
+            }
+            return vector;
+        }
+    }
+
+    @Override
+    public ArrayList<String> getPrettyColumns(String strTabla) throws Exception {
+        ArrayList<String> vector = null;
+        Statement oStatement = null;
+
+        if (strTabla.substring(0, 6).equalsIgnoreCase("SELECT")) {
+            vector = new ArrayList<>();
+            String strResult = null;
+            PreparedStatement oPreparedStatement = null;
+            ResultSet oResultSet;
+            try {
+
+                oPreparedStatement = connection.prepareStatement(strTabla);
+                oResultSet = oPreparedStatement.executeQuery();
+                //oResultSet = oStatement.executeQuery(strTabla);
+                ResultSetMetaData rsmd = oResultSet.getMetaData();
+                int numberOfColumns = rsmd.getColumnCount();
+                for (int contador = 1; contador <= numberOfColumns; contador++) {
+                    if (rsmd.getColumnName(contador).length() >= 4) {
+                        if (rsmd.getColumnName(contador).substring(0, 3).equalsIgnoreCase("id_")) {
+                            vector.add(rsmd.getColumnName(contador).substring(3));
+                        } else {
+                            vector.add(rsmd.getColumnName(contador));
+                        }
+
+                    } else {
+                        vector.add(rsmd.getColumnName(contador));
+                    }
+                }
+            } catch (SQLException ex) {
+                ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getColumnsName ERROR:  Can't process query: " + ex.getMessage()));
+            } finally {
+                if (oStatement != null) {
+                    oStatement.close();
+                }
+
+            }
+            return vector;
+        } else {
+
+            try {
+                vector = new ArrayList<>();
+                oStatement = connection.createStatement();
+                //String strSQL = "SELECT id FROM " + strTabla + " WHERE 1=1 ";
+                String strSQL = "SHOW FULL COLUMNS FROM " + strTabla;
+                ResultSet oResultSet = oStatement.executeQuery(strSQL);
+                while (oResultSet.next()) {
+                    vector.add(oResultSet.getString("Comment")); //COLUMNS.Comment COLUMN_COMMENT
+//                if (desc) {
+//                    if (oResultSet.getString("COLUMN_NAME").length() >= 4) {
+//                        if (oResultSet.getString("COLUMN_NAME").substring(0, 3).equalsIgnoreCase("id_")) {
+//                            vector.add("desc_" + oResultSet.getString("COLUMN_NAME").substring(3));
+//                        }
+//                    }
+//                }
+                }
+            } catch (SQLException ex) {
+                ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPrettyColumns ERROR:  Can't process query: " + ex.getMessage()));
+            } finally {
+                if (oStatement != null) {
+                    oStatement.close();
+                }
+
+            }
+            return vector;
         }
     }
 
@@ -574,7 +672,7 @@ public class MysqlDataSpImpl implements DataInterface {
 //---------------------------------------
 //---------------------------------------
     @Override
-    public ArrayList<Integer> getPageSQL(String strSQL, int intRegsPerPage, int intPagina) throws Exception {
+    public ArrayList<Integer> getPage(String strSQL, int intRegsPerPage, int intPagina) throws Exception {
         ArrayList<Integer> vector = null;
         Statement oStatement = null;
         try {
@@ -608,7 +706,7 @@ public class MysqlDataSpImpl implements DataInterface {
     }
 
     @Override
-    public int getPagesSQL(String strSQL, int intRegsPerPage) throws Exception {
+    public int getPages(String strSQL, int intRegsPerPage) throws Exception {
 
         int intResult = 0;
         Statement oStatement = null;
@@ -634,7 +732,7 @@ public class MysqlDataSpImpl implements DataInterface {
     }
 
     @Override
-    public int getCountSQL(String strSQL) throws Exception {
+    public int getCount(String strSQL) throws Exception {
         int intResult = 0;
         Statement oStatement = null;
         try {

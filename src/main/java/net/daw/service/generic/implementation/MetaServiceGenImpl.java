@@ -30,10 +30,22 @@ public class MetaServiceGenImpl implements MetaServiceInterface {
 
     protected Connection oConnection = null;
     protected String strObjectName = null;
+    protected String strPojo = null;
 
-    public MetaServiceGenImpl(String ob, Connection con) {
+    public MetaServiceGenImpl(String ob, String pojo, Connection con) {
         strObjectName = Character.toUpperCase(ob.charAt(0)) + ob.substring(1);
         oConnection = con;
+        strPojo = Character.toUpperCase(pojo.charAt(0)) + pojo.substring(1);
+    }
+
+    @Override
+    public void setSource(String source) throws Exception {
+        strObjectName = source;
+    }
+    
+    @Override
+    public void setPojo(String pojo) throws Exception {
+        strPojo = Character.toUpperCase(pojo.charAt(0)) + pojo.substring(1);
     }
 
     @Override
@@ -41,8 +53,8 @@ public class MetaServiceGenImpl implements MetaServiceInterface {
         String data = null;
         try {
             oConnection.setAutoCommit(false);
-            Constructor c = Class.forName("net.daw.dao.generic.specific.implementation." + strObjectName + "DaoGenSpImpl").getConstructor(String.class,Connection.class);
-            TableDaoGenImpl oDao = (TableDaoGenImpl) c.newInstance(strObjectName, oConnection);
+            Constructor c = Class.forName("net.daw.dao.generic.specific.implementation." + strPojo + "DaoGenSpImpl").getConstructor(String.class, String.class, Connection.class);
+            TableDaoGenImpl oDao = (TableDaoGenImpl) c.newInstance(strObjectName, strPojo, oConnection);
             ArrayList<String> alColumns = null;
             alColumns = oDao.getPrettyColumnsNames();
             GsonBuilder gsonBuilder = new GsonBuilder();
@@ -62,8 +74,8 @@ public class MetaServiceGenImpl implements MetaServiceInterface {
         String data = null;
         try {
             oConnection.setAutoCommit(false);
-            Constructor c = Class.forName("net.daw.dao.generic.specific.implementation." + strObjectName + "DaoGenSpImpl").getConstructor(String.class,Connection.class);
-            TableDaoGenImpl oDao = (TableDaoGenImpl) c.newInstance(strObjectName, oConnection);
+            Constructor c = Class.forName("net.daw.dao.generic.specific.implementation." + strPojo + "DaoGenSpImpl").getConstructor(String.class, String.class, Connection.class);
+            TableDaoGenImpl oDao = (TableDaoGenImpl) c.newInstance(strObjectName, strPojo, oConnection);
             ArrayList<String> alColumns = null;
             alColumns = oDao.getColumnsNames();
             GsonBuilder gsonBuilder = new GsonBuilder();
