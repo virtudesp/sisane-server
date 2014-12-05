@@ -25,7 +25,7 @@ import net.daw.bean.generic.specific.implementation.TipopropuestaBeanGenSpImpl;
 public class TipopropuestaDaoGenSpImpl extends TableDaoGenImpl<TipopropuestaBeanGenSpImpl> {
 
     public TipopropuestaDaoGenSpImpl(String strObject, Connection pooledConnection) throws Exception {
-        super(strObject, pooledConnection);
+        super(strObject, strObject, pooledConnection);
     }
 
 }

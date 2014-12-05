@@ -26,6 +26,6 @@ import net.daw.dao.generic.specific.implementation.ComentarioDaoGenSpImpl;
 public class ComentarioServiceGenSpImpl extends TableServiceGenImpl {
 
     public ComentarioServiceGenSpImpl(String strObject, Connection con) {
-        super(strObject, con);
+        super(strObject, strObject, con);
     }
 }

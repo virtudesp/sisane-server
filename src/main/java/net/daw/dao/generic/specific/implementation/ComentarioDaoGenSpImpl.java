@@ -30,6 +30,6 @@ import net.daw.helper.ExceptionBooster;
 public class ComentarioDaoGenSpImpl extends TableDaoGenImpl<ComentarioBeanGenSpImpl> {
 
     public ComentarioDaoGenSpImpl(String strObject, Connection pooledConnection) throws Exception {
-        super(strObject, pooledConnection);
+        super(strObject, strObject, pooledConnection);
     }
 }
