@@ -15,6 +15,11 @@
  along with this program; if not, write to the Free Software
  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 --%>
+<%@page import="net.daw.bean.generic.specific.implementation.UsuarioBeanGenSpImpl"%>
+<%UsuarioBeanGenSpImpl user = (UsuarioBeanGenSpImpl) request.getSession().getAttribute("usuarioBean");%>
+<%
+        int id = user.getId();
+%>
 
 <form class="form-horizontal" role="form" action="#" id="propuestaForm" name="formulario">
     <div class="form-group">
@@ -50,18 +55,30 @@
         </div>
     </div>
 
-    <div class="form-group">
-        <label class="col-sm-2 control-label"  for="tipopropuesta">Tipo de propuesta:</label>
-        <div class="col-sm-6">
-            <input type="text" id="tipopropuesta" class="form-control"  name="tipopropuesta" size="15" placeholder="tipopropuesta" />
-        </div>
-    </div>
+    
+    
+    
 
     <div class="form-group">
-        <label class="col-sm-2 control-label"  for="usuario">Usuario:</label>
-        <div class="col-sm-6">
-            <input type="text" id="usuario" class="form-control"  name="usuario" size="15" placeholder="usuario" />
+        <label class="col-sm-2 control-label" for="obj_tipopropuesta_id">Tipo de propuesta: </label> 
+        <div class="col-sm-2">              
+            <input readonly="true"  class="form-control"  id="obj_tipopropuesta_id" class="input-mini" name="id_tipopropuesta" type="text" size="5" maxlength="5" />  
         </div>
+        <div class="col-sm-1">              
+            <a class="btn btn-primary btn-sm" id="obj_tipopropuesta_button" href="#"><i class="glyphicon glyphicon-search"></i></a>
+        </div>        
+        <label class="col-sm-7" for="obj_tipopropuesta_desc" id="obj_tipopropuesta_desc"></label>                     
+    </div>
+    
+    <div class="form-group">
+        <label class="col-sm-2 control-label" for="obj_usuario_id">Usuario: </label> 
+        <div class="col-sm-2">              
+            <input readonly="true"  value="<%=id%>"  class="form-control"  id="obj_usuario_id" class="input-mini" name="id_usuario" type="text" size="5" maxlength="5" />  
+        </div>
+        <div class="col-sm-1">              
+            <a class="btn btn-primary btn-sm" id="obj_usuario_button" href="#"><i class="glyphicon glyphicon-search"></i></a>
+        </div>        
+        <label class="col-sm-7" for="obj_usuario_desc" id="obj_usuario_desc"></label>                     
     </div>
     
 
@@ -137,36 +154,39 @@
                             }
 
                         },
-                        tipopropuesta: {
+                        id_usuario: {
                             validators: {
                                 notEmpty: {
-                                    message: 'Debe introducir un tipo de propuesta'
+                                    message: 'Debe elegir un usuario'
                                 },
                                 integer: {
-                                    message: 'El valor del tipo de propuesta debe ser un entero'
+                                    message: 'El identificador de usuario debe ser un entero'
                                 }
                             }
-
                         },
-                        usuario: {
+                        id_tipopropuesta: {
                             validators: {
                                 notEmpty: {
-                                    message: 'Debe introducir un usuario'
+                                    message: 'Debe elegir un tipo de propuesta'
                                 },
                                 integer: {
-                                    message: 'El valor del usuario debe ser un entero'
+                                    message: 'El identificador del tipo de propuesta debe ser un entero'
                                 }
                             }
-
                         }
+                        
                       
 
                     }
                 })
-                
-
-                
+                .on('change', '[name="id_usuario"]', function() {
+                    $('#propuestaForm').bootstrapValidator('revalidateField', 'id_usuario');
+                })
+                .on('change', '[name="id_tipopropuesta"]', function() {
+                    $('#propuestaForm').bootstrapValidator('revalidateField', 'id_tipopropuesta');
+                })
                 ;
+                
         $('#fecha_group').on('dp.change dp.show', function(e) {
 // Revalidate the date when user change it
             $('#propuestaForm').bootstrapValidator('revalidateField', 'fecha_group');
