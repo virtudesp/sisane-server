@@ -42,16 +42,18 @@ import net.daw.helper.FilterBeanHelper;
  * @author al037805
  */
 public class PropuestaDaoSpcImpl implements ViewDaoInterface<PropuestaBeanGenSpImpl>, TableDaoInterface<PropuestaBeanGenSpImpl>, MetaDaoInterface {
-    
+
     private String strTableName = null;
     private MysqlDataSpImpl oMysql = null;
     private Connection oConnection = null;
+    private String strPojo = null;
 
-    public PropuestaDaoSpcImpl(String ob, Connection oConexion) throws Exception {
+    public PropuestaDaoSpcImpl(String ob, String pojo, Connection oConexion) throws Exception {
         try {
             strTableName = ob;
             oConnection = oConexion;
             oMysql = new MysqlDataSpImpl(oConnection);
+            strPojo = pojo;
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":constructor ERROR: " + ex.getMessage()));
         }
@@ -104,16 +106,15 @@ public class PropuestaDaoSpcImpl implements ViewDaoInterface<PropuestaBeanGenSpI
                     oPropuestaBean.setId(0);
                 } else {
                     oPropuestaBean.setDescripcion(oMysql.getOne(strTableName, "descripcion", oPropuestaBean.getId()));
-                    
+
                     String fecha = "";
                     fecha = oMysql.getOne(strTableName, "fecha", oPropuestaBean.getId());
                     SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
                     oPropuestaBean.setFecha(date.parse(fecha));
-                    
+
                     oPropuestaBean.setPuntuacion(Integer.valueOf(oMysql.getOne(strTableName, "puntuacion", oPropuestaBean.getId())));
-                    
+
                     /* Claves ajenas id_tipopropuesta y id_usuario */
-                    
                     oPropuestaBean.setId_tipopropuesta(Integer.parseInt(oMysql.getOne(strTableName, "id_tipopropuesta", oPropuestaBean.getId())));
                     oPropuestaBean.setId_usuario(Integer.parseInt(oMysql.getOne(strTableName, "id_usuario", oPropuestaBean.getId())));
 
@@ -128,14 +129,8 @@ public class PropuestaDaoSpcImpl implements ViewDaoInterface<PropuestaBeanGenSpI
                     UsuarioDaoGenSpImpl oUsuarioDAO = new UsuarioDaoGenSpImpl(strTableName, "usuario", oConnection);
                     oUsuario = oUsuarioDAO.get(oUsuario, AppConfigurationHelper.getJsonDepth());
                     oPropuestaBean.setObj_usuario(oUsuario);
-                   
-                    
-                   
-                    
+
                     /* Fin de las claves ajenas id_tipopropuesta y id_usuario */
-                    
-                    
-              
                 }
             } catch (Exception ex) {
                 ExceptionBooster.boost(new Exception(this.getClass().getName() + ":get ERROR: " + ex.getMessage()));
@@ -153,20 +148,17 @@ public class PropuestaDaoSpcImpl implements ViewDaoInterface<PropuestaBeanGenSpI
                 oPropuestaBean.setId(oMysql.insertOne(strTableName));
             }
             oMysql.updateOne(oPropuestaBean.getId(), strTableName, "descripcion", oPropuestaBean.getDescripcion());
-            
-            SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);       
+
+            SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
             oMysql.updateOne(oPropuestaBean.getId(), strTableName, "fecha", date.format(oPropuestaBean.getFecha()));
-            
+
             oMysql.updateOne(oPropuestaBean.getId(), strTableName, "puntuacion", oPropuestaBean.getPuntuacion().toString());
-            
+
             /* Aqui van las claves ajenas  */
-            
             oMysql.updateOne(oPropuestaBean.getId(), strTableName, "id_tipopropuesta", oPropuestaBean.getId_tipopropuesta().toString());
             oMysql.updateOne(oPropuestaBean.getId(), strTableName, "id_usuario", oPropuestaBean.getId_usuario().toString());
-            
+
             /*  Fin de las claves ajenas en servidor */
-            
-            
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":set ERROR: " + ex.getMessage()));
         }
@@ -210,6 +202,5 @@ public class PropuestaDaoSpcImpl implements ViewDaoInterface<PropuestaBeanGenSpI
     public int updateOne(int intId, String strTabla, String strCampo, String strValor) throws Exception {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
-    
+
 }

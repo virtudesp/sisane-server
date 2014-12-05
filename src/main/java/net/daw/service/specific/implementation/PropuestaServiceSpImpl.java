@@ -38,22 +38,22 @@ import net.daw.service.publicinterface.ViewServiceInterface;
  * @author al037805
  */
 public class PropuestaServiceSpImpl implements TableServiceInterface, ViewServiceInterface, MetaServiceInterface {
-    
+
     protected Connection oConnection = null;
     protected String strObjectName = null;
-    protected String strPojo = null; 
+    protected String strPojo = null;
 
     public PropuestaServiceSpImpl(String strObject, String pojo, Connection con) {
         strObjectName = strObject;
         oConnection = con;
         strPojo = Character.toUpperCase(pojo.charAt(0)) + pojo.substring(1);
     }
-    
+
     @Override
     public void setSource(String source) throws Exception {
         strObjectName = source;
     }
-    
+
     @Override
     public void setPojo(String pojo) throws Exception {
         strPojo = Character.toUpperCase(pojo.charAt(0)) + pojo.substring(1);
@@ -64,7 +64,7 @@ public class PropuestaServiceSpImpl implements TableServiceInterface, ViewServic
         String resultado = null;
         try {
             oConnection.setAutoCommit(false);
-            PropuestaDaoSpcImpl oPropuestaDAO = new PropuestaDaoSpcImpl(strObjectName, oConnection);
+            PropuestaDaoSpcImpl oPropuestaDAO = new PropuestaDaoSpcImpl(strObjectName, strObjectName, oConnection);
             PropuestaBeanGenSpImpl oPropuesta = new PropuestaBeanGenSpImpl(id);
             Map<String, String> data = new HashMap<>();
             oPropuestaDAO.remove(oPropuesta);
@@ -85,7 +85,7 @@ public class PropuestaServiceSpImpl implements TableServiceInterface, ViewServic
         String resultado = null;
         try {
             oConnection.setAutoCommit(false);
-            PropuestaDaoSpcImpl oPropuestaDAO = new PropuestaDaoSpcImpl(strObjectName, oConnection);
+            PropuestaDaoSpcImpl oPropuestaDAO = new PropuestaDaoSpcImpl(strObjectName, strObjectName, oConnection);
             PropuestaBeanGenSpImpl oPropuesta = new PropuestaBeanGenSpImpl();
             Gson gson = new GsonBuilder().setDateFormat("dd/MM/yyyy").create();
             jason = EncodingUtilHelper.decodeURIComponent(jason);
@@ -108,7 +108,7 @@ public class PropuestaServiceSpImpl implements TableServiceInterface, ViewServic
         String data = null;
         try {
             oConnection.setAutoCommit(false);
-            PropuestaDaoSpcImpl oPropuestaDAO = new PropuestaDaoSpcImpl(strObjectName, oConnection);
+            PropuestaDaoSpcImpl oPropuestaDAO = new PropuestaDaoSpcImpl(strObjectName, strObjectName, oConnection);
             PropuestaBeanGenSpImpl oPropuesta = new PropuestaBeanGenSpImpl(id);
             oPropuesta = oPropuestaDAO.get(oPropuesta, 1);
             GsonBuilder gsonBuilder = new GsonBuilder();
@@ -128,7 +128,7 @@ public class PropuestaServiceSpImpl implements TableServiceInterface, ViewServic
         String data = null;
         try {
             oConnection.setAutoCommit(false);
-            PropuestaDaoSpcImpl oPropuestaDAO = new PropuestaDaoSpcImpl(strObjectName, oConnection);
+            PropuestaDaoSpcImpl oPropuestaDAO = new PropuestaDaoSpcImpl(strObjectName, strObjectName, oConnection);
             List<PropuestaBeanGenSpImpl> oPropuestas = oPropuestaDAO.getPage(intRegsPerPag, intPage, alFilter, hmOrder);
             GsonBuilder gsonBuilder = new GsonBuilder();
             gsonBuilder.setDateFormat("dd/MM/yyyy");
@@ -148,7 +148,7 @@ public class PropuestaServiceSpImpl implements TableServiceInterface, ViewServic
         String data = null;
         try {
             oConnection.setAutoCommit(false);
-            PropuestaDaoSpcImpl oPropuestaDAO = new PropuestaDaoSpcImpl(strObjectName, oConnection);
+            PropuestaDaoSpcImpl oPropuestaDAO = new PropuestaDaoSpcImpl(strObjectName, strObjectName, oConnection);
             int pages = oPropuestaDAO.getPages(intRegsPerPag, alFilter);
             data = "{\"data\":\"" + Integer.toString(pages) + "\"}";
             oConnection.commit();
@@ -164,7 +164,7 @@ public class PropuestaServiceSpImpl implements TableServiceInterface, ViewServic
         String data = null;
         try {
             oConnection.setAutoCommit(false);
-            PropuestaDaoSpcImpl oPropuestaDAO = new PropuestaDaoSpcImpl(strObjectName, oConnection);
+            PropuestaDaoSpcImpl oPropuestaDAO = new PropuestaDaoSpcImpl(strObjectName, strObjectName, oConnection);
             int registers = oPropuestaDAO.getCount(alFilter);
             data = "{\"data\":\"" + Integer.toString(registers) + "\"}";
             oConnection.commit();
@@ -182,7 +182,7 @@ public class PropuestaServiceSpImpl implements TableServiceInterface, ViewServic
         ArrayList<String> alColumns = null;
         try {
             oConnection.setAutoCommit(false);
-            PropuestaDaoSpcImpl oPropuestaDAO = new PropuestaDaoSpcImpl(strObjectName, oConnection);
+            PropuestaDaoSpcImpl oPropuestaDAO = new PropuestaDaoSpcImpl(strObjectName, strObjectName, oConnection);
             alColumns = oPropuestaDAO.getPrettyColumnsNames();
             data = new Gson().toJson(alColumns);
             //data = "{\"data\":" + data + "}";
@@ -200,7 +200,7 @@ public class PropuestaServiceSpImpl implements TableServiceInterface, ViewServic
         try {
             oConnection.setAutoCommit(false);
             ArrayList<String> alColumns = null;
-            PropuestaDaoSpcImpl oPropuestaDAO = new PropuestaDaoSpcImpl(strObjectName, oConnection);
+            PropuestaDaoSpcImpl oPropuestaDAO = new PropuestaDaoSpcImpl(strObjectName, strObjectName, oConnection);
             alColumns = oPropuestaDAO.getColumnsNames();
             data = new Gson().toJson(alColumns);
             //data = "{\"data\":" + data + "}";

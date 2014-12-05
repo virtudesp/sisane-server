@@ -19,13 +19,10 @@ package net.daw.service.generic.specific.implementation;
 
 import net.daw.service.generic.implementation.TableServiceGenImpl;
 import java.sql.Connection;
-import javax.servlet.ServletException;
-import net.daw.bean.generic.specific.implementation.ComentarioBeanGenSpImpl;
-import net.daw.dao.generic.specific.implementation.ComentarioDaoGenSpImpl;
 
 public class ComentarioServiceGenSpImpl extends TableServiceGenImpl {
 
-    public ComentarioServiceGenSpImpl(String strObject, Connection con) {
-        super(strObject, strObject, con);
+    public ComentarioServiceGenSpImpl(String strObject,  String pojo,  Connection con) {
+        super(strObject, pojo, con);
     }
 }

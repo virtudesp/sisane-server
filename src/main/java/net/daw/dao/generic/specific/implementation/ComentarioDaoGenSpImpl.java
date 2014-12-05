@@ -2,7 +2,7 @@
  * Copyright (C) July 2014 Rafael Aznar
  *
  * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License
+ * modify it under the terms of the GNU General Public License  
  * as published by the Free Software Foundation; either version 2
  * of the License, or (at your option) any later version.
  *
@@ -17,19 +17,13 @@
  */
 package net.daw.dao.generic.specific.implementation;
 
-import java.lang.reflect.Method;
-import java.lang.reflect.ParameterizedType;
 import net.daw.dao.generic.implementation.TableDaoGenImpl;
 import java.sql.Connection;
-import java.text.SimpleDateFormat;
-import java.util.Locale;
 import net.daw.bean.generic.specific.implementation.ComentarioBeanGenSpImpl;
-import net.daw.bean.generic.specific.implementation.ProductoBeanGenSpImpl;
-import net.daw.helper.ExceptionBooster;
 
 public class ComentarioDaoGenSpImpl extends TableDaoGenImpl<ComentarioBeanGenSpImpl> {
 
-    public ComentarioDaoGenSpImpl(String strObject, Connection pooledConnection) throws Exception {
-        super(strObject, strObject, pooledConnection);
+    public ComentarioDaoGenSpImpl(String strObject, String pojo, Connection pooledConnection) throws Exception {
+        super(strObject, pojo, pooledConnection);
     }
 }
