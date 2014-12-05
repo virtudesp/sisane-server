@@ -50,7 +50,6 @@
         <a  class="list-group-item" id="lnkOpcion" href="jsp#/opcion">Opcion</a>
         <a  class="list-group-item" id="lnkImpuesto" href="jsp#/impuesto">Impuesto</a> 
         <a  class="list-group-item" id="lnkActividad" href="jsp#/actividad">Actividad</a>
-        <a  class="list-group-item" id="lnkPropuesta" href="jsp#/propuesta">Propuesta</a>
         <a  class="list-group-item" id="lnkActividad" href="jsp#/entrega">Entrega</a> 
         <a  class="list-group-item" id="lnkActividad" href="jsp#/detalle_pedido">DetallePedido</a> 
     </div>
@@ -91,5 +90,6 @@
     <div class="list-group">
         <a  class="list-group-item" id="lnkTipotema" href="jsp#/comentario">Comentarios</a> 
         <a  class="list-group-item" id="lnkTipopropuesta" href="jsp#/tipopropuesta">Tipo propuesta</a>
+        <a  class="list-group-item" id="lnkPropuesta" href="jsp#/propuesta">Propuesta</a>
     </div>
 </div>

@@ -237,7 +237,12 @@
         <script src="js/specific/mensajeprivado/routes.js" charset="UTF-8"></script>
         <!-- FIN FORO -->
                
-        <!-- PROPUESTAS Y VOTACIONES -->        
+        <!-- PROPUESTAS Y VOTACIONES -->    
+        <script src="js/specific/propuesta/control.js" charset="UTF-8"></script>
+        <script src="js/specific/propuesta/model.js" charset="UTF-8"></script>
+        <script src="js/specific/propuesta/view.js" charset="UTF-8"></script>
+        <script src="js/specific/propuesta/routes.js" charset="UTF-8"></script>
+        
         <script src="js/specific/tipopropuesta/control.js" charset="UTF-8"></script>
         <script src="js/specific/tipopropuesta/model.js" charset="UTF-8"></script>
         <script src="js/specific/tipopropuesta/view.js" charset="UTF-8"></script>
@@ -313,7 +318,7 @@
                 fRespuestaRoutes();
 
                 fComentarioRoutes();
-
+                fPropuestaRoutes();
                 fTipopropuestaRoutes();
 
 
