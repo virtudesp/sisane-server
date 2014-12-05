@@ -33,7 +33,7 @@ cuestionarioView.prototype.loadButtons = function (id) {
     botonera += '<a class="btn btn-default view" id="' + id + '"  href="jsp#/' + this.clase + '/view/' + id + '"><i class="glyphicon glyphicon-eye-open"></i></a>';
     botonera += '<a class="btn btn-default edit" id="' + id + '"  href="jsp#/' + this.clase + '/edit/' + id + '"><i class="glyphicon glyphicon-pencil"></i></a>';
     botonera += '<a class="btn btn-default remove" id="' + id + '"  href="jsp#/' + this.clase + '/remove/' + id + '"><i class="glyphicon glyphicon-remove"></i></a>';
-    botonera += '<a class="btn btn-default make" id="' + id + '"  href="jsp#/' + this.clase + '/make/' + id + '"><i class="glyphicon glyphicon-play"></i></a>';
+    botonera += '<a class="btn btn-default" id="' + id + '"  href="jsp#/' + this.clase + '/make/' + id + '"><i class="glyphicon glyphicon-play"></i></a>';
     botonera += '</div></div>';
     return botonera;
 };
@@ -72,19 +72,24 @@ cuestionarioView.prototype.getBodyPageTable = function (page, fieldNames, visibl
 };
 
 cuestionarioView.prototype.getCuestionarioForm = function (jason) {
-    formulario = "<form id='cuestionarioForm' action='' method='get' >";
-    formulario += "<input type='hidden' name='usuario' value='<%=user.getId()%>'><br> ";
+    formulario = "<form id='cuestionarioForm' action='#' method='get' >";
+    // input oculto de usuario
+    formulario += "<input type='hidden' id='usuario' name='usuario' value='3' ><br> ";
     pregunta = "";
     for (i = 0; i < jason.length; i++) {
         if (pregunta != jason[i].obj_pregunta.descripcion) {
             pregunta = jason[i].obj_pregunta.descripcion
             idpregunta = jason[i].id_pregunta;
-            formulario += "<br/><label for=pregunta_" + idpregunta + ">" + pregunta + "</label> <br/>";
-
+            // label de la pregunta
+            formulario += "<br/><label for='pregunta_" + idpregunta + "'>" + pregunta + "</label> <br/>";
+            // input oculto con el id de la pregunta
+            formulario += "<input type='hidden' id='pregunta_"+idpregunta+"' name='preguntas' value='"+idpregunta+"' ><br> ";
             for (j = 0; j < jason.length; j++) {
                 if (jason[j].id_pregunta == idpregunta) {
-                    formulario += "<input type='radio'  class='col-md-offset-1 col-md-1' name='pregunta_" + idpregunta + "' \n\
-                    value='" + jason[j].id + "'>" + jason[j].valor + "<br/>";
+                    // radio buttons con opciones de la pregunta
+                    formulario += "<input type='radio'  class='col-md-offset-1 col-md-1' \n\
+                        name='pregunta_" + idpregunta + "' value='" + jason[j].id + "'>" 
+                        + jason[j].valor + "<br/>";
                 }
             }
         }

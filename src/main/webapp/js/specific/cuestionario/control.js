@@ -23,22 +23,23 @@ cuestionarioControl.prototype = new control('cuestionario');
 cuestionarioControl.prototype.getClassNameCuestionario = function () {
     return this.getClassName() + "Control";
 };
-cuestionarioControl.prototype.make = function (place, id, oModel, oView) {
+cuestionarioControl.prototype.make = function (place, id, oModel, oModelSet, oView) {
     var thisObject = this;
     $(place).empty();
     var oCuestionarioModel = oModel;
+    var oRespuestaModel = oModelSet;
     var oCuestionarioView = oView;
     data = oCuestionarioModel.getGenericOperation("getallpreguntas", id);
     formularioHTML = oCuestionarioView.getCuestionarioForm(data);
     $(place).append(oView.getPanel("Realizar cuestionario de " + data[0].obj_pregunta.obj_cuestionario.tipo,
-    oCuestionarioView.getEmptyView("cuestionarioForm", 1)));
+            oCuestionarioView.getEmptyView("cuestionarioForm", 1)));
     $("#formularioCuestionario").html(formularioHTML);
 
     $('#submitForm').click(function () {
         var valores = [];
         valores = $('#cuestionarioForm').serializeObject();
-        resultado = {json: JSON.stringify(valores)};
-        oView.doResultOperationNotifyToUser(place, JSON.stringify(resultado));
+        resultado = oRespuestaModel.setGenericOperation('setform',{json: JSON.stringify(valores)});
+        oView.doResultOperationNotifyToUser(place, resultado["status"], "Se ha creado el registro con id=" + resultado["message"], resultado["message"], true);
         return false;
     });
 };

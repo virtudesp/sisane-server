@@ -87,7 +87,7 @@ function fCuestionarioRoutes() {
     Path.map("#/cuestionario/make/:id").to(function () {
         $('#indexContenidoJsp').spinner();
         var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
-        oCuestionarioControl.make($('#indexContenido'), paramsObject['id'], oCuestionarioModel, oCuestionarioView);
+        oCuestionarioControl.make($('#indexContenido'), paramsObject['id'], oCuestionarioModel, oRespuestaModel, oCuestionarioView);
         $('#indexContenidoJsp').empty();
         return false;
     });

@@ -229,6 +229,12 @@ model.prototype.setOne = function (jsonfile) {
     });
     return feedback;
 };
+model.prototype.setGenericOperation = function (operation, jsonfile) {
+    $.when(ajax().ajaxCallSync(this.urlJson + '&op=' + operation, 'GET', jsonfile)).done(function (data) {
+        feedback = data;
+    });
+    return feedback;
+};
 model.prototype.removeOne = function (id) {
     $.when(ajax().ajaxCallSync(this.urlJson + '&op=remove&id=' + id, 'GET', '')).done(function (data) {
         feedback = data;
