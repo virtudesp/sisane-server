@@ -27,7 +27,7 @@ import net.daw.service.generic.implementation.TableServiceGenImpl;
 public class VUsuarioProveedorServiceGenSpImpl extends TableServiceGenImpl {
 
     public VUsuarioProveedorServiceGenSpImpl(String strObject, Connection con) {
-        super(strObject, con);
+        super(strObject, strObject, con);
     }
-    
+
 }

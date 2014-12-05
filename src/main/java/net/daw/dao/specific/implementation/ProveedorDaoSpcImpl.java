@@ -22,6 +22,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import net.daw.bean.generic.specific.implementation.ProveedorBeanGenSpImpl;
+import net.daw.bean.generic.specific.implementation.UsuarioBeanGenSpImpl;
+import net.daw.dao.generic.specific.implementation.UsuarioDaoGenSpImpl;
 import net.daw.dao.publicinterface.MetaDaoInterface;
 import net.daw.dao.publicinterface.TableDaoInterface;
 import net.daw.dao.publicinterface.ViewDaoInterface;
@@ -110,13 +112,14 @@ public class ProveedorDaoSpcImpl implements ViewDaoInterface<ProveedorBeanGenSpI
 
                         UsuarioBeanGenSpImpl oUsuario1 = new UsuarioBeanGenSpImpl();
                         oUsuario1.setId(Integer.parseInt(oMysql.getOne(strTableName, "id_usuario_1", oProveedorBean.getId())));
-                        UsuarioDaoGenSpImpl oUsuarioDAO1 = new UsuarioDaoGenSpImpl("usuario", oConnection);
+                        
+                        UsuarioDaoGenSpImpl oUsuarioDAO1 = new UsuarioDaoGenSpImpl("usuario", "Usuario", oConnection);
                         oUsuario1 = oUsuarioDAO1.get(oUsuario1, AppConfigurationHelper.getJsonDepth());
                         oProveedorBean.setObj_usuario_1(oUsuario1);
 
                         UsuarioBeanGenSpImpl oUsuario2 = new UsuarioBeanGenSpImpl();
                         oUsuario2.setId(Integer.parseInt(oMysql.getOne(strTableName, "id_usuario_2", oProveedorBean.getId())));
-                        UsuarioDaoGenSpImpl oUsuarioDAO2 = new UsuarioDaoGenSpImpl("usuario", oConnection);
+                        UsuarioDaoGenSpImpl oUsuarioDAO2 = new UsuarioDaoGenSpImpl("usuario", "Usuario", oConnection);
                         oUsuario2 = oUsuarioDAO2.get(oUsuario2, AppConfigurationHelper.getJsonDepth());
                         oProveedorBean.setObj_usuario_2(oUsuario2);
                     }
