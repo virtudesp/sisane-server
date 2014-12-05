@@ -19,13 +19,10 @@ package net.daw.service.generic.specific.implementation;
 
 import net.daw.service.generic.implementation.TableServiceGenImpl;
 import java.sql.Connection;
-import javax.servlet.ServletException;
-import net.daw.bean.generic.specific.implementation.TipotemaBeanGenSpImpl;
-import net.daw.dao.generic.specific.implementation.TipotemaDaoGenSpImpl;
 
 public class TipotemaServiceGenSpImpl extends TableServiceGenImpl {
 
-    public TipotemaServiceGenSpImpl(String strObject, Connection con) {
-        super(strObject, con);
+    public TipotemaServiceGenSpImpl(String strObject, String pojo, Connection con) {
+        super(strObject, pojo, con);
     }
 }

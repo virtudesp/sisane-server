@@ -26,7 +26,6 @@ import java.util.Locale;
 import net.daw.bean.generic.specific.implementation.ActividadBeanGenSpImpl;
 import net.daw.bean.generic.specific.implementation.DocumentoBeanGenSpImpl;
 import net.daw.bean.generic.specific.implementation.EntregaBeanGenSpImpl;
-import net.daw.bean.generic.specific.implementation.TipoproductoBeanGenSpImpl;
 import net.daw.dao.generic.specific.implementation.DocumentoDaoGenSpImpl;
 import net.daw.dao.publicinterface.MetaDaoInterface;
 import net.daw.dao.publicinterface.TableDaoInterface;
@@ -41,12 +40,14 @@ public class EntregaDaoSpcImpl implements ViewDaoInterface<EntregaBeanGenSpImpl>
     private String strTableName = null;
     private MysqlDataSpImpl oMysql = null;
     private Connection oConnection = null;
+    private String strPojo = null;
 
-    public EntregaDaoSpcImpl(String ob, Connection oConexion) throws Exception {
+    public EntregaDaoSpcImpl(String ob, String pojo, Connection oConexion) throws Exception {
         try {
             strTableName = ob;
             oConnection = oConexion;
             oMysql = new MysqlDataSpImpl(oConnection);
+            strPojo = pojo;
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":constructor ERROR: " + ex.getMessage()));
         }
@@ -109,7 +110,7 @@ public class EntregaDaoSpcImpl implements ViewDaoInterface<EntregaBeanGenSpImpl>
                     
                     DocumentoBeanGenSpImpl oDocumento = new DocumentoBeanGenSpImpl();
                     oDocumento.setId(Integer.parseInt(oMysql.getOne(strTableName, "id_documento", oEntregaBean.getId())));
-                    DocumentoDaoGenSpImpl oDocumentoDAO = new DocumentoDaoGenSpImpl("documento", oConnection);
+                    DocumentoDaoGenSpImpl oDocumentoDAO = new DocumentoDaoGenSpImpl("documento", "Documento", oConnection);
                     oDocumento = oDocumentoDAO.get(oDocumento, AppConfigurationHelper.getJsonDepth());
                     oEntregaBean.setObj_documento(oDocumento);
                     
@@ -117,7 +118,7 @@ public class EntregaDaoSpcImpl implements ViewDaoInterface<EntregaBeanGenSpImpl>
                     oEntregaBean.setId_documento(Integer.parseInt(oMysql.getOne(strTableName, "id_actividad", oEntregaBean.getId())));
                     ActividadBeanGenSpImpl oActividad = new ActividadBeanGenSpImpl();
                     oActividad.setId(Integer.parseInt(oMysql.getOne(strTableName, "id_actividad", oEntregaBean.getId())));
-                    ActividadDaoSpcImpl oActividadDAO = new ActividadDaoSpcImpl("actividad", oConnection);
+                    ActividadDaoSpcImpl oActividadDAO = new ActividadDaoSpcImpl("actividad", "Actividad", oConnection);
                     oActividad = oActividadDAO.get(oActividad, AppConfigurationHelper.getJsonDepth());
                     oEntregaBean.setObj_actividad(oActividad);
                     

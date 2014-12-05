@@ -26,7 +26,7 @@ import net.daw.dao.generic.specific.implementation.EstadoDaoGenSpImpl;
 public class TipopropuestaServiceGenSpImpl extends TableServiceGenImpl {
 
     public TipopropuestaServiceGenSpImpl(String strObject, Connection con) {
-        super(strObject, con);
+        super(strObject, strObject, con);
     }
 }
 

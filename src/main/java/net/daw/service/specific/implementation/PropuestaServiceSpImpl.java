@@ -41,10 +41,22 @@ public class PropuestaServiceSpImpl implements TableServiceInterface, ViewServic
     
     protected Connection oConnection = null;
     protected String strObjectName = null;
+    protected String strPojo = null; 
 
-    public PropuestaServiceSpImpl(String strObject, Connection con) {
+    public PropuestaServiceSpImpl(String strObject, String pojo, Connection con) {
         strObjectName = strObject;
         oConnection = con;
+        strPojo = Character.toUpperCase(pojo.charAt(0)) + pojo.substring(1);
+    }
+    
+    @Override
+    public void setSource(String source) throws Exception {
+        strObjectName = source;
+    }
+    
+    @Override
+    public void setPojo(String pojo) throws Exception {
+        strPojo = Character.toUpperCase(pojo.charAt(0)) + pojo.substring(1);
     }
 
     @Override

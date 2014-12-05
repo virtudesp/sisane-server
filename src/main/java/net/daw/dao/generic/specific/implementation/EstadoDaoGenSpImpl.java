@@ -23,8 +23,8 @@ import net.daw.bean.generic.specific.implementation.EstadoBeanGenSpImpl;
 
 public class EstadoDaoGenSpImpl extends TableDaoGenImpl<EstadoBeanGenSpImpl> {
 
-    public EstadoDaoGenSpImpl(String strObject, Connection pooledConnection) throws Exception {
-        super(strObject, pooledConnection);
+    public EstadoDaoGenSpImpl(String strObject, String pojo, Connection pooledConnection) throws Exception {
+        super(strObject, pojo, pooledConnection);
     }
 
 }

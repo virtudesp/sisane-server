@@ -17,19 +17,13 @@
  */
 package net.daw.dao.generic.specific.implementation;
 
-import java.lang.reflect.Method;
-import java.lang.reflect.ParameterizedType;
 import net.daw.dao.generic.implementation.TableDaoGenImpl;
 import java.sql.Connection;
-import java.text.SimpleDateFormat;
-import java.util.Locale;
 import net.daw.bean.generic.specific.implementation.PostBeanGenSpImpl;
-import net.daw.bean.generic.specific.implementation.ProductoBeanGenSpImpl;
-import net.daw.helper.ExceptionBooster;
 
 public class PostDaoGenSpImpl extends TableDaoGenImpl<PostBeanGenSpImpl> {
 
-    public PostDaoGenSpImpl(String strObject, Connection pooledConnection) throws Exception {
-        super(strObject, pooledConnection);
+    public PostDaoGenSpImpl(String strObject, String pojo, Connection pooledConnection) throws Exception {
+        super(strObject, pojo, pooledConnection);
     }
 }

@@ -45,7 +45,7 @@ public class PropuestaControlOperationSpImpl implements ControlOperationInterfac
         try {
             DataConnectionSource = new BoneConnectionPoolImpl();
             oConnection = DataConnectionSource.newConnection();
-            oPropuestaService = new PropuestaServiceSpImpl(ParameterCooker.prepareObject(request), oConnection);
+            oPropuestaService = new PropuestaServiceSpImpl(ParameterCooker.prepareObject(request), ParameterCooker.prepareObject(request), oConnection);
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":PropuestaControlOperationSpImpl ERROR: " + ex.getMessage()));
         }

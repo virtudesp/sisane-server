@@ -38,12 +38,14 @@ public class PedidoDaoSpcImpl implements ViewDaoInterface<PedidoBeanGenSpImpl>, 
     private String strTableName = null;
     private MysqlDataSpImpl oMysql = null;
     private Connection oConnection = null;
+    private String strPojo = null;
 
-    public PedidoDaoSpcImpl(String ob, Connection oConexion) throws Exception {
+    public PedidoDaoSpcImpl(String ob, String pojo, Connection oConexion) throws Exception {
         try {
             strTableName = ob;
             oConnection = oConexion;
             oMysql = new MysqlDataSpImpl(oConnection);
+            strPojo = pojo;
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":constructor ERROR: " + ex.getMessage()));
         }
@@ -104,7 +106,7 @@ public class PedidoDaoSpcImpl implements ViewDaoInterface<PedidoBeanGenSpImpl>, 
 
                         UsuarioBeanGenSpImpl oUsuario = new UsuarioBeanGenSpImpl();
                         oUsuario.setId(Integer.parseInt(oMysql.getOne(strTableName, "id_usuario", oPedidoBean.getId())));
-                        UsuarioDaoGenSpImpl oUsuarioDAO = new UsuarioDaoGenSpImpl("usuario", oConnection);
+                        UsuarioDaoGenSpImpl oUsuarioDAO = new UsuarioDaoGenSpImpl("usuario", "Usuario", oConnection);
                         oUsuario = oUsuarioDAO.get(oUsuario, AppConfigurationHelper.getJsonDepth());
                         oPedidoBean.setObj_usuario(oUsuario);
                     }

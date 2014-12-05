@@ -19,15 +19,11 @@ package net.daw.service.generic.specific.implementation;
 
 import net.daw.service.generic.implementation.TableServiceGenImpl;
 import java.sql.Connection;
-import javax.servlet.ServletException;
-import net.daw.bean.generic.specific.implementation.EntregaBeanGenSpImpl;
-import net.daw.dao.generic.specific.implementation.EntregaDaoGenSpImpl;
-import net.daw.helper.AppConfigurationHelper;
 
 public class EntregaServiceGenSpImpl extends TableServiceGenImpl {
 
-    public EntregaServiceGenSpImpl(String strObject, Connection con) {
-        super(strObject, con);
+    public EntregaServiceGenSpImpl(String strObject, String pojo, Connection con) {
+        super(strObject, pojo, con);
     }
 
  

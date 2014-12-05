@@ -38,10 +38,22 @@ public class PostServiceSpImpl implements TableServiceInterface, ViewServiceInte
 
     protected Connection oConnection = null;
     protected String strObjectName = null;
+    protected String strPojo = null;
 
-    public PostServiceSpImpl(String strObject, Connection con) {
+    public PostServiceSpImpl(String strObject, String pojo, Connection con) {
         strObjectName = strObject;
         oConnection = con;
+        strPojo = Character.toUpperCase(pojo.charAt(0)) + pojo.substring(1);
+    }
+
+    @Override
+    public void setSource(String source) throws Exception {
+        strObjectName = source;
+    }
+    
+    @Override
+    public void setPojo(String pojo) throws Exception {
+        strPojo = Character.toUpperCase(pojo.charAt(0)) + pojo.substring(1);
     }
 
     @Override
@@ -49,7 +61,7 @@ public class PostServiceSpImpl implements TableServiceInterface, ViewServiceInte
         String resultado = null;
         try {
             oConnection.setAutoCommit(false);
-            PostDaoSpcImpl oPostDAO = new PostDaoSpcImpl(strObjectName, oConnection);
+            PostDaoSpcImpl oPostDAO = new PostDaoSpcImpl(strObjectName, strPojo, oConnection);
             PostBeanGenSpImpl oPost = new PostBeanGenSpImpl(id);
             Map<String, String> data = new HashMap<>();
             oPostDAO.remove(oPost);
@@ -70,7 +82,7 @@ public class PostServiceSpImpl implements TableServiceInterface, ViewServiceInte
         String resultado = null;
         try {
             oConnection.setAutoCommit(false);
-            PostDaoSpcImpl oPostDAO = new PostDaoSpcImpl(strObjectName, oConnection);
+            PostDaoSpcImpl oPostDAO = new PostDaoSpcImpl(strObjectName, strPojo, oConnection);
             PostBeanGenSpImpl oPost = new PostBeanGenSpImpl();
             Gson gson = new GsonBuilder().setDateFormat("dd/MM/yyyy HH:mm:ss").create();
             jason = EncodingUtilHelper.decodeURIComponent(jason);
@@ -87,17 +99,17 @@ public class PostServiceSpImpl implements TableServiceInterface, ViewServiceInte
         }
         return resultado;
     }
-    
+
     public String set2(String jason, int idusuario, int idtipousuario) throws Exception {
         String resultado = null;
         try {
             oConnection.setAutoCommit(false);
-            PostDaoSpcImpl oPostDAO = new PostDaoSpcImpl(strObjectName, oConnection);
+            PostDaoSpcImpl oPostDAO = new PostDaoSpcImpl(strObjectName, strPojo, oConnection);
             PostBeanGenSpImpl oPost = new PostBeanGenSpImpl();
             Gson gson = new GsonBuilder().setDateFormat("dd/MM/yyyy HH:mm:ss").create();
             jason = EncodingUtilHelper.decodeURIComponent(jason);
             oPost = gson.fromJson(jason, oPost.getClass());
-            
+
             if (idusuario != oPost.getId_usuario() && idtipousuario != 1) {
                 Map<String, String> data = new HashMap<>();
                 data.put("message", "Su ID no corresponde al usuario que ha creado el post");
@@ -122,7 +134,7 @@ public class PostServiceSpImpl implements TableServiceInterface, ViewServiceInte
         String data = null;
         try {
             oConnection.setAutoCommit(false);
-            PostDaoSpcImpl oPostDAO = new PostDaoSpcImpl(strObjectName, oConnection);
+            PostDaoSpcImpl oPostDAO = new PostDaoSpcImpl(strObjectName, strPojo, oConnection);
             PostBeanGenSpImpl oPost = new PostBeanGenSpImpl(id);
             oPost = oPostDAO.get(oPost, AppConfigurationHelper.getJsonDepth());
             GsonBuilder gsonBuilder = new GsonBuilder();
@@ -142,7 +154,7 @@ public class PostServiceSpImpl implements TableServiceInterface, ViewServiceInte
         String data = null;
         try {
             oConnection.setAutoCommit(false);
-            PostDaoSpcImpl oPostDAO = new PostDaoSpcImpl(strObjectName, oConnection);
+            PostDaoSpcImpl oPostDAO = new PostDaoSpcImpl(strObjectName, strPojo, oConnection);
             List<PostBeanGenSpImpl> oPosts = oPostDAO.getPage(intRegsPerPag, intPage, alFilter, hmOrder);
             GsonBuilder gsonBuilder = new GsonBuilder();
             gsonBuilder.setDateFormat("dd/MM/yyyy HH:mm:ss");
@@ -162,7 +174,7 @@ public class PostServiceSpImpl implements TableServiceInterface, ViewServiceInte
         String data = null;
         try {
             oConnection.setAutoCommit(false);
-            PostDaoSpcImpl oPostDAO = new PostDaoSpcImpl(strObjectName, oConnection);
+            PostDaoSpcImpl oPostDAO = new PostDaoSpcImpl(strObjectName, strPojo, oConnection);
             int pages = oPostDAO.getPages(intRegsPerPag, alFilter);
             data = "{\"data\":\"" + Integer.toString(pages) + "\"}";
             oConnection.commit();
@@ -178,7 +190,7 @@ public class PostServiceSpImpl implements TableServiceInterface, ViewServiceInte
         String data = null;
         try {
             oConnection.setAutoCommit(false);
-            PostDaoSpcImpl oPostDAO = new PostDaoSpcImpl(strObjectName, oConnection);
+            PostDaoSpcImpl oPostDAO = new PostDaoSpcImpl(strObjectName, strPojo, oConnection);
             int registers = oPostDAO.getCount(alFilter);
             data = "{\"data\":\"" + Integer.toString(registers) + "\"}";
             oConnection.commit();
@@ -196,7 +208,7 @@ public class PostServiceSpImpl implements TableServiceInterface, ViewServiceInte
         ArrayList<String> alColumns = null;
         try {
             oConnection.setAutoCommit(false);
-            PostDaoSpcImpl oPostDAO = new PostDaoSpcImpl(strObjectName, oConnection);
+            PostDaoSpcImpl oPostDAO = new PostDaoSpcImpl(strObjectName, strPojo, oConnection);
             alColumns = oPostDAO.getPrettyColumnsNames();
             data = new Gson().toJson(alColumns);
             //data = "{\"data\":" + data + "}";
@@ -214,7 +226,7 @@ public class PostServiceSpImpl implements TableServiceInterface, ViewServiceInte
         try {
             oConnection.setAutoCommit(false);
             ArrayList<String> alColumns = null;
-            PostDaoSpcImpl oPostDAO = new PostDaoSpcImpl(strObjectName, oConnection);
+            PostDaoSpcImpl oPostDAO = new PostDaoSpcImpl(strObjectName, strPojo, oConnection);
             alColumns = oPostDAO.getColumnsNames();
             data = new Gson().toJson(alColumns);
             //data = "{\"data\":" + data + "}";
