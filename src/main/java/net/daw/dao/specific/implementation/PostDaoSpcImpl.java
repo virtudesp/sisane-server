@@ -20,7 +20,6 @@ package net.daw.dao.specific.implementation;
 import java.sql.Connection;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -41,12 +40,14 @@ public class PostDaoSpcImpl implements ViewDaoInterface<PostBeanGenSpImpl>, Tabl
     private String strTableName = null;
     private MysqlDataSpImpl oMysql = null;
     private Connection oConnection = null;
+    private String strPojo = null;
 
-    public PostDaoSpcImpl(String ob, Connection oConexion) throws Exception {
+    public PostDaoSpcImpl(String ob, String pojo, Connection oConexion) throws Exception {
         try {
             strTableName = ob;
             oConnection = oConexion;
             oMysql = new MysqlDataSpImpl(oConnection);
+            strPojo = pojo;
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":constructor ERROR: " + ex.getMessage()));
         }
@@ -114,13 +115,13 @@ public class PostDaoSpcImpl implements ViewDaoInterface<PostBeanGenSpImpl>, Tabl
 
                         TemaBeanGenSpImpl oTema = new TemaBeanGenSpImpl();
                         oTema.setId(Integer.parseInt(oMysql.getOne(strTableName, "id_tema", oPostBean.getId())));
-                        TemaDaoSpcImpl oTemaDAO = new TemaDaoSpcImpl("tema", oConnection);
+                        TemaDaoSpcImpl oTemaDAO = new TemaDaoSpcImpl("tema", "Tema", oConnection);
                         oTema = oTemaDAO.get(oTema, AppConfigurationHelper.getJsonDepth());
                         oPostBean.setObj_tema(oTema);
 
                         UsuarioBeanGenSpImpl oUsuario = new UsuarioBeanGenSpImpl();
                         oUsuario.setId(Integer.parseInt(oMysql.getOne(strTableName, "id_usuario", oPostBean.getId())));
-                        UsuarioDaoGenSpImpl oUsuarioDAO = new UsuarioDaoGenSpImpl("usuario", oConnection);
+                        UsuarioDaoGenSpImpl oUsuarioDAO = new UsuarioDaoGenSpImpl("usuario", "Usuario",oConnection);
                         oUsuario = oUsuarioDAO.get(oUsuario, AppConfigurationHelper.getJsonDepth());
                         oPostBean.setObj_usuario(oUsuario);
                     }

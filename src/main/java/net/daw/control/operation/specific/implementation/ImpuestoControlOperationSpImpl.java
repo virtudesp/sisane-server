@@ -41,7 +41,7 @@ public class ImpuestoControlOperationSpImpl implements ControlOperationInterface
         try {
             DataConnectionSource = new BoneConnectionPoolImpl();
             oConnection = DataConnectionSource.newConnection();
-            oImpuestoService = new ImpuestoServiceSpImpl(ParameterCooker.prepareObject(request), oConnection);
+            oImpuestoService = new ImpuestoServiceSpImpl(ParameterCooker.prepareObject(request), ParameterCooker.prepareObject(request), oConnection);
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":ImpuestoControlOperationSpImpl ERROR: " + ex.getMessage()));
         }

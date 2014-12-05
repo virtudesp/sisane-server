@@ -37,16 +37,18 @@ import net.daw.helper.FilterBeanHelper;
  * @author al037805
  */
 public class ActividadDaoSpcImpl implements ViewDaoInterface<ActividadBeanGenSpImpl>, TableDaoInterface<ActividadBeanGenSpImpl>, MetaDaoInterface {
-    
+
     private String strTableName = null;
     private MysqlDataSpImpl oMysql = null;
     private Connection oConnection = null;
+    private String strPojo = null;
 
-    public ActividadDaoSpcImpl(String ob, Connection oConexion) throws Exception {
+    public ActividadDaoSpcImpl(String ob, String pojo, Connection oConexion) throws Exception {
         try {
             strTableName = ob;
             oConnection = oConexion;
             oMysql = new MysqlDataSpImpl(oConnection);
+            strPojo = pojo;
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":constructor ERROR: " + ex.getMessage()));
         }
@@ -99,16 +101,15 @@ public class ActividadDaoSpcImpl implements ViewDaoInterface<ActividadBeanGenSpI
                     oActividadBean.setId(0);
                 } else {
                     oActividadBean.setEnunciado(oMysql.getOne(strTableName, "enunciado", oActividadBean.getId()));
-                    
+
                     String fecha = "";
                     fecha = oMysql.getOne(strTableName, "fecha", oActividadBean.getId());
                     SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
                     oActividadBean.setFecha(date.parse(fecha));
-                    
+
                     oActividadBean.setEvaluacion(Integer.valueOf(oMysql.getOne(strTableName, "evaluacion", oActividadBean.getId())));
                     oActividadBean.setActivo((byte) Integer.parseInt(oMysql.getOne(strTableName, "activo", oActividadBean.getId())));
-                    
-              
+
                 }
             } catch (Exception ex) {
                 ExceptionBooster.boost(new Exception(this.getClass().getName() + ":get ERROR: " + ex.getMessage()));
@@ -126,12 +127,12 @@ public class ActividadDaoSpcImpl implements ViewDaoInterface<ActividadBeanGenSpI
                 oActividadBean.setId(oMysql.insertOne(strTableName));
             }
             oMysql.updateOne(oActividadBean.getId(), strTableName, "enunciado", oActividadBean.getEnunciado());
-            
-            SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);       
+
+            SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
             oMysql.updateOne(oActividadBean.getId(), strTableName, "fecha", date.format(oActividadBean.getFecha()));
-            
+
             oMysql.updateOne(oActividadBean.getId(), strTableName, "evaluacion", oActividadBean.getEvaluacion().toString());
-            
+
             oMysql.updateOne(oActividadBean.getId(), strTableName, "activo", Integer.toString(oActividadBean.getActivo()));
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":set ERROR: " + ex.getMessage()));
@@ -176,5 +177,5 @@ public class ActividadDaoSpcImpl implements ViewDaoInterface<ActividadBeanGenSpI
     public int updateOne(int intId, String strTabla, String strCampo, String strValor) throws Exception {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
 }

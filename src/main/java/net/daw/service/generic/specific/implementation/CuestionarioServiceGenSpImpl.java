@@ -20,33 +20,30 @@ package net.daw.service.generic.specific.implementation;
 import java.sql.Connection;
 import javax.servlet.ServletException;
 import net.daw.bean.generic.specific.implementation.CuestionarioBeanGenSpImpl;
-import net.daw.bean.generic.specific.implementation.DocumentoBeanGenSpImpl;
 import net.daw.dao.generic.specific.implementation.CuestionarioDaoGenSpImpl;
-import net.daw.dao.generic.specific.implementation.DocumentoDaoGenSpImpl;
 import net.daw.service.generic.implementation.TableServiceGenImpl;
 
 /**
  *
  * @author al038098
  */
-public class CuestionarioServiceGenSpImpl extends TableServiceGenImpl{
-    
-    public CuestionarioServiceGenSpImpl(String strObject, Connection con) {
-        super(strObject, con);
+public class CuestionarioServiceGenSpImpl extends TableServiceGenImpl {
+
+    public CuestionarioServiceGenSpImpl(String strObject, String pojo, Connection con) {
+        super(strObject, pojo, con);
     }
-    
+
     public String getTipoCuestionario(Integer id) throws Exception {
         String data;
         try {
             CuestionarioBeanGenSpImpl oCuestionarioBean = new CuestionarioBeanGenSpImpl();
             oCuestionarioBean.setId(id);
-            CuestionarioDaoGenSpImpl oCuestionarioDao = new CuestionarioDaoGenSpImpl(strObjectName, oConnection);
+            CuestionarioDaoGenSpImpl oCuestionarioDao = new CuestionarioDaoGenSpImpl(strObjectName, strPojo, oConnection);
             oCuestionarioBean = oCuestionarioDao.get(oCuestionarioBean, 1);
             return "{\"data\":\"" + oCuestionarioBean.getTipo() + "\"}";
         } catch (Exception e) {
             throw new ServletException("GetContenido: View Error: " + e.getMessage());
         }
     }
-    
-    
+
 }

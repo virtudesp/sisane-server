@@ -41,7 +41,7 @@ public class DetallePedidoControlOperationSpImpl implements ControlOperationInte
         try {
             DataConnectionSource = new BoneConnectionPoolImpl();
             oConnection = DataConnectionSource.newConnection();
-            oDetallePedidoService = new DetallePedidoServiceSpImpl(ParameterCooker.prepareObject(request), oConnection);
+            oDetallePedidoService = new DetallePedidoServiceSpImpl(ParameterCooker.prepareObject(request), ParameterCooker.prepareObject(request), oConnection);
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":DetallePedidoControlOperationSpImpl ERROR: " + ex.getMessage()));
         }

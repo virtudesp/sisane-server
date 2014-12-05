@@ -18,7 +18,6 @@
 package net.daw.dao.generic.specific.implementation;
 
 import java.sql.Connection;
-import net.daw.bean.generic.specific.implementation.DocumentoBeanGenSpImpl;
 import net.daw.bean.generic.specific.implementation.PublicacionBeanGenSpImpl;
 import net.daw.dao.generic.implementation.TableDaoGenImpl;
 
@@ -28,7 +27,7 @@ import net.daw.dao.generic.implementation.TableDaoGenImpl;
  */
 public class PublicacionDaoGenSpImpl extends TableDaoGenImpl<PublicacionBeanGenSpImpl> {
 
-    public PublicacionDaoGenSpImpl(String strObject, Connection pooledConnection) throws Exception {
-        super(strObject, pooledConnection);
+    public PublicacionDaoGenSpImpl(String strObject, String pojo, Connection pooledConnection) throws Exception {
+        super(strObject, pojo, pooledConnection);
     }
 }

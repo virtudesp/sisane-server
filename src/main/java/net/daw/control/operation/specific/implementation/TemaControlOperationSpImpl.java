@@ -41,7 +41,7 @@ public class TemaControlOperationSpImpl implements ControlOperationInterface {
         try {
             DataConnectionSource = new BoneConnectionPoolImpl();
             oConnection = DataConnectionSource.newConnection();
-            oTemaService = new TemaServiceSpImpl(ParameterCooker.prepareObject(request), oConnection);
+            oTemaService = new TemaServiceSpImpl(ParameterCooker.prepareObject(request), ParameterCooker.prepareObject(request), oConnection);
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":TemaControlOperationSpImpl ERROR: " + ex.getMessage()));
         }

@@ -22,7 +22,7 @@ import java.sql.Connection;
 
 public class AmigoServiceGenSpImpl extends TableServiceGenImpl {
 
-    public AmigoServiceGenSpImpl(String strObject, Connection con) {
-        super(strObject, con);
+    public AmigoServiceGenSpImpl(String strObject, String pojo, Connection con) {
+        super(strObject, pojo, con);
     }
 }

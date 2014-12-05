@@ -38,13 +38,25 @@ import net.daw.service.publicinterface.ViewServiceInterface;
  * @author al037805
  */
 public class ActividadServiceSpImpl implements TableServiceInterface, ViewServiceInterface, MetaServiceInterface {
-    
+
     protected Connection oConnection = null;
     protected String strObjectName = null;
+    protected String strPojo = null;    
 
-    public ActividadServiceSpImpl(String strObject, Connection con) {
+    public ActividadServiceSpImpl(String strObject, String pojo, Connection con) {
         strObjectName = strObject;
         oConnection = con;
+        strPojo = Character.toUpperCase(pojo.charAt(0)) + pojo.substring(1);
+    }
+
+    @Override
+    public void setSource(String source) throws Exception {
+        strObjectName = source;
+    }
+    
+    @Override
+    public void setPojo(String pojo) throws Exception {
+        strPojo = Character.toUpperCase(pojo.charAt(0)) + pojo.substring(1);
     }
 
     @Override
@@ -52,7 +64,7 @@ public class ActividadServiceSpImpl implements TableServiceInterface, ViewServic
         String resultado = null;
         try {
             oConnection.setAutoCommit(false);
-            ActividadDaoSpcImpl oActividadDAO = new ActividadDaoSpcImpl(strObjectName, oConnection);
+            ActividadDaoSpcImpl oActividadDAO = new ActividadDaoSpcImpl(strObjectName, strPojo, oConnection);
             ActividadBeanGenSpImpl oActividad = new ActividadBeanGenSpImpl(id);
             Map<String, String> data = new HashMap<>();
             oActividadDAO.remove(oActividad);
@@ -73,7 +85,7 @@ public class ActividadServiceSpImpl implements TableServiceInterface, ViewServic
         String resultado = null;
         try {
             oConnection.setAutoCommit(false);
-            ActividadDaoSpcImpl oActividadDAO = new ActividadDaoSpcImpl(strObjectName, oConnection);
+            ActividadDaoSpcImpl oActividadDAO = new ActividadDaoSpcImpl(strObjectName, strPojo, oConnection);
             ActividadBeanGenSpImpl oActividad = new ActividadBeanGenSpImpl();
             Gson gson = new GsonBuilder().setDateFormat("dd/MM/yyyy").create();
             jason = EncodingUtilHelper.decodeURIComponent(jason);
@@ -96,7 +108,7 @@ public class ActividadServiceSpImpl implements TableServiceInterface, ViewServic
         String data = null;
         try {
             oConnection.setAutoCommit(false);
-            ActividadDaoSpcImpl oActividadDAO = new ActividadDaoSpcImpl(strObjectName, oConnection);
+            ActividadDaoSpcImpl oActividadDAO = new ActividadDaoSpcImpl(strObjectName, strPojo, oConnection);
             ActividadBeanGenSpImpl oActividad = new ActividadBeanGenSpImpl(id);
             oActividad = oActividadDAO.get(oActividad, 1);
             GsonBuilder gsonBuilder = new GsonBuilder();
@@ -116,7 +128,7 @@ public class ActividadServiceSpImpl implements TableServiceInterface, ViewServic
         String data = null;
         try {
             oConnection.setAutoCommit(false);
-            ActividadDaoSpcImpl oActividadDAO = new ActividadDaoSpcImpl(strObjectName, oConnection);
+            ActividadDaoSpcImpl oActividadDAO = new ActividadDaoSpcImpl(strObjectName, strPojo, oConnection);
             List<ActividadBeanGenSpImpl> oActividads = oActividadDAO.getPage(intRegsPerPag, intPage, alFilter, hmOrder);
             GsonBuilder gsonBuilder = new GsonBuilder();
             gsonBuilder.setDateFormat("dd/MM/yyyy");
@@ -136,7 +148,7 @@ public class ActividadServiceSpImpl implements TableServiceInterface, ViewServic
         String data = null;
         try {
             oConnection.setAutoCommit(false);
-            ActividadDaoSpcImpl oActividadDAO = new ActividadDaoSpcImpl(strObjectName, oConnection);
+            ActividadDaoSpcImpl oActividadDAO = new ActividadDaoSpcImpl(strObjectName, strPojo, oConnection);
             int pages = oActividadDAO.getPages(intRegsPerPag, alFilter);
             data = "{\"data\":\"" + Integer.toString(pages) + "\"}";
             oConnection.commit();
@@ -152,7 +164,7 @@ public class ActividadServiceSpImpl implements TableServiceInterface, ViewServic
         String data = null;
         try {
             oConnection.setAutoCommit(false);
-            ActividadDaoSpcImpl oActividadDAO = new ActividadDaoSpcImpl(strObjectName, oConnection);
+            ActividadDaoSpcImpl oActividadDAO = new ActividadDaoSpcImpl(strObjectName, strPojo, oConnection);
             int registers = oActividadDAO.getCount(alFilter);
             data = "{\"data\":\"" + Integer.toString(registers) + "\"}";
             oConnection.commit();
@@ -170,7 +182,7 @@ public class ActividadServiceSpImpl implements TableServiceInterface, ViewServic
         ArrayList<String> alColumns = null;
         try {
             oConnection.setAutoCommit(false);
-            ActividadDaoSpcImpl oActividadDAO = new ActividadDaoSpcImpl(strObjectName, oConnection);
+            ActividadDaoSpcImpl oActividadDAO = new ActividadDaoSpcImpl(strObjectName, strPojo, oConnection);
             alColumns = oActividadDAO.getPrettyColumnsNames();
             data = new Gson().toJson(alColumns);
             //data = "{\"data\":" + data + "}";
@@ -188,7 +200,7 @@ public class ActividadServiceSpImpl implements TableServiceInterface, ViewServic
         try {
             oConnection.setAutoCommit(false);
             ArrayList<String> alColumns = null;
-            ActividadDaoSpcImpl oActividadDAO = new ActividadDaoSpcImpl(strObjectName, oConnection);
+            ActividadDaoSpcImpl oActividadDAO = new ActividadDaoSpcImpl(strObjectName, strPojo, oConnection);
             alColumns = oActividadDAO.getColumnsNames();
             data = new Gson().toJson(alColumns);
             //data = "{\"data\":" + data + "}";
@@ -257,5 +269,5 @@ public class ActividadServiceSpImpl implements TableServiceInterface, ViewServic
     public String updateOne(int intId, String strTabla, String strCampo, String strValor) throws Exception {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
 }

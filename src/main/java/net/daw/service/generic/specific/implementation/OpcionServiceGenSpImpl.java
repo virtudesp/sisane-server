@@ -22,7 +22,7 @@ import java.sql.Connection;
 
 public class OpcionServiceGenSpImpl extends TableServiceGenImpl {
 
-    public OpcionServiceGenSpImpl(String strObject, Connection con) {
-        super(strObject, con);
+    public OpcionServiceGenSpImpl(String strObject, String pojo, Connection con) {
+        super(strObject, pojo, con);
     }
 }
