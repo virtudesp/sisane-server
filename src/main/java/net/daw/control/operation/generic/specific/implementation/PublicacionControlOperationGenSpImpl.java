@@ -35,7 +35,7 @@ import net.daw.service.specific.implementation.ProductoServiceSpImpl;
  */
 public class PublicacionControlOperationGenSpImpl extends ControlOperationGenImpl {
 
-    private PublicacionServiceGenSpImpl oPublicacionService = (PublicacionServiceGenSpImpl) process;
+    private PublicacionServiceGenSpImpl oPublicacionService = (PublicacionServiceGenSpImpl) oService;
 
     public PublicacionControlOperationGenSpImpl(HttpServletRequest request) throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, Exception {
         super(request);

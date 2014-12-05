@@ -32,7 +32,7 @@ function fDocumentoRoutes() {
         oDocumentoControl.list($('#indexContenido'), param().defaultizeUrlObjectParameters({}), null, oDocumentoModel, oDocumentoView);
         //documentoControl.modalListEventsLoading(documentoObject, documentoView, $('#indexContenido'), param().defaultizeUrlObjectParameters({}), null);        
         $('#indexContenidoJsp').empty();
-        $('#indexContenidoJsp').append(oDocumentoControl.getClassNameDocumento());
+        //$('#indexContenidoJsp').append(oDocumentoControl.getClassNameDocumento());
         return false;
     });
 

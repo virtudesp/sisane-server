@@ -38,18 +38,30 @@ public class ProveedorServiceSpImpl implements TableServiceInterface, ViewServic
 
     protected Connection oConnection = null;
     protected String strObjectName = null;
+    protected String strPojo = null;
 
-    public ProveedorServiceSpImpl(String strObject, Connection con) {
+    public ProveedorServiceSpImpl(String strObject, String pojo, Connection con) {
         strObjectName = strObject;
         oConnection = con;
+        strPojo = Character.toUpperCase(pojo.charAt(0)) + pojo.substring(1);
     }
 
+    @Override
+    public void setSource(String source) throws Exception {
+        strObjectName = source;
+    }
+    
+    @Override
+    public void setPojo(String pojo) throws Exception {
+        strPojo = Character.toUpperCase(pojo.charAt(0)) + pojo.substring(1);
+    }  
+    
     @Override
     public String remove(Integer id) throws Exception {
         String resultado = null;
         try {
             oConnection.setAutoCommit(false);
-            ProveedorDaoSpcImpl oProveedorDAO = new ProveedorDaoSpcImpl(strObjectName, oConnection);
+            ProveedorDaoSpcImpl oProveedorDAO = new ProveedorDaoSpcImpl(strObjectName, strPojo, oConnection);
             ProveedorBeanGenSpImpl oProveedor = new ProveedorBeanGenSpImpl(id);
             Map<String, String> data = new HashMap<>();
             oProveedorDAO.remove(oProveedor);
@@ -70,7 +82,7 @@ public class ProveedorServiceSpImpl implements TableServiceInterface, ViewServic
         String resultado = null;
         try {
             oConnection.setAutoCommit(false);
-            ProveedorDaoSpcImpl oProveedorDAO = new ProveedorDaoSpcImpl(strObjectName, oConnection);
+            ProveedorDaoSpcImpl oProveedorDAO = new ProveedorDaoSpcImpl(strObjectName, strPojo, oConnection);
             ProveedorBeanGenSpImpl oProveedor = new ProveedorBeanGenSpImpl();
             Gson gson = new GsonBuilder().setDateFormat("dd/MM/yyyy").create();
             jason = EncodingUtilHelper.decodeURIComponent(jason);
@@ -93,7 +105,7 @@ public class ProveedorServiceSpImpl implements TableServiceInterface, ViewServic
         String data = null;
         try {
             oConnection.setAutoCommit(false);
-            ProveedorDaoSpcImpl oProveedorDAO = new ProveedorDaoSpcImpl(strObjectName, oConnection);
+            ProveedorDaoSpcImpl oProveedorDAO = new ProveedorDaoSpcImpl(strObjectName, strPojo, oConnection);
             ProveedorBeanGenSpImpl oProveedor = new ProveedorBeanGenSpImpl(id);
             oProveedor = oProveedorDAO.get(oProveedor, AppConfigurationHelper.getJsonDepth());
             GsonBuilder gsonBuilder = new GsonBuilder();
@@ -113,7 +125,7 @@ public class ProveedorServiceSpImpl implements TableServiceInterface, ViewServic
         String data = null;
         try {
             oConnection.setAutoCommit(false);
-            ProveedorDaoSpcImpl oProveedorDAO = new ProveedorDaoSpcImpl(strObjectName, oConnection);
+            ProveedorDaoSpcImpl oProveedorDAO = new ProveedorDaoSpcImpl(strObjectName, strPojo, oConnection);
             List<ProveedorBeanGenSpImpl> oProveedors = oProveedorDAO.getPage(intRegsPerPag, intPage, alFilter, hmOrder);
             GsonBuilder gsonBuilder = new GsonBuilder();
             gsonBuilder.setDateFormat("dd/MM/yyyy");
@@ -133,7 +145,7 @@ public class ProveedorServiceSpImpl implements TableServiceInterface, ViewServic
         String data = null;
         try {
             oConnection.setAutoCommit(false);
-            ProveedorDaoSpcImpl oProveedorDAO = new ProveedorDaoSpcImpl(strObjectName, oConnection);
+            ProveedorDaoSpcImpl oProveedorDAO = new ProveedorDaoSpcImpl(strObjectName, strPojo, oConnection);
             int pages = oProveedorDAO.getPages(intRegsPerPag, alFilter);
             data = "{\"data\":\"" + Integer.toString(pages) + "\"}";
             oConnection.commit();
@@ -149,7 +161,7 @@ public class ProveedorServiceSpImpl implements TableServiceInterface, ViewServic
         String data = null;
         try {
             oConnection.setAutoCommit(false);
-            ProveedorDaoSpcImpl oProveedorDAO = new ProveedorDaoSpcImpl(strObjectName, oConnection);
+            ProveedorDaoSpcImpl oProveedorDAO = new ProveedorDaoSpcImpl(strObjectName, strPojo, oConnection);
             int registers = oProveedorDAO.getCount(alFilter);
             data = "{\"data\":\"" + Integer.toString(registers) + "\"}";
             oConnection.commit();
@@ -167,7 +179,7 @@ public class ProveedorServiceSpImpl implements TableServiceInterface, ViewServic
         ArrayList<String> alColumns = null;
         try {
             oConnection.setAutoCommit(false);
-            ProveedorDaoSpcImpl oProveedorDAO = new ProveedorDaoSpcImpl(strObjectName, oConnection);
+            ProveedorDaoSpcImpl oProveedorDAO = new ProveedorDaoSpcImpl(strObjectName, strPojo, oConnection);
             alColumns = oProveedorDAO.getPrettyColumnsNames();
             data = new Gson().toJson(alColumns);
             //data = "{\"data\":" + data + "}";
@@ -185,7 +197,7 @@ public class ProveedorServiceSpImpl implements TableServiceInterface, ViewServic
         try {
             oConnection.setAutoCommit(false);
             ArrayList<String> alColumns = null;
-            ProveedorDaoSpcImpl oProveedorDAO = new ProveedorDaoSpcImpl(strObjectName, oConnection);
+            ProveedorDaoSpcImpl oProveedorDAO = new ProveedorDaoSpcImpl(strObjectName, strPojo, oConnection);
             alColumns = oProveedorDAO.getColumnsNames();
             data = new Gson().toJson(alColumns);
             //data = "{\"data\":" + data + "}";

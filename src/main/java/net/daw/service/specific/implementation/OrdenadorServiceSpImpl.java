@@ -38,10 +38,22 @@ public class OrdenadorServiceSpImpl implements TableServiceInterface, ViewServic
 
     protected Connection oConnection = null;
     protected String strObjectName = null;
+    protected String strPojo = null;
 
-    public OrdenadorServiceSpImpl(String strObject, Connection con) {
+    public OrdenadorServiceSpImpl(String strObject, String pojo, Connection con) {
         strObjectName = strObject;
         oConnection = con;
+        strPojo = Character.toUpperCase(pojo.charAt(0)) + pojo.substring(1);
+    }
+
+    @Override
+    public void setSource(String source) throws Exception {
+        strObjectName = source;
+    }
+    
+    @Override
+    public void setPojo(String pojo) throws Exception {
+        strPojo = Character.toUpperCase(pojo.charAt(0)) + pojo.substring(1);
     }
 
     @Override
@@ -49,7 +61,7 @@ public class OrdenadorServiceSpImpl implements TableServiceInterface, ViewServic
         String resultado = null;
         try {
             oConnection.setAutoCommit(false);
-            OrdenadorDaoSpcImpl oOrdenadorDAO = new OrdenadorDaoSpcImpl(strObjectName, oConnection);
+            OrdenadorDaoSpcImpl oOrdenadorDAO = new OrdenadorDaoSpcImpl(strObjectName, strPojo, oConnection);
             OrdenadorBeanGenSpImpl oOrdenador = new OrdenadorBeanGenSpImpl(id);
             Map<String, String> data = new HashMap<>();
             oOrdenadorDAO.remove(oOrdenador);
@@ -70,7 +82,7 @@ public class OrdenadorServiceSpImpl implements TableServiceInterface, ViewServic
         String resultado = null;
         try {
             oConnection.setAutoCommit(false);
-            OrdenadorDaoSpcImpl oOrdenadorDAO = new OrdenadorDaoSpcImpl(strObjectName, oConnection);
+            OrdenadorDaoSpcImpl oOrdenadorDAO = new OrdenadorDaoSpcImpl(strObjectName, strPojo, oConnection);
             OrdenadorBeanGenSpImpl oOrdenador = new OrdenadorBeanGenSpImpl();
             Gson gson = new GsonBuilder().setDateFormat("dd/MM/yyyy").create();
             jason = EncodingUtilHelper.decodeURIComponent(jason);
@@ -93,7 +105,7 @@ public class OrdenadorServiceSpImpl implements TableServiceInterface, ViewServic
         String data = null;
         try {
             oConnection.setAutoCommit(false);
-            OrdenadorDaoSpcImpl oOrdenadorDAO = new OrdenadorDaoSpcImpl(strObjectName, oConnection);
+            OrdenadorDaoSpcImpl oOrdenadorDAO = new OrdenadorDaoSpcImpl(strObjectName, strPojo, oConnection);
             OrdenadorBeanGenSpImpl oOrdenador = new OrdenadorBeanGenSpImpl(id);
             oOrdenador = oOrdenadorDAO.get(oOrdenador, AppConfigurationHelper.getJsonDepth());
             GsonBuilder gsonBuilder = new GsonBuilder();
@@ -113,7 +125,7 @@ public class OrdenadorServiceSpImpl implements TableServiceInterface, ViewServic
         String data = null;
         try {
             oConnection.setAutoCommit(false);
-            OrdenadorDaoSpcImpl oOrdenadorDAO = new OrdenadorDaoSpcImpl(strObjectName, oConnection);
+            OrdenadorDaoSpcImpl oOrdenadorDAO = new OrdenadorDaoSpcImpl(strObjectName, strPojo, oConnection);
             List<OrdenadorBeanGenSpImpl> oOrdenadors = oOrdenadorDAO.getPage(intRegsPerPag, intPage, alFilter, hmOrder);
             GsonBuilder gsonBuilder = new GsonBuilder();
             gsonBuilder.setDateFormat("dd/MM/yyyy");
@@ -133,7 +145,7 @@ public class OrdenadorServiceSpImpl implements TableServiceInterface, ViewServic
         String data = null;
         try {
             oConnection.setAutoCommit(false);
-            OrdenadorDaoSpcImpl oOrdenadorDAO = new OrdenadorDaoSpcImpl(strObjectName, oConnection);
+            OrdenadorDaoSpcImpl oOrdenadorDAO = new OrdenadorDaoSpcImpl(strObjectName, strPojo, oConnection);
             int pages = oOrdenadorDAO.getPages(intRegsPerPag, alFilter);
             data = "{\"data\":\"" + Integer.toString(pages) + "\"}";
             oConnection.commit();
@@ -149,7 +161,7 @@ public class OrdenadorServiceSpImpl implements TableServiceInterface, ViewServic
         String data = null;
         try {
             oConnection.setAutoCommit(false);
-            OrdenadorDaoSpcImpl oOrdenadorDAO = new OrdenadorDaoSpcImpl(strObjectName, oConnection);
+            OrdenadorDaoSpcImpl oOrdenadorDAO = new OrdenadorDaoSpcImpl(strObjectName, strPojo, oConnection);
             int registers = oOrdenadorDAO.getCount(alFilter);
             data = "{\"data\":\"" + Integer.toString(registers) + "\"}";
             oConnection.commit();
@@ -167,7 +179,7 @@ public class OrdenadorServiceSpImpl implements TableServiceInterface, ViewServic
         ArrayList<String> alColumns = null;
         try {
             oConnection.setAutoCommit(false);
-            OrdenadorDaoSpcImpl oOrdenadorDAO = new OrdenadorDaoSpcImpl(strObjectName, oConnection);
+            OrdenadorDaoSpcImpl oOrdenadorDAO = new OrdenadorDaoSpcImpl(strObjectName, strPojo, oConnection);
             alColumns = oOrdenadorDAO.getPrettyColumnsNames();
             data = new Gson().toJson(alColumns);
             //data = "{\"data\":" + data + "}";
@@ -185,7 +197,7 @@ public class OrdenadorServiceSpImpl implements TableServiceInterface, ViewServic
         try {
             oConnection.setAutoCommit(false);
             ArrayList<String> alColumns = null;
-            OrdenadorDaoSpcImpl oOrdenadorDAO = new OrdenadorDaoSpcImpl(strObjectName, oConnection);
+            OrdenadorDaoSpcImpl oOrdenadorDAO = new OrdenadorDaoSpcImpl(strObjectName, strPojo, oConnection);
             alColumns = oOrdenadorDAO.getColumnsNames();
             data = new Gson().toJson(alColumns);
             //data = "{\"data\":" + data + "}";

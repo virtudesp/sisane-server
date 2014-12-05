@@ -31,8 +31,8 @@ import net.daw.service.generic.implementation.TableServiceGenImpl;
  */
 public class PublicacionServiceGenSpImpl extends TableServiceGenImpl {
 
-    public PublicacionServiceGenSpImpl(String strObject, Connection con) {
-        super(strObject, con);
+    public PublicacionServiceGenSpImpl(String strObject, String pojo, Connection con) {
+        super(strObject, pojo, con);
     }
 
     public String duplicate(Integer id) throws Exception {

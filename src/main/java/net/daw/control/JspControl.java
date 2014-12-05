@@ -86,7 +86,7 @@ public class JspControl extends HttpServlet {
                             connection = DataConnectionSource.newConnection();
                             oUsuario.setLogin(login);
                             oUsuario.setPassword(pass);
-                            UsuarioDaoGenSpImpl oUsuarioDao = new UsuarioDaoGenSpImpl("usuario", connection);
+                            UsuarioDaoGenSpImpl oUsuarioDao = new UsuarioDaoGenSpImpl("usuario", "Usuario", connection);
                             oUsuario = oUsuarioDao.getFromLogin(oUsuario);
                             if (oUsuario.getId() != 0) {
                                 //oUsuario = oUsuarioDao.type(oUsuario); //fill user level -> pending
@@ -118,9 +118,7 @@ public class JspControl extends HttpServlet {
                 if (op.equalsIgnoreCase("logout")) {
                     request.getSession().invalidate();
                 }
-                if (op.equals("cambia")){
-                    getServletContext().getRequestDispatcher("/jsp/formulariocambiar.jsp").forward(request, response);
-                }
+
                 
             }
             //delivering jsp page

@@ -42,7 +42,7 @@ public class MensajeprivadoControlOperationSpImpl implements ControlOperationInt
         try {
             DataConnectionSource = new BoneConnectionPoolImpl();
             oConnection = DataConnectionSource.newConnection();
-            oMensajeprivadoService = new MensajeprivadoServiceSpImpl(ParameterCooker.prepareObject(request), oConnection);
+            oMensajeprivadoService = new MensajeprivadoServiceSpImpl(ParameterCooker.prepareObject(request), ParameterCooker.prepareObject(request), oConnection);
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":MensajeprivadoControlOperationSpImpl ERROR: " + ex.getMessage()));
         }

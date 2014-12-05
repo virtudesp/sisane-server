@@ -32,7 +32,7 @@ function fPedidoRoutes() {
         oPedidoControl.list($('#indexContenido'), param().defaultizeUrlObjectParameters({}), null, oPedidoModel, oPedidoView);
         //pedidoControl.modalListEventsLoading(pedidoObject, pedidoView, $('#indexContenido'), param().defaultizeUrlObjectParameters({}), null);        
         $('#indexContenidoJsp').empty();
-        $('#indexContenidoJsp').append(oPedidoControl.getClassNamePedido());
+        //$('#indexContenidoJsp').append(oPedidoControl.getClassNamePedido());
         return false;
     });
 

@@ -20,12 +20,11 @@ package net.daw.dao.generic.specific.implementation;
 import net.daw.dao.generic.implementation.TableDaoGenImpl;
 import java.sql.Connection;
 import net.daw.bean.generic.specific.implementation.PedidoBeanGenSpImpl;
-import net.daw.helper.AppConfigurationHelper;
 
 public class PedidoDaoGenSpImpl extends TableDaoGenImpl<PedidoBeanGenSpImpl> {
 
-    public PedidoDaoGenSpImpl(String strObject, Connection pooledConnection) throws Exception {
-        super(strObject, pooledConnection);
+    public PedidoDaoGenSpImpl(String strObject, String pojo, Connection pooledConnection) throws Exception {
+        super(strObject, pojo, pooledConnection);
     }
 
     

@@ -35,8 +35,8 @@ import net.daw.helper.FilterBeanHelper;
 
 public abstract class ViewServiceGenImpl extends MetaServiceGenImpl implements ViewServiceInterface, MetaServiceInterface {
 
-    public ViewServiceGenImpl(String ob, Connection con) {
-        super(ob, con);
+    public ViewServiceGenImpl(String ob, String pojo, Connection con) {
+        super(ob, pojo, con);
     }
 
     @Override
@@ -44,9 +44,9 @@ public abstract class ViewServiceGenImpl extends MetaServiceGenImpl implements V
         String data = null;
         try {
             oConnection.setAutoCommit(false);
-            BeanGenImpl oGenericBean = (BeanGenImpl) Class.forName("net.daw.bean.generic.specific.implementation." + strObjectName + "BeanGenSpImpl").newInstance();
-            Constructor c = Class.forName("net.daw.dao.generic.specific.implementation." + strObjectName + "DaoGenSpImpl").getConstructor(String.class, Connection.class);
-            TableDaoGenImpl oGenericDao = (TableDaoGenImpl) c.newInstance(strObjectName, oConnection);
+            BeanGenImpl oGenericBean = (BeanGenImpl) Class.forName("net.daw.bean.generic.specific.implementation." + strPojo + "BeanGenSpImpl").newInstance();
+            Constructor c = Class.forName("net.daw.dao.generic.specific.implementation." + strPojo + "DaoGenSpImpl").getConstructor(String.class, String.class, Connection.class);
+            TableDaoGenImpl oGenericDao = (TableDaoGenImpl) c.newInstance(strObjectName, strPojo, oConnection);
             oGenericBean.setId(id);
             oGenericBean = (BeanGenImpl) (BeanInterface) oGenericDao.get(oGenericBean, AppConfigurationHelper.getJsonDepth());
             GsonBuilder gsonBuilder = new GsonBuilder();
@@ -67,9 +67,9 @@ public abstract class ViewServiceGenImpl extends MetaServiceGenImpl implements V
         String data = null;
         try {
             oConnection.setAutoCommit(false);
-            BeanGenImpl oGenericBean = (BeanGenImpl) Class.forName("net.daw.bean.generic.specific.implementation." + strObjectName + "BeanGenSpImpl").newInstance();
-            Constructor c = Class.forName("net.daw.dao.generic.specific.implementation." + strObjectName + "DaoGenSpImpl").getConstructor(String.class, Connection.class);
-            TableDaoGenImpl oGenericDao = (TableDaoGenImpl) c.newInstance(strObjectName, oConnection);
+            BeanGenImpl oGenericBean = (BeanGenImpl) Class.forName("net.daw.bean.generic.specific.implementation." + strPojo + "BeanGenSpImpl").newInstance();
+            Constructor c = Class.forName("net.daw.dao.generic.specific.implementation." + strPojo + "DaoGenSpImpl").getConstructor(String.class, String.class, Connection.class);
+            TableDaoGenImpl oGenericDao = (TableDaoGenImpl) c.newInstance(strObjectName, strPojo, oConnection);
             List<BeanInterface> loGenericBean = oGenericDao.getPage(intRegsPerPag, intPage, alFilter, hmOrder);
             GsonBuilder gsonBuilder = new GsonBuilder();
             gsonBuilder.setDateFormat("dd/MM/yyyy");
@@ -90,8 +90,8 @@ public abstract class ViewServiceGenImpl extends MetaServiceGenImpl implements V
         String data = null;
         try {
             oConnection.setAutoCommit(false);
-            Constructor c = Class.forName("net.daw.dao.generic.specific.implementation." + strObjectName + "DaoGenSpImpl").getConstructor(String.class, Connection.class);
-            TableDaoGenImpl oGenericDao = (TableDaoGenImpl) c.newInstance(strObjectName, oConnection);
+            Constructor c = Class.forName("net.daw.dao.generic.specific.implementation." + strPojo + "DaoGenSpImpl").getConstructor(String.class, String.class, Connection.class);
+            TableDaoGenImpl oGenericDao = (TableDaoGenImpl) c.newInstance(strObjectName, strPojo, oConnection);
             int pages = oGenericDao.getPages(intRegsPerPag, alFilter);
             data = "{\"data\":\"" + Integer.toString(pages) + "\"}";
         } catch (Exception ex) {
@@ -108,8 +108,8 @@ public abstract class ViewServiceGenImpl extends MetaServiceGenImpl implements V
         String data = null;
         try {
             oConnection.setAutoCommit(false);
-            Constructor c = Class.forName("net.daw.dao.generic.specific.implementation." + strObjectName + "DaoGenSpImpl").getConstructor(String.class, Connection.class);
-            TableDaoGenImpl oGenericDao = (TableDaoGenImpl) c.newInstance(strObjectName, oConnection);
+            Constructor c = Class.forName("net.daw.dao.generic.specific.implementation." + strPojo + "DaoGenSpImpl").getConstructor(String.class, String.class, Connection.class);
+            TableDaoGenImpl oGenericDao = (TableDaoGenImpl) c.newInstance(strObjectName, strPojo, oConnection);
             int registers = oGenericDao.getCount(alFilter);
             data = "{\"data\":\"" + Integer.toString(registers) + "\"}";
             return data;

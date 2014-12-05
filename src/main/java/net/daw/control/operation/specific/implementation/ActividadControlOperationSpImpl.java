@@ -45,7 +45,7 @@ public class ActividadControlOperationSpImpl implements ControlOperationInterfac
         try {
             DataConnectionSource = new BoneConnectionPoolImpl();
             oConnection = DataConnectionSource.newConnection();
-            oActividadService = new ActividadServiceSpImpl(ParameterCooker.prepareObject(request), oConnection);
+            oActividadService = new ActividadServiceSpImpl(ParameterCooker.prepareObject(request), ParameterCooker.prepareObject(request), oConnection);
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":ActividadControlOperationSpImpl ERROR: " + ex.getMessage()));
         }

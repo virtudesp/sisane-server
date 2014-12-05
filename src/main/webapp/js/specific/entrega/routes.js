@@ -32,7 +32,7 @@ function fEntregaRoutes() {
         oEntregaControl.list($('#indexContenido'), param().defaultizeUrlObjectParameters({}), null, oEntregaModel, oEntregaView);
         //entregaControl.modalListEventsLoading(entregaObject, entregaView, $('#indexContenido'), param().defaultizeUrlObjectParameters({}), null);        
         $('#indexContenidoJsp').empty();
-        $('#indexContenidoJsp').append(oEntregaControl.getClassNameEntrega());
+        //$('#indexContenidoJsp').append(oEntregaControl.getClassNameEntrega());
         return false;
     });
 

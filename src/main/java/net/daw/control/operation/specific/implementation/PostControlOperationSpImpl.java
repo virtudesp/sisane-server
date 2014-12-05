@@ -42,7 +42,7 @@ public class PostControlOperationSpImpl implements ControlOperationInterface {
         try {
             DataConnectionSource = new BoneConnectionPoolImpl();
             oConnection = DataConnectionSource.newConnection();
-            oPostService = new PostServiceSpImpl(ParameterCooker.prepareObject(request), oConnection);
+            oPostService = new PostServiceSpImpl(ParameterCooker.prepareObject(request), ParameterCooker.prepareObject(request), oConnection);
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":PostControlOperationSpImpl ERROR: " + ex.getMessage()));
         }

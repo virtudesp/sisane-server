@@ -32,7 +32,7 @@ function fAmigoRoutes() {
         oAmigoControl.list($('#indexContenido'), param().defaultizeUrlObjectParameters({}), null, oAmigoModel, oAmigoView);
         //amigoControl.modalListEventsLoading(amigoObject, amigoView, $('#indexContenido'), param().defaultizeUrlObjectParameters({}), null);        
         $('#indexContenidoJsp').empty();
-        $('#indexContenidoJsp').append(oAmigoControl.getClassNameAmigo());
+        //$('#indexContenidoJsp').append(oAmigoControl.getClassNameAmigo());
         return false;
     });
 

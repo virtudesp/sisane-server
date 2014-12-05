@@ -41,7 +41,7 @@ public class ProveedorControlOperationSpImpl implements ControlOperationInterfac
         try {
             DataConnectionSource = new BoneConnectionPoolImpl();
             oConnection = DataConnectionSource.newConnection();
-            oProveedorService = new ProveedorServiceSpImpl(ParameterCooker.prepareObject(request), oConnection);
+            oProveedorService = new ProveedorServiceSpImpl(ParameterCooker.prepareObject(request), ParameterCooker.prepareObject(request), oConnection);
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":ProveedorControlOperationSpImpl ERROR: " + ex.getMessage()));
         }

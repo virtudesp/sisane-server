@@ -26,8 +26,8 @@ import net.daw.helper.AppConfigurationHelper;
 
 public class DocumentoServiceGenSpImpl extends TableServiceGenImpl {
 
-    public DocumentoServiceGenSpImpl(String strObject, Connection con) {
-        super(strObject, con);
+    public DocumentoServiceGenSpImpl(String strObject, String pojo, Connection con) {
+        super(strObject, pojo, con);
     }
 
     public String getContenido(Integer id) throws Exception {
@@ -35,7 +35,7 @@ public class DocumentoServiceGenSpImpl extends TableServiceGenImpl {
         try {
             DocumentoBeanGenSpImpl oDocumentoBean = new DocumentoBeanGenSpImpl();
             oDocumentoBean.setId(id);
-            DocumentoDaoGenSpImpl oDocumentoDao = new DocumentoDaoGenSpImpl(strObjectName, oConnection);
+            DocumentoDaoGenSpImpl oDocumentoDao = new DocumentoDaoGenSpImpl(strObjectName, strPojo, oConnection);
             oDocumentoBean = oDocumentoDao.get(oDocumentoBean, AppConfigurationHelper.getJsonDepth());
             return "{\"data\":\"" + oDocumentoBean.getContenido() + "\"}";
         } catch (Exception e) {
