@@ -26,7 +26,7 @@ import net.daw.dao.generic.implementation.TableDaoGenImpl;
 import net.daw.helper.ExceptionBooster;
 import net.daw.service.publicinterface.MetaServiceInterface;
 
-public class MetaServiceGenImpl implements MetaServiceInterface {
+public abstract class MetaServiceGenImpl implements MetaServiceInterface {
 
     protected Connection oConnection = null;
     protected String strObjectName = null;

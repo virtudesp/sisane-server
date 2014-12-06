@@ -43,11 +43,7 @@ public class ViewDaoGenImpl<TIPO_OBJETO> extends MetaDaoGenImpl<TIPO_OBJETO> imp
     public int getPages(int intRegsPerPag, ArrayList<FilterBeanHelper> hmFilter) throws Exception {
         int pages = 0;
         try {
-            if (strView.substring(0, 6).equalsIgnoreCase("SELECT")) {
-                pages = oMysql.getPages(strView, intRegsPerPag);
-            } else {
-                pages = oMysql.getPages(strView, intRegsPerPag, hmFilter);
-            }
+            pages = oMysql.getPages(strView, intRegsPerPag, hmFilter);
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPages ERROR: " + ex.getMessage()));
         }
@@ -58,11 +54,7 @@ public class ViewDaoGenImpl<TIPO_OBJETO> extends MetaDaoGenImpl<TIPO_OBJETO> imp
     public int getCount(ArrayList<FilterBeanHelper> hmFilter) throws Exception {
         int pages = 0;
         try {
-            if (strView.substring(0, 6).equalsIgnoreCase("SELECT")) {
-                pages = oMysql.getCount(strView);
-            } else {
-                pages = oMysql.getCount(strView, hmFilter);
-            }
+            pages = oMysql.getCount(strView, hmFilter);
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getCount ERROR: " + ex.getMessage()));
         }
@@ -76,11 +68,7 @@ public class ViewDaoGenImpl<TIPO_OBJETO> extends MetaDaoGenImpl<TIPO_OBJETO> imp
         ArrayList<Integer> arrId;
         ArrayList<TIPO_OBJETO> arrCliente = new ArrayList<>();
         try {
-            if (strView.substring(0, 6).equalsIgnoreCase("SELECT")) {
-                arrId = oMysql.getPage(strView, intRegsPerPag, intPage);
-            } else {
-                arrId = oMysql.getPage(strView, intRegsPerPag, intPage, hmFilter, hmOrder);
-            }
+            arrId = oMysql.getPage(strView, intRegsPerPag, intPage, hmFilter, hmOrder);
             Iterator<Integer> iterador = arrId.listIterator();
             while (iterador.hasNext()) {
                 Object oBean = Class.forName(tipo.getName()).newInstance();
