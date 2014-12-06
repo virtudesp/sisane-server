@@ -299,14 +299,13 @@ public class MysqlDataSpImpl implements DataInterface {
             PreparedStatement oPreparedStatement = null;
             ResultSet oResultSet;
             try {
-
                 oPreparedStatement = connection.prepareStatement(strTabla);
                 oResultSet = oPreparedStatement.executeQuery();
                 //oResultSet = oStatement.executeQuery(strTabla);
                 ResultSetMetaData rsmd = oResultSet.getMetaData();
                 int numberOfColumns = rsmd.getColumnCount();
                 for (int contador = 1; contador <= numberOfColumns; contador++) {
-                    if (rsmd.getColumnName(contador).length() >= 4) {
+                    if (rsmd.getColumnName(contador).length() >= 5) { //los nombres de las tablas como minimo han de tener dos caracteres + el id_ o el set = 5 caracteres
                         if (rsmd.getColumnName(contador).substring(0, 3).equalsIgnoreCase("id_")) {
                             vector.add("obj_" + rsmd.getColumnName(contador).substring(3));
                         } else {
@@ -379,7 +378,7 @@ public class MysqlDataSpImpl implements DataInterface {
                 ResultSetMetaData rsmd = oResultSet.getMetaData();
                 int numberOfColumns = rsmd.getColumnCount();
                 for (int contador = 1; contador <= numberOfColumns; contador++) {
-                    if (rsmd.getColumnName(contador).length() >= 4) {
+                    if (rsmd.getColumnName(contador).length() >= 5) { //los nombres de las tablas como minimo han de tener dos caracteres + el id_ o el set = 5 caracteres
                         if (rsmd.getColumnName(contador).substring(0, 3).equalsIgnoreCase("id_")) {
                             vector.add(rsmd.getColumnName(contador).substring(3));
                         } else {
