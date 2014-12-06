@@ -23,7 +23,7 @@ import net.daw.bean.generic.specific.implementation.PostBeanGenSpImpl;
 
 public class PostDaoGenSpImpl extends TableDaoGenImpl<PostBeanGenSpImpl> {
 
-    public PostDaoGenSpImpl(String strObject, String pojo, Connection pooledConnection) throws Exception {
-        super(strObject, pojo, pooledConnection);
+    public PostDaoGenSpImpl(String strFuente, Connection pooledConnection) throws Exception {
+        super(strFuente, "Post", pooledConnection);
     }
 }

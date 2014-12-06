@@ -23,9 +23,8 @@ import net.daw.bean.generic.specific.implementation.RespuestaBeanGenSpImpl;
 
 public class RespuestaDaoGenSpImpl extends TableDaoGenImpl<RespuestaBeanGenSpImpl> {
 
-    public RespuestaDaoGenSpImpl(String strObject, String pojo, Connection pooledConnection) throws Exception {
-        super(strObject, pojo, pooledConnection);
+    public RespuestaDaoGenSpImpl(String strFuente, Connection pooledConnection) throws Exception {
+        super(strFuente, "Respuesta", pooledConnection);
     }
-
 
 }

@@ -41,14 +41,12 @@ public class ActividadDaoSpcImpl implements ViewDaoInterface<ActividadBeanGenSpI
     private String strTableName = null;
     private MysqlDataSpImpl oMysql = null;
     private Connection oConnection = null;
-    private String strPojo = null;
 
-    public ActividadDaoSpcImpl(String ob, String pojo, Connection oConexion) throws Exception {
+    public ActividadDaoSpcImpl(String ob, Connection oConexion) throws Exception {
         try {
             strTableName = ob;
             oConnection = oConexion;
             oMysql = new MysqlDataSpImpl(oConnection);
-            strPojo = pojo;
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":constructor ERROR: " + ex.getMessage()));
         }

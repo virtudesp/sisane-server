@@ -41,14 +41,12 @@ public class TemaDaoSpcImpl implements ViewDaoInterface<TemaBeanGenSpImpl>, Tabl
     private String strTableName = null;
     private MysqlDataSpImpl oMysql = null;
     private Connection oConnection = null;
-    private String strPojo = null;
 
-    public TemaDaoSpcImpl(String ob, String pojo, Connection oConexion) throws Exception {
+    public TemaDaoSpcImpl(String ob, Connection oConexion) throws Exception {
         try {
             strTableName = ob;
             oConnection = oConexion;
             oMysql = new MysqlDataSpImpl(oConnection);
-            strPojo = pojo;
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":constructor ERROR: " + ex.getMessage()));
         }
@@ -103,23 +101,23 @@ public class TemaDaoSpcImpl implements ViewDaoInterface<TemaBeanGenSpImpl>, Tabl
                     expand--;
                     if (expand > 0) {
                         oTemaBean.setNombre(oMysql.getOne(strTableName, "nombre", oTemaBean.getId()));
-                        
+
                         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                        String dateInString = oMysql.getOne(strTableName, "fechacreacion", oTemaBean.getId());         
-                        oTemaBean.setFechacreacion(formatter.parse(dateInString));                        
-                        
+                        String dateInString = oMysql.getOne(strTableName, "fechacreacion", oTemaBean.getId());
+                        oTemaBean.setFechacreacion(formatter.parse(dateInString));
+
                         oTemaBean.setId_tipotema(Integer.parseInt(oMysql.getOne(strTableName, "id_tipotema", oTemaBean.getId())));
                         oTemaBean.setId_usuario(Integer.parseInt(oMysql.getOne(strTableName, "id_usuario", oTemaBean.getId())));
 
                         TipotemaBeanGenSpImpl oTipotema = new TipotemaBeanGenSpImpl();
                         oTipotema.setId(Integer.parseInt(oMysql.getOne(strTableName, "id_tipotema", oTemaBean.getId())));
-                        TipotemaDaoGenSpImpl oTipotemaDAO = new TipotemaDaoGenSpImpl("tipotema", "Tipotema", oConnection);
+                        TipotemaDaoGenSpImpl oTipotemaDAO = new TipotemaDaoGenSpImpl("tipotema", oConnection);
                         oTipotema = oTipotemaDAO.get(oTipotema, AppConfigurationHelper.getJsonDepth());
                         oTemaBean.setObj_tipotema(oTipotema);
 
                         UsuarioBeanGenSpImpl oUsuario = new UsuarioBeanGenSpImpl();
                         oUsuario.setId(Integer.parseInt(oMysql.getOne(strTableName, "id_usuario", oTemaBean.getId())));
-                        UsuarioDaoGenSpImpl oUsuarioDAO = new UsuarioDaoGenSpImpl("usuario", "Usuario", oConnection);
+                        UsuarioDaoGenSpImpl oUsuarioDAO = new UsuarioDaoGenSpImpl("usuario", oConnection);
                         oUsuario = oUsuarioDAO.get(oUsuario, AppConfigurationHelper.getJsonDepth());
                         oTemaBean.setObj_usuario(oUsuario);
                     }
@@ -140,17 +138,17 @@ public class TemaDaoSpcImpl implements ViewDaoInterface<TemaBeanGenSpImpl>, Tabl
                 oTemaBean.setId(oMysql.insertOne(strTableName));
             }
             oMysql.updateOne(oTemaBean.getId(), strTableName, "nombre", oTemaBean.getNombre());
-                        
-            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");      
-            Date newDate = new Date();       
+
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            Date newDate = new Date();
             String date = formatter.format(newDate);
-            
+
             if (oMysql.getOne(strTableName, "fechacreacion", oTemaBean.getId()) != null) {
                 oMysql.updateOne(oTemaBean.getId(), strTableName, "fechacreacion", oMysql.getOne(strTableName, "fechacreacion", oTemaBean.getId()));
             } else {
                 oMysql.updateOne(oTemaBean.getId(), strTableName, "fechacreacion", date);
             }
-            
+
             oMysql.updateOne(oTemaBean.getId(), strTableName, "id_usuario", oTemaBean.getId_usuario().toString());
             oMysql.updateOne(oTemaBean.getId(), strTableName, "id_tipotema", oTemaBean.getId_tipotema().toString());
         } catch (Exception ex) {

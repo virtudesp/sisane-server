@@ -40,14 +40,12 @@ public class PostDaoSpcImpl implements ViewDaoInterface<PostBeanGenSpImpl>, Tabl
     private String strTableName = null;
     private MysqlDataSpImpl oMysql = null;
     private Connection oConnection = null;
-    private String strPojo = null;
 
-    public PostDaoSpcImpl(String ob, String pojo, Connection oConexion) throws Exception {
+    public PostDaoSpcImpl(String ob, Connection oConexion) throws Exception {
         try {
             strTableName = ob;
             oConnection = oConexion;
             oMysql = new MysqlDataSpImpl(oConnection);
-            strPojo = pojo;
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":constructor ERROR: " + ex.getMessage()));
         }
@@ -103,25 +101,25 @@ public class PostDaoSpcImpl implements ViewDaoInterface<PostBeanGenSpImpl>, Tabl
                     if (expand > 0) {
                         oPostBean.setTitulo(oMysql.getOne(strTableName, "titulo", oPostBean.getId()));
                         oPostBean.setMensaje(oMysql.getOne(strTableName, "mensaje", oPostBean.getId()));
-                        
+
                         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                        String dateInString = oMysql.getOne(strTableName, "fechacreacion", oPostBean.getId());  
-                        String dateInString2 = oMysql.getOne(strTableName, "fechamodificacion", oPostBean.getId());         
-                        oPostBean.setFechacreacion(formatter.parse(dateInString));   
-                        oPostBean.setFechamodificacion(formatter.parse(dateInString2));                        
-                        
+                        String dateInString = oMysql.getOne(strTableName, "fechacreacion", oPostBean.getId());
+                        String dateInString2 = oMysql.getOne(strTableName, "fechamodificacion", oPostBean.getId());
+                        oPostBean.setFechacreacion(formatter.parse(dateInString));
+                        oPostBean.setFechamodificacion(formatter.parse(dateInString2));
+
                         oPostBean.setId_tema(Integer.parseInt(oMysql.getOne(strTableName, "id_tema", oPostBean.getId())));
                         oPostBean.setId_usuario(Integer.parseInt(oMysql.getOne(strTableName, "id_usuario", oPostBean.getId())));
 
                         TemaBeanGenSpImpl oTema = new TemaBeanGenSpImpl();
                         oTema.setId(Integer.parseInt(oMysql.getOne(strTableName, "id_tema", oPostBean.getId())));
-                        TemaDaoSpcImpl oTemaDAO = new TemaDaoSpcImpl("tema", "Tema", oConnection);
+                        TemaDaoSpcImpl oTemaDAO = new TemaDaoSpcImpl("tema", oConnection);
                         oTema = oTemaDAO.get(oTema, AppConfigurationHelper.getJsonDepth());
                         oPostBean.setObj_tema(oTema);
 
                         UsuarioBeanGenSpImpl oUsuario = new UsuarioBeanGenSpImpl();
                         oUsuario.setId(Integer.parseInt(oMysql.getOne(strTableName, "id_usuario", oPostBean.getId())));
-                        UsuarioDaoGenSpImpl oUsuarioDAO = new UsuarioDaoGenSpImpl("usuario", "Usuario",oConnection);
+                        UsuarioDaoGenSpImpl oUsuarioDAO = new UsuarioDaoGenSpImpl("usuario", oConnection);
                         oUsuario = oUsuarioDAO.get(oUsuario, AppConfigurationHelper.getJsonDepth());
                         oPostBean.setObj_usuario(oUsuario);
                     }
@@ -139,25 +137,25 @@ public class PostDaoSpcImpl implements ViewDaoInterface<PostBeanGenSpImpl>, Tabl
     public PostBeanGenSpImpl set(PostBeanGenSpImpl oPostBean) throws Exception {
         try {
             Boolean isNew = false;
-            
+
             if (oPostBean.getId() == 0) {
                 oPostBean.setId(oMysql.insertOne(strTableName));
                 isNew = true;
             }
-            
+
             oMysql.updateOne(oPostBean.getId(), strTableName, "titulo", oPostBean.getTitulo());
             oMysql.updateOne(oPostBean.getId(), strTableName, "mensaje", oPostBean.getMensaje());
-            
-            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");      
-            Date newDate = new Date();       
+
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            Date newDate = new Date();
             String date = formatter.format(newDate);
-            
+
             if (isNew == false) {
                 oMysql.updateOne(oPostBean.getId(), strTableName, "fechacreacion", oMysql.getOne(strTableName, "fechacreacion", oPostBean.getId()));
             } else {
                 oMysql.updateOne(oPostBean.getId(), strTableName, "fechacreacion", date);
             }
-            
+
             oMysql.updateOne(oPostBean.getId(), strTableName, "fechamodificacion", date);
             oMysql.updateOne(oPostBean.getId(), strTableName, "id_tema", oPostBean.getId_tema().toString());
             oMysql.updateOne(oPostBean.getId(), strTableName, "id_usuario", oPostBean.getId_usuario().toString());

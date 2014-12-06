@@ -36,14 +36,12 @@ public class ProductoDaoSpcImpl implements ViewDaoInterface<ProductoBeanGenSpImp
     private String strTableName = null;
     private MysqlDataSpImpl oMysql = null;
     private Connection oConnection = null;
-    private String strPojo = null;
 
-    public ProductoDaoSpcImpl(String ob, String pojo, Connection oConexion) throws Exception {
+    public ProductoDaoSpcImpl(String ob, Connection oConexion) throws Exception {
         try {
             strTableName = ob;
             oConnection = oConexion;
             oMysql = new MysqlDataSpImpl(oConnection);
-            strPojo = pojo;
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":constructor ERROR: " + ex.getMessage()));
         }
@@ -105,7 +103,7 @@ public class ProductoDaoSpcImpl implements ViewDaoInterface<ProductoBeanGenSpImp
 
                         TipoproductoBeanGenSpImpl oTipoproducto = new TipoproductoBeanGenSpImpl();
                         oTipoproducto.setId(Integer.parseInt(oMysql.getOne(strTableName, "id_tipoproducto", oProductoBean.getId())));
-                        TipoproductoDaoSpcImpl oTipoproductoDAO = new TipoproductoDaoSpcImpl("tipoproducto", "Tipoproducto",oConnection);
+                        TipoproductoDaoSpcImpl oTipoproductoDAO = new TipoproductoDaoSpcImpl("tipoproducto", oConnection);
                         oTipoproducto = oTipoproductoDAO.get(oTipoproducto, AppConfigurationHelper.getJsonDepth());
                         oProductoBean.setObj_tipoproducto(oTipoproducto);
                     }

@@ -35,14 +35,12 @@ public class ImpuestoDaoSpcImpl implements ViewDaoInterface<ImpuestoBeanGenSpImp
     private String strTableName = null;
     private MysqlDataSpImpl oMysql = null;
     private Connection oConnection = null;
-    private String strPojo = null;
 
-    public ImpuestoDaoSpcImpl(String ob, String pojo, Connection oConexion) throws Exception {
+    public ImpuestoDaoSpcImpl(String ob, Connection oConexion) throws Exception {
         try {
             strTableName = ob;
             oConnection = oConexion;
             oMysql = new MysqlDataSpImpl(oConnection);
-            strPojo = pojo;
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":constructor ERROR: " + ex.getMessage()));
         }
@@ -96,9 +94,6 @@ public class ImpuestoDaoSpcImpl implements ViewDaoInterface<ImpuestoBeanGenSpImp
                 } else {
                     oImpuestoBean.setNombre(oMysql.getOne(strTableName, "nombre", oImpuestoBean.getId()));
                     oImpuestoBean.setValor(oMysql.getOne(strTableName, "valor", oImpuestoBean.getId()));
-    
-              
-                   
 
                 }
             } catch (Exception ex) {
@@ -116,11 +111,11 @@ public class ImpuestoDaoSpcImpl implements ViewDaoInterface<ImpuestoBeanGenSpImp
             if (oImpuestoBean.getId() == 0) {
                 oImpuestoBean.setId(oMysql.insertOne(strTableName));
             }
-            
+
             oMysql.updateOne(oImpuestoBean.getId(), strTableName, "nombre", oImpuestoBean.getNombre());
             oMysql.updateOne(oImpuestoBean.getId(), strTableName, "valor", oImpuestoBean.getValor());
-;
-          
+            ;
+
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":set ERROR: " + ex.getMessage()));
         }

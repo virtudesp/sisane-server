@@ -26,9 +26,8 @@ import net.daw.dao.publicinterface.ViewDaoInterface;
 
 public class ObjetoDaoGenSpImpl extends TableDaoGenImpl<ObjetoBeanGenSpImpl> implements TableDaoInterface<ObjetoBeanGenSpImpl>, ViewDaoInterface<ObjetoBeanGenSpImpl>, MetaDaoInterface {
 
-    public ObjetoDaoGenSpImpl(String strObject, String pojo, Connection pooledConnection) throws Exception {
-        super(strObject, pojo, pooledConnection);
+    public ObjetoDaoGenSpImpl(String strFuente, Connection pooledConnection) throws Exception {
+        super(strFuente, "Objeto", pooledConnection);
     }
-
 
 }
