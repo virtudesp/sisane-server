@@ -73,8 +73,6 @@ cuestionarioView.prototype.getBodyPageTable = function (page, fieldNames, visibl
 
 cuestionarioView.prototype.getCuestionarioForm = function (jason) {
     formulario = "<form id='cuestionarioForm' action='#' method='get' >";
-    // input oculto de usuario
-    formulario += "<input type='hidden' id='usuario' name='usuario' value='3' ><br> ";
     pregunta = "";
     for (i = 0; i < jason.length; i++) {
         if (pregunta != jason[i].obj_pregunta.descripcion) {
