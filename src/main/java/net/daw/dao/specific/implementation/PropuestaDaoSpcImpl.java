@@ -125,7 +125,7 @@ public class PropuestaDaoSpcImpl implements ViewDaoInterface<PropuestaBeanGenSpI
 
                     UsuarioBeanGenSpImpl oUsuario = new UsuarioBeanGenSpImpl();
                     oUsuario.setId(Integer.parseInt(oMysql.getOne(strTableName, "id_usuario", oPropuestaBean.getId())));
-                    UsuarioDaoGenSpImpl oUsuarioDAO = new UsuarioDaoGenSpImpl(strTableName, "usuario", oConnection);
+                    UsuarioDaoGenSpImpl oUsuarioDAO = new UsuarioDaoGenSpImpl(strTableName, oConnection);
                     oUsuario = oUsuarioDAO.get(oUsuario, AppConfigurationHelper.getJsonDepth());
                     oPropuestaBean.setObj_usuario(oUsuario);
 
