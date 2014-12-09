@@ -24,8 +24,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import net.daw.bean.generic.specific.implementation.PropuestaBeanGenSpImpl;
-import net.daw.dao.specific.implementation.PropuestaDaoSpcImpl;
+import net.daw.bean.generic.specific.implementation.ComentarioBeanGenSpImpl;
+import net.daw.dao.specific.implementation.ComentarioDaoSpcImpl;
 import net.daw.helper.EncodingUtilHelper;
 import net.daw.helper.ExceptionBooster;
 import net.daw.helper.FilterBeanHelper;
@@ -37,13 +37,13 @@ import net.daw.service.publicinterface.ViewServiceInterface;
  *
  * @author al037805
  */
-public class PropuestaServiceSpImpl implements TableServiceInterface, ViewServiceInterface, MetaServiceInterface {
+public class ComentarioServiceSpImpl implements TableServiceInterface, ViewServiceInterface, MetaServiceInterface {
 
     protected Connection oConnection = null;
     protected String strObjectName = null;
     protected String strPojo = null;
 
-    public PropuestaServiceSpImpl(String strObject, String pojo, Connection con) {
+    public ComentarioServiceSpImpl(String strObject, String pojo, Connection con) {
         strObjectName = strObject;
         oConnection = con;
         strPojo = Character.toUpperCase(pojo.charAt(0)) + pojo.substring(1);
@@ -64,12 +64,12 @@ public class PropuestaServiceSpImpl implements TableServiceInterface, ViewServic
         String resultado = null;
         try {
             oConnection.setAutoCommit(false);
-            PropuestaDaoSpcImpl oPropuestaDAO = new PropuestaDaoSpcImpl(strObjectName, strObjectName, oConnection);
-            PropuestaBeanGenSpImpl oPropuesta = new PropuestaBeanGenSpImpl(id);
+            ComentarioDaoSpcImpl oComentarioDAO = new ComentarioDaoSpcImpl(strObjectName, strObjectName, oConnection);
+            ComentarioBeanGenSpImpl oComentario = new ComentarioBeanGenSpImpl(id);
             Map<String, String> data = new HashMap<>();
-            oPropuestaDAO.remove(oPropuesta);
+            oComentarioDAO.remove(oComentario);
             data.put("status", "200");
-            data.put("message", "se ha eliminado el registro con id=" + oPropuesta.getId());
+            data.put("message", "se ha eliminado el registro con id=" + oComentario.getId());
             Gson gson = new Gson();
             resultado = gson.toJson(data);
             oConnection.commit();
@@ -85,15 +85,15 @@ public class PropuestaServiceSpImpl implements TableServiceInterface, ViewServic
         String resultado = null;
         try {
             oConnection.setAutoCommit(false);
-            PropuestaDaoSpcImpl oPropuestaDAO = new PropuestaDaoSpcImpl(strObjectName, strObjectName, oConnection);
-            PropuestaBeanGenSpImpl oPropuesta = new PropuestaBeanGenSpImpl();
+            ComentarioDaoSpcImpl oComentarioDAO = new ComentarioDaoSpcImpl(strObjectName, strObjectName, oConnection);
+            ComentarioBeanGenSpImpl oComentario = new ComentarioBeanGenSpImpl();
             Gson gson = new GsonBuilder().setDateFormat("dd/MM/yyyy").create();
             jason = EncodingUtilHelper.decodeURIComponent(jason);
-            oPropuesta = gson.fromJson(jason, oPropuesta.getClass());
-            oPropuesta = oPropuestaDAO.set(oPropuesta);
+            oComentario = gson.fromJson(jason, oComentario.getClass());
+            oComentario = oComentarioDAO.set(oComentario);
             Map<String, String> data = new HashMap<>();
             data.put("status", "200");
-            data.put("message", Integer.toString(oPropuesta.getId()));
+            data.put("message", Integer.toString(oComentario.getId()));
             resultado = gson.toJson(data);
             oConnection.commit();
         } catch (Exception ex) {
@@ -108,13 +108,13 @@ public class PropuestaServiceSpImpl implements TableServiceInterface, ViewServic
         String data = null;
         try {
             oConnection.setAutoCommit(false);
-            PropuestaDaoSpcImpl oPropuestaDAO = new PropuestaDaoSpcImpl(strObjectName, strObjectName, oConnection);
-            PropuestaBeanGenSpImpl oPropuesta = new PropuestaBeanGenSpImpl(id);
-            oPropuesta = oPropuestaDAO.get(oPropuesta, 1);
+            ComentarioDaoSpcImpl oComentarioDAO = new ComentarioDaoSpcImpl(strObjectName, strObjectName, oConnection);
+            ComentarioBeanGenSpImpl oComentario = new ComentarioBeanGenSpImpl(id);
+            oComentario = oComentarioDAO.get(oComentario, 1);
             GsonBuilder gsonBuilder = new GsonBuilder();
             gsonBuilder.setDateFormat("dd/MM/yyyy");
             Gson gson = gsonBuilder.create();
-            data = gson.toJson(oPropuesta);
+            data = gson.toJson(oComentario);
             oConnection.commit();
         } catch (Exception ex) {
             oConnection.rollback();
@@ -128,12 +128,12 @@ public class PropuestaServiceSpImpl implements TableServiceInterface, ViewServic
         String data = null;
         try {
             oConnection.setAutoCommit(false);
-            PropuestaDaoSpcImpl oPropuestaDAO = new PropuestaDaoSpcImpl(strObjectName, strObjectName, oConnection);
-            List<PropuestaBeanGenSpImpl> oPropuestas = oPropuestaDAO.getPage(intRegsPerPag, intPage, alFilter, hmOrder);
+            ComentarioDaoSpcImpl oComentarioDAO = new ComentarioDaoSpcImpl(strObjectName, strObjectName, oConnection);
+            List<ComentarioBeanGenSpImpl> oComentarios = oComentarioDAO.getPage(intRegsPerPag, intPage, alFilter, hmOrder);
             GsonBuilder gsonBuilder = new GsonBuilder();
             gsonBuilder.setDateFormat("dd/MM/yyyy");
             Gson gson = gsonBuilder.create();
-            data = gson.toJson(oPropuestas);
+            data = gson.toJson(oComentarios);
             data = "{\"list\":" + data + "}";
             oConnection.commit();
         } catch (Exception ex) {
@@ -148,8 +148,8 @@ public class PropuestaServiceSpImpl implements TableServiceInterface, ViewServic
         String data = null;
         try {
             oConnection.setAutoCommit(false);
-            PropuestaDaoSpcImpl oPropuestaDAO = new PropuestaDaoSpcImpl(strObjectName, strObjectName, oConnection);
-            int pages = oPropuestaDAO.getPages(intRegsPerPag, alFilter);
+            ComentarioDaoSpcImpl oComentarioDAO = new ComentarioDaoSpcImpl(strObjectName, strObjectName, oConnection);
+            int pages = oComentarioDAO.getPages(intRegsPerPag, alFilter);
             data = "{\"data\":\"" + Integer.toString(pages) + "\"}";
             oConnection.commit();
         } catch (Exception ex) {
@@ -164,8 +164,8 @@ public class PropuestaServiceSpImpl implements TableServiceInterface, ViewServic
         String data = null;
         try {
             oConnection.setAutoCommit(false);
-            PropuestaDaoSpcImpl oPropuestaDAO = new PropuestaDaoSpcImpl(strObjectName, strObjectName, oConnection);
-            int registers = oPropuestaDAO.getCount(alFilter);
+            ComentarioDaoSpcImpl oComentarioDAO = new ComentarioDaoSpcImpl(strObjectName, strObjectName, oConnection);
+            int registers = oComentarioDAO.getCount(alFilter);
             data = "{\"data\":\"" + Integer.toString(registers) + "\"}";
             oConnection.commit();
 
@@ -182,8 +182,8 @@ public class PropuestaServiceSpImpl implements TableServiceInterface, ViewServic
         ArrayList<String> alColumns = null;
         try {
             oConnection.setAutoCommit(false);
-            PropuestaDaoSpcImpl oPropuestaDAO = new PropuestaDaoSpcImpl(strObjectName, strObjectName, oConnection);
-            alColumns = oPropuestaDAO.getPrettyColumnsNames();
+            ComentarioDaoSpcImpl oComentarioDAO = new ComentarioDaoSpcImpl(strObjectName, strObjectName, oConnection);
+            alColumns = oComentarioDAO.getPrettyColumnsNames();
             data = new Gson().toJson(alColumns);
             //data = "{\"data\":" + data + "}";
             oConnection.commit();
@@ -200,8 +200,8 @@ public class PropuestaServiceSpImpl implements TableServiceInterface, ViewServic
         try {
             oConnection.setAutoCommit(false);
             ArrayList<String> alColumns = null;
-            PropuestaDaoSpcImpl oPropuestaDAO = new PropuestaDaoSpcImpl(strObjectName, strObjectName, oConnection);
-            alColumns = oPropuestaDAO.getColumnsNames();
+            ComentarioDaoSpcImpl oComentarioDAO = new ComentarioDaoSpcImpl(strObjectName, strObjectName, oConnection);
+            alColumns = oComentarioDAO.getColumnsNames();
             data = new Gson().toJson(alColumns);
             //data = "{\"data\":" + data + "}";
             oConnection.commit();
