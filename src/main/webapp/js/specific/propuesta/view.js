@@ -121,7 +121,7 @@ propuestaView.prototype.printValue = function (value, valor, recortar) {
     var strResult = "";
     if (/obj_tipopropuesta/.test(valor)) {
         if (value[valor].id > 0) {
-            strResult = '<a href="jsp#/' + valor.substring(4) + '/view/' + value[valor].id + '">' + value[valor].id + ":" + value[valor].nombre + '</a>';
+            strResult = '<a href="jsp#/' + valor.substring(4) + '/view/' + value[valor].id + '">' + value[valor].id + ":" + value[valor].descripcion + '</a>';
         } else {
             strResult = '???';
         }        
