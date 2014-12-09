@@ -18,16 +18,21 @@
 package net.daw.dao.generic.specific.implementation;
 
 import java.sql.Connection;
+import net.daw.bean.generic.specific.implementation.UsuarioProveedorBeanGenSpImpl;
 import net.daw.dao.generic.implementation.TableDaoGenImpl;
+import net.daw.dao.publicinterface.MetaDaoInterface;
+import net.daw.dao.publicinterface.TableDaoInterface;
+import net.daw.dao.publicinterface.ViewDaoInterface;
 
 /**
  *
  * @author a021008858z
  */
-public class VUsuarioProveedorDaoGenSpImpl extends TableDaoGenImpl<VUsuarioProveedorDaoGenSpImpl> {
 
-    public VUsuarioProveedorDaoGenSpImpl (String strObject, Connection pooledConnection) throws Exception {
-        super(strObject,strObject, pooledConnection);
+public class UsuarioProveedorDaoGenSpImpl extends TableDaoGenImpl<UsuarioProveedorBeanGenSpImpl> {
+
+    public UsuarioProveedorDaoGenSpImpl (String strObject, String pojo, Connection pooledConnection) throws Exception {
+        super(strObject, pojo, pooledConnection);
     }
     
 }

@@ -15,19 +15,20 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-package net.daw.service.generic.specific.implementation;
+package net.daw.control.operation.generic.specific.implementation;
 
-import java.sql.Connection;
-import net.daw.service.generic.implementation.TableServiceGenImpl;
+import javax.servlet.http.HttpServletRequest;
+import net.daw.control.operation.generic.implementation.ControlOperationGenImpl;
 
 /**
  *
  * @author a021008858z
  */
-public class VUsuarioProveedorServiceGenSpImpl extends TableServiceGenImpl {
+public class UsuarioProveedorControlOperationGenSpimpl extends ControlOperationGenImpl {
 
-    public VUsuarioProveedorServiceGenSpImpl(String strObject, Connection con) {
-        super(strObject, strObject, con);
+    public UsuarioProveedorControlOperationGenSpimpl(HttpServletRequest request) throws Exception {
+        super(request);
+        oService.setPojo("Proveedor");
+        oService.setSource("SELECT * FROM proveedor where id>=10");
     }
-
 }

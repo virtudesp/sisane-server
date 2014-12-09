@@ -106,22 +106,22 @@ public class ProveedorDaoSpcImpl implements ViewDaoInterface<ProveedorBeanGenSpI
                         oProveedorBean.setWeb(oMysql.getOne(strTableName, "web", oProveedorBean.getId()));
                         oProveedorBean.setFax(oMysql.getOne(strTableName, "fax", oProveedorBean.getId()));
                         oProveedorBean.setLocalidad(oMysql.getOne(strTableName, "localidad", oProveedorBean.getId()));
-
-                        oProveedorBean.setId_usuario_1(Integer.parseInt(oMysql.getOne(strTableName, "id_usuario_1", oProveedorBean.getId())));
-                        oProveedorBean.setId_usuario_2(Integer.parseInt(oMysql.getOne(strTableName, "id_usuario_2", oProveedorBean.getId())));
-
-                        UsuarioBeanGenSpImpl oUsuario1 = new UsuarioBeanGenSpImpl();
-                        oUsuario1.setId(Integer.parseInt(oMysql.getOne(strTableName, "id_usuario_1", oProveedorBean.getId())));
-                        
-                        UsuarioDaoGenSpImpl oUsuarioDAO1 = new UsuarioDaoGenSpImpl("usuario", "Usuario", oConnection);
-                        oUsuario1 = oUsuarioDAO1.get(oUsuario1, AppConfigurationHelper.getJsonDepth());
-                        oProveedorBean.setObj_usuario_1(oUsuario1);
-
-                        UsuarioBeanGenSpImpl oUsuario2 = new UsuarioBeanGenSpImpl();
-                        oUsuario2.setId(Integer.parseInt(oMysql.getOne(strTableName, "id_usuario_2", oProveedorBean.getId())));
-                        UsuarioDaoGenSpImpl oUsuarioDAO2 = new UsuarioDaoGenSpImpl("usuario", "Usuario", oConnection);
-                        oUsuario2 = oUsuarioDAO2.get(oUsuario2, AppConfigurationHelper.getJsonDepth());
-                        oProveedorBean.setObj_usuario_2(oUsuario2);
+//
+//                        oProveedorBean.setId_usuario_1(Integer.parseInt(oMysql.getOne(strTableName, "id_usuario_1", oProveedorBean.getId())));
+//                        oProveedorBean.setId_usuario_2(Integer.parseInt(oMysql.getOne(strTableName, "id_usuario_2", oProveedorBean.getId())));
+//
+//                        UsuarioBeanGenSpImpl oUsuario1 = new UsuarioBeanGenSpImpl();
+//                        oUsuario1.setId(Integer.parseInt(oMysql.getOne(strTableName, "id_usuario_1", oProveedorBean.getId())));
+//                        
+//                        UsuarioDaoGenSpImpl oUsuarioDAO1 = new UsuarioDaoGenSpImpl("usuario", "Usuario", oConnection);
+//                        oUsuario1 = oUsuarioDAO1.get(oUsuario1, AppConfigurationHelper.getJsonDepth());
+//                        oProveedorBean.setObj_usuario_1(oUsuario1);
+//
+//                        UsuarioBeanGenSpImpl oUsuario2 = new UsuarioBeanGenSpImpl();
+//                        oUsuario2.setId(Integer.parseInt(oMysql.getOne(strTableName, "id_usuario_2", oProveedorBean.getId())));
+//                        UsuarioDaoGenSpImpl oUsuarioDAO2 = new UsuarioDaoGenSpImpl("usuario", "Usuario", oConnection);
+//                        oUsuario2 = oUsuarioDAO2.get(oUsuario2, AppConfigurationHelper.getJsonDepth());
+//                        oProveedorBean.setObj_usuario_2(oUsuario2);
                     }
                 }
             } catch (Exception ex) {

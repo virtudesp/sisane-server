@@ -15,14 +15,19 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-package net.daw.control.route.generic.specific.implementation;
+package net.daw.service.generic.specific.implementation;
 
-import net.daw.control.route.generic.implementation.ControlRouteGenImpl;
+import java.sql.Connection;
+import net.daw.service.generic.implementation.TableServiceGenImpl;
 
 /**
  *
  * @author a021008858z
  */
-public class V_Usuario_ProveedorControlRouteGenSpImpl extends ControlRouteGenImpl{
-    
+public class UsuarioProveedorServiceGenSpImpl extends TableServiceGenImpl {
+
+    public UsuarioProveedorServiceGenSpImpl(String strObject, String pojo, Connection con) {
+        super(strObject, pojo, con);
+    }
+
 }

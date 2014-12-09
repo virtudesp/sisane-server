@@ -25,12 +25,12 @@ import net.daw.bean.publicinterface.BeanInterface;
  *
  * @author a021008858z
  */
-public class V_Usuario_ProveedorBeanGenSpImpl extends BeanGenImpl implements BeanInterface{
+public class UsuarioProveedorBeanGenSpImpl extends BeanGenImpl implements BeanInterface{
     
-    public V_Usuario_ProveedorBeanGenSpImpl() {
+    public UsuarioProveedorBeanGenSpImpl() {
     }
 
-    public V_Usuario_ProveedorBeanGenSpImpl(Integer id) {
+    public UsuarioProveedorBeanGenSpImpl(Integer id) {
         super(id);
     }
     

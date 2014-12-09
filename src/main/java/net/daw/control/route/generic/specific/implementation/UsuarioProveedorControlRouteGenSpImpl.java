@@ -15,18 +15,14 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-package net.daw.control.operation.generic.specific.implementation;
+package net.daw.control.route.generic.specific.implementation;
 
-import javax.servlet.http.HttpServletRequest;
-import net.daw.control.operation.generic.implementation.ControlOperationGenImpl;
+import net.daw.control.route.generic.implementation.ControlRouteGenImpl;
 
 /**
  *
  * @author a021008858z
  */
-public class VUsuarioProveedorControlOperationGenSpimpl extends ControlOperationGenImpl{
-
-    public VUsuarioProveedorControlOperationGenSpimpl(HttpServletRequest request) throws Exception {
-        super(request);
-    }
+public class UsuarioProveedorControlRouteGenSpImpl extends ControlRouteGenImpl{
+    
 }
