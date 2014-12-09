@@ -38,15 +38,18 @@ public class RespuestaServiceGenSpImpl extends TableServiceGenImpl {
     }
 
     public String setForm(Integer id, String jason) throws Exception {
-        String json = "";
         Map<Object, Object> nombreMap = new HashMap<Object, Object>();
         ArrayList<String> preguntas = new ArrayList<String>();
+        String resultado = "";
         try {
-            //oConnection.setAutoCommit(false);
+            oConnection.setAutoCommit(false);
             Gson gson = new GsonBuilder().setDateFormat("dd/MM/yyyy").create();
 
             nombreMap = gson.fromJson(jason, nombreMap.getClass());
             preguntas = (ArrayList) nombreMap.get("preguntas");
+
+            Map<String, String> data = new HashMap<>();
+            data.put("status", "200");
 
             for (Integer i = 0; i < preguntas.size(); i++) {
                 String pregunta = "pregunta_" + preguntas.get(i);
@@ -58,15 +61,19 @@ public class RespuestaServiceGenSpImpl extends TableServiceGenImpl {
                 oRespuesta.setId_pregunta(Integer.parseInt(preguntas.get(i)));
                 oRespuesta.setId_opcion(opcion);
 
-                json = gson.toJson(oRespuesta);
-                json = this.set(json);
-            }
+                RespuestaDaoGenSpImpl oRespuestaDao = new RespuestaDaoGenSpImpl("Respuesta", oConnection);
+                oRespuestaDao.set(oRespuesta);
 
-            // oConnection.commit();
+                resultado += oRespuesta.getId() + ", ";
+            }
+            data.put("message", resultado);
+            resultado = gson.toJson(data);
+            oConnection.commit();
+
         } catch (Exception ex) {
-            //oConnection.rollback();
+            oConnection.rollback();
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":set ERROR: " + ex.getMessage()));
         }
-        return json;
+        return resultado;
     }
 }

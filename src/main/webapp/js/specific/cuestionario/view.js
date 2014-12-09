@@ -79,15 +79,15 @@ cuestionarioView.prototype.getCuestionarioForm = function (jason) {
             pregunta = jason[i].obj_pregunta.descripcion
             idpregunta = jason[i].id_pregunta;
             // label de la pregunta
-            formulario += "<br/><label for='pregunta_" + idpregunta + "'>" + pregunta + "</label> <br/>";
+            formulario += "<br/><label>" + pregunta + "</label> <br/>";
             // input oculto con el id de la pregunta
-            formulario += "<input type='hidden' id='pregunta_"+idpregunta+"' name='preguntas' value='"+idpregunta+"' ><br> ";
+            formulario += "<input type='hidden' id='pregunta_" + idpregunta + "' name='preguntas' value='" + idpregunta + "' ><br> ";
             for (j = 0; j < jason.length; j++) {
                 if (jason[j].id_pregunta == idpregunta) {
                     // radio buttons con opciones de la pregunta
                     formulario += "<input type='radio'  class='col-md-offset-1 col-md-1' \n\
-                        name='pregunta_" + idpregunta + "' value='" + jason[j].id + "'>" 
-                        + jason[j].valor + "<br/>";
+                        name='pregunta_" + idpregunta + "' value='" + jason[j].id + "'/>"
+                            + jason[j].valor + "<br/>";
                 }
             }
         }

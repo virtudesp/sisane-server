@@ -39,7 +39,7 @@ cuestionarioControl.prototype.make = function (place, id, oModel, oModelSet, oVi
         var valores = [];
         valores = $('#cuestionarioForm').serializeObject();
         resultado = oRespuestaModel.setGenericOperation("setform",{json: JSON.stringify(valores)});
-        oView.doResultOperationNotifyToUser(place, resultado["status"], "Se ha creado el registro con id=" + resultado["message"], resultado["message"], true);
+        oView.doResultOperationNotifyToUser(place, resultado["status"], "Se han creado los registros con id=" + resultado["message"], resultado["message"], true);
         return false;
     });
 };
