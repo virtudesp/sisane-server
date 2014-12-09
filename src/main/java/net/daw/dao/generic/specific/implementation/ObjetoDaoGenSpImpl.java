@@ -19,16 +19,35 @@ package net.daw.dao.generic.specific.implementation;
 
 import net.daw.dao.generic.implementation.TableDaoGenImpl;
 import java.sql.Connection;
+import java.sql.SQLException;
 import net.daw.bean.generic.specific.implementation.ObjetoBeanGenSpImpl;
 import net.daw.dao.publicinterface.MetaDaoInterface;
 import net.daw.dao.publicinterface.TableDaoInterface;
 import net.daw.dao.publicinterface.ViewDaoInterface;
+import net.daw.helper.ExceptionBooster;
 
 public class ObjetoDaoGenSpImpl extends TableDaoGenImpl<ObjetoBeanGenSpImpl> implements TableDaoInterface<ObjetoBeanGenSpImpl>, ViewDaoInterface<ObjetoBeanGenSpImpl>, MetaDaoInterface {
 
+    protected Connection oConnection = null;
+    protected String strObjectName = null;
+
     public ObjetoDaoGenSpImpl(String strObject, Connection pooledConnection) throws Exception {
         super(strObject, pooledConnection);
+        strObjectName = strObject;
+        oConnection = pooledConnection;
     }
 
+    public int getId(ObjetoBeanGenSpImpl oObjeto) throws SQLException {
+        int id = 0;
+        try {
+            oConnection.setAutoCommit(false);
+            id = Integer.parseInt(oMysql.getId(strObjectName, "descripcion", oObjeto.getDescripcion()));
+
+        } catch (Exception ex) {
+            oConnection.rollback();
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ": ERROR: " + ex.getMessage()));
+        }
+        return id;
+    }
 
 }

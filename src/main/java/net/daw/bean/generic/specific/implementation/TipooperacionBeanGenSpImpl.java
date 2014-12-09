@@ -30,30 +30,4 @@ public class TipooperacionBeanGenSpImpl extends BeanGenImpl implements BeanInter
         super(id);
     }
 
-    @Expose(serialize = false)
-    private Integer id_operacion = 0;
-    @Expose(deserialize = false)
-    private OperacionBeanGenSpImpl obj_operacion = null;
-   
-    
-
-    public Integer getId_operacion() {
-        return id_operacion;
-    }
-
-    public void setId_operacion(Integer id_operacion) {
-        this.id_operacion = id_operacion;
-    }
-
-    public OperacionBeanGenSpImpl getObj_operacion() {
-        return obj_operacion;
-    }
-
-    public void setObj_operacion(OperacionBeanGenSpImpl obj_operacion) {
-        this.obj_operacion = obj_operacion;
-    }
-
-  
-
-
 }

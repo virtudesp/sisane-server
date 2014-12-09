@@ -30,6 +30,7 @@ import net.daw.connection.publicinterface.ConnectionInterface;
 import net.daw.helper.ExceptionBooster;
 import net.daw.helper.FilterBeanHelper;
 import net.daw.helper.ParameterCooker;
+import net.daw.helper.PermissionManager;
 
 public class ControlOperationGenImpl implements ControlOperationInterface {
 
@@ -37,6 +38,7 @@ public class ControlOperationGenImpl implements ControlOperationInterface {
     protected Connection connection = null;
     protected String strObject = null;
     protected TableServiceGenImpl process = null;
+    protected boolean perm;
 
     public ControlOperationGenImpl(HttpServletRequest request) throws Exception {
         try {
@@ -45,6 +47,9 @@ public class ControlOperationGenImpl implements ControlOperationInterface {
             strObject = ParameterCooker.prepareObject(request);
             Constructor oConstructor = Class.forName("net.daw.service.generic.specific.implementation." + ParameterCooker.prepareCamelCaseObject(request) + "ServiceGenSpImpl").getConstructor(String.class, Connection.class);
             process = (TableServiceGenImpl) oConstructor.newInstance(strObject, connection);
+            PermissionManager oPermissionM = new PermissionManager();
+            perm = oPermissionM.getPermission(request, connection);
+
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":ControlOperationGenImpl ERROR: " + ex.getMessage()));
         }
@@ -52,93 +57,152 @@ public class ControlOperationGenImpl implements ControlOperationInterface {
 
     @Override
     public String get(HttpServletRequest request) throws Exception {
-        String result = process.get(ParameterCooker.prepareId(request));
-        closeDB();
+        String result = "";
+        if (perm) {
+            result = process.get(ParameterCooker.prepareId(request));
+            closeDB();
+        } else {
+            result = "error";
+        }
         return result;
     }
 
     @Override
     public String getaggregateviewone(HttpServletRequest request) throws Exception {
-        String result = process.getAggregateViewOne(ParameterCooker.prepareId(request));
-        closeDB();
+        String result = "";
+        if (perm) {
+            result = result = process.getAggregateViewOne(ParameterCooker.prepareId(request));
+            closeDB();
+        } else {
+            result = "error";
+        }
+
         return result;
     }
 
     @Override
     public String getprettycolumns(HttpServletRequest request) throws Exception {
-        String result = process.getPrettyColumns();
-        closeDB();
+        String result = "";
+        if (perm) {
+            result = process.getPrettyColumns();
+            closeDB();
+        } else {
+            result = "error";
+        }
+
         return result;
     }
 
     @Override
     public String getcolumns(HttpServletRequest request) throws Exception {
-        String result = process.getColumns();
-        closeDB();
+        String result = "";
+        if (perm) {
+            result = process.getColumns();
+            closeDB();
+        } else {
+            result = "error";
+        }
+
         return result;
     }
 
     @Override
     public String getpage(HttpServletRequest request) throws Exception {
-        Integer intRegsPerPag = ParameterCooker.prepareRpp(request);
-        Integer intPage = ParameterCooker.preparePage(request);
-        ArrayList<FilterBeanHelper> alFilter = ParameterCooker.prepareFilter(request);
-        HashMap<String, String> hmOrder = ParameterCooker.prepareOrder(request);
-        String result = process.getPage(intRegsPerPag, intPage, alFilter, hmOrder);
-        closeDB();
+        String result = "";
+        if (perm) {
+            Integer intRegsPerPag = ParameterCooker.prepareRpp(request);
+            Integer intPage = ParameterCooker.preparePage(request);
+            ArrayList<FilterBeanHelper> alFilter = ParameterCooker.prepareFilter(request);
+            HashMap<String, String> hmOrder = ParameterCooker.prepareOrder(request);
+            result = process.getPage(intRegsPerPag, intPage, alFilter, hmOrder);
+            closeDB();
+        } else {
+            result = "error";
+        }
+
         return result;
     }
 
     @Override
     public String getpages(HttpServletRequest request) throws Exception {
-        Integer intRegsPerPag = ParameterCooker.prepareRpp(request);
-        ArrayList<FilterBeanHelper> alFilter = ParameterCooker.prepareFilter(request);
-        String result = process.getPages(intRegsPerPag, alFilter);
-        closeDB();
+        String result = "";
+        if (perm) {
+            Integer intRegsPerPag = ParameterCooker.prepareRpp(request);
+            ArrayList<FilterBeanHelper> alFilter = ParameterCooker.prepareFilter(request);
+            result = process.getPages(intRegsPerPag, alFilter);
+            closeDB();
+        } else {
+            result = "error";
+        }
         return result;
     }
 
     @Override
     public String getregisters(HttpServletRequest request) throws Exception {
-        ArrayList<FilterBeanHelper> alFilter = ParameterCooker.prepareFilter(request);
-        String result = process.getCount(alFilter);
-        closeDB();
+        String result = "";
+        if (perm) {
+            ArrayList<FilterBeanHelper> alFilter = ParameterCooker.prepareFilter(request);
+            result = process.getCount(alFilter);
+            closeDB();
+        } else {
+            result = "error";
+        }
         return result;
     }
 
     @Override
     public String getaggregateviewsome(HttpServletRequest request) throws Exception {
-        Integer intRegsPerPag = ParameterCooker.prepareRpp(request);
-        Integer intPage = ParameterCooker.preparePage(request);
-        ArrayList<FilterBeanHelper> alFilter = ParameterCooker.prepareFilter(request);
-        HashMap<String, String> hmOrder = ParameterCooker.prepareOrder(request);
-        String result = process.getAggregateViewSome(intRegsPerPag, intPage, alFilter, hmOrder);
-        closeDB();
+        String result = "";
+        if (perm) {
+            Integer intRegsPerPag = ParameterCooker.prepareRpp(request);
+            Integer intPage = ParameterCooker.preparePage(request);
+            ArrayList<FilterBeanHelper> alFilter = ParameterCooker.prepareFilter(request);
+            HashMap<String, String> hmOrder = ParameterCooker.prepareOrder(request);
+            result = process.getAggregateViewSome(intRegsPerPag, intPage, alFilter, hmOrder);
+            closeDB();
+        } else {
+            result = "error";
+        }
         return result;
     }
 
     @Override
     public String remove(HttpServletRequest request) throws Exception {
-        String result = process.remove(ParameterCooker.prepareId(request));
-        closeDB();
+        String result = "";
+        if (perm) {
+            result = process.remove(ParameterCooker.prepareId(request));
+            closeDB();
+        } else {
+            result = "error";
+        }
         return result;
     }
 
     @Override
     public String set(HttpServletRequest request) throws Exception {
-        String result = process.set(ParameterCooker.prepareJson(request));
-        closeDB();
+        String result = "";
+        if (perm) {
+            result = process.set(ParameterCooker.prepareJson(request));
+            closeDB();
+        } else {
+            result = "error";
+        }
         return result;
     }
+
     @Override
     public String updateOne(HttpServletRequest request) throws Exception {
-        int id = Integer.parseInt(request.getParameter("id"));
-        String tabla = request.getParameter("ob");
-        String campo = request.getParameter("campo");
-        String valor = request.getParameter("valor");
-        
-        String result = process.updateOne(id, tabla, campo, valor);
-        
+        String result = "";
+        if (perm) {
+            int id = Integer.parseInt(request.getParameter("id"));
+            String tabla = request.getParameter("ob");
+            String campo = request.getParameter("campo");
+            String valor = request.getParameter("valor");
+
+            result = process.updateOne(id, tabla, campo, valor);
+        } else {
+            result = "error";
+        }
         return result;
     }
 

@@ -2178,8 +2178,9 @@ CREATE TABLE IF NOT EXISTS `objeto` (
 
 CREATE TABLE IF NOT EXISTS `operacion` (
   `id` int(6) NOT NULL COMMENT 'ID Operación',
-  `descripcion` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Descripción',
-  `id_objeto` int(6) NOT NULL COMMENT 'ID Objeto'
+  `descripcion` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Descripción',
+  `id_objeto` int(6) NOT NULL COMMENT 'ID Objeto',
+  `id_tipooperacion` int(6) NOT NULL COMMENT 'ID Tipo Operación'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 -- --------------------------------------------------------
 
@@ -2202,7 +2203,7 @@ CREATE TABLE IF NOT EXISTS `permiso` (
 
 CREATE TABLE IF NOT EXISTS `tipooperacion` (
   `id` int(6) NOT NULL COMMENT 'Identificador',
-  `id_operacion` int(6) NOT NULL COMMENT 'ID Operación'
+  `descripcion` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Descripción'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
