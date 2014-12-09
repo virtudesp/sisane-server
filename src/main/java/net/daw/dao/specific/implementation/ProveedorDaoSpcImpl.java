@@ -22,7 +22,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import net.daw.bean.generic.specific.implementation.ProveedorBeanGenSpImpl;
-import net.daw.bean.generic.specific.implementation.TipoproductoBeanGenSpImpl;
 import net.daw.dao.publicinterface.MetaDaoInterface;
 import net.daw.dao.publicinterface.TableDaoInterface;
 import net.daw.dao.publicinterface.ViewDaoInterface;
@@ -36,12 +35,14 @@ public class ProveedorDaoSpcImpl implements ViewDaoInterface<ProveedorBeanGenSpI
     private String strTableName = null;
     private MysqlDataSpImpl oMysql = null;
     private Connection oConnection = null;
+    private String strPojo = null;
 
-    public ProveedorDaoSpcImpl(String ob, Connection oConexion) throws Exception {
+    public ProveedorDaoSpcImpl(String ob, String pojo, Connection oConexion) throws Exception {
         try {
             strTableName = ob;
             oConnection = oConexion;
             oMysql = new MysqlDataSpImpl(oConnection);
+            strPojo = pojo;
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":constructor ERROR: " + ex.getMessage()));
         }

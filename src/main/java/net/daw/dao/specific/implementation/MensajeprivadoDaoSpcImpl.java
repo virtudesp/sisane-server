@@ -24,7 +24,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import net.daw.bean.generic.specific.implementation.MensajeprivadoBeanGenSpImpl;
-import net.daw.bean.generic.specific.implementation.TipoproductoBeanGenSpImpl;
 import net.daw.bean.generic.specific.implementation.UsuarioBeanGenSpImpl;
 import net.daw.dao.generic.specific.implementation.UsuarioDaoGenSpImpl;
 import net.daw.dao.publicinterface.MetaDaoInterface;
@@ -40,12 +39,14 @@ public class MensajeprivadoDaoSpcImpl implements ViewDaoInterface<Mensajeprivado
     private String strTableName = null;
     private MysqlDataSpImpl oMysql = null;
     private Connection oConnection = null;
+    private String strPojo = null;
 
-    public MensajeprivadoDaoSpcImpl(String ob, Connection oConexion) throws Exception {
+    public MensajeprivadoDaoSpcImpl(String ob, String pojo, Connection oConexion) throws Exception {
         try {
             strTableName = ob;
             oConnection = oConexion;
             oMysql = new MysqlDataSpImpl(oConnection);
+            strPojo = pojo;
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":constructor ERROR: " + ex.getMessage()));
         }
@@ -111,13 +112,13 @@ public class MensajeprivadoDaoSpcImpl implements ViewDaoInterface<Mensajeprivado
 
                         UsuarioBeanGenSpImpl oUsuario1 = new UsuarioBeanGenSpImpl();
                         oUsuario1.setId(Integer.parseInt(oMysql.getOne(strTableName, "id_usuario_1", oMensajeprivadoBean.getId())));
-                        UsuarioDaoGenSpImpl oUsuarioDAO1 = new UsuarioDaoGenSpImpl("usuario", oConnection);
+                        UsuarioDaoGenSpImpl oUsuarioDAO1 = new UsuarioDaoGenSpImpl("usuario", "Usuario", oConnection);
                         oUsuario1 = oUsuarioDAO1.get(oUsuario1, AppConfigurationHelper.getJsonDepth());
                         oMensajeprivadoBean.setObj_usuario_1(oUsuario1);
                         
                         UsuarioBeanGenSpImpl oUsuario2 = new UsuarioBeanGenSpImpl();
                         oUsuario2.setId(Integer.parseInt(oMysql.getOne(strTableName, "id_usuario_2", oMensajeprivadoBean.getId())));
-                        UsuarioDaoGenSpImpl oUsuarioDAO2 = new UsuarioDaoGenSpImpl("usuario", oConnection);
+                        UsuarioDaoGenSpImpl oUsuarioDAO2 = new UsuarioDaoGenSpImpl("usuario", "Usuario", oConnection);
                         oUsuario2 = oUsuarioDAO2.get(oUsuario2, AppConfigurationHelper.getJsonDepth());
                         oMensajeprivadoBean.setObj_usuario_2(oUsuario2);
                     }

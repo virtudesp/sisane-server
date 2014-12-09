@@ -26,8 +26,8 @@ import net.daw.dao.publicinterface.ViewDaoInterface;
 
 public class AmigoDaoGenSpImpl extends TableDaoGenImpl<AmigoBeanGenSpImpl> implements TableDaoInterface<AmigoBeanGenSpImpl>, ViewDaoInterface<AmigoBeanGenSpImpl>, MetaDaoInterface {
 
-    public AmigoDaoGenSpImpl(String strObject, Connection pooledConnection) throws Exception {
-        super(strObject, pooledConnection);
+    public AmigoDaoGenSpImpl(String strObject, String pojo, Connection pooledConnection) throws Exception {
+        super(strObject, pojo, pooledConnection);
     }
 
 

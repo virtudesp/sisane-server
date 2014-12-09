@@ -27,12 +27,14 @@ public class MetaDaoGenImpl<TIPO_OBJETO> implements MetaDaoInterface {
 
     protected MysqlDataSpImpl oMysql = null;
     protected String strView = null;
+    protected String strPojo = null;
     protected Connection connection = null;
 
-    public MetaDaoGenImpl(String view, Connection pooledConnection) throws Exception {
+    public MetaDaoGenImpl(String view, String pojo, Connection pooledConnection) throws Exception {
         try {
             connection = pooledConnection;
             strView = view;
+            strPojo = pojo;
             oMysql = new MysqlDataSpImpl(connection);
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":constructor ERROR: " + ex.getMessage()));

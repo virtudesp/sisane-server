@@ -41,7 +41,7 @@ public class TipoproductoControlOperationSpImpl implements ControlOperationInter
         try {
             DataConnectionSource = new BoneConnectionPoolImpl();
             oConnection = DataConnectionSource.newConnection();
-            oTipoproductoService = new TipoproductoServiceSpImpl(ParameterCooker.prepareObject(request), oConnection);
+            oTipoproductoService = new TipoproductoServiceSpImpl(ParameterCooker.prepareObject(request), ParameterCooker.prepareObject(request), oConnection);
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":TipoproductoControlOperationSpImpl ERROR: " + ex.getMessage()));
         }

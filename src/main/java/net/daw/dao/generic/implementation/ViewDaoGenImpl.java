@@ -35,15 +35,19 @@ import net.daw.helper.FilterBeanHelper;
 
 public class ViewDaoGenImpl<TIPO_OBJETO> extends MetaDaoGenImpl<TIPO_OBJETO> implements ViewDaoInterface<TIPO_OBJETO>, MetaDaoInterface {
 
-    public ViewDaoGenImpl(String view, Connection pooledConnection) throws Exception {
-        super(view, pooledConnection);
+    public ViewDaoGenImpl(String view, String pojo, Connection pooledConnection) throws Exception {
+        super(view, pojo, pooledConnection);
     }
 
     @Override
     public int getPages(int intRegsPerPag, ArrayList<FilterBeanHelper> hmFilter) throws Exception {
         int pages = 0;
         try {
-            pages = oMysql.getPages(strView, intRegsPerPag, hmFilter);
+            if (strView.substring(0, 6).equalsIgnoreCase("SELECT")) {
+                pages = oMysql.getPages(strView, intRegsPerPag);
+            } else {
+                pages = oMysql.getPages(strView, intRegsPerPag, hmFilter);
+            }
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPages ERROR: " + ex.getMessage()));
         }
@@ -54,7 +58,11 @@ public class ViewDaoGenImpl<TIPO_OBJETO> extends MetaDaoGenImpl<TIPO_OBJETO> imp
     public int getCount(ArrayList<FilterBeanHelper> hmFilter) throws Exception {
         int pages = 0;
         try {
-            pages = oMysql.getCount(strView, hmFilter);
+            if (strView.substring(0, 6).equalsIgnoreCase("SELECT")) {
+            pages = oMysql.getCount(strView);
+            } else {
+               pages = oMysql.getCount(strView, hmFilter);
+            }
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getCount ERROR: " + ex.getMessage()));
         }
@@ -68,7 +76,11 @@ public class ViewDaoGenImpl<TIPO_OBJETO> extends MetaDaoGenImpl<TIPO_OBJETO> imp
         ArrayList<Integer> arrId;
         ArrayList<TIPO_OBJETO> arrCliente = new ArrayList<>();
         try {
-            arrId = oMysql.getPage(strView, intRegsPerPag, intPage, hmFilter, hmOrder);
+            if (strView.substring(0, 6).equalsIgnoreCase("SELECT")) {
+                arrId = oMysql.getPage(strView, intRegsPerPag, intPage);
+            } else {
+                arrId = oMysql.getPage(strView, intRegsPerPag, intPage, hmFilter, hmOrder);
+            }
             Iterator<Integer> iterador = arrId.listIterator();
             while (iterador.hasNext()) {
                 Object oBean = Class.forName(tipo.getName()).newInstance();
@@ -139,14 +151,14 @@ public class ViewDaoGenImpl<TIPO_OBJETO> extends MetaDaoGenImpl<TIPO_OBJETO> imp
                                 //pte porque da error
                                 Constructor c;
                                 try {
-                                    c = Class.forName("net.daw.dao.generic.specific.implementation." + strTabla + "DaoGenSpImpl").getConstructor(String.class, Connection.class);
+                                    c = Class.forName("net.daw.dao.generic.specific.implementation." + strTabla + "DaoGenSpImpl").getConstructor(String.class, String.class, Connection.class);
                                 } catch (ClassNotFoundException | NoSuchMethodException | SecurityException ex) {
                                     //aqui da el error--> pte d eestudiar
-                                    c =  Class.forName("net.daw.dao.specific.implementation." + strTabla + "DaoSpcImpl").getConstructor(String.class, Connection.class);
+                                    c = Class.forName("net.daw.dao.specific.implementation." + strTabla + "DaoSpcImpl").getConstructor(String.class, String.class, Connection.class);
                                 }
                                 //------------------------------------
 
-                                TableDaoGenImpl oAjenaDao = (TableDaoGenImpl) c.newInstance(strTabla, connection);
+                                TableDaoGenImpl oAjenaDao = (TableDaoGenImpl) c.newInstance(strTabla, strTabla, connection);
 
                                 BeanGenImpl oAjenaBean = (BeanGenImpl) Class.forName("net.daw.bean.generic.specific.implementation." + strTabla + "BeanGenSpImpl").newInstance();
                                 int intIdAjena = (Integer) metodo_getId_Ajena.invoke(oBean);
@@ -173,13 +185,13 @@ public class ViewDaoGenImpl<TIPO_OBJETO> extends MetaDaoGenImpl<TIPO_OBJETO> imp
                         final Class<?> classTipoParamMetodoSet = method.getParameterTypes()[0];
                         if (method.getName().length() >= 5) {
                             if (!method.getName().substring(3).toLowerCase(Locale.ENGLISH).substring(0, 4).equalsIgnoreCase("obj_")) {
-                                String strValor = oMysql.getOne(strView, method.getName().substring(3).toLowerCase(Locale.ENGLISH), (Integer) metodo_getId.invoke(oBean));
+                                String strValor = oMysql.getOne(strPojo, method.getName().substring(3).toLowerCase(Locale.ENGLISH), (Integer) metodo_getId.invoke(oBean));
                                 if (strValor != null) {
                                     parseValue(oBean, method, classTipoParamMetodoSet.getName(), strValor);
                                 }
                             }
                         } else {
-                            String strValor = oMysql.getOne(strView, method.getName().substring(3).toLowerCase(Locale.ENGLISH), (Integer) metodo_getId.invoke(oBean));
+                            String strValor = oMysql.getOne(strPojo, method.getName().substring(3).toLowerCase(Locale.ENGLISH), (Integer) metodo_getId.invoke(oBean));
                             if (strValor != null) {
                                 parseValue(oBean, method, classTipoParamMetodoSet.getName(), strValor);
                             }

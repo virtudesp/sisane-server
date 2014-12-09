@@ -45,7 +45,7 @@ public class EntregaControlOperationSpImpl implements ControlOperationInterface{
         try {
             DataConnectionSource = new BoneConnectionPoolImpl();
             oConnection = DataConnectionSource.newConnection();
-            oEntregaService = new EntregaServiceSpImpl(ParameterCooker.prepareObject(request), oConnection);
+            oEntregaService = new EntregaServiceSpImpl(ParameterCooker.prepareObject(request), ParameterCooker.prepareObject(request), oConnection);
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":EntregaControlOperationSpImpl ERROR: " + ex.getMessage()));
         }

@@ -44,6 +44,7 @@
             <li class="divider"></li>
             <li class="dropdown-header">Propuestas y votaciones</li>
             <li><a href="jsp#/tipopropuesta">Tipo propuesta</a></li>
+            <li><a href="jsp#/Propuesta">Propuesta</a></li>
         </ul>
     </li>    
 

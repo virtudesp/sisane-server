@@ -20,12 +20,10 @@ package net.daw.dao.specific.implementation;
 import java.sql.Connection;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import net.daw.bean.generic.specific.implementation.TemaBeanGenSpImpl;
-import net.daw.bean.generic.specific.implementation.TipoproductoBeanGenSpImpl;
 import net.daw.bean.generic.specific.implementation.TipotemaBeanGenSpImpl;
 import net.daw.bean.generic.specific.implementation.UsuarioBeanGenSpImpl;
 import net.daw.dao.generic.specific.implementation.TipotemaDaoGenSpImpl;
@@ -43,12 +41,14 @@ public class TemaDaoSpcImpl implements ViewDaoInterface<TemaBeanGenSpImpl>, Tabl
     private String strTableName = null;
     private MysqlDataSpImpl oMysql = null;
     private Connection oConnection = null;
+    private String strPojo = null;
 
-    public TemaDaoSpcImpl(String ob, Connection oConexion) throws Exception {
+    public TemaDaoSpcImpl(String ob, String pojo, Connection oConexion) throws Exception {
         try {
             strTableName = ob;
             oConnection = oConexion;
             oMysql = new MysqlDataSpImpl(oConnection);
+            strPojo = pojo;
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":constructor ERROR: " + ex.getMessage()));
         }
@@ -113,13 +113,13 @@ public class TemaDaoSpcImpl implements ViewDaoInterface<TemaBeanGenSpImpl>, Tabl
 
                         TipotemaBeanGenSpImpl oTipotema = new TipotemaBeanGenSpImpl();
                         oTipotema.setId(Integer.parseInt(oMysql.getOne(strTableName, "id_tipotema", oTemaBean.getId())));
-                        TipotemaDaoGenSpImpl oTipotemaDAO = new TipotemaDaoGenSpImpl("tipotema", oConnection);
+                        TipotemaDaoGenSpImpl oTipotemaDAO = new TipotemaDaoGenSpImpl("tipotema", "Tipotema", oConnection);
                         oTipotema = oTipotemaDAO.get(oTipotema, AppConfigurationHelper.getJsonDepth());
                         oTemaBean.setObj_tipotema(oTipotema);
 
                         UsuarioBeanGenSpImpl oUsuario = new UsuarioBeanGenSpImpl();
                         oUsuario.setId(Integer.parseInt(oMysql.getOne(strTableName, "id_usuario", oTemaBean.getId())));
-                        UsuarioDaoGenSpImpl oUsuarioDAO = new UsuarioDaoGenSpImpl("usuario", oConnection);
+                        UsuarioDaoGenSpImpl oUsuarioDAO = new UsuarioDaoGenSpImpl("usuario", "Usuario", oConnection);
                         oUsuario = oUsuarioDAO.get(oUsuario, AppConfigurationHelper.getJsonDepth());
                         oTemaBean.setObj_usuario(oUsuario);
                     }

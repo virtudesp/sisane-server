@@ -25,8 +25,8 @@ import net.daw.dao.generic.specific.implementation.PreguntaDaoGenSpImpl;
 
 public class PreguntaServiceGenSpImpl extends TableServiceGenImpl {
 
-    public PreguntaServiceGenSpImpl(String strObject, Connection con) {
-        super(strObject, con);
+    public PreguntaServiceGenSpImpl(String strObject, String pojo, Connection con) {
+        super(strObject, pojo, con);
     }
 
     public String getContenido(Integer id) throws Exception {
@@ -34,7 +34,7 @@ public class PreguntaServiceGenSpImpl extends TableServiceGenImpl {
         try {
             PreguntaBeanGenSpImpl oPreguntaBean = new PreguntaBeanGenSpImpl();
             oPreguntaBean.setId(id);
-            PreguntaDaoGenSpImpl oPreguntaDao = new PreguntaDaoGenSpImpl(strObjectName, oConnection);
+            PreguntaDaoGenSpImpl oPreguntaDao = new PreguntaDaoGenSpImpl(strObjectName, strPojo, oConnection);
             oPreguntaBean = oPreguntaDao.get(oPreguntaBean, 1);
             return "{\"data\":\"" + oPreguntaBean.getDescripcion() + "\"}";
         } catch (Exception e) {

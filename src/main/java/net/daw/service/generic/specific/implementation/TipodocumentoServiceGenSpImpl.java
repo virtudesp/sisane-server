@@ -22,7 +22,7 @@ import java.sql.Connection;
 
 public class TipodocumentoServiceGenSpImpl extends TableServiceGenImpl {
 
-    public TipodocumentoServiceGenSpImpl(String strObject, Connection con) {
-        super(strObject, con);
+    public TipodocumentoServiceGenSpImpl(String strObject, String pojo, Connection con) {
+        super(strObject, pojo, con);
     }
 }

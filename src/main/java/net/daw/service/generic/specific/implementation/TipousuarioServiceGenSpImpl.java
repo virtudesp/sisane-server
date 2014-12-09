@@ -19,14 +19,11 @@ package net.daw.service.generic.specific.implementation;
 
 import net.daw.service.generic.implementation.TableServiceGenImpl;
 import java.sql.Connection;
-import javax.servlet.ServletException;
-import net.daw.bean.generic.specific.implementation.EstadoBeanGenSpImpl;
-import net.daw.dao.generic.specific.implementation.EstadoDaoGenSpImpl;
 
 public class TipousuarioServiceGenSpImpl extends TableServiceGenImpl {
 
-    public TipousuarioServiceGenSpImpl(String strObject, Connection con) {
-        super(strObject, con);
+    public TipousuarioServiceGenSpImpl(String strObject, String pojo, Connection con) {
+        super(strObject, pojo, con);
     }
 }
 
