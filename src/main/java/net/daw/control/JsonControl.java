@@ -19,6 +19,7 @@ package net.daw.control;
 
 import com.google.gson.Gson;
 import java.io.IOException;
+import java.sql.Connection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
@@ -27,6 +28,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import net.daw.bean.generic.specific.implementation.UsuarioBeanGenSpImpl;
+import net.daw.connection.implementation.BoneConnectionPoolImpl;
+import net.daw.connection.publicinterface.ConnectionInterface;
 import net.daw.control.operation.generic.specific.implementation.AmigoControlOperationGenSpImpl;
 import net.daw.control.operation.generic.specific.implementation.CuestionarioControlOperationGenSpImpl;
 import net.daw.control.operation.generic.specific.implementation.DocumentoControlOperationGenSpImpl;
@@ -80,6 +84,8 @@ import net.daw.helper.EstadoHelper;
 import net.daw.helper.EstadoHelper.Tipo_estado;
 import net.daw.helper.ExceptionBooster;
 import net.daw.helper.ParameterCooker;
+import net.daw.helper.PermissionManager;
+import net.daw.service.generic.specific.implementation.PermisoServiceGenSpImpl;
 
 public class JsonControl extends HttpServlet {
 
@@ -117,10 +123,12 @@ public class JsonControl extends HttpServlet {
                 Logger.getLogger(JsonControl.class.getName()).log(Level.SEVERE, null, ex);
                 return;
             }
+
             //----------------------------------------------------------------------          
             retardo(0); //debug delay
             String jsonResult = "";
             if (request.getSession().getAttribute("usuarioBean") != null) {
+
                 switch (ParameterCooker.prepareObject(request)) {
                     case "documento":
                         DocumentoControlRouteGenSpImpl oDocumentoRoute = new DocumentoControlRouteGenSpImpl();
@@ -252,7 +260,16 @@ public class JsonControl extends HttpServlet {
             } else {
                 jsonResult = "{\"error\" : \"No active server session\"}";
             }
-            request.setAttribute("contenido", jsonResult);
+            if (jsonResult.equals("error")) {
+                Map<String, String> data = new HashMap<>();
+                data.put("status", "403");
+                data.put("message", "ERROR: You don't have permission to perform this operation");
+                Gson gson = new Gson();
+                request.setAttribute("contenido", gson.toJson(data));
+                getServletContext().getRequestDispatcher("/jsp/messageAjax.jsp").forward(request, response);
+            } else {
+                request.setAttribute("contenido", jsonResult);
+            }
             getServletContext().getRequestDispatcher("/jsp/messageAjax.jsp").forward(request, response);
         } catch (Exception ex) {
             if (EstadoHelper.getTipo_estado() == Tipo_estado.Debug) {

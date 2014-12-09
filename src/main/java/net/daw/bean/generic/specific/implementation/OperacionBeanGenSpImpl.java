@@ -36,7 +36,29 @@ public class OperacionBeanGenSpImpl extends BeanGenImpl implements BeanInterface
     private Integer id_objeto = 0;
     @Expose(deserialize = false)
     private ObjetoBeanGenSpImpl obj_objeto = null;
+    
+    @Expose(serialize = false)
+    private Integer id_tipooperacion = 0;
+    @Expose(deserialize = false)
+    private TipooperacionBeanGenSpImpl obj_tipooperacion = null;
+   
+    
 
+    public Integer getId_tipooperacion() {
+        return id_tipooperacion;
+    }
+
+    public void setId_tipooperacion(Integer id_tipooperacion) {
+        this.id_tipooperacion = id_tipooperacion;
+    }
+
+    public TipooperacionBeanGenSpImpl getObj_tipooperacion() {
+        return obj_tipooperacion;
+    }
+
+    public void setObj_operacion(TipooperacionBeanGenSpImpl obj_tipooperacion) {
+        this.obj_tipooperacion = obj_tipooperacion;
+    }
     public String getDescripcion() {
         return descripcion;
     }
