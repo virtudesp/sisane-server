@@ -28,7 +28,6 @@ import net.daw.bean.generic.specific.implementation.ComentarioBeanGenSpImpl;
 import net.daw.bean.generic.specific.implementation.PropuestaBeanGenSpImpl;
 import net.daw.bean.generic.specific.implementation.TipopropuestaBeanGenSpImpl;
 import net.daw.bean.generic.specific.implementation.UsuarioBeanGenSpImpl;
-import net.daw.dao.generic.specific.implementation.TipopropuestaDaoGenSpImpl;
 import net.daw.dao.generic.specific.implementation.UsuarioDaoGenSpImpl;
 import net.daw.dao.publicinterface.MetaDaoInterface;
 import net.daw.dao.publicinterface.TableDaoInterface;
