@@ -21,8 +21,6 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import javax.servlet.http.HttpServletRequest;
 import net.daw.bean.generic.specific.implementation.UsuarioBeanGenSpImpl;
-import net.daw.connection.implementation.BoneConnectionPoolImpl;
-import net.daw.connection.publicinterface.ConnectionInterface;
 import net.daw.service.generic.specific.implementation.PermisoServiceGenSpImpl;
 
 /**
@@ -36,7 +34,7 @@ public class PermissionManager {
     
     public boolean getPermission(HttpServletRequest request, Connection connection) throws SQLException, Exception {
        
-        PermisoServiceGenSpImpl oPermiso = new PermisoServiceGenSpImpl("permiso", connection);
+        PermisoServiceGenSpImpl oPermiso = new PermisoServiceGenSpImpl("permiso", "Permiso", connection);
         String objeto = request.getParameter("ob");
         String operacion = request.getParameter("op");
         UsuarioBeanGenSpImpl oUsuarioBean = (UsuarioBeanGenSpImpl) request.getSession().getAttribute("usuarioBean");

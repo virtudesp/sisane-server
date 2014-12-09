@@ -36,8 +36,7 @@ public class ControlOperationGenImpl implements ControlOperationInterface {
 
     protected ConnectionInterface DataConnectionSource = null;
     protected Connection connection = null;
-    protected String strObject = null;
-    protected TableServiceGenImpl process = null;
+    protected String strObject = null;    
     protected boolean perm;
     protected TableServiceGenImpl oService = null;
 
@@ -46,13 +45,10 @@ public class ControlOperationGenImpl implements ControlOperationInterface {
             DataConnectionSource = new BoneConnectionPoolImpl();
             connection = DataConnectionSource.newConnection();
             strObject = ParameterCooker.prepareObject(request);
-            Constructor oConstructor = Class.forName("net.daw.service.generic.specific.implementation." + ParameterCooker.prepareCamelCaseObject(request) + "ServiceGenSpImpl").getConstructor(String.class, Connection.class);
-            process = (TableServiceGenImpl) oConstructor.newInstance(strObject, connection);
-            PermissionManager oPermissionM = new PermissionManager();
-            perm = oPermissionM.getPermission(request, connection);
-
             Constructor oConstructor = Class.forName("net.daw.service.generic.specific.implementation." + ParameterCooker.prepareCamelCaseObject(request) + "ServiceGenSpImpl").getConstructor(String.class, String.class, Connection.class);
             oService = (TableServiceGenImpl) oConstructor.newInstance(strObject, strObject, connection);
+            PermissionManager oPermissionM = new PermissionManager();
+            perm = oPermissionM.getPermission(request, connection);           
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":ControlOperationGenImpl ERROR: " + ex.getMessage()));
         }
@@ -62,7 +58,7 @@ public class ControlOperationGenImpl implements ControlOperationInterface {
     public String get(HttpServletRequest request) throws Exception {
         String result = "";
         if (perm) {
-            result = process.get(ParameterCooker.prepareId(request));
+            result = oService.get(ParameterCooker.prepareId(request));
             closeDB();
         } else {
             result = "error";
@@ -74,7 +70,7 @@ public class ControlOperationGenImpl implements ControlOperationInterface {
     public String getaggregateviewone(HttpServletRequest request) throws Exception {
         String result = "";
         if (perm) {
-            result = result = process.getAggregateViewOne(ParameterCooker.prepareId(request));
+            result = result = oService.getAggregateViewOne(ParameterCooker.prepareId(request));
             closeDB();
         } else {
             result = "error";
@@ -87,7 +83,7 @@ public class ControlOperationGenImpl implements ControlOperationInterface {
     public String getprettycolumns(HttpServletRequest request) throws Exception {
         String result = "";
         if (perm) {
-            result = process.getPrettyColumns();
+            result = oService.getPrettyColumns();
             closeDB();
         } else {
             result = "error";
@@ -100,7 +96,7 @@ public class ControlOperationGenImpl implements ControlOperationInterface {
     public String getcolumns(HttpServletRequest request) throws Exception {
         String result = "";
         if (perm) {
-            result = process.getColumns();
+            result = oService.getColumns();
             closeDB();
         } else {
             result = "error";
@@ -117,7 +113,7 @@ public class ControlOperationGenImpl implements ControlOperationInterface {
             Integer intPage = ParameterCooker.preparePage(request);
             ArrayList<FilterBeanHelper> alFilter = ParameterCooker.prepareFilter(request);
             HashMap<String, String> hmOrder = ParameterCooker.prepareOrder(request);
-            result = process.getPage(intRegsPerPag, intPage, alFilter, hmOrder);
+            result = oService.getPage(intRegsPerPag, intPage, alFilter, hmOrder);
             closeDB();
         } else {
             result = "error";
@@ -132,7 +128,7 @@ public class ControlOperationGenImpl implements ControlOperationInterface {
         if (perm) {
             Integer intRegsPerPag = ParameterCooker.prepareRpp(request);
             ArrayList<FilterBeanHelper> alFilter = ParameterCooker.prepareFilter(request);
-            result = process.getPages(intRegsPerPag, alFilter);
+            result = oService.getPages(intRegsPerPag, alFilter);
             closeDB();
         } else {
             result = "error";
@@ -145,7 +141,7 @@ public class ControlOperationGenImpl implements ControlOperationInterface {
         String result = "";
         if (perm) {
             ArrayList<FilterBeanHelper> alFilter = ParameterCooker.prepareFilter(request);
-            result = process.getCount(alFilter);
+            result = oService.getCount(alFilter);
             closeDB();
         } else {
             result = "error";
@@ -161,7 +157,7 @@ public class ControlOperationGenImpl implements ControlOperationInterface {
             Integer intPage = ParameterCooker.preparePage(request);
             ArrayList<FilterBeanHelper> alFilter = ParameterCooker.prepareFilter(request);
             HashMap<String, String> hmOrder = ParameterCooker.prepareOrder(request);
-            result = process.getAggregateViewSome(intRegsPerPag, intPage, alFilter, hmOrder);
+            result = oService.getAggregateViewSome(intRegsPerPag, intPage, alFilter, hmOrder);
             closeDB();
         } else {
             result = "error";
@@ -173,7 +169,7 @@ public class ControlOperationGenImpl implements ControlOperationInterface {
     public String remove(HttpServletRequest request) throws Exception {
         String result = "";
         if (perm) {
-            result = process.remove(ParameterCooker.prepareId(request));
+            result = oService.remove(ParameterCooker.prepareId(request));
             closeDB();
         } else {
             result = "error";
@@ -185,7 +181,7 @@ public class ControlOperationGenImpl implements ControlOperationInterface {
     public String set(HttpServletRequest request) throws Exception {
         String result = "";
         if (perm) {
-            result = process.set(ParameterCooker.prepareJson(request));
+            result = oService.set(ParameterCooker.prepareJson(request));
             closeDB();
         } else {
             result = "error";
@@ -202,7 +198,7 @@ public class ControlOperationGenImpl implements ControlOperationInterface {
             String campo = request.getParameter("campo");
             String valor = request.getParameter("valor");
 
-            result = process.updateOne(id, tabla, campo, valor);
+            result = oService.updateOne(id, tabla, campo, valor);
         } else {
             result = "error";
         }

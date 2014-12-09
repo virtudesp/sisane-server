@@ -33,7 +33,7 @@ public class PermisoDaoGenSpImpl extends TableDaoGenImpl<PermisoBeanGenSpImpl> i
     
 
     public PermisoDaoGenSpImpl(String strObject, Connection pooledConnection) throws Exception {
-        super(strObject, pooledConnection);
+        super(strObject, "Permiso", pooledConnection);
        
     }
 

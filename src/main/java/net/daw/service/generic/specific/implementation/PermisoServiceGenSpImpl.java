@@ -35,8 +35,8 @@ public class PermisoServiceGenSpImpl extends TableServiceGenImpl {
     protected Connection oConnection = null;
     protected String strObjectName = null;
 
-    public PermisoServiceGenSpImpl(String strObject, Connection con) {
-        super(strObject, con);
+    public PermisoServiceGenSpImpl(String strObject,  String pojo, Connection con) {
+        super(strObject, pojo, con);
         strObjectName = strObject;
         oConnection = con;
     }
