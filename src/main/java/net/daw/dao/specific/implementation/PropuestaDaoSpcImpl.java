@@ -27,7 +27,6 @@ import java.util.Locale;
 import net.daw.bean.generic.specific.implementation.PropuestaBeanGenSpImpl;
 import net.daw.bean.generic.specific.implementation.TipopropuestaBeanGenSpImpl;
 import net.daw.bean.generic.specific.implementation.UsuarioBeanGenSpImpl;
-import net.daw.dao.generic.specific.implementation.TipopropuestaDaoGenSpImpl;
 import net.daw.dao.generic.specific.implementation.UsuarioDaoGenSpImpl;
 import net.daw.dao.publicinterface.MetaDaoInterface;
 import net.daw.dao.publicinterface.TableDaoInterface;
@@ -120,7 +119,7 @@ public class PropuestaDaoSpcImpl implements ViewDaoInterface<PropuestaBeanGenSpI
 
                     TipopropuestaBeanGenSpImpl oTipopropuesta = new TipopropuestaBeanGenSpImpl();
                     oTipopropuesta.setId(Integer.parseInt(oMysql.getOne(strTableName, "id_tipopropuesta", oPropuestaBean.getId())));
-                    TipopropuestaDaoGenSpImpl oTipoPropuestaDAO = new TipopropuestaDaoGenSpImpl("tipopropuesta", oConnection);
+                    TipopropuestaDaoSpcImpl oTipoPropuestaDAO = new TipopropuestaDaoSpcImpl("tipopropuesta", oConnection);
                     oTipopropuesta = oTipoPropuestaDAO.get(oTipopropuesta, AppConfigurationHelper.getJsonDepth());
                     oPropuestaBean.setObj_tipopropuesta(oTipopropuesta);
 

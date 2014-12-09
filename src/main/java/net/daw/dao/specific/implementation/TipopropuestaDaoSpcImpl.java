@@ -24,8 +24,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Locale;
-import net.daw.bean.generic.specific.implementation.ComentarioBeanGenSpImpl;
-import net.daw.bean.generic.specific.implementation.PropuestaBeanGenSpImpl;
+import net.daw.bean.generic.specific.implementation.TipopropuestaBeanGenSpImpl;
 import net.daw.bean.generic.specific.implementation.TipopropuestaBeanGenSpImpl;
 import net.daw.bean.generic.specific.implementation.UsuarioBeanGenSpImpl;
 import net.daw.dao.generic.specific.implementation.UsuarioDaoGenSpImpl;
@@ -41,19 +40,17 @@ import net.daw.helper.FilterBeanHelper;
  *
  * @author al037805
  */
-public class ComentarioDaoSpcImpl implements ViewDaoInterface<ComentarioBeanGenSpImpl>, TableDaoInterface<ComentarioBeanGenSpImpl>, MetaDaoInterface {
-
+public class TipopropuestaDaoSpcImpl implements ViewDaoInterface<TipopropuestaBeanGenSpImpl>, TableDaoInterface<TipopropuestaBeanGenSpImpl>, MetaDaoInterface {
+    
     private String strTableName = null;
     private MysqlDataSpImpl oMysql = null;
     private Connection oConnection = null;
-    private String strPojo = null;
 
-    public ComentarioDaoSpcImpl(String ob, String pojo, Connection oConexion) throws Exception {
+    public TipopropuestaDaoSpcImpl(String ob, Connection oConexion) throws Exception {
         try {
             strTableName = ob;
             oConnection = oConexion;
             oMysql = new MysqlDataSpImpl(oConnection);
-            strPojo = pojo;
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":constructor ERROR: " + ex.getMessage()));
         }
@@ -82,82 +79,61 @@ public class ComentarioDaoSpcImpl implements ViewDaoInterface<ComentarioBeanGenS
     }
 
     @Override
-    public ArrayList<ComentarioBeanGenSpImpl> getPage(int intRegsPerPag, int intPage, ArrayList<FilterBeanHelper> hmFilter, HashMap<String, String> hmOrder) throws Exception {
+    public ArrayList<TipopropuestaBeanGenSpImpl> getPage(int intRegsPerPag, int intPage, ArrayList<FilterBeanHelper> hmFilter, HashMap<String, String> hmOrder) throws Exception {
         ArrayList<Integer> arrId;
-        ArrayList<ComentarioBeanGenSpImpl> arrComentario = new ArrayList<>();
+        ArrayList<TipopropuestaBeanGenSpImpl> arrTipopropuesta = new ArrayList<>();
         try {
             arrId = oMysql.getPage(strTableName, intRegsPerPag, intPage, hmFilter, hmOrder);
             Iterator<Integer> iterador = arrId.listIterator();
             while (iterador.hasNext()) {
-                ComentarioBeanGenSpImpl oComentarioBean = new ComentarioBeanGenSpImpl(iterador.next());
-                arrComentario.add(this.get(oComentarioBean, 1));
+                TipopropuestaBeanGenSpImpl oTipopropuestaBean = new TipopropuestaBeanGenSpImpl(iterador.next());
+                arrTipopropuesta.add(this.get(oTipopropuestaBean, 1));
             }
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPage ERROR: " + ex.getMessage()));
         }
-        return arrComentario;
+        return arrTipopropuesta;
     }
 
     @Override
-    public ComentarioBeanGenSpImpl get(ComentarioBeanGenSpImpl oComentarioBean, Integer expand) throws Exception {
-        if (oComentarioBean.getId() > 0) {
+    public TipopropuestaBeanGenSpImpl get(TipopropuestaBeanGenSpImpl oTipopropuestaBean, Integer expand) throws Exception {
+        if (oTipopropuestaBean.getId() > 0) {
             try {
-                if (!oMysql.existsOne(strTableName, oComentarioBean.getId())) {
-                    oComentarioBean.setId(0);
+                if (!oMysql.existsOne(strTableName, oTipopropuestaBean.getId())) {
+                    oTipopropuestaBean.setId(0);
                 } else {
-                    oComentarioBean.setContenido(oMysql.getOne(strTableName, "contenido", oComentarioBean.getId()));
-
-                    /* Claves ajenas id_propuesta y id_usuario */
-                    oComentarioBean.setId_propuesta(Integer.parseInt(oMysql.getOne(strTableName, "id_propuesta", oComentarioBean.getId())));
-                    oComentarioBean.setId_usuario(Integer.parseInt(oMysql.getOne(strTableName, "id_usuario", oComentarioBean.getId())));
-
-                    PropuestaBeanGenSpImpl oPropuesta = new PropuestaBeanGenSpImpl();
-                    oPropuesta.setId(Integer.parseInt(oMysql.getOne(strTableName, "id_propuesta", oComentarioBean.getId())));
-                    PropuestaDaoSpcImpl oPropuestaDAO = new PropuestaDaoSpcImpl("propuesta", "propuesta",oConnection);
-                    oPropuesta = oPropuestaDAO.get(oPropuesta, AppConfigurationHelper.getJsonDepth());
-                    oComentarioBean.setObj_propuesta(oPropuesta);
-
-                    UsuarioBeanGenSpImpl oUsuario = new UsuarioBeanGenSpImpl();
-                    oUsuario.setId(Integer.parseInt(oMysql.getOne(strTableName, "id_usuario", oComentarioBean.getId())));
-                    UsuarioDaoGenSpImpl oUsuarioDAO = new UsuarioDaoGenSpImpl(strTableName, "usuario", oConnection);
-                    oUsuario = oUsuarioDAO.get(oUsuario, AppConfigurationHelper.getJsonDepth());
-                    oComentarioBean.setObj_usuario(oUsuario);
-
-                    /* Fin de las claves ajenas id_propuesta y id_usuario */
+                    oTipopropuestaBean.setDescripcion(oMysql.getOne(strTableName, "descripcion", oTipopropuestaBean.getId()));
+                   
                 }
             } catch (Exception ex) {
                 ExceptionBooster.boost(new Exception(this.getClass().getName() + ":get ERROR: " + ex.getMessage()));
             }
         } else {
-            oComentarioBean.setId(0);
+            oTipopropuestaBean.setId(0);
         }
-        return oComentarioBean;
+        return oTipopropuestaBean;
     }
 
     @Override
-    public ComentarioBeanGenSpImpl set(ComentarioBeanGenSpImpl oComentarioBean) throws Exception {
+    public TipopropuestaBeanGenSpImpl set(TipopropuestaBeanGenSpImpl oTipopropuestaBean) throws Exception {
         try {
-            if (oComentarioBean.getId() == 0) {
-                oComentarioBean.setId(oMysql.insertOne(strTableName));
+            if (oTipopropuestaBean.getId() == 0) {
+                oTipopropuestaBean.setId(oMysql.insertOne(strTableName));
             }
-            oMysql.updateOne(oComentarioBean.getId(), strTableName, "contenido", oComentarioBean.getContenido());
-
-            /* Aqui van las claves ajenas  */
-            oMysql.updateOne(oComentarioBean.getId(), strTableName, "id_propuesta", oComentarioBean.getId_propuesta().toString());
-            oMysql.updateOne(oComentarioBean.getId(), strTableName, "id_usuario", oComentarioBean.getId_usuario().toString());
-
-            /*  Fin de las claves ajenas en servidor */
+            oMysql.updateOne(oTipopropuestaBean.getId(), strTableName, "descripcion", oTipopropuestaBean.getDescripcion());
+            
+           
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":set ERROR: " + ex.getMessage()));
         }
-        return oComentarioBean;
+        return oTipopropuestaBean;
     }
 
     @Override
-    public int remove(ComentarioBeanGenSpImpl oComentarioBean) throws Exception {
+    public int remove(TipopropuestaBeanGenSpImpl oTipopropuestaBean) throws Exception {
         int result = 0;
         try {
-            result = oMysql.removeOne(oComentarioBean.getId(), strTableName);
+            result = oMysql.removeOne(oTipopropuestaBean.getId(), strTableName);
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":remove ERROR: " + ex.getMessage()));
         }
@@ -190,5 +166,6 @@ public class ComentarioDaoSpcImpl implements ViewDaoInterface<ComentarioBeanGenS
     public int updateOne(int intId, String strTabla, String strCampo, String strValor) throws Exception {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
+    
+    
 }
