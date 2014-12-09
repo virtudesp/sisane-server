@@ -39,14 +39,12 @@ public class MensajeprivadoDaoSpcImpl implements ViewDaoInterface<Mensajeprivado
     private String strTableName = null;
     private MysqlDataSpImpl oMysql = null;
     private Connection oConnection = null;
-    private String strPojo = null;
 
-    public MensajeprivadoDaoSpcImpl(String ob, String pojo, Connection oConexion) throws Exception {
+    public MensajeprivadoDaoSpcImpl(String ob, Connection oConexion) throws Exception {
         try {
             strTableName = ob;
             oConnection = oConexion;
             oMysql = new MysqlDataSpImpl(oConnection);
-            strPojo = pojo;
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":constructor ERROR: " + ex.getMessage()));
         }
@@ -104,21 +102,21 @@ public class MensajeprivadoDaoSpcImpl implements ViewDaoInterface<Mensajeprivado
                         oMensajeprivadoBean.setAsunto(oMysql.getOne(strTableName, "asunto", oMensajeprivadoBean.getId()));
 
                         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                        String dateInString = oMysql.getOne(strTableName, "fechaenvio", oMensajeprivadoBean.getId());         
-                        oMensajeprivadoBean.setFechaenvio(formatter.parse(dateInString));   
-                        
+                        String dateInString = oMysql.getOne(strTableName, "fechaenvio", oMensajeprivadoBean.getId());
+                        oMensajeprivadoBean.setFechaenvio(formatter.parse(dateInString));
+
                         oMensajeprivadoBean.setId_usuario_1(Integer.parseInt(oMysql.getOne(strTableName, "id_usuario_1", oMensajeprivadoBean.getId())));
                         oMensajeprivadoBean.setId_usuario_2(Integer.parseInt(oMysql.getOne(strTableName, "id_usuario_2", oMensajeprivadoBean.getId())));
 
                         UsuarioBeanGenSpImpl oUsuario1 = new UsuarioBeanGenSpImpl();
                         oUsuario1.setId(Integer.parseInt(oMysql.getOne(strTableName, "id_usuario_1", oMensajeprivadoBean.getId())));
-                        UsuarioDaoGenSpImpl oUsuarioDAO1 = new UsuarioDaoGenSpImpl("usuario", "Usuario", oConnection);
+                        UsuarioDaoGenSpImpl oUsuarioDAO1 = new UsuarioDaoGenSpImpl("usuario", oConnection);
                         oUsuario1 = oUsuarioDAO1.get(oUsuario1, AppConfigurationHelper.getJsonDepth());
                         oMensajeprivadoBean.setObj_usuario_1(oUsuario1);
-                        
+
                         UsuarioBeanGenSpImpl oUsuario2 = new UsuarioBeanGenSpImpl();
                         oUsuario2.setId(Integer.parseInt(oMysql.getOne(strTableName, "id_usuario_2", oMensajeprivadoBean.getId())));
-                        UsuarioDaoGenSpImpl oUsuarioDAO2 = new UsuarioDaoGenSpImpl("usuario", "Usuario", oConnection);
+                        UsuarioDaoGenSpImpl oUsuarioDAO2 = new UsuarioDaoGenSpImpl("usuario", oConnection);
                         oUsuario2 = oUsuarioDAO2.get(oUsuario2, AppConfigurationHelper.getJsonDepth());
                         oMensajeprivadoBean.setObj_usuario_2(oUsuario2);
                     }
@@ -136,24 +134,24 @@ public class MensajeprivadoDaoSpcImpl implements ViewDaoInterface<Mensajeprivado
     public MensajeprivadoBeanGenSpImpl set(MensajeprivadoBeanGenSpImpl oMensajeprivadoBean) throws Exception {
         try {
             Boolean isNew = false;
-            
+
             if (oMensajeprivadoBean.getId() == 0) {
                 oMensajeprivadoBean.setId(oMysql.insertOne(strTableName));
                 isNew = true;
             }
             oMysql.updateOne(oMensajeprivadoBean.getId(), strTableName, "mensaje", oMensajeprivadoBean.getMensaje());
             oMysql.updateOne(oMensajeprivadoBean.getId(), strTableName, "asunto", oMensajeprivadoBean.getAsunto());
-            
-            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");      
-            Date newDate = new Date();       
+
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            Date newDate = new Date();
             String date = formatter.format(newDate);
-            
+
             if (isNew == false) {
                 oMysql.updateOne(oMensajeprivadoBean.getId(), strTableName, "fechaenvio", oMysql.getOne(strTableName, "fechaenvio", oMensajeprivadoBean.getId()));
             } else {
                 oMysql.updateOne(oMensajeprivadoBean.getId(), strTableName, "fechaenvio", date);
             }
-            
+
             oMysql.updateOne(oMensajeprivadoBean.getId(), strTableName, "id_usuario_1", oMensajeprivadoBean.getId_usuario_1().toString());
             oMysql.updateOne(oMensajeprivadoBean.getId(), strTableName, "id_usuario_2", oMensajeprivadoBean.getId_usuario_2().toString());
         } catch (Exception ex) {

@@ -50,7 +50,7 @@ public class MensajeprivadoServiceSpImpl implements TableServiceInterface, ViewS
     public void setSource(String source) throws Exception {
         strObjectName = source;
     }
-    
+
     @Override
     public void setPojo(String pojo) throws Exception {
         strPojo = Character.toUpperCase(pojo.charAt(0)) + pojo.substring(1);
@@ -61,7 +61,7 @@ public class MensajeprivadoServiceSpImpl implements TableServiceInterface, ViewS
         String resultado = null;
         try {
             oConnection.setAutoCommit(false);
-            MensajeprivadoDaoSpcImpl oMensajeprivadoDAO = new MensajeprivadoDaoSpcImpl(strObjectName, strPojo, oConnection);
+            MensajeprivadoDaoSpcImpl oMensajeprivadoDAO = new MensajeprivadoDaoSpcImpl(strObjectName, oConnection);
             MensajeprivadoBeanGenSpImpl oMensajeprivado = new MensajeprivadoBeanGenSpImpl(id);
             Map<String, String> data = new HashMap<>();
             oMensajeprivadoDAO.remove(oMensajeprivado);
@@ -82,7 +82,7 @@ public class MensajeprivadoServiceSpImpl implements TableServiceInterface, ViewS
         String resultado = null;
         try {
             oConnection.setAutoCommit(false);
-            MensajeprivadoDaoSpcImpl oMensajeprivadoDAO = new MensajeprivadoDaoSpcImpl(strObjectName, strPojo, oConnection);
+            MensajeprivadoDaoSpcImpl oMensajeprivadoDAO = new MensajeprivadoDaoSpcImpl(strObjectName, oConnection);
             MensajeprivadoBeanGenSpImpl oMensajeprivado = new MensajeprivadoBeanGenSpImpl();
             Gson gson = new GsonBuilder().setDateFormat("dd/MM/yyyy HH:mm:ss").create();
             jason = EncodingUtilHelper.decodeURIComponent(jason);
@@ -104,7 +104,7 @@ public class MensajeprivadoServiceSpImpl implements TableServiceInterface, ViewS
         String resultado = null;
         try {
             oConnection.setAutoCommit(false);
-            MensajeprivadoDaoSpcImpl oMensajeprivadoDAO = new MensajeprivadoDaoSpcImpl(strObjectName, strPojo, oConnection);
+            MensajeprivadoDaoSpcImpl oMensajeprivadoDAO = new MensajeprivadoDaoSpcImpl(strObjectName, oConnection);
             MensajeprivadoBeanGenSpImpl oMensajeprivado = new MensajeprivadoBeanGenSpImpl();
             Gson gson = new GsonBuilder().setDateFormat("dd/MM/yyyy HH:mm:ss").create();
             jason = EncodingUtilHelper.decodeURIComponent(jason);
@@ -138,7 +138,7 @@ public class MensajeprivadoServiceSpImpl implements TableServiceInterface, ViewS
         String data = null;
         try {
             oConnection.setAutoCommit(false);
-            MensajeprivadoDaoSpcImpl oMensajeprivadoDAO = new MensajeprivadoDaoSpcImpl(strObjectName, strPojo, oConnection);
+            MensajeprivadoDaoSpcImpl oMensajeprivadoDAO = new MensajeprivadoDaoSpcImpl(strObjectName, oConnection);
             MensajeprivadoBeanGenSpImpl oMensajeprivado = new MensajeprivadoBeanGenSpImpl(id);
             oMensajeprivado = oMensajeprivadoDAO.get(oMensajeprivado, AppConfigurationHelper.getJsonDepth());
             GsonBuilder gsonBuilder = new GsonBuilder();
@@ -158,7 +158,7 @@ public class MensajeprivadoServiceSpImpl implements TableServiceInterface, ViewS
         String data = null;
         try {
             oConnection.setAutoCommit(false);
-            MensajeprivadoDaoSpcImpl oMensajeprivadoDAO = new MensajeprivadoDaoSpcImpl(strObjectName, strPojo, oConnection);
+            MensajeprivadoDaoSpcImpl oMensajeprivadoDAO = new MensajeprivadoDaoSpcImpl(strObjectName, oConnection);
             List<MensajeprivadoBeanGenSpImpl> oMensajeprivados = oMensajeprivadoDAO.getPage(intRegsPerPag, intPage, alFilter, hmOrder);
             GsonBuilder gsonBuilder = new GsonBuilder();
             gsonBuilder.setDateFormat("dd/MM/yyyy HH:mm:ss");
@@ -178,7 +178,7 @@ public class MensajeprivadoServiceSpImpl implements TableServiceInterface, ViewS
         String data = null;
         try {
             oConnection.setAutoCommit(false);
-            MensajeprivadoDaoSpcImpl oMensajeprivadoDAO = new MensajeprivadoDaoSpcImpl(strObjectName, strPojo, oConnection);
+            MensajeprivadoDaoSpcImpl oMensajeprivadoDAO = new MensajeprivadoDaoSpcImpl(strObjectName, oConnection);
             int pages = oMensajeprivadoDAO.getPages(intRegsPerPag, alFilter);
             data = "{\"data\":\"" + Integer.toString(pages) + "\"}";
             oConnection.commit();
@@ -194,7 +194,7 @@ public class MensajeprivadoServiceSpImpl implements TableServiceInterface, ViewS
         String data = null;
         try {
             oConnection.setAutoCommit(false);
-            MensajeprivadoDaoSpcImpl oMensajeprivadoDAO = new MensajeprivadoDaoSpcImpl(strObjectName, strPojo, oConnection);
+            MensajeprivadoDaoSpcImpl oMensajeprivadoDAO = new MensajeprivadoDaoSpcImpl(strObjectName, oConnection);
             int registers = oMensajeprivadoDAO.getCount(alFilter);
             data = "{\"data\":\"" + Integer.toString(registers) + "\"}";
             oConnection.commit();
@@ -212,7 +212,7 @@ public class MensajeprivadoServiceSpImpl implements TableServiceInterface, ViewS
         ArrayList<String> alColumns = null;
         try {
             oConnection.setAutoCommit(false);
-            MensajeprivadoDaoSpcImpl oMensajeprivadoDAO = new MensajeprivadoDaoSpcImpl(strObjectName, strPojo, oConnection);
+            MensajeprivadoDaoSpcImpl oMensajeprivadoDAO = new MensajeprivadoDaoSpcImpl(strObjectName, oConnection);
             alColumns = oMensajeprivadoDAO.getPrettyColumnsNames();
             data = new Gson().toJson(alColumns);
             //data = "{\"data\":" + data + "}";
@@ -230,7 +230,7 @@ public class MensajeprivadoServiceSpImpl implements TableServiceInterface, ViewS
         try {
             oConnection.setAutoCommit(false);
             ArrayList<String> alColumns = null;
-            MensajeprivadoDaoSpcImpl oMensajeprivadoDAO = new MensajeprivadoDaoSpcImpl(strObjectName, strPojo, oConnection);
+            MensajeprivadoDaoSpcImpl oMensajeprivadoDAO = new MensajeprivadoDaoSpcImpl(strObjectName, oConnection);
             alColumns = oMensajeprivadoDAO.getColumnsNames();
             data = new Gson().toJson(alColumns);
             //data = "{\"data\":" + data + "}";

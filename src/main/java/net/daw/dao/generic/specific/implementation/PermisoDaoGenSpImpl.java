@@ -26,9 +26,8 @@ import net.daw.dao.publicinterface.ViewDaoInterface;
 
 public class PermisoDaoGenSpImpl extends TableDaoGenImpl<PermisoBeanGenSpImpl> implements TableDaoInterface<PermisoBeanGenSpImpl>, ViewDaoInterface<PermisoBeanGenSpImpl>, MetaDaoInterface {
 
-    public PermisoDaoGenSpImpl(String strObject, String pojo, Connection pooledConnection) throws Exception {
-        super(strObject, pojo, pooledConnection);
+    public PermisoDaoGenSpImpl(String strFuente, Connection pooledConnection) throws Exception {
+        super(strFuente, "Permiso", pooledConnection);
     }
-
 
 }

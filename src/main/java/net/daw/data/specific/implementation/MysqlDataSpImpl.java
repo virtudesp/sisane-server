@@ -174,27 +174,13 @@ public class MysqlDataSpImpl implements DataInterface {
 
     @Override
     public Boolean existsOne(String strTabla, int id) throws Exception {
-
-        if (strTabla.substring(0, 6).equalsIgnoreCase("SELECT")) {
-            int intResult = 0;
-            Statement oStatement = null;
-            try {
-                oStatement = (Statement) connection.createStatement();
-                String strSQL = "SELECT COUNT(*) " + strTabla.substring(strTabla.indexOf("FROM"), strTabla.length());
-                ResultSet oResultSet = oStatement.executeQuery(strSQL);
-                while (oResultSet.next()) {
-                    intResult = oResultSet.getInt("COUNT(*)");
-                }
-            } catch (SQLException ex) {
-                ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getCountSQL ERROR:  Can't process query: " + ex.getMessage()));
-            } finally {
-                if (oStatement != null) {
-                    oStatement.close();
-                }
+        Boolean strOrigenTabla = true;
+        if (strTabla.length() >= 6) {
+            if (strTabla.substring(0, 6).equalsIgnoreCase("SELECT")) {
+                strOrigenTabla = false;
             }
-            return intResult > 0;
-        } else {
-
+        }
+        if (strOrigenTabla) {
             int result = 0;
             Statement oStatement = null;
             try {
@@ -215,7 +201,24 @@ public class MysqlDataSpImpl implements DataInterface {
 
             }
             return (result > 0);
-
+        } else {
+            int intResult = 0;
+            Statement oStatement = null;
+            try {
+                oStatement = (Statement) connection.createStatement();
+                String strSQL = "SELECT COUNT(*) " + strTabla.substring(strTabla.indexOf("FROM"), strTabla.length());
+                ResultSet oResultSet = oStatement.executeQuery(strSQL);
+                while (oResultSet.next()) {
+                    intResult = oResultSet.getInt("COUNT(*)");
+                }
+            } catch (SQLException ex) {
+                ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getCountSQL ERROR:  Can't process query: " + ex.getMessage()));
+            } finally {
+                if (oStatement != null) {
+                    oStatement.close();
+                }
+            }
+            return intResult > 0;
         }
     }
 
@@ -256,44 +259,15 @@ public class MysqlDataSpImpl implements DataInterface {
 
     @Override
     public ArrayList<String> getColumnsName(String strTabla) throws Exception {
+        Boolean strOrigenTabla = true;
+        if (strTabla.length() >= 6) {
+            if (strTabla.substring(0, 6).equalsIgnoreCase("SELECT")) {
+                strOrigenTabla = false;
+            }
+        }
         ArrayList<String> vector = null;
         Statement oStatement = null;
-
-        if (strTabla.substring(0, 6).equalsIgnoreCase("SELECT")) {
-            vector = new ArrayList<>();
-            String strResult = null;
-            PreparedStatement oPreparedStatement = null;
-            ResultSet oResultSet;
-            try {
-
-                oPreparedStatement = connection.prepareStatement(strTabla);
-                oResultSet = oPreparedStatement.executeQuery();
-                //oResultSet = oStatement.executeQuery(strTabla);
-                ResultSetMetaData rsmd = oResultSet.getMetaData();
-                int numberOfColumns = rsmd.getColumnCount();
-                for (int contador = 1; contador <= numberOfColumns; contador++) {
-                    if (rsmd.getColumnName(contador).length() >= 4) {
-                        if (rsmd.getColumnName(contador).substring(0, 3).equalsIgnoreCase("id_")) {
-                            vector.add("obj_" + rsmd.getColumnName(contador).substring(3));
-                        } else {
-                            vector.add(rsmd.getColumnName(contador));
-                        }
-
-                    } else {
-                        vector.add(rsmd.getColumnName(contador));
-                    }
-                }
-            } catch (SQLException ex) {
-                ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getColumnsName ERROR:  Can't process query: " + ex.getMessage()));
-            } finally {
-                if (oStatement != null) {
-                    oStatement.close();
-                }
-
-            }
-            return vector;
-        } else {
-
+        if (strOrigenTabla) {
             try {
                 vector = new ArrayList<>();
                 oStatement = connection.createStatement();
@@ -319,30 +293,21 @@ public class MysqlDataSpImpl implements DataInterface {
 
             }
             return vector;
-        }
-    }
-
-    @Override
-    public ArrayList<String> getPrettyColumns(String strTabla) throws Exception {
-        ArrayList<String> vector = null;
-        Statement oStatement = null;
-
-        if (strTabla.substring(0, 6).equalsIgnoreCase("SELECT")) {
+        } else {
             vector = new ArrayList<>();
             String strResult = null;
             PreparedStatement oPreparedStatement = null;
             ResultSet oResultSet;
             try {
-
                 oPreparedStatement = connection.prepareStatement(strTabla);
                 oResultSet = oPreparedStatement.executeQuery();
                 //oResultSet = oStatement.executeQuery(strTabla);
                 ResultSetMetaData rsmd = oResultSet.getMetaData();
                 int numberOfColumns = rsmd.getColumnCount();
                 for (int contador = 1; contador <= numberOfColumns; contador++) {
-                    if (rsmd.getColumnName(contador).length() >= 4) {
+                    if (rsmd.getColumnName(contador).length() >= 5) { //los nombres de las tablas como minimo han de tener dos caracteres + el id_ o el set = 5 caracteres
                         if (rsmd.getColumnName(contador).substring(0, 3).equalsIgnoreCase("id_")) {
-                            vector.add(rsmd.getColumnName(contador).substring(3));
+                            vector.add("obj_" + rsmd.getColumnName(contador).substring(3));
                         } else {
                             vector.add(rsmd.getColumnName(contador));
                         }
@@ -360,8 +325,21 @@ public class MysqlDataSpImpl implements DataInterface {
 
             }
             return vector;
-        } else {
 
+        }
+    }
+
+    @Override
+    public ArrayList<String> getPrettyColumns(String strTabla) throws Exception {
+        Boolean strOrigenTabla = true;
+        if (strTabla.length() >= 6) {
+            if (strTabla.substring(0, 6).equalsIgnoreCase("SELECT")) {
+                strOrigenTabla = false;
+            }
+        }
+        ArrayList<String> vector = null;
+        Statement oStatement = null;
+        if (strOrigenTabla) {
             try {
                 vector = new ArrayList<>();
                 oStatement = connection.createStatement();
@@ -380,6 +358,39 @@ public class MysqlDataSpImpl implements DataInterface {
                 }
             } catch (SQLException ex) {
                 ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPrettyColumns ERROR:  Can't process query: " + ex.getMessage()));
+            } finally {
+                if (oStatement != null) {
+                    oStatement.close();
+                }
+
+            }
+            return vector;
+        } else {
+            vector = new ArrayList<>();
+            String strResult = null;
+            PreparedStatement oPreparedStatement = null;
+            ResultSet oResultSet;
+            try {
+
+                oPreparedStatement = connection.prepareStatement(strTabla);
+                oResultSet = oPreparedStatement.executeQuery();
+                //oResultSet = oStatement.executeQuery(strTabla);
+                ResultSetMetaData rsmd = oResultSet.getMetaData();
+                int numberOfColumns = rsmd.getColumnCount();
+                for (int contador = 1; contador <= numberOfColumns; contador++) {
+                    if (rsmd.getColumnName(contador).length() >= 5) { //los nombres de las tablas como minimo han de tener dos caracteres + el id_ o el set = 5 caracteres
+                        if (rsmd.getColumnName(contador).substring(0, 3).equalsIgnoreCase("id_")) {
+                            vector.add(rsmd.getColumnName(contador).substring(3));
+                        } else {
+                            vector.add(rsmd.getColumnName(contador));
+                        }
+
+                    } else {
+                        vector.add(rsmd.getColumnName(contador));
+                    }
+                }
+            } catch (SQLException ex) {
+                ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getColumnsName ERROR:  Can't process query: " + ex.getMessage()));
             } finally {
                 if (oStatement != null) {
                     oStatement.close();
@@ -478,278 +489,289 @@ public class MysqlDataSpImpl implements DataInterface {
 //    }
     @Override
     public ArrayList<Integer> getPage(String strTabla, int intRegsPerPage, int intPagina, ArrayList<FilterBeanHelper> alFilter, HashMap<String, String> hmOrder) throws Exception {
-        ArrayList<Integer> vector = null;
-        Statement oStatement = null;
-        try {
-            vector = new ArrayList<>();
-            int intOffset;
-            oStatement = (Statement) connection.createStatement();
-            String strSQL = "SELECT id FROM " + strTabla + " WHERE 1=1 ";
-            String strSQLcount = "SELECT COUNT(*) FROM " + strTabla + " WHERE 1=1 ";
-            if (alFilter != null) {
-                String strSQLFilter = "";
-                Iterator iterator = alFilter.iterator();
-                while (iterator.hasNext()) {
-                    FilterBeanHelper oFilterBean = (FilterBeanHelper) iterator.next();
-                    switch (oFilterBean.getFilterOperator()) {
-                        case "like":
-                            strSQLFilter += " AND " + oFilterBean.getFilter() + " LIKE '%" + oFilterBean.getFilterValue() + "%'";
-                            break;
-                        case "notlike":
-                            strSQLFilter += " AND " + oFilterBean.getFilter() + " NOT LIKE '%" + oFilterBean.getFilterValue() + "%'";
-                            break;
-                        case "equals":
-                            strSQLFilter += " AND " + oFilterBean.getFilter() + " = '" + oFilterBean.getFilterValue() + "'";
-                            break;
-                        case "notequalto":
-                            strSQLFilter += " AND " + oFilterBean.getFilter() + " <> '" + oFilterBean.getFilterValue() + "'";
-                            break;
-                        case "less":
-                            strSQLFilter += " AND " + oFilterBean.getFilter() + " < " + oFilterBean.getFilterValue() + "";
-                            break;
-                        case "lessorequal":
-                            strSQLFilter += " AND " + oFilterBean.getFilter() + " <= " + oFilterBean.getFilterValue() + "";
-                            break;
-                        case "greater":
-                            strSQLFilter += " AND " + oFilterBean.getFilter() + " > " + oFilterBean.getFilterValue() + "";
-                            break;
-                        case "greaterorequal":
-                            strSQLFilter += " AND " + oFilterBean.getFilter() + " >= " + oFilterBean.getFilterValue() + "";
-                            break;
-                    }
-                }
-                strSQL += strSQLFilter;
-                strSQLcount += strSQLFilter;
-            }
-            //when limit of pages exceed, show last page
-            ResultSet oResultSet = oStatement.executeQuery(strSQLcount);
-            int intCuenta = 0;
-            if (oResultSet.next()) {
-                intCuenta = oResultSet.getInt("COUNT(*)");
-            }
-            int maxPaginas = new Double(intCuenta / intRegsPerPage).intValue();
-            intPagina = Math.min(intPagina - 1, maxPaginas) + 1;
-            intOffset = Math.max(((intPagina - 1) * intRegsPerPage), 0);
-            //--                        
-            if (hmOrder != null) {
-                strSQL += " ORDER BY";
-                for (Map.Entry oPar : hmOrder.entrySet()) {
-                    strSQL += " " + oPar.getKey() + " " + oPar.getValue() + ",";
-                }
-                strSQL = strSQL.substring(0, strSQL.length() - 1);
-            }
-            strSQL += " LIMIT " + intOffset + " , " + intRegsPerPage;
-            oResultSet = oStatement.executeQuery(strSQL);
-            while (oResultSet.next()) {
-                vector.add(oResultSet.getInt("id"));
-            }
-
-        } catch (SQLException ex) {
-            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPage ERROR:  Can't process query: " + ex.getMessage()));
-        } finally {
-            if (oStatement != null) {
-                oStatement.close();
+        Boolean strOrigenTabla = true;
+        if (strTabla.length() >= 6) {
+            if (strTabla.substring(0, 6).equalsIgnoreCase("SELECT")) {
+                strOrigenTabla = false;
             }
         }
-        return vector;
+        if (strOrigenTabla) {
+
+            ArrayList<Integer> vector = null;
+            Statement oStatement = null;
+            try {
+                vector = new ArrayList<>();
+                int intOffset;
+                oStatement = (Statement) connection.createStatement();
+                String strSQL = "SELECT id FROM " + strTabla + " WHERE 1=1 ";
+                String strSQLcount = "SELECT COUNT(*) FROM " + strTabla + " WHERE 1=1 ";
+                if (alFilter != null) {
+                    String strSQLFilter = "";
+                    Iterator iterator = alFilter.iterator();
+                    while (iterator.hasNext()) {
+                        FilterBeanHelper oFilterBean = (FilterBeanHelper) iterator.next();
+                        switch (oFilterBean.getFilterOperator()) {
+                            case "like":
+                                strSQLFilter += " AND " + oFilterBean.getFilter() + " LIKE '%" + oFilterBean.getFilterValue() + "%'";
+                                break;
+                            case "notlike":
+                                strSQLFilter += " AND " + oFilterBean.getFilter() + " NOT LIKE '%" + oFilterBean.getFilterValue() + "%'";
+                                break;
+                            case "equals":
+                                strSQLFilter += " AND " + oFilterBean.getFilter() + " = '" + oFilterBean.getFilterValue() + "'";
+                                break;
+                            case "notequalto":
+                                strSQLFilter += " AND " + oFilterBean.getFilter() + " <> '" + oFilterBean.getFilterValue() + "'";
+                                break;
+                            case "less":
+                                strSQLFilter += " AND " + oFilterBean.getFilter() + " < " + oFilterBean.getFilterValue() + "";
+                                break;
+                            case "lessorequal":
+                                strSQLFilter += " AND " + oFilterBean.getFilter() + " <= " + oFilterBean.getFilterValue() + "";
+                                break;
+                            case "greater":
+                                strSQLFilter += " AND " + oFilterBean.getFilter() + " > " + oFilterBean.getFilterValue() + "";
+                                break;
+                            case "greaterorequal":
+                                strSQLFilter += " AND " + oFilterBean.getFilter() + " >= " + oFilterBean.getFilterValue() + "";
+                                break;
+                        }
+                    }
+                    strSQL += strSQLFilter;
+                    strSQLcount += strSQLFilter;
+                }
+                //when limit of pages exceed, show last page
+                ResultSet oResultSet = oStatement.executeQuery(strSQLcount);
+                int intCuenta = 0;
+                if (oResultSet.next()) {
+                    intCuenta = oResultSet.getInt("COUNT(*)");
+                }
+                int maxPaginas = new Double(intCuenta / intRegsPerPage).intValue();
+                intPagina = Math.min(intPagina - 1, maxPaginas) + 1;
+                intOffset = Math.max(((intPagina - 1) * intRegsPerPage), 0);
+                //--                        
+                if (hmOrder != null) {
+                    strSQL += " ORDER BY";
+                    for (Map.Entry oPar : hmOrder.entrySet()) {
+                        strSQL += " " + oPar.getKey() + " " + oPar.getValue() + ",";
+                    }
+                    strSQL = strSQL.substring(0, strSQL.length() - 1);
+                }
+                strSQL += " LIMIT " + intOffset + " , " + intRegsPerPage;
+                oResultSet = oStatement.executeQuery(strSQL);
+                while (oResultSet.next()) {
+                    vector.add(oResultSet.getInt("id"));
+                }
+
+            } catch (SQLException ex) {
+                ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPage ERROR:  Can't process query: " + ex.getMessage()));
+            } finally {
+                if (oStatement != null) {
+                    oStatement.close();
+                }
+            }
+            return vector;
+        } else {
+            ArrayList<Integer> vector = null;
+            Statement oStatement = null;
+            try {
+                vector = new ArrayList<>();
+                int intOffset;
+                oStatement = (Statement) connection.createStatement();
+                String strSQLcount = "SELECT COUNT(*) " + strTabla.substring(strTabla.indexOf("FROM"), strTabla.length());
+                //when limit of pages exceed, show last page
+                ResultSet oResultSet = oStatement.executeQuery(strSQLcount);
+                int intCuenta = 0;
+                if (oResultSet.next()) {
+                    intCuenta = oResultSet.getInt("COUNT(*)");
+                }
+                int maxPaginas = new Double(intCuenta / intRegsPerPage).intValue();
+                intPagina = Math.min(intPagina - 1, maxPaginas) + 1;
+                intOffset = Math.max(((intPagina - 1) * intRegsPerPage), 0);
+                //--                        
+                strTabla += " LIMIT " + intOffset + " , " + intRegsPerPage;
+                oResultSet = oStatement.executeQuery(strTabla);
+                while (oResultSet.next()) {
+                    vector.add(oResultSet.getInt("id"));
+                }
+            } catch (SQLException ex) {
+                ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPageSQL ERROR:  Can't process query: " + ex.getMessage()));
+            } finally {
+                if (oStatement != null) {
+                    oStatement.close();
+                }
+            }
+            return vector;
+        }
     }
 
     @Override
     public int getPages(String strTabla, int intRegsPerPage, ArrayList<FilterBeanHelper> alFilter) throws Exception {
-
-        int intResult = 0;
-        Statement oStatement = null;
-        try {
-            oStatement = (Statement) connection.createStatement();
-            String strSQL = "SELECT count(*) FROM " + strTabla + " WHERE 1=1";
-            if (alFilter != null) {
-                Iterator iterator = alFilter.iterator();
-                while (iterator.hasNext()) {
-                    FilterBeanHelper oFilterBean = (FilterBeanHelper) iterator.next();
-                    switch (oFilterBean.getFilterOperator()) {
-                        case "like":
-                            strSQL += " AND " + oFilterBean.getFilter() + " LIKE '%" + oFilterBean.getFilterValue() + "%'";
-                            break;
-                        case "notlike":
-                            strSQL += " AND " + oFilterBean.getFilter() + " NOT LIKE '%" + oFilterBean.getFilterValue() + "%'";
-                            break;
-                        case "equals":
-                            strSQL += " AND " + oFilterBean.getFilter() + " = '" + oFilterBean.getFilterValue() + "'";
-                            break;
-                        case "notequalto":
-                            strSQL += " AND " + oFilterBean.getFilter() + " <> '" + oFilterBean.getFilterValue() + "'";
-                            break;
-                        case "less":
-                            strSQL += " AND " + oFilterBean.getFilter() + " < " + oFilterBean.getFilterValue() + "";
-                            break;
-                        case "lessorequal":
-                            strSQL += " AND " + oFilterBean.getFilter() + " <= " + oFilterBean.getFilterValue() + "";
-                            break;
-                        case "greater":
-                            strSQL += " AND " + oFilterBean.getFilter() + " > " + oFilterBean.getFilterValue() + "";
-                            break;
-                        case "greaterorequal":
-                            strSQL += " AND " + oFilterBean.getFilter() + " >= " + oFilterBean.getFilterValue() + "";
-                            break;
-                    }
-
-                }
-            }
-            ResultSet oResultSet = oStatement.executeQuery(strSQL);
-            while (oResultSet.next()) {
-                intResult = oResultSet.getInt("COUNT(*)") / intRegsPerPage;
-                if ((oResultSet.getInt("COUNT(*)") % intRegsPerPage) > 0) {
-                    intResult++;
-                }
-            }
-        } catch (SQLException ex) {
-            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPages ERROR:  Can't process query: " + ex.getMessage()));
-        } finally {
-            if (oStatement != null) {
-                oStatement.close();
+        Boolean strOrigenTabla = true;
+        if (strTabla.length() >= 6) {
+            if (strTabla.substring(0, 6).equalsIgnoreCase("SELECT")) {
+                strOrigenTabla = false;
             }
         }
-        return intResult;
+        if (strOrigenTabla) {
+            int intResult = 0;
+            Statement oStatement = null;
+            try {
+                oStatement = (Statement) connection.createStatement();
+                String strSQL = "SELECT count(*) FROM " + strTabla + " WHERE 1=1";
+                if (alFilter != null) {
+                    Iterator iterator = alFilter.iterator();
+                    while (iterator.hasNext()) {
+                        FilterBeanHelper oFilterBean = (FilterBeanHelper) iterator.next();
+                        switch (oFilterBean.getFilterOperator()) {
+                            case "like":
+                                strSQL += " AND " + oFilterBean.getFilter() + " LIKE '%" + oFilterBean.getFilterValue() + "%'";
+                                break;
+                            case "notlike":
+                                strSQL += " AND " + oFilterBean.getFilter() + " NOT LIKE '%" + oFilterBean.getFilterValue() + "%'";
+                                break;
+                            case "equals":
+                                strSQL += " AND " + oFilterBean.getFilter() + " = '" + oFilterBean.getFilterValue() + "'";
+                                break;
+                            case "notequalto":
+                                strSQL += " AND " + oFilterBean.getFilter() + " <> '" + oFilterBean.getFilterValue() + "'";
+                                break;
+                            case "less":
+                                strSQL += " AND " + oFilterBean.getFilter() + " < " + oFilterBean.getFilterValue() + "";
+                                break;
+                            case "lessorequal":
+                                strSQL += " AND " + oFilterBean.getFilter() + " <= " + oFilterBean.getFilterValue() + "";
+                                break;
+                            case "greater":
+                                strSQL += " AND " + oFilterBean.getFilter() + " > " + oFilterBean.getFilterValue() + "";
+                                break;
+                            case "greaterorequal":
+                                strSQL += " AND " + oFilterBean.getFilter() + " >= " + oFilterBean.getFilterValue() + "";
+                                break;
+                        }
+
+                    }
+                }
+                ResultSet oResultSet = oStatement.executeQuery(strSQL);
+                while (oResultSet.next()) {
+                    intResult = oResultSet.getInt("COUNT(*)") / intRegsPerPage;
+                    if ((oResultSet.getInt("COUNT(*)") % intRegsPerPage) > 0) {
+                        intResult++;
+                    }
+                }
+            } catch (SQLException ex) {
+                ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPages ERROR:  Can't process query: " + ex.getMessage()));
+            } finally {
+                if (oStatement != null) {
+                    oStatement.close();
+                }
+            }
+            return intResult;
+        } else {
+
+            int intResult = 0;
+            Statement oStatement = null;
+            try {
+                oStatement = (Statement) connection.createStatement();
+                strTabla = "SELECT COUNT(*) " + strTabla.substring(strTabla.indexOf("FROM"), strTabla.length());
+
+                ResultSet oResultSet = oStatement.executeQuery(strTabla);
+                while (oResultSet.next()) {
+                    intResult = oResultSet.getInt("COUNT(*)") / intRegsPerPage;
+                    if ((oResultSet.getInt("COUNT(*)") % intRegsPerPage) > 0) {
+                        intResult++;
+                    }
+                }
+            } catch (SQLException ex) {
+                ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPagesSQL ERROR:  Can't process query: " + ex.getMessage()));
+            } finally {
+                if (oStatement != null) {
+                    oStatement.close();
+                }
+            }
+            return intResult;
+        }
     }
 
     @Override
     public int getCount(String strTabla, ArrayList<FilterBeanHelper> alFilter) throws Exception {
-
-        int intResult = 0;
-        Statement oStatement = null;
-        try {
-            oStatement = (Statement) connection.createStatement();
-            String strSQL = "SELECT count(*) FROM " + strTabla + " WHERE 1=1";
-            if (alFilter != null) {
-                Iterator iterator = alFilter.iterator();
-                while (iterator.hasNext()) {
-                    FilterBeanHelper oFilterBean = (FilterBeanHelper) iterator.next();
-                    switch (oFilterBean.getFilterOperator()) {
-                        case "like":
-                            strSQL += " AND " + oFilterBean.getFilter() + " LIKE '%" + oFilterBean.getFilterValue() + "%'";
-                            break;
-                        case "notlike":
-                            strSQL += " AND " + oFilterBean.getFilter() + " NOT LIKE '%" + oFilterBean.getFilterValue() + "%'";
-                            break;
-                        case "equals":
-                            strSQL += " AND " + oFilterBean.getFilter() + " = '" + oFilterBean.getFilterValue() + "'";
-                            break;
-                        case "notequalto":
-                            strSQL += " AND " + oFilterBean.getFilter() + " <> '" + oFilterBean.getFilterValue() + "'";
-                            break;
-                        case "less":
-                            strSQL += " AND " + oFilterBean.getFilter() + " < " + oFilterBean.getFilterValue() + "";
-                            break;
-                        case "lessorequal":
-                            strSQL += " AND " + oFilterBean.getFilter() + " <= " + oFilterBean.getFilterValue() + "";
-                            break;
-                        case "greater":
-                            strSQL += " AND " + oFilterBean.getFilter() + " > " + oFilterBean.getFilterValue() + "";
-                            break;
-                        case "greaterorequal":
-                            strSQL += " AND " + oFilterBean.getFilter() + " >= " + oFilterBean.getFilterValue() + "";
-                            break;
+        Boolean strOrigenTabla = true;
+        if (strTabla.length() >= 6) {
+            if (strTabla.substring(0, 6).equalsIgnoreCase("SELECT")) {
+                strOrigenTabla = false;
+            }
+        }
+        if (strOrigenTabla) {
+            int intResult = 0;
+            Statement oStatement = null;
+            try {
+                oStatement = (Statement) connection.createStatement();
+                String strSQL = "SELECT count(*) FROM " + strTabla + " WHERE 1=1";
+                if (alFilter != null) {
+                    Iterator iterator = alFilter.iterator();
+                    while (iterator.hasNext()) {
+                        FilterBeanHelper oFilterBean = (FilterBeanHelper) iterator.next();
+                        switch (oFilterBean.getFilterOperator()) {
+                            case "like":
+                                strSQL += " AND " + oFilterBean.getFilter() + " LIKE '%" + oFilterBean.getFilterValue() + "%'";
+                                break;
+                            case "notlike":
+                                strSQL += " AND " + oFilterBean.getFilter() + " NOT LIKE '%" + oFilterBean.getFilterValue() + "%'";
+                                break;
+                            case "equals":
+                                strSQL += " AND " + oFilterBean.getFilter() + " = '" + oFilterBean.getFilterValue() + "'";
+                                break;
+                            case "notequalto":
+                                strSQL += " AND " + oFilterBean.getFilter() + " <> '" + oFilterBean.getFilterValue() + "'";
+                                break;
+                            case "less":
+                                strSQL += " AND " + oFilterBean.getFilter() + " < " + oFilterBean.getFilterValue() + "";
+                                break;
+                            case "lessorequal":
+                                strSQL += " AND " + oFilterBean.getFilter() + " <= " + oFilterBean.getFilterValue() + "";
+                                break;
+                            case "greater":
+                                strSQL += " AND " + oFilterBean.getFilter() + " > " + oFilterBean.getFilterValue() + "";
+                                break;
+                            case "greaterorequal":
+                                strSQL += " AND " + oFilterBean.getFilter() + " >= " + oFilterBean.getFilterValue() + "";
+                                break;
+                        }
                     }
                 }
-            }
-            ResultSet oResultSet = oStatement.executeQuery(strSQL);
-            while (oResultSet.next()) {
-                intResult = oResultSet.getInt("COUNT(*)");
-            }
-        } catch (SQLException ex) {
-            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getCount ERROR:  Can't process query: " + ex.getMessage()));
-        } finally {
-            if (oStatement != null) {
-                oStatement.close();
-            }
-        }
-        return intResult;
-    }
-
-//---------------------------------------
-//---------------------------------------
-//    SQL libres en pruebas
-//---------------------------------------
-//---------------------------------------
-    @Override
-    public ArrayList<Integer> getPage(String strSQL, int intRegsPerPage, int intPagina) throws Exception {
-        ArrayList<Integer> vector = null;
-        Statement oStatement = null;
-        try {
-            vector = new ArrayList<>();
-            int intOffset;
-            oStatement = (Statement) connection.createStatement();
-            String strSQLcount = "SELECT COUNT(*) " + strSQL.substring(strSQL.indexOf("FROM"), strSQL.length());
-            //when limit of pages exceed, show last page
-            ResultSet oResultSet = oStatement.executeQuery(strSQLcount);
-            int intCuenta = 0;
-            if (oResultSet.next()) {
-                intCuenta = oResultSet.getInt("COUNT(*)");
-            }
-            int maxPaginas = new Double(intCuenta / intRegsPerPage).intValue();
-            intPagina = Math.min(intPagina - 1, maxPaginas) + 1;
-            intOffset = Math.max(((intPagina - 1) * intRegsPerPage), 0);
-            //--                        
-            strSQL += " LIMIT " + intOffset + " , " + intRegsPerPage;
-            oResultSet = oStatement.executeQuery(strSQL);
-            while (oResultSet.next()) {
-                vector.add(oResultSet.getInt("id"));
-            }
-        } catch (SQLException ex) {
-            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPageSQL ERROR:  Can't process query: " + ex.getMessage()));
-        } finally {
-            if (oStatement != null) {
-                oStatement.close();
-            }
-        }
-        return vector;
-    }
-
-    @Override
-    public int getPages(String strSQL, int intRegsPerPage) throws Exception {
-
-        int intResult = 0;
-        Statement oStatement = null;
-        try {
-            oStatement = (Statement) connection.createStatement();
-            strSQL = "SELECT COUNT(*) " + strSQL.substring(strSQL.indexOf("FROM"), strSQL.length());
-
-            ResultSet oResultSet = oStatement.executeQuery(strSQL);
-            while (oResultSet.next()) {
-                intResult = oResultSet.getInt("COUNT(*)") / intRegsPerPage;
-                if ((oResultSet.getInt("COUNT(*)") % intRegsPerPage) > 0) {
-                    intResult++;
+                ResultSet oResultSet = oStatement.executeQuery(strSQL);
+                while (oResultSet.next()) {
+                    intResult = oResultSet.getInt("COUNT(*)");
+                }
+            } catch (SQLException ex) {
+                ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getCount ERROR:  Can't process query: " + ex.getMessage()));
+            } finally {
+                if (oStatement != null) {
+                    oStatement.close();
                 }
             }
-        } catch (SQLException ex) {
-            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPagesSQL ERROR:  Can't process query: " + ex.getMessage()));
-        } finally {
-            if (oStatement != null) {
-                oStatement.close();
+            return intResult;
+        } else {
+            int intResult = 0;
+            Statement oStatement = null;
+            try {
+                oStatement = (Statement) connection.createStatement();
+                strTabla = "SELECT COUNT(*) " + strTabla.substring(strTabla.indexOf("FROM"), strTabla.length());
+                ResultSet oResultSet = oStatement.executeQuery(strTabla);
+                while (oResultSet.next()) {
+                    intResult = oResultSet.getInt("COUNT(*)");
+                }
+            } catch (SQLException ex) {
+                ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getCountSQL ERROR:  Can't process query: " + ex.getMessage()));
+            } finally {
+                if (oStatement != null) {
+                    oStatement.close();
+                }
             }
+            return intResult;
         }
-        return intResult;
     }
 
-    @Override
-    public int getCount(String strSQL) throws Exception {
-        int intResult = 0;
-        Statement oStatement = null;
-        try {
-            oStatement = (Statement) connection.createStatement();
-            strSQL = "SELECT COUNT(*) " + strSQL.substring(strSQL.indexOf("FROM"), strSQL.length());
-            ResultSet oResultSet = oStatement.executeQuery(strSQL);
-            while (oResultSet.next()) {
-                intResult = oResultSet.getInt("COUNT(*)");
-            }
-        } catch (SQLException ex) {
-            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getCountSQL ERROR:  Can't process query: " + ex.getMessage()));
-        } finally {
-            if (oStatement != null) {
-                oStatement.close();
-            }
-        }
-        return intResult;
-    }
+
 
 }

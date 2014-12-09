@@ -26,7 +26,7 @@ import net.daw.dao.generic.implementation.TableDaoGenImpl;
 import net.daw.helper.ExceptionBooster;
 import net.daw.service.publicinterface.MetaServiceInterface;
 
-public class MetaServiceGenImpl implements MetaServiceInterface {
+public abstract class MetaServiceGenImpl implements MetaServiceInterface {
 
     protected Connection oConnection = null;
     protected String strObjectName = null;
@@ -53,8 +53,8 @@ public class MetaServiceGenImpl implements MetaServiceInterface {
         String data = null;
         try {
             oConnection.setAutoCommit(false);
-            Constructor c = Class.forName("net.daw.dao.generic.specific.implementation." + strPojo + "DaoGenSpImpl").getConstructor(String.class, String.class, Connection.class);
-            TableDaoGenImpl oDao = (TableDaoGenImpl) c.newInstance(strObjectName, strPojo, oConnection);
+            Constructor c = Class.forName("net.daw.dao.generic.specific.implementation." + strPojo + "DaoGenSpImpl").getConstructor(String.class, Connection.class);
+            TableDaoGenImpl oDao = (TableDaoGenImpl) c.newInstance(strObjectName, oConnection);
             ArrayList<String> alColumns = null;
             alColumns = oDao.getPrettyColumnsNames();
             GsonBuilder gsonBuilder = new GsonBuilder();
@@ -74,8 +74,8 @@ public class MetaServiceGenImpl implements MetaServiceInterface {
         String data = null;
         try {
             oConnection.setAutoCommit(false);
-            Constructor c = Class.forName("net.daw.dao.generic.specific.implementation." + strPojo + "DaoGenSpImpl").getConstructor(String.class, String.class, Connection.class);
-            TableDaoGenImpl oDao = (TableDaoGenImpl) c.newInstance(strObjectName, strPojo, oConnection);
+            Constructor c = Class.forName("net.daw.dao.generic.specific.implementation." + strPojo + "DaoGenSpImpl").getConstructor(String.class, Connection.class);
+            TableDaoGenImpl oDao = (TableDaoGenImpl) c.newInstance(strObjectName, oConnection);
             ArrayList<String> alColumns = null;
             alColumns = oDao.getColumnsNames();
             GsonBuilder gsonBuilder = new GsonBuilder();
