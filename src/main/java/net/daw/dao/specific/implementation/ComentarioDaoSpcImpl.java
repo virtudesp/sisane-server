@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Locale;
+import net.daw.bean.generic.specific.implementation.ComentarioBeanGenSpImpl;
 import net.daw.bean.generic.specific.implementation.PropuestaBeanGenSpImpl;
 import net.daw.bean.generic.specific.implementation.TipopropuestaBeanGenSpImpl;
 import net.daw.bean.generic.specific.implementation.UsuarioBeanGenSpImpl;
@@ -41,14 +42,14 @@ import net.daw.helper.FilterBeanHelper;
  *
  * @author al037805
  */
-public class PropuestaDaoSpcImpl implements ViewDaoInterface<PropuestaBeanGenSpImpl>, TableDaoInterface<PropuestaBeanGenSpImpl>, MetaDaoInterface {
+public class ComentarioDaoSpcImpl implements ViewDaoInterface<ComentarioBeanGenSpImpl>, TableDaoInterface<ComentarioBeanGenSpImpl>, MetaDaoInterface {
 
     private String strTableName = null;
     private MysqlDataSpImpl oMysql = null;
     private Connection oConnection = null;
     private String strPojo = null;
 
-    public PropuestaDaoSpcImpl(String ob, String pojo, Connection oConexion) throws Exception {
+    public ComentarioDaoSpcImpl(String ob, String pojo, Connection oConexion) throws Exception {
         try {
             strTableName = ob;
             oConnection = oConexion;
@@ -82,94 +83,82 @@ public class PropuestaDaoSpcImpl implements ViewDaoInterface<PropuestaBeanGenSpI
     }
 
     @Override
-    public ArrayList<PropuestaBeanGenSpImpl> getPage(int intRegsPerPag, int intPage, ArrayList<FilterBeanHelper> hmFilter, HashMap<String, String> hmOrder) throws Exception {
+    public ArrayList<ComentarioBeanGenSpImpl> getPage(int intRegsPerPag, int intPage, ArrayList<FilterBeanHelper> hmFilter, HashMap<String, String> hmOrder) throws Exception {
         ArrayList<Integer> arrId;
-        ArrayList<PropuestaBeanGenSpImpl> arrPropuesta = new ArrayList<>();
+        ArrayList<ComentarioBeanGenSpImpl> arrComentario = new ArrayList<>();
         try {
             arrId = oMysql.getPage(strTableName, intRegsPerPag, intPage, hmFilter, hmOrder);
             Iterator<Integer> iterador = arrId.listIterator();
             while (iterador.hasNext()) {
-                PropuestaBeanGenSpImpl oPropuestaBean = new PropuestaBeanGenSpImpl(iterador.next());
-                arrPropuesta.add(this.get(oPropuestaBean, 1));
+                ComentarioBeanGenSpImpl oComentarioBean = new ComentarioBeanGenSpImpl(iterador.next());
+                arrComentario.add(this.get(oComentarioBean, 1));
             }
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPage ERROR: " + ex.getMessage()));
         }
-        return arrPropuesta;
+        return arrComentario;
     }
 
     @Override
-    public PropuestaBeanGenSpImpl get(PropuestaBeanGenSpImpl oPropuestaBean, Integer expand) throws Exception {
-        if (oPropuestaBean.getId() > 0) {
+    public ComentarioBeanGenSpImpl get(ComentarioBeanGenSpImpl oComentarioBean, Integer expand) throws Exception {
+        if (oComentarioBean.getId() > 0) {
             try {
-                if (!oMysql.existsOne(strTableName, oPropuestaBean.getId())) {
-                    oPropuestaBean.setId(0);
+                if (!oMysql.existsOne(strTableName, oComentarioBean.getId())) {
+                    oComentarioBean.setId(0);
                 } else {
-                    oPropuestaBean.setDescripcion(oMysql.getOne(strTableName, "descripcion", oPropuestaBean.getId()));
+                    oComentarioBean.setContenido(oMysql.getOne(strTableName, "contenido", oComentarioBean.getId()));
 
-                    String fecha = "";
-                    fecha = oMysql.getOne(strTableName, "fecha", oPropuestaBean.getId());
-                    SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
-                    oPropuestaBean.setFecha(date.parse(fecha));
+                    /* Claves ajenas id_propuesta y id_usuario */
+                    oComentarioBean.setId_propuesta(Integer.parseInt(oMysql.getOne(strTableName, "id_propuesta", oComentarioBean.getId())));
+                    oComentarioBean.setId_usuario(Integer.parseInt(oMysql.getOne(strTableName, "id_usuario", oComentarioBean.getId())));
 
-                    oPropuestaBean.setPuntuacion(Integer.valueOf(oMysql.getOne(strTableName, "puntuacion", oPropuestaBean.getId())));
-
-                    /* Claves ajenas id_tipopropuesta y id_usuario */
-                    oPropuestaBean.setId_tipopropuesta(Integer.parseInt(oMysql.getOne(strTableName, "id_tipopropuesta", oPropuestaBean.getId())));
-                    oPropuestaBean.setId_usuario(Integer.parseInt(oMysql.getOne(strTableName, "id_usuario", oPropuestaBean.getId())));
-
-                    TipopropuestaBeanGenSpImpl oTipopropuesta = new TipopropuestaBeanGenSpImpl();
-                    oTipopropuesta.setId(Integer.parseInt(oMysql.getOne(strTableName, "id_tipopropuesta", oPropuestaBean.getId())));
-                    TipopropuestaDaoGenSpImpl oTipoPropuestaDAO = new TipopropuestaDaoGenSpImpl("tipopropuesta", oConnection);
-                    oTipopropuesta = oTipoPropuestaDAO.get(oTipopropuesta, AppConfigurationHelper.getJsonDepth());
-                    oPropuestaBean.setObj_tipopropuesta(oTipopropuesta);
+                    PropuestaBeanGenSpImpl oPropuesta = new PropuestaBeanGenSpImpl();
+                    oPropuesta.setId(Integer.parseInt(oMysql.getOne(strTableName, "id_propuesta", oComentarioBean.getId())));
+                    PropuestaDaoSpcImpl oPropuestaDAO = new PropuestaDaoSpcImpl("propuesta", "propuesta",oConnection);
+                    oPropuesta = oPropuestaDAO.get(oPropuesta, AppConfigurationHelper.getJsonDepth());
+                    oComentarioBean.setObj_propuesta(oPropuesta);
 
                     UsuarioBeanGenSpImpl oUsuario = new UsuarioBeanGenSpImpl();
-                    oUsuario.setId(Integer.parseInt(oMysql.getOne(strTableName, "id_usuario", oPropuestaBean.getId())));
+                    oUsuario.setId(Integer.parseInt(oMysql.getOne(strTableName, "id_usuario", oComentarioBean.getId())));
                     UsuarioDaoGenSpImpl oUsuarioDAO = new UsuarioDaoGenSpImpl(strTableName, "usuario", oConnection);
                     oUsuario = oUsuarioDAO.get(oUsuario, AppConfigurationHelper.getJsonDepth());
-                    oPropuestaBean.setObj_usuario(oUsuario);
+                    oComentarioBean.setObj_usuario(oUsuario);
 
-                    /* Fin de las claves ajenas id_tipopropuesta y id_usuario */
+                    /* Fin de las claves ajenas id_propuesta y id_usuario */
                 }
             } catch (Exception ex) {
                 ExceptionBooster.boost(new Exception(this.getClass().getName() + ":get ERROR: " + ex.getMessage()));
             }
         } else {
-            oPropuestaBean.setId(0);
+            oComentarioBean.setId(0);
         }
-        return oPropuestaBean;
+        return oComentarioBean;
     }
 
     @Override
-    public PropuestaBeanGenSpImpl set(PropuestaBeanGenSpImpl oPropuestaBean) throws Exception {
+    public ComentarioBeanGenSpImpl set(ComentarioBeanGenSpImpl oComentarioBean) throws Exception {
         try {
-            if (oPropuestaBean.getId() == 0) {
-                oPropuestaBean.setId(oMysql.insertOne(strTableName));
+            if (oComentarioBean.getId() == 0) {
+                oComentarioBean.setId(oMysql.insertOne(strTableName));
             }
-            oMysql.updateOne(oPropuestaBean.getId(), strTableName, "descripcion", oPropuestaBean.getDescripcion());
-
-            SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
-            oMysql.updateOne(oPropuestaBean.getId(), strTableName, "fecha", date.format(oPropuestaBean.getFecha()));
-
-            oMysql.updateOne(oPropuestaBean.getId(), strTableName, "puntuacion", oPropuestaBean.getPuntuacion().toString());
+            oMysql.updateOne(oComentarioBean.getId(), strTableName, "contenido", oComentarioBean.getContenido());
 
             /* Aqui van las claves ajenas  */
-            oMysql.updateOne(oPropuestaBean.getId(), strTableName, "id_tipopropuesta", oPropuestaBean.getId_tipopropuesta().toString());
-            oMysql.updateOne(oPropuestaBean.getId(), strTableName, "id_usuario", oPropuestaBean.getId_usuario().toString());
+            oMysql.updateOne(oComentarioBean.getId(), strTableName, "id_propuesta", oComentarioBean.getId_propuesta().toString());
+            oMysql.updateOne(oComentarioBean.getId(), strTableName, "id_usuario", oComentarioBean.getId_usuario().toString());
 
             /*  Fin de las claves ajenas en servidor */
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":set ERROR: " + ex.getMessage()));
         }
-        return oPropuestaBean;
+        return oComentarioBean;
     }
 
     @Override
-    public int remove(PropuestaBeanGenSpImpl oPropuestaBean) throws Exception {
+    public int remove(ComentarioBeanGenSpImpl oComentarioBean) throws Exception {
         int result = 0;
         try {
-            result = oMysql.removeOne(oPropuestaBean.getId(), strTableName);
+            result = oMysql.removeOne(oComentarioBean.getId(), strTableName);
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":remove ERROR: " + ex.getMessage()));
         }
