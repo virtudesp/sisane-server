@@ -21,10 +21,9 @@ import java.sql.Connection;
 import net.daw.bean.generic.specific.implementation.EntregaBeanGenSpImpl;
 import net.daw.dao.generic.implementation.TableDaoGenImpl;
 
-
 public class EntregaDaoGenSpImpl extends TableDaoGenImpl<EntregaBeanGenSpImpl> {
 
-    public EntregaDaoGenSpImpl(String strObject, String pojo, Connection pooledConnection) throws Exception {
-        super(strObject, pojo, pooledConnection);
+    public EntregaDaoGenSpImpl(String strFuente, Connection pooledConnection) throws Exception {
+        super(strFuente, "Entrega", pooledConnection);
     }
 }

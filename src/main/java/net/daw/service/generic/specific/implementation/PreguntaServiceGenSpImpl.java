@@ -34,7 +34,7 @@ public class PreguntaServiceGenSpImpl extends TableServiceGenImpl {
         try {
             PreguntaBeanGenSpImpl oPreguntaBean = new PreguntaBeanGenSpImpl();
             oPreguntaBean.setId(id);
-            PreguntaDaoGenSpImpl oPreguntaDao = new PreguntaDaoGenSpImpl(strObjectName, strPojo, oConnection);
+            PreguntaDaoGenSpImpl oPreguntaDao = new PreguntaDaoGenSpImpl(strObjectName, oConnection);
             oPreguntaBean = oPreguntaDao.get(oPreguntaBean, 1);
             return "{\"data\":\"" + oPreguntaBean.getDescripcion() + "\"}";
         } catch (Exception e) {

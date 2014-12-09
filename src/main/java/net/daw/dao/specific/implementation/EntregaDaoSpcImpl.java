@@ -40,14 +40,12 @@ public class EntregaDaoSpcImpl implements ViewDaoInterface<EntregaBeanGenSpImpl>
     private String strTableName = null;
     private MysqlDataSpImpl oMysql = null;
     private Connection oConnection = null;
-    private String strPojo = null;
 
-    public EntregaDaoSpcImpl(String ob, String pojo, Connection oConexion) throws Exception {
+    public EntregaDaoSpcImpl(String ob, Connection oConexion) throws Exception {
         try {
             strTableName = ob;
             oConnection = oConexion;
             oMysql = new MysqlDataSpImpl(oConnection);
-            strPojo = pojo;
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":constructor ERROR: " + ex.getMessage()));
         }
@@ -107,23 +105,19 @@ public class EntregaDaoSpcImpl implements ViewDaoInterface<EntregaBeanGenSpImpl>
                     oEntregaBean.setFecha(date.parse(fecha));
 
                     oEntregaBean.setId_documento(Integer.parseInt(oMysql.getOne(strTableName, "id_documento", oEntregaBean.getId())));
-                    
+
                     DocumentoBeanGenSpImpl oDocumento = new DocumentoBeanGenSpImpl();
                     oDocumento.setId(Integer.parseInt(oMysql.getOne(strTableName, "id_documento", oEntregaBean.getId())));
-                    DocumentoDaoGenSpImpl oDocumentoDAO = new DocumentoDaoGenSpImpl("documento", "Documento", oConnection);
+                    DocumentoDaoGenSpImpl oDocumentoDAO = new DocumentoDaoGenSpImpl("documento", oConnection);
                     oDocumento = oDocumentoDAO.get(oDocumento, AppConfigurationHelper.getJsonDepth());
                     oEntregaBean.setObj_documento(oDocumento);
-                    
-                    
+
                     oEntregaBean.setId_documento(Integer.parseInt(oMysql.getOne(strTableName, "id_actividad", oEntregaBean.getId())));
                     ActividadBeanGenSpImpl oActividad = new ActividadBeanGenSpImpl();
                     oActividad.setId(Integer.parseInt(oMysql.getOne(strTableName, "id_actividad", oEntregaBean.getId())));
-                    ActividadDaoSpcImpl oActividadDAO = new ActividadDaoSpcImpl("actividad", "Actividad", oConnection);
+                    ActividadDaoSpcImpl oActividadDAO = new ActividadDaoSpcImpl("actividad", oConnection);
                     oActividad = oActividadDAO.get(oActividad, AppConfigurationHelper.getJsonDepth());
                     oEntregaBean.setObj_actividad(oActividad);
-                    
-                    
-                    
 
                 }
             } catch (Exception ex) {
@@ -143,14 +137,13 @@ public class EntregaDaoSpcImpl implements ViewDaoInterface<EntregaBeanGenSpImpl>
             }
 
             oMysql.updateOne(oEntregaBean.getId(), strTableName, "nota", oEntregaBean.getNota().toString());
-            
-            SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);       
+
+            SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
             oMysql.updateOne(oEntregaBean.getId(), strTableName, "fecha", date.format(oEntregaBean.getFecha()));
-            
+
             oMysql.updateOne(oEntregaBean.getId(), strTableName, "id_documento", oEntregaBean.getId_documento().toString());
             oMysql.updateOne(oEntregaBean.getId(), strTableName, "id_actividad", oEntregaBean.getId_actividad().toString());
-            
-      
+
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":set ERROR: " + ex.getMessage()));
         }

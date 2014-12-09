@@ -50,7 +50,7 @@ public class ProductoServiceSpImpl implements TableServiceInterface, ViewService
     public void setSource(String source) throws Exception {
         strObjectName = source;
     }
-    
+
     @Override
     public void setPojo(String pojo) throws Exception {
         strPojo = Character.toUpperCase(pojo.charAt(0)) + pojo.substring(1);
@@ -61,7 +61,7 @@ public class ProductoServiceSpImpl implements TableServiceInterface, ViewService
         String resultado = null;
         try {
             oConnection.setAutoCommit(false);
-            ProductoDaoSpcImpl oProductoDAO = new ProductoDaoSpcImpl(strObjectName, strPojo, oConnection);
+            ProductoDaoSpcImpl oProductoDAO = new ProductoDaoSpcImpl(strObjectName, oConnection);
             ProductoBeanGenSpImpl oProducto = new ProductoBeanGenSpImpl(id);
             Map<String, String> data = new HashMap<>();
             oProductoDAO.remove(oProducto);
@@ -82,7 +82,7 @@ public class ProductoServiceSpImpl implements TableServiceInterface, ViewService
         String resultado = null;
         try {
             oConnection.setAutoCommit(false);
-            ProductoDaoSpcImpl oProductoDAO = new ProductoDaoSpcImpl(strObjectName, strPojo, oConnection);
+            ProductoDaoSpcImpl oProductoDAO = new ProductoDaoSpcImpl(strObjectName, oConnection);
             ProductoBeanGenSpImpl oProducto = new ProductoBeanGenSpImpl();
             Gson gson = new GsonBuilder().setDateFormat("dd/MM/yyyy").create();
             jason = EncodingUtilHelper.decodeURIComponent(jason);
@@ -105,7 +105,7 @@ public class ProductoServiceSpImpl implements TableServiceInterface, ViewService
         String data = null;
         try {
             oConnection.setAutoCommit(false);
-            ProductoDaoSpcImpl oProductoDAO = new ProductoDaoSpcImpl(strObjectName, strPojo, oConnection);
+            ProductoDaoSpcImpl oProductoDAO = new ProductoDaoSpcImpl(strObjectName, oConnection);
             ProductoBeanGenSpImpl oProducto = new ProductoBeanGenSpImpl(id);
             oProducto = oProductoDAO.get(oProducto, AppConfigurationHelper.getJsonDepth());
             GsonBuilder gsonBuilder = new GsonBuilder();
@@ -125,7 +125,7 @@ public class ProductoServiceSpImpl implements TableServiceInterface, ViewService
         String data = null;
         try {
             oConnection.setAutoCommit(false);
-            ProductoDaoSpcImpl oProductoDAO = new ProductoDaoSpcImpl(strObjectName, strPojo, oConnection);
+            ProductoDaoSpcImpl oProductoDAO = new ProductoDaoSpcImpl(strObjectName, oConnection);
             List<ProductoBeanGenSpImpl> oProductos = oProductoDAO.getPage(intRegsPerPag, intPage, alFilter, hmOrder);
             GsonBuilder gsonBuilder = new GsonBuilder();
             gsonBuilder.setDateFormat("dd/MM/yyyy");
@@ -145,7 +145,7 @@ public class ProductoServiceSpImpl implements TableServiceInterface, ViewService
         String data = null;
         try {
             oConnection.setAutoCommit(false);
-            ProductoDaoSpcImpl oProductoDAO = new ProductoDaoSpcImpl(strObjectName, strPojo, oConnection);
+            ProductoDaoSpcImpl oProductoDAO = new ProductoDaoSpcImpl(strObjectName, oConnection);
             int pages = oProductoDAO.getPages(intRegsPerPag, alFilter);
             data = "{\"data\":\"" + Integer.toString(pages) + "\"}";
             oConnection.commit();
@@ -161,7 +161,7 @@ public class ProductoServiceSpImpl implements TableServiceInterface, ViewService
         String data = null;
         try {
             oConnection.setAutoCommit(false);
-            ProductoDaoSpcImpl oProductoDAO = new ProductoDaoSpcImpl(strObjectName, strPojo, oConnection);
+            ProductoDaoSpcImpl oProductoDAO = new ProductoDaoSpcImpl(strObjectName, oConnection);
             int registers = oProductoDAO.getCount(alFilter);
             data = "{\"data\":\"" + Integer.toString(registers) + "\"}";
             oConnection.commit();
@@ -179,7 +179,7 @@ public class ProductoServiceSpImpl implements TableServiceInterface, ViewService
         ArrayList<String> alColumns = null;
         try {
             oConnection.setAutoCommit(false);
-            ProductoDaoSpcImpl oProductoDAO = new ProductoDaoSpcImpl(strObjectName, strPojo, oConnection);
+            ProductoDaoSpcImpl oProductoDAO = new ProductoDaoSpcImpl(strObjectName, oConnection);
             alColumns = oProductoDAO.getPrettyColumnsNames();
             data = new Gson().toJson(alColumns);
             //data = "{\"data\":" + data + "}";
@@ -197,7 +197,7 @@ public class ProductoServiceSpImpl implements TableServiceInterface, ViewService
         try {
             oConnection.setAutoCommit(false);
             ArrayList<String> alColumns = null;
-            ProductoDaoSpcImpl oProductoDAO = new ProductoDaoSpcImpl(strObjectName, strPojo, oConnection);
+            ProductoDaoSpcImpl oProductoDAO = new ProductoDaoSpcImpl(strObjectName, oConnection);
             alColumns = oProductoDAO.getColumnsNames();
             data = new Gson().toJson(alColumns);
             //data = "{\"data\":" + data + "}";

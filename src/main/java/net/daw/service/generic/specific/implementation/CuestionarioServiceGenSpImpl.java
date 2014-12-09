@@ -38,7 +38,7 @@ public class CuestionarioServiceGenSpImpl extends TableServiceGenImpl {
         try {
             CuestionarioBeanGenSpImpl oCuestionarioBean = new CuestionarioBeanGenSpImpl();
             oCuestionarioBean.setId(id);
-            CuestionarioDaoGenSpImpl oCuestionarioDao = new CuestionarioDaoGenSpImpl(strObjectName, strPojo, oConnection);
+            CuestionarioDaoGenSpImpl oCuestionarioDao = new CuestionarioDaoGenSpImpl(strObjectName, oConnection);
             oCuestionarioBean = oCuestionarioDao.get(oCuestionarioBean, 1);
             return "{\"data\":\"" + oCuestionarioBean.getTipo() + "\"}";
         } catch (Exception e) {

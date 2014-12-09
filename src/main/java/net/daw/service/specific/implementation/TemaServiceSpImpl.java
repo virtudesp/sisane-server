@@ -50,18 +50,18 @@ public class TemaServiceSpImpl implements TableServiceInterface, ViewServiceInte
     public void setSource(String source) throws Exception {
         strObjectName = source;
     }
-    
+
     @Override
     public void setPojo(String pojo) throws Exception {
         strPojo = Character.toUpperCase(pojo.charAt(0)) + pojo.substring(1);
-    }   
-    
+    }
+
     @Override
     public String remove(Integer id) throws Exception {
         String resultado = null;
         try {
             oConnection.setAutoCommit(false);
-            TemaDaoSpcImpl oTemaDAO = new TemaDaoSpcImpl(strObjectName, strPojo, oConnection);
+            TemaDaoSpcImpl oTemaDAO = new TemaDaoSpcImpl(strObjectName, oConnection);
             TemaBeanGenSpImpl oTema = new TemaBeanGenSpImpl(id);
             Map<String, String> data = new HashMap<>();
             oTemaDAO.remove(oTema);
@@ -82,7 +82,7 @@ public class TemaServiceSpImpl implements TableServiceInterface, ViewServiceInte
         String resultado = null;
         try {
             oConnection.setAutoCommit(false);
-            TemaDaoSpcImpl oTemaDAO = new TemaDaoSpcImpl(strObjectName, strPojo, oConnection);
+            TemaDaoSpcImpl oTemaDAO = new TemaDaoSpcImpl(strObjectName, oConnection);
             TemaBeanGenSpImpl oTema = new TemaBeanGenSpImpl();
             Gson gson = new GsonBuilder().setDateFormat("dd/MM/yyyy HH:mm:ss").create();
             jason = EncodingUtilHelper.decodeURIComponent(jason);
@@ -105,7 +105,7 @@ public class TemaServiceSpImpl implements TableServiceInterface, ViewServiceInte
         String data = null;
         try {
             oConnection.setAutoCommit(false);
-            TemaDaoSpcImpl oTemaDAO = new TemaDaoSpcImpl(strObjectName, strPojo, oConnection);
+            TemaDaoSpcImpl oTemaDAO = new TemaDaoSpcImpl(strObjectName, oConnection);
             TemaBeanGenSpImpl oTema = new TemaBeanGenSpImpl(id);
             oTema = oTemaDAO.get(oTema, AppConfigurationHelper.getJsonDepth());
             GsonBuilder gsonBuilder = new GsonBuilder();
@@ -125,7 +125,7 @@ public class TemaServiceSpImpl implements TableServiceInterface, ViewServiceInte
         String data = null;
         try {
             oConnection.setAutoCommit(false);
-            TemaDaoSpcImpl oTemaDAO = new TemaDaoSpcImpl(strObjectName, strPojo, oConnection);
+            TemaDaoSpcImpl oTemaDAO = new TemaDaoSpcImpl(strObjectName, oConnection);
             List<TemaBeanGenSpImpl> oTemas = oTemaDAO.getPage(intRegsPerPag, intPage, alFilter, hmOrder);
             GsonBuilder gsonBuilder = new GsonBuilder();
             gsonBuilder.setDateFormat("dd/MM/yyyy HH:mm:ss");
@@ -145,7 +145,7 @@ public class TemaServiceSpImpl implements TableServiceInterface, ViewServiceInte
         String data = null;
         try {
             oConnection.setAutoCommit(false);
-            TemaDaoSpcImpl oTemaDAO = new TemaDaoSpcImpl(strObjectName, strPojo, oConnection);
+            TemaDaoSpcImpl oTemaDAO = new TemaDaoSpcImpl(strObjectName, oConnection);
             int pages = oTemaDAO.getPages(intRegsPerPag, alFilter);
             data = "{\"data\":\"" + Integer.toString(pages) + "\"}";
             oConnection.commit();
@@ -161,7 +161,7 @@ public class TemaServiceSpImpl implements TableServiceInterface, ViewServiceInte
         String data = null;
         try {
             oConnection.setAutoCommit(false);
-            TemaDaoSpcImpl oTemaDAO = new TemaDaoSpcImpl(strObjectName, strPojo, oConnection);
+            TemaDaoSpcImpl oTemaDAO = new TemaDaoSpcImpl(strObjectName, oConnection);
             int registers = oTemaDAO.getCount(alFilter);
             data = "{\"data\":\"" + Integer.toString(registers) + "\"}";
             oConnection.commit();
@@ -179,7 +179,7 @@ public class TemaServiceSpImpl implements TableServiceInterface, ViewServiceInte
         ArrayList<String> alColumns = null;
         try {
             oConnection.setAutoCommit(false);
-            TemaDaoSpcImpl oTemaDAO = new TemaDaoSpcImpl(strObjectName, strPojo, oConnection);
+            TemaDaoSpcImpl oTemaDAO = new TemaDaoSpcImpl(strObjectName, oConnection);
             alColumns = oTemaDAO.getPrettyColumnsNames();
             data = new Gson().toJson(alColumns);
             //data = "{\"data\":" + data + "}";
@@ -197,7 +197,7 @@ public class TemaServiceSpImpl implements TableServiceInterface, ViewServiceInte
         try {
             oConnection.setAutoCommit(false);
             ArrayList<String> alColumns = null;
-            TemaDaoSpcImpl oTemaDAO = new TemaDaoSpcImpl(strObjectName, strPojo, oConnection);
+            TemaDaoSpcImpl oTemaDAO = new TemaDaoSpcImpl(strObjectName, oConnection);
             alColumns = oTemaDAO.getColumnsNames();
             data = new Gson().toJson(alColumns);
             //data = "{\"data\":" + data + "}";

@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import net.daw.data.specific.implementation.MysqlDataSpImpl;
 import net.daw.helper.ExceptionBooster;
 
-public class MetaDaoGenImpl<TIPO_OBJETO> implements MetaDaoInterface {
+public abstract class MetaDaoGenImpl<TIPO_OBJETO> implements MetaDaoInterface {
 
     protected MysqlDataSpImpl oMysql = null;
     protected String strView = null;
