@@ -64,7 +64,7 @@ public class TipopropuestaServiceSpImpl implements TableServiceInterface, ViewSe
         String resultado = null;
         try {
             oConnection.setAutoCommit(false);
-            TipopropuestaDaoSpcImpl oTipopropuestaDAO = new TipopropuestaDaoSpcImpl(strObjectName, oConnection);
+            TipopropuestaDaoSpcImpl oTipopropuestaDAO = new TipopropuestaDaoSpcImpl(strObjectName,"tipopropuesta" , oConnection);
             TipopropuestaBeanGenSpImpl oTipopropuesta = new TipopropuestaBeanGenSpImpl(id);
             Map<String, String> data = new HashMap<>();
             oTipopropuestaDAO.remove(oTipopropuesta);
@@ -85,7 +85,7 @@ public class TipopropuestaServiceSpImpl implements TableServiceInterface, ViewSe
         String resultado = null;
         try {
             oConnection.setAutoCommit(false);
-            TipopropuestaDaoSpcImpl oTipopropuestaDAO = new TipopropuestaDaoSpcImpl(strObjectName, oConnection);
+            TipopropuestaDaoSpcImpl oTipopropuestaDAO = new TipopropuestaDaoSpcImpl(strObjectName,"tipopropuesta" , oConnection);
             TipopropuestaBeanGenSpImpl oTipopropuesta = new TipopropuestaBeanGenSpImpl();
             Gson gson = new GsonBuilder().setDateFormat("dd/MM/yyyy").create();
             jason = EncodingUtilHelper.decodeURIComponent(jason);
@@ -108,7 +108,7 @@ public class TipopropuestaServiceSpImpl implements TableServiceInterface, ViewSe
         String data = null;
         try {
             oConnection.setAutoCommit(false);
-            TipopropuestaDaoSpcImpl oTipopropuestaDAO = new TipopropuestaDaoSpcImpl(strObjectName, oConnection);
+            TipopropuestaDaoSpcImpl oTipopropuestaDAO = new TipopropuestaDaoSpcImpl(strObjectName,"tipopropuesta" , oConnection);
             TipopropuestaBeanGenSpImpl oTipopropuesta = new TipopropuestaBeanGenSpImpl(id);
             oTipopropuesta = oTipopropuestaDAO.get(oTipopropuesta, 1);
             GsonBuilder gsonBuilder = new GsonBuilder();
@@ -128,7 +128,7 @@ public class TipopropuestaServiceSpImpl implements TableServiceInterface, ViewSe
         String data = null;
         try {
             oConnection.setAutoCommit(false);
-            TipopropuestaDaoSpcImpl oTipopropuestaDAO = new TipopropuestaDaoSpcImpl(strObjectName, oConnection);
+            TipopropuestaDaoSpcImpl oTipopropuestaDAO = new TipopropuestaDaoSpcImpl(strObjectName,"tipopropuesta" , oConnection);
             List<TipopropuestaBeanGenSpImpl> oTipopropuestas = oTipopropuestaDAO.getPage(intRegsPerPag, intPage, alFilter, hmOrder);
             GsonBuilder gsonBuilder = new GsonBuilder();
             gsonBuilder.setDateFormat("dd/MM/yyyy");
@@ -148,7 +148,7 @@ public class TipopropuestaServiceSpImpl implements TableServiceInterface, ViewSe
         String data = null;
         try {
             oConnection.setAutoCommit(false);
-            TipopropuestaDaoSpcImpl oTipopropuestaDAO = new TipopropuestaDaoSpcImpl(strObjectName, oConnection);
+            TipopropuestaDaoSpcImpl oTipopropuestaDAO = new TipopropuestaDaoSpcImpl(strObjectName,"tipopropuesta" , oConnection);
             int pages = oTipopropuestaDAO.getPages(intRegsPerPag, alFilter);
             data = "{\"data\":\"" + Integer.toString(pages) + "\"}";
             oConnection.commit();
@@ -164,7 +164,7 @@ public class TipopropuestaServiceSpImpl implements TableServiceInterface, ViewSe
         String data = null;
         try {
             oConnection.setAutoCommit(false);
-            TipopropuestaDaoSpcImpl oTipopropuestaDAO = new TipopropuestaDaoSpcImpl(strObjectName, oConnection);
+            TipopropuestaDaoSpcImpl oTipopropuestaDAO = new TipopropuestaDaoSpcImpl(strObjectName,"tipopropuesta" , oConnection);
             int registers = oTipopropuestaDAO.getCount(alFilter);
             data = "{\"data\":\"" + Integer.toString(registers) + "\"}";
             oConnection.commit();
@@ -182,7 +182,7 @@ public class TipopropuestaServiceSpImpl implements TableServiceInterface, ViewSe
         ArrayList<String> alColumns = null;
         try {
             oConnection.setAutoCommit(false);
-            TipopropuestaDaoSpcImpl oTipopropuestaDAO = new TipopropuestaDaoSpcImpl(strObjectName, oConnection);
+            TipopropuestaDaoSpcImpl oTipopropuestaDAO = new TipopropuestaDaoSpcImpl(strObjectName,"tipopropuesta" , oConnection);
             alColumns = oTipopropuestaDAO.getPrettyColumnsNames();
             data = new Gson().toJson(alColumns);
             //data = "{\"data\":" + data + "}";
@@ -200,7 +200,7 @@ public class TipopropuestaServiceSpImpl implements TableServiceInterface, ViewSe
         try {
             oConnection.setAutoCommit(false);
             ArrayList<String> alColumns = null;
-            TipopropuestaDaoSpcImpl oTipopropuestaDAO = new TipopropuestaDaoSpcImpl(strObjectName, oConnection);
+            TipopropuestaDaoSpcImpl oTipopropuestaDAO = new TipopropuestaDaoSpcImpl(strObjectName,"tipopropuesta" , oConnection);
             alColumns = oTipopropuestaDAO.getColumnsNames();
             data = new Gson().toJson(alColumns);
             //data = "{\"data\":" + data + "}";
