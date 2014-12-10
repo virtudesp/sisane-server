@@ -146,6 +146,29 @@ public class MysqlDataSpImpl implements DataInterface {
         }
         return strResult;
     }
+    
+    public String getIdByTwoValues(String strTabla, String strCampo1, String strValor1,String strCampo2, String strValor2) throws Exception {
+        String strResult = null;
+        Statement oStatement = null;
+        ResultSet oResultSet;
+        try {
+            oStatement = (Statement) connection.createStatement();
+            String strSQL = "SELECT id FROM " + strTabla + " WHERE " + strCampo1 + "='" + strValor1 + "' AND "+ strCampo2 + "='" + strValor2 + "'";
+            oResultSet = oStatement.executeQuery(strSQL);
+            if (oResultSet.next()) {
+                strResult = oResultSet.getString("id");
+            } else {
+                ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getId ERROR: ID not exists"));
+            }
+        } catch (SQLException ex) {
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getId ERROR: Can't process query: " + ex.getMessage()));
+        } finally {
+            if (oStatement != null) {
+                oStatement.close();
+            }
+        }
+        return strResult;
+    }
 
     @Override
     public String getOne(String strTabla, String strCampo, int id) throws Exception {
