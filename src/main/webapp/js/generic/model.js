@@ -53,14 +53,19 @@ model.prototype.loadAggregateViewSome = function (objParams) {
         pagina_objs = data; //decodeURI htmlDecode
     });
     //return pagina_objs;
-    this.cFieldNames = pagina_objs.data.columns;
-    this.cCountFields = this.cFieldNames.length;
-    this.cPrettyFieldNames = pagina_objs.data.prettyColumns;
-    this.cPrettyFieldNamesAcciones = this.cPrettyFieldNames;
-    this.cPrettyFieldNamesAcciones.push("acciones");
-    this.cPage = pagina_objs.data.page.list;
-    this.cPages = pagina_objs.data.pages.data;
-    this.cRegisters = pagina_objs.data.registers.data;
+    if (pagina_objs.status == "403") {
+        return false; 
+    } else {
+        this.cFieldNames = pagina_objs.data.columns;
+        this.cCountFields = this.cFieldNames.length;
+        this.cPrettyFieldNames = pagina_objs.data.prettyColumns;
+        this.cPrettyFieldNamesAcciones = this.cPrettyFieldNames;
+        this.cPrettyFieldNamesAcciones.push("acciones");
+        this.cPage = pagina_objs.data.page.list;
+        this.cPages = pagina_objs.data.pages.data;
+        this.cRegisters = pagina_objs.data.registers.data;
+        return true;
+    }
 };
 
 model.prototype.loadAggregateViewOne = function (id1) {
