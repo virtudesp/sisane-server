@@ -28,7 +28,8 @@ public class UsuarioProveedorControlOperationGenSpimpl extends ControlOperationG
 
     public UsuarioProveedorControlOperationGenSpimpl(HttpServletRequest request) throws Exception {
         super(request);
-        oService.setPojo("Proveedor");
-        oService.setSource("SELECT * FROM proveedor where id>=10");
+
+        oService.setPojo("UsuarioProveedor");
+        oService.setSource("SELECT p.id_proveedor as id, pe.id_usuario as id_usuario FROM proveedor p, detalle_pedido d, pedido pe WHERE p.id=d.id_producto AND pe.id=d.id_pedido");
     }
 }
