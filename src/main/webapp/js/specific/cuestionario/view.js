@@ -79,11 +79,11 @@ cuestionarioView.prototype.getCuestionarioForm = function (jason) {
             pregunta = jason[i].obj_pregunta.descripcion
             idpregunta = jason[i].id_pregunta;
             // label de la pregunta
-            formulario += "<br/><fieldset><legend>"+pregunta+"</legend>";
+            formulario += "<br/><fieldset><legend>" + pregunta + "</legend>";
             // input oculto con el id de la pregunta
             formulario += "<input type='hidden' id='pregunta_" + idpregunta + "' name='preguntas' value='" + idpregunta + "' ><br> ";
             for (j = 0; j < jason.length; j++) {
-                if (jason[j].id_pregunta == idpregunta ) {
+                if (jason[j].id_pregunta == idpregunta) {
                     // radio buttons con opciones de la pregunta
                     formulario += "<input type='radio'  class='col-md-offset-1 col-md-1' \n\
                         name='pregunta_" + idpregunta + "' value='" + jason[j].id + "'/>"
@@ -93,6 +93,36 @@ cuestionarioView.prototype.getCuestionarioForm = function (jason) {
             formulario += "</fieldset>";
         }
     }
-    formulario += "<br/><input type='submit' id='submitForm' class='btn btn-success'/>";
+    formulario += "<div id='messages'></div><br/><input type='submit' id='submitForm' class='btn btn-success'/>";
     return formulario += "</form><br/>";
+};
+cuestionarioView.prototype.getValidationForm = function (jason) {
+    pregunta = "";
+    validador = "<script type='text/javascript'> \n\
+    $(document).ready(function () {\n\
+        $('#cuestionarioForm')\n\
+                .bootstrapValidator({\n\
+                    container: '#messages',\n\
+                    feedbackIcons: {\n\
+                        valid: 'glyphicon glyphicon-ok',\n\
+                        invalid: 'glyphicon glyphicon-remove',\n\
+                        validating: 'glyphicon glyphicon-refresh'\n\
+                    },\n\
+                    fields: {";
+// Añade una validacion segun el numero de preguntas del cuestionario
+    for (i = 0; i < jason.length; i++) {
+        if (pregunta != jason[i].obj_pregunta.descripcion) {
+            pregunta = jason[i].obj_pregunta.descripcion
+            idpregunta = jason[i].id_pregunta;
+            validador += "pregunta_" + idpregunta + ": {\n\
+         validators: {\n\
+         notEmpty: {\n\
+         message: 'Debe contestar a la pregunta: "+pregunta+"'\n\
+         }\n\
+         }\n\
+         },\n";
+        }
+    }
+    validador += "} });});</script>";
+    return validador;
 };

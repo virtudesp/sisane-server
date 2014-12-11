@@ -5,3 +5,4 @@
 --%>
 
 <div id="formularioCuestionario"></div>
+<div id="validadorCuestionario"></div>

@@ -31,16 +31,21 @@ cuestionarioControl.prototype.make = function (place, id, oModel, oModelSet, oVi
     var oCuestionarioView = oView;
     data = oCuestionarioModel.getGenericOperation("getallpreguntas", id);
     formularioHTML = oCuestionarioView.getCuestionarioForm(data);
+    validadorHTML = oCuestionarioView.getValidationForm(data);
     $(place).append(oView.getPanel("Realizar cuestionario de " + data[0].obj_pregunta.obj_cuestionario.tipo,
             oCuestionarioView.getEmptyView("cuestionarioForm", 1)));
     $("#formularioCuestionario").html(formularioHTML);
-
+    $("#validadorCuestionario").html(validadorHTML);
+    
     $('#submitForm').click(function () {
-        var valores = [];
-        valores = $('#cuestionarioForm').serializeObject();
-        resultado = oRespuestaModel.setGenericOperation("setform",{json: JSON.stringify(valores)});
-        oView.doResultOperationNotifyToUser(place, resultado["status"], "Se han creado los registros con id=" + resultado["message"], resultado["message"], true);
-        return false;
+        oView.okValidation(function (e) {
+            var valores = [];
+            valores = $('#cuestionarioForm').serializeObject();
+            resultado = oRespuestaModel.setGenericOperation("setform", {json: JSON.stringify(valores)});
+            oView.doResultOperationNotifyToUser(place, resultado["status"], "Se han creado los registros con id=" + resultado["message"], resultado["message"], true);
+            e.preventDefault();
+            return false;
+        });
     });
 };
 
