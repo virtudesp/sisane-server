@@ -185,13 +185,13 @@ public class ViewDaoGenImpl<TIPO_OBJETO> extends MetaDaoGenImpl<TIPO_OBJETO> imp
                         final Class<?> classTipoParamMetodoSet = method.getParameterTypes()[0];
                         if (method.getName().length() >= 5) {
                             if (!method.getName().substring(3).toLowerCase(Locale.ENGLISH).substring(0, 4).equalsIgnoreCase("obj_")) {
-                                String strValor = oMysql.getOne(strPojo, method.getName().substring(3).toLowerCase(Locale.ENGLISH), (Integer) metodo_getId.invoke(oBean));
+                                String strValor = oMysql.getOne(strView, method.getName().substring(3).toLowerCase(Locale.ENGLISH), (Integer) metodo_getId.invoke(oBean));
                                 if (strValor != null) {
                                     parseValue(oBean, method, classTipoParamMetodoSet.getName(), strValor);
                                 }
                             }
                         } else {
-                            String strValor = oMysql.getOne(strPojo, method.getName().substring(3).toLowerCase(Locale.ENGLISH), (Integer) metodo_getId.invoke(oBean));
+                            String strValor = oMysql.getOne(strView, method.getName().substring(3).toLowerCase(Locale.ENGLISH), (Integer) metodo_getId.invoke(oBean));
                             if (strValor != null) {
                                 parseValue(oBean, method, classTipoParamMetodoSet.getName(), strValor);
                             }

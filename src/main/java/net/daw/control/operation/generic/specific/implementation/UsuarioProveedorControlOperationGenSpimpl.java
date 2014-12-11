@@ -30,6 +30,6 @@ public class UsuarioProveedorControlOperationGenSpimpl extends ControlOperationG
         super(request);
 
         oService.setPojo("UsuarioProveedor");
-        oService.setSource("SELECT p.id_proveedor as id, pe.id_usuario as id_usuario FROM proveedor p, detalle_pedido d, pedido pe WHERE p.id=d.id_producto AND pe.id=d.id_pedido");
+        oService.setSource("SELECT p.id as id, pe.id_usuario as id_usuario FROM proveedor p, detalle_pedido d, pedido pe WHERE p.id=d.id_producto AND pe.id=d.id_pedido");
     }
 }

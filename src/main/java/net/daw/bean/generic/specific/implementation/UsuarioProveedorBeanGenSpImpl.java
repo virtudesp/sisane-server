@@ -25,32 +25,19 @@ import net.daw.bean.publicinterface.BeanInterface;
  *
  * @author a021008858z
  */
-public class UsuarioProveedorBeanGenSpImpl extends BeanGenImpl implements BeanInterface{
-    
+public class UsuarioProveedorBeanGenSpImpl extends BeanGenImpl implements BeanInterface {
+
     public UsuarioProveedorBeanGenSpImpl() {
     }
 
     public UsuarioProveedorBeanGenSpImpl(Integer id) {
         super(id);
     }
-    
+
     @Expose(serialize = false)
-    private Integer id_proveedor = 0;
-    @Expose(deserialize = false)
-    private ProveedorBeanGenSpImpl obj_proveedor = null;
-    //private String presentacion = "";
-    @Expose(serialize = false)
-    private Integer id_usuario = 0; 
+    private Integer id_usuario = 0;
     @Expose(deserialize = false)
     private UsuarioBeanGenSpImpl obj_usuario = null;
-
-    public Integer getId_proveedor() {
-        return id_proveedor;
-    }
-
-    public void setId_proveedor(Integer id_proveedor) {
-        this.id_proveedor = id_proveedor;
-    }
 
     public Integer getId_usuario() {
         return id_usuario;
@@ -68,17 +55,4 @@ public class UsuarioProveedorBeanGenSpImpl extends BeanGenImpl implements BeanIn
         this.obj_usuario = obj_usuario;
     }
 
-    public ProveedorBeanGenSpImpl getObj_proveedor() {
-        return obj_proveedor;
-    }
-
-    public void setObj_proveedor(ProveedorBeanGenSpImpl obj_proveedor) {
-        this.obj_proveedor = obj_proveedor;
-    }
-    
-    
-    
-    
-    }
-    
-    
+}
