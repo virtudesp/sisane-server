@@ -236,6 +236,23 @@
         <script src="js/specific/mensajeprivado/view.js" charset="UTF-8"></script>
         <script src="js/specific/mensajeprivado/routes.js" charset="UTF-8"></script>
         <!-- FIN FORO -->
+               
+        <!-- PROPUESTAS Y VOTACIONES -->    
+        <script src="js/specific/propuesta/control.js" charset="UTF-8"></script>
+        <script src="js/specific/propuesta/model.js" charset="UTF-8"></script>
+        <script src="js/specific/propuesta/view.js" charset="UTF-8"></script>
+        <script src="js/specific/propuesta/routes.js" charset="UTF-8"></script>
+        
+        <script src="js/specific/tipopropuesta/control.js" charset="UTF-8"></script>
+        <script src="js/specific/tipopropuesta/model.js" charset="UTF-8"></script>
+        <script src="js/specific/tipopropuesta/view.js" charset="UTF-8"></script>
+        <script src="js/specific/tipopropuesta/routes.js" charset="UTF-8"></script>
+        
+        <script src="js/specific/comentario/control.js" charset="UTF-8"></script>
+        <script src="js/specific/comentario/model.js" charset="UTF-8"></script>
+        <script src="js/specific/comentario/view.js" charset="UTF-8"></script>
+        <script src="js/specific/comentario/routes.js" charset="UTF-8"></script>
+        <!--FIN PROPUESTAS Y VOTACIONES-->
 
         <script src="js/specific/proveedor/control.js" charset="UTF-8"></script>
         <script src="js/specific/proveedor/model.js" charset="UTF-8"></script>
@@ -257,10 +274,13 @@
         <script src="js/specific/detalle_pedido/model.js" charset="UTF-8"></script>
         <script src="js/specific/detalle_pedido/view.js" charset="UTF-8"></script>
         <script src="js/specific/detalle_pedido/routes.js" charset="UTF-8"></script>
+        
          <script src="js/specific/respuesta/control.js" charset="UTF-8"></script>
         <script src="js/specific/respuesta/model.js" charset="UTF-8"></script>
         <script src="js/specific/respuesta/view.js" charset="UTF-8"></script>
         <script src="js/specific/respuesta/routes.js" charset="UTF-8"></script>
+        
+        
         
         <script src="js/specific/tipodocumento/model.js" charset="UTF-8"></script>
 
@@ -296,6 +316,11 @@
                 fPedidoRoutes();
                 fDetalle_pedidoRoutes();
                 fRespuestaRoutes();
+
+                fComentarioRoutes();
+                fPropuestaRoutes();
+                fTipopropuestaRoutes();
+
 
 
                 Path.listen();

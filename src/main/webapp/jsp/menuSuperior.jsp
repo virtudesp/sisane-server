@@ -41,6 +41,10 @@
             <li><a href="jsp#/publicacion">Publicacion</a></li>
             <li><a href="jsp#/estado">Estado</a></li>
             <li><a href="jsp#/amigo">Amigo</a></li>
+            <li class="divider"></li>
+            <li class="dropdown-header">Propuestas y votaciones</li>
+            <li><a href="jsp#/tipopropuesta">Tipo propuesta</a></li>
+            <li><a href="jsp#/Propuesta">Propuesta</a></li>
         </ul>
     </li>    
 
