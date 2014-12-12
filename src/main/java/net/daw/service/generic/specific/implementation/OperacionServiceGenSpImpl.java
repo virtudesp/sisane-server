@@ -15,19 +15,23 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-package net.daw.control.operation.generic.specific.implementation;
+package net.daw.service.generic.specific.implementation;
 
-import java.lang.reflect.InvocationTargetException;
-import javax.servlet.http.HttpServletRequest;
-import net.daw.control.operation.generic.implementation.ControlOperationGenImpl;
+import net.daw.service.generic.implementation.TableServiceGenImpl;
+import java.sql.Connection;
 
-public class DocumentoControlOperationGenSpImpl extends ControlOperationGenImpl {
+public class OperacionServiceGenSpImpl extends TableServiceGenImpl {
 
-    public DocumentoControlOperationGenSpImpl(HttpServletRequest request) throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, Exception {
-        super(request);
-        oService.setPojo("Documento");
-        oService.setSource("SELECT * FROM documento where id>=10 order by alta desc");
-        
+    public OperacionServiceGenSpImpl(String strObject, String pojo, Connection con) {
+        super(strObject, pojo, con);
     }
 
+//    public String setStandardOperations(Integer id) throws Exception {
+//        String data;
+//        try {
+//            //pte
+//        } catch (Exception e) {
+//            throw new ServletException("GetContenido: View Error: " + e.getMessage());
+//        }
+//    }
 }
