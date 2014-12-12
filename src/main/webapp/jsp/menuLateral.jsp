@@ -81,6 +81,18 @@
 
     </div>
 </div>
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        <h3 class="panel-title">Tareas</h3>
+    </div>
+    <div class="list-group">
+        <a  class="list-group-item" id="lnkPublicacion" href="jsp#/tarea">Tarea</a> 
+        <a  class="list-group-item" id="lnkPublicacion" href="jsp#/proyecto">Proyecto</a> 
+        <a  class="list-group-item" id="lnkPublicacion" href="jsp#/estadotarea">Estado Tarea</a> 
+        <a  class="list-group-item" id="lnkPublicacion" href="jsp#/tipotarea">Tipo Tarea</a> 
+
+    </div>
+</div>
 
 
 <div class="panel panel-primary">

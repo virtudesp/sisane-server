@@ -39,8 +39,12 @@ import net.daw.control.operation.generic.specific.implementation.PedidoControlOp
 import net.daw.control.operation.generic.specific.implementation.PreguntaControlOperationGenSpImpl;
 import net.daw.control.operation.generic.specific.implementation.PublicacionControlOperationGenSpImpl;
 import net.daw.control.operation.generic.specific.implementation.EstadoControlOperationGenSpImpl;
+import net.daw.control.operation.generic.specific.implementation.EstadotareaControlOperationGenSpImpl;
+import net.daw.control.operation.generic.specific.implementation.ProyectoControlOperationGenSpImpl;
 import net.daw.control.operation.generic.specific.implementation.RespuestaControlOperationGenSpImpl;
+import net.daw.control.operation.generic.specific.implementation.TareaControlOperationGenSpImpl;
 import net.daw.control.operation.generic.specific.implementation.TipodocumentoControlOperationGenSpImpl;
+import net.daw.control.operation.generic.specific.implementation.TipotareaControlOperationGenSpImpl;
 import net.daw.control.operation.generic.specific.implementation.TipotemaControlOperationGenSpImpl;
 import net.daw.control.operation.generic.specific.implementation.TipousuarioControlOperationGenSpImpl;
 import net.daw.control.operation.generic.specific.implementation.UsuarioControlOperationGenSpImpl;
@@ -66,9 +70,13 @@ import net.daw.control.route.generic.specific.implementation.PreguntaControlRout
 import net.daw.control.route.generic.specific.implementation.OpcionControlRouteGenSpImpl;
 import net.daw.control.route.generic.specific.implementation.PublicacionControlRouteGenSpImpl;
 import net.daw.control.route.generic.specific.implementation.EstadoControlRouteGenSpImpl;
+import net.daw.control.route.generic.specific.implementation.EstadotareaControlRouteGenSpImpl;
 import net.daw.control.route.generic.specific.implementation.PedidoControlRouteGenSpImpl;
+import net.daw.control.route.generic.specific.implementation.ProyectoControlRouteGenSpImpl;
 import net.daw.control.route.generic.specific.implementation.RespuestaControlRouteGenSpImpl;
+import net.daw.control.route.generic.specific.implementation.TareaControlRouteGenSpImpl;
 import net.daw.control.route.generic.specific.implementation.TipodocumentoControlRouteGenSpImpl;
+import net.daw.control.route.generic.specific.implementation.TipotareaControlRouteGenSpImpl;
 import net.daw.control.route.generic.specific.implementation.TipotemaControlRouteGenSpImpl;
 import net.daw.control.route.generic.specific.implementation.TipousuarioControlRouteGenSpImpl;
 import net.daw.control.route.generic.specific.implementation.UsuarioControlRouteGenSpImpl;
@@ -277,6 +285,26 @@ public class JsonControl extends HttpServlet {
                         TipopropuestaControlRouteSpImpl oTipopropuestaRoute = new TipopropuestaControlRouteSpImpl();
                         TipopropuestaControlOperationSpImpl oTipopropuestaRouteControlOperation = new TipopropuestaControlOperationSpImpl(request);
                         jsonResult = oTipopropuestaRoute.execute(request, oTipopropuestaRouteControlOperation);
+                        break;
+                    case "tarea":
+                        TareaControlRouteGenSpImpl oTareaRoute = new TareaControlRouteGenSpImpl();
+                        TareaControlOperationGenSpImpl oTareaControlOperation = new TareaControlOperationGenSpImpl(request);
+                        jsonResult = oTareaRoute.execute(request, oTareaControlOperation);
+                        break;
+                    case "estadotarea":
+                        EstadotareaControlRouteGenSpImpl oEstadotareaRoute = new EstadotareaControlRouteGenSpImpl();
+                        EstadotareaControlOperationGenSpImpl oEstadotareaControlOperation = new EstadotareaControlOperationGenSpImpl(request);
+                        jsonResult = oEstadotareaRoute.execute(request, oEstadotareaControlOperation);
+                        break; 
+                    case "proyecto":
+                        ProyectoControlRouteGenSpImpl oProyectoRoute = new ProyectoControlRouteGenSpImpl();
+                        ProyectoControlOperationGenSpImpl oProyectoControlOperation = new ProyectoControlOperationGenSpImpl(request);
+                        jsonResult = oProyectoRoute.execute(request, oProyectoControlOperation);
+                        break;
+                    case "tipotarea":
+                        TipotareaControlRouteGenSpImpl oTipotareaRoute = new TipotareaControlRouteGenSpImpl();
+                        TipotareaControlOperationGenSpImpl oTipotareaControlOperation = new TipotareaControlOperationGenSpImpl(request);
+                        jsonResult = oTipotareaRoute.execute(request, oTipotareaControlOperation);
                         break;
                         
 
