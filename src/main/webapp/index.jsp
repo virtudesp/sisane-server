@@ -41,6 +41,7 @@
         <link rel="stylesheet" href="css/animate.css">
         <link rel="stylesheet" href="css/bootstrapValidator.min.css">
         <link rel="stylesheet" href="css/bootstrap-datetimepicker.min.css"  />
+        <link rel="stylesheet" href="css/documentobonito.css">
     </head>
     <body>
         <!--[if lt IE 7]>
@@ -280,6 +281,11 @@
         <script src="js/specific/respuesta/view.js" charset="UTF-8"></script>
         <script src="js/specific/respuesta/routes.js" charset="UTF-8"></script>
         
+        <script src="js/specific/documentobonito/control.js" charset="UTF-8"></script>
+        <script src="js/specific/documentobonito/model.js" charset="UTF-8"></script>
+        <script src="js/specific/documentobonito/view.js" charset="UTF-8"></script>
+        <script src="js/specific/documentobonito/routes.js" charset="UTF-8"></script>
+        
         
         
         <script src="js/specific/tipodocumento/model.js" charset="UTF-8"></script>
@@ -316,10 +322,10 @@
                 fPedidoRoutes();
                 fDetalle_pedidoRoutes();
                 fRespuestaRoutes();
-
                 fComentarioRoutes();
                 fPropuestaRoutes();
                 fTipopropuestaRoutes();
+                fDocumentobonitoRoutes();
 
 
 
