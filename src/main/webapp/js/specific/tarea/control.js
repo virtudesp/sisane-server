@@ -19,6 +19,7 @@
 var tareaControl = function (strClase) {
     this.clase = strClase;
 };
+
 tareaControl.prototype = new control('tarea');
 tareaControl.prototype.getClassNameTarea = function () {
     return this.getClassName() + "Control";

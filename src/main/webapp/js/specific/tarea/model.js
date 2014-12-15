@@ -19,6 +19,7 @@
 var tareaModel = function (strClase) {
     this.clase = strClase;
 };
+
 tareaModel.prototype = new model('tarea');
 tareaModel.prototype.getClassNameTarea = function () {
     return this.getClassName() + "Modelo";

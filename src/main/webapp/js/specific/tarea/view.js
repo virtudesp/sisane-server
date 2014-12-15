@@ -88,6 +88,7 @@ tareaView.prototype.doEventsLoading = function () {
     });
 };
 
+
 tareaView.prototype.loadButtons = function (id) {
     var page = oTareaModel.getCachedPage();
     var pagelength = page.length;
