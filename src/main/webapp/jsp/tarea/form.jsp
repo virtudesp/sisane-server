@@ -16,7 +16,7 @@
  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 --%>
 
-<form class="form-horizontal" role="form" action="#" id="temaForm" name="formulario">
+<form class="form-horizontal" role="form" action="#" id="tareaForm" name="formulario">
     <div class="form-group">
         <label class="col-sm-2 control-label" for="id">Id:</label>
         <div class="col-sm-2">
@@ -24,25 +24,24 @@
         </div>
     </div>
     <div class="form-group">
-        <label class="col-sm-2 control-label"  for="descripcion">Titulo de la tarea:</label>
+        <label class="col-sm-2 control-label"  for="des">Descripcion:</label>
         <div class="col-sm-6">
-            <input type="text" id="descripcion" class="form-control"  name="descripcion" size="15" placeholder="Título de la tarea" />
+            <input type="text" id="descripcion" class="form-control"  name="descripcion" size="15" placeholder="descripcion" />
         </div>
-    </div>
+    </div>   
     
-     <div class="form-group">
-        <label class="col-sm-2 control-label" for="fechaentrega">Fecha entrega:</label> 
+    <div class="form-group">
+        <label class="col-sm-2 control-label" for="fechaentrega">Alta:</label> 
         <div class="col-sm-3">           
             <div class='input-group date' id='fechaentrega'>
-                <input type='text' class="form-control" id='fechaentrega' name="fechaentrega" placeholder="Fechaentrega" />
+                <input type='text' class="form-control" id='alta' name="fechaentrega" placeholder="Fecha de alta" />
                 <span class="input-group-addon">
                     <span class="glyphicon glyphicon-calendar"></span>
                 </span>
             </div>
         </div>
-    </div>
-    
-    
+    </div>     
+
     <div class="form-group">
         <label class="col-sm-2 control-label" for="obj_usuario_id">Usuario: </label> 
         <div class="col-sm-2">              
@@ -53,16 +52,16 @@
         </div>        
         <label class="col-sm-7" for="obj_usuario_desc" id="obj_usuario_desc"></label>                     
     </div>
-    
-     <div class="form-group">
-        <label class="col-sm-2 control-label" for="obj_tipotarea_id">Tipo tarea: </label> 
+
+    <div class="form-group">
+        <label class="col-sm-2 control-label" for="obj_tipotarea_id">Tipo de tarea: </label> 
         <div class="col-sm-2">              
             <input readonly="true"  class="form-control"  id="obj_tipotarea_id" class="input-mini" name="id_tipotarea" type="text" size="5" maxlength="5" />  
         </div>
         <div class="col-sm-1">              
             <a class="btn btn-primary btn-sm" id="obj_tipotarea_button" href="#"><i class="glyphicon glyphicon-search"></i></a>
         </div>        
-        <label class="col-sm-7" for="obj_tipotarea_desc" id="obj_tipotarea_desc"></label>                     
+        <label class="col-sm-7" for="obj_usuario_desc" id="obj_tipotarea_desc"></label>                     
     </div>
     
      <div class="form-group">
@@ -73,9 +72,10 @@
         <div class="col-sm-1">              
             <a class="btn btn-primary btn-sm" id="obj_estadotarea_button" href="#"><i class="glyphicon glyphicon-search"></i></a>
         </div>        
-        <label class="col-sm-7" for="obj_estadotarea_desc" id="obj_estadotarea_desc"></label>                     
+        <label class="col-sm-7" for="obj_usuario_desc" id="obj_estadotarea_desc"></label>                     
     </div>
 
+    
     <div class="form-group">
         <div class="col-sm-offset-2 col-sm-10">
             <div id="messages"></div>
@@ -99,8 +99,13 @@
             language: 'es',
             showToday: true
         });
+        $('#cambio_group').datetimepicker({
+            pickTime: false,
+            language: 'es',
+            showToday: true
+        });
         //http://jqueryvalidation.org/documentation/
-        $('#temaForm')
+        $('#tareaForm')
                 .bootstrapValidator({
                     container: '#messages',
                     feedbackIcons: {
@@ -112,24 +117,58 @@
                         descripcion: {
                             validators: {
                                 notEmpty: {
-                                    message: 'Debe introducir un descripcion de la tarea'
+                                    message: 'Debe introducir un título'
                                 },
                                 stringLength: {
                                     max: 255,
-                                    message: 'La descripcion de la tarea debe tener como máximo 255 caracteres'
+                                    message: 'El título debe tener como máximo 255 caracteres'
                                 }
                             }
                         },
-                         fechaentrega: {
+                        contenido: {
                             validators: {
                                 notEmpty: {
-                                    message: 'Debe introducir una fecha'
+                                    message: 'Debe introducir contenido'
+                                }
+                            }
+                        },
+                        fechaentrega: {
+                            validators: {
+                                notEmpty: {
+                                    message: 'Debe introducir una fecha de alta'
                                 },
                                 date: {
                                     format: 'DD/MM/YYYY',
-                                    message: 'La fecha no tiene un formato DD/MM/YYYY'
+                                    message: 'La fecha de alta no tiene formato DD/MM/YYYY'
                                 }
                             }
+                        },
+                        cambio_group: {
+                            validators: {
+                                notEmpty: {
+                                    message: 'Debe introducir una fecha de cambio'
+                                },
+                                date: {
+                                    format: 'DD/MM/YYYY',
+                                    message: 'La fecha de cambio no tiene formato DD/MM/YYYY'
+                                }
+                            }
+                        },
+                        hits: {
+                            validators: {
+                                notEmpty: {
+                                    message: 'Debe introducir un número de hits'
+                                },
+                                integer: {
+                                    message: 'El valor de hits debe ser un entero'
+                                },
+                                between: {
+                                    min: -0,
+                                    max: 99999999,
+                                    message: 'El número de hits debe ser un entero entre 0 y 99999999'
+                                }
+                            }
+
                         },
                         id_usuario: {
                             validators: {
@@ -141,40 +180,46 @@
                                 }
                             }
                         },
-                         id_estadotarea: {
-                            validators: {
-                                notEmpty: {
-                                    message: 'Debe elegir un tipo tarea'
-                                },
-                                integer: {
-                                    message: 'El identificador de estado tarea debe ser un entero'
-                                }
-                            }
-                        },
                         id_tipotarea: {
                             validators: {
                                 notEmpty: {
-                                    message: 'Debe elegir un tipo de documento'
+                                    message: 'Debe elegir un tipo de tarea'
                                 },
                                 integer: {
-                                    message: 'El identificador de tipo tarea  debe ser un entero'
+                                    message: 'El identificador de tipo de tarea debe ser un entero'
+                                }
+                            }
+                        },
+                        etiquetas: {
+                            validators: {
+                                notEmpty: {
+                                    message: 'Debe introducir una etiqueta'
+                                },
+                                stringLength: {
+                                    max: 100,
+                                    message: 'La longitud de las etiquetas debe ser de 100 caracteres como mucho'
                                 }
                             }
                         }
+
                     }
                 })
                 .on('change', '[name="id_usuario"]', function() {
-                    $('#temaForm').bootstrapValidator('revalidateField', 'id_usuario');
+                    $('#tareaForm').bootstrapValidator('revalidateField', 'id_usuario');
                 })
 
-                .on('change', '[name="id_tipotema"]', function() {
-                    $('#temaForm').bootstrapValidator('revalidateField', 'id_tipotema');
+                .on('change', '[name="id_tipotarea"]', function() {
+                    $('#tareaForm').bootstrapValidator('revalidateField', 'id_tipotarea');
                 })
                 ;
-                 .on('change', '[name="id_estadotarea"]', function() {
-                    $('#temaForm').bootstrapValidator('revalidateField', 'id_estadotarea');
-                })
-                ;
+        $('#fechaentrega').on('dp.change dp.show', function(e) {
+// Revalidate the date when user change it
+            $('#tareaForm').bootstrapValidator('revalidateField', 'fechaentrega');
+        });
+        $('#cambio_group').on('dp.change dp.show', function(e) {
+// Revalidate the date when user change it
+            $('#tareaForm').bootstrapValidator('revalidateField', 'cambio_group');
+        });
     });       
 
     

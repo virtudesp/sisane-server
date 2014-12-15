@@ -125,7 +125,7 @@
                                 <div class="panel-body">
                                     <br />
                                     <div class="text-center">
-                                        <a class="btn btn-primary" href='jsp#/<%=strNombreMantenimiento%>/new'>Crear un nuevo <%=strNombreMantenimiento%></a> 
+                                        <a id="newButton" class="btn btn-primary" href='jsp#/<%=strNombreMantenimiento%>/new'>Crear un nuevo <%=strNombreMantenimiento%></a> 
                                     </div>
                                     <br />
                                 </div>
