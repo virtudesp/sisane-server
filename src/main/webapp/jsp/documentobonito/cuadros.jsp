@@ -54,9 +54,9 @@
                             <div class="panel panel-default">
                                 <!-- Default panel contents -->
                                 <div class="panel-heading">Visualizacion</div>
-                                <div class="panel-body">     
-                                  <a class="btn btn-default" href="#"><i class="glyphicon glyphicon-th-list"></i></a>
-                                  <a class="btn btn-default active" href="#"><i class="glyphicon glyphicon-file"></i></a>
+                                <div class="panel-body visualizacion">     
+                                  <a class="btn btn-default botLista" href="jsp#/documento"><i class="glyphicon glyphicon-th-list"></i></a>
+                                  <a class="btn btn-default active botFile" href="#"><i class="glyphicon glyphicon-file"></i></a>
                                 </div>
                             </div>
                         </div>
