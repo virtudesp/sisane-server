@@ -19,12 +19,29 @@ package net.daw.control.operation.generic.specific.implementation;
 
 import java.lang.reflect.InvocationTargetException;
 import javax.servlet.http.HttpServletRequest;
+import net.daw.bean.generic.specific.implementation.UsuarioBeanGenSpImpl;
 import net.daw.control.operation.generic.implementation.ControlOperationGenImpl;
+import net.daw.helper.ExceptionBooster;
+import net.daw.helper.ParameterCooker;
+import net.daw.service.generic.specific.implementation.RespuestaServiceGenSpImpl;
 
 public class RespuestaControlOperationGenSpImpl extends ControlOperationGenImpl {
+
+    private RespuestaServiceGenSpImpl oRespuestaService = (RespuestaServiceGenSpImpl) process;
 
     public RespuestaControlOperationGenSpImpl(HttpServletRequest request) throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, Exception {
         super(request);
     }
 
+    public String setForm(HttpServletRequest request) throws Exception {
+        String result = null;
+        try {
+            UsuarioBeanGenSpImpl oUsuario = (UsuarioBeanGenSpImpl) request.getSession().getAttribute("usuarioBean");
+            result = oRespuestaService.setForm(oUsuario.getId(), ParameterCooker.prepareJson(request));
+            closeDB();
+        } catch (Exception ex) {
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":set ERROR: " + ex.getMessage()));
+        }
+        return result;
+    }
 }
