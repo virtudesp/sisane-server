@@ -644,8 +644,8 @@ INSERT INTO `cuestionario` (`id`, `tipo`) VALUES
 CREATE TABLE IF NOT EXISTS `detalle_pedido` (
 `id` int(11) NOT NULL COMMENT 'Identificador',
   `cantidad` int(11) DEFAULT NULL COMMENT 'Cantidad',
-  `id_pedido` int(11) NOT NULL COMMENT 'Id Pedido',
-  `id_producto` int(11) NOT NULL COMMENT 'Id Producto'
+  `id_pedido` int(11) DEFAULT NULL COMMENT 'Id Pedido',
+  `id_producto` int(11) DEFAULT NULL COMMENT 'Id Producto'
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=47 ;
 
 --
@@ -1785,7 +1785,11 @@ INSERT INTO `operacion` (`id`, `descripcion`, `id_objeto`, `id_tipooperacion`) V
 (448, 'getaggregateviewsome', 40, 1),
 (449, 'remove', 40, 2),
 (450, 'set', 40, 2),
-(451, 'updateOne', 40, 2)
+(451, 'updateOne', 40, 2),
+
+(452, 'getAllPreguntas', 6, 1),
+(453, 'setForm', 27, 2)
+
 ;
 
 -- --------------------------------------------------------
@@ -1818,7 +1822,7 @@ CREATE TABLE IF NOT EXISTS `pedido` (
 `id` int(11) NOT NULL COMMENT 'Identificador',
   `fecha` date DEFAULT NULL COMMENT 'Fecha Pedido',
   `observaciones` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Observaciones',
-  `id_usuario` int(11) NOT NULL COMMENT 'Id Usuario'
+  `id_usuario` int(11) DEFAULT NULL COMMENT 'Id Usuario'
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=24 ;
 
 --
@@ -1871,8 +1875,8 @@ INSERT INTO `permiso` (`id`, `id_tipousuario`, `id_tipooperacion`, `permitido`) 
 (1, 1, 1, 1),
 (2, 1, 2, 1),
 (3, 2, 1, 1),
-(4, 2, 2, 0),
-(5, 3, 1, 0),
+(4, 2, 2, 1),
+(5, 3, 1, 1),
 (6, 2, 2, 0);
 
 -- --------------------------------------------------------
@@ -1887,8 +1891,8 @@ CREATE TABLE IF NOT EXISTS `post` (
   `mensaje` longtext COMMENT 'Mensaje',
   `fechacreacion` datetime DEFAULT NULL COMMENT 'Fecha Creación',
   `fechamodificacion` datetime DEFAULT NULL COMMENT 'Fecha Modificación',
-  `id_tema` int(6) NOT NULL COMMENT 'ID Tema',
-  `id_usuario` int(6) NOT NULL COMMENT 'ID Usuario'
+  `id_tema` int(6) DEFAULT NULL COMMENT 'ID Tema',
+  `id_usuario` int(6) DEFAULT NULL COMMENT 'ID Usuario'
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=36 ;
 
 --
@@ -2025,8 +2029,8 @@ CREATE TABLE IF NOT EXISTS `producto` (
   `codigo` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Codigo',
   `descripcion` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Descripcion',
   `precio` decimal(6,2) DEFAULT NULL COMMENT 'Precio',
-  `id_tipoproducto` int(11) NOT NULL COMMENT 'Id Tipo Producto',
-  `id_proveedor` int(11) NOT NULL COMMENT 'Id Proveedor'
+  `id_tipoproducto` int(11) DEFAULT NULL COMMENT 'Id Tipo Producto',
+  `id_proveedor` int(11) DEFAULT NULL COMMENT 'Id Proveedor'
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=406 ;
 
 --
@@ -2564,9 +2568,9 @@ INSERT INTO `publicacion` (`id`, `contenido`, `id_usuario`) VALUES
 
 CREATE TABLE IF NOT EXISTS `respuesta` (
 `id` int(11) NOT NULL,
-  `id_usuario` int(11) NOT NULL COMMENT 'Id. Usuario',
-  `id_pregunta` int(11) NOT NULL COMMENT 'Id. Pregunta',
-  `id_opcion` int(11) NOT NULL COMMENT 'Id. Opción'
+  `id_usuario` int(11) DEFAULT NULL COMMENT 'Id. Usuario',
+  `id_pregunta` int(11) DEFAULT NULL COMMENT 'Id. Pregunta',
+  `id_opcion` int(11) DEFAULT NULL COMMENT 'Id. Opción'
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='respuesta' AUTO_INCREMENT=2 ;
 
 -- --------------------------------------------------------
@@ -2579,8 +2583,8 @@ CREATE TABLE IF NOT EXISTS `tema` (
 `id` int(6) NOT NULL COMMENT 'Id',
   `nombre` varchar(255) DEFAULT NULL COMMENT 'Título del tema',
   `fechacreacion` datetime DEFAULT NULL COMMENT 'Fecha de creación',
-  `id_tipotema` int(6) NOT NULL COMMENT 'Categoría',
-  `id_usuario` int(6) NOT NULL COMMENT 'Creador del tema'
+  `id_tipotema` int(6) DEFAULT NULL COMMENT 'Categoría',
+  `id_usuario` int(6) DEFAULT NULL COMMENT 'Creador del tema'
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=21 ;
 
 --
@@ -2668,7 +2672,7 @@ INSERT INTO `tipooperacion` (`id`, `descripcion`) VALUES
 CREATE TABLE IF NOT EXISTS `tipoproducto` (
 `id` int(11) NOT NULL,
   `descripcion` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Descripción',
-  `id_impuesto` int(11) NOT NULL
+  `id_impuesto` int(11) DEFAULT NULL
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=32 ;
 
 --
