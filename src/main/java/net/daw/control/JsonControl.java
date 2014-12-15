@@ -19,7 +19,6 @@ package net.daw.control;
 
 import com.google.gson.Gson;
 import java.io.IOException;
-import java.sql.Connection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
@@ -28,9 +27,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import net.daw.bean.generic.specific.implementation.UsuarioBeanGenSpImpl;
-import net.daw.connection.implementation.BoneConnectionPoolImpl;
-import net.daw.connection.publicinterface.ConnectionInterface;
 import net.daw.control.operation.generic.specific.implementation.AmigoControlOperationGenSpImpl;
 import net.daw.control.operation.generic.specific.implementation.CuestionarioControlOperationGenSpImpl;
 import net.daw.control.operation.generic.specific.implementation.DocumentoControlOperationGenSpImpl;
@@ -61,7 +57,6 @@ import net.daw.control.operation.specific.implementation.MensajeprivadoControlOp
 import net.daw.control.operation.specific.implementation.PostControlOperationSpImpl;
 import net.daw.control.operation.specific.implementation.ProveedorControlOperationSpImpl;
 import net.daw.control.operation.specific.implementation.TemaControlOperationSpImpl;
-import net.daw.control.operation.specific.implementation.TipoproductoControlOperationSpImpl;
 import net.daw.control.operation.specific.implementation.TipoproductoControlOperationSpImpl;
 import net.daw.control.operation.specific.implementation.TipopropuestaControlOperationSpImpl;
 import net.daw.control.route.generic.specific.implementation.CuestionarioControlRouteGenSpImpl;
@@ -99,8 +94,6 @@ import net.daw.helper.EstadoHelper;
 import net.daw.helper.EstadoHelper.Tipo_estado;
 import net.daw.helper.ExceptionBooster;
 import net.daw.helper.ParameterCooker;
-import net.daw.helper.PermissionManager;
-import net.daw.service.generic.specific.implementation.PermisoServiceGenSpImpl;
 
 public class JsonControl extends HttpServlet {
 
