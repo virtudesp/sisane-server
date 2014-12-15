@@ -1041,7 +1041,13 @@ INSERT INTO `objeto` (`id`, `descripcion`) VALUES
 (32, 'tipopropuesta'),
 (33, 'tipotema'),
 (34, 'tipousuario'),
-(35, 'usuario');
+(35, 'usuario'),
+(36, 'tarea'),
+(37, 'tipotarea'),
+(38, 'estadotarea'),
+(39, 'proyecto'),
+(40, 'documentobonito')
+;
 
 -- --------------------------------------------------------
 
@@ -1346,17 +1352,6 @@ INSERT INTO `operacion` (`id`, `descripcion`, `id_objeto`, `id_tipooperacion`) V
 (9, 'remove', 1, 2),
 (10, 'set', 1, 2),
 (11, 'updateOne', 1, 2),
-(12, 'get', 1, 1),
-(13, 'getaggregateviewone', 1, 1),
-(14, 'getprettycolumns', 1, 1),
-(15, 'getcolumns', 1, 1),
-(16, 'getpage', 1, 1),
-(17, 'getpages', 1, 1),
-(18, 'getregisters', 1, 1),
-(19, 'getaggregateviewsome', 1, 1),
-(20, 'remove', 1, 2),
-(21, 'set', 1, 2),
-(22, 'updateOne', 1, 2),
 (23, 'get', 2, 1),
 (24, 'getaggregateviewone', 2, 1),
 (25, 'getprettycolumns', 2, 1),
@@ -1730,7 +1725,68 @@ INSERT INTO `operacion` (`id`, `descripcion`, `id_objeto`, `id_tipooperacion`) V
 (393, 'getaggregateviewsome', 35, 1),
 (394, 'remove', 35, 2),
 (395, 'set', 35, 2),
-(396, 'updateOne', 35, 2);
+(396, 'updateOne', 35, 2),
+
+(397, 'get', 36, 1),
+(398, 'getaggregateviewone', 36, 1),
+(399, 'getprettycolumns', 36, 1),
+(400, 'getcolumns', 36, 1),
+(401, 'getpage', 36, 1),
+(402, 'getpages', 36, 1),
+(403, 'getregisters', 36, 1),
+(404, 'getaggregateviewsome', 36, 1),
+(405, 'remove', 36, 2),
+(406, 'set', 36, 2),
+(407, 'updateOne', 36, 2),
+
+(408, 'get', 37, 1),
+(409, 'getaggregateviewone', 37, 1),
+(410, 'getprettycolumns', 37, 1),
+(411, 'getcolumns', 37, 1),
+(412, 'getpage', 37, 1),
+(413, 'getpages', 37, 1),
+(414, 'getregisters', 37, 1),
+(415, 'getaggregateviewsome', 37, 1),
+(416, 'remove', 37, 2),
+(417, 'set', 37, 2),
+(418, 'updateOne', 37, 2),
+
+(419, 'get', 38, 1),
+(420, 'getaggregateviewone', 38, 1),
+(421, 'getprettycolumns', 38, 1),
+(422, 'getcolumns', 38, 1),
+(423, 'getpage', 38, 1),
+(424, 'getpages', 38, 1),
+(425, 'getregisters', 38, 1),
+(426, 'getaggregateviewsome', 38, 1),
+(427, 'remove', 38, 2),
+(428, 'set', 38, 2),
+(429, 'updateOne', 38, 2),
+
+(430, 'get', 39, 1),
+(431, 'getaggregateviewone', 39, 1),
+(432, 'getprettycolumns', 39, 1),
+(433, 'getcolumns', 39, 1),
+(434, 'getpage', 39, 1),
+(435, 'getpages', 39, 1),
+(436, 'getregisters', 39, 1),
+(437, 'getaggregateviewsome', 39, 1),
+(438, 'remove', 39, 2),
+(439, 'set', 39, 2),
+(440, 'updateOne', 39, 2),
+
+(441, 'get', 40, 1),
+(442, 'getaggregateviewone', 40, 1),
+(443, 'getprettycolumns', 40, 1),
+(444, 'getcolumns', 40, 1),
+(445, 'getpage', 40, 1),
+(446, 'getpages', 40, 1),
+(447, 'getregisters', 40, 1),
+(448, 'getaggregateviewsome', 40, 1),
+(449, 'remove', 40, 2),
+(450, 'set', 40, 2),
+(451, 'updateOne', 40, 2)
+;
 
 -- --------------------------------------------------------
 
