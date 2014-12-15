@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost:3306
--- Tiempo de generación: 12-12-2014 a las 09:42:32
+-- Tiempo de generación: 15-12-2014 a las 09:28:34
 -- Versión del servidor: 5.5.39
 -- Versión de PHP: 5.4.32
 
@@ -1334,7 +1334,7 @@ CREATE TABLE IF NOT EXISTS `operacion` (
   `descripcion` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Descripción',
   `id_objeto` int(6) DEFAULT NULL COMMENT 'ID Objeto',
   `id_tipooperacion` int(6) DEFAULT NULL COMMENT 'ID Tipo Operación'
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=523 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=525 ;
 
 --
 -- Volcado de datos para la tabla `operacion`
@@ -1865,7 +1865,7 @@ CREATE TABLE IF NOT EXISTS `permiso` (
   `id_tipousuario` int(6) DEFAULT NULL COMMENT 'ID Tipo de usuario',
   `id_tipooperacion` int(6) DEFAULT NULL COMMENT 'ID Tipo Operación',
   `permitido` tinyint(1) DEFAULT NULL COMMENT 'Permitido'
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=8 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=9 ;
 
 --
 -- Volcado de datos para la tabla `permiso`
@@ -2650,7 +2650,7 @@ INSERT INTO `tipodocumento` (`id`, `descripcion`, `privado`) VALUES
 CREATE TABLE IF NOT EXISTS `tipooperacion` (
 `id` int(6) NOT NULL COMMENT 'Identificador',
   `descripcion` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Descripción'
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=6 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=7 ;
 
 --
 -- Volcado de datos para la tabla `tipooperacion`
@@ -2661,7 +2661,8 @@ INSERT INTO `tipooperacion` (`id`, `descripcion`) VALUES
 (2, 'escritura'),
 (3, 'alta'),
 (4, 'modificación'),
-(5, 'borrado');
+(5, 'borrado'),
+(6, 'rellenar');
 
 -- --------------------------------------------------------
 
@@ -3136,7 +3137,7 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id',AUTO_INCREMENT=257;
 -- AUTO_INCREMENT de la tabla `operacion`
 --
 ALTER TABLE `operacion`
-MODIFY `id` int(6) NOT NULL AUTO_INCREMENT COMMENT 'ID Operación',AUTO_INCREMENT=523;
+MODIFY `id` int(6) NOT NULL AUTO_INCREMENT COMMENT 'ID Operación',AUTO_INCREMENT=525;
 --
 -- AUTO_INCREMENT de la tabla `ordenador`
 --
@@ -3151,7 +3152,7 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Identificador',AUTO_INCREME
 -- AUTO_INCREMENT de la tabla `permiso`
 --
 ALTER TABLE `permiso`
-MODIFY `id` int(6) NOT NULL AUTO_INCREMENT COMMENT 'ID Permiso',AUTO_INCREMENT=8;
+MODIFY `id` int(6) NOT NULL AUTO_INCREMENT COMMENT 'ID Permiso',AUTO_INCREMENT=9;
 --
 -- AUTO_INCREMENT de la tabla `post`
 --
@@ -3186,7 +3187,7 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Identificador',AUTO_INCREME
 -- AUTO_INCREMENT de la tabla `respuesta`
 --
 ALTER TABLE `respuesta`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT de la tabla `tema`
 --
@@ -3201,7 +3202,7 @@ MODIFY `id` int(6) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=11;
 -- AUTO_INCREMENT de la tabla `tipooperacion`
 --
 ALTER TABLE `tipooperacion`
-MODIFY `id` int(6) NOT NULL AUTO_INCREMENT COMMENT 'Identificador',AUTO_INCREMENT=6;
+MODIFY `id` int(6) NOT NULL AUTO_INCREMENT COMMENT 'Identificador',AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT de la tabla `tipoproducto`
 --

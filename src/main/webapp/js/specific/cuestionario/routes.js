@@ -75,13 +75,21 @@ function fCuestionarioRoutes() {
         $('#indexContenidoJsp').empty();
         return false;
     });
-    
-        Path.map("#/cuestionario/preguntas/:id").to(function () {
+
+    Path.map("#/cuestionario/preguntas/:id").to(function () {
         $('#indexContenidoJsp').spinner();
         var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
         oCuestionarioControl.remove($('#indexContenido'), paramsObject['id'], oCuestionarioModel, oCuestionarioView);
         $('#indexContenidoJsp').empty();
         return false;
     });
-    
+
+    Path.map("#/cuestionario/make/:id").to(function () {
+        $('#indexContenidoJsp').spinner();
+        var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
+        oCuestionarioControl.make($('#indexContenido'), paramsObject['id'], oCuestionarioModel, oRespuestaModel, oCuestionarioView);
+        $('#indexContenidoJsp').empty();
+        return false;
+    });
+
 }
