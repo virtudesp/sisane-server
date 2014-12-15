@@ -46,7 +46,7 @@ public class EstadoHelper {
     }
 
     public static String getAutor() {
-        return "Rafael Aznar";
+        return "Rafael Aznar & alumnos";
     }
 
     public static String getMailAutor() {
