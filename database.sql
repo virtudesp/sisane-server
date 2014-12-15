@@ -1045,7 +1045,9 @@ INSERT INTO `objeto` (`id`, `descripcion`) VALUES
 (36, 'tarea'),
 (37, 'tipotarea'),
 (38, 'estadotarea'),
-(39, 'proyecto');
+(39, 'proyecto'),
+(40, 'documentobonito')
+;
 
 -- --------------------------------------------------------
 
@@ -1771,7 +1773,19 @@ INSERT INTO `operacion` (`id`, `descripcion`, `id_objeto`, `id_tipooperacion`) V
 (437, 'getaggregateviewsome', 39, 1),
 (438, 'remove', 39, 2),
 (439, 'set', 39, 2),
-(440, 'updateOne', 39, 2)
+(440, 'updateOne', 39, 2),
+
+(441, 'get', 40, 1),
+(442, 'getaggregateviewone', 40, 1),
+(443, 'getprettycolumns', 40, 1),
+(444, 'getcolumns', 40, 1),
+(445, 'getpage', 40, 1),
+(446, 'getpages', 40, 1),
+(447, 'getregisters', 40, 1),
+(448, 'getaggregateviewsome', 40, 1),
+(449, 'remove', 40, 2),
+(450, 'set', 40, 2),
+(451, 'updateOne', 40, 2)
 ;
 
 -- --------------------------------------------------------
