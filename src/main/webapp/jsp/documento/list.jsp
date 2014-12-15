@@ -125,7 +125,7 @@
                                 <div class="panel-body">
                                     <br />
                                     <div class="text-center">
-                                        <a id="newButton" class="btn btn-primary" href='jsp#/<%=strNombreMantenimiento%>/new'>Crear un nuevo <%=strNombreMantenimiento%></a> 
+                                        <a class="btn btn-primary" href='jsp#/<%=strNombreMantenimiento%>/new'>Crear un nuevo <%=strNombreMantenimiento%></a> 
                                     </div>
                                     <br />
                                 </div>
@@ -139,6 +139,7 @@
     </div>
 
 </div>
+                                    
 </div>
 <div class="row">
     <div class="col-md-12" id="menuLateralList">
