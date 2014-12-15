@@ -43,8 +43,8 @@ import net.daw.service.generic.implementation.TableServiceGenImpl;
  */
 public class CuestionarioServiceGenSpImpl extends TableServiceGenImpl {
 
-    public CuestionarioServiceGenSpImpl(String strObject, Connection con) {
-        super(strObject, con);
+    public CuestionarioServiceGenSpImpl(String strObject, String pojo, Connection con) {
+        super(strObject, "Cuestionario", con);
     }
 
     public String getTipoCuestionario(Integer id) throws Exception {

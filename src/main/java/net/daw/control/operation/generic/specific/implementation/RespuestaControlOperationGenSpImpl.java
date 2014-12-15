@@ -27,7 +27,7 @@ import net.daw.service.generic.specific.implementation.RespuestaServiceGenSpImpl
 
 public class RespuestaControlOperationGenSpImpl extends ControlOperationGenImpl {
 
-    private RespuestaServiceGenSpImpl oRespuestaService = (RespuestaServiceGenSpImpl) process;
+    private RespuestaServiceGenSpImpl oRespuestaService = (RespuestaServiceGenSpImpl) oService;
 
     public RespuestaControlOperationGenSpImpl(HttpServletRequest request) throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, Exception {
         super(request);

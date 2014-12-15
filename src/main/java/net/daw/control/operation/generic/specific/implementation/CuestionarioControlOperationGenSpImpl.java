@@ -30,8 +30,8 @@ import net.daw.service.generic.specific.implementation.PublicacionServiceGenSpIm
  */
 public class CuestionarioControlOperationGenSpImpl extends ControlOperationGenImpl {
 
-    private CuestionarioServiceGenSpImpl oCuestionarioService = (CuestionarioServiceGenSpImpl) process;
-    
+    private CuestionarioServiceGenSpImpl oCuestionarioService = (CuestionarioServiceGenSpImpl) oService;
+
     public CuestionarioControlOperationGenSpImpl(HttpServletRequest request) throws Exception {
         super(request);
     }
@@ -39,8 +39,12 @@ public class CuestionarioControlOperationGenSpImpl extends ControlOperationGenIm
     public String getAllPreguntas(HttpServletRequest request) throws Exception {
         String result = null;
         try {
-            result = oCuestionarioService.getAllPreguntas(ParameterCooker.prepareId(request));
-            closeDB();
+            if (perm) {
+                result = oCuestionarioService.getAllPreguntas(ParameterCooker.prepareId(request));
+                closeDB();
+            } else {
+                result = "error";
+            }
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":set ERROR: " + ex.getMessage()));
         }
