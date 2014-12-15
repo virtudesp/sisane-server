@@ -39,7 +39,7 @@
 
                 <div id="pane1" class="tab-pane active">
                     <div class="row">
-                        <div class="col-md-7">
+                        <div class="col-md-5">
                             <div class="panel panel-default">
                                 <!-- Default panel contents -->
                                 <div class="panel-heading">Paginación</div>
@@ -47,6 +47,16 @@
                                     <div class="text-center">
                                         <div id="pagination"></div>
                                     </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="panel panel-default">
+                                <!-- Default panel contents -->
+                                <div class="panel-heading">Visualizacion</div>
+                                <div class="panel-body">     
+                                  <a class="btn btn-default" href="#"><i class="glyphicon glyphicon-th-list"></i></a>
+                                  <a class="btn btn-default active" href="#"><i class="glyphicon glyphicon-file"></i></a>
                                 </div>
                             </div>
                         </div>
@@ -131,7 +141,6 @@
 <div class="row ejercicio">
     <div class="col-md-12" id="menuLateralList"> 
         <div id="tableBody"></div>
-
         <div id="datos"></div>
         <div id="datos2"></div>
     </div> 

@@ -22,7 +22,7 @@ function fDocumentobonitoRoutes() {
 
     Path.map("#/documentobonito").to(function () {
         $('#indexContenidoJsp').spinner();
-        oDocumentobonitoControl.list($('#indexContenido'), param().defaultizeUrlObjectParameters({}), null, oDocumentobonitoModel, oDocumentobonitoView);
+        oDocumentobonitoControl.listCuadros($('#indexContenido'), param().defaultizeUrlObjectParameters({}), null, oDocumentobonitoModel, oDocumentobonitoView);
         //documentobonitoControl.modalListEventsLoading(documentobonitoObject, documentobonitoView, $('#indexContenido'), param().defaultizeUrlObjectParameters({}), null);        
         $('#indexContenidoJsp').empty();
         //$('#indexContenidoJsp').append(oDocumentobonitoControl.getClassNameDocumentobonito());

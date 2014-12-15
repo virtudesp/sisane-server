@@ -206,7 +206,7 @@ documentobonitoView.prototype.printValue = function (value, valor) {
 
 
 
-documentoView.prototype.getHeaderPageTable = function (prettyFieldNames, fieldNames, visibleFields, UrlFromParamsWithoutOrder) {
+documentobonitoView.prototype.getHeaderPageTable = function (prettyFieldNames, fieldNames, visibleFields, UrlFromParamsWithoutOrder) {
     var strNombreClase = this.clase;
     var numField = 0; //visible field counter
     var tabla = "";
