@@ -26,11 +26,8 @@
     
     <div class="form-group">
         <label class="col-sm-2 control-label" for="contenido">Descripcion:</label>
-        <div class="col-sm-9">
+        <div class="col-sm-5">
             <textarea type="text"  class="form-control pull-left"  id="descripcion" name="descripcion" size="15" placeholder="descripcion"></textarea>
-        </div>
-        <div class="col-sm-1">
-            <a class="btn btn-primary btn-sm" id="descripcion_button" href="#"><i class="glyphicon glyphicon-pencil"></i></a>
         </div>
     </div>
 
