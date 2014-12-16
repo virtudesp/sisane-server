@@ -192,7 +192,10 @@
         <script src="js/specific/usuario/view.js" charset="UTF-8"></script>
         <script src="js/specific/usuario/routes.js" charset="UTF-8"></script>
         
+        <script src="js/specific/tipodocumento/control.js" charset="UTF-8"></script>
         <script src="js/specific/tipodocumento/model.js" charset="UTF-8"></script>
+        <script src="js/specific/tipodocumento/view.js" charset="UTF-8"></script>
+        <script src="js/specific/tipodocumento/routes.js" charset="UTF-8"></script>
         
         <script src="js/specific/pregunta/control.js" charset="UTF-8"></script>
         <script src="js/specific/pregunta/model.js" charset="UTF-8"></script>
@@ -326,6 +329,7 @@
                 fPropuestaRoutes();
                 fTipopropuestaRoutes();
                 fDocumentobonitoRoutes();
+                fTipodocumentoRoutes();
 
 
 

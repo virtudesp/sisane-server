@@ -6,25 +6,32 @@
 
 /*titulo*/
 #contenido2 {
-    font-size: 18px;
+    font-size: 20px;
     text-align: center;
-    border: solid 2px #428bca;
+    /*border: solid 1px #428bca;*/
+    background-color: #428bca;
+    color: white;
     padding-top: 5px;
     padding-bottom: 5px;
-    border-radius: 20px;
-    width: 600px;
-    margin: 0 auto 10px;
+    /*border-radius: 20px;*/
+    /*width: 600px;*/
+    margin: 0 auto ;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
 }
 
 /*contenido*/
 #contenido3 {
+    font-size: 12px;
     border: solid 2px #428bca;
     height: 280px;
     margin: 0 auto;
     margin-bottom: 3px;
-    border-radius: 25px;
+    /*border-radius: 5px;*/
     padding-left: 15px;
     padding-top: 18px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
 }
 
 /*fecha*/
