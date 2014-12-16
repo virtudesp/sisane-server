@@ -284,6 +284,11 @@
         <script src="js/specific/respuesta/model.js" charset="UTF-8"></script>
         <script src="js/specific/respuesta/view.js" charset="UTF-8"></script>
         <script src="js/specific/respuesta/routes.js" charset="UTF-8"></script>
+        
+        <script src="js/specific/producto/control.js" charset="UTF-8"></script>
+        <script src="js/specific/producto/model.js" charset="UTF-8"></script>
+        <script src="js/specific/producto/view.js" charset="UTF-8"></script>
+        <script src="js/specific/producto/routes.js" charset="UTF-8"></script>
 
 
 
@@ -325,6 +330,7 @@
                 fComentarioRoutes();
                 fPropuestaRoutes();
                 fTipopropuestaRoutes();
+                fProductoRoutes();
 
 
 

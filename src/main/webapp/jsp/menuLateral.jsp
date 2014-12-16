@@ -51,7 +51,8 @@
         <a  class="list-group-item" id="lnkImpuesto" href="jsp#/impuesto">Impuesto</a> 
         <a  class="list-group-item" id="lnkActividad" href="jsp#/actividad">Actividad</a>
         <a  class="list-group-item" id="lnkActividad" href="jsp#/entrega">Entrega</a> 
-        <a  class="list-group-item" id="lnkActividad" href="jsp#/detalle_pedido">DetallePedido</a> 
+        <a  class="list-group-item" id="lnkActividad" href="jsp#/detalle_pedido">DetallePedido</a>
+        <a  class="list-group-item" id="lnkProducto" href="jsp#/producto">Producto</a> 
     </div>
 </div>
 
