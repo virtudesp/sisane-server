@@ -3,8 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost:3306
--- Tiempo de generación: 15-12-2014 a las 09:28:34
--- Tiempo de generación: 12-12-2014 a las 08:05:43
+-- Tiempo de generación: 16-12-2014 a las 09:17:23
 -- Versión del servidor: 5.5.39
 -- Versión de PHP: 5.4.32
 
@@ -395,57 +394,6 @@ INSERT INTO `comentario` (`id`, `contenido`, `id_usuario`, `id_propuesta`) VALUE
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `comentario`
---
-
-CREATE TABLE IF NOT EXISTS `comentario` (
-`id` int(11) NOT NULL COMMENT 'Num de comentario',
-  `contenido` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Contenido',
-  `id_usuario` int(11) DEFAULT NULL COMMENT 'Num de Usuario',
-  `id_propuesta` int(11) DEFAULT NULL COMMENT 'Num propuesta'
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=33 ;
-
---
--- Volcado de datos para la tabla `comentario`
---
-
-INSERT INTO `comentario` (`id`, `contenido`, `id_usuario`, `id_propuesta`) VALUES
-(1, 'Claro, ¡así quedaria genial!', 5, 1),
-(2, 'No me gustan los margenes, me parece algo obsoleto.', 4, 1),
-(3, 'En el index no le veo utilidad', 12, 2),
-(4, 'Estaria bien usarlo en el index', 10, 2),
-(5, 'Yo me apunto, es una gran herramienta', 8, 3),
-(6, 'No le veo demasiada utilidad, pero tengo curiosidad', 9, 3),
-(7, 'Yo me apunto, es una gran herramienta', 1, 4),
-(8, 'No la conozco, pero siempre esta bien aprender cosas nuevas', 7, 4),
-(9, 'Me apunto!, almorzamos en el bar de siempre?', 3, 5),
-(10, 'Yo no podre acudir pero disfrutad por mi!', 6, 5),
-(11, 'Yo tnego vacaciones! donde nos vamos?', 5, 6),
-(12, 'Vamonos a esquiar que yo nunca he ido!', 10, 6),
-(13, 'Prueba Libros web, suele tener mucha información de todo tipo', 9, 7),
-(14, 'A mi me gusta mas mc Libre, échale un ojo a ver si te ayuda', 2, 7),
-(15, 'Java4Dummies está muy bien', 5, 8),
-(16, 'Yo use sobre todo internet, pero en la biblioteca municipal hay bastantes libros', 10, 8),
-(17, 'Prueba Libros web, suele tener mucha información de todo tipo', 8, 9),
-(18, 'A mi me gusta mas mc Libre, échale un ojo a ver si te ayuda', 12, 9),
-(19, 'Php4Dummies está muy bien', 1, 10),
-(20, 'Yo use sobre todo internet, pero en la biblioteca municipal hay bastantes libros sobre php', 5, 10),
-(21, 'Prueba Libros web, suele tener mucha información de todo tipo', 6, 11),
-(22, 'A mi me gusta mas mc Libre, échale un ojo a ver si te ayuda', 11, 11),
-(23, 'Django4Dummies está muy bien', 7, 12),
-(24, 'Yo use sobre todo internet, pero en la biblioteca municipal hay bastantes libros sobre Django', 12, 12),
-(25, 'Prueba Libros web, suele tener mucha información de todo tipo', 8, 13),
-(26, 'A mi me gusta mas mc Libre, échale un ojo a ver si te ayuda', 6, 13),
-(27, 'Visualbasic4Dummies está muy bien', 1, 14),
-(28, 'Yo use sobre todo internet, pero en la biblioteca municipal hay bastantes libros sobre Visualbasic', 5, 14),
-(29, 'Prueba Libros web, suele tener mucha información de todo tipo', 7, 15),
-(30, 'A mi me gusta mas mc Libre, échale un ojo a ver si te ayuda', 10, 15),
-(31, 'Ruby4Dummies está muy bien', 2, 16),
-(32, 'Yo use sobre todo internet, pero en la biblioteca municipal hay bastantes libros sobre Ruby', 7, 16);
-
--- --------------------------------------------------------
-
---
 -- Estructura de tabla para la tabla `compra`
 --
 
@@ -696,8 +644,8 @@ INSERT INTO `cuestionario` (`id`, `tipo`) VALUES
 CREATE TABLE IF NOT EXISTS `detalle_pedido` (
 `id` int(11) NOT NULL COMMENT 'Identificador',
   `cantidad` int(11) DEFAULT NULL COMMENT 'Cantidad',
-  `id_pedido` int(11) DEFAULT NULL COMMENT 'Id Pedido',
-  `id_producto` int(11) DEFAULT NULL COMMENT 'Id Producto'
+  `id_pedido` int(11) NOT NULL DEFAULT '0' COMMENT 'Id Pedido',
+  `id_producto` int(11) NOT NULL DEFAULT '0' COMMENT 'Id Producto'
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=47 ;
 
 --
@@ -1120,10 +1068,7 @@ INSERT INTO `objeto` (`id`, `descripcion`) VALUES
 (37, 'tipotarea'),
 (38, 'estadotarea'),
 (39, 'proyecto'),
-(40, 'documentobonito')
-;
-  `descripcion` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Descripción'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+(40, 'documentobonito');
 
 -- --------------------------------------------------------
 
@@ -1406,76 +1351,6 @@ INSERT INTO `opcion` (`id`, `valor`, `id_pregunta`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `operacion` (
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `ordenador`
---
-
-CREATE TABLE IF NOT EXISTS `ordenador` (
-`id` int(11) NOT NULL COMMENT 'Identificador',
-  `descripcion` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Descripción'
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=4 ;
-
---
--- Volcado de datos para la tabla `ordenador`
---
-
-INSERT INTO `ordenador` (`id`, `descripcion`) VALUES
-(1, 'Ordenador de rafa'),
-(2, 'Ordenador de pep'),
-(3, 'aaas');
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `pedido`
---
-
-CREATE TABLE IF NOT EXISTS `pedido` (
-`id` int(11) NOT NULL COMMENT 'Identificador',
-  `fecha` date DEFAULT NULL COMMENT 'Fecha Pedido',
-  `observaciones` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Observaciones',
-  `id_usuario` int(11) DEFAULT NULL COMMENT 'Id Usuario'
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=24 ;
-
---
--- Volcado de datos para la tabla `pedido`
---
-
-INSERT INTO `pedido` (`id`, `fecha`, `observaciones`, `id_usuario`) VALUES
-(1, '2014-07-10', NULL, 1),
-(2, '2013-11-06', 'Reclamación cliente', 2),
-(3, '2014-02-15', NULL, 3),
-(4, '2012-05-01', NULL, 4),
-(5, '2014-12-18', NULL, 5),
-(6, '2014-02-20', NULL, 6),
-(7, '2013-09-11', 'Entrega atrasada', 7),
-(8, '2014-07-07', 'Cliente se declara insolvente', 8),
-(9, '2011-08-02', NULL, 9),
-(10, '2012-06-16', 'Reclamación cliente', 10),
-(11, '2014-11-26', NULL, 24),
-(12, '2013-08-31', NULL, 12),
-(13, '2014-02-22', NULL, 13),
-(14, '2013-01-03', NULL, 14),
-(15, '2011-03-12', 'Reclamación cliente', 15),
-(16, '2013-06-30', NULL, 16),
-(17, '2014-07-28', NULL, 17),
-(18, '2014-09-11', 'Reclamación cliente', 18),
-(19, '2011-09-04', 'Reclamación cliente', 19),
-(20, '2011-02-07', NULL, 20),
-(21, '2014-01-13', NULL, 21),
-(22, '2012-10-17', NULL, 22),
-(23, '2014-04-12', 'Reclamación cliente', 23);
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `permiso`
---
-
-CREATE TABLE IF NOT EXISTS `permiso` (
 `id` int(6) NOT NULL COMMENT 'ID Operación',
   `descripcion` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Descripción',
   `id_objeto` int(6) DEFAULT NULL COMMENT 'ID Objeto',
@@ -1872,7 +1747,6 @@ INSERT INTO `operacion` (`id`, `descripcion`, `id_objeto`, `id_tipooperacion`) V
 (394, 'remove', 35, 2),
 (395, 'set', 35, 2),
 (396, 'updateOne', 35, 2),
-
 (397, 'get', 36, 1),
 (398, 'getaggregateviewone', 36, 1),
 (399, 'getprettycolumns', 36, 1),
@@ -1884,7 +1758,6 @@ INSERT INTO `operacion` (`id`, `descripcion`, `id_objeto`, `id_tipooperacion`) V
 (405, 'remove', 36, 2),
 (406, 'set', 36, 2),
 (407, 'updateOne', 36, 2),
-
 (408, 'get', 37, 1),
 (409, 'getaggregateviewone', 37, 1),
 (410, 'getprettycolumns', 37, 1),
@@ -1896,7 +1769,6 @@ INSERT INTO `operacion` (`id`, `descripcion`, `id_objeto`, `id_tipooperacion`) V
 (416, 'remove', 37, 2),
 (417, 'set', 37, 2),
 (418, 'updateOne', 37, 2),
-
 (419, 'get', 38, 1),
 (420, 'getaggregateviewone', 38, 1),
 (421, 'getprettycolumns', 38, 1),
@@ -1908,7 +1780,6 @@ INSERT INTO `operacion` (`id`, `descripcion`, `id_objeto`, `id_tipooperacion`) V
 (427, 'remove', 38, 2),
 (428, 'set', 38, 2),
 (429, 'updateOne', 38, 2),
-
 (430, 'get', 39, 1),
 (431, 'getaggregateviewone', 39, 1),
 (432, 'getprettycolumns', 39, 1),
@@ -1920,7 +1791,6 @@ INSERT INTO `operacion` (`id`, `descripcion`, `id_objeto`, `id_tipooperacion`) V
 (438, 'remove', 39, 2),
 (439, 'set', 39, 2),
 (440, 'updateOne', 39, 2),
-
 (441, 'get', 40, 1),
 (442, 'getaggregateviewone', 40, 1),
 (443, 'getprettycolumns', 40, 1),
@@ -1932,11 +1802,95 @@ INSERT INTO `operacion` (`id`, `descripcion`, `id_objeto`, `id_tipooperacion`) V
 (449, 'remove', 40, 2),
 (450, 'set', 40, 2),
 (451, 'updateOne', 40, 2),
-
 (452, 'getAllPreguntas', 6, 1),
-(453, 'setForm', 27, 2)
+(453, 'setForm', 27, 2);
 
-;
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `ordenador`
+--
+
+CREATE TABLE IF NOT EXISTS `ordenador` (
+`id` int(11) NOT NULL COMMENT 'Identificador',
+  `descripcion` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Descripción'
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=4 ;
+
+--
+-- Volcado de datos para la tabla `ordenador`
+--
+
+INSERT INTO `ordenador` (`id`, `descripcion`) VALUES
+(1, 'Ordenador de rafa'),
+(2, 'Ordenador de pep'),
+(3, 'aaas');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `pedido`
+--
+
+CREATE TABLE IF NOT EXISTS `pedido` (
+`id` int(11) NOT NULL COMMENT 'Identificador',
+  `fecha` date DEFAULT NULL COMMENT 'Fecha Pedido',
+  `observaciones` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Observaciones',
+  `id_usuario` int(11) NOT NULL DEFAULT '0' COMMENT 'Id Usuario'
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=24 ;
+
+--
+-- Volcado de datos para la tabla `pedido`
+--
+
+INSERT INTO `pedido` (`id`, `fecha`, `observaciones`, `id_usuario`) VALUES
+(1, '2014-07-10', NULL, 1),
+(2, '2013-11-06', 'Reclamación cliente', 2),
+(3, '2014-02-15', NULL, 3),
+(4, '2012-05-01', NULL, 4),
+(5, '2014-12-18', NULL, 5),
+(6, '2014-02-20', NULL, 6),
+(7, '2013-09-11', 'Entrega atrasada', 7),
+(8, '2014-07-07', 'Cliente se declara insolvente', 8),
+(9, '2011-08-02', NULL, 9),
+(10, '2012-06-16', 'Reclamación cliente', 10),
+(11, '2014-11-26', NULL, 24),
+(12, '2013-08-31', NULL, 12),
+(13, '2014-02-22', NULL, 13),
+(14, '2013-01-03', NULL, 14),
+(15, '2011-03-12', 'Reclamación cliente', 15),
+(16, '2013-06-30', NULL, 16),
+(17, '2014-07-28', NULL, 17),
+(18, '2014-09-11', 'Reclamación cliente', 18),
+(19, '2011-09-04', 'Reclamación cliente', 19),
+(20, '2011-02-07', NULL, 20),
+(21, '2014-01-13', NULL, 21),
+(22, '2012-10-17', NULL, 22),
+(23, '2014-04-12', 'Reclamación cliente', 23);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `permiso`
+--
+
+CREATE TABLE IF NOT EXISTS `permiso` (
+`id` int(6) NOT NULL COMMENT 'ID Permiso',
+  `id_tipousuario` int(6) DEFAULT NULL COMMENT 'ID Tipo de usuario',
+  `id_tipooperacion` int(6) DEFAULT NULL COMMENT 'ID Tipo Operación',
+  `permitido` tinyint(1) DEFAULT NULL COMMENT 'Permitido'
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=9 ;
+
+--
+-- Volcado de datos para la tabla `permiso`
+--
+
+INSERT INTO `permiso` (`id`, `id_tipousuario`, `id_tipooperacion`, `permitido`) VALUES
+(1, 1, 1, 1),
+(2, 1, 2, 1),
+(3, 2, 1, 1),
+(4, 2, 2, 1),
+(5, 3, 1, 1),
+(6, 2, 2, 0);
 
 -- --------------------------------------------------------
 
@@ -1950,6 +1904,8 @@ CREATE TABLE IF NOT EXISTS `post` (
   `mensaje` longtext COMMENT 'Mensaje',
   `fechacreacion` datetime DEFAULT NULL COMMENT 'Fecha Creación',
   `fechamodificacion` datetime DEFAULT NULL COMMENT 'Fecha Modificación',
+  `id_tema` int(6) DEFAULT NULL COMMENT 'ID Tema',
+  `id_usuario` int(6) DEFAULT NULL COMMENT 'ID Usuario'
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=36 ;
 
 --
@@ -2086,8 +2042,8 @@ CREATE TABLE IF NOT EXISTS `producto` (
   `codigo` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Codigo',
   `descripcion` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Descripcion',
   `precio` decimal(6,2) DEFAULT NULL COMMENT 'Precio',
-  `id_tipoproducto` int(11) DEFAULT NULL COMMENT 'Id Tipo Producto',
-  `id_proveedor` int(11) DEFAULT NULL COMMENT 'Id Proveedor'
+  `id_tipoproducto` int(11) NOT NULL DEFAULT '0' COMMENT 'Id Tipo Producto',
+  `id_proveedor` int(11) NOT NULL DEFAULT '0' COMMENT 'Id Proveedor'
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=406 ;
 
 --
@@ -2651,24 +2607,10 @@ INSERT INTO `publicacion` (`id`, `contenido`, `id_usuario`) VALUES
 
 CREATE TABLE IF NOT EXISTS `respuesta` (
 `id` int(11) NOT NULL,
-`id` int(6) NOT NULL COMMENT 'ID Permiso',
-  `id_tipousuario` int(6) DEFAULT NULL COMMENT 'ID Tipo de usuario',
-  `id_tipooperacion` int(6) DEFAULT NULL COMMENT 'ID Tipo Operación',
-  `permitido` tinyint(1) DEFAULT NULL COMMENT 'Permitido'
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=9 ;
-
---
--- Volcado de datos para la tabla `permiso`
---
-
-INSERT INTO `permiso` (`id`, `id_tipousuario`, `id_tipooperacion`, `permitido`) VALUES
-(1, 1, 1, 1),
-(2, 1, 2, 1),
-(3, 2, 1, 1),
-(4, 2, 2, 1),
-(5, 3, 1, 1),
-(6, 2, 2, 0);
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='respuesta' AUTO_INCREMENT=2 ;
+  `id_usuario` int(11) DEFAULT NULL COMMENT 'Id. Usuario',
+  `id_pregunta` int(11) DEFAULT NULL COMMENT 'Id. Pregunta',
+  `id_opcion` int(11) DEFAULT NULL COMMENT 'Id. Opción'
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='respuesta' AUTO_INCREMENT=7 ;
 
 -- --------------------------------------------------------
 
@@ -2726,8 +2668,8 @@ CREATE TABLE IF NOT EXISTS `tema` (
 `id` int(6) NOT NULL COMMENT 'Id',
   `nombre` varchar(255) DEFAULT NULL COMMENT 'Título del tema',
   `fechacreacion` datetime DEFAULT NULL COMMENT 'Fecha de creación',
-  `id_tema` int(6) DEFAULT NULL COMMENT 'ID Tema',
-  `id_usuario` int(6) DEFAULT NULL COMMENT 'ID Usuario'
+  `id_tipotema` int(6) DEFAULT NULL COMMENT 'Categoría',
+  `id_usuario` int(6) DEFAULT NULL COMMENT 'Creador del tema'
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=21 ;
 
 --
@@ -2791,9 +2733,21 @@ INSERT INTO `tipodocumento` (`id`, `descripcion`, `privado`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `tipooperacion` (
-  `id_usuario` int(11) DEFAULT NULL COMMENT 'Id. Usuario',
-  `id_pregunta` int(11) DEFAULT NULL COMMENT 'Id. Pregunta',
-  `id_opcion` int(11) DEFAULT NULL COMMENT 'Id. Opción'
+`id` int(6) NOT NULL COMMENT 'Identificador',
+  `descripcion` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Descripción'
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=7 ;
+
+--
+-- Volcado de datos para la tabla `tipooperacion`
+--
+
+INSERT INTO `tipooperacion` (`id`, `descripcion`) VALUES
+(1, 'lectura'),
+(2, 'escritura'),
+(3, 'alta'),
+(4, 'modificación'),
+(5, 'borrado'),
+(6, 'rellenar');
 
 -- --------------------------------------------------------
 
@@ -2804,7 +2758,7 @@ CREATE TABLE IF NOT EXISTS `tipooperacion` (
 CREATE TABLE IF NOT EXISTS `tipoproducto` (
 `id` int(11) NOT NULL,
   `descripcion` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Descripción',
-  `id_impuesto` int(11) DEFAULT NULL
+  `id_impuesto` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=32 ;
 
 --
@@ -2867,8 +2821,32 @@ INSERT INTO `tipopropuesta` (`id`, `descripcion`) VALUES
 (6, 'Aprender django'),
 (7, 'Aprender Visual Basic'),
 (8, 'Aprender ruby');
-  `id_tipotema` int(6) DEFAULT NULL COMMENT 'Categoría',
-  `id_usuario` int(6) DEFAULT NULL COMMENT 'Creador del tema'
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `tipotarea`
+--
+
+CREATE TABLE IF NOT EXISTS `tipotarea` (
+`id` int(11) NOT NULL COMMENT 'Id',
+  `descripcion` varchar(250) DEFAULT NULL COMMENT 'Descripción'
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=10 ;
+
+--
+-- Volcado de datos para la tabla `tipotarea`
+--
+
+INSERT INTO `tipotarea` (`id`, `descripcion`) VALUES
+(1, 'diseño de la base de datos'),
+(2, 'diseño del programa'),
+(3, 'diseño del interface'),
+(4, 'programación del cliente'),
+(5, 'programación del servidor'),
+(6, 'reparación de error en cliente'),
+(7, 'reparación de error en servidor'),
+(8, 'documentación'),
+(9, 'gestión de permisos');
 
 -- --------------------------------------------------------
 
@@ -3074,21 +3052,9 @@ ALTER TABLE `metadocumentos`
  ADD PRIMARY KEY (`id`);
 
 --
--- Indices de la tabla `objeto`
---
-ALTER TABLE `objeto`
- ADD PRIMARY KEY (`id`);
-
---
 -- Indices de la tabla `opcion`
 --
 ALTER TABLE `opcion`
- ADD PRIMARY KEY (`id`);
-
---
--- Indices de la tabla `operacion`
---
-ALTER TABLE `operacion`
  ADD PRIMARY KEY (`id`);
 
 --
@@ -3132,12 +3098,6 @@ ALTER TABLE `pregunta`
 --
 ALTER TABLE `producto`
  ADD PRIMARY KEY (`id`,`id_tipoproducto`,`id_proveedor`);
-
---
--- Indices de la tabla `propuesta`
---
-ALTER TABLE `propuesta`
- ADD PRIMARY KEY (`id`);
 
 --
 -- Indices de la tabla `propuesta`
@@ -3204,21 +3164,12 @@ ALTER TABLE `tipoproducto`
 --
 ALTER TABLE `tipopropuesta`
  ADD PRIMARY KEY (`id`);
-`id` int(6) NOT NULL COMMENT 'Identificador',
-  `descripcion` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Descripción'
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=7 ;
 
 --
--- Volcado de datos para la tabla `tipooperacion`
+-- Indices de la tabla `tipotarea`
 --
-
-INSERT INTO `tipooperacion` (`id`, `descripcion`) VALUES
-(1, 'lectura'),
-(2, 'escritura'),
-(3, 'alta'),
-(4, 'modificación'),
-(5, 'borrado'),
-(6, 'rellenar');
+ALTER TABLE `tipotarea`
+ ADD PRIMARY KEY (`id`);
 
 --
 -- Indices de la tabla `tipotema`
@@ -3257,11 +3208,6 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Identificador',AUTO_INCREME
 --
 ALTER TABLE `cliente`
 MODIFY `id` int(6) NOT NULL AUTO_INCREMENT COMMENT 'Identificador',AUTO_INCREMENT=251;
---
--- AUTO_INCREMENT de la tabla `comentario`
---
-ALTER TABLE `comentario`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Num de comentario',AUTO_INCREMENT=33;
 --
 -- AUTO_INCREMENT de la tabla `comentario`
 --
@@ -3386,6 +3332,12 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Identificador',AUTO_INCREME
 -- AUTO_INCREMENT de la tabla `respuesta`
 --
 ALTER TABLE `respuesta`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
+--
+-- AUTO_INCREMENT de la tabla `tarea`
+--
+ALTER TABLE `tarea`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Id',AUTO_INCREMENT=26;
 --
 -- AUTO_INCREMENT de la tabla `tema`
 --
@@ -3406,11 +3358,6 @@ MODIFY `id` int(6) NOT NULL AUTO_INCREMENT COMMENT 'Identificador',AUTO_INCREMEN
 --
 ALTER TABLE `tipoproducto`
 MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=32;
---
--- AUTO_INCREMENT de la tabla `tipopropuesta`
---
-ALTER TABLE `tipopropuesta`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Num del tipo de propuesta',AUTO_INCREMENT=9;
 --
 -- AUTO_INCREMENT de la tabla `tipopropuesta`
 --
