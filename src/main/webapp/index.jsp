@@ -289,6 +289,11 @@
         <script src="js/specific/producto/model.js" charset="UTF-8"></script>
         <script src="js/specific/producto/view.js" charset="UTF-8"></script>
         <script src="js/specific/producto/routes.js" charset="UTF-8"></script>
+        
+        <script src="js/specific/tipoproducto/control.js" charset="UTF-8"></script>
+        <script src="js/specific/tipoproducto/model.js" charset="UTF-8"></script>
+        <script src="js/specific/tipoproducto/view.js" charset="UTF-8"></script>
+        <script src="js/specific/tipoproducto/routes.js" charset="UTF-8"></script>
 
 
 
@@ -331,6 +336,7 @@
                 fPropuestaRoutes();
                 fTipopropuestaRoutes();
                 fProductoRoutes();
+                fTipoproductoRoutes();
 
 
 
