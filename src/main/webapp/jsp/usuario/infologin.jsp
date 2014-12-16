@@ -28,8 +28,8 @@
     <%-- 
     <a href="#"> <i class="icon-user">Estás logueado como <%=usuario%> / <%=user.getTipoUsuario()%></i></a>
     --%>
-    <a href="#"> <i class="icon-user">Estás logueado como <%=usuario%> (Nivel: <%=level%>)</i></a>
+    <a href="#"> <i class="icon-user">Conectado como <%=usuario%> (<%=level%>)</i></a>
 </li>
-<li><a href="jsp?ob=usuario&op=logout">Salir del sistema</a></li>
+<li><a href="jsp?ob=usuario&op=logout">Salir</a></li>
     <%} else {%>
-<li><a href="jsp?op=login01&ob=usuario">Login</a></li><%}%>
+<li><a href="jsp?op=login01&ob=usuario">Entrar</a></li><%}%>

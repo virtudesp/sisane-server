@@ -26,7 +26,8 @@ public class DocumentoControlOperationGenSpImpl extends ControlOperationGenImpl 
     public DocumentoControlOperationGenSpImpl(HttpServletRequest request) throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, Exception {
         super(request);
         oService.setPojo("Documento");
-        oService.setSource("SELECT * FROM documento where id>=10");
+        oService.setSource("SELECT * FROM documento where id>=10 order by alta desc");
+        
     }
 
 }

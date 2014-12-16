@@ -1,5 +1,5 @@
-/* 
- * Copyright (C) 2014 rafa
+/*
+ * Copyright (C) July 2014 Rafael Aznar
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -15,12 +15,23 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
+package net.daw.service.generic.specific.implementation;
 
-var opcionControl = function (strClase) {
-    this.clase = strClase;
-};
-opcionControl.prototype = new control('opcion');
-opcionControl.prototype.getClassNameOpcion = function () {
-    return this.getClassName() + "Control";
-};
-var oOpcionControl = new opcionControl('opcion');
+import net.daw.service.generic.implementation.TableServiceGenImpl;
+import java.sql.Connection;
+
+public class OperacionServiceGenSpImpl extends TableServiceGenImpl {
+
+    public OperacionServiceGenSpImpl(String strObject, String pojo, Connection con) {
+        super(strObject, pojo, con);
+    }
+
+//    public String setStandardOperations(Integer id) throws Exception {
+//        String data;
+//        try {
+//            //pte
+//        } catch (Exception e) {
+//            throw new ServletException("GetContenido: View Error: " + e.getMessage());
+//        }
+//    }
+}
