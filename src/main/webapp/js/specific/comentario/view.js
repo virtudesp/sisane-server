@@ -26,113 +26,148 @@ comentarioView.prototype.getClassNameComentario = function () {
 };
 var oComentarioView = new comentarioView('comentario');
 
-
-comentarioView.prototype.loadButtons = function (id) {
-
-    var botonera = "";
-    botonera += '<div class="btn-toolbar" role="toolbar"><div class="btn-group btn-group-xs">';
-    botonera += '<a class="btn btn-default view" id="' + id + '"  href="jsp#/' + this.clase + '/view/' + id + '"><i class="glyphicon glyphicon-eye-open"></i></a>';
-    botonera += '<a class="btn btn-default edit" id="' + id + '"  href="jsp#/' + this.clase + '/edit/' + id + '"><i class="glyphicon glyphicon-pencil"></i></a>';
-    botonera += '<a class="btn btn-default remove" id="' + id + '"  href="jsp#/' + this.clase + '/remove/' + id + '"><i class="glyphicon glyphicon-remove"></i></a>';
-    botonera += '</div></div>';
-    return botonera;
-
-}
-comentarioView.prototype.loadFormValues = function (valores, campos) {
-//                    $('#comentario_form #titulo').val(valores['titulo']);
-//                    $('#comentario_form #contenido').val(valores['contenido']);
-//                    $('#comentario_form #alta').val(valores['alta']);
-//                    $('#comentario_form #cambio').val(valores['cambio']);
-//                    $('#comentario_form #hits').val(valores['hits']);
-//                    $('#comentario_form #id_usuario').val(valores['id_usuario']);
-//                    $('#comentario_form #etiquetas').val(valores['etiquetas']);
-//                    $('#comentario_form #publicado').val(valores['publicado']);
-//                    $('#comentario_form #portada').val(valores['portada']);
-    this.doFillForm(valores, campos);
-};
-
-comentarioView.prototype.getFormValues = function () {
-    var valores = [];
-//                    valores['titulo'] = $('#comentario_form #titulo');
-//                    valores['contenido'] = $('#comentario_form #contenido');
-//                    valores['alta'] = $('#comentario_form #alta');
-//                    valores['cambio'] = $('#comentario_form #cambio');
-//                    valores['hits'] = $('#comentario_form #hits');
-//                    valores['id_usuario'] = $('#comentario_form #id_usuario');
-//                    valores['etiquetas'] = $('#comentario_form #etiquetas');
-//                    valores['publicado'] = $('#comentario_form #publicado');
-//                    valores['portada'] = $('#comentario_form #portada');
-
-    var disabled = $('#comentarioForm').find(':input:disabled').removeAttr('disabled');
-    valores = $('#comentarioForm').serializeObject();
-    disabled.attr('disabled', 'disabled');
-    return valores;
-};
-
 comentarioView.prototype.doEventsLoading = function () {
     var thisObject = this;
     $('#comentarioForm #obj_usuario_button').unbind('click');
     $("#comentarioForm #obj_usuario_button").click(function () {
-        var oControl = oComentarioControl;  //para probar dejar comentario
-        //vista('usuario').cargaModalBuscarClaveAjena('#modal01', "comentario");
+        var oControl = oUsuarioControl;  //para probar dejar documento
+        //vista('usuario').cargaModalBuscarClaveAjena('#modal01', "documento");
 
         $("#comentarioForm").append(thisObject.getEmptyModal());
         util().loadForm('#modal01', thisObject.getFormHeader('Elección de usuario'), "", thisObject.getFormFooter(), true);
 
         $('#comentarioForm').append(thisObject.getEmptyModal());
 
-        oControl.list('#modal01 #modal-body', param().defaultizeUrlObjectParameters({}), true, oComentarioModel, oComentarioView);
+        oControl.list('#modal01 #modal-body', param().defaultizeUrlObjectParameters({}), true, oUsuarioModel, oUsuarioView);
         oControl.modalListEventsLoading('#modal01 #modal-body', param().defaultizeUrlObjectParameters({}), function (id) {
             $('#obj_usuario_id').val(id).change();
             $('#obj_usuario_desc').text(decodeURIComponent(oUsuarioModel.getMeAsAForeignKey(id)));
             $('#modal01').modal('hide');
 
-        },oComentarioModel, oComentarioView);
+        },oUsuarioModel, oUsuarioView);
         return false;
     });
-        var thisObject = this;
-    $('#comentarioForm #obj_pregunta_button').unbind('click');
-    $("#comentarioForm #obj_pregunta_button").click(function () {
-        var oControl = oComentarioControl;  //para probar dejar comentario
-        //vista('usuario').cargaModalBuscarClaveAjena('#modal01', "comentario");
+    $('#comentarioForm #obj_tipocomentario_button').unbind('click');
+    $("#comentarioForm #obj_tipocomentario_button").click(function () {
+        var oControl = oTipocomentarioControl;
 
         $("#comentarioForm").append(thisObject.getEmptyModal());
-        util().loadForm('#modal01', thisObject.getFormHeader('Elección de pregunta'), "", thisObject.getFormFooter(), true);
+        util().loadForm('#modal01', thisObject.getFormHeader('Elección del tipo de Comentario'), "", thisObject.getFormFooter(), true);
 
         $('#comentarioForm').append(thisObject.getEmptyModal());
 
-        oControl.list('#modal01 #modal-body', param().defaultizeUrlObjectParameters({}), true, oComentarioModel, oComentarioView);
+        oControl.list('#modal01 #modal-body', param().defaultizeUrlObjectParameters({}), true, oTipocomentarioModel, oTipocomentarioView);
         oControl.modalListEventsLoading('#modal01 #modal-body', param().defaultizeUrlObjectParameters({}), function (id) {
-            $('#obj_pregunta_id').val(id).change();
-            $('#obj_pregunta_desc').text(decodeURIComponent(oPreguntaModel.getMeAsAForeignKey(id)));
+            $('#obj_tipocomentario_id').val(id).change();
+            $('#obj_tipocomentario_desc').text(decodeURIComponent(oTipocomentarioModel.getMeAsAForeignKey(id)));
             $('#modal01').modal('hide');
 
-        },oComentarioModel, oComentarioView);
+        },oTipocomentarioModel, oTipocomentarioView);
         return false;
     });
-        var thisObject = this;
-    $('#comentarioForm #obj_opcion_button').unbind('click');
-    $("#comentarioForm #obj_opcion_button").click(function () {
-        var oControl = oComentarioControl;  //para probar dejar comentario
-        //vista('usuario').cargaModalBuscarClaveAjena('#modal01', "comentario");
-
-        $("#comentarioForm").append(thisObject.getEmptyModal());
-        util().loadForm('#modal01', thisObject.getFormHeader('Elección de opción'), "", thisObject.getFormFooter(), true);
+    $('#contenido_button').unbind('click');
+    $('#contenido_button').click(function () {
+        //cabecera = '<button id="full-width" type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>' + '<h3 id="myModalLabel">Edición de contenidos</h3>';
+        cabecera = thisObject.getFormHeader('Edición de contenidos');
+        //pie = '<button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="true">Cerrar</button>';                        
+        pie = '<a class="btn btn-primary" href="http://creoleparser.googlecode.com/svn/trunk/creoleparser/test_pages/CheatSheetPlus.html">Sintaxis</a>';
+        pie += thisObject.getFormFooter();
+        contenido = '<div class="row"><div class="col-md-6">';
+        contenido += '<textarea type="text" id="contenidomodal" name="contenido" rows="20" cols="70" placeholder="contenido"></textarea>';
+        contenido += '</div><div class="col-md-6"><div id="textoparseado"></div></div>';
+        contenido += '</div>';
 
         $('#comentarioForm').append(thisObject.getEmptyModal());
 
-        oControl.list('#modal01 #modal-body', param().defaultizeUrlObjectParameters({}), true, oComentarioModel, oComentarioView);
-        oControl.modalListEventsLoading('#modal01 #modal-body', param().defaultizeUrlObjectParameters({}), function (id) {
-            $('#obj_opcion_id').val(id).change();
-            $('#obj_opcion_desc').text(decodeURIComponent(oOpcionModel.getMeAsAForeignKey(id)));
-            $('#modal01').modal('hide');
-
-        },oComentarioModel, oComentarioView);
+        util().loadForm('#modal01', cabecera, contenido, pie, true);
+        var texto = $('#contenido').val();
+        $('#contenidomodal').val(texto);
+        util().creoleParse(texto, $('#textoparseado'));
+        $('#contenido').val($('#contenidomodal').val());
+        $('#contenidomodal').keyup(function () {
+            util().creoleParse($('#contenidomodal').val(), $('#textoparseado'));
+            $('#contenido').val($('#contenidomodal').val());
+        });
         return false;
     });
+};
+
+
+comentarioView.prototype.loadButtons = function (id) {
+    var page = oComentarioModel.getCachedPage();
+    var pagelength = page.length;
+    var idNow = id;
+    var id_usuario;
     
+    for (var i=0;i<pagelength;i++) {
+        if (page[i]["id"] == idNow) {
+            id_usuario = page[i]["id_usuario"];
+        }
+    }
+    
+    var botonera = "";
+    botonera += '<div class="btn-toolbar" role="toolbar"><div class="btn-group btn-group-xs">';
+    botonera += '<a class="btn btn-default view" id="' + id + '"  href="jsp#/' + this.clase + '/view/' + id + '"><i class="glyphicon glyphicon-eye-open"></i></a>';
+    botonera += '<a class="btn btn-default edit" id="' + id + '"  href="jsp#/' + this.clase + '/edit/' + id + '"><i class="glyphicon glyphicon-pencil"></i></a>';
+    botonera += '<a class="btn btn-default remove" id="' + id + '"  href="jsp#/' + this.clase + '/remove/' + id + '"><i class="glyphicon glyphicon-remove"></i></a>';
+    botonera += '<a class="btn btn-default votararriba" id="' + id + '"  href="jsp#/' + this.clase + '/votararriba/' + id + '"><i class="glyphicon glyphicon-arrow-up"></i></a>';
+    botonera += '<a class="btn btn-default votarabajo" id="' + id + '"  href="jsp#/' + this.clase + '/votarabajo/' + id + '"><i class="glyphicon glyphicon-arrow-down"></i></a>';
+    //botonera += '<a class="btn btn-default mp" id="' + id + '"  href="jsp#/' + "mensajeprivado" + '/new/' + id_usuario + '"><i class="glyphicon glyphicon-envelope"></i></a>';
+    botonera += '</div></div>';
+    return botonera;
 };
 
-comentarioView.prototype.okValidation = function (f) {
-    $('#comentarioForm').on('success.form.bv', f);
+
+comentarioView.prototype.printValue = function (value, valor, recortar) {
+    var thisObject = this;
+    var strResult = "";
+    if (/obj_tipocomentario/.test(valor)) {
+        if (value[valor].id > 0) {
+            strResult = '<a href="jsp#/' + valor.substring(4) + '/view/' + value[valor].id + '">' + value[valor].id + ":" + value[valor].descripcion + '</a>';
+        } else {
+            strResult = '???';
+        }        
+    } else if (/obj_usuario/.test(valor)) {
+        if (value[valor].id > 0) {
+            strResult = '<a href="jsp#/' + valor.substring(4) + '/view/' + value[valor].id + '">' + value[valor].id + ":" + value[valor].login + '</a>';
+        } else {
+            strResult = '???';
+        }
+    } else if (/obj_/.test(valor)) {
+        if (value[valor].id > 0) {
+            strResult = '<a href="jsp#/' + valor.substring(4) + '/view/' + value[valor].id + '">' + value[valor].id + ":" + util().getForeign(value[valor]) + '</a>';
+        } else {
+            strResult = '???';
+        }
+    } else {
+        switch (value[valor]) {
+            case true:
+                strResult = '<i class="glyphicon glyphicon-ok"></i>';
+                break;
+            case false:
+                strResult = '<i class="glyphicon glyphicon-remove"></i>';
+                break;
+            default:
+                strResult = decodeURIComponent(value[valor]);
+                
+                if (/mensaje/.test(valor)) {                    
+                } else {
+                    if (recortar) 
+                        if (strResult.length > 50) //don't show too long fields
+                            strResult = strResult.substr(0, 20) + " ...";
+                }            
+
+            };
+    };
+    return strResult;
 };
+
+/*comentarioView.prototype.getEmptyForm = function () {
+    $.when(ajax().ajaxCallSync(path + '/jsp?ob=' + this.clase + '&op=form&mode=1', 'GET', '')).done(function (data) {
+        form = data;
+    });
+    return form;
+};
+comentarioView.prototype.getPanel = function (titulo, contenido) {
+    return '<div class="panel panel-default"><div class="panel-heading"><h1>' + titulo + '</h1></div><div class="panel-body">' + contenido + '</div></div>';
+};*/
