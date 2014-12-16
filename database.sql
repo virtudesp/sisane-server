@@ -3,18 +3,12 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost:3306
--- Tiempo de generación: 15-12-2014 a las 09:28:34
+-- Tiempo de generación: 16-12-2014 a las 09:58:49
 -- Versión del servidor: 5.5.39
 -- Versión de PHP: 5.4.32
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
-
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
 
 --
 -- Base de datos: `ausiasyield2014`
@@ -644,8 +638,8 @@ INSERT INTO `cuestionario` (`id`, `tipo`) VALUES
 CREATE TABLE IF NOT EXISTS `detalle_pedido` (
 `id` int(11) NOT NULL COMMENT 'Identificador',
   `cantidad` int(11) DEFAULT NULL COMMENT 'Cantidad',
-  `id_pedido` int(11) DEFAULT NULL COMMENT 'Id Pedido',
-  `id_producto` int(11) DEFAULT NULL COMMENT 'Id Producto'
+  `id_pedido` int(11) NOT NULL DEFAULT '0' COMMENT 'Id Pedido',
+  `id_producto` int(11) NOT NULL DEFAULT '0' COMMENT 'Id Producto'
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=47 ;
 
 --
@@ -1046,8 +1040,7 @@ INSERT INTO `objeto` (`id`, `descripcion`) VALUES
 (37, 'tipotarea'),
 (38, 'estadotarea'),
 (39, 'proyecto'),
-(40, 'documentobonito')
-;
+(40, 'documentobonito');
 
 -- --------------------------------------------------------
 
@@ -1334,7 +1327,7 @@ CREATE TABLE IF NOT EXISTS `operacion` (
   `descripcion` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Descripción',
   `id_objeto` int(6) DEFAULT NULL COMMENT 'ID Objeto',
   `id_tipooperacion` int(6) DEFAULT NULL COMMENT 'ID Tipo Operación'
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=525 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=454 ;
 
 --
 -- Volcado de datos para la tabla `operacion`
@@ -1726,7 +1719,6 @@ INSERT INTO `operacion` (`id`, `descripcion`, `id_objeto`, `id_tipooperacion`) V
 (394, 'remove', 35, 2),
 (395, 'set', 35, 2),
 (396, 'updateOne', 35, 2),
-
 (397, 'get', 36, 1),
 (398, 'getaggregateviewone', 36, 1),
 (399, 'getprettycolumns', 36, 1),
@@ -1738,7 +1730,6 @@ INSERT INTO `operacion` (`id`, `descripcion`, `id_objeto`, `id_tipooperacion`) V
 (405, 'remove', 36, 2),
 (406, 'set', 36, 2),
 (407, 'updateOne', 36, 2),
-
 (408, 'get', 37, 1),
 (409, 'getaggregateviewone', 37, 1),
 (410, 'getprettycolumns', 37, 1),
@@ -1750,7 +1741,6 @@ INSERT INTO `operacion` (`id`, `descripcion`, `id_objeto`, `id_tipooperacion`) V
 (416, 'remove', 37, 2),
 (417, 'set', 37, 2),
 (418, 'updateOne', 37, 2),
-
 (419, 'get', 38, 1),
 (420, 'getaggregateviewone', 38, 1),
 (421, 'getprettycolumns', 38, 1),
@@ -1762,7 +1752,6 @@ INSERT INTO `operacion` (`id`, `descripcion`, `id_objeto`, `id_tipooperacion`) V
 (427, 'remove', 38, 2),
 (428, 'set', 38, 2),
 (429, 'updateOne', 38, 2),
-
 (430, 'get', 39, 1),
 (431, 'getaggregateviewone', 39, 1),
 (432, 'getprettycolumns', 39, 1),
@@ -1774,7 +1763,6 @@ INSERT INTO `operacion` (`id`, `descripcion`, `id_objeto`, `id_tipooperacion`) V
 (438, 'remove', 39, 2),
 (439, 'set', 39, 2),
 (440, 'updateOne', 39, 2),
-
 (441, 'get', 40, 1),
 (442, 'getaggregateviewone', 40, 1),
 (443, 'getprettycolumns', 40, 1),
@@ -1786,11 +1774,8 @@ INSERT INTO `operacion` (`id`, `descripcion`, `id_objeto`, `id_tipooperacion`) V
 (449, 'remove', 40, 2),
 (450, 'set', 40, 2),
 (451, 'updateOne', 40, 2),
-
 (452, 'getAllPreguntas', 6, 1),
-(453, 'setForm', 27, 2)
-
-;
+(453, 'setForm', 27, 2);
 
 -- --------------------------------------------------------
 
@@ -1822,7 +1807,7 @@ CREATE TABLE IF NOT EXISTS `pedido` (
 `id` int(11) NOT NULL COMMENT 'Identificador',
   `fecha` date DEFAULT NULL COMMENT 'Fecha Pedido',
   `observaciones` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Observaciones',
-  `id_usuario` int(11) DEFAULT NULL COMMENT 'Id Usuario'
+  `id_usuario` int(11) NOT NULL DEFAULT '0' COMMENT 'Id Usuario'
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=24 ;
 
 --
@@ -1865,7 +1850,7 @@ CREATE TABLE IF NOT EXISTS `permiso` (
   `id_tipousuario` int(6) DEFAULT NULL COMMENT 'ID Tipo de usuario',
   `id_tipooperacion` int(6) DEFAULT NULL COMMENT 'ID Tipo Operación',
   `permitido` tinyint(1) DEFAULT NULL COMMENT 'Permitido'
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=9 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=7 ;
 
 --
 -- Volcado de datos para la tabla `permiso`
@@ -2029,8 +2014,8 @@ CREATE TABLE IF NOT EXISTS `producto` (
   `codigo` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Codigo',
   `descripcion` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Descripcion',
   `precio` decimal(6,2) DEFAULT NULL COMMENT 'Precio',
-  `id_tipoproducto` int(11) DEFAULT NULL COMMENT 'Id Tipo Producto',
-  `id_proveedor` int(11) DEFAULT NULL COMMENT 'Id Proveedor'
+  `id_tipoproducto` int(11) NOT NULL DEFAULT '0' COMMENT 'Id Tipo Producto',
+  `id_proveedor` int(11) NOT NULL DEFAULT '0' COMMENT 'Id Proveedor'
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=406 ;
 
 --
@@ -2571,7 +2556,7 @@ CREATE TABLE IF NOT EXISTS `respuesta` (
   `id_usuario` int(11) DEFAULT NULL COMMENT 'Id. Usuario',
   `id_pregunta` int(11) DEFAULT NULL COMMENT 'Id. Pregunta',
   `id_opcion` int(11) DEFAULT NULL COMMENT 'Id. Opción'
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='respuesta' AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='respuesta' AUTO_INCREMENT=7 ;
 
 -- --------------------------------------------------------
 
@@ -2673,7 +2658,7 @@ INSERT INTO `tipooperacion` (`id`, `descripcion`) VALUES
 CREATE TABLE IF NOT EXISTS `tipoproducto` (
 `id` int(11) NOT NULL,
   `descripcion` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Descripción',
-  `id_impuesto` int(11) DEFAULT NULL
+  `id_impuesto` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=32 ;
 
 --
@@ -3137,7 +3122,7 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id',AUTO_INCREMENT=257;
 -- AUTO_INCREMENT de la tabla `operacion`
 --
 ALTER TABLE `operacion`
-MODIFY `id` int(6) NOT NULL AUTO_INCREMENT COMMENT 'ID Operación',AUTO_INCREMENT=525;
+MODIFY `id` int(6) NOT NULL AUTO_INCREMENT COMMENT 'ID Operación',AUTO_INCREMENT=454;
 --
 -- AUTO_INCREMENT de la tabla `ordenador`
 --
@@ -3152,7 +3137,7 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Identificador',AUTO_INCREME
 -- AUTO_INCREMENT de la tabla `permiso`
 --
 ALTER TABLE `permiso`
-MODIFY `id` int(6) NOT NULL AUTO_INCREMENT COMMENT 'ID Permiso',AUTO_INCREMENT=9;
+MODIFY `id` int(6) NOT NULL AUTO_INCREMENT COMMENT 'ID Permiso',AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT de la tabla `post`
 --
@@ -3228,6 +3213,3 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Identificador',AUTO_INCREME
 --
 ALTER TABLE `usuario`
 MODIFY `id` int(6) NOT NULL AUTO_INCREMENT COMMENT 'Identificador',AUTO_INCREMENT=31;
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
