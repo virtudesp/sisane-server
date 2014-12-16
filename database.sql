@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost:3306
--- Tiempo de generación: 15-12-2014 a las 09:28:34
+-- Tiempo de generación: 16-12-2014 a las 09:17:23
 -- Versión del servidor: 5.5.39
 -- Versión de PHP: 5.4.32
 
@@ -644,8 +644,8 @@ INSERT INTO `cuestionario` (`id`, `tipo`) VALUES
 CREATE TABLE IF NOT EXISTS `detalle_pedido` (
 `id` int(11) NOT NULL COMMENT 'Identificador',
   `cantidad` int(11) DEFAULT NULL COMMENT 'Cantidad',
-  `id_pedido` int(11) DEFAULT NULL COMMENT 'Id Pedido',
-  `id_producto` int(11) DEFAULT NULL COMMENT 'Id Producto'
+  `id_pedido` int(11) NOT NULL DEFAULT '0' COMMENT 'Id Pedido',
+  `id_producto` int(11) NOT NULL DEFAULT '0' COMMENT 'Id Producto'
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=47 ;
 
 --
@@ -832,6 +832,28 @@ INSERT INTO `estado` (`id`, `tipo`) VALUES
 (18, 'Fantastico'),
 (19, 'OP'),
 (20, 'rafa es el mejor');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `estadotarea`
+--
+
+CREATE TABLE IF NOT EXISTS `estadotarea` (
+`id` int(11) NOT NULL COMMENT 'ID',
+  `descripcion` varchar(255) NOT NULL COMMENT 'Descripción'
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=6 ;
+
+--
+-- Volcado de datos para la tabla `estadotarea`
+--
+
+INSERT INTO `estadotarea` (`id`, `descripcion`) VALUES
+(1, 'Diseño'),
+(2, 'Sin empezar'),
+(3, 'En proceso'),
+(4, 'Terminada'),
+(5, 'Validada');
 
 -- --------------------------------------------------------
 
@@ -1046,8 +1068,7 @@ INSERT INTO `objeto` (`id`, `descripcion`) VALUES
 (37, 'tipotarea'),
 (38, 'estadotarea'),
 (39, 'proyecto'),
-(40, 'documentobonito')
-;
+(40, 'documentobonito');
 
 -- --------------------------------------------------------
 
@@ -1726,7 +1747,6 @@ INSERT INTO `operacion` (`id`, `descripcion`, `id_objeto`, `id_tipooperacion`) V
 (394, 'remove', 35, 2),
 (395, 'set', 35, 2),
 (396, 'updateOne', 35, 2),
-
 (397, 'get', 36, 1),
 (398, 'getaggregateviewone', 36, 1),
 (399, 'getprettycolumns', 36, 1),
@@ -1738,7 +1758,6 @@ INSERT INTO `operacion` (`id`, `descripcion`, `id_objeto`, `id_tipooperacion`) V
 (405, 'remove', 36, 2),
 (406, 'set', 36, 2),
 (407, 'updateOne', 36, 2),
-
 (408, 'get', 37, 1),
 (409, 'getaggregateviewone', 37, 1),
 (410, 'getprettycolumns', 37, 1),
@@ -1750,7 +1769,6 @@ INSERT INTO `operacion` (`id`, `descripcion`, `id_objeto`, `id_tipooperacion`) V
 (416, 'remove', 37, 2),
 (417, 'set', 37, 2),
 (418, 'updateOne', 37, 2),
-
 (419, 'get', 38, 1),
 (420, 'getaggregateviewone', 38, 1),
 (421, 'getprettycolumns', 38, 1),
@@ -1762,7 +1780,6 @@ INSERT INTO `operacion` (`id`, `descripcion`, `id_objeto`, `id_tipooperacion`) V
 (427, 'remove', 38, 2),
 (428, 'set', 38, 2),
 (429, 'updateOne', 38, 2),
-
 (430, 'get', 39, 1),
 (431, 'getaggregateviewone', 39, 1),
 (432, 'getprettycolumns', 39, 1),
@@ -1774,7 +1791,6 @@ INSERT INTO `operacion` (`id`, `descripcion`, `id_objeto`, `id_tipooperacion`) V
 (438, 'remove', 39, 2),
 (439, 'set', 39, 2),
 (440, 'updateOne', 39, 2),
-
 (441, 'get', 40, 1),
 (442, 'getaggregateviewone', 40, 1),
 (443, 'getprettycolumns', 40, 1),
@@ -1786,11 +1802,8 @@ INSERT INTO `operacion` (`id`, `descripcion`, `id_objeto`, `id_tipooperacion`) V
 (449, 'remove', 40, 2),
 (450, 'set', 40, 2),
 (451, 'updateOne', 40, 2),
-
 (452, 'getAllPreguntas', 6, 1),
-(453, 'setForm', 27, 2)
-
-;
+(453, 'setForm', 27, 2);
 
 -- --------------------------------------------------------
 
@@ -1822,7 +1835,7 @@ CREATE TABLE IF NOT EXISTS `pedido` (
 `id` int(11) NOT NULL COMMENT 'Identificador',
   `fecha` date DEFAULT NULL COMMENT 'Fecha Pedido',
   `observaciones` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Observaciones',
-  `id_usuario` int(11) DEFAULT NULL COMMENT 'Id Usuario'
+  `id_usuario` int(11) NOT NULL DEFAULT '0' COMMENT 'Id Usuario'
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=24 ;
 
 --
@@ -2029,8 +2042,8 @@ CREATE TABLE IF NOT EXISTS `producto` (
   `codigo` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Codigo',
   `descripcion` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Descripcion',
   `precio` decimal(6,2) DEFAULT NULL COMMENT 'Precio',
-  `id_tipoproducto` int(11) DEFAULT NULL COMMENT 'Id Tipo Producto',
-  `id_proveedor` int(11) DEFAULT NULL COMMENT 'Id Proveedor'
+  `id_tipoproducto` int(11) NOT NULL DEFAULT '0' COMMENT 'Id Tipo Producto',
+  `id_proveedor` int(11) NOT NULL DEFAULT '0' COMMENT 'Id Proveedor'
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=406 ;
 
 --
@@ -2525,6 +2538,32 @@ INSERT INTO `proveedor` (`id`, `nia`, `nombre`, `telefono`, `direccion`, `email`
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `proyecto`
+--
+
+CREATE TABLE IF NOT EXISTS `proyecto` (
+`id` int(11) NOT NULL COMMENT 'id',
+  `descripcion` varchar(250) DEFAULT NULL COMMENT 'descripción'
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=10 ;
+
+--
+-- Volcado de datos para la tabla `proyecto`
+--
+
+INSERT INTO `proyecto` (`id`, `descripcion`) VALUES
+(1, 'Gesti%C3%B3n%20de%20proyectos'),
+(2, 'Foro'),
+(3, 'Blog'),
+(4, 'Tienda virtual'),
+(5, 'Red social'),
+(6, 'Actividades'),
+(7, 'Noticias sociales'),
+(8, 'Facturación'),
+(9, 'Cuestionarios');
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `publicacion`
 --
 
@@ -2571,7 +2610,53 @@ CREATE TABLE IF NOT EXISTS `respuesta` (
   `id_usuario` int(11) DEFAULT NULL COMMENT 'Id. Usuario',
   `id_pregunta` int(11) DEFAULT NULL COMMENT 'Id. Pregunta',
   `id_opcion` int(11) DEFAULT NULL COMMENT 'Id. Opción'
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='respuesta' AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='respuesta' AUTO_INCREMENT=7 ;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `tarea`
+--
+
+CREATE TABLE IF NOT EXISTS `tarea` (
+`id` int(11) NOT NULL COMMENT 'Id',
+  `descripcion` varchar(255) DEFAULT NULL COMMENT 'Descripción',
+  `fechaentrega` datetime DEFAULT NULL COMMENT 'Fecha Entrega',
+  `id_usuario` int(6) DEFAULT NULL COMMENT 'ID Usuario',
+  `id_tipotarea` int(6) DEFAULT NULL COMMENT 'ID Tipo tarea',
+  `id_estadotarea` int(6) DEFAULT NULL COMMENT 'ID Estado tarea'
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=26 ;
+
+--
+-- Volcado de datos para la tabla `tarea`
+--
+
+INSERT INTO `tarea` (`id`, `descripcion`, `fechaentrega`, `id_usuario`, `id_tipotarea`, `id_estadotarea`) VALUES
+(1, 'diseño de la base de datos', '2014-12-17 15:16:27', 1, 3, 1),
+(2, 'programación de un mantenimiento', '2015-03-18 06:11:35', 2, 4, 2),
+(3, 'programación de una clave ajena', '2014-12-10 10:17:40', 3, 5, 3),
+(4, 'gestión de permisos', '2015-05-15 13:00:00', 4, 6, 4),
+(5, 'gestión de permisos', '2014-06-17 06:16:16', 5, 7, 5),
+(6, 'programación de una clave ajena', '2014-11-11 00:00:00', 6, 8, 5),
+(7, 'programación de un mantenimiento', '2014-07-31 09:33:45', 7, 9, 4),
+(8, 'diseño de la base de datos', '2014-08-21 13:35:30', 8, 9, 3),
+(9, 'programación de una clave ajena', '2014-09-02 00:30:29', 9, 8, 2),
+(10, 'gestión de permisos', '2014-05-30 11:29:30', 10, 7, 1),
+(11, 'programación de un mantenimiento', '2014-10-22 00:00:00', 11, 6, 1),
+(12, 'diseño de la base de datos', NULL, 12, 5, 2),
+(13, 'programación de un mantenimiento', '2014-03-04 13:25:11', 13, 4, 3),
+(14, 'gestión de permisos', '2014-12-08 07:12:00', 14, 3, 4),
+(15, 'diseño de la base de datos', '2014-10-14 20:48:00', 15, 2, 5),
+(16, 'programación de un mantenimiemto', '2014-12-02 09:16:00', 16, 1, 5),
+(17, 'programación de una clave ajena', '2014-12-15 00:00:00', 17, 1, 4),
+(18, 'gestión de permisos', '2014-12-08 00:00:00', 18, 2, 3),
+(19, 'diseño de la base de datos', '2014-01-08 00:00:00', 19, 3, 2),
+(20, 'programación de un mantenimiemto', '2014-09-11 16:29:42', 20, 4, 1),
+(21, 'programación de una clave ajena', '2014-02-06 08:21:47', 21, 5, 4),
+(22, 'gestión de permisos', '2014-08-13 05:42:00', 22, 6, 2),
+(23, 'programación de un mantenimiento', '2014-09-17 08:21:00', 23, 7, 3),
+(24, 'programacion de una clave ajena', '2014-09-02 13:00:00', 24, 8, 4),
+(25, 'diseño de la base de datos', '2014-07-16 11:18:00', 25, 9, 5);
 
 -- --------------------------------------------------------
 
@@ -2673,7 +2758,7 @@ INSERT INTO `tipooperacion` (`id`, `descripcion`) VALUES
 CREATE TABLE IF NOT EXISTS `tipoproducto` (
 `id` int(11) NOT NULL,
   `descripcion` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Descripción',
-  `id_impuesto` int(11) DEFAULT NULL
+  `id_impuesto` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=32 ;
 
 --
@@ -2736,6 +2821,32 @@ INSERT INTO `tipopropuesta` (`id`, `descripcion`) VALUES
 (6, 'Aprender django'),
 (7, 'Aprender Visual Basic'),
 (8, 'Aprender ruby');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `tipotarea`
+--
+
+CREATE TABLE IF NOT EXISTS `tipotarea` (
+`id` int(11) NOT NULL COMMENT 'Id',
+  `descripcion` varchar(250) DEFAULT NULL COMMENT 'Descripción'
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=10 ;
+
+--
+-- Volcado de datos para la tabla `tipotarea`
+--
+
+INSERT INTO `tipotarea` (`id`, `descripcion`) VALUES
+(1, 'diseño de la base de datos'),
+(2, 'diseño del programa'),
+(3, 'diseño del interface'),
+(4, 'programación del cliente'),
+(5, 'programación del servidor'),
+(6, 'reparación de error en cliente'),
+(7, 'reparación de error en servidor'),
+(8, 'documentación'),
+(9, 'gestión de permisos');
 
 -- --------------------------------------------------------
 
@@ -2911,6 +3022,12 @@ ALTER TABLE `estado`
  ADD PRIMARY KEY (`id`);
 
 --
+-- Indices de la tabla `estadotarea`
+--
+ALTER TABLE `estadotarea`
+ ADD PRIMARY KEY (`id`);
+
+--
 -- Indices de la tabla `impuesto`
 --
 ALTER TABLE `impuesto`
@@ -2995,6 +3112,12 @@ ALTER TABLE `proveedor`
  ADD PRIMARY KEY (`id`);
 
 --
+-- Indices de la tabla `proyecto`
+--
+ALTER TABLE `proyecto`
+ ADD PRIMARY KEY (`id`);
+
+--
 -- Indices de la tabla `publicacion`
 --
 ALTER TABLE `publicacion`
@@ -3004,6 +3127,12 @@ ALTER TABLE `publicacion`
 -- Indices de la tabla `respuesta`
 --
 ALTER TABLE `respuesta`
+ ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `tarea`
+--
+ALTER TABLE `tarea`
  ADD PRIMARY KEY (`id`);
 
 --
@@ -3034,6 +3163,12 @@ ALTER TABLE `tipoproducto`
 -- Indices de la tabla `tipopropuesta`
 --
 ALTER TABLE `tipopropuesta`
+ ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `tipotarea`
+--
+ALTER TABLE `tipotarea`
  ADD PRIMARY KEY (`id`);
 
 --
@@ -3109,6 +3244,11 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Id',AUTO_INCREMENT=21;
 ALTER TABLE `estado`
 MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Identificador',AUTO_INCREMENT=21;
 --
+-- AUTO_INCREMENT de la tabla `estadotarea`
+--
+ALTER TABLE `estadotarea`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',AUTO_INCREMENT=6;
+--
 -- AUTO_INCREMENT de la tabla `impuesto`
 --
 ALTER TABLE `impuesto`
@@ -3179,6 +3319,11 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Num_propuesta',AUTO_INCREME
 ALTER TABLE `proveedor`
 MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Identificador',AUTO_INCREMENT=22;
 --
+-- AUTO_INCREMENT de la tabla `proyecto`
+--
+ALTER TABLE `proyecto`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id',AUTO_INCREMENT=10;
+--
 -- AUTO_INCREMENT de la tabla `publicacion`
 --
 ALTER TABLE `publicacion`
@@ -3188,6 +3333,11 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Identificador',AUTO_INCREME
 --
 ALTER TABLE `respuesta`
 MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
+--
+-- AUTO_INCREMENT de la tabla `tarea`
+--
+ALTER TABLE `tarea`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Id',AUTO_INCREMENT=26;
 --
 -- AUTO_INCREMENT de la tabla `tema`
 --
@@ -3213,6 +3363,11 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=32;
 --
 ALTER TABLE `tipopropuesta`
 MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Num del tipo de propuesta',AUTO_INCREMENT=9;
+--
+-- AUTO_INCREMENT de la tabla `tipotarea`
+--
+ALTER TABLE `tipotarea`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Id',AUTO_INCREMENT=10;
 --
 -- AUTO_INCREMENT de la tabla `tipotema`
 --
