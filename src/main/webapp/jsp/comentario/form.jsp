@@ -15,6 +15,11 @@
  along with this program; if not, write to the Free Software
  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 --%>
+<%@page import="net.daw.bean.generic.specific.implementation.UsuarioBeanGenSpImpl"%>
+<%UsuarioBeanGenSpImpl user = (UsuarioBeanGenSpImpl) request.getSession().getAttribute("usuarioBean");%>
+<%
+        int id = user.getId();
+%>
 
 <form class="form-horizontal" role="form" action="#" id="comentarioForm" name="formulario">
     <div class="form-group">
@@ -24,38 +29,35 @@
         </div>
     </div>
     
-  
+    <div class="form-group">
+        <label class="col-sm-2 control-label"  for="titulo">Contenido comentario:</label>
+        <div class="col-sm-6">
+            <input type="text" id="descripcion" class="form-control"  name="contenido" size="45" placeholder="contenido" />
+        </div>
+    </div>
 
+    <div class="form-group">
+        <label class="col-sm-2 control-label" for="obj_propuesta_id">Propuesta: </label> 
+        <div class="col-sm-2">              
+            <input readonly="true" class="form-control"  id="obj_propuesta_id" class="input-mini" name="id_propuesta" type="text" size="5" maxlength="5" />  
+        </div>
+        <div class="col-sm-1">              
+            <a class="btn btn-primary btn-sm" id="obj_propuesta_button" href="#"><i class="glyphicon glyphicon-search"></i></a>
+        </div>        
+        <label class="col-sm-7" for="obj_propuesta_desc" id="obj_propuesta_desc"></label>                     
+    </div>
+    
     <div class="form-group">
         <label class="col-sm-2 control-label" for="obj_usuario_id">Usuario: </label> 
         <div class="col-sm-2">              
-            <input readonly="true"  class="form-control"  id="obj_usuario_id" class="input-mini" name="id_usuario" type="text" size="5" maxlength="5" />  
+            <input readonly="true"  value="<%=id%>"  class="form-control"  id="obj_usuario_id" class="input-mini" name="id_usuario" type="text" size="5" maxlength="5" />  
         </div>
         <div class="col-sm-1">              
             <a class="btn btn-primary btn-sm" id="obj_usuario_button" href="#"><i class="glyphicon glyphicon-search"></i></a>
         </div>        
         <label class="col-sm-7" for="obj_usuario_desc" id="obj_usuario_desc"></label>                     
     </div>
-        <div class="form-group">
-        <label class="col-sm-2 control-label" for="obj_pregunta_id">Pregunta: </label> 
-        <div class="col-sm-2">              
-            <input readonly="true"  class="form-control"  id="obj_pregunta_id" class="input-mini" name="comentario" type="text" size="5" maxlength="5" />  
-        </div>
-        <div class="col-sm-1">              
-            <a class="btn btn-primary btn-sm" id="obj_pregunta_button" href="#"><i class="glyphicon glyphicon-search"></i></a>
-        </div>        
-        <label class="col-sm-7" for="obj_usuario_desc" id="obj_usuario_desc"></label>                     
-    </div>
-        <div class="form-group">
-        <label class="col-sm-2 control-label" for="obj_opcion_id">Respuesta: </label> 
-        <div class="col-sm-2">              
-            <input readonly="true"  class="form-control"  id="obj_opcion_id" class="input-mini" name="id" type="text" size="5" maxlength="5" />  
-        </div>
-        <div class="col-sm-1">              
-            <a class="btn btn-primary btn-sm" id="obj_opcion_button" href="#"><i class="glyphicon glyphicon-search"></i></a>
-        </div>        
-        <label class="col-sm-7" for="obj_opcion_desc" id="obj_opcion_desc"></label>                     
-    </div>
+    
 
 
     <div class="form-group">
@@ -71,21 +73,12 @@
     </div>
 
 </form>
-        
+
 
 <script type="text/javascript">
 
     $(document).ready(function() {
-        $('#alta_group').datetimepicker({
-            pickTime: false,
-            language: 'es',
-            showToday: true
-        });
-        $('#cambio_group').datetimepicker({
-            pickTime: false,
-            language: 'es',
-            showToday: true
-        });
+        
         //http://jqueryvalidation.org/documentation/
         $('#comentarioForm')
                 .bootstrapValidator({
@@ -96,7 +89,19 @@
                         validating: 'glyphicon glyphicon-refresh'
                     },
                     fields: {
-                       
+                        descripcion: {
+                            validators: {
+                                notEmpty: {
+                                    message: 'Debe introducir una descripcion'
+                                },
+                                stringLength: {
+                                    max: 255,
+                                    message: 'La descripcion debe tener como máximo 255 caracteres'
+                                }
+                            }
+                        },
+                        
+                        
                         id_usuario: {
                             validators: {
                                 notEmpty: {
@@ -107,56 +112,33 @@
                                 }
                             }
                         },
-                        id_opcion: {
+                        id_propuesta: {
                             validators: {
                                 notEmpty: {
-                                    message: 'Debe elegir un tipo de opcion'
+                                    message: 'Debe elegir una propuesta'
                                 },
                                 integer: {
-                                    message: 'El identificador de tipo de opcion debe ser un entero'
-                                }
-                            }
-                        },
-                        id_pregunta: {
-                            validators: {
-                                notEmpty: {
-                                    message: 'Debe elegir un tipo de pregunta'
-                                },
-                                integer: {
-                                    message: 'El identificador de tipo de pregunta debe ser un entero'
-                                }
-                            }
-                        },
-                        etiquetas: {
-                            validators: {
-                                notEmpty: {
-                                    message: 'Debe introducir una etiqueta'
-                                },
-                                stringLength: {
-                                    max: 100,
-                                    message: 'La longitud de las etiquetas debe ser de 100 caracteres como mucho'
+                                    message: 'El identificador de propuesta debe ser un entero'
                                 }
                             }
                         }
+                        
+                      
 
                     }
                 })
-
-                .on('change', '[name="id_cuestionario"]', function() {
-                    $('#comentarioForm').bootstrapValidator('revalidateField', 'id_cuestionario');
+                .on('change', '[name="id_usuario"]', function() {
+                    $('#comentarioForm').bootstrapValidator('revalidateField', 'id_usuario');
+                })
+                .on('change', '[name="id_propuesta"]', function() {
+                    $('#comentarioForm').bootstrapValidator('revalidateField', 'id_propuesta');
                 })
                 ;
-        $('#alta_group').on('dp.change dp.show', function(e) {
-// Revalidate the date when user change it
-            $('#comentarioForm').bootstrapValidator('revalidateField', 'alta_group');
-        });
-        $('#cambio_group').on('dp.change dp.show', function(e) {
-// Revalidate the date when user change it
-            $('#comentarioForm').bootstrapValidator('revalidateField', 'cambio_group');
-        });
+                
+        
+        
     });       
 
     
     
 </script>
-     

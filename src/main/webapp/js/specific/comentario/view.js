@@ -47,22 +47,22 @@ comentarioView.prototype.doEventsLoading = function () {
         },oUsuarioModel, oUsuarioView);
         return false;
     });
-    $('#comentarioForm #obj_tipocomentario_button').unbind('click');
-    $("#comentarioForm #obj_tipocomentario_button").click(function () {
-        var oControl = oTipocomentarioControl;
+    $('#comentarioForm #obj_propuesta_button').unbind('click');
+    $("#comentarioForm #obj_propuesta_button").click(function () {
+        var oControl = oPropuestaControl;
 
         $("#comentarioForm").append(thisObject.getEmptyModal());
-        util().loadForm('#modal01', thisObject.getFormHeader('Elección del tipo de Comentario'), "", thisObject.getFormFooter(), true);
+        util().loadForm('#modal01', thisObject.getFormHeader('Elección de Propuesta'), "", thisObject.getFormFooter(), true);
 
         $('#comentarioForm').append(thisObject.getEmptyModal());
 
-        oControl.list('#modal01 #modal-body', param().defaultizeUrlObjectParameters({}), true, oTipocomentarioModel, oTipocomentarioView);
+        oControl.list('#modal01 #modal-body', param().defaultizeUrlObjectParameters({}), true, oPropuestaModel, oPropuestaView);
         oControl.modalListEventsLoading('#modal01 #modal-body', param().defaultizeUrlObjectParameters({}), function (id) {
-            $('#obj_tipocomentario_id').val(id).change();
-            $('#obj_tipocomentario_desc').text(decodeURIComponent(oTipocomentarioModel.getMeAsAForeignKey(id)));
+            $('#obj_propuesta_id').val(id).change();
+            $('#obj_propuesta_desc').text(decodeURIComponent(oPropuestaModel.getMeAsAForeignKey(id)));
             $('#modal01').modal('hide');
 
-        },oTipocomentarioModel, oTipocomentarioView);
+        },oPropuestaModel, oPropuestaView);
         return false;
     });
     $('#contenido_button').unbind('click');
@@ -121,7 +121,7 @@ comentarioView.prototype.loadButtons = function (id) {
 comentarioView.prototype.printValue = function (value, valor, recortar) {
     var thisObject = this;
     var strResult = "";
-    if (/obj_tipocomentario/.test(valor)) {
+    if (/obj_Propuesta/.test(valor)) {
         if (value[valor].id > 0) {
             strResult = '<a href="jsp#/' + valor.substring(4) + '/view/' + value[valor].id + '">' + value[valor].id + ":" + value[valor].descripcion + '</a>';
         } else {
