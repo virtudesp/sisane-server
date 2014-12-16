@@ -20,9 +20,7 @@ package net.daw.dao.generic.specific.implementation;
 import java.sql.Connection;
 import net.daw.bean.generic.specific.implementation.UsuarioProveedorBeanGenSpImpl;
 import net.daw.dao.generic.implementation.TableDaoGenImpl;
-import net.daw.dao.publicinterface.MetaDaoInterface;
-import net.daw.dao.publicinterface.TableDaoInterface;
-import net.daw.dao.publicinterface.ViewDaoInterface;
+
 
 /**
  *
