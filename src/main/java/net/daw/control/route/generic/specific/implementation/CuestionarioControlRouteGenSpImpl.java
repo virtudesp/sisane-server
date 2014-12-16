@@ -17,12 +17,37 @@
  */
 package net.daw.control.route.generic.specific.implementation;
 
+import javax.servlet.http.HttpServletRequest;
+import net.daw.control.operation.generic.specific.implementation.CuestionarioControlOperationGenSpImpl;
+import net.daw.control.operation.generic.specific.implementation.PublicacionControlOperationGenSpImpl;
+import net.daw.control.operation.publicinterface.ControlOperationInterface;
 import net.daw.control.route.generic.implementation.ControlRouteGenImpl;
+import net.daw.helper.ExceptionBooster;
+import net.daw.helper.ParameterCooker;
 
 /**
  *
  * @author al038098
  */
-public class CuestionarioControlRouteGenSpImpl extends ControlRouteGenImpl{
-    
+public class CuestionarioControlRouteGenSpImpl extends ControlRouteGenImpl {
+
+    @Override
+    public String execute(HttpServletRequest request, ControlOperationInterface oControl) throws Exception {
+        CuestionarioControlOperationGenSpImpl oCuestionarioControl = (CuestionarioControlOperationGenSpImpl) oControl;
+        String operation = ParameterCooker.prepareOperation(request);
+        String jsonResult = "";
+        try {
+            switch (operation) {
+                case "getallpreguntas":
+                    jsonResult = oCuestionarioControl.getAllPreguntas(request);
+                    break;
+                default:
+                    jsonResult = super.execute(request, oControl);
+                    break;
+            }
+        } catch (Exception ex) {
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":execute ERROR: " + ex.getMessage()));
+        }
+        return jsonResult;
+    }
 }
