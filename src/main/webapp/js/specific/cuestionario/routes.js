@@ -63,7 +63,7 @@ function fCuestionarioRoutes() {
     Path.map("#/cuestionario/new").to(function () {
         $('#indexContenidoJsp').spinner();
         var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
-        oCuestionarioControl.new($('#indexContenido'), oCuestionarioModel, oCuestionarioView);
+        oCuestionarioControl.new($('#indexContenido'),null, oCuestionarioModel, oCuestionarioView);
         $('#indexContenidoJsp').empty();
         return false;
     });
