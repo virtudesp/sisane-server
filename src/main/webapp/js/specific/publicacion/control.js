@@ -23,6 +23,7 @@ publicacionControl.prototype = new control('publicacion');
 publicacionControl.prototype.getClassNamePublicacion = function () {
     return this.getClassName() + "Control";
 };
+
 publicacionControl.prototype.duplicate = function (place, id, oModel, oView) {
     var thisObject = this;
     $(place).empty();

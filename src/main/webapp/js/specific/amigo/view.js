@@ -26,7 +26,6 @@ amigoView.prototype.getClassNameAmigo = function () {
 };
 var oAmigoView = new amigoView('amigo');
 
-
 amigoView.prototype.loadButtons = function (id, id_usuario_1) {
 
     var botonera = "";

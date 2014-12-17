@@ -27,6 +27,7 @@ function fPublicacionRoutes() {
 //        return false;
 //    });
 
+
     Path.map("#/publicacion").to(function () {
         $('#indexContenidoJsp').spinner();
         oPublicacionControl.list($('#indexContenido'), param().defaultizeUrlObjectParameters({}), null, oPublicacionModel, oPublicacionView);

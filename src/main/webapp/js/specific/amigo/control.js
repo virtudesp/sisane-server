@@ -19,6 +19,7 @@
 var amigoControl = function (strClase) {
     this.clase = strClase;
 };
+
 amigoControl.prototype = new control('amigo');
 amigoControl.prototype.getClassNameAmigo = function () {
     return this.getClassName() + "Control";

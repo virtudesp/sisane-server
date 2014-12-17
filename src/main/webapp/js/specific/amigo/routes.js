@@ -27,6 +27,7 @@ function fAmigoRoutes() {
 //        return false;
 //    });
 
+
     Path.map("#/amigo").to(function () {
         $('#indexContenidoJsp').spinner();
         oAmigoControl.list($('#indexContenido'), param().defaultizeUrlObjectParameters({}), null, oAmigoModel, oAmigoView);

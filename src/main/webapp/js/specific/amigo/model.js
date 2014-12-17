@@ -19,6 +19,7 @@
 var amigoModel = function (strClase) {
     this.clase = strClase;
 };
+
 amigoModel.prototype = new model('amigo');
 amigoModel.prototype.getClassNameAmigo = function () {
     return this.getClassName() + "Modelo";

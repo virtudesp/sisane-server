@@ -26,7 +26,6 @@ publicacionView.prototype.getClassNamePublicacion = function () {
 };
 var oPublicacionView = new publicacionView('publicacion');
 
-
 publicacionView.prototype.loadButtons = function (id, id_usuario) {
 
     var botonera = "";
