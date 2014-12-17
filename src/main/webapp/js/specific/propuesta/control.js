@@ -25,6 +25,7 @@ propuestaControl.prototype.getClassName = function () {
 };
 var oPropuestaControl = new propuestaControl('propuesta');
 
+
 //propuestaControl.prototype.new = function (place, objParams, oModel, oView) {
 //    var thisObject = this;
 //    $(place).empty();

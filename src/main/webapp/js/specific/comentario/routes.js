@@ -19,10 +19,10 @@
 
 function fComentarioRoutes() {
 
-//    Path.map("#/documento").to(function () {
+//    Path.map("#/comentario").to(function () {
 //        $('#indexContenidoJsp').spinner();
-//        control('documento').list($('#indexContenido'), param().defaultizeUrlObjectParameters({}), null);
-//        //documentoControl.modalListEventsLoading(documentoObject, documentoView, $('#indexContenido'), param().defaultizeUrlObjectParameters({}), null);        
+//        control('comentario').list($('#indexContenido'), param().defaultizeUrlObjectParameters({}), null);
+//        //comentarioControl.modalListEventsLoading(comentarioObject, comentarioView, $('#indexContenido'), param().defaultizeUrlObjectParameters({}), null);        
 //        $('#indexContenidoJsp').empty();
 //        return false;
 //    });
@@ -30,16 +30,16 @@ function fComentarioRoutes() {
     Path.map("#/comentario").to(function () {
         $('#indexContenidoJsp').spinner();
         oComentarioControl.list($('#indexContenido'), param().defaultizeUrlObjectParameters({}), null, oComentarioModel, oComentarioView);
-        //documentoControl.modalListEventsLoading(documentoObject, documentoView, $('#indexContenido'), param().defaultizeUrlObjectParameters({}), null);        
+        //comentarioControl.modalListEventsLoading(comentarioObject, comentarioView, $('#indexContenido'), param().defaultizeUrlObjectParameters({}), null);        
         $('#indexContenidoJsp').empty();
-        $('#indexContenidoJsp').append(oComentarioControl.getClassNameComentario());
+        //$('#indexContenidoJsp').append(oComentarioControl.getClassNameComentario());
         return false;
     });
 
     Path.map("#/comentario/list/:url").to(function () {
         $('#indexContenidoJsp').spinner();
         var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
-        oComentarioControl.list($('#indexContenido'), paramsObject,null,  oComentarioModel, oComentarioView);
+        oComentarioControl.list($('#indexContenido'), paramsObject, null, oComentarioModel, oComentarioView);
         $('#indexContenidoJsp').empty();
         return false;
     });
@@ -47,7 +47,7 @@ function fComentarioRoutes() {
     Path.map("#/comentario/view/:id").to(function () {
         $('#indexContenidoJsp').spinner();
         var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
-        oComentarioControl.view($('#indexContenido'), paramsObject['id'],null, oComentarioModel, oComentarioView);
+        oComentarioControl.view($('#indexContenido'), paramsObject['id'], oComentarioModel, oComentarioView);
         $('#indexContenidoJsp').empty();
 
         return false;
@@ -56,19 +56,26 @@ function fComentarioRoutes() {
     Path.map("#/comentario/edit/:id").to(function () {
         $('#indexContenidoJsp').spinner();
         var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
-        oComentarioControl.edit($('#indexContenido'), paramsObject['id'],null, oComentarioModel, oComentarioView);
+        oComentarioControl.edit($('#indexContenido'), paramsObject['id'], oComentarioModel, oComentarioView);
         $('#indexContenidoJsp').empty();
     });
 
     Path.map("#/comentario/new").to(function () {
         $('#indexContenidoJsp').spinner();
         var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
-        oComentarioControl.new($('#indexContenido'),null, oComentarioModel, oComentarioView);
+        oComentarioControl.new($('#indexContenido'), null,oComentarioModel, oComentarioView);
         $('#indexContenidoJsp').empty();
         return false;
     });
 
     Path.map("#/comentario/remove/:id").to(function () {
+        $('#indexContenidoJsp').spinner();
+        var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
+        oComentarioControl.remove($('#indexContenido'), paramsObject['id'], oComentarioModel, oComentarioView);
+        $('#indexContenidoJsp').empty();
+        return false;
+    });
+    Path.map("#/comentario/votararriba/:id").to(function () {
         $('#indexContenidoJsp').spinner();
         var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
         oComentarioControl.remove($('#indexContenido'), paramsObject['id'], oComentarioModel, oComentarioView);
