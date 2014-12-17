@@ -41,6 +41,7 @@
         <link rel="stylesheet" href="css/animate.css">
         <link rel="stylesheet" href="css/bootstrapValidator.min.css">
         <link rel="stylesheet" href="css/bootstrap-datetimepicker.min.css"  />
+        <link rel="stylesheet" href="css/documentobonito.css">
         
         <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
         <!--[if lt IE 9]>
@@ -198,9 +199,12 @@
         <script src="js/specific/usuario/model.js" charset="UTF-8"></script>
         <script src="js/specific/usuario/view.js" charset="UTF-8"></script>
         <script src="js/specific/usuario/routes.js" charset="UTF-8"></script>
-
+        
+        <script src="js/specific/tipodocumento/control.js" charset="UTF-8"></script>
         <script src="js/specific/tipodocumento/model.js" charset="UTF-8"></script>
-
+        <script src="js/specific/tipodocumento/view.js" charset="UTF-8"></script>
+        <script src="js/specific/tipodocumento/routes.js" charset="UTF-8"></script>
+        
         <script src="js/specific/pregunta/control.js" charset="UTF-8"></script>
         <script src="js/specific/pregunta/model.js" charset="UTF-8"></script>
         <script src="js/specific/pregunta/view.js" charset="UTF-8"></script>
@@ -290,6 +294,11 @@
         <script src="js/specific/respuesta/view.js" charset="UTF-8"></script>
         <script src="js/specific/respuesta/routes.js" charset="UTF-8"></script>
         
+        <script src="js/specific/documentobonito/control.js" charset="UTF-8"></script>
+        <script src="js/specific/documentobonito/model.js" charset="UTF-8"></script>
+        <script src="js/specific/documentobonito/view.js" charset="UTF-8"></script>
+        <script src="js/specific/documentobonito/routes.js" charset="UTF-8"></script>
+        
         <script src="js/specific/tarea/control.js" charset="UTF-8"></script>
         <script src="js/specific/tarea/model.js" charset="UTF-8"></script>
         <script src="js/specific/tarea/view.js" charset="UTF-8"></script>
@@ -350,10 +359,11 @@
                 fPedidoRoutes();
                 fDetalle_pedidoRoutes();
                 fRespuestaRoutes();
-
                 fComentarioRoutes();
                 fPropuestaRoutes();
                 fTipopropuestaRoutes();
+                fDocumentobonitoRoutes();
+                fTipodocumentoRoutes();
 
 
 

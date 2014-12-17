@@ -17,17 +17,17 @@
  */
 
 
-var documentoView = function (strClase) {
+var tipodocumentoView = function (strClase) {
     this.clase = strClase;
 };
-documentoView.prototype = new view('documento');
-documentoView.prototype.getClassNameDocumento = function () {
+tipodocumentoView.prototype = new view('tipodocumento');
+tipodocumentoView.prototype.getClassNameTipodocumento = function () {
     return this.getClassName() + "Vista";
 };
-var oDocumentoView = new documentoView('documento');
+var oTipodocumentoView = new tipodocumentoView('tipodocumento');
 
 
-documentoView.prototype.loadButtons = function (id) {
+tipodocumentoView.prototype.loadButtons = function (id) {
 
     var botonera = "";
     botonera += '<div class="btn-toolbar" role="toolbar"><div class="btn-group btn-group-xs">';
@@ -38,48 +38,48 @@ documentoView.prototype.loadButtons = function (id) {
     return botonera;
 
 }
-documentoView.prototype.loadFormValues = function (valores, campos) {
-//                    $('#documento_form #titulo').val(valores['titulo']);
-//                    $('#documento_form #contenido').val(valores['contenido']);
-//                    $('#documento_form #alta').val(valores['alta']);
-//                    $('#documento_form #cambio').val(valores['cambio']);
-//                    $('#documento_form #hits').val(valores['hits']);
-//                    $('#documento_form #id_usuario').val(valores['id_usuario']);
-//                    $('#documento_form #etiquetas').val(valores['etiquetas']);
-//                    $('#documento_form #publicado').val(valores['publicado']);
-//                    $('#documento_form #portada').val(valores['portada']);
+tipodocumentoView.prototype.loadFormValues = function (valores, campos) {
+//                    $('#tipodocumento_form #titulo').val(valores['titulo']);
+//                    $('#tipodocumento_form #contenido').val(valores['contenido']);
+//                    $('#tipodocumento_form #alta').val(valores['alta']);
+//                    $('#tipodocumento_form #cambio').val(valores['cambio']);
+//                    $('#tipodocumento_form #hits').val(valores['hits']);
+//                    $('#tipodocumento_form #id_usuario').val(valores['id_usuario']);
+//                    $('#tipodocumento_form #etiquetas').val(valores['etiquetas']);
+//                    $('#tipodocumento_form #publicado').val(valores['publicado']);
+//                    $('#tipodocumento_form #portada').val(valores['portada']);
     this.doFillForm(valores, campos);
 };
 
-documentoView.prototype.getFormValues = function () {
+tipodocumentoView.prototype.getFormValues = function () {
     var valores = [];
-//                    valores['titulo'] = $('#documento_form #titulo');
-//                    valores['contenido'] = $('#documento_form #contenido');
-//                    valores['alta'] = $('#documento_form #alta');
-//                    valores['cambio'] = $('#documento_form #cambio');
-//                    valores['hits'] = $('#documento_form #hits');
-//                    valores['id_usuario'] = $('#documento_form #id_usuario');
-//                    valores['etiquetas'] = $('#documento_form #etiquetas');
-//                    valores['publicado'] = $('#documento_form #publicado');
-//                    valores['portada'] = $('#documento_form #portada');
+//                    valores['titulo'] = $('#tipodocumento_form #titulo');
+//                    valores['contenido'] = $('#tipodocumento_form #contenido');
+//                    valores['alta'] = $('#tipodocumento_form #alta');
+//                    valores['cambio'] = $('#tipodocumento_form #cambio');
+//                    valores['hits'] = $('#tipodocumento_form #hits');
+//                    valores['id_usuario'] = $('#tipodocumento_form #id_usuario');
+//                    valores['etiquetas'] = $('#tipodocumento_form #etiquetas');
+//                    valores['publicado'] = $('#tipodocumento_form #publicado');
+//                    valores['portada'] = $('#tipodocumento_form #portada');
 
-    var disabled = $('#documentoForm').find(':input:disabled').removeAttr('disabled');
-    valores = $('#documentoForm').serializeObject();
+    var disabled = $('#tipodocumentoForm').find(':input:disabled').removeAttr('disabled');
+    valores = $('#tipodocumentoForm').serializeObject();
     disabled.attr('disabled', 'disabled');
     return valores;
 };
 
-documentoView.prototype.doEventsLoading = function () {
+tipodocumentoView.prototype.doEventsLoading = function () {
     var thisObject = this;
-    $('#documentoForm #obj_usuario_button').unbind('click');
-    $("#documentoForm #obj_usuario_button").click(function () {
-        var oControl = oUsuarioControl;  //para probar dejar documento
-        //vista('usuario').cargaModalBuscarClaveAjena('#modal01', "documento");
+    $('#tipodocumentoForm #obj_usuario_button').unbind('click');
+    $("#tipodocumentoForm #obj_usuario_button").click(function () {
+        var oControl = oUsuarioControl;  //para probar dejar tipodocumento
+        //vista('usuario').cargaModalBuscarClaveAjena('#modal01', "tipodocumento");
 
-        $("#documentoForm").append(thisObject.getEmptyModal());
+        $("#tipodocumentoForm").append(thisObject.getEmptyModal());
         util().loadForm('#modal01', thisObject.getFormHeader('Elección de usuario'), "", thisObject.getFormFooter(), true);
 
-        $('#documentoForm').append(thisObject.getEmptyModal());
+        $('#tipodocumentoForm').append(thisObject.getEmptyModal());
 
         oControl.list('#modal01 #modal-body', param().defaultizeUrlObjectParameters({}), true, oUsuarioModel, oUsuarioView);
         oControl.modalListEventsLoading('#modal01 #modal-body', param().defaultizeUrlObjectParameters({}), function (id) {
@@ -90,14 +90,14 @@ documentoView.prototype.doEventsLoading = function () {
         },oUsuarioModel, oUsuarioView);
         return false;
     });
-    $('#documentoForm #obj_tipodocumento_button').unbind('click');
-    $("#documentoForm #obj_tipodocumento_button").click(function () {
+    $('#tipodocumentoForm #obj_tipodocumento_button').unbind('click');
+    $("#tipodocumentoForm #obj_tipodocumento_button").click(function () {
         var oControl = oTipodocumentoControl;
 
-        $("#documentoForm").append(thisObject.getEmptyModal());
-        util().loadForm('#modal01', thisObject.getFormHeader('Elección de tipo de documento'), "", thisObject.getFormFooter(), true);
+        $("#tipodocumentoForm").append(thisObject.getEmptyModal());
+        util().loadForm('#modal01', thisObject.getFormHeader('Elección de tipo de tipodocumento'), "", thisObject.getFormFooter(), true);
 
-        $('#documentoForm').append(thisObject.getEmptyModal());
+        $('#tipodocumentoForm').append(thisObject.getEmptyModal());
 
         oControl.list('#modal01 #modal-body', param().defaultizeUrlObjectParameters({}), true, oTipodocumentoModel, oTipodocumentoView);
         oControl.modalListEventsLoading('#modal01 #modal-body', param().defaultizeUrlObjectParameters({}), function (id) {
@@ -120,7 +120,7 @@ documentoView.prototype.doEventsLoading = function () {
         contenido += '</div><div class="col-md-6"><div id="textoparseado"></div></div>';
         contenido += '</div>';
 
-        $('#documentoForm').append(thisObject.getEmptyModal());
+        $('#tipodocumentoForm').append(thisObject.getEmptyModal());
 
         util().loadForm('#modal01', cabecera, contenido, pie, true);
         var texto = $('#contenido').val();
@@ -135,6 +135,6 @@ documentoView.prototype.doEventsLoading = function () {
     });
 };
 
-documentoView.prototype.okValidation = function (f) {
-    $('#documentoForm').on('success.form.bv', f);
+tipodocumentoView.prototype.okValidation = function (f) {
+    $('#tipodocumentoForm').on('success.form.bv', f);
 };
