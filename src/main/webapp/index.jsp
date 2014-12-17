@@ -33,9 +33,9 @@
         <meta name="viewport" content="width=device-width">
         <link rel="stylesheet" href="css/bootstrap.min.css">
         <% if (user != null) {%>
-        <link rel="stylesheet" href="css/skin/o<%=user.getSkin()%>.css">
+        <link rel="stylesheet" href="css/skin/<%=user.getSkin()%>.css">
         <% } else {%>
-        <link rel="stylesheet" href="css/skin/omain.css">
+        <link rel="stylesheet" href="css/skin/main.css">
         <% }%>
         <!-- <link rel="stylesheet" href="css/jquery-ui.css"> -->
         <link rel="stylesheet" href="css/animate.css">
@@ -61,7 +61,6 @@
                 </div>
                 <div class="collapse navbar-collapse">
 
-
                     <ul class="nav navbar-nav">
                         <%if (user != null) {%>
                         <jsp:include page="jsp/menuSuperior.jsp" /> 
@@ -70,9 +69,6 @@
                     <ul class="nav navbar-nav navbar-right">
                         <jsp:include page="jsp/usuario/infologin.jsp" />
                     </ul>
-
-
-
 
                 </div><!--/.nav-collapse -->
             </div>
