@@ -627,6 +627,84 @@ public class MysqlDataSpImpl implements DataInterface {
         }
     }
 
+    public ArrayList<Integer> getPageComentarioAmigo(int id_usuario, int intRegsPerPage, int intPagina, ArrayList<FilterBeanHelper> alFilter, HashMap<String, String> hmOrder) throws Exception {
+        ArrayList<Integer> vector = null;
+        Statement oStatement = null;
+        try {
+            vector = new ArrayList<>();
+            int intOffset;
+            oStatement = (Statement) connection.createStatement();
+            String strSQL = "select distinct p.* from publicacion p inner join amigo a where p.id_usuario = a.id_usuario_2 and a.id_usuario_1 = " + id_usuario + " OR p.id_usuario = " + id_usuario + " ";
+            String strSQLcount = "SELECT COUNT(*) from publicacion p inner join amigo a where p.id_usuario = a.id_usuario_2 and a.id_usuario_1 = " + id_usuario + " OR p.id_usuario = " + id_usuario + " ";
+            // select p.* from publicacion p inner join amigo a where p.id_usuario = a.id_usuario_2 and a.id_usuario_1 = 2 ORDER BY `fechacreacion` DESC
+            if (alFilter != null) {
+                String strSQLFilter = "";
+                Iterator iterator = alFilter.iterator();
+                while (iterator.hasNext()) {
+                    FilterBeanHelper oFilterBean = (FilterBeanHelper) iterator.next();
+                    switch (oFilterBean.getFilterOperator()) {
+                        case "like":
+                            strSQLFilter += " AND " + oFilterBean.getFilter() + " LIKE '%" + oFilterBean.getFilterValue() + "%'";
+                            break;
+                        case "notlike":
+                            strSQLFilter += " AND " + oFilterBean.getFilter() + " NOT LIKE '%" + oFilterBean.getFilterValue() + "%'";
+                            break;
+                        case "equals":
+                            strSQLFilter += " AND " + oFilterBean.getFilter() + " = '" + oFilterBean.getFilterValue() + "'";
+                            break;
+                        case "notequalto":
+                            strSQLFilter += " AND " + oFilterBean.getFilter() + " <> '" + oFilterBean.getFilterValue() + "'";
+                            break;
+                        case "less":
+                            strSQLFilter += " AND " + oFilterBean.getFilter() + " < " + oFilterBean.getFilterValue() + "";
+                            break;
+                        case "lessorequal":
+                            strSQLFilter += " AND " + oFilterBean.getFilter() + " <= " + oFilterBean.getFilterValue() + "";
+                            break;
+                        case "greater":
+                            strSQLFilter += " AND " + oFilterBean.getFilter() + " > " + oFilterBean.getFilterValue() + "";
+                            break;
+                        case "greaterorequal":
+                            strSQLFilter += " AND " + oFilterBean.getFilter() + " >= " + oFilterBean.getFilterValue() + "";
+                            break;
+                    }
+                }
+                strSQL += strSQLFilter;
+                strSQLcount += strSQLFilter;
+            }
+            //when limit of pages exceed, show last page
+            ResultSet oResultSet = oStatement.executeQuery(strSQLcount);
+            int intCuenta = 0;
+            if (oResultSet.next()) {
+                intCuenta = oResultSet.getInt("COUNT(*)");
+            }
+            int maxPaginas = new Double(intCuenta / intRegsPerPage).intValue();
+            intPagina = Math.min(intPagina - 1, maxPaginas) + 1;
+            intOffset = Math.max(((intPagina - 1) * intRegsPerPage), 0);
+            //--                        
+            if (hmOrder != null) {
+                strSQL += " ORDER BY";
+                for (Map.Entry oPar : hmOrder.entrySet()) {
+                    strSQL += " " + oPar.getKey() + " " + oPar.getValue() + ",";
+                }
+                strSQL = strSQL.substring(0, strSQL.length() - 1);
+            }
+            strSQL += " LIMIT " + intOffset + " , " + intRegsPerPage;
+            oResultSet = oStatement.executeQuery(strSQL);
+            while (oResultSet.next()) {
+                vector.add(oResultSet.getInt("id"));
+            }
+
+        } catch (SQLException ex) {
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPage ERROR:  Can't process query: " + ex.getMessage()));
+        } finally {
+            if (oStatement != null) {
+                oStatement.close();
+            }
+        }
+        return vector;
+    }
+
     @Override
     public int getPages(String strTabla, int intRegsPerPage, ArrayList<FilterBeanHelper> alFilter) throws Exception {
         Boolean strOrigenTabla = true;
@@ -715,6 +793,63 @@ public class MysqlDataSpImpl implements DataInterface {
         }
     }
 
+    public int getPagesComentarioAmigo(int id_usuario, int intRegsPerPage, ArrayList<FilterBeanHelper> alFilter) throws Exception {
+
+        int intResult = 0;
+        Statement oStatement = null;
+        try {
+            oStatement = (Statement) connection.createStatement();
+            String strSQL = "SELECT count(*) from publicacion p inner join amigo a where p.id_usuario = a.id_usuario_2 and a.id_usuario_1 = " + id_usuario + " OR p.id_usuario = " + id_usuario + " ";
+            if (alFilter != null) {
+                Iterator iterator = alFilter.iterator();
+                while (iterator.hasNext()) {
+                    FilterBeanHelper oFilterBean = (FilterBeanHelper) iterator.next();
+                    switch (oFilterBean.getFilterOperator()) {
+                        case "like":
+                            strSQL += " AND " + oFilterBean.getFilter() + " LIKE '%" + oFilterBean.getFilterValue() + "%'";
+                            break;
+                        case "notlike":
+                            strSQL += " AND " + oFilterBean.getFilter() + " NOT LIKE '%" + oFilterBean.getFilterValue() + "%'";
+                            break;
+                        case "equals":
+                            strSQL += " AND " + oFilterBean.getFilter() + " = '" + oFilterBean.getFilterValue() + "'";
+                            break;
+                        case "notequalto":
+                            strSQL += " AND " + oFilterBean.getFilter() + " <> '" + oFilterBean.getFilterValue() + "'";
+                            break;
+                        case "less":
+                            strSQL += " AND " + oFilterBean.getFilter() + " < " + oFilterBean.getFilterValue() + "";
+                            break;
+                        case "lessorequal":
+                            strSQL += " AND " + oFilterBean.getFilter() + " <= " + oFilterBean.getFilterValue() + "";
+                            break;
+                        case "greater":
+                            strSQL += " AND " + oFilterBean.getFilter() + " > " + oFilterBean.getFilterValue() + "";
+                            break;
+                        case "greaterorequal":
+                            strSQL += " AND " + oFilterBean.getFilter() + " >= " + oFilterBean.getFilterValue() + "";
+                            break;
+                    }
+
+                }
+            }
+            ResultSet oResultSet = oStatement.executeQuery(strSQL);
+            while (oResultSet.next()) {
+                intResult = oResultSet.getInt("COUNT(*)") / intRegsPerPage;
+                if ((oResultSet.getInt("COUNT(*)") % intRegsPerPage) > 0) {
+                    intResult++;
+                }
+            }
+        } catch (SQLException ex) {
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPages ERROR:  Can't process query: " + ex.getMessage()));
+        } finally {
+            if (oStatement != null) {
+                oStatement.close();
+            }
+        }
+        return intResult;
+    }
+
     @Override
     public int getCount(String strTabla, ArrayList<FilterBeanHelper> alFilter) throws Exception {
         Boolean strOrigenTabla = true;
@@ -794,6 +929,72 @@ public class MysqlDataSpImpl implements DataInterface {
         }
     }
 
+    public int agregarAmigo(int idamigo, int idamigo2) throws Exception {
+
+        ResultSet oResultSet;
+        java.sql.PreparedStatement oPreparedStatement = null;
+        int id = 0;
+        try {
+            String strSQL = "INSERT INTO `amigo` (`id`, `id_usuario_1`, `id_usuario_2`) VALUES (NULL, '" + idamigo + "', '" + idamigo2 + "'); ";
+            oPreparedStatement = connection.prepareStatement(strSQL, Statement.RETURN_GENERATED_KEYS);
+            int returnLastInsertId = oPreparedStatement.executeUpdate();
+            if (returnLastInsertId != -1) {
+                oResultSet = oPreparedStatement.getGeneratedKeys();
+                oResultSet.next();
+                id = oResultSet.getInt(1);
+            } else {
+                ExceptionBooster.boost(new Exception(this.getClass().getName() + ":agregarAmigo ERROR inserting register"));
+            }
+        } catch (SQLException ex) {
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":agregarAmigo ERROR inserting register: " + ex.getMessage()));
+        } finally {
+            if (oPreparedStatement != null) {
+                oPreparedStatement.close();
+            }
+        }
+        return id;
+    }
+
+    public int removeAmigo(int idamigo, int idamigo2) throws Exception {
+
+        java.sql.PreparedStatement oPreparedStatement = null;
+        int intResult = 0;
+        try {
+            String strSQL = "DELETE FROM `amigo` WHERE `id_usuario_1` = " + idamigo + " AND `id_usuario_2` = " + idamigo2;
+            oPreparedStatement = connection.prepareStatement(strSQL, Statement.RETURN_GENERATED_KEYS);
+            intResult = oPreparedStatement.executeUpdate();
+        } catch (SQLException ex) {
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":removeAmigo ERROR inserting register: " + ex.getMessage()));
+        } finally {
+            if (oPreparedStatement != null) {
+                oPreparedStatement.close();
+            }
+        }
+        return intResult;
+    }
+
+    public int existeAmigo(int idamigo, int idamigo2) throws Exception {
+
+        int intResult = 0;
+        Statement oStatement = null;
+        try {
+            oStatement = (Statement) connection.createStatement();
+            String strSQL = "SELECT COUNT(id) FROM `amigo` WHERE `id_usuario_1` = " + idamigo + " AND `id_usuario_2` = " + idamigo2;
+            
+            ResultSet oResultSet = oStatement.executeQuery(strSQL);
+            while (oResultSet.next()) {
+                intResult = oResultSet.getInt("COUNT(id)");
+            }
+        } catch (SQLException ex) {
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":existeAmigo ERROR:  Can't process query: " + ex.getMessage()));
+        } finally {
+            if (oStatement != null) {
+                oStatement.close();
+            }
+        }
+        return intResult;
+    }
+    
 
 
 }

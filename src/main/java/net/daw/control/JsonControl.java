@@ -46,6 +46,7 @@ import net.daw.control.operation.generic.specific.implementation.TipousuarioCont
 import net.daw.control.operation.generic.specific.implementation.UsuarioControlOperationGenSpImpl;
 import net.daw.control.operation.specific.implementation.OrdenadorControlOperationSpImpl;
 import net.daw.control.operation.specific.implementation.ActividadControlOperationSpImpl;
+import net.daw.control.operation.specific.implementation.AmigoControlOperationSpImpl;
 import net.daw.control.operation.specific.implementation.PropuestaControlOperationSpImpl;
 import net.daw.control.operation.specific.implementation.ProductoControlOperationSpImpl;
 import net.daw.control.operation.specific.implementation.ComentarioControlOperationSpImpl;
@@ -56,6 +57,7 @@ import net.daw.control.operation.specific.implementation.DetallePedidoControlOpe
 import net.daw.control.operation.specific.implementation.MensajeprivadoControlOperationSpImpl;
 import net.daw.control.operation.specific.implementation.PostControlOperationSpImpl;
 import net.daw.control.operation.specific.implementation.ProveedorControlOperationSpImpl;
+import net.daw.control.operation.specific.implementation.PublicacionControlOperationSpImpl;
 import net.daw.control.operation.specific.implementation.TemaControlOperationSpImpl;
 import net.daw.control.operation.specific.implementation.TipoproductoControlOperationSpImpl;
 import net.daw.control.operation.specific.implementation.TipopropuestaControlOperationSpImpl;
@@ -87,6 +89,7 @@ import net.daw.control.route.specific.implementation.PostControlRouteSpImpl;
 import net.daw.control.route.specific.implementation.DetallePedidoControlRouteSpImpl;
 import net.daw.control.route.specific.implementation.ImpuestoControlRouteSpImpl;
 import net.daw.control.route.specific.implementation.ProveedorControlRouteSpImpl;
+import net.daw.control.route.specific.implementation.PublicacionControlRouteSpImpl;
 import net.daw.control.route.specific.implementation.TemaControlRouteSpImpl;
 import net.daw.control.route.specific.implementation.TipoproductoControlRouteSpImpl;
 import net.daw.control.route.specific.implementation.TipopropuestaControlRouteSpImpl;
@@ -185,12 +188,12 @@ public class JsonControl extends HttpServlet {
                         break;
                     case "amigo":
                         AmigoControlRouteSpImpl oAmigoRoute = new AmigoControlRouteSpImpl();
-                        AmigoControlOperationGenSpImpl oAmigoControlOperation = new AmigoControlOperationGenSpImpl(request);
+                        AmigoControlOperationSpImpl oAmigoControlOperation = new AmigoControlOperationSpImpl(request);
                         jsonResult = oAmigoRoute.execute(request, oAmigoControlOperation);
                         break;
                     case "publicacion":
-                        PublicacionControlRouteGenSpImpl oPublicacionRoute = new PublicacionControlRouteGenSpImpl();
-                        PublicacionControlOperationGenSpImpl oPublicacionControlOperation = new PublicacionControlOperationGenSpImpl(request);
+                        PublicacionControlRouteSpImpl oPublicacionRoute = new PublicacionControlRouteSpImpl();
+                        PublicacionControlOperationSpImpl oPublicacionControlOperation = new PublicacionControlOperationSpImpl(request);
                         jsonResult = oPublicacionRoute.execute(request, oPublicacionControlOperation);
                         break;
                     case "post":

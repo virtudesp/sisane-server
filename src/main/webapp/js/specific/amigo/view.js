@@ -27,13 +27,16 @@ amigoView.prototype.getClassNameAmigo = function () {
 var oAmigoView = new amigoView('amigo');
 
 
-amigoView.prototype.loadButtons = function (id) {
+amigoView.prototype.loadButtons = function (id, id_usuario_1) {
 
     var botonera = "";
     botonera += '<div class="btn-toolbar" role="toolbar"><div class="btn-group btn-group-xs">';
     botonera += '<a class="btn btn-default view" id="' + id + '"  href="jsp#/' + this.clase + '/view/' + id + '"><i class="glyphicon glyphicon-eye-open"></i></a>';
-    botonera += '<a class="btn btn-default edit" id="' + id + '"  href="jsp#/' + this.clase + '/edit/' + id + '"><i class="glyphicon glyphicon-pencil"></i></a>';
-    botonera += '<a class="btn btn-default remove" id="' + id + '"  href="jsp#/' + this.clase + '/remove/' + id + '"><i class="glyphicon glyphicon-remove"></i></a>';
+    
+    if (myuser == id_usuario_1) {
+        botonera += '<a class="btn btn-default remove" id="' + id + '"  href="jsp#/' + this.clase + '/remove/' + id + '"><i class="glyphicon glyphicon-remove"></i></a>';
+    }
+    
     botonera += '</div></div>';
     return botonera;
 
@@ -189,7 +192,7 @@ amigoView.prototype.printValue = function (value, valor, recortar) {
         if (value[valor].id > 0) {
             val = valor.substring(4);
             val = val.substring(0, val.length-2);
-            strResult = '<a href="jsp#/' + val + '/view/' + value[valor].id + '">' + value[valor].id + ":" + value[valor].login + '</a>';
+            strResult = '<a href="jsp#/' + 'redsocialperfil' + '/list/systemfilter=id_usuario&systemfilteroperator=equals&systemfiltervalue=' + value[valor].id + '&page=1&id=1&rpp=10&vf=4&order=fechacreacion&ordervalue=desc' + '">' + value[valor].login.charAt(0).toUpperCase() + value[valor].login.slice(1)+ '</a>';
         } else {
             strResult = '???';
         }

@@ -16,16 +16,31 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
-var amigoControl = function (strClase) {
+var inicioRedSocialControl = function (strClase) {
     this.clase = strClase;
 };
-amigoControl.prototype = new control('amigo');
-amigoControl.prototype.getClassNameAmigo = function () {
+inicioRedSocialControl.prototype = new control('publicacion');
+inicioRedSocialControl.prototype.getClassNameInicioRedSocial = function () {
     return this.getClassName() + "Control";
 };
-var oAmigoControl = new amigoControl('amigo');
+inicioRedSocialControl.prototype.duplicate = function (place, id, oModel, oView) {
+    var thisObject = this;
+    $(place).empty();
+    var oDocumentoModel = oModel;
+    oDocumentoModel.loadAggregateViewOne(id);
+    $(place).append(oView.getPanel("Borrado de " + this.clase, oView.getObjectTable(oDocumentoModel.getCachedPrettyFieldNames(), oDocumentoModel.getCachedOne(), oDocumentoModel.getCachedFieldNames())));
+    $(place).append('<div id=\"result\">¿Seguro que desea duplicar el registro?</div>');
+    $(place).append('<a class="btn btn-danger" id="btnDuplicarSi" href="#">Sí, duplicar</a>');
+    $('#btnDuplicarSi').unbind('click');
+    $('#btnDuplicarSi').click(function (event) {
+        resultado = oModel.duplicateOne(id);
+        oView.doResultOperationNotifyToUser(place, resultado["status"], resultado["message"], resultado["message"], false);
+        return false;
+    });
+};
+var oInicioRedSocialControl = new inicioRedSocialControl('publicacion');
 
-amigoControl.prototype.list = function (place, objParams, callback, oModel, oView) {
+inicioRedSocialControl.prototype.list = function (place, objParams, callback, oModel, oView) {
     var thisObject = this;
     objParams = param().validateUrlObjectParameters(objParams);
     //get all data from server in one http call and store it in cache
@@ -80,7 +95,7 @@ amigoControl.prototype.list = function (place, objParams, callback, oModel, oVie
                 botonera += '</div></div>';
                 return botonera;
             } else {
-                return oView.loadButtons(id, page[id_elemento]["id_usuario_1"]);
+                return oView.loadButtons(id, page[id_elemento]["id_usuario"]);
             }
             //mejor pasar documento como parametro y crear un repo global de código personalizado
         });

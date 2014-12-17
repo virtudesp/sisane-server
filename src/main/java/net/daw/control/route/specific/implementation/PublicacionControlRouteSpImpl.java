@@ -19,17 +19,16 @@ package net.daw.control.route.specific.implementation;
 
 import javax.servlet.http.HttpServletRequest;
 import net.daw.control.operation.publicinterface.ControlOperationInterface;
-import net.daw.control.operation.specific.implementation.AmigoControlOperationSpImpl;
+import net.daw.control.operation.specific.implementation.PublicacionControlOperationSpImpl;
 import net.daw.control.route.publicinterface.ControlRouteInterface;
 import net.daw.helper.ExceptionBooster;
 import net.daw.helper.ParameterCooker;
 
-public class AmigoControlRouteSpImpl implements ControlRouteInterface {
+public class PublicacionControlRouteSpImpl implements ControlRouteInterface {
 
     @Override
     public String execute(HttpServletRequest request, ControlOperationInterface oControl) throws Exception {
-        AmigoControlOperationSpImpl oAmigoControl = (AmigoControlOperationSpImpl) oControl;
-
+        PublicacionControlOperationSpImpl oPublicacionControl = (PublicacionControlOperationSpImpl) oControl;
         String operation = ParameterCooker.prepareOperation(request);
         String jsonResult = "";
         try {
@@ -49,8 +48,14 @@ public class AmigoControlRouteSpImpl implements ControlRouteInterface {
                 case "getpage":
                     jsonResult = oControl.getpage(request);
                     break;
+                case "getcomentarioamigo":
+                    jsonResult = oPublicacionControl.getcomentarioamigo(request);
+                    break;
                 case "getpages":
                     jsonResult = oControl.getpages(request);
+                    break;
+                case "getpagescomentarioamigo":
+                    jsonResult = oPublicacionControl.getpagescomentarioamigo(request);
                     break;
                 case "getregisters":
                     jsonResult = oControl.getregisters(request);
@@ -63,15 +68,6 @@ public class AmigoControlRouteSpImpl implements ControlRouteInterface {
                     break;
                 case "set":
                     jsonResult = oControl.set(request);
-                    break;
-                case "agregaramigo":
-                    jsonResult = oAmigoControl.agregarAmigo(request);
-                    break;
-                case "removeamigo":
-                    jsonResult = oAmigoControl.removeAmigo(request);
-                    break;
-                case "existeamigo":
-                    jsonResult = oAmigoControl.existeAmigo(request);
                     break;
                 default:
                     ExceptionBooster.boost(new Exception(this.getClass().getName() + ":execute ERROR: error de operación: la operación no existe"));

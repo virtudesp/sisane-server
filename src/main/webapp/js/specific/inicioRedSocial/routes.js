@@ -17,67 +17,75 @@
  */
 
 
-function fAmigoRoutes() {
+function fInicioRedSocialRoutes() {
 
-//    Path.map("#/amigo").to(function () {
+//    Path.map("#/inicioRedSocial").to(function () {
 //        $('#indexContenidoJsp').spinner();
-//        control('amigo').list($('#indexContenido'), param().defaultizeUrlObjectParameters({}), null);
-//        //amigoControl.modalListEventsLoading(amigoObject, amigoView, $('#indexContenido'), param().defaultizeUrlObjectParameters({}), null);        
+//        control('inicioRedSocial').list($('#indexContenido'), param().defaultizeUrlObjectParameters({}), null);
+//        //inicioRedSocialControl.modalListEventsLoading(inicioRedSocialObject, inicioRedSocialView, $('#indexContenido'), param().defaultizeUrlObjectParameters({}), null);        
 //        $('#indexContenidoJsp').empty();
 //        return false;
 //    });
 
-    Path.map("#/amigo").to(function () {
+    Path.map("#/inicioRedSocial").to(function () {
         $('#indexContenidoJsp').spinner();
-        oAmigoControl.list($('#indexContenido'), param().defaultizeUrlObjectParameters({}), null, oAmigoModel, oAmigoView);
-        //amigoControl.modalListEventsLoading(amigoObject, amigoView, $('#indexContenido'), param().defaultizeUrlObjectParameters({}), null);        
+        oPublicacionControl.list($('#indexContenido'), param().defaultizeUrlObjectParameters({}), null, oPublicacionModel, oPublicacionView);
+        //inicioRedSocialControl.modalListEventsLoading(inicioRedSocialObject, inicioRedSocialView, $('#indexContenido'), param().defaultizeUrlObjectParameters({}), null);        
         $('#indexContenidoJsp').empty();
-        //$('#indexContenidoJsp').append(oAmigoControl.getClassNameAmigo());
+        $('#indexContenidoJsp').append(oPublicacionControl.getClassNamePublicacion());
         return false;
     });
 
-    Path.map("#/amigo/list/:url").to(function () {
+    Path.map("#/inicioRedSocial/list/:url").to(function () {
         $('#indexContenidoJsp').spinner();
         var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
-        oAmigoControl.list($('#indexContenido'), paramsObject, null, oAmigoModel, oAmigoView);
+        oPublicacionControl.list($('#indexContenido'), paramsObject, null, oPublicacionModel, oPublicacionView);
         $('#indexContenidoJsp').empty();
         return false;
     });
 
-    Path.map("#/amigo/view/:id").to(function () {
+    Path.map("#/inicioRedSocial/view/:id").to(function () {
         $('#indexContenidoJsp').spinner();
         var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
-        oAmigoControl.view($('#indexContenido'), paramsObject['id'], oAmigoModel, oAmigoView);
+        oPublicacionControl.view($('#indexContenido'), paramsObject['id'], oPublicacionModel, oPublicacionView);
         $('#indexContenidoJsp').empty();
 
         return false;
     });
 
-    Path.map("#/amigo/edit/:id").to(function () {
+    Path.map("#/inicioRedSocial/edit/:id").to(function () {
         $('#indexContenidoJsp').spinner();
         var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
-        oAmigoControl.edit($('#indexContenido'), paramsObject['id'], oAmigoModel, oAmigoView);
+        oPublicacionControl.edit($('#indexContenido'), paramsObject['id'], oPublicacionModel, oPublicacionView);
         $('#indexContenidoJsp').empty();
     });
-    Path.map("#/amigo/new").to(function () {
+    Path.map("#/inicioRedSocial/new").to(function () {
         $('#indexContenidoJsp').spinner();
         //var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
-        oAmigoControl.new($('#indexContenido'), null, oAmigoModel, oAmigoView);
+        oPublicacionControl.new($('#indexContenido'), null, oPublicacionModel, oPublicacionView);
         $('#indexContenidoJsp').empty();
         return false;
     });
-    Path.map("#/amigo/new/:url").to(function () {
+    Path.map("#/inicioRedSocial/new/:url").to(function () {
         $('#indexContenidoJsp').spinner();
         var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
-        oAmigoControl.new($('#indexContenido'), paramsObject, oAmigoModel, oAmigoView);
+        oPublicacionControl.new($('#indexContenido'), paramsObject, oPublicacionModel, oPublicacionView);
         $('#indexContenidoJsp').empty();
         return false;
     });
 
-    Path.map("#/amigo/remove/:id").to(function () {
+    Path.map("#/inicioRedSocial/remove/:id").to(function () {
         $('#indexContenidoJsp').spinner();
         var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
-        oAmigoControl.remove($('#indexContenido'), paramsObject['id'], oAmigoModel, oAmigoView);
+        oPublicacionControl.remove($('#indexContenido'), paramsObject['id'], oPublicacionModel, oPublicacionView);
+        $('#indexContenidoJsp').empty();
+        return false;
+    });
+
+    Path.map("#/inicioRedSocial/duplicate/:id").to(function () {
+        $('#indexContenidoJsp').spinner();
+        var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
+        oPublicacionControl.duplicate($('#indexContenido'), paramsObject['id'], oPublicacionModel, oPublicacionView);
         $('#indexContenidoJsp').empty();
         return false;
     });

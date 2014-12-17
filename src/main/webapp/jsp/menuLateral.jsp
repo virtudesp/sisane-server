@@ -18,7 +18,9 @@
 <%@page import="net.daw.bean.generic.specific.implementation.UsuarioBeanGenSpImpl"%>
         
 <%  UsuarioBeanGenSpImpl user = (UsuarioBeanGenSpImpl) request.getSession().getAttribute("usuarioBean");
-    String level = user.getObj_tipousuario().getDescripcion(); %>
+    String level = user.getObj_tipousuario().getDescripcion(); 
+    int id_usuario = user.getId(); 
+%>
 
 <div class="panel panel-primary">
     <div class="panel-heading">
@@ -60,11 +62,8 @@
         <h3 class="panel-title">Red Social</h3>
     </div>
     <div class="list-group">
-
-        <a  class="list-group-item" id="lnkPublicacion" href="jsp#/publicacion">Publicacion</a> 
-        <a  class="list-group-item" id="lnkPublicacion" href="jsp#/estado">Estado</a>
-        <a  class="list-group-item" id="lnkPublicacion" href="jsp#/amigo">Amigo</a>
-
+        <a  class="list-group-item" id="lnkPublicacion" href="jsp#/inicioRedSocial/list/page=1&id=1&rpp=10&vf=4&order=fechacreacion&ordervalue=desc">Inicio</a> 
+        <a  class="list-group-item" id="lnkPublicacion" href="jsp#/redsocialperfil/list/systemfilter=id_usuario&systemfilteroperator=equals&systemfiltervalue=<%=id_usuario%>&page=1&id=1&rpp=10&vf=4&order=fechacreacion&ordervalue=desc">Mi perfil</a> 
     </div>
 </div>
 
@@ -125,3 +124,7 @@
         <a  class="list-group-item" id="lnkPropuesta" href="jsp#/propuesta">Propuesta</a>
     </div>
 </div>
+
+<script type="text/javascript">
+    myuser = <%=id_usuario%>;
+</script>

@@ -18,6 +18,7 @@
 package net.daw.bean.generic.specific.implementation;
 
 import com.google.gson.annotations.Expose;
+import java.util.Date;
 import net.daw.bean.generic.implementation.BeanGenImpl;
 import net.daw.bean.publicinterface.BeanInterface;
 
@@ -40,6 +41,8 @@ public class PublicacionBeanGenSpImpl extends BeanGenImpl implements BeanInterfa
     private Integer id_usuario = 0;
     @Expose(deserialize = false)
     private UsuarioBeanGenSpImpl obj_usuario = null;
+    @Expose
+    private Date fechacreacion = new Date();
 
     public String getContenido() {
         return contenido;
@@ -63,6 +66,14 @@ public class PublicacionBeanGenSpImpl extends BeanGenImpl implements BeanInterfa
 
     public void setObj_usuario(UsuarioBeanGenSpImpl obj_usuario) {
         this.obj_usuario = obj_usuario;
+    }
+
+    public Date getFechacreacion() {
+        return fechacreacion;
+    }
+
+    public void setFechacreacion(Date fechacreacion) {
+        this.fechacreacion = fechacreacion;
     }
     
     

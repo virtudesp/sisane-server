@@ -17,23 +17,23 @@
  */
 
 
-var publicacionView = function (strClase) {
+var inicioRedSocialView = function (strClase) {
     this.clase = strClase;
 };
-publicacionView.prototype = new view('publicacion');
-publicacionView.prototype.getClassNamePublicacion = function () {
+inicioRedSocialView.prototype = new view('publicacion');
+inicioRedSocialView.prototype.getClassNameinicioRedSocial = function () {
     return this.getClassName() + "Vista";
 };
-var oPublicacionView = new publicacionView('publicacion');
+var oInicioRedSocialView = new inicioRedSocialView('publicacion');
 
 
-publicacionView.prototype.loadButtons = function (id, id_usuario) {
+inicioRedSocialView.prototype.loadButtons = function (id) {
 
     var botonera = "";
     botonera += '<div class="btn-toolbar" role="toolbar"><div class="btn-group btn-group-xs">';
     botonera += '<a class="btn btn-default view" id="' + id + '"  href="jsp#/' + this.clase + '/view/' + id + '"><i class="glyphicon glyphicon-eye-open"></i></a>';
     
-    if (myuser == id_usuario) {
+    if (myuser == id) {
         botonera += '<a class="btn btn-default edit" id="' + id + '"  href="jsp#/' + this.clase + '/edit/' + id + '"><i class="glyphicon glyphicon-pencil"></i></a>';
         botonera += '<a class="btn btn-default remove" id="' + id + '"  href="jsp#/' + this.clase + '/remove/' + id + '"><i class="glyphicon glyphicon-remove"></i></a>';
     }
@@ -42,7 +42,7 @@ publicacionView.prototype.loadButtons = function (id, id_usuario) {
     return botonera;
 
 }
-publicacionView.prototype.loadFormValues = function (valores, campos) {
+inicioRedSocialView.prototype.loadFormValues = function (valores, campos) {
 //                    $('#publicacion_form #titulo').val(valores['titulo']);
 //                    $('#publicacion_form #contenido').val(valores['contenido']);
 //                    $('#publicacion_form #alta').val(valores['alta']);
@@ -55,7 +55,7 @@ publicacionView.prototype.loadFormValues = function (valores, campos) {
     this.doFillForm(valores, campos);
 };
 
-publicacionView.prototype.getFormValues = function () {
+inicioRedSocialView.prototype.getFormValues = function () {
     var valores = [];
 //                    valores['titulo'] = $('#publicacion_form #titulo');
 //                    valores['contenido'] = $('#publicacion_form #contenido');
@@ -73,7 +73,7 @@ publicacionView.prototype.getFormValues = function () {
     return valores;
 };
 
-publicacionView.prototype.doEventsLoading = function () {
+inicioRedSocialView.prototype.doEventsLoading = function () {
     var thisObject = this;
     $('#publicacionForm #obj_usuario_button').unbind('click');
     $("#publicacionForm #obj_usuario_button").click(function () {
@@ -94,20 +94,62 @@ publicacionView.prototype.doEventsLoading = function () {
         },oUsuarioModel, oUsuarioView);
         return false;
     });
+    $('#publicacionForm #obj_tipopublicacion_button').unbind('click');
+    $("#publicacionForm #obj_tipopublicacion_button").click(function () {
+        var oControl = oPublicacionControl;
+
+        $("#publicacionForm").append(thisObject.getEmptyModal());
+        util().loadForm('#modal01', thisObject.getFormHeader('Elección de tipo de publicacion'), "", thisObject.getFormFooter(), true);
+
+        $('#publicacionForm').append(thisObject.getEmptyModal());
+
+        oControl.list('#modal01 #modal-body', param().defaultizeUrlObjectParameters({}), true, oPublicacionModel, oPublicacionView);
+        oControl.modalListEventsLoading('#modal01 #modal-body', param().defaultizeUrlObjectParameters({}), function (id) {
+            $('#obj_tipopublicacion_id').val(id).change();
+            $('#obj_tipopublicacion_desc').text(decodeURIComponent(oTipopublicacionModel.getMeAsAForeignKey(id)));
+            $('#modal01').modal('hide');
+
+        },oPublicacionModel, oPublicacionView);
+        return false;
+    });
+    $('#contenido_button').unbind('click');
+    $('#contenido_button').click(function () {
+        //cabecera = '<button id="full-width" type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>' + '<h3 id="myModalLabel">Edición de contenidos</h3>';
+        cabecera = thisObject.getFormHeader('Edición de contenidos');
+        //pie = '<button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="true">Cerrar</button>';                        
+        pie = '<a class="btn btn-primary" href="http://creoleparser.googlecode.com/svn/trunk/creoleparser/test_pages/CheatSheetPlus.html">Sintaxis</a>';
+        pie += thisObject.getFormFooter();
+        contenido = '<div class="row"><div class="col-md-6">';
+        contenido += '<textarea type="text" id="contenidomodal" name="contenido" rows="20" cols="70" placeholder="contenido"></textarea>';
+        contenido += '</div><div class="col-md-6"><div id="textoparseado"></div></div>';
+        contenido += '</div>';
+
+        $('#publicacionForm').append(thisObject.getEmptyModal());
+
+        util().loadForm('#modal01', cabecera, contenido, pie, true);
+        var texto = $('#contenido').val();
+        $('#contenidomodal').val(texto);
+        util().creoleParse(texto, $('#textoparseado'));
+        $('#contenido').val($('#contenidomodal').val());
+        $('#contenidomodal').keyup(function () {
+            util().creoleParse($('#contenidomodal').val(), $('#textoparseado'));
+            $('#contenido').val($('#contenidomodal').val());
+        });
+        return false;
+    });
 };
 
-publicacionView.prototype.okValidation = function (f) {
+inicioRedSocialView.prototype.okValidation = function (f) {
     $('#publicacionForm').on('success.form.bv', f);
 };
 
-publicacionView.prototype.printValue = function (value, valor, recortar) {
+inicioRedSocialView.prototype.printValue = function (value, valor, recortar) {
     var thisObject = this;
     var strResult = "";
     if (/obj_usuario/.test(valor)) {
         if (value[valor].id > 0) {
             val = valor.substring(4);
-            strResult = '<a href="jsp#/' + 'redsocialperfil' + '/list/systemfilter=id_usuario&systemfilteroperator=equals&systemfiltervalue=' + value[valor].id + '&page=1&id=1&rpp=10&vf=4&order=fechacreacion&ordervalue=desc' + '">' + value[valor].login.charAt(0).toUpperCase() + value[valor].login.slice(1)+ '</a>';
-            //function MaysPrimera(string){ return string.charAt(0).toUpperCase() + string.slice(1); }
+            strResult = '<a href="jsp#/' + val + '/view/' + value[valor].id + '">' + value[valor].id + ":" + value[valor].login + '</a>';
         } else {
             strResult = '???';
         }
@@ -137,8 +179,47 @@ publicacionView.prototype.printValue = function (value, valor, recortar) {
     };
     return strResult;
 };
+inicioRedSocialView.prototype.getHeaderPageTable = function (prettyFieldNames, fieldNames, visibleFields, UrlFromParamsWithoutOrder) {
+    var strNombreClase = this.clase;
+    var numField = 0; //visible field counter
+    var tabla = "";
+    if (prettyFieldNames !== null) {
+        tabla += '<tr>';
+        $.each(prettyFieldNames, function (index, value) {
+            numField++; //field counter
+            if (numField <= visibleFields) {
+//                        if (value === "acciones") {
+//                            tabla += '<th class="col-md-2">' + value;
+//                            tabla += '</th>';
+//                        } else {
+                fieldNames.splice(index, 0);
+                if (fieldNames[numField - 1] !== null) {
+                    tabla += '<th class="col-md-1">' + value;
+                } else {
+                    tabla += '<th>' + value;
+                }
+                ;
+                if (fieldNames[numField - 1].substr(0, 4) == "obj_") {
+                    fieldName = fieldNames[numField - 1].substring(4);
+                    fieldName = "id_" + fieldName;
+                } else {
+                    fieldName = fieldNames[numField - 1];
+                }
+                ;
+                tabla += '<br />';
+                tabla += '<a class="orderAsc" id="' + fieldName + '" href="jsp#/' + strNombreClase + '/list/' + UrlFromParamsWithoutOrder + '&order=' + fieldName + '&ordervalue=asc"><i class="glyphicon glyphicon-arrow-up"></i></a>';
+                tabla += '<a class="orderDesc" id="' + fieldName + '" href="jsp#/' + strNombreClase + '/list/' + UrlFromParamsWithoutOrder + '&order=' + fieldName + '&ordervalue=desc"><i class="glyphicon glyphicon-arrow-down"></i></a>';
+                tabla += '</th>';
+            }
+        });
+        tabla += '<th class="col-md-2">acciones</th>';
+        tabla += '</tr>';
+    }
+    ;
+    return tabla;
+};
 
-publicacionView.prototype.getBodyPageTable = function (page, fieldNames, visibleFields, tdbuttons) {
+inicioRedSocialView.prototype.getBodyPageTable = function (page, fieldNames, visibleFields, tdbuttons) {
     var thisObject = this;
     var tabla = "";
     $.each(page, function (index, value) {
