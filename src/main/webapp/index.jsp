@@ -33,15 +33,21 @@
         <meta name="viewport" content="width=device-width">
         <link rel="stylesheet" href="css/bootstrap.min.css">
         <% if (user != null) {%>
-        <link rel="stylesheet" href="css/skin/o<%=user.getSkin()%>.css">
+        <link rel="stylesheet" href="css/skin/<%=user.getSkin()%>.css">
         <% } else {%>
-        <link rel="stylesheet" href="css/skin/omain.css">
+        <link rel="stylesheet" href="css/skin/main.css">
         <% }%>
         <!-- <link rel="stylesheet" href="css/jquery-ui.css"> -->
         <link rel="stylesheet" href="css/animate.css">
         <link rel="stylesheet" href="css/bootstrapValidator.min.css">
         <link rel="stylesheet" href="css/bootstrap-datetimepicker.min.css"  />
         <link rel="stylesheet" href="css/documentobonito.css">
+        
+        <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+          <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+          <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+        <![endif]-->
     </head>
     <body>
         <!--[if lt IE 7]>
@@ -61,7 +67,6 @@
                 </div>
                 <div class="collapse navbar-collapse">
 
-
                     <ul class="nav navbar-nav">
                         <%if (user != null) {%>
                         <jsp:include page="jsp/menuSuperior.jsp" /> 
@@ -70,9 +75,6 @@
                     <ul class="nav navbar-nav navbar-right">
                         <jsp:include page="jsp/usuario/infologin.jsp" />
                     </ul>
-
-
-
 
                 </div><!--/.nav-collapse -->
             </div>
