@@ -32,7 +32,7 @@
     <div class="form-group">
         <label class="col-sm-2 control-label"  for="titulo">Contenido comentario:</label>
         <div class="col-sm-6">
-            <input type="text" id="descripcion" class="form-control"  name="contenido" size="45" placeholder="contenido" />
+            <input type="text" id="contenido" class="form-control"  name="contenido" size="45" placeholder="contenido" />
         </div>
     </div>
 
