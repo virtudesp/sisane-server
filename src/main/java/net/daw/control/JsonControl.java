@@ -30,6 +30,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.daw.control.operation.generic.specific.implementation.AmigoControlOperationGenSpImpl;
 import net.daw.control.operation.generic.specific.implementation.CuestionarioControlOperationGenSpImpl;
 import net.daw.control.operation.generic.specific.implementation.DocumentoControlOperationGenSpImpl;
+import net.daw.control.operation.generic.specific.implementation.DocumentobonitoControlOperationGenSpImpl;
 import net.daw.control.operation.generic.specific.implementation.OpcionControlOperationGenSpImpl;
 import net.daw.control.operation.generic.specific.implementation.PedidoControlOperationGenSpImpl;
 import net.daw.control.operation.generic.specific.implementation.PreguntaControlOperationGenSpImpl;
@@ -61,6 +62,7 @@ import net.daw.control.operation.specific.implementation.TipoproductoControlOper
 import net.daw.control.operation.specific.implementation.TipopropuestaControlOperationSpImpl;
 import net.daw.control.route.generic.specific.implementation.CuestionarioControlRouteGenSpImpl;
 import net.daw.control.route.generic.specific.implementation.DocumentoControlRouteGenSpImpl;
+import net.daw.control.route.generic.specific.implementation.DocumentobonitoControlRouteGenSpImpl;
 import net.daw.control.route.generic.specific.implementation.PreguntaControlRouteGenSpImpl;
 import net.daw.control.route.generic.specific.implementation.OpcionControlRouteGenSpImpl;
 import net.daw.control.route.generic.specific.implementation.PublicacionControlRouteGenSpImpl;
@@ -272,12 +274,17 @@ public class JsonControl extends HttpServlet {
                         ComentarioControlRouteSpImpl oComentarioRoute = new ComentarioControlRouteSpImpl();
                         ComentarioControlOperationSpImpl oComentarioControlOperation = new ComentarioControlOperationSpImpl(request);
                         jsonResult = oComentarioRoute.execute(request, oComentarioControlOperation);
-                        break;  
+                        break;
 
                     case "tipopropuesta":
                         TipopropuestaControlRouteSpImpl oTipopropuestaRoute = new TipopropuestaControlRouteSpImpl();
                         TipopropuestaControlOperationSpImpl oTipopropuestaRouteControlOperation = new TipopropuestaControlOperationSpImpl(request);
                         jsonResult = oTipopropuestaRoute.execute(request, oTipopropuestaRouteControlOperation);
+                        break;
+                    case "documentobonito":
+                        DocumentobonitoControlRouteGenSpImpl oDocumentobonitoRoute = new DocumentobonitoControlRouteGenSpImpl();
+                        DocumentobonitoControlOperationGenSpImpl oDocumentobonitoControlOperation = new DocumentobonitoControlOperationGenSpImpl(request);
+                        jsonResult = oDocumentobonitoRoute.execute(request, oDocumentobonitoControlOperation);
                         break;
                     case "tarea":
                         TareaControlRouteGenSpImpl oTareaRoute = new TareaControlRouteGenSpImpl();
