@@ -43,7 +43,10 @@
     margin-bottom: 50px;
     border-radius: 20px;
     padding: 5px;
+    position: relative;
+    left: 90%;
 
+    
 }
 
 .visualizacion{
