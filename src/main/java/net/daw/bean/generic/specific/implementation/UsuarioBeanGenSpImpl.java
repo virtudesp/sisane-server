@@ -39,6 +39,8 @@ public class UsuarioBeanGenSpImpl extends BeanGenImpl implements BeanInterface {
     private String ciudad = "";
     @Expose
     private String firma = "";
+    @Expose
+    private String skin = "";
 
     public String getLogin() {
         return login;
@@ -103,5 +105,13 @@ public class UsuarioBeanGenSpImpl extends BeanGenImpl implements BeanInterface {
     public void setFirma(String firma) {
         this.firma = firma;
     }
-    
+
+    public String getSkin() {
+        return skin;
+    }
+
+    public void setSkin(String skin) {
+        this.skin = skin;
+    }
+
 }
