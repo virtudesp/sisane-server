@@ -1,5 +1,5 @@
-/*
- * Copyright (C) July 2014 Rafael Aznar
+/* 
+ * Copyright (C) 2014 rafa
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -15,16 +15,12 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-package net.daw.control.operation.generic.specific.implementation;
 
-import java.lang.reflect.InvocationTargetException;
-import javax.servlet.http.HttpServletRequest;
-import net.daw.control.operation.generic.implementation.ControlOperationGenImpl;
-
-public class DocumentoControlOperationGenSpImpl extends ControlOperationGenImpl {
-
-    public DocumentoControlOperationGenSpImpl(HttpServletRequest request) throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, Exception {
-        super(request);
-    }
-
-}
+var tipodocumentoControl = function (strClase) {
+    this.clase = strClase;
+};
+tipodocumentoControl.prototype = new control('tipodocumento');
+tipodocumentoControl.prototype.getClassNameTipodocumento = function () {
+    return this.getClassName() + "Control";
+};
+var oTipodocumentoControl = new documentoControl('tipodocumento');
