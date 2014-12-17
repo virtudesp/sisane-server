@@ -1,30 +1,18 @@
 <%-- 
- Copyright (C) July 2014 Rafael Aznar
-
- This program is free software; you can redistribute it and/or
- modify it under the terms of the GNU General Public License
- as published by the Free Software Foundation; either version 2
- of the License, or (at your option) any later version.
-
- This program is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- GNU General Public License for more details.
-
- You should have received a copy of the GNU General Public License
- along with this program; if not, write to the Free Software
- Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+    Document   : listBueno
+    Created on : 01-dic-2014, 17:15:48
+    Author     : al037542
 --%>
 
 <%@page import="java.sql.Connection"%>
-<%@page import="net.daw.dao.generic.specific.implementation.DocumentoDaoGenSpImpl"%>
+<%@page import="net.daw.dao.generic.specific.implementation.DocumentobonitoDaoGenSpImpl"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.Iterator"%>
 <%
     ArrayList<String> alColumnsNames;
     Iterator<String> oIterador;
-    String strNombreMantenimiento = "documento";
-    Connection connection = (Connection) request.getAttribute("connection");    
+    String strNombreMantenimiento = "documentobonito";
+    Connection connection = (Connection) request.getAttribute("connection");
 %>
 <div class="row">
     <div class="col-md-12">
@@ -67,12 +55,11 @@
                                 <!-- Default panel contents -->
                                 <div class="panel-heading">Visualizacion</div>
                                 <div class="panel-body visualizacion">     
-                                  <a class="btn btn-default active botLista" href="#"><i class="glyphicon glyphicon-th-list"></i></a>
-                                  <a class="btn btn-default botFile" href="jsp#/documentobonito"><i class="glyphicon glyphicon-file"></i></a>
+                                  <a class="btn btn-default botLista" href="jsp#/documento"><i class="glyphicon glyphicon-th-list"></i></a>
+                                  <a class="btn btn-default active botFile" href="#"><i class="glyphicon glyphicon-file"></i></a>
                                 </div>
                             </div>
                         </div>
-                        
                         <div class="col-md-2">
                             <div class="panel panel-default">
                                 <!-- Default panel contents -->
@@ -136,7 +123,7 @@
                                 <div class="panel-body">
                                     <br />
                                     <div class="text-center">
-                                        <a class="btn btn-primary" href='jsp#/<%=strNombreMantenimiento%>/new'>Crear un nuevo <%=strNombreMantenimiento%></a> 
+                                        <a id="newButton" class="btn btn-primary" href='jsp#/<%=strNombreMantenimiento%>/new'>Crear un nuevo <%=strNombreMantenimiento%></a> 
                                     </div>
                                     <br />
                                 </div>
@@ -150,18 +137,18 @@
     </div>
 
 </div>
-                                    
-</div>
-<div class="row">
-    <div class="col-md-12" id="menuLateralList">
-        <table class="table table-responsive table-hover table-striped table-condensed">
-            <thead id="tableHeaders"></thead>
-            <tbody id="tableBody"></tbody>
-        </table>
+
+<div class="row ejercicio">
+    <div class="col-md-12" id="menuLateralList"> 
+        <div id="tableBody"></div>
         <div id="datos"></div>
         <div id="datos2"></div>
     </div> 
 </div> 
+
+
+
+
 <!-- Modals -->
 <div id="modal01" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">

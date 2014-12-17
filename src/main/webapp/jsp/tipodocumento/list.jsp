@@ -17,13 +17,13 @@
 --%>
 
 <%@page import="java.sql.Connection"%>
-<%@page import="net.daw.dao.generic.specific.implementation.DocumentoDaoGenSpImpl"%>
+<%@page import="net.daw.dao.generic.specific.implementation.TipodocumentoDaoGenSpImpl"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.Iterator"%>
 <%
     ArrayList<String> alColumnsNames;
     Iterator<String> oIterador;
-    String strNombreMantenimiento = "documento";
+    String strNombreMantenimiento = "tipodocumento";
     Connection connection = (Connection) request.getAttribute("connection");    
 %>
 <div class="row">
@@ -51,7 +51,7 @@
 
                 <div id="pane1" class="tab-pane active">
                     <div class="row">
-                        <div class="col-md-5">
+                        <div class="col-md-7">
                             <div class="panel panel-default">
                                 <!-- Default panel contents -->
                                 <div class="panel-heading">Paginación</div>
@@ -62,16 +62,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-2">
-                            <div class="panel panel-default">
-                                <!-- Default panel contents -->
-                                <div class="panel-heading">Visualizacion</div>
-                                <div class="panel-body visualizacion">     
-                                  <a class="btn btn-default active botLista" href="#"><i class="glyphicon glyphicon-th-list"></i></a>
-                                  <a class="btn btn-default botFile" href="jsp#/documentobonito"><i class="glyphicon glyphicon-file"></i></a>
-                                </div>
-                            </div>
-                        </div>
+                        
                         
                         <div class="col-md-2">
                             <div class="panel panel-default">
