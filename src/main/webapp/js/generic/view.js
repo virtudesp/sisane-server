@@ -187,17 +187,17 @@ view.prototype.getFilterInfo = function (objParams) {
 view.prototype.getRppLinks = function (objParams) {
     var UrlFromParamsWithoutRpp = param().getUrlStringFromParamsObject(param().getUrlObjectFromParamsWithoutParamArray(objParams, ["rpp"]));
     var botonera = '<div id="pagination"><ul class="pagination">';
-    if (objParams['rpp'] == 5)
-        botonera += '<li class="active">';
-    else
-        botonera += '<li>';
-    botonera += '<a class="rpp_link" id="10" href="jsp#/' + this.clase + '/list/' + UrlFromParamsWithoutRpp + '&rpp=10">10</a></li>';
     if (objParams['rpp'] == 10)
         botonera += '<li class="active">';
     else
         botonera += '<li>';
-    botonera += '<a class="rpp_link" id="50" href="jsp#/' + this.clase + '/list/' + UrlFromParamsWithoutRpp + '&rpp=50">50</a></li>';
+    botonera += '<a class="rpp_link" id="10" href="jsp#/' + this.clase + '/list/' + UrlFromParamsWithoutRpp + '&rpp=10">10</a></li>';
     if (objParams['rpp'] == 50)
+        botonera += '<li class="active">';
+    else
+        botonera += '<li>';
+    botonera += '<a class="rpp_link" id="50" href="jsp#/' + this.clase + '/list/' + UrlFromParamsWithoutRpp + '&rpp=50">50</a></li>';
+    if (objParams['rpp'] == 100)
         botonera += '<li class="active">';
     else
         botonera += '<li>';
