@@ -19,7 +19,6 @@ package net.daw.control;
 
 import com.google.gson.Gson;
 import java.io.IOException;
-import java.sql.Connection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
@@ -28,9 +27,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import net.daw.bean.generic.specific.implementation.UsuarioBeanGenSpImpl;
-import net.daw.connection.implementation.BoneConnectionPoolImpl;
-import net.daw.connection.publicinterface.ConnectionInterface;
 import net.daw.control.operation.generic.specific.implementation.AmigoControlOperationGenSpImpl;
 import net.daw.control.operation.generic.specific.implementation.CuestionarioControlOperationGenSpImpl;
 import net.daw.control.operation.generic.specific.implementation.DocumentoControlOperationGenSpImpl;
@@ -40,8 +36,12 @@ import net.daw.control.operation.generic.specific.implementation.PedidoControlOp
 import net.daw.control.operation.generic.specific.implementation.PreguntaControlOperationGenSpImpl;
 import net.daw.control.operation.generic.specific.implementation.PublicacionControlOperationGenSpImpl;
 import net.daw.control.operation.generic.specific.implementation.EstadoControlOperationGenSpImpl;
+import net.daw.control.operation.generic.specific.implementation.EstadotareaControlOperationGenSpImpl;
+import net.daw.control.operation.generic.specific.implementation.ProyectoControlOperationGenSpImpl;
 import net.daw.control.operation.generic.specific.implementation.RespuestaControlOperationGenSpImpl;
+import net.daw.control.operation.generic.specific.implementation.TareaControlOperationGenSpImpl;
 import net.daw.control.operation.generic.specific.implementation.TipodocumentoControlOperationGenSpImpl;
+import net.daw.control.operation.generic.specific.implementation.TipotareaControlOperationGenSpImpl;
 import net.daw.control.operation.generic.specific.implementation.TipotemaControlOperationGenSpImpl;
 import net.daw.control.operation.generic.specific.implementation.TipousuarioControlOperationGenSpImpl;
 import net.daw.control.operation.generic.specific.implementation.UsuarioControlOperationGenSpImpl;
@@ -59,7 +59,6 @@ import net.daw.control.operation.specific.implementation.PostControlOperationSpI
 import net.daw.control.operation.specific.implementation.ProveedorControlOperationSpImpl;
 import net.daw.control.operation.specific.implementation.TemaControlOperationSpImpl;
 import net.daw.control.operation.specific.implementation.TipoproductoControlOperationSpImpl;
-import net.daw.control.operation.specific.implementation.TipoproductoControlOperationSpImpl;
 import net.daw.control.operation.specific.implementation.TipopropuestaControlOperationSpImpl;
 import net.daw.control.route.generic.specific.implementation.CuestionarioControlRouteGenSpImpl;
 import net.daw.control.route.generic.specific.implementation.DocumentoControlRouteGenSpImpl;
@@ -68,9 +67,13 @@ import net.daw.control.route.generic.specific.implementation.PreguntaControlRout
 import net.daw.control.route.generic.specific.implementation.OpcionControlRouteGenSpImpl;
 import net.daw.control.route.generic.specific.implementation.PublicacionControlRouteGenSpImpl;
 import net.daw.control.route.generic.specific.implementation.EstadoControlRouteGenSpImpl;
+import net.daw.control.route.generic.specific.implementation.EstadotareaControlRouteGenSpImpl;
 import net.daw.control.route.generic.specific.implementation.PedidoControlRouteGenSpImpl;
+import net.daw.control.route.generic.specific.implementation.ProyectoControlRouteGenSpImpl;
 import net.daw.control.route.generic.specific.implementation.RespuestaControlRouteGenSpImpl;
+import net.daw.control.route.generic.specific.implementation.TareaControlRouteGenSpImpl;
 import net.daw.control.route.generic.specific.implementation.TipodocumentoControlRouteGenSpImpl;
+import net.daw.control.route.generic.specific.implementation.TipotareaControlRouteGenSpImpl;
 import net.daw.control.route.generic.specific.implementation.TipotemaControlRouteGenSpImpl;
 import net.daw.control.route.generic.specific.implementation.TipousuarioControlRouteGenSpImpl;
 import net.daw.control.route.generic.specific.implementation.UsuarioControlRouteGenSpImpl;
@@ -93,8 +96,6 @@ import net.daw.helper.EstadoHelper;
 import net.daw.helper.EstadoHelper.Tipo_estado;
 import net.daw.helper.ExceptionBooster;
 import net.daw.helper.ParameterCooker;
-import net.daw.helper.PermissionManager;
-import net.daw.service.generic.specific.implementation.PermisoServiceGenSpImpl;
 
 public class JsonControl extends HttpServlet {
 
@@ -285,6 +286,27 @@ public class JsonControl extends HttpServlet {
                         DocumentobonitoControlOperationGenSpImpl oDocumentobonitoControlOperation = new DocumentobonitoControlOperationGenSpImpl(request);
                         jsonResult = oDocumentobonitoRoute.execute(request, oDocumentobonitoControlOperation);
                         break;
+                    case "tarea":
+                        TareaControlRouteGenSpImpl oTareaRoute = new TareaControlRouteGenSpImpl();
+                        TareaControlOperationGenSpImpl oTareaControlOperation = new TareaControlOperationGenSpImpl(request);
+                        jsonResult = oTareaRoute.execute(request, oTareaControlOperation);
+                        break;
+                    case "estadotarea":
+                        EstadotareaControlRouteGenSpImpl oEstadotareaRoute = new EstadotareaControlRouteGenSpImpl();
+                        EstadotareaControlOperationGenSpImpl oEstadotareaControlOperation = new EstadotareaControlOperationGenSpImpl(request);
+                        jsonResult = oEstadotareaRoute.execute(request, oEstadotareaControlOperation);
+                        break; 
+                    case "proyecto":
+                        ProyectoControlRouteGenSpImpl oProyectoRoute = new ProyectoControlRouteGenSpImpl();
+                        ProyectoControlOperationGenSpImpl oProyectoControlOperation = new ProyectoControlOperationGenSpImpl(request);
+                        jsonResult = oProyectoRoute.execute(request, oProyectoControlOperation);
+                        break;
+                    case "tipotarea":
+                        TipotareaControlRouteGenSpImpl oTipotareaRoute = new TipotareaControlRouteGenSpImpl();
+                        TipotareaControlOperationGenSpImpl oTipotareaControlOperation = new TipotareaControlOperationGenSpImpl(request);
+                        jsonResult = oTipotareaRoute.execute(request, oTipotareaControlOperation);
+                        break;
+                        
 
                     default:
                         ExceptionBooster.boost(new Exception(this.getClass().getName() + ":processRequest ERROR: no such operation"));

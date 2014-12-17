@@ -19,15 +19,35 @@ package net.daw.control.operation.generic.specific.implementation;
 
 import javax.servlet.http.HttpServletRequest;
 import net.daw.control.operation.generic.implementation.ControlOperationGenImpl;
+import net.daw.helper.ExceptionBooster;
+import net.daw.helper.ParameterCooker;
+import net.daw.service.generic.specific.implementation.CuestionarioServiceGenSpImpl;
+import net.daw.service.generic.specific.implementation.PublicacionServiceGenSpImpl;
 
 /**
  *
  * @author al038098
  */
-public class CuestionarioControlOperationGenSpImpl extends ControlOperationGenImpl{
+public class CuestionarioControlOperationGenSpImpl extends ControlOperationGenImpl {
+
+    private CuestionarioServiceGenSpImpl oCuestionarioService = (CuestionarioServiceGenSpImpl) oService;
 
     public CuestionarioControlOperationGenSpImpl(HttpServletRequest request) throws Exception {
         super(request);
     }
-    
+
+    public String getAllPreguntas(HttpServletRequest request) throws Exception {
+        String result = null;
+        try {
+            if (perm) {
+                result = oCuestionarioService.getAllPreguntas(ParameterCooker.prepareId(request));
+                closeDB();
+            } else {
+                result = "error";
+            }
+        } catch (Exception ex) {
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":set ERROR: " + ex.getMessage()));
+        }
+        return result;
+    }
 }

@@ -27,6 +27,39 @@ preguntaView.prototype.getClassNamePregunta = function () {
 var oPreguntaView = new preguntaView('pregunta');
 
 
+preguntaView.prototype.getBodyPageTable = function (page, fieldNames, visibleFields, tdbuttons) {
+    var thisObject = this;
+    var tabla = "";
+    $.each(page, function (index, value) {
+        tabla += '<tr>';
+        var numField = 0;
+        var id;
+        var strClaveAjena;
+        $.each(fieldNames, function (index, valor) {
+            if ("id" == valor) {
+                id = value[valor];
+            }
+            ;
+            numField++;
+            if (numField <= visibleFields) {
+                tabla += '<td>';
+                if(valor == "descripcion"){
+                    tabla += '<a href="jsp#/opcion/list/' + 'systemfilter=id_pregunta&systemfilteroperator=equals&systemfiltervalue=' + value.id + '">' + thisObject.printValue(value, valor, true) + '</a>';
+                }else{
+                    tabla += thisObject.printValue(value, valor, true);
+                }
+                tabla += '</td>';
+            }
+        });
+        tabla += '<td>';
+        tabla += tdbuttons(id);
+        tabla += '</td>';
+        tabla += '</tr>';
+    });
+    return tabla;
+};
+
+
 preguntaView.prototype.loadButtons = function (id) {
 
     var botonera = "";

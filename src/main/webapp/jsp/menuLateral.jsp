@@ -15,6 +15,10 @@
  along with this program; if not, write to the Free Software
  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 --%>           
+<%@page import="net.daw.bean.generic.specific.implementation.UsuarioBeanGenSpImpl"%>
+        
+<%  UsuarioBeanGenSpImpl user = (UsuarioBeanGenSpImpl) request.getSession().getAttribute("usuarioBean");
+    String level = user.getObj_tipousuario().getDescripcion(); %>
 
 <div class="panel panel-primary">
     <div class="panel-heading">
@@ -68,6 +72,26 @@
     </div>
 </div>
 
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        <h3 class="panel-title">Cuestionario</h3>
+    </div>
+    <div class="list-group">
+        <a  class="list-group-item" id="lnkCuestionario" href="jsp#/cuestionario">Cuestionario</a> 
+        <a  class="list-group-item" id="lnkPregunta" href="jsp#/pregunta">Pregunta</a>
+        <a  class="list-group-item" id="lnkOpcion" href="jsp#/opcion">Opcion</a>
+        <a  class="list-group-item" id="lnkRespuesta" href="jsp#/respuesta">Respuesta</a>
+    </div>
+</div>
+
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        <h3 class="panel-title">Global</h3>
+    </div>
+    <div class="list-group">
+        <a  class="list-group-item" id="lnkOrdenador" href="jsp?op=cambia">Cambia el campo</a>
+    </div>
+</div>
 
 <div class="panel panel-primary">
     <div class="panel-heading">
@@ -78,6 +102,18 @@
         <a  class="list-group-item" id="lnkTema" href="jsp#/tema">Tema</a> 
         <a  class="list-group-item" id="lnkPost" href="jsp#/post">Post</a> 
         <a  class="list-group-item" id="lnkMensajeprivado" href="jsp#/mensajeprivado">Mensaje privado</a> 
+
+    </div>
+</div>
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        <h3 class="panel-title">Tareas</h3>
+    </div>
+    <div class="list-group">
+        <a  class="list-group-item" id="lnkPublicacion" href="jsp#/tarea">Tarea</a> 
+        <a  class="list-group-item" id="lnkPublicacion" href="jsp#/proyecto">Proyecto</a> 
+        <a  class="list-group-item" id="lnkPublicacion" href="jsp#/estadotarea">Estado Tarea</a> 
+        <a  class="list-group-item" id="lnkPublicacion" href="jsp#/tipotarea">Tipo Tarea</a> 
 
     </div>
 </div>

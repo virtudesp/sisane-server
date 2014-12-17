@@ -30,15 +30,15 @@ control.prototype.new = function (place, objParams, oModel, oView) {
     $(place).append(oView.getPanel("Alta de " + this.clase, oView.getEmptyForm()));
     //id must not be enabled
     $('#id').val('0').attr("disabled", true);
-    //soporte de claves ajenas
     if (objParams) {
+        //soporte de claves ajenas
         var selector = objParams["systemfilter"].replace('id_', 'obj_');
         $('#' + selector + "_id").val(objParams["systemfiltervalue"]).attr("disabled", true);
         $('#' + selector + "_button").attr("disabled", true).hide();
         var oModelo = "o" + objParams["systemfilter"].replace('id_', '').charAt(0).toUpperCase() + objParams["systemfilter"].replace('id_', '').slice(1) + "Model";
         $('#' + selector + '_desc').text(decodeURIComponent(window[oModelo].getMeAsAForeignKey(objParams["systemfiltervalue"])));
+        //--
     }
-    //--
     oView.doEventsLoading();
     $('#submitForm').unbind('click');
     $('#submitForm').click(function () {
