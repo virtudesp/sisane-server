@@ -32,17 +32,19 @@
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width">
         <link rel="stylesheet" href="css/bootstrap.min.css">
+
+        <!-- <link rel="stylesheet" href="css/jquery-ui.css"> -->
+        <link rel="stylesheet" href="css/animate.css">
+        <link rel="stylesheet" href="css/bootstrapValidator.min.css">
+        <link rel="stylesheet" href="css/bootstrap-datetimepicker.min.css"  />
+
+
         <% if (user != null) {%>
         <link rel="stylesheet" href="css/skin/<%=user.getSkin()%>.css">
         <% } else {%>
         <link rel="stylesheet" href="css/skin/main.css">
         <% }%>
-        <!-- <link rel="stylesheet" href="css/jquery-ui.css"> -->
-        <link rel="stylesheet" href="css/animate.css">
-        <link rel="stylesheet" href="css/bootstrapValidator.min.css">
-        <link rel="stylesheet" href="css/bootstrap-datetimepicker.min.css"  />
-        <link rel="stylesheet" href="css/documentobonito.css">
-        
+
         <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
         <!--[if lt IE 9]>
           <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
@@ -56,7 +58,7 @@
 
         <!-- Fixed navbar -->
         <div class="navbar navbar-default navbar-fixed-top">
-            <div class="container">
+            <div class="container barra">
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                         <span class="icon-bar"></span>
@@ -202,12 +204,12 @@
         <script src="js/specific/usuario/model.js" charset="UTF-8"></script>
         <script src="js/specific/usuario/view.js" charset="UTF-8"></script>
         <script src="js/specific/usuario/routes.js" charset="UTF-8"></script>
-        
+
         <script src="js/specific/tipodocumento/control.js" charset="UTF-8"></script>
         <script src="js/specific/tipodocumento/model.js" charset="UTF-8"></script>
         <script src="js/specific/tipodocumento/view.js" charset="UTF-8"></script>
         <script src="js/specific/tipodocumento/routes.js" charset="UTF-8"></script>
-        
+
         <script src="js/specific/pregunta/control.js" charset="UTF-8"></script>
         <script src="js/specific/pregunta/model.js" charset="UTF-8"></script>
         <script src="js/specific/pregunta/view.js" charset="UTF-8"></script>
@@ -296,12 +298,12 @@
         <script src="js/specific/respuesta/model.js" charset="UTF-8"></script>
         <script src="js/specific/respuesta/view.js" charset="UTF-8"></script>
         <script src="js/specific/respuesta/routes.js" charset="UTF-8"></script>
-        
+
         <script src="js/specific/documentobonito/control.js" charset="UTF-8"></script>
         <script src="js/specific/documentobonito/model.js" charset="UTF-8"></script>
         <script src="js/specific/documentobonito/view.js" charset="UTF-8"></script>
         <script src="js/specific/documentobonito/routes.js" charset="UTF-8"></script>
-        
+
         <script src="js/specific/tarea/control.js" charset="UTF-8"></script>
         <script src="js/specific/tarea/model.js" charset="UTF-8"></script>
         <script src="js/specific/tarea/view.js" charset="UTF-8"></script>
