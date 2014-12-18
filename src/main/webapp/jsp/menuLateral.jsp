@@ -19,6 +19,7 @@
         
 <%  UsuarioBeanGenSpImpl user = (UsuarioBeanGenSpImpl) request.getSession().getAttribute("usuarioBean");
     String level = user.getObj_tipousuario().getDescripcion(); 
+    int id_tipousuario = user.getId_tipousuario();
     int id_usuario = user.getId(); 
 %>
 
@@ -127,4 +128,5 @@
 
 <script type="text/javascript">
     myuser = <%=id_usuario%>;
+    mylevel = <%=id_tipousuario%>;
 </script>

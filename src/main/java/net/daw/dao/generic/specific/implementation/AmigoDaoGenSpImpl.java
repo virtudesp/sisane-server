@@ -23,11 +23,49 @@ import net.daw.bean.generic.specific.implementation.AmigoBeanGenSpImpl;
 import net.daw.dao.publicinterface.MetaDaoInterface;
 import net.daw.dao.publicinterface.TableDaoInterface;
 import net.daw.dao.publicinterface.ViewDaoInterface;
+import net.daw.helper.ExceptionBooster;
 
 public class AmigoDaoGenSpImpl extends TableDaoGenImpl<AmigoBeanGenSpImpl> implements TableDaoInterface<AmigoBeanGenSpImpl>, ViewDaoInterface<AmigoBeanGenSpImpl>, MetaDaoInterface {
 
-    public AmigoDaoGenSpImpl(String strFuente, Connection pooledConnection) throws Exception {
-        super(strFuente, "Amigo", pooledConnection);
+    public AmigoDaoGenSpImpl(String strObject, Connection pooledConnection) throws Exception {
+        super(strObject, strObject, pooledConnection);
     }
 
+
+
+    public AmigoBeanGenSpImpl agregarAmigo(AmigoBeanGenSpImpl oAmigoBean) throws Exception {
+        try {
+            oMysql.agregarAmigo(oAmigoBean.getId_usuario_1(), oAmigoBean.getId_usuario_2());
+
+        } catch (Exception ex) {
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":agregarAmigo ERROR: " + ex.getMessage()));
+        }
+        return oAmigoBean;
+    }
+
+    public AmigoBeanGenSpImpl removeAmigo(AmigoBeanGenSpImpl oAmigoBean) throws Exception {
+        try {
+            oMysql.removeAmigo(oAmigoBean.getId_usuario_1(), oAmigoBean.getId_usuario_2());
+
+        } catch (Exception ex) {
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":removeAmigo ERROR: " + ex.getMessage()));
+        }
+        return oAmigoBean;
+    }
+    
+    public Boolean existeAmigo(AmigoBeanGenSpImpl oAmigoBean) throws Exception {
+        int oAmigo = 0;
+        Boolean amigo = false;
+        try {
+            oAmigo = oMysql.existeAmigo(oAmigoBean.getId_usuario_1(), oAmigoBean.getId_usuario_2());
+            if (oAmigo > 0) {
+                amigo = true;
+            } else {
+                amigo = false;
+            }
+        } catch (Exception ex) {
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":existeAmigo ERROR: " + ex.getMessage()));
+        }
+        return amigo;
+    }
 }

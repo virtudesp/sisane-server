@@ -17,12 +17,97 @@
  */
 package net.daw.service.generic.specific.implementation;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import net.daw.service.generic.implementation.TableServiceGenImpl;
 import java.sql.Connection;
+import java.util.HashMap;
+import java.util.Map;
+import net.daw.bean.generic.specific.implementation.AmigoBeanGenSpImpl;
+import net.daw.dao.generic.specific.implementation.AmigoDaoGenSpImpl;
+import net.daw.helper.ExceptionBooster;
 
 public class AmigoServiceGenSpImpl extends TableServiceGenImpl {
 
     public AmigoServiceGenSpImpl(String strObject, String pojo, Connection con) {
-        super(strObject, pojo, con);
+        super(strObject, "amigo", con);
+    }
+    
+    public String agregarAmigo(int id_usuario_1, int id_usuario_2) throws Exception {
+        String resultado = null;
+        try {
+            oConnection.setAutoCommit(false);
+         
+            AmigoDaoGenSpImpl oAmigoDAO = new AmigoDaoGenSpImpl(strObjectName, oConnection); 
+            AmigoBeanGenSpImpl oAmigo = new AmigoBeanGenSpImpl();
+            oAmigo.setId_usuario_1(id_usuario_1);
+            oAmigo.setId_usuario_2(id_usuario_2);
+            
+            Boolean amigo = oAmigoDAO.existeAmigo(oAmigo);
+            
+            if (!amigo) {
+                Gson gson = new GsonBuilder().create();       
+                oAmigo = oAmigoDAO.set(oAmigo);
+                Map<String, String> data = new HashMap<>();
+                data.put("status", "200");
+                data.put("message", Integer.toString(oAmigo.getId()));
+                resultado = gson.toJson(data);
+            } else {
+                Gson gson = new GsonBuilder().create();     
+                Map<String, String> data = new HashMap<>();
+                data.put("status", "500");
+                data.put("message", "Error, este usuario ya es tu amigo.");
+                resultado = gson.toJson(data);
+            }
+            
+            oConnection.commit();
+        } catch (Exception ex) {
+            oConnection.rollback();
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":set ERROR: " + ex.getMessage()));
+        }
+        return resultado;
+    }
+    
+    public String removeAmigo(int id_usuario_1, int id_usuario_2) throws Exception {
+        String resultado = null;
+        try {
+            oConnection.setAutoCommit(false);
+            AmigoDaoGenSpImpl oAmigoDAO = new AmigoDaoGenSpImpl(strObjectName, oConnection);
+            AmigoBeanGenSpImpl oAmigo = new AmigoBeanGenSpImpl();
+            oAmigo.setId_usuario_1(id_usuario_1);
+            oAmigo.setId_usuario_2(id_usuario_2);
+            Gson gson = new GsonBuilder().create();       
+            
+            oAmigo = oAmigoDAO.removeAmigo(oAmigo);
+            Map<String, String> data = new HashMap<>();
+            data.put("status", "200");
+            data.put("message", Integer.toString(oAmigo.getId()));
+            resultado = gson.toJson(data);
+            oConnection.commit();
+        } catch (Exception ex) {
+            oConnection.rollback();
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":set ERROR: " + ex.getMessage()));
+        }
+        return resultado;
+    }
+
+    public String existeAmigo(int id_usuario_1, int id_usuario_2) throws Exception {
+        String resultado = null;
+        try {
+            oConnection.setAutoCommit(false);
+            AmigoDaoGenSpImpl oAmigoDAO = new AmigoDaoGenSpImpl(strObjectName, oConnection);
+            AmigoBeanGenSpImpl oAmigo = new AmigoBeanGenSpImpl();
+            oAmigo.setId_usuario_1(id_usuario_1);
+            oAmigo.setId_usuario_2(id_usuario_2);
+            
+            Boolean amigo = oAmigoDAO.existeAmigo(oAmigo);
+            resultado = "{\"data\":" + amigo + "}";
+            oConnection.commit();
+
+        } catch (Exception ex) {
+            oConnection.rollback();
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":existeAmigo ERROR: " + ex.getMessage()));
+        }
+        return resultado;
     }
 }

@@ -57,7 +57,7 @@ redsocialperfilControl.prototype.view = function (place, id, oModel, oView) {
         if(!amigo){
             $(place).append('<a class="btn btn-primary" id=\"addfriend\">Añadir amigo</a>');
         } else {
-            $(place).append('<a class="btn btn-primary" id=\"removefriend\">Eliminar amigo</a>');
+            $(place).append('<a class="btn btn-danger" id=\"removefriend\">Eliminar amigo</a>');
         }        
     }
     
