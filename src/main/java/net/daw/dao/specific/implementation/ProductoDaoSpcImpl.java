@@ -114,6 +114,8 @@ public class ProductoDaoSpcImpl implements ViewDaoInterface<ProductoBeanGenSpImp
                         ProveedorDaoSpcImpl oProveedorDAO = new ProveedorDaoSpcImpl("proveedor", oConnection);
                         oProveedor = oProveedorDAO.get(oProveedor, AppConfigurationHelper.getJsonDepth());
                         oProductoBean.setObj_proveedor(oProveedor);
+                        
+                        oProductoBean.setPath(oMysql.getOne(strTableName, "path", oProductoBean.getId()));
                     }
                 }
             } catch (Exception ex) {
@@ -136,6 +138,7 @@ public class ProductoDaoSpcImpl implements ViewDaoInterface<ProductoBeanGenSpImp
             oMysql.updateOne(oProductoBean.getId(), strTableName, "precio", oProductoBean.getPrecio().toString());
             oMysql.updateOne(oProductoBean.getId(), strTableName, "id_tipoproducto", oProductoBean.getId_tipoproducto().toString());
             oMysql.updateOne(oProductoBean.getId(), strTableName, "id_proveedor", oProductoBean.getId_tipoproducto().toString());
+            oMysql.updateOne(oProductoBean.getId(), strTableName, "path", oProductoBean.getPath());
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":set ERROR: " + ex.getMessage()));
         }

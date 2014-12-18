@@ -41,13 +41,14 @@ public class ProductoBeanGenSpImpl extends BeanGenImpl implements BeanInterface 
     private Integer id_proveedor = 0; //importante inicializar a 0 las claves ajenas
     @Expose(deserialize = false)
     private ProveedorBeanGenSpImpl obj_proveedor = null;
-    
+    @Expose
+    private String path;
 
     public ProductoBeanGenSpImpl() {
     }
 
     public ProductoBeanGenSpImpl(Integer id) {
-       super(id);
+        super(id);
     }
 
     public String getCodigo() {
@@ -118,12 +119,12 @@ public class ProductoBeanGenSpImpl extends BeanGenImpl implements BeanInterface 
         this.obj_proveedor = obj_proveedor;
     }
 
-    
+    public String getPath() {
+        return path;
+    }
 
-    
-    
-    
-    
-    
+    public void setPath(String path) {
+        this.path = path;
+    }
 
 }
