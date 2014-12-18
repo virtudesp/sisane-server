@@ -16,7 +16,7 @@
  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 --%>
 
-<form class="form-horizontal" role="form" action="#" id="tipotareaForm" name="formulario">
+<form class="form-horizontal" role="form" action="#" id="proyectoForm" name="formulario">
     <div class="form-group">
         <label class="col-sm-2 control-label" for="id">Id:</label>
         <div class="col-sm-2">
@@ -24,7 +24,7 @@
         </div>
     </div>
     <div class="form-group">
-        <label class="col-sm-2 control-label"  for="titulo">Descripcion:</label>
+        <label class="col-sm-2 control-label"  for="descripcion">Descripcion:</label>
         <div class="col-sm-6">
             <input type="text" id="descripcion" class="form-control"  name="descripcion" size="15" placeholder="descripcion de la tarea" />
         </div>
@@ -63,7 +63,7 @@
 
     $(document).ready(function() {
         //http://jqueryvalidation.org/documentation/
-        $('#tipotareaForm')
+        $('#proyectoForm')
                 .bootstrapValidator({
                     container: '#messages',
                     feedbackIcons: {
@@ -72,7 +72,7 @@
                         validating: 'glyphicon glyphicon-refresh'
                     },
                     fields: {
-                        valor: {
+                        descripcion: {
                             validators: {
                                 notEmpty: {
                                     message: 'Debe introducir un valor'
@@ -82,17 +82,7 @@
                                     message: 'El título debe tener como máximo 255 caracteres'
                                 }
                             }
-                        },
-                        id_pregunta: {
-                            validators: {
-                                notEmpty: {
-                                    message: 'Debe elegir una pregunta'
-                                },
-                                integer: {
-                                    message: 'El identificador de pregunta debe ser un entero'
-                                }
-                            }
-                        }
+                        }                    
                     }
                 })
     });       
