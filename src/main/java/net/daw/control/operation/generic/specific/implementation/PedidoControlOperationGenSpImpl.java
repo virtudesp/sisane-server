@@ -30,9 +30,14 @@ public class PedidoControlOperationGenSpImpl extends ControlOperationGenImpl {
             UsuarioBeanGenSpImpl oUsuario = new UsuarioBeanGenSpImpl();
             oUsuario=  (UsuarioBeanGenSpImpl) request.getSession().getAttribute("usuarioBean");           
             int id = oUsuario.getId();
+            int tipoUsuario = oUsuario.getId_tipousuario();
             
             oService.setPojo("Pedido");
-            oService.setSource("SELECT * FROM pedido WHERE id_usuario = "+id);
+            if (tipoUsuario == 1){
+                oService.setSource("SELECT * FROM pedido WHERE 1=1");
+            }else{               
+                oService.setSource("SELECT * FROM pedido WHERE id_usuario = "+id);
+            }
     }
 
 }

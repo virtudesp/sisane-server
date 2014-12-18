@@ -157,8 +157,8 @@ public class MysqlDataSpImpl implements DataInterface {
         if (strTabla.substring(0, 6).equalsIgnoreCase("SELECT")) {
             try {
                 strSQL = strTabla;
-                oPreparedStatement = connection.prepareStatement(strSQL);
                 strSQL+= " AND id=" + id;
+                oPreparedStatement = connection.prepareStatement(strSQL);
                 //oPreparedStatement.setInt(1, id);
                 oResultSet = oPreparedStatement.executeQuery();
                 if (oResultSet.next()) {
