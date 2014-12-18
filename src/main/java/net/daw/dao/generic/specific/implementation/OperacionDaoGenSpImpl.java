@@ -19,15 +19,41 @@ package net.daw.dao.generic.specific.implementation;
 
 import net.daw.dao.generic.implementation.TableDaoGenImpl;
 import java.sql.Connection;
+import java.sql.SQLException;
 import net.daw.bean.generic.specific.implementation.OperacionBeanGenSpImpl;
+import net.daw.bean.generic.specific.implementation.PermisoBeanGenSpImpl;
 import net.daw.dao.publicinterface.MetaDaoInterface;
 import net.daw.dao.publicinterface.TableDaoInterface;
 import net.daw.dao.publicinterface.ViewDaoInterface;
+import net.daw.helper.ExceptionBooster;
 
 public class OperacionDaoGenSpImpl extends TableDaoGenImpl<OperacionBeanGenSpImpl> implements TableDaoInterface<OperacionBeanGenSpImpl>, ViewDaoInterface<OperacionBeanGenSpImpl>, MetaDaoInterface {
 
-    public OperacionDaoGenSpImpl(String strObject, String pojo, Connection pooledConnection) throws Exception {
-        super(strObject, pojo, pooledConnection);
+    protected Connection oConnection = null;
+    protected String strObjectName = null;
+
+    public OperacionDaoGenSpImpl(String strObject, Connection pooledConnection) throws Exception {
+        super(strObject, "Operacion", pooledConnection);
+        strObjectName = strObject;
+        oConnection = pooledConnection;
+
+    }
+
+
+    public int getOperationId(OperacionBeanGenSpImpl oOperacionBean) throws SQLException {
+        int id = 0;
+        try {
+            oConnection.setAutoCommit(false);
+            String strIdObj = oOperacionBean.getId_objeto().toString();
+            String descripcion = oOperacionBean.getDescripcion().toString();
+            id = Integer.parseInt(oMysql.getIdByTwoValues(strObjectName, "id_objeto", strIdObj, "descripcion", descripcion));
+
+        } catch (Exception ex) {
+            oConnection.rollback();
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ": ERROR: " + ex.getMessage()));
+        }
+        return id;
+
     }
 
 

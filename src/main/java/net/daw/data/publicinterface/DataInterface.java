@@ -52,10 +52,4 @@ public interface DataInterface {
 
     public int getCount(String strTabla, ArrayList<FilterBeanHelper> alFilter) throws Exception;
 
-    public ArrayList<Integer> getPage(String strSQL, int intRegsPerPage, int intPagina) throws Exception;
-
-    public int getPages(String strSQL, int intRegsPerPage) throws Exception;
-
-    public int getCount(String strSQL) throws Exception;
-
 }

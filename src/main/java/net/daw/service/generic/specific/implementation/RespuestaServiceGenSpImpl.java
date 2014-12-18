@@ -17,8 +17,19 @@
  */
 package net.daw.service.generic.specific.implementation;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import net.daw.service.generic.implementation.TableServiceGenImpl;
 import java.sql.Connection;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import net.daw.bean.generic.specific.implementation.RespuestaBeanGenSpImpl;
+import net.daw.dao.generic.specific.implementation.RespuestaDaoGenSpImpl;
+import net.daw.helper.ExceptionBooster;
 
 public class RespuestaServiceGenSpImpl extends TableServiceGenImpl {
 
@@ -26,4 +37,43 @@ public class RespuestaServiceGenSpImpl extends TableServiceGenImpl {
         super(strObject, pojo, con);
     }
 
+    public String setForm(Integer id, String jason) throws Exception {
+        Map<Object, Object> nombreMap = new HashMap<Object, Object>();
+        ArrayList<String> preguntas = new ArrayList<String>();
+        String resultado = "";
+        try {
+            oConnection.setAutoCommit(false);
+            Gson gson = new GsonBuilder().setDateFormat("dd/MM/yyyy").create();
+
+            nombreMap = gson.fromJson(jason, nombreMap.getClass());
+            preguntas = (ArrayList) nombreMap.get("preguntas");
+
+            Map<String, String> data = new HashMap<>();
+            data.put("status", "200");
+
+            for (Integer i = 0; i < preguntas.size(); i++) {
+                String pregunta = "pregunta_" + preguntas.get(i);
+                Integer opcion = Integer.parseInt(nombreMap.get(pregunta).toString());
+
+                RespuestaBeanGenSpImpl oRespuesta = new RespuestaBeanGenSpImpl();
+                oRespuesta.setId(0);
+                oRespuesta.setId_usuario(id);
+                oRespuesta.setId_pregunta(Integer.parseInt(preguntas.get(i)));
+                oRespuesta.setId_opcion(opcion);
+
+                RespuestaDaoGenSpImpl oRespuestaDao = new RespuestaDaoGenSpImpl("Respuesta", oConnection);
+                oRespuestaDao.set(oRespuesta);
+
+                resultado += oRespuesta.getId() + ", ";
+            }
+            data.put("message", resultado);
+            resultado = gson.toJson(data);
+            oConnection.commit();
+
+        } catch (Exception ex) {
+            oConnection.rollback();
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":set ERROR: " + ex.getMessage()));
+        }
+        return resultado;
+    }
 }

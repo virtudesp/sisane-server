@@ -46,27 +46,29 @@ public abstract class TableDaoGenImpl<TIPO_OBJETO> extends ViewDaoGenImpl<TIPO_O
                 metodo_setId.invoke(oBean, oMysql.insertOne(strTabla));
             }
             for (Method method : tipo.getMethods()) {
-                if (!method.getName().substring(3).equalsIgnoreCase("id")) {
-                    if (method.getName().substring(0, 3).equalsIgnoreCase("get")) {
-                        if (!method.getName().substring(0, 6).equalsIgnoreCase("getObj")) {
-                            if (!method.getName().equals("getClass")) {
-                                final Class<?> classTipoDevueltoMetodoGet = method.getReturnType();
-                                String value = method.invoke(oBean).toString();
-                                switch (classTipoDevueltoMetodoGet.getName()) {
-                                    case "java.util.Date":
-                                        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-                                        value = format.format(method.invoke(oBean));
-                                        break;
-                                    case "java.lang.Boolean":
-                                        if ("true".equals(value)) {
-                                            value = "1";
-                                        } else {
-                                            value = "0";
-                                        }
-                                        break;
+                if (method.getName().length() >= 5) { //los campos como minimo han de tener dos caracteres + el get o el set = 5 caracteres
+                    if (!method.getName().substring(3).equalsIgnoreCase("id")) {
+                        if (method.getName().substring(0, 3).equalsIgnoreCase("get")) {
+                            if (!method.getName().substring(0, 6).equalsIgnoreCase("getObj")) {
+                                if (!method.getName().equals("getClass")) {
+                                    final Class<?> classTipoDevueltoMetodoGet = method.getReturnType();
+                                    String value = method.invoke(oBean).toString();
+                                    switch (classTipoDevueltoMetodoGet.getName()) {
+                                        case "java.util.Date":
+                                            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+                                            value = format.format(method.invoke(oBean));
+                                            break;
+                                        case "java.lang.Boolean":
+                                            if ("true".equals(value)) {
+                                                value = "1";
+                                            } else {
+                                                value = "0";
+                                            }
+                                            break;
+                                    }
+                                    String strCampo = method.getName().substring(3).toLowerCase(Locale.ENGLISH);
+                                    oMysql.updateOne((Integer) metodo_getId.invoke(oBean), strTabla, strCampo, value);
                                 }
-                                String strCampo = method.getName().substring(3).toLowerCase(Locale.ENGLISH);
-                                oMysql.updateOne((Integer) metodo_getId.invoke(oBean), strTabla, strCampo, value);
                             }
                         }
                     }
@@ -102,4 +104,3 @@ public abstract class TableDaoGenImpl<TIPO_OBJETO> extends ViewDaoGenImpl<TIPO_O
         return pages;
     }
 }
-

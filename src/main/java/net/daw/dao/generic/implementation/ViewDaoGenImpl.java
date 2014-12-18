@@ -43,11 +43,7 @@ public class ViewDaoGenImpl<TIPO_OBJETO> extends MetaDaoGenImpl<TIPO_OBJETO> imp
     public int getPages(int intRegsPerPag, ArrayList<FilterBeanHelper> hmFilter) throws Exception {
         int pages = 0;
         try {
-            if (strView.substring(0, 6).equalsIgnoreCase("SELECT")) {
-                pages = oMysql.getPages(strView, intRegsPerPag);
-            } else {
-                pages = oMysql.getPages(strView, intRegsPerPag, hmFilter);
-            }
+            pages = oMysql.getPages(strView, intRegsPerPag, hmFilter);
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPages ERROR: " + ex.getMessage()));
         }
@@ -58,11 +54,7 @@ public class ViewDaoGenImpl<TIPO_OBJETO> extends MetaDaoGenImpl<TIPO_OBJETO> imp
     public int getCount(ArrayList<FilterBeanHelper> hmFilter) throws Exception {
         int pages = 0;
         try {
-            if (strView.substring(0, 6).equalsIgnoreCase("SELECT")) {
-            pages = oMysql.getCount(strView);
-            } else {
-               pages = oMysql.getCount(strView, hmFilter);
-            }
+            pages = oMysql.getCount(strView, hmFilter);
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getCount ERROR: " + ex.getMessage()));
         }
@@ -76,11 +68,7 @@ public class ViewDaoGenImpl<TIPO_OBJETO> extends MetaDaoGenImpl<TIPO_OBJETO> imp
         ArrayList<Integer> arrId;
         ArrayList<TIPO_OBJETO> arrCliente = new ArrayList<>();
         try {
-            if (strView.substring(0, 6).equalsIgnoreCase("SELECT")) {
-                arrId = oMysql.getPage(strView, intRegsPerPag, intPage);
-            } else {
-                arrId = oMysql.getPage(strView, intRegsPerPag, intPage, hmFilter, hmOrder);
-            }
+            arrId = oMysql.getPage(strView, intRegsPerPag, intPage, hmFilter, hmOrder);
             Iterator<Integer> iterador = arrId.listIterator();
             while (iterador.hasNext()) {
                 Object oBean = Class.forName(tipo.getName()).newInstance();
@@ -126,46 +114,48 @@ public class ViewDaoGenImpl<TIPO_OBJETO> extends MetaDaoGenImpl<TIPO_OBJETO> imp
     private TIPO_OBJETO fillForeign(TIPO_OBJETO oBean, Class<TIPO_OBJETO> tipo) throws Exception {
         try {
             for (Method method : tipo.getMethods()) {
-                if (!method.getName().substring(3).equalsIgnoreCase("id")) {
-                    if (method.getName().substring(0, 3).equalsIgnoreCase("set")) {
-                        final Class<?> classTipoParamMetodoSet = method.getParameterTypes()[0];
-                        if (method.getName().length() >= 5) {
-                            if (method.getName().substring(3).toLowerCase(Locale.ENGLISH).substring(0, 4).equalsIgnoreCase("obj_")) {
-                                //prueba: method.getName().substring(method.getName().indexOf("_")+1,method.getName().lastIndexOf("_")))
-                                //ojo: en los pojos, los id_ deben preceder a los obj_ del mismo objeto siempre!
-                                //only two _ allowed in foreign keys
-                                String strAjena, strTabla = null;
+                if (method.getName().length() >= 5) { //los campos como minimo han de tener dos caracteres + el get o el set = 5 caracteres
+                    if (!method.getName().substring(3).equalsIgnoreCase("id")) {
+                        if (method.getName().substring(0, 3).equalsIgnoreCase("set")) {
+                            final Class<?> classTipoParamMetodoSet = method.getParameterTypes()[0];
+                            if (method.getName().length() >= 5) {
+                                if (method.getName().substring(3).toLowerCase(Locale.ENGLISH).substring(0, 4).equalsIgnoreCase("obj_")) {
+                                    //prueba: method.getName().substring(method.getName().indexOf("_")+1,method.getName().lastIndexOf("_")))
+                                    //ojo: en los pojos, los id_ deben preceder a los obj_ del mismo objeto siempre!
+                                    //only two _ allowed in foreign keys
+                                    String strAjena, strTabla = null;
 
-                                if (!(method.getName().indexOf("_") == (method.getName().lastIndexOf("_")))) {
-                                    strTabla = method.getName().substring(method.getName().indexOf("_") + 1, method.getName().lastIndexOf("_")).toLowerCase(Locale.ENGLISH);
-                                    strAjena = method.getName().substring(3).toLowerCase(Locale.ENGLISH).substring(4);
-                                } else {
-                                    strAjena = method.getName().substring(3).toLowerCase(Locale.ENGLISH).substring(4);
-                                    strTabla = strAjena;
-                                }
-                                Method metodo_getId_Ajena = tipo.getMethod("getId_" + strAjena);
-                                strTabla = strTabla.substring(0, 1).toUpperCase(Locale.ENGLISH) + strTabla.substring(1);
+                                    if (!(method.getName().indexOf("_") == (method.getName().lastIndexOf("_")))) {
+                                        strTabla = method.getName().substring(method.getName().indexOf("_") + 1, method.getName().lastIndexOf("_")).toLowerCase(Locale.ENGLISH);
+                                        strAjena = method.getName().substring(3).toLowerCase(Locale.ENGLISH).substring(4);
+                                    } else {
+                                        strAjena = method.getName().substring(3).toLowerCase(Locale.ENGLISH).substring(4);
+                                        strTabla = strAjena;
+                                    }
+                                    Method metodo_getId_Ajena = tipo.getMethod("getId_" + strAjena);
+                                    strTabla = strTabla.substring(0, 1).toUpperCase(Locale.ENGLISH) + strTabla.substring(1);
                                 //GenericDaoImplementation oAjenaDao = (GenericDaoImplementation) Class.forName("net.daw.dao." + strAjena + "Dao").newInstance();
 
-                                //rafa: aqui intentamos crear el DAO de la clave ajena generico-específico y si no espcífico
-                                //pte porque da error
-                                Constructor c;
-                                try {
-                                    c = Class.forName("net.daw.dao.generic.specific.implementation." + strTabla + "DaoGenSpImpl").getConstructor(String.class, String.class, Connection.class);
-                                } catch (ClassNotFoundException | NoSuchMethodException | SecurityException ex) {
-                                    //aqui da el error--> pte d eestudiar
-                                    c = Class.forName("net.daw.dao.specific.implementation." + strTabla + "DaoSpcImpl").getConstructor(String.class, String.class, Connection.class);
+                                    //rafa: aqui intentamos crear el DAO de la clave ajena generico-específico y si no espcífico
+                                    //pte porque da error
+                                    Constructor c;
+                                    try {
+                                        c = Class.forName("net.daw.dao.generic.specific.implementation." + strTabla + "DaoGenSpImpl").getConstructor(String.class, Connection.class);
+                                    } catch (ClassNotFoundException | NoSuchMethodException | SecurityException ex) {
+                                        //aqui da el error--> pte d eestudiar
+                                        c = Class.forName("net.daw.dao.specific.implementation." + strTabla + "DaoSpcImpl").getConstructor(String.class, Connection.class);
+                                    }
+                                    //------------------------------------
+
+                                    TableDaoGenImpl oAjenaDao = (TableDaoGenImpl) c.newInstance(strTabla, connection);
+
+                                    BeanGenImpl oAjenaBean = (BeanGenImpl) Class.forName("net.daw.bean.generic.specific.implementation." + strTabla + "BeanGenSpImpl").newInstance();
+                                    int intIdAjena = (Integer) metodo_getId_Ajena.invoke(oBean);
+                                    oAjenaBean.setId(intIdAjena);
+                                    oAjenaBean = (BeanGenImpl) oAjenaDao.get(oAjenaBean, AppConfigurationHelper.getJsonDepth());
+                                    //String strDescription = oAjenaDao.getDescription((Integer) metodo_getId_Ajena.invoke(oBean));
+                                    method.invoke(oBean, oAjenaBean);
                                 }
-                                //------------------------------------
-
-                                TableDaoGenImpl oAjenaDao = (TableDaoGenImpl) c.newInstance(strTabla, strTabla, connection);
-
-                                BeanGenImpl oAjenaBean = (BeanGenImpl) Class.forName("net.daw.bean.generic.specific.implementation." + strTabla + "BeanGenSpImpl").newInstance();
-                                int intIdAjena = (Integer) metodo_getId_Ajena.invoke(oBean);
-                                oAjenaBean.setId(intIdAjena);
-                                oAjenaBean = (BeanGenImpl) oAjenaDao.get(oAjenaBean, AppConfigurationHelper.getJsonDepth());
-                                //String strDescription = oAjenaDao.getDescription((Integer) metodo_getId_Ajena.invoke(oBean));
-                                method.invoke(oBean, oAjenaBean);
                             }
                         }
                     }
@@ -197,6 +187,7 @@ public class ViewDaoGenImpl<TIPO_OBJETO> extends MetaDaoGenImpl<TIPO_OBJETO> imp
                             }
                         }
 
+                        }
                     }
                 }
             }

@@ -53,7 +53,7 @@ public class EntregaServiceSpImpl implements TableServiceInterface, ViewServiceI
     public void setSource(String source) throws Exception {
         strObjectName = source;
     }
-    
+
     @Override
     public void setPojo(String pojo) throws Exception {
         strPojo = Character.toUpperCase(pojo.charAt(0)) + pojo.substring(1);
@@ -64,7 +64,7 @@ public class EntregaServiceSpImpl implements TableServiceInterface, ViewServiceI
         String resultado = null;
         try {
             oConnection.setAutoCommit(false);
-            EntregaDaoSpcImpl oEntregaDAO = new EntregaDaoSpcImpl(strObjectName, strPojo, oConnection);
+            EntregaDaoSpcImpl oEntregaDAO = new EntregaDaoSpcImpl(strObjectName, oConnection);
             EntregaBeanGenSpImpl oEntrega = new EntregaBeanGenSpImpl(id);
             Map<String, String> data = new HashMap<>();
             oEntregaDAO.remove(oEntrega);
@@ -85,7 +85,7 @@ public class EntregaServiceSpImpl implements TableServiceInterface, ViewServiceI
         String resultado = null;
         try {
             oConnection.setAutoCommit(false);
-            EntregaDaoSpcImpl oEntregaDAO = new EntregaDaoSpcImpl(strObjectName, strPojo, oConnection);
+            EntregaDaoSpcImpl oEntregaDAO = new EntregaDaoSpcImpl(strObjectName, oConnection);
             EntregaBeanGenSpImpl oEntrega = new EntregaBeanGenSpImpl();
             Gson gson = new GsonBuilder().setDateFormat("dd/MM/yyyy").create();
             jason = EncodingUtilHelper.decodeURIComponent(jason);
@@ -108,7 +108,7 @@ public class EntregaServiceSpImpl implements TableServiceInterface, ViewServiceI
         String data = null;
         try {
             oConnection.setAutoCommit(false);
-            EntregaDaoSpcImpl oEntregaDAO = new EntregaDaoSpcImpl(strObjectName, strPojo, oConnection);
+            EntregaDaoSpcImpl oEntregaDAO = new EntregaDaoSpcImpl(strObjectName, oConnection);
             EntregaBeanGenSpImpl oEntrega = new EntregaBeanGenSpImpl(id);
             oEntrega = oEntregaDAO.get(oEntrega, 1);
             GsonBuilder gsonBuilder = new GsonBuilder();
@@ -128,7 +128,7 @@ public class EntregaServiceSpImpl implements TableServiceInterface, ViewServiceI
         String data = null;
         try {
             oConnection.setAutoCommit(false);
-            EntregaDaoSpcImpl oEntregaDAO = new EntregaDaoSpcImpl(strObjectName, strPojo, oConnection);
+            EntregaDaoSpcImpl oEntregaDAO = new EntregaDaoSpcImpl(strObjectName, oConnection);
             List<EntregaBeanGenSpImpl> oEntregas = oEntregaDAO.getPage(intRegsPerPag, intPage, alFilter, hmOrder);
             GsonBuilder gsonBuilder = new GsonBuilder();
             gsonBuilder.setDateFormat("dd/MM/yyyy");
@@ -148,7 +148,7 @@ public class EntregaServiceSpImpl implements TableServiceInterface, ViewServiceI
         String data = null;
         try {
             oConnection.setAutoCommit(false);
-            EntregaDaoSpcImpl oEntregaDAO = new EntregaDaoSpcImpl(strObjectName, strPojo, oConnection);
+            EntregaDaoSpcImpl oEntregaDAO = new EntregaDaoSpcImpl(strObjectName, oConnection);
             int pages = oEntregaDAO.getPages(intRegsPerPag, alFilter);
             data = "{\"data\":\"" + Integer.toString(pages) + "\"}";
             oConnection.commit();
@@ -164,7 +164,7 @@ public class EntregaServiceSpImpl implements TableServiceInterface, ViewServiceI
         String data = null;
         try {
             oConnection.setAutoCommit(false);
-            EntregaDaoSpcImpl oEntregaDAO = new EntregaDaoSpcImpl(strObjectName, strPojo, oConnection);
+            EntregaDaoSpcImpl oEntregaDAO = new EntregaDaoSpcImpl(strObjectName, oConnection);
             int registers = oEntregaDAO.getCount(alFilter);
             data = "{\"data\":\"" + Integer.toString(registers) + "\"}";
             oConnection.commit();
@@ -182,7 +182,7 @@ public class EntregaServiceSpImpl implements TableServiceInterface, ViewServiceI
         ArrayList<String> alColumns = null;
         try {
             oConnection.setAutoCommit(false);
-            EntregaDaoSpcImpl oEntregaDAO = new EntregaDaoSpcImpl(strObjectName, strPojo, oConnection);
+            EntregaDaoSpcImpl oEntregaDAO = new EntregaDaoSpcImpl(strObjectName, oConnection);
             alColumns = oEntregaDAO.getPrettyColumnsNames();
             data = new Gson().toJson(alColumns);
             //data = "{\"data\":" + data + "}";
@@ -200,7 +200,7 @@ public class EntregaServiceSpImpl implements TableServiceInterface, ViewServiceI
         try {
             oConnection.setAutoCommit(false);
             ArrayList<String> alColumns = null;
-            EntregaDaoSpcImpl oEntregaDAO = new EntregaDaoSpcImpl(strObjectName, strPojo, oConnection);
+            EntregaDaoSpcImpl oEntregaDAO = new EntregaDaoSpcImpl(strObjectName, oConnection);
             alColumns = oEntregaDAO.getColumnsNames();
             data = new Gson().toJson(alColumns);
             //data = "{\"data\":" + data + "}";

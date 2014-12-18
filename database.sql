@@ -3,18 +3,12 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost:3306
--- Tiempo de generación: 24-11-2014 a las 04:08:31
+-- Tiempo de generación: 17-12-2014 a las 08:03:29
 -- Versión del servidor: 5.5.39
 -- Versión de PHP: 5.4.32
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
-
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
 
 --
 -- Base de datos: `ausiasyield2014`
@@ -343,6 +337,57 @@ INSERT INTO `cliente` (`id`, `nombre`, `ape1`, `ape2`, `email`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `comentario`
+--
+
+CREATE TABLE IF NOT EXISTS `comentario` (
+`id` int(11) NOT NULL COMMENT 'Num de comentario',
+  `contenido` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Contenido',
+  `id_usuario` int(11) DEFAULT NULL COMMENT 'Num de Usuario',
+  `id_propuesta` int(11) DEFAULT NULL COMMENT 'Num propuesta'
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=33 ;
+
+--
+-- Volcado de datos para la tabla `comentario`
+--
+
+INSERT INTO `comentario` (`id`, `contenido`, `id_usuario`, `id_propuesta`) VALUES
+(1, 'Claro, ¡así quedaria genial!', 5, 1),
+(2, 'No me gustan los margenes, me parece algo obsoleto.', 4, 1),
+(3, 'En el index no le veo utilidad', 12, 2),
+(4, 'Estaria bien usarlo en el index', 10, 2),
+(5, 'Yo me apunto, es una gran herramienta', 8, 3),
+(6, 'No le veo demasiada utilidad, pero tengo curiosidad', 9, 3),
+(7, 'Yo me apunto, es una gran herramienta', 1, 4),
+(8, 'No la conozco, pero siempre esta bien aprender cosas nuevas', 7, 4),
+(9, 'Me apunto!, almorzamos en el bar de siempre?', 3, 5),
+(10, 'Yo no podre acudir pero disfrutad por mi!', 6, 5),
+(11, 'Yo tnego vacaciones! donde nos vamos?', 5, 6),
+(12, 'Vamonos a esquiar que yo nunca he ido!', 10, 6),
+(13, 'Prueba Libros web, suele tener mucha información de todo tipo', 9, 7),
+(14, 'A mi me gusta mas mc Libre, échale un ojo a ver si te ayuda', 2, 7),
+(15, 'Java4Dummies está muy bien', 5, 8),
+(16, 'Yo use sobre todo internet, pero en la biblioteca municipal hay bastantes libros', 10, 8),
+(17, 'Prueba Libros web, suele tener mucha información de todo tipo', 8, 9),
+(18, 'A mi me gusta mas mc Libre, échale un ojo a ver si te ayuda', 12, 9),
+(19, 'Php4Dummies está muy bien', 1, 10),
+(20, 'Yo use sobre todo internet, pero en la biblioteca municipal hay bastantes libros sobre php', 5, 10),
+(21, 'Prueba Libros web, suele tener mucha información de todo tipo', 6, 11),
+(22, 'A mi me gusta mas mc Libre, échale un ojo a ver si te ayuda', 11, 11),
+(23, 'Django4Dummies está muy bien', 7, 12),
+(24, 'Yo use sobre todo internet, pero en la biblioteca municipal hay bastantes libros sobre Django', 12, 12),
+(25, 'Prueba Libros web, suele tener mucha información de todo tipo', 8, 13),
+(26, 'A mi me gusta mas mc Libre, échale un ojo a ver si te ayuda', 6, 13),
+(27, 'Visualbasic4Dummies está muy bien', 1, 14),
+(28, 'Yo use sobre todo internet, pero en la biblioteca municipal hay bastantes libros sobre Visualbasic', 5, 14),
+(29, 'Prueba Libros web, suele tener mucha información de todo tipo', 7, 15),
+(30, 'A mi me gusta mas mc Libre, échale un ojo a ver si te ayuda', 10, 15),
+(31, 'Ruby4Dummies está muy bien', 2, 16),
+(32, 'Yo use sobre todo internet, pero en la biblioteca municipal hay bastantes libros sobre Ruby', 7, 16);
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `compra`
 --
 
@@ -593,8 +638,8 @@ INSERT INTO `cuestionario` (`id`, `tipo`) VALUES
 CREATE TABLE IF NOT EXISTS `detalle_pedido` (
 `id` int(11) NOT NULL COMMENT 'Identificador',
   `cantidad` int(11) DEFAULT NULL COMMENT 'Cantidad',
-  `id_pedido` int(11) NOT NULL COMMENT 'Id Pedido',
-  `id_producto` int(11) NOT NULL COMMENT 'Id Producto'
+  `id_pedido` int(11) NOT NULL DEFAULT '0' COMMENT 'Id Pedido',
+  `id_producto` int(11) NOT NULL DEFAULT '0' COMMENT 'Id Producto'
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=47 ;
 
 --
@@ -785,6 +830,28 @@ INSERT INTO `estado` (`id`, `tipo`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `estadotarea`
+--
+
+CREATE TABLE IF NOT EXISTS `estadotarea` (
+`id` int(11) NOT NULL COMMENT 'ID',
+  `descripcion` varchar(255) NOT NULL COMMENT 'Descripción'
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=6 ;
+
+--
+-- Volcado de datos para la tabla `estadotarea`
+--
+
+INSERT INTO `estadotarea` (`id`, `descripcion`) VALUES
+(1, 'Diseño'),
+(2, 'Sin empezar'),
+(3, 'En proceso'),
+(4, 'Terminada'),
+(5, 'Validada');
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `impuesto`
 --
 
@@ -830,38 +897,38 @@ INSERT INTO `impuesto` (`id`, `nombre`, `valor`) VALUES
 
 CREATE TABLE IF NOT EXISTS `mensajeprivado` (
 `id` int(6) NOT NULL COMMENT 'ID',
+  `fechaenvio` datetime DEFAULT NULL COMMENT 'Fecha de envío',
   `id_usuario_1` int(6) DEFAULT NULL COMMENT 'ID Usuario envía',
   `id_usuario_2` int(6) DEFAULT NULL COMMENT 'ID Usuario recibe',
   `asunto` varchar(255) DEFAULT NULL COMMENT 'Asunto',
-  `mensaje` longtext COMMENT 'Mensaje',
-  `leido` tinyint(1) DEFAULT NULL COMMENT 'Leído'
+  `mensaje` longtext COMMENT 'Mensaje'
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=21 ;
 
 --
 -- Volcado de datos para la tabla `mensajeprivado`
 --
 
-INSERT INTO `mensajeprivado` (`id`, `id_usuario_1`, `id_usuario_2`, `asunto`, `mensaje`, `leido`) VALUES
-(1, 1, 29, 'Lorem ipsum dolor sit amet', 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.', 0),
-(2, 4, 23, 'Donec quam felis', 'Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo.', 1),
-(3, 2, 7, 'Nullam dictum felis eu pede mollis pretium', 'Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus.', 1),
-(4, 15, 16, 'Phasellus viverra nulla ut metus varius laoreet', 'Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus.', 0),
-(5, 8, 9, 'Maecenas tempus, tellus eget condimentum rhoncus', 'Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. Maecenas nec odio et ante tincidunt tempus.', 1),
-(6, 18, 12, 'Donec vitae sapien ut libero venenatis faucibus', 'Donec vitae sapien ut libero venenatis faucibus. Nullam quis ante. Etiam sit amet orci eget eros faucibus tincidunt. Duis leo. Sed fringilla mauris sit amet nibh. Donec sodales sagittis magna. Sed consequat, leo eget bibendum sodales, augue velit cursus nunc, ', 0),
-(7, 11, 6, 'Sed consequat, leo eget bibendum sodales', 'Sed consequat, leo eget bibendum sodales, augue velit cursus nunc, quis gravida magna mi a libero. Fusce vulputate eleifend sapien. Vestibulum purus quam, scelerisque ut, mollis sed, nonummy id, metus. Nullam accumsan lorem in dui. Cras ultricies mi eu turpis hendrerit fringilla.', 1),
-(8, 30, 29, 'Maecenas nec odio et ante tincidunt tempus', 'Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut libero venenatis faucibus. Nullam quis ante. Etiam sit amet orci eget eros faucibus tincidunt. Duis leo. Sed fringilla mauris sit amet nibh. Donec sodales sagittis magna.', 1),
-(9, 13, 14, 'Aenean imperdiet. Etiam ultricies nisi vel augue', 'Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem.', 0),
-(10, 6, 5, 'Vivamus elementum semper nisi', 'Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum.', 1),
-(11, 19, 24, 'Nulla consequat massa quis enim', 'Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus.', 1),
-(12, 24, 23, 'Vestibulum ante ipsum primis in faucibus', 'Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; In ac dui quis mi consectetuer lacinia. Nam pretium turpis et arcu. Duis arcu tortor, suscipit eget, imperdiet nec, imperdiet iaculis, ipsum. Sed aliquam ultrices mauris. Integer ante arcu, accumsan a, consectetuer eget, posuere ut, mauris. Praesent adipiscing. Phasellus ullamcorper ipsum rutrum nunc. Nunc nonummy metus. Vestibulum volutpat pretium libero. Cras id dui. Aenean ut ', 0),
-(13, 17, 15, 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit', 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem.', 0),
-(14, 15, 9, 'Quis autem vel eum iure reprehenderit', 'Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?', 1),
-(15, 3, 27, 'At vero eos et accusamus et iusto odio', 'At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio.', 1),
-(16, 25, 29, 'Nam libero tempore, cum soluta nobis est eligendi', 'Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae.', 1),
-(17, 6, 1, 'Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet', 'Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur?', 1),
-(18, 17, 11, 'Nemo enim ipsam voluptatem', 'Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.', 0),
-(19, 22, 21, 'Sed ut perspiciatis unde omnis iste natus error', 'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.', 1),
-(20, 28, 29, 'Y, viéndole don Quijote de aquella manera', 'Y, viéndole don Quijote de aquella manera, con muestras de tanta tristeza, le dijo: Sábete, Sancho, que no es un hombre más que otro si no hace más que otro.', 1);
+INSERT INTO `mensajeprivado` (`id`, `fechaenvio`, `id_usuario_1`, `id_usuario_2`, `asunto`, `mensaje`) VALUES
+(1, '2014-11-11 08:33:19', 1, 29, 'Lorem ipsum dolor sit amet', 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.'),
+(2, '2014-11-04 06:45:15', 4, 23, 'Donec quam felis', 'Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo.'),
+(3, '2014-11-10 07:57:13', 2, 7, 'Nullam dictum felis eu pede mollis pretium', 'Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus.'),
+(4, '2014-11-03 12:08:32', 15, 16, 'Phasellus viverra nulla ut metus varius laoreet', 'Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus.'),
+(5, '2014-11-14 08:38:25', 8, 9, 'Maecenas tempus, tellus eget condimentum rhoncus', 'Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. Maecenas nec odio et ante tincidunt tempus.'),
+(6, '2014-11-19 05:24:42', 18, 12, 'Donec vitae sapien ut libero venenatis faucibus', 'Donec vitae sapien ut libero venenatis faucibus. Nullam quis ante. Etiam sit amet orci eget eros faucibus tincidunt. Duis leo. Sed fringilla mauris sit amet nibh. Donec sodales sagittis magna. Sed consequat, leo eget bibendum sodales, augue velit cursus nunc, '),
+(7, '2014-11-16 12:32:12', 11, 6, 'Sed consequat, leo eget bibendum sodales', 'Sed consequat, leo eget bibendum sodales, augue velit cursus nunc, quis gravida magna mi a libero. Fusce vulputate eleifend sapien. Vestibulum purus quam, scelerisque ut, mollis sed, nonummy id, metus. Nullam accumsan lorem in dui. Cras ultricies mi eu turpis hendrerit fringilla.'),
+(8, '2014-11-12 12:27:30', 30, 29, 'Maecenas nec odio et ante tincidunt tempus', 'Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut libero venenatis faucibus. Nullam quis ante. Etiam sit amet orci eget eros faucibus tincidunt. Duis leo. Sed fringilla mauris sit amet nibh. Donec sodales sagittis magna.'),
+(9, '2014-11-19 04:24:21', 13, 14, 'Aenean imperdiet. Etiam ultricies nisi vel augue', 'Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem.'),
+(10, '2014-11-14 08:30:05', 6, 5, 'Vivamus elementum semper nisi', 'Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum.'),
+(11, '2014-11-01 06:35:22', 19, 24, 'Nulla consequat massa quis enim', 'Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus.'),
+(12, '2014-11-09 05:08:21', 24, 23, 'Vestibulum ante ipsum primis in faucibus', 'Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; In ac dui quis mi consectetuer lacinia. Nam pretium turpis et arcu. Duis arcu tortor, suscipit eget, imperdiet nec, imperdiet iaculis, ipsum. Sed aliquam ultrices mauris. Integer ante arcu, accumsan a, consectetuer eget, posuere ut, mauris. Praesent adipiscing. Phasellus ullamcorper ipsum rutrum nunc. Nunc nonummy metus. Vestibulum volutpat pretium libero. Cras id dui. Aenean ut '),
+(13, '2014-11-17 17:21:30', 17, 15, 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit', 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem.'),
+(14, '2014-11-15 00:22:28', 15, 9, 'Quis autem vel eum iure reprehenderit', 'Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?'),
+(15, '2014-11-12 23:17:59', 3, 27, 'At vero eos et accusamus et iusto odio', 'At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio.'),
+(16, '2014-11-02 21:13:40', 25, 29, 'Nam libero tempore, cum soluta nobis est eligendi', 'Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae.'),
+(17, '2014-11-13 10:39:10', 6, 1, 'Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet', 'Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur?'),
+(18, '2014-11-14 15:13:34', 17, 11, 'Buenas tardes', 'Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.'),
+(19, '2014-11-17 08:36:28', 22, 21, 'Sed ut perspiciatis unde omnis iste natus error', 'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.'),
+(20, '2014-11-09 09:43:32', 28, 29, 'Y, viéndole don Quijote de aquella manera', 'Y, viéndole don Quijote de aquella manera, con muestras de tanta tristeza, le dijo: Sábete, Sancho, que no es un hombre más que otro si no hace más que otro.');
 
 -- --------------------------------------------------------
 
@@ -939,6 +1006,63 @@ INSERT INTO `metadocumentos` (`id`, `orden`, `id_documento`, `id_metadocumento`)
 (18, 7, 18, 18),
 (19, 8, 19, 19),
 (20, 7, 20, 20);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `objeto`
+--
+
+CREATE TABLE IF NOT EXISTS `objeto` (
+  `id` int(6) NOT NULL COMMENT 'ID Objeto',
+  `descripcion` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Descripción'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `objeto`
+--
+
+INSERT INTO `objeto` (`id`, `descripcion`) VALUES
+(1, 'actividad'),
+(2, 'amigo'),
+(3, 'cliente'),
+(4, 'comentario'),
+(5, 'compra'),
+(6, 'cuestionario'),
+(7, 'detalle_pedido'),
+(8, 'documento'),
+(9, 'entrega'),
+(10, 'estado'),
+(11, 'impuesto'),
+(12, 'mensajeprivado'),
+(13, 'metadocumento'),
+(14, 'metadocumentos'),
+(15, 'objeto'),
+(16, 'opcion'),
+(17, 'operacion'),
+(18, 'ordenador'),
+(19, 'pedido'),
+(20, 'permiso'),
+(21, 'post'),
+(22, 'pregunta'),
+(23, 'producto'),
+(24, 'propuesta'),
+(25, 'proveedor'),
+(26, 'publicacion'),
+(27, 'respuesta'),
+(28, 'tema'),
+(29, 'tipodocumento'),
+(30, 'tipooperacion'),
+(31, 'tipoproducto'),
+(32, 'tipopropuesta'),
+(33, 'tipotema'),
+(34, 'tipousuario'),
+(35, 'usuario'),
+(36, 'tarea'),
+(37, 'tipotarea'),
+(38, 'estadotarea'),
+(39, 'proyecto'),
+(40, 'documentobonito');
 
 -- --------------------------------------------------------
 
@@ -1217,6 +1341,467 @@ INSERT INTO `opcion` (`id`, `valor`, `id_pregunta`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `operacion`
+--
+
+CREATE TABLE IF NOT EXISTS `operacion` (
+`id` int(6) NOT NULL COMMENT 'ID Operación',
+  `descripcion` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Descripción',
+  `id_objeto` int(6) DEFAULT NULL COMMENT 'ID Objeto',
+  `id_tipooperacion` int(6) DEFAULT NULL COMMENT 'ID Tipo Operación'
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=454 ;
+
+--
+-- Volcado de datos para la tabla `operacion`
+--
+
+INSERT INTO `operacion` (`id`, `descripcion`, `id_objeto`, `id_tipooperacion`) VALUES
+(1, 'get', 1, 1),
+(2, 'getaggregateviewone', 1, 1),
+(3, 'getprettycolumns', 1, 1),
+(4, 'getcolumns', 1, 1),
+(5, 'getpage', 1, 1),
+(6, 'getpages', 1, 1),
+(7, 'getregisters', 1, 1),
+(8, 'getaggregateviewsome', 1, 1),
+(9, 'remove', 1, 2),
+(10, 'set', 1, 2),
+(11, 'updateOne', 1, 2),
+(23, 'get', 2, 1),
+(24, 'getaggregateviewone', 2, 1),
+(25, 'getprettycolumns', 2, 1),
+(26, 'getcolumns', 2, 1),
+(27, 'getpage', 2, 1),
+(28, 'getpages', 2, 1),
+(29, 'getregisters', 2, 1),
+(30, 'getaggregateviewsome', 2, 1),
+(31, 'remove', 2, 2),
+(32, 'set', 2, 2),
+(33, 'updateOne', 2, 2),
+(34, 'get', 3, 1),
+(35, 'getaggregateviewone', 3, 1),
+(36, 'getprettycolumns', 3, 1),
+(37, 'getcolumns', 3, 1),
+(38, 'getpage', 3, 1),
+(39, 'getpages', 3, 1),
+(40, 'getregisters', 3, 1),
+(41, 'getaggregateviewsome', 3, 1),
+(42, 'remove', 3, 2),
+(43, 'set', 3, 2),
+(44, 'updateOne', 3, 2),
+(45, 'get', 4, 1),
+(46, 'getaggregateviewone', 4, 1),
+(47, 'getprettycolumns', 4, 1),
+(48, 'getcolumns', 4, 1),
+(49, 'getpage', 4, 1),
+(50, 'getpages', 4, 1),
+(51, 'getregisters', 4, 1),
+(52, 'getaggregateviewsome', 4, 1),
+(53, 'remove', 4, 2),
+(54, 'set', 4, 2),
+(55, 'updateOne', 4, 2),
+(56, 'get', 5, 1),
+(57, 'getaggregateviewone', 5, 1),
+(58, 'getprettycolumns', 5, 1),
+(59, 'getcolumns', 5, 1),
+(60, 'getpage', 5, 1),
+(61, 'getpages', 5, 1),
+(62, 'getregisters', 5, 1),
+(63, 'getaggregateviewsome', 5, 1),
+(64, 'remove', 5, 2),
+(65, 'set', 5, 2),
+(66, 'updateOne', 5, 2),
+(67, 'get', 6, 1),
+(68, 'getaggregateviewone', 6, 1),
+(69, 'getprettycolumns', 6, 1),
+(70, 'getcolumns', 6, 1),
+(71, 'getpage', 6, 1),
+(72, 'getpages', 6, 1),
+(73, 'getregisters', 6, 1),
+(74, 'getaggregateviewsome', 6, 1),
+(75, 'remove', 6, 2),
+(76, 'set', 6, 2),
+(77, 'updateOne', 6, 2),
+(78, 'get', 7, 1),
+(79, 'getaggregateviewone', 7, 1),
+(80, 'getprettycolumns', 7, 1),
+(81, 'getcolumns', 7, 1),
+(82, 'getpage', 7, 1),
+(83, 'getpages', 7, 1),
+(84, 'getregisters', 7, 1),
+(85, 'getaggregateviewsome', 7, 1),
+(86, 'remove', 7, 2),
+(87, 'set', 7, 2),
+(88, 'updateOne', 7, 2),
+(89, 'get', 8, 1),
+(90, 'getaggregateviewone', 8, 1),
+(91, 'getprettycolumns', 8, 1),
+(92, 'getcolumns', 8, 1),
+(93, 'getpage', 8, 1),
+(94, 'getpages', 8, 1),
+(95, 'getregisters', 8, 1),
+(96, 'getaggregateviewsome', 8, 1),
+(97, 'remove', 8, 2),
+(98, 'set', 8, 2),
+(99, 'updateOne', 8, 2),
+(100, 'get', 9, 1),
+(101, 'getaggregateviewone', 9, 1),
+(102, 'getprettycolumns', 9, 1),
+(103, 'getcolumns', 9, 1),
+(104, 'getpage', 9, 1),
+(105, 'getpages', 9, 1),
+(106, 'getregisters', 9, 1),
+(107, 'getaggregateviewsome', 9, 1),
+(108, 'remove', 9, 2),
+(109, 'set', 9, 2),
+(110, 'updateOne', 9, 2),
+(111, 'get', 10, 1),
+(112, 'getaggregateviewone', 10, 1),
+(113, 'getprettycolumns', 10, 1),
+(114, 'getcolumns', 10, 1),
+(115, 'getpage', 10, 1),
+(116, 'getpages', 10, 1),
+(117, 'getregisters', 10, 1),
+(118, 'getaggregateviewsome', 10, 1),
+(119, 'remove', 10, 2),
+(120, 'set', 10, 2),
+(121, 'updateOne', 10, 2),
+(122, 'get', 11, 1),
+(123, 'getaggregateviewone', 11, 1),
+(124, 'getprettycolumns', 11, 1),
+(125, 'getcolumns', 11, 1),
+(126, 'getpage', 11, 1),
+(127, 'getpages', 11, 1),
+(128, 'getregisters', 11, 1),
+(129, 'getaggregateviewsome', 11, 1),
+(130, 'remove', 11, 2),
+(131, 'set', 11, 2),
+(132, 'updateOne', 11, 2),
+(133, 'get', 12, 1),
+(134, 'getaggregateviewone', 12, 1),
+(135, 'getprettycolumns', 12, 1),
+(136, 'getcolumns', 12, 1),
+(137, 'getpage', 12, 1),
+(138, 'getpages', 12, 1),
+(139, 'getregisters', 12, 1),
+(140, 'getaggregateviewsome', 12, 1),
+(141, 'remove', 12, 2),
+(142, 'set', 12, 2),
+(143, 'updateOne', 12, 2),
+(144, 'get', 13, 1),
+(145, 'getaggregateviewone', 13, 1),
+(146, 'getprettycolumns', 13, 1),
+(147, 'getcolumns', 13, 1),
+(148, 'getpage', 13, 1),
+(149, 'getpages', 13, 1),
+(150, 'getregisters', 13, 1),
+(151, 'getaggregateviewsome', 13, 1),
+(152, 'remove', 13, 2),
+(153, 'set', 13, 2),
+(154, 'updateOne', 13, 2),
+(155, 'get', 14, 1),
+(156, 'getaggregateviewone', 14, 1),
+(157, 'getprettycolumns', 14, 1),
+(158, 'getcolumns', 14, 1),
+(159, 'getpage', 14, 1),
+(160, 'getpages', 14, 1),
+(161, 'getregisters', 14, 1),
+(162, 'getaggregateviewsome', 14, 1),
+(163, 'remove', 14, 2),
+(164, 'set', 14, 2),
+(165, 'updateOne', 14, 2),
+(166, 'get', 15, 1),
+(167, 'getaggregateviewone', 15, 1),
+(168, 'getprettycolumns', 15, 1),
+(169, 'getcolumns', 15, 1),
+(170, 'getpage', 15, 1),
+(171, 'getpages', 15, 1),
+(172, 'getregisters', 15, 1),
+(173, 'getaggregateviewsome', 15, 1),
+(174, 'remove', 15, 2),
+(175, 'set', 15, 2),
+(176, 'updateOne', 15, 2),
+(177, 'get', 16, 1),
+(178, 'getaggregateviewone', 16, 1),
+(179, 'getprettycolumns', 16, 1),
+(180, 'getcolumns', 16, 1),
+(181, 'getpage', 16, 1),
+(182, 'getpages', 16, 1),
+(183, 'getregisters', 16, 1),
+(184, 'getaggregateviewsome', 16, 1),
+(185, 'remove', 16, 2),
+(186, 'set', 16, 2),
+(187, 'updateOne', 16, 2),
+(188, 'get', 17, 1),
+(189, 'getaggregateviewone', 17, 1),
+(190, 'getprettycolumns', 17, 1),
+(191, 'getcolumns', 17, 1),
+(192, 'getpage', 17, 1),
+(193, 'getpages', 17, 1),
+(194, 'getregisters', 17, 1),
+(195, 'getaggregateviewsome', 17, 1),
+(196, 'remove', 17, 2),
+(197, 'set', 17, 2),
+(198, 'updateOne', 17, 2),
+(199, 'get', 18, 1),
+(200, 'getaggregateviewone', 18, 1),
+(201, 'getprettycolumns', 18, 1),
+(202, 'getcolumns', 18, 1),
+(203, 'getpage', 18, 1),
+(204, 'getpages', 18, 1),
+(205, 'getregisters', 18, 1),
+(206, 'getaggregateviewsome', 18, 1),
+(207, 'remove', 18, 2),
+(208, 'set', 18, 2),
+(209, 'updateOne', 18, 2),
+(210, 'get', 19, 1),
+(211, 'getaggregateviewone', 19, 1),
+(212, 'getprettycolumns', 19, 1),
+(213, 'getcolumns', 19, 1),
+(214, 'getpage', 19, 1),
+(215, 'getpages', 19, 1),
+(216, 'getregisters', 19, 1),
+(217, 'getaggregateviewsome', 19, 1),
+(218, 'remove', 19, 2),
+(219, 'set', 19, 2),
+(220, 'updateOne', 19, 2),
+(221, 'get', 20, 1),
+(222, 'getaggregateviewone', 20, 1),
+(223, 'getprettycolumns', 20, 1),
+(224, 'getcolumns', 20, 1),
+(225, 'getpage', 20, 1),
+(226, 'getpages', 20, 1),
+(227, 'getregisters', 20, 1),
+(228, 'getaggregateviewsome', 20, 1),
+(229, 'remove', 20, 2),
+(230, 'set', 20, 2),
+(231, 'updateOne', 20, 2),
+(232, 'get', 21, 1),
+(233, 'getaggregateviewone', 21, 1),
+(234, 'getprettycolumns', 21, 1),
+(235, 'getcolumns', 21, 1),
+(236, 'getpage', 21, 1),
+(237, 'getpages', 21, 1),
+(238, 'getregisters', 21, 1),
+(239, 'getaggregateviewsome', 21, 1),
+(240, 'remove', 21, 2),
+(241, 'set', 21, 2),
+(242, 'updateOne', 21, 2),
+(243, 'get', 22, 1),
+(244, 'getaggregateviewone', 22, 1),
+(245, 'getprettycolumns', 22, 1),
+(246, 'getcolumns', 22, 1),
+(247, 'getpage', 22, 1),
+(248, 'getpages', 22, 1),
+(249, 'getregisters', 22, 1),
+(250, 'getaggregateviewsome', 22, 1),
+(251, 'remove', 22, 2),
+(252, 'set', 22, 2),
+(253, 'updateOne', 22, 2),
+(254, 'get', 23, 1),
+(255, 'getaggregateviewone', 23, 1),
+(256, 'getprettycolumns', 23, 1),
+(257, 'getcolumns', 23, 1),
+(258, 'getpage', 23, 1),
+(259, 'getpages', 23, 1),
+(260, 'getregisters', 23, 1),
+(261, 'getaggregateviewsome', 23, 1),
+(262, 'remove', 23, 2),
+(263, 'set', 23, 2),
+(264, 'updateOne', 23, 2),
+(265, 'get', 24, 1),
+(266, 'getaggregateviewone', 24, 1),
+(267, 'getprettycolumns', 24, 1),
+(268, 'getcolumns', 24, 1),
+(269, 'getpage', 24, 1),
+(270, 'getpages', 24, 1),
+(271, 'getregisters', 24, 1),
+(272, 'getaggregateviewsome', 24, 1),
+(273, 'remove', 24, 2),
+(274, 'set', 24, 2),
+(275, 'updateOne', 24, 2),
+(276, 'get', 25, 1),
+(277, 'getaggregateviewone', 25, 1),
+(278, 'getprettycolumns', 25, 1),
+(279, 'getcolumns', 25, 1),
+(280, 'getpage', 25, 1),
+(281, 'getpages', 25, 1),
+(282, 'getregisters', 25, 1),
+(283, 'getaggregateviewsome', 25, 1),
+(284, 'remove', 25, 2),
+(285, 'set', 25, 2),
+(286, 'updateOne', 25, 2),
+(287, 'get', 26, 1),
+(288, 'getaggregateviewone', 26, 1),
+(289, 'getprettycolumns', 26, 1),
+(290, 'getcolumns', 26, 1),
+(291, 'getpage', 26, 1),
+(292, 'getpages', 26, 1),
+(293, 'getregisters', 26, 1),
+(294, 'getaggregateviewsome', 26, 1),
+(295, 'remove', 26, 2),
+(296, 'set', 26, 2),
+(297, 'updateOne', 26, 2),
+(298, 'get', 27, 1),
+(299, 'getaggregateviewone', 27, 1),
+(300, 'getprettycolumns', 27, 1),
+(301, 'getcolumns', 27, 1),
+(302, 'getpage', 27, 1),
+(303, 'getpages', 27, 1),
+(304, 'getregisters', 27, 1),
+(305, 'getaggregateviewsome', 27, 1),
+(306, 'remove', 27, 2),
+(307, 'set', 27, 2),
+(308, 'updateOne', 27, 2),
+(309, 'get', 28, 1),
+(310, 'getaggregateviewone', 28, 1),
+(311, 'getprettycolumns', 28, 1),
+(312, 'getcolumns', 28, 1),
+(313, 'getpage', 28, 1),
+(314, 'getpages', 28, 1),
+(315, 'getregisters', 28, 1),
+(316, 'getaggregateviewsome', 28, 1),
+(317, 'remove', 28, 2),
+(318, 'set', 28, 2),
+(319, 'updateOne', 28, 2),
+(320, 'get', 29, 1),
+(321, 'getaggregateviewone', 29, 1),
+(322, 'getprettycolumns', 29, 1),
+(323, 'getcolumns', 29, 1),
+(324, 'getpage', 29, 1),
+(325, 'getpages', 29, 1),
+(326, 'getregisters', 29, 1),
+(327, 'getaggregateviewsome', 29, 1),
+(328, 'remove', 29, 2),
+(329, 'set', 29, 2),
+(330, 'updateOne', 29, 2),
+(331, 'get', 30, 1),
+(332, 'getaggregateviewone', 30, 1),
+(333, 'getprettycolumns', 30, 1),
+(334, 'getcolumns', 30, 1),
+(335, 'getpage', 30, 1),
+(336, 'getpages', 30, 1),
+(337, 'getregisters', 30, 1),
+(338, 'getaggregateviewsome', 30, 1),
+(339, 'remove', 30, 2),
+(340, 'set', 30, 2),
+(341, 'updateOne', 30, 2),
+(342, 'get', 31, 1),
+(343, 'getaggregateviewone', 31, 1),
+(344, 'getprettycolumns', 31, 1),
+(345, 'getcolumns', 31, 1),
+(346, 'getpage', 31, 1),
+(347, 'getpages', 31, 1),
+(348, 'getregisters', 31, 1),
+(349, 'getaggregateviewsome', 31, 1),
+(350, 'remove', 31, 2),
+(351, 'set', 31, 2),
+(352, 'updateOne', 31, 2),
+(353, 'get', 32, 1),
+(354, 'getaggregateviewone', 32, 1),
+(355, 'getprettycolumns', 32, 1),
+(356, 'getcolumns', 32, 1),
+(357, 'getpage', 32, 1),
+(358, 'getpages', 32, 1),
+(359, 'getregisters', 32, 1),
+(360, 'getaggregateviewsome', 32, 1),
+(361, 'remove', 32, 2),
+(362, 'set', 32, 2),
+(363, 'updateOne', 32, 2),
+(364, 'get', 33, 1),
+(365, 'getaggregateviewone', 33, 1),
+(366, 'getprettycolumns', 33, 1),
+(367, 'getcolumns', 33, 1),
+(368, 'getpage', 33, 1),
+(369, 'getpages', 33, 1),
+(370, 'getregisters', 33, 1),
+(371, 'getaggregateviewsome', 33, 1),
+(372, 'remove', 33, 2),
+(373, 'set', 33, 2),
+(374, 'updateOne', 33, 2),
+(375, 'get', 34, 1),
+(376, 'getaggregateviewone', 34, 1),
+(377, 'getprettycolumns', 34, 1),
+(378, 'getcolumns', 34, 1),
+(379, 'getpage', 34, 1),
+(380, 'getpages', 34, 1),
+(381, 'getregisters', 34, 1),
+(382, 'getaggregateviewsome', 34, 1),
+(383, 'remove', 34, 2),
+(384, 'set', 34, 2),
+(385, 'updateOne', 34, 2),
+(386, 'get', 35, 1),
+(387, 'getaggregateviewone', 35, 1),
+(388, 'getprettycolumns', 35, 1),
+(389, 'getcolumns', 35, 1),
+(390, 'getpage', 35, 1),
+(391, 'getpages', 35, 1),
+(392, 'getregisters', 35, 1),
+(393, 'getaggregateviewsome', 35, 1),
+(394, 'remove', 35, 2),
+(395, 'set', 35, 2),
+(396, 'updateOne', 35, 2),
+(397, 'get', 36, 1),
+(398, 'getaggregateviewone', 36, 1),
+(399, 'getprettycolumns', 36, 1),
+(400, 'getcolumns', 36, 1),
+(401, 'getpage', 36, 1),
+(402, 'getpages', 36, 1),
+(403, 'getregisters', 36, 1),
+(404, 'getaggregateviewsome', 36, 1),
+(405, 'remove', 36, 2),
+(406, 'set', 36, 2),
+(407, 'updateOne', 36, 2),
+(408, 'get', 37, 1),
+(409, 'getaggregateviewone', 37, 1),
+(410, 'getprettycolumns', 37, 1),
+(411, 'getcolumns', 37, 1),
+(412, 'getpage', 37, 1),
+(413, 'getpages', 37, 1),
+(414, 'getregisters', 37, 1),
+(415, 'getaggregateviewsome', 37, 1),
+(416, 'remove', 37, 2),
+(417, 'set', 37, 2),
+(418, 'updateOne', 37, 2),
+(419, 'get', 38, 1),
+(420, 'getaggregateviewone', 38, 1),
+(421, 'getprettycolumns', 38, 1),
+(422, 'getcolumns', 38, 1),
+(423, 'getpage', 38, 1),
+(424, 'getpages', 38, 1),
+(425, 'getregisters', 38, 1),
+(426, 'getaggregateviewsome', 38, 1),
+(427, 'remove', 38, 2),
+(428, 'set', 38, 2),
+(429, 'updateOne', 38, 2),
+(430, 'get', 39, 1),
+(431, 'getaggregateviewone', 39, 1),
+(432, 'getprettycolumns', 39, 1),
+(433, 'getcolumns', 39, 1),
+(434, 'getpage', 39, 1),
+(435, 'getpages', 39, 1),
+(436, 'getregisters', 39, 1),
+(437, 'getaggregateviewsome', 39, 1),
+(438, 'remove', 39, 2),
+(439, 'set', 39, 2),
+(440, 'updateOne', 39, 2),
+(441, 'get', 40, 1),
+(442, 'getaggregateviewone', 40, 1),
+(443, 'getprettycolumns', 40, 1),
+(444, 'getcolumns', 40, 1),
+(445, 'getpage', 40, 1),
+(446, 'getpages', 40, 1),
+(447, 'getregisters', 40, 1),
+(448, 'getaggregateviewsome', 40, 1),
+(449, 'remove', 40, 2),
+(450, 'set', 40, 2),
+(451, 'updateOne', 40, 2),
+(452, 'getAllPreguntas', 6, 1),
+(453, 'setForm', 27, 2);
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `ordenador`
 --
 
@@ -1244,7 +1829,7 @@ CREATE TABLE IF NOT EXISTS `pedido` (
 `id` int(11) NOT NULL COMMENT 'Identificador',
   `fecha` date DEFAULT NULL COMMENT 'Fecha Pedido',
   `observaciones` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Observaciones',
-  `id_usuario` int(11) NOT NULL COMMENT 'Id Usuario'
+  `id_usuario` int(11) NOT NULL DEFAULT '0' COMMENT 'Id Usuario'
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=24 ;
 
 --
@@ -1279,6 +1864,31 @@ INSERT INTO `pedido` (`id`, `fecha`, `observaciones`, `id_usuario`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `permiso`
+--
+
+CREATE TABLE IF NOT EXISTS `permiso` (
+`id` int(6) NOT NULL COMMENT 'ID Permiso',
+  `id_tipousuario` int(6) DEFAULT NULL COMMENT 'ID Tipo de usuario',
+  `id_tipooperacion` int(6) DEFAULT NULL COMMENT 'ID Tipo Operación',
+  `permitido` tinyint(1) DEFAULT NULL COMMENT 'Permitido'
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=7 ;
+
+--
+-- Volcado de datos para la tabla `permiso`
+--
+
+INSERT INTO `permiso` (`id`, `id_tipousuario`, `id_tipooperacion`, `permitido`) VALUES
+(1, 1, 1, 1),
+(2, 1, 2, 1),
+(3, 2, 1, 1),
+(4, 2, 2, 1),
+(5, 3, 1, 1),
+(6, 2, 2, 0);
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `post`
 --
 
@@ -1288,51 +1898,50 @@ CREATE TABLE IF NOT EXISTS `post` (
   `mensaje` longtext COMMENT 'Mensaje',
   `fechacreacion` datetime DEFAULT NULL COMMENT 'Fecha Creación',
   `fechamodificacion` datetime DEFAULT NULL COMMENT 'Fecha Modificación',
-  `primermensaje` tinyint(1) DEFAULT '0' COMMENT 'Primer Mensaje',
-  `id_tema` int(6) NOT NULL COMMENT 'ID Tema',
-  `id_usuario` int(6) NOT NULL COMMENT 'ID Usuario'
+  `id_tema` int(6) DEFAULT NULL COMMENT 'ID Tema',
+  `id_usuario` int(6) DEFAULT NULL COMMENT 'ID Usuario'
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=36 ;
 
 --
 -- Volcado de datos para la tabla `post`
 --
 
-INSERT INTO `post` (`id`, `titulo`, `mensaje`, `fechacreacion`, `fechamodificacion`, `primermensaje`, `id_tema`, `id_usuario`) VALUES
-(1, 'Peter Lim, ¿Estafa o no?', 'Qué os parece el nuevo dueño del Valencia CF, ¿os parece un timador?\r\n\r\nSé que a mucha gente no le causa mucha confianza.', '2014-10-30 09:43:02', '2014-10-30 09:45:02', 1, 1, 2),
-(2, 'Peter Lim, ¿Estafa o no?', 'Es campechano como el Juanca', '2014-10-30 09:43:55', '2014-10-30 09:43:55', 0, 1, 15),
-(3, 'Ranking películas de terror', 'Aquí tenéis mi ranking de películas de terror:\r\n\r\n1.- El grito\r\n2.- Scream\r\n3.- La señal', '2014-10-20 12:35:00', '2014-10-20 12:35:00', 1, 2, 10),
-(4, 'Ranking películas de terror', 'No estoy de acuerdo, Scream es una película del montón', '2014-10-20 13:30:05', '2014-10-20 13:30:05', 0, 2, 15),
-(5, '¿Que os parece este ordenador?', 'No sé si comprarme el Acer R34765', '2014-10-23 14:20:10', '2014-10-23 14:20:10', 1, 3, 14),
-(6, '¿Que os parece este ordenador?', 'Si pones las especificaciones mejor', '2014-10-23 14:25:10', '2014-10-23 14:25:10', 0, 3, 2),
-(7, '¿Xbox One, PC o Ps4?', '¿Cuál os parece la mejor plataforma?', '2014-10-30 13:17:50', '2014-10-30 13:17:50', 1, 4, 16),
-(8, '¿Xbox One, PC o Ps4?', 'XBOX ONE claramente, y sino PC con Windows', '2014-10-30 13:19:50', '2014-10-30 13:19:50', 0, 4, 29),
-(9, 'Comparación Audi tt y BMW serie 1', 'Me gusta más la carrocería del BMW, pero el motor del Audi me parece más potente', '2014-09-15 08:02:00', '2014-09-15 08:03:00', 1, 5, 1),
-(10, 'Como montar una estantería fácilmente', 'https://www.youtube.com/watch?v=I7cfajBGDAo', '2014-10-30 14:27:50', '2014-10-30 14:27:50', 1, 6, 29),
-(11, 'Como montar una estantería fácilmente', 'Muy útil, gracias.', '2014-10-30 14:28:50', '2014-10-30 14:28:50', 0, 6, 28),
-(12, 'Especificaciones GoPro3', 'Los amantes de las cámaras de acción tienen un nuevo modelo a tener en el punto de mira, GoPro HERO3, una nueva gama que acaba de ser presentada con el objetivo de hacernos olvidar modelos anteriores, gracias a la rebaja de dimensiones, y mejora en especificaciones.Aparece en tres versiones, Black, Silver, y White. Externamente mantienen unas líneas de diseño que ya son reconocibles, como icono de mercado. El nuevo modelo es un 30&#37; más delgado, y pesa un 25&#37; menos.Todos los modelos cuentan con conectividad WiFi como novedad, un aspecto que supone un plus, y que se aprovecha en el modelo Black con la incorporación de un control remoto que permite operar con la cámara a distancia. Con el mando se pueden controlar hasta 50 cámaras a la vez, y es sumergible.', '2014-05-05 04:10:52', '2014-05-05 04:10:52', 1, 7, 8),
-(13, 'Especificaciones GoPro3', 'Está muy bien se la recomendaría a mis amigos', '2014-05-05 04:15:52', '2014-05-05 04:15:52', 0, 7, 6),
-(14, 'Sorteo entrada para el cine ABC El Saler', 'Los que queráis participar escribid en el hilo', '2014-01-30 18:15:17', '2014-01-30 18:15:17', 1, 8, 8),
-(15, 'Sorteo entrada para el cine ABC El Saler', 'Me apunto', '2014-01-30 18:18:17', '2014-01-30 18:18:17', 0, 8, 21),
-(16, 'Sorteo entrada para el cine ABC El Saler', 'Yo también', '2014-01-30 18:18:28', '2014-01-30 18:18:28', 0, 8, 17),
-(17, 'Consulta sobre hongos en los pies', 'Que medicamento me recomendáis para tratar los hongos en los pies', '2014-07-29 09:46:10', '2014-07-29 09:46:10', 1, 9, 4),
-(18, 'Consulta sobre hongos en los pies', 'Silvisil cura hongos', '2014-07-29 11:46:10', '2014-07-29 14:46:10', 0, 9, 15),
-(19, 'Duda convalidaciones de FOL', 'Como puedo convalidarme la asignatura', '2014-05-07 19:54:00', '2014-05-07 19:54:00', 1, 10, 5),
-(20, 'Duda convalidaciones de FOL', 'Tienes que haber cursado un modulo similar o de las mismas caracteristicas', '2014-05-07 20:34:00', '2014-05-07 21:54:00', 0, 10, 10),
-(21, 'Viajes a Malaysia', 'Con qué agencia de viajes me recomendariais viajar a Malaysia?', '2014-10-28 06:46:54', '2014-10-28 06:46:54', 1, 11, 9),
-(22, 'Viajes a Malaysia', 'RyanAir que es de bajo coste y alta seguridad', '2014-10-28 18:46:54', '2014-10-28 18:46:54', 0, 11, 1),
-(23, 'Receta-Tarta de limón', 'Tipo de receta: Postre\r\n\r\nNúmero de partes: 3 porciones\r\n\r\nTiempo de preparación: 15 Minutos\r\nTiempo de cocción: 6 Horas\r\nListos en: 6 h, 15 m\r\nDificultad: Fácil\r\n500 grms, queso fresco de untar\r\n500 ml. Nata de montar ( crema de leche )\r\n200 ml. Leche condensada\r\n150 ml Zumo de limón ( como dos limones )\r\n2 sobres de gelatina de limon\r\n\r\nPara la base\r\n1 rulo de galletas maria\r\n4 cucharadas de mantequilla\r\n100 grms avellanas\r\n1 cucharadita de canela', '2014-09-20 11:50:01', '2014-09-20 11:50:01', 1, 12, 10),
-(24, 'Receta-Tarta de limón', 'La probaré tu tranquilo que para la proxima saldra mejor', '2014-09-20 11:52:01', '2014-09-20 12:50:01', 0, 12, 2),
-(25, 'Pasarela Cibeles 2015', 'Osea, guay, hay pasarela suuuuper larga, jijiji :P', '2014-10-28 21:23:54', '2014-10-28 21:23:54', 1, 13, 13),
-(26, 'Pasarela Cibeles 2015', 'Me esperaba algo de informacion', '2014-10-28 22:23:55', '2014-10-28 23:19:56', 0, 13, 22),
-(27, 'Concierto Luz Casal en Burjassot', 'Se sabe algo sobre artistas invitados?', '2014-06-20 12:05:40', '2014-06-20 12:09:40', 1, 14, 16),
-(28, 'Concierto Luz Casal en Burjassot', 'Todavia no hemos recibido esa informacion', '2014-06-21 12:05:40', '2014-06-21 12:05:40', 0, 14, 18),
-(29, 'Me falla la impresora-AYUDA', 'Porque mi impresora no hace pizzas?', '2014-10-23 13:10:52', '2014-10-23 13:10:52', 1, 15, 15),
-(30, 'Me falla la impresora-AYUDA', 'Prueba a romperla y luego comertela', '2014-10-23 14:10:52', '2014-10-23 14:10:52', 0, 15, 11),
-(31, '¿Iphone 6 es un timo o no?', 'Creeis que el iPhone 6 se dobla como dicen?', '2014-09-24 09:59:02', '2014-09-24 09:59:02', 1, 16, 23),
-(32, 'Conferencia Stephen Hawking', 'https://www.youtube.com/watch?v=r8q4Hun7FMA', '2014-10-30 09:12:08', '2014-10-30 09:12:08', 1, 17, 17),
-(33, '¿Cuál es el mejor museo de carruajes de Europa?', 'Cual me recomendais visitar?', '2014-10-30 10:22:18', '2014-10-30 10:22:18', 1, 18, 4),
-(34, 'Vendo Ford Fiesta rosa en perfectas condiciones (Valencia)', 'Pues eso', '2014-08-15 16:11:22', '2014-08-16 20:15:22', 1, 19, 9),
-(35, '¿Bleach o Naruto?-Cuidado SPOILERS', 'Que serie os parece mejor? en ambas mueren todos al final', '2014-10-12 09:14:18', '2014-10-21 10:15:18', 1, 20, 1);
+INSERT INTO `post` (`id`, `titulo`, `mensaje`, `fechacreacion`, `fechamodificacion`, `id_tema`, `id_usuario`) VALUES
+(1, 'Peter Lim, ¿Estafa o no?', 'Qué os parece el nuevo dueño del Valencia CF, ¿os parece un timador?\r\n\r\nSé que a mucha gente no le causa mucha confianza.', '2014-10-30 09:43:02', '2014-10-30 09:45:02', 1, 2),
+(2, 'Peter Lim, ¿Estafa o no?', 'Es campechano como el Juanca', '2014-10-30 09:43:55', '2014-10-30 09:43:55', 1, 15),
+(3, 'Ranking películas de terror', 'Aquí tenéis mi ranking de películas de terror:\r\n\r\n1.- El grito\r\n2.- Scream\r\n3.- La señal', '2014-10-20 12:35:00', '2014-10-20 12:35:00', 2, 10),
+(4, 'Ranking películas de terror', 'No estoy de acuerdo, Scream es una película del montón', '2014-10-20 13:30:05', '2014-10-20 13:30:05', 2, 15),
+(5, '¿Que os parece este ordenador?', 'No sé si comprarme el Acer R34765', '2014-10-23 14:20:10', '2014-10-23 14:20:10', 3, 14),
+(6, '¿Que os parece este ordenador?', 'Si pones las especificaciones mejor', '2014-10-23 14:25:10', '2014-10-23 14:25:10', 3, 2),
+(7, '¿Xbox One, PC o Ps4?', '¿Cuál os parece la mejor plataforma?', '2014-10-30 13:17:50', '2014-10-30 13:17:50', 4, 16),
+(8, '¿Xbox One, PC o Ps4?', 'XBOX ONE claramente, y sino PC con Windows', '2014-10-30 13:19:50', '2014-10-30 13:19:50', 4, 29),
+(9, 'Comparación Audi tt y BMW serie 1', 'Me gusta más la carrocería del BMW, pero el motor del Audi me parece más potente', '2014-09-15 08:02:00', '2014-09-15 08:03:00', 5, 1),
+(10, 'Como montar una estantería fácilmente', 'https://www.youtube.com/watch?v=I7cfajBGDAo', '2014-10-30 14:27:50', '2014-10-30 14:27:50', 6, 29),
+(11, 'Como montar una estantería fácilmente', 'Muy útil, gracias.', '2014-10-30 14:28:50', '2014-10-30 14:28:50', 6, 28),
+(12, 'Especificaciones GoPro3', 'Los amantes de las cámaras de acción tienen un nuevo modelo a tener en el punto de mira, GoPro HERO3, una nueva gama que acaba de ser presentada con el objetivo de hacernos olvidar modelos anteriores, gracias a la rebaja de dimensiones, y mejora en especificaciones.Aparece en tres versiones, Black, Silver, y White. Externamente mantienen unas líneas de diseño que ya son reconocibles, como icono de mercado. El nuevo modelo es un 30&#37; más delgado, y pesa un 25&#37; menos.Todos los modelos cuentan con conectividad WiFi como novedad, un aspecto que supone un plus, y que se aprovecha en el modelo Black con la incorporación de un control remoto que permite operar con la cámara a distancia. Con el mando se pueden controlar hasta 50 cámaras a la vez, y es sumergible.', '2014-05-05 04:10:52', '2014-05-05 04:10:52', 7, 8),
+(13, 'Especificaciones GoPro3', 'Está muy bien se la recomendaría a mis amigos', '2014-05-05 04:15:52', '2014-05-05 04:15:52', 7, 6),
+(14, 'Sorteo entrada para el cine ABC El Saler', 'Los que queráis participar escribid en el hilo', '2014-01-30 18:15:17', '2014-01-30 18:15:17', 8, 8),
+(15, 'Sorteo entrada para el cine ABC El Saler', 'Me apunto', '2014-01-30 18:18:17', '2014-01-30 18:18:17', 8, 21),
+(16, 'Sorteo entrada para el cine ABC El Saler', 'Yo también', '2014-01-30 18:18:28', '2014-01-30 18:18:28', 8, 17),
+(17, 'Consulta sobre hongos en los pies', 'Que medicamento me recomendáis para tratar los hongos en los pies', '2014-07-29 09:46:10', '2014-07-29 09:46:10', 9, 4),
+(18, 'Consulta sobre hongos en los pies', 'Silvisil cura hongos', '2014-07-29 11:46:10', '2014-07-29 14:46:10', 9, 15),
+(19, 'Duda convalidaciones de FOL', 'Como puedo convalidarme la asignatura', '2014-05-07 19:54:00', '2014-05-07 19:54:00', 10, 5),
+(20, 'Duda convalidaciones de FOL', 'Tienes que haber cursado un modulo similar o de las mismas caracteristicas', '2014-05-07 20:34:00', '2014-05-07 21:54:00', 10, 10),
+(21, 'Viajes a Malaysia', 'Con qué agencia de viajes me recomendariais viajar a Malaysia?', '2014-10-28 06:46:54', '2014-10-28 06:46:54', 11, 9),
+(22, 'Viajes a Malaysia', 'RyanAir que es de bajo coste y alta seguridad', '2014-10-28 18:46:54', '2014-10-28 18:46:54', 11, 1),
+(23, 'Receta-Tarta de limón', 'Tipo de receta: Postre\r\n\r\nNúmero de partes: 3 porciones\r\n\r\nTiempo de preparación: 15 Minutos\r\nTiempo de cocción: 6 Horas\r\nListos en: 6 h, 15 m\r\nDificultad: Fácil\r\n500 grms, queso fresco de untar\r\n500 ml. Nata de montar ( crema de leche )\r\n200 ml. Leche condensada\r\n150 ml Zumo de limón ( como dos limones )\r\n2 sobres de gelatina de limon\r\n\r\nPara la base\r\n1 rulo de galletas maria\r\n4 cucharadas de mantequilla\r\n100 grms avellanas\r\n1 cucharadita de canela', '2014-09-20 11:50:01', '2014-09-20 11:50:01', 12, 10),
+(24, 'Receta-Tarta de limón', 'La probaré tu tranquilo que para la proxima saldra mejor', '2014-09-20 11:52:01', '2014-09-20 12:50:01', 12, 2),
+(25, 'Pasarela Cibeles 2015', 'Osea, guay, hay pasarela suuuuper larga, jijiji :P', '2014-10-28 21:23:54', '2014-10-28 21:23:54', 13, 13),
+(26, 'Pasarela Cibeles 2015', 'Me esperaba algo de informacion', '2014-10-28 22:23:55', '2014-10-28 23:19:56', 13, 22),
+(27, 'Concierto Luz Casal en Burjassot', 'Se sabe algo sobre artistas invitados?', '2014-06-20 12:05:40', '2014-06-20 12:09:40', 14, 16),
+(28, 'Concierto Luz Casal en Burjassot', 'Todavia no hemos recibido esa informacion', '2014-06-21 12:05:40', '2014-06-21 12:05:40', 14, 18),
+(29, 'Me falla la impresora-AYUDA', 'Porque mi impresora no hace pizzas?', '2014-10-23 13:10:52', '2014-10-23 13:10:52', 15, 15),
+(30, 'Me falla la impresora-AYUDA', 'Prueba a romperla y luego comertela', '2014-10-23 14:10:52', '2014-10-23 14:10:52', 15, 11),
+(31, '¿Iphone 6 es un timo o no?', 'Creeis que el iPhone 6 se dobla como dicen?', '2014-09-24 09:59:02', '2014-09-24 09:59:02', 16, 23),
+(32, 'Conferencia Stephen Hawking', 'https://www.youtube.com/watch?v=r8q4Hun7FMA', '2014-10-30 09:12:08', '2014-10-30 09:12:08', 17, 17),
+(33, '¿Cuál es el mejor museo de carruajes de Europa?', 'Cual me recomendais visitar?', '2014-10-30 10:22:18', '2014-10-30 10:22:18', 18, 4),
+(34, 'Vendo Ford Fiesta rosa en perfectas condiciones (Valencia)', 'Pues eso', '2014-08-15 16:11:22', '2014-08-16 20:15:22', 19, 9),
+(35, '¿Bleach o Naruto?-Cuidado SPOILERS', 'Que serie os parece mejor? en ambas mueren todos al final', '2014-10-12 09:14:18', '2014-10-21 10:15:18', 20, 1);
 
 -- --------------------------------------------------------
 
@@ -1427,8 +2036,8 @@ CREATE TABLE IF NOT EXISTS `producto` (
   `codigo` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Codigo',
   `descripcion` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Descripcion',
   `precio` decimal(6,2) DEFAULT NULL COMMENT 'Precio',
-  `id_tipoproducto` int(11) NOT NULL COMMENT 'Id Tipo Producto',
-  `id_proveedor` int(11) NOT NULL COMMENT 'Id Proveedor'
+  `id_tipoproducto` int(11) NOT NULL DEFAULT '0' COMMENT 'Id Tipo Producto',
+  `id_proveedor` int(11) NOT NULL DEFAULT '0' COMMENT 'Id Proveedor'
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=406 ;
 
 --
@@ -1841,6 +2450,43 @@ INSERT INTO `producto` (`id`, `codigo`, `descripcion`, `precio`, `id_tipoproduct
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `propuesta`
+--
+
+CREATE TABLE IF NOT EXISTS `propuesta` (
+`id` int(11) NOT NULL COMMENT 'Num_propuesta',
+  `descripcion` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Descripcion',
+  `fecha` date DEFAULT NULL COMMENT 'Fecha_Propuesta',
+  `puntuacion` int(11) DEFAULT NULL COMMENT 'Puntuacion',
+  `id_tipopropuesta` int(11) DEFAULT NULL COMMENT 'Num del Tipo de Propuesta',
+  `id_usuario` int(11) DEFAULT NULL COMMENT 'Num de Usuario'
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=17 ;
+
+--
+-- Volcado de datos para la tabla `propuesta`
+--
+
+INSERT INTO `propuesta` (`id`, `descripcion`, `fecha`, `puntuacion`, `id_tipopropuesta`, `id_usuario`) VALUES
+(1, '¿Aplicamos margenes a todos los documentos?', '2014-11-12', 0, 1, 1),
+(2, 'Los aplicamos solo en el index.', '2014-11-10', 0, 1, 2),
+(3, '¿Aprendemos bootstrap?', '2014-11-18', 0, 2, 3),
+(4, '¿Aprendemos Angular?', '2014-11-19', 0, 2, 4),
+(5, '¿Quedamos el dia 4 de diciembre por la mañama?', '2014-11-11', 0, 3, 5),
+(6, '¿Quedamos el puente de diciembre?', '2014-11-28', 0, 3, 6),
+(7, 'Paginas para aprender java', '2014-11-10', 0, 4, 7),
+(8, 'Libros para aprender java', '2014-11-19', 0, 4, 8),
+(9, 'Paginas para aprender php', '2014-11-05', 0, 5, 9),
+(10, 'Libros para aprender php', '2014-11-20', 0, 5, 10),
+(11, 'Paginas para aprender django', '2014-12-08', 0, 6, 11),
+(12, 'Libros para aprender django', '2014-12-02', 0, 6, 12),
+(13, 'Paginas para aprender Visual Basic', '2014-12-07', 0, 7, 13),
+(14, 'Libros para aprender Visual Basic', '2014-12-15', 0, 7, 14),
+(15, 'Paginas para aprender Ruby', '2014-12-17', 0, 8, 15),
+(16, 'Libros para aprender Ruby', '2014-11-19', 0, 8, 16);
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `proveedor`
 --
 
@@ -1882,6 +2528,32 @@ INSERT INTO `proveedor` (`id`, `nia`, `nombre`, `telefono`, `direccion`, `email`
 (19, '', 'Ferretería Pla', '962907224', 'Calle Major 33 46890', 'info@armeriapla.com', 'www.armeriapla.com', '963246532', 'Argullent (VALENCIA)'),
 (20, '00.000.018-B', 'Moreno Suministros Industriales', '93699336', 'Carretera de Terrassa 106 08191', 'comercial@ferreteriamoreno.com', 'www.ferreteriamoreno.com', '936999092', 'Rubí (Barcelona)'),
 (21, '00.000.004-B', 'Ferrokey', '917280377', 'Herrera Oria 63 segunda planta 28034', 'info@ferroket.com', 'www.ferroket.com', '913580421', 'MADRID');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `proyecto`
+--
+
+CREATE TABLE IF NOT EXISTS `proyecto` (
+`id` int(11) NOT NULL COMMENT 'id',
+  `descripcion` varchar(250) DEFAULT NULL COMMENT 'descripción'
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=10 ;
+
+--
+-- Volcado de datos para la tabla `proyecto`
+--
+
+INSERT INTO `proyecto` (`id`, `descripcion`) VALUES
+(1, 'Gesti%C3%B3n%20de%20proyectos'),
+(2, 'Foro'),
+(3, 'Blog'),
+(4, 'Tienda virtual'),
+(5, 'Red social'),
+(6, 'Actividades'),
+(7, 'Noticias sociales'),
+(8, 'Facturación'),
+(9, 'Cuestionarios');
 
 -- --------------------------------------------------------
 
@@ -1928,11 +2600,57 @@ INSERT INTO `publicacion` (`id`, `contenido`, `id_usuario`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `respuesta` (
-`id` int(11) NOT NULL COMMENT 'Identificador',
-  `id_usuario` int(11) NOT NULL COMMENT 'Id. Usuario',
-  `id_pregunta` int(11) NOT NULL COMMENT 'Id. Pregunta',
-  `id_opcion` int(11) NOT NULL COMMENT 'Id. Opción'
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='respuesta' AUTO_INCREMENT=2 ;
+`id` int(11) NOT NULL,
+  `id_usuario` int(11) DEFAULT NULL COMMENT 'Id. Usuario',
+  `id_pregunta` int(11) DEFAULT NULL COMMENT 'Id. Pregunta',
+  `id_opcion` int(11) DEFAULT NULL COMMENT 'Id. Opción'
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='respuesta' AUTO_INCREMENT=7 ;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `tarea`
+--
+
+CREATE TABLE IF NOT EXISTS `tarea` (
+`id` int(11) NOT NULL COMMENT 'Id',
+  `descripcion` varchar(255) DEFAULT NULL COMMENT 'Descripción',
+  `fechaentrega` datetime DEFAULT NULL COMMENT 'Fecha Entrega',
+  `id_usuario` int(6) DEFAULT NULL COMMENT 'ID Usuario',
+  `id_tipotarea` int(6) DEFAULT NULL COMMENT 'ID Tipo tarea',
+  `id_estadotarea` int(6) DEFAULT NULL COMMENT 'ID Estado tarea'
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=26 ;
+
+--
+-- Volcado de datos para la tabla `tarea`
+--
+
+INSERT INTO `tarea` (`id`, `descripcion`, `fechaentrega`, `id_usuario`, `id_tipotarea`, `id_estadotarea`) VALUES
+(1, 'diseño de la base de datos', '2014-12-17 15:16:27', 1, 3, 1),
+(2, 'programación de un mantenimiento', '2015-03-18 06:11:35', 2, 4, 2),
+(3, 'programación de una clave ajena', '2014-12-10 10:17:40', 3, 5, 3),
+(4, 'gestión de permisos', '2015-05-15 13:00:00', 4, 6, 4),
+(5, 'gestión de permisos', '2014-06-17 06:16:16', 5, 7, 5),
+(6, 'programación de una clave ajena', '2014-11-11 00:00:00', 6, 8, 5),
+(7, 'programación de un mantenimiento', '2014-07-31 09:33:45', 7, 9, 4),
+(8, 'diseño de la base de datos', '2014-08-21 13:35:30', 8, 9, 3),
+(9, 'programación de una clave ajena', '2014-09-02 00:30:29', 9, 8, 2),
+(10, 'gestión de permisos', '2014-05-30 11:29:30', 10, 7, 1),
+(11, 'programación de un mantenimiento', '2014-10-22 00:00:00', 11, 6, 1),
+(12, 'diseño de la base de datos', NULL, 12, 5, 2),
+(13, 'programación de un mantenimiento', '2014-03-04 13:25:11', 13, 4, 3),
+(14, 'gestión de permisos', '2014-12-08 07:12:00', 14, 3, 4),
+(15, 'diseño de la base de datos', '2014-10-14 20:48:00', 15, 2, 5),
+(16, 'programación de un mantenimiemto', '2014-12-02 09:16:00', 16, 1, 5),
+(17, 'programación de una clave ajena', '2014-12-15 00:00:00', 17, 1, 4),
+(18, 'gestión de permisos', '2014-12-08 00:00:00', 18, 2, 3),
+(19, 'diseño de la base de datos', '2014-01-08 00:00:00', 19, 3, 2),
+(20, 'programación de un mantenimiemto', '2014-09-11 16:29:42', 20, 4, 1),
+(21, 'programación de una clave ajena', '2014-02-06 08:21:47', 21, 5, 4),
+(22, 'gestión de permisos', '2014-08-13 05:42:00', 22, 6, 2),
+(23, 'programación de un mantenimiento', '2014-09-17 08:21:00', 23, 7, 3),
+(24, 'programacion de una clave ajena', '2014-09-02 13:00:00', 24, 8, 4),
+(25, 'diseño de la base de datos', '2014-07-16 11:18:00', 25, 9, 5);
 
 -- --------------------------------------------------------
 
@@ -1942,10 +2660,10 @@ CREATE TABLE IF NOT EXISTS `respuesta` (
 
 CREATE TABLE IF NOT EXISTS `tema` (
 `id` int(6) NOT NULL COMMENT 'Id',
-  `nombre` varchar(255) DEFAULT NULL COMMENT 'Título',
-  `fechacreacion` datetime DEFAULT NULL COMMENT 'Fecha Creación',
-  `id_tipotema` int(6) NOT NULL COMMENT 'ID Categoría',
-  `id_usuario` int(6) NOT NULL COMMENT 'ID Usuario'
+  `nombre` varchar(255) DEFAULT NULL COMMENT 'Título del tema',
+  `fechacreacion` datetime DEFAULT NULL COMMENT 'Fecha de creación',
+  `id_tipotema` int(6) DEFAULT NULL COMMENT 'Categoría',
+  `id_usuario` int(6) DEFAULT NULL COMMENT 'Creador del tema'
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=21 ;
 
 --
@@ -2005,13 +2723,36 @@ INSERT INTO `tipodocumento` (`id`, `descripcion`, `privado`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `tipooperacion`
+--
+
+CREATE TABLE IF NOT EXISTS `tipooperacion` (
+`id` int(6) NOT NULL COMMENT 'Identificador',
+  `descripcion` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Descripción'
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=7 ;
+
+--
+-- Volcado de datos para la tabla `tipooperacion`
+--
+
+INSERT INTO `tipooperacion` (`id`, `descripcion`) VALUES
+(1, 'lectura'),
+(2, 'escritura'),
+(3, 'alta'),
+(4, 'modificación'),
+(5, 'borrado'),
+(6, 'rellenar');
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `tipoproducto`
 --
 
 CREATE TABLE IF NOT EXISTS `tipoproducto` (
 `id` int(11) NOT NULL,
   `descripcion` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Descripción',
-  `id_impuesto` int(11) NOT NULL
+  `id_impuesto` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=32 ;
 
 --
@@ -2049,6 +2790,57 @@ INSERT INTO `tipoproducto` (`id`, `descripcion`, `id_impuesto`) VALUES
 (29, 'Género automático', 3),
 (30, 'Género descatalogado', 21),
 (31, 'Género inexistente', 21);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `tipopropuesta`
+--
+
+CREATE TABLE IF NOT EXISTS `tipopropuesta` (
+`id` int(11) NOT NULL COMMENT 'Num del tipo de propuesta',
+  `descripcion` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Descripcion'
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=9 ;
+
+--
+-- Volcado de datos para la tabla `tipopropuesta`
+--
+
+INSERT INTO `tipopropuesta` (`id`, `descripcion`) VALUES
+(1, 'Aplicar margenes'),
+(2, 'Aprender un framwork'),
+(3, 'Quedadas'),
+(4, 'Aprender java'),
+(5, 'Aprender php'),
+(6, 'Aprender django'),
+(7, 'Aprender Visual Basic'),
+(8, 'Aprender ruby');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `tipotarea`
+--
+
+CREATE TABLE IF NOT EXISTS `tipotarea` (
+`id` int(11) NOT NULL COMMENT 'Id',
+  `descripcion` varchar(250) DEFAULT NULL COMMENT 'Descripción'
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=10 ;
+
+--
+-- Volcado de datos para la tabla `tipotarea`
+--
+
+INSERT INTO `tipotarea` (`id`, `descripcion`) VALUES
+(1, 'diseño de la base de datos'),
+(2, 'diseño del programa'),
+(3, 'diseño del interface'),
+(4, 'programación del cliente'),
+(5, 'programación del servidor'),
+(6, 'reparación de error en cliente'),
+(7, 'reparación de error en servidor'),
+(8, 'documentación'),
+(9, 'gestión de permisos');
 
 -- --------------------------------------------------------
 
@@ -2120,92 +2912,46 @@ CREATE TABLE IF NOT EXISTS `usuario` (
   `id_tipousuario` int(11) DEFAULT NULL COMMENT 'Tipo de usuario',
   `id_estado` int(11) DEFAULT NULL COMMENT 'Estado',
   `ciudad` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Ciudad',
-  `firma` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Firma'
+  `firma` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Firma',
+  `skin` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Plantilla'
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=31 ;
 
 --
 -- Volcado de datos para la tabla `usuario`
 --
 
-INSERT INTO `usuario` (`id`, `login`, `password`, `id_tipousuario`, `id_estado`, `ciudad`, `firma`) VALUES
-(1, 'pepe', 'pepe', 2, 1, 'Valencia', 'is my life and do what I want'),
-(2, 'juan', 'juan', 3, 3, 'Madrid', 'http://criticalandia.com críticas de entretenimiento, listas, opiniones...'),
-(3, 'maria', 'maria', 3, 6, 'Barcelona', 'If you love something, set it free. Unless it''''s a tiger.'),
-(4, 'antonia', 'antonia', 3, 7, 'Sevilla', '"El único límite a nuestros logros de mañana está en nuestras dudas de hoy."'),
-(5, 'edu', 'edu', 3, 13, 'Zaragoza', 'Plataforma: ORGULLLO CADISTA no.58'),
-(6, 'jose', 'jose', 3, 19, 'Teruel', 'Ironía: Figura literaria mediante la cual se da a entender lo contrario de lo que se dice.'),
-(7, 'silvia', 'silvia', 3, 6, 'Huesca', 'Paso de firmas'),
-(8, 'pedro', 'pedro', 3, 8, 'Alicante', 'Camisetas y calzado www.pedidoshicks.com'),
-(9, 'raquel', 'raquel', 3, 15, 'Castellón', 'PEÑA COLCHONERA Socio número 629'),
-(10, 'daniel', 'daniel', 3, 12, 'Almería', '"Obsesionado es tan sólo la palabra que usan los perezosos para describir a los dedicados"'),
-(11, 'rafael', 'rafael', 1, 17, 'A Coruña', 'Ista ye a mia tierra, a mia fabla'),
-(12, 'juan', 'juan', 3, 14, 'Barcelona', 'No todos los catalanes somos independentistas'),
-(13, 'elena', 'elena', 3, 19, 'Bilbao', 'Buenas tardes'),
-(14, 'luis', 'luis', 3, 4, 'Lugo', 'Preparado para cualquier combate'),
-(15, 'alba', 'alba', 3, 5, 'Cuenca', 'Si tienes un Ibiza o un Cordoba, este es tu club: www.clubseatcordoba.com'),
-(16, 'amparo', 'amparo', 3, 7, 'Ciudad Real', 'No hay dos sin tres'),
-(17, 'ambrosio', 'ambrosio', 3, 8, 'Guadalajara', 'Tesis+Antítesis=Síntesis. Problema+Acción = Solución.'),
-(18, 'luisa', 'luisa', 3, 1, 'Huelva', 'Y yo me iré. y se quedará mi huerto con su verde árbol, y con su pozo blanco. Y yo me iré.. Y se quedarán los pájaros cantando'),
-(19, 'leon', 'leon', 3, 3, 'Granada', 'La Infanta no sabía nada y punto.'),
-(20, 'rosa', 'rosa', 3, 2, 'Cádiz', 'Viva España'),
-(21, 'capcom', 'capcom', 3, 17, 'Jerez', 'La gente cree que soy una mala persona, pero no es cierto, yo tengo el corazón de un niño...en un frasco con formol encima de mi escritorio.'),
-(22, 'teleco', 'teleco', 3, 18, 'Vallecas', 'Foreros de la Comunidad de Madrid Nº25'),
-(23, 'mercadona', 'mercadona', 3, 13, 'Jaén', 'Y veréis el resurgir poderoso del guerrero, sin miedo a leyes ni a nostalgias.'),
-(24, 'vistaprint', 'vistaprint', 3, 15, 'Valencia', 'Codeados.com Diseño y Desarrollo web, Imagen Corporativa, SEO, Marketing Digital'),
-(25, 'google', 'google', 3, 16, 'California', 'Viva google +'),
-(26, 'konami', 'konami', 3, 6, 'Tokio', 'Viva Castolo, Minanda y Ximelez'),
-(27, 'orange', 'orange', 3, 7, 'París', 'Viva movistar'),
-(28, 'samsung', 'samsung', 3, 8, 'Cuenca', 'Viva el iPhone 6'),
-(29, 'gigabyte', 'gigabyte', 3, 10, 'Oviedo', 'Viva gigabyte'),
-(30, 'microsoft', 'microsoft', 3, 10, 'Albacete', 'La xbox ONE es la MEJOR CONSOLA');
+INSERT INTO `usuario` (`id`, `login`, `password`, `id_tipousuario`, `id_estado`, `ciudad`, `firma`, `skin`) VALUES
+(1, 'pepe', 'pepe', 2, 1, 'Valencia', 'is my life and do what I want', 'main'),
+(2, 'juan', 'juan', 3, 3, 'Madrid', 'http://criticalandia.com críticas de entretenimiento, listas, opiniones...', 'main'),
+(3, 'maria', 'maria', 3, 6, 'Barcelona', 'If you love something, set it free. Unless it''''s a tiger.', 'main'),
+(4, 'antonia', 'antonia', 3, 7, 'Sevilla', '"El único límite a nuestros logros de mañana está en nuestras dudas de hoy."', 'main'),
+(5, 'edu', 'edu', 3, 13, 'Zaragoza', 'Plataforma: ORGULLLO CADISTA no.58', 'main'),
+(6, 'jose', 'jose', 3, 19, 'Teruel', 'Ironía: Figura literaria mediante la cual se da a entender lo contrario de lo que se dice.', 'main'),
+(7, 'silvia', 'silvia', 3, 6, 'Huesca', 'Paso de firmas', 'main'),
+(8, 'pedro', 'pedro', 3, 8, 'Alicante', 'Camisetas y calzado www.pedidoshicks.com', 'main'),
+(9, 'raquel', 'raquel', 3, 15, 'Castellón', 'PEÑA COLCHONERA Socio número 629', 'main'),
+(10, 'daniel', 'daniel', 3, 12, 'Almería', '"Obsesionado es tan sólo la palabra que usan los perezosos para describir a los dedicados"', 'main'),
+(11, 'rafael', 'rafael', 1, 17, 'A Coruña', 'Ista ye a mia tierra, a mia fabla', 'main'),
+(12, 'juan', 'juan', 3, 14, 'Barcelona', 'No todos los catalanes somos independentistas', 'main'),
+(13, 'elena', 'elena', 3, 19, 'Bilbao', 'Buenas tardes', 'main'),
+(14, 'luis', 'luis', 3, 4, 'Lugo', 'Preparado para cualquier combate', 'main'),
+(15, 'alba', 'alba', 3, 5, 'Cuenca', 'Si tienes un Ibiza o un Cordoba, este es tu club: www.clubseatcordoba.com', 'main'),
+(16, 'amparo', 'amparo', 3, 7, 'Ciudad Real', 'No hay dos sin tres', 'main'),
+(17, 'ambrosio', 'ambrosio', 3, 8, 'Guadalajara', 'Tesis+Antítesis=Síntesis. Problema+Acción = Solución.', 'main'),
+(18, 'luisa', 'luisa', 3, 1, 'Huelva', 'Y yo me iré. y se quedará mi huerto con su verde árbol, y con su pozo blanco. Y yo me iré.. Y se quedarán los pájaros cantando', 'main'),
+(19, 'leon', 'leon', 3, 3, 'Granada', 'La Infanta no sabía nada y punto.', 'main'),
+(20, 'rosa', 'rosa', 3, 2, 'Cádiz', 'Viva España', 'main'),
+(21, 'capcom', 'capcom', 3, 17, 'Jerez', 'La gente cree que soy una mala persona, pero no es cierto, yo tengo el corazón de un niño...en un frasco con formol encima de mi escritorio.', 'main'),
+(22, 'teleco', 'teleco', 3, 18, 'Vallecas', 'Foreros de la Comunidad de Madrid Nº25', 'main'),
+(23, 'mercadona', 'mercadona', 3, 13, 'Jaén', 'Y veréis el resurgir poderoso del guerrero, sin miedo a leyes ni a nostalgias.', 'main'),
+(24, 'vistaprint', 'vistaprint', 3, 15, 'Valencia', 'Codeados.com Diseño y Desarrollo web, Imagen Corporativa, SEO, Marketing Digital', 'main'),
+(25, 'google', 'google', 3, 16, 'California', 'Viva google +', 'main'),
+(26, 'konami', 'konami', 3, 6, 'Tokio', 'Viva Castolo, Minanda y Ximelez', 'main'),
+(27, 'orange', 'orange', 3, 7, 'París', 'Viva movistar', 'main'),
+(28, 'samsung', 'samsung', 3, 8, 'Cuenca', 'Viva el iPhone 6', 'main'),
+(29, 'gigabyte', 'gigabyte', 3, 10, 'Oviedo', 'Viva gigabyte', 'main'),
+(30, 'microsoft', 'microsoft', 3, 10, 'Albacete', 'La xbox ONE es la MEJOR CONSOLA', 'main');
 
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `objeto`
---
-
-CREATE TABLE IF NOT EXISTS `objeto` (
-  `id` int(6) NOT NULL COMMENT 'ID Objeto',
-  `descripcion` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Descripción'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `operacion`
---
-
-CREATE TABLE IF NOT EXISTS `operacion` (
-  `id` int(6) NOT NULL COMMENT 'ID Operación',
-  `descripcion` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Descripción',
-  `id_objeto` int(6) NOT NULL COMMENT 'ID Objeto'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `permiso`
---
-
-CREATE TABLE IF NOT EXISTS `permiso` (
-  `id` int(6) NOT NULL COMMENT 'ID Permiso',
-  `id_tipousuario` int(6) NOT NULL COMMENT 'ID Tipo de usuario',
-  `id_tipooperacion` int(6) NOT NULL COMMENT 'ID Tipo Operación',
-  `permitido` tinyint(1) DEFAULT NULL COMMENT 'Permitido'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `tipooperacion`
---
-
-CREATE TABLE IF NOT EXISTS `tipooperacion` (
-  `id` int(6) NOT NULL COMMENT 'Identificador',
-  `id_operacion` int(6) NOT NULL COMMENT 'ID Operación'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
 --
 -- Índices para tablas volcadas
 --
@@ -2229,6 +2975,12 @@ ALTER TABLE `cliente`
  ADD PRIMARY KEY (`id`);
 
 --
+-- Indices de la tabla `comentario`
+--
+ALTER TABLE `comentario`
+ ADD PRIMARY KEY (`id`);
+
+--
 -- Indices de la tabla `compra`
 --
 ALTER TABLE `compra`
@@ -2247,31 +2999,6 @@ ALTER TABLE `detalle_pedido`
  ADD PRIMARY KEY (`id`,`id_pedido`,`id_producto`);
 
 --
--- Indices de la tabla `objeto`
---
-ALTER TABLE `objeto`
- ADD PRIMARY KEY (`id`);
-
---
--- Indices de la tabla `tipooperacion`
---
-ALTER TABLE `tipooperacion`
- ADD PRIMARY KEY (`id`);
-
---
--- Indices de la tabla `permiso`
---
-ALTER TABLE `permiso`
- ADD PRIMARY KEY (`id`);
-
---
--- Indices de la tabla `operacion`
---
-ALTER TABLE `operacion`
- ADD PRIMARY KEY (`id`);
-
-
---
 -- Indices de la tabla `documento`
 --
 ALTER TABLE `documento`
@@ -2287,6 +3014,12 @@ ALTER TABLE `entrega`
 -- Indices de la tabla `estado`
 --
 ALTER TABLE `estado`
+ ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `estadotarea`
+--
+ALTER TABLE `estadotarea`
  ADD PRIMARY KEY (`id`);
 
 --
@@ -2320,6 +3053,12 @@ ALTER TABLE `opcion`
  ADD PRIMARY KEY (`id`);
 
 --
+-- Indices de la tabla `operacion`
+--
+ALTER TABLE `operacion`
+ ADD PRIMARY KEY (`id`);
+
+--
 -- Indices de la tabla `ordenador`
 --
 ALTER TABLE `ordenador`
@@ -2330,6 +3069,12 @@ ALTER TABLE `ordenador`
 --
 ALTER TABLE `pedido`
  ADD PRIMARY KEY (`id`,`id_usuario`);
+
+--
+-- Indices de la tabla `permiso`
+--
+ALTER TABLE `permiso`
+ ADD PRIMARY KEY (`id`);
 
 --
 -- Indices de la tabla `post`
@@ -2350,9 +3095,21 @@ ALTER TABLE `producto`
  ADD PRIMARY KEY (`id`,`id_tipoproducto`,`id_proveedor`);
 
 --
+-- Indices de la tabla `propuesta`
+--
+ALTER TABLE `propuesta`
+ ADD PRIMARY KEY (`id`);
+
+--
 -- Indices de la tabla `proveedor`
 --
 ALTER TABLE `proveedor`
+ ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `proyecto`
+--
+ALTER TABLE `proyecto`
  ADD PRIMARY KEY (`id`);
 
 --
@@ -2368,6 +3125,12 @@ ALTER TABLE `respuesta`
  ADD PRIMARY KEY (`id`);
 
 --
+-- Indices de la tabla `tarea`
+--
+ALTER TABLE `tarea`
+ ADD PRIMARY KEY (`id`);
+
+--
 -- Indices de la tabla `tema`
 --
 ALTER TABLE `tema`
@@ -2380,10 +3143,28 @@ ALTER TABLE `tipodocumento`
  ADD PRIMARY KEY (`id`);
 
 --
+-- Indices de la tabla `tipooperacion`
+--
+ALTER TABLE `tipooperacion`
+ ADD PRIMARY KEY (`id`);
+
+--
 -- Indices de la tabla `tipoproducto`
 --
 ALTER TABLE `tipoproducto`
  ADD PRIMARY KEY (`id`,`id_impuesto`);
+
+--
+-- Indices de la tabla `tipopropuesta`
+--
+ALTER TABLE `tipopropuesta`
+ ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `tipotarea`
+--
+ALTER TABLE `tipotarea`
+ ADD PRIMARY KEY (`id`);
 
 --
 -- Indices de la tabla `tipotema`
@@ -2423,6 +3204,11 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Identificador',AUTO_INCREME
 ALTER TABLE `cliente`
 MODIFY `id` int(6) NOT NULL AUTO_INCREMENT COMMENT 'Identificador',AUTO_INCREMENT=251;
 --
+-- AUTO_INCREMENT de la tabla `comentario`
+--
+ALTER TABLE `comentario`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Num de comentario',AUTO_INCREMENT=33;
+--
 -- AUTO_INCREMENT de la tabla `compra`
 --
 ALTER TABLE `compra`
@@ -2453,6 +3239,11 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Id',AUTO_INCREMENT=21;
 ALTER TABLE `estado`
 MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Identificador',AUTO_INCREMENT=21;
 --
+-- AUTO_INCREMENT de la tabla `estadotarea`
+--
+ALTER TABLE `estadotarea`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',AUTO_INCREMENT=6;
+--
 -- AUTO_INCREMENT de la tabla `impuesto`
 --
 ALTER TABLE `impuesto`
@@ -2478,6 +3269,11 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Id Documento',AUTO_INCREMEN
 ALTER TABLE `opcion`
 MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id',AUTO_INCREMENT=257;
 --
+-- AUTO_INCREMENT de la tabla `operacion`
+--
+ALTER TABLE `operacion`
+MODIFY `id` int(6) NOT NULL AUTO_INCREMENT COMMENT 'ID Operación',AUTO_INCREMENT=454;
+--
 -- AUTO_INCREMENT de la tabla `ordenador`
 --
 ALTER TABLE `ordenador`
@@ -2487,6 +3283,11 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Identificador',AUTO_INCREME
 --
 ALTER TABLE `pedido`
 MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Identificador',AUTO_INCREMENT=24;
+--
+-- AUTO_INCREMENT de la tabla `permiso`
+--
+ALTER TABLE `permiso`
+MODIFY `id` int(6) NOT NULL AUTO_INCREMENT COMMENT 'ID Permiso',AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT de la tabla `post`
 --
@@ -2503,10 +3304,20 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id',AUTO_INCREMENT=69;
 ALTER TABLE `producto`
 MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Identificador',AUTO_INCREMENT=406;
 --
+-- AUTO_INCREMENT de la tabla `propuesta`
+--
+ALTER TABLE `propuesta`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Num_propuesta',AUTO_INCREMENT=17;
+--
 -- AUTO_INCREMENT de la tabla `proveedor`
 --
 ALTER TABLE `proveedor`
 MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Identificador',AUTO_INCREMENT=22;
+--
+-- AUTO_INCREMENT de la tabla `proyecto`
+--
+ALTER TABLE `proyecto`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id',AUTO_INCREMENT=10;
 --
 -- AUTO_INCREMENT de la tabla `publicacion`
 --
@@ -2516,7 +3327,12 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Identificador',AUTO_INCREME
 -- AUTO_INCREMENT de la tabla `respuesta`
 --
 ALTER TABLE `respuesta`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
+--
+-- AUTO_INCREMENT de la tabla `tarea`
+--
+ALTER TABLE `tarea`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Id',AUTO_INCREMENT=26;
 --
 -- AUTO_INCREMENT de la tabla `tema`
 --
@@ -2528,10 +3344,25 @@ MODIFY `id` int(6) NOT NULL AUTO_INCREMENT COMMENT 'Id',AUTO_INCREMENT=21;
 ALTER TABLE `tipodocumento`
 MODIFY `id` int(6) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=11;
 --
+-- AUTO_INCREMENT de la tabla `tipooperacion`
+--
+ALTER TABLE `tipooperacion`
+MODIFY `id` int(6) NOT NULL AUTO_INCREMENT COMMENT 'Identificador',AUTO_INCREMENT=7;
+--
 -- AUTO_INCREMENT de la tabla `tipoproducto`
 --
 ALTER TABLE `tipoproducto`
 MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=32;
+--
+-- AUTO_INCREMENT de la tabla `tipopropuesta`
+--
+ALTER TABLE `tipopropuesta`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Num del tipo de propuesta',AUTO_INCREMENT=9;
+--
+-- AUTO_INCREMENT de la tabla `tipotarea`
+--
+ALTER TABLE `tipotarea`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Id',AUTO_INCREMENT=10;
 --
 -- AUTO_INCREMENT de la tabla `tipotema`
 --
@@ -2547,26 +3378,3 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Identificador',AUTO_INCREME
 --
 ALTER TABLE `usuario`
 MODIFY `id` int(6) NOT NULL AUTO_INCREMENT COMMENT 'Identificador',AUTO_INCREMENT=31;
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-
-ALTER TABLE `tema` CHANGE `nombre` `nombre` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'Título del tema';
-
-ALTER TABLE `tema` CHANGE `fechacreacion` `fechacreacion` DATETIME NULL DEFAULT NULL COMMENT 'Fecha de creación'; 
-
-ALTER TABLE `tema` CHANGE `id_tipotema` `id_tipotema` INT(6) NOT NULL COMMENT 'Categoría';
-
-ALTER TABLE `tema` CHANGE `id_usuario` `id_usuario` INT(6) NOT NULL COMMENT 'Creador del tema';
-
-
-
-ALTER TABLE `post` DROP `primermensaje`;
-ALTER TABLE `mensajeprivado` DROP `leido`;
-
-ALTER TABLE `mensajeprivado` ADD `fechaenvio` DATETIME NULL COMMENT 'Fecha de envío' AFTER `id`;
-
-UPDATE `ausiasyield2014`.`mensajeprivado` SET `fechaenvio` = '2014-11-11 08:33:19' WHERE `mensajeprivado`.`id` = 1; UPDATE `ausiasyield2014`.`mensajeprivado` SET `fechaenvio` = '2014-11-04 06:45:15' WHERE `mensajeprivado`.`id` = 2; UPDATE `ausiasyield2014`.`mensajeprivado` SET `fechaenvio` = '2014-11-10 07:57:13' WHERE `mensajeprivado`.`id` = 3; UPDATE `ausiasyield2014`.`mensajeprivado` SET `fechaenvio` = '2014-11-03 12:08:32' WHERE `mensajeprivado`.`id` = 4; UPDATE `ausiasyield2014`.`mensajeprivado` SET `fechaenvio` = '2014-11-14 08:38:25' WHERE `mensajeprivado`.`id` = 5; UPDATE `ausiasyield2014`.`mensajeprivado` SET `fechaenvio` = '2014-11-19 05:24:42' WHERE `mensajeprivado`.`id` = 6; UPDATE `ausiasyield2014`.`mensajeprivado` SET `fechaenvio` = '2014-11-16 12:32:12' WHERE `mensajeprivado`.`id` = 7; UPDATE `ausiasyield2014`.`mensajeprivado` SET `fechaenvio` = '2014-11-12 12:27:30' WHERE `mensajeprivado`.`id` = 8; UPDATE `ausiasyield2014`.`mensajeprivado` SET `fechaenvio` = '2014-11-19 04:24:21' WHERE `mensajeprivado`.`id` = 9; UPDATE `ausiasyield2014`.`mensajeprivado` SET `fechaenvio` = '2014-11-14 08:30:05' WHERE `mensajeprivado`.`id` = 10; UPDATE `ausiasyield2014`.`mensajeprivado` SET `fechaenvio` = '2014-11-01 06:35:22' WHERE `mensajeprivado`.`id` = 11; UPDATE `ausiasyield2014`.`mensajeprivado` SET `fechaenvio` = '2014-11-09 05:08:21' WHERE `mensajeprivado`.`id` = 12; UPDATE `ausiasyield2014`.`mensajeprivado` SET `fechaenvio` = '2014-11-17 17:21:30' WHERE `mensajeprivado`.`id` = 13; UPDATE `ausiasyield2014`.`mensajeprivado` SET `asunto` = '' WHERE `mensajeprivado`.`id` = 18;
-UPDATE `ausiasyield2014`.`mensajeprivado` SET `fechaenvio` = '2014-11-15 00:22:28' WHERE `mensajeprivado`.`id` = 14; UPDATE `ausiasyield2014`.`mensajeprivado` SET `fechaenvio` = '2014-11-12 23:17:59' WHERE `mensajeprivado`.`id` = 15; UPDATE `ausiasyield2014`.`mensajeprivado` SET `fechaenvio` = '2014-11-02 21:13:40' WHERE `mensajeprivado`.`id` = 16; UPDATE `ausiasyield2014`.`mensajeprivado` SET `fechaenvio` = '2014-11-13 10:39:10' WHERE `mensajeprivado`.`id` = 17; UPDATE `ausiasyield2014`.`mensajeprivado` SET `fechaenvio` = '2014-11-14 15:13:34' WHERE `mensajeprivado`.`id` = 18; UPDATE `ausiasyield2014`.`mensajeprivado` SET `fechaenvio` = '2014-11-17 08:36:28' WHERE `mensajeprivado`.`id` = 19; UPDATE `ausiasyield2014`.`mensajeprivado` SET `fechaenvio` = '2014-11-09 09:43:32' WHERE `mensajeprivado`.`id` = 20;
-
-UPDATE `ausiasyield2014`.`mensajeprivado` SET `asunto` = 'Buenas tardes' WHERE `mensajeprivado`.`id` = 18;

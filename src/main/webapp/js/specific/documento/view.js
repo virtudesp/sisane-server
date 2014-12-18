@@ -92,20 +92,20 @@ documentoView.prototype.doEventsLoading = function () {
     });
     $('#documentoForm #obj_tipodocumento_button').unbind('click');
     $("#documentoForm #obj_tipodocumento_button").click(function () {
-        var oControl = oDocumentoControl;
+        var oControl = oTipodocumentoControl;
 
         $("#documentoForm").append(thisObject.getEmptyModal());
         util().loadForm('#modal01', thisObject.getFormHeader('Elección de tipo de documento'), "", thisObject.getFormFooter(), true);
 
         $('#documentoForm').append(thisObject.getEmptyModal());
 
-        oControl.list('#modal01 #modal-body', param().defaultizeUrlObjectParameters({}), true, oDocumentoModel, oDocumentoView);
+        oControl.list('#modal01 #modal-body', param().defaultizeUrlObjectParameters({}), true, oTipodocumentoModel, oTipodocumentoView);
         oControl.modalListEventsLoading('#modal01 #modal-body', param().defaultizeUrlObjectParameters({}), function (id) {
             $('#obj_tipodocumento_id').val(id).change();
             $('#obj_tipodocumento_desc').text(decodeURIComponent(oTipodocumentoModel.getMeAsAForeignKey(id)));
             $('#modal01').modal('hide');
 
-        },oDocumentoModel, oDocumentoView);
+        },oTipodocumentoModel, oTipodocumentoView);
         return false;
     });
     $('#contenido_button').unbind('click');

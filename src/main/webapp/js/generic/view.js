@@ -117,6 +117,12 @@ view.prototype.getEmptyList = function () {
     });
     return form;
 };
+view.prototype.getEmptyView = function (operacion, mode) {
+    $.when(ajax().ajaxCallSync(path + '/jsp?ob=' + this.clase + '&op=' + operacion + '&mode=' + mode, 'GET', '')).done(function (data) {
+        form = data;
+    });
+    return form;
+};
 //        getEmptyDiv: function() {
 //            return '<div id="content"></div>';
 //        },
@@ -181,26 +187,26 @@ view.prototype.getFilterInfo = function (objParams) {
 view.prototype.getRppLinks = function (objParams) {
     var UrlFromParamsWithoutRpp = param().getUrlStringFromParamsObject(param().getUrlObjectFromParamsWithoutParamArray(objParams, ["rpp"]));
     var botonera = '<div id="pagination"><ul class="pagination">';
-    if (objParams['rpp'] == 5)
-        botonera += '<li class="active">';
-    else
-        botonera += '<li>';
-    botonera += '<a class="rpp_link" id="5" href="jsp#/' + this.clase + '/list/' + UrlFromParamsWithoutRpp + '&rpp=5">5</a></li>';
     if (objParams['rpp'] == 10)
         botonera += '<li class="active">';
     else
         botonera += '<li>';
     botonera += '<a class="rpp_link" id="10" href="jsp#/' + this.clase + '/list/' + UrlFromParamsWithoutRpp + '&rpp=10">10</a></li>';
-    if (objParams['rpp'] == 20)
-        botonera += '<li class="active">';
-    else
-        botonera += '<li>';
-    botonera += '<a class="rpp_link" id="20" href="jsp#/' + this.clase + '/list/' + UrlFromParamsWithoutRpp + '&rpp=20">20</a></li>';
     if (objParams['rpp'] == 50)
         botonera += '<li class="active">';
     else
         botonera += '<li>';
     botonera += '<a class="rpp_link" id="50" href="jsp#/' + this.clase + '/list/' + UrlFromParamsWithoutRpp + '&rpp=50">50</a></li>';
+    if (objParams['rpp'] == 100)
+        botonera += '<li class="active">';
+    else
+        botonera += '<li>';
+    botonera += '<a class="rpp_link" id="100" href="jsp#/' + this.clase + '/list/' + UrlFromParamsWithoutRpp + '&rpp=100">100</a></li>';
+//    if (objParams['rpp'] == 50)
+//        botonera += '<li class="active">';
+//    else
+//        botonera += '<li>';
+//    botonera += '<a class="rpp_link" id="50" href="jsp#/' + this.clase + '/list/' + UrlFromParamsWithoutRpp + '&rpp=50">50</a></li>';
     botonera += '</ul></div>';
     return botonera;
 };

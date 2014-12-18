@@ -29,7 +29,7 @@
             <input type="text" id="titulo" class="form-control"  name="titulo" size="15" placeholder="titulo" />
         </div>
     </div>
-    
+
     <div class="form-group">
         <div class="col-sm-offset-2 col-sm-10">
             <div id="messages"></div>
@@ -43,7 +43,7 @@
     </div>
 
 </form>
-        
+
 
 <script type="text/javascript">
 
@@ -72,7 +72,7 @@
                             validators: {
                                 notEmpty: {
                                     message: 'Debe introducir un id'
-                                },                        
+                                },
                             }
                         },
                         tipo: {
@@ -84,9 +84,9 @@
                         },
                     }
                 });
-                });
-                         
-    
-    
+    });
+
+
+
 </script>
      

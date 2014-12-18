@@ -27,7 +27,7 @@ import net.daw.dao.generic.implementation.TableDaoGenImpl;
  */
 public class PublicacionDaoGenSpImpl extends TableDaoGenImpl<PublicacionBeanGenSpImpl> {
 
-    public PublicacionDaoGenSpImpl(String strObject, String pojo, Connection pooledConnection) throws Exception {
-        super(strObject, pojo, pooledConnection);
+    public PublicacionDaoGenSpImpl(String strFuente, Connection pooledConnection) throws Exception {
+        super(strFuente, "Publicacion", pooledConnection);
     }
 }
