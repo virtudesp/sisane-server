@@ -75,4 +75,12 @@ function fPedidoRoutes() {
         $('#indexContenidoJsp').empty();
         return false;
     });
+    
+        Path.map("#/pedido/pedidousuario/:id").to(function () {
+        $('#indexContenidoJsp').spinner();
+        var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
+        oPedidoControl.list($('#indexContenido'), paramsObject['id'], oPedidoModel, oPedidoView);
+        $('#indexContenidoJsp').empty();
+        return false;
+    });
 }

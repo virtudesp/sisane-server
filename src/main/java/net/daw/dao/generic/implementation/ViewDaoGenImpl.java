@@ -170,28 +170,27 @@ public class ViewDaoGenImpl<TIPO_OBJETO> extends MetaDaoGenImpl<TIPO_OBJETO> imp
     private TIPO_OBJETO fill(TIPO_OBJETO oBean, Class<TIPO_OBJETO> tipo, Method metodo_getId) throws Exception {
         try {
             for (Method method : tipo.getMethods()) {
-                if (method.getName().length() >= 5) { //los campos como minimo han de tener dos caracteres + el get o el set = 5 caracteres
-                    if (!method.getName().substring(3).equalsIgnoreCase("id")) {
-                        if (method.getName().substring(0, 3).equalsIgnoreCase("set")) {
-                            final Class<?> classTipoParamMetodoSet = method.getParameterTypes()[0];
-                            if (method.getName().length() >= 5) {
-                                if (!method.getName().substring(3).toLowerCase(Locale.ENGLISH).substring(0, 4).equalsIgnoreCase("obj_")) {
-                                    String strValor = oMysql.getOne(strPojo, method.getName().substring(3).toLowerCase(Locale.ENGLISH), (Integer) metodo_getId.invoke(oBean));
-                                    if (strValor != null) {
-                                        parseValue(oBean, method, classTipoParamMetodoSet.getName(), strValor);
-                                    }
-                                }
-                            } else {
-                                String strValor = oMysql.getOne(strPojo, method.getName().substring(3).toLowerCase(Locale.ENGLISH), (Integer) metodo_getId.invoke(oBean));
+                if (!method.getName().substring(3).equalsIgnoreCase("id")) {
+                    if (method.getName().substring(0, 3).equalsIgnoreCase("set")) {
+                        final Class<?> classTipoParamMetodoSet = method.getParameterTypes()[0];
+                        if (method.getName().length() >= 5) {
+                            if (!method.getName().substring(3).toLowerCase(Locale.ENGLISH).substring(0, 4).equalsIgnoreCase("obj_")) {
+                                String strValor = oMysql.getOne(strView, method.getName().substring(3).toLowerCase(Locale.ENGLISH), (Integer) metodo_getId.invoke(oBean));
                                 if (strValor != null) {
                                     parseValue(oBean, method, classTipoParamMetodoSet.getName(), strValor);
                                 }
                             }
+                        } else {
+                            String strValor = oMysql.getOne(strView, method.getName().substring(3).toLowerCase(Locale.ENGLISH), (Integer) metodo_getId.invoke(oBean));
+                            if (strValor != null) {
+                                parseValue(oBean, method, classTipoParamMetodoSet.getName(), strValor);
+                            }
+                        }
 
                         }
                     }
                 }
-            }
+            
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":fill ERROR: " + ex.getMessage()));
         }

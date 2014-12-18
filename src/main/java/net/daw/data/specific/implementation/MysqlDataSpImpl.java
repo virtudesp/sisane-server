@@ -175,22 +175,47 @@ public class MysqlDataSpImpl implements DataInterface {
         String strResult = null;
         PreparedStatement oPreparedStatement = null;
         ResultSet oResultSet;
-        try {
-            String strSQL = "SELECT " + strCampo + " FROM " + strTabla + " WHERE id=?";
-            oPreparedStatement = connection.prepareStatement(strSQL);
-            oPreparedStatement.setInt(1, id);
-            oResultSet = oPreparedStatement.executeQuery();
-            if (oResultSet.next()) {
-                strResult = oResultSet.getString(strCampo);
-            } else {
-                ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getOne ERROR: ID not exists: " + id));
+        String strSQL = "";
+
+        if (strTabla.substring(0, 6).equalsIgnoreCase("SELECT")) {
+            try {
+                strSQL = strTabla;
+                strSQL+= " AND id=" + id;
+                oPreparedStatement = connection.prepareStatement(strSQL);
+                //oPreparedStatement.setInt(1, id);
+                oResultSet = oPreparedStatement.executeQuery();
+                if (oResultSet.next()) {
+                    strResult = oResultSet.getString(strCampo);
+                } else {
+                    ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getOne ERROR: ID not exists: " + id));
+                }
+            } catch (Exception ex) {
+                ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getOne ERROR: Can't process query: " + ex.getMessage()));
+            } finally {
+                if (oPreparedStatement != null) {
+                    oPreparedStatement.close();
+                }
             }
-        } catch (Exception ex) {
-            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getOne ERROR: Can't process query: " + ex.getMessage()));
-        } finally {
-            if (oPreparedStatement != null) {
-                oPreparedStatement.close();
+        } else {
+            try {
+                //pte cambiar
+                strSQL = "SELECT " + strCampo + " FROM " + strTabla + " WHERE id=?";
+                oPreparedStatement = connection.prepareStatement(strSQL);
+                oPreparedStatement.setInt(1, id);
+                oResultSet = oPreparedStatement.executeQuery();
+                if (oResultSet.next()) {
+                    strResult = oResultSet.getString(strCampo);
+                } else {
+                    ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getOne ERROR: ID not exists: " + id));
+                }
+            } catch (Exception ex) {
+                ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getOne ERROR: Can't process query: " + ex.getMessage()));
+            } finally {
+                if (oPreparedStatement != null) {
+                    oPreparedStatement.close();
+                }
             }
+
         }
         return strResult;
     }
