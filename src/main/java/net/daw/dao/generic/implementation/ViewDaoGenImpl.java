@@ -190,7 +190,7 @@ public class ViewDaoGenImpl<TIPO_OBJETO> extends MetaDaoGenImpl<TIPO_OBJETO> imp
                         }
                     }
                 }
-            }
+            
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":fill ERROR: " + ex.getMessage()));
         }

@@ -49,6 +49,7 @@ import net.daw.control.operation.generic.specific.implementation.UsuarioControlO
 import net.daw.control.operation.generic.specific.implementation.UsuarioProveedorControlOperationGenSpimpl;
 import net.daw.control.operation.specific.implementation.OrdenadorControlOperationSpImpl;
 import net.daw.control.operation.specific.implementation.ActividadControlOperationSpImpl;
+import net.daw.control.operation.specific.implementation.ComentarioControlOperationSpImpl;
 import net.daw.control.operation.specific.implementation.PropuestaControlOperationSpImpl;
 import net.daw.control.operation.specific.implementation.ProductoControlOperationSpImpl;
 import net.daw.control.operation.specific.implementation.EntregaControlOperationSpImpl;
@@ -87,6 +88,7 @@ import net.daw.control.route.specific.implementation.MensajeprivadoControlRouteS
 import net.daw.control.route.specific.implementation.ComentarioControlRouteSpImpl;
 import net.daw.control.route.specific.implementation.PostControlRouteSpImpl;
 import net.daw.control.route.specific.implementation.ImpuestoControlRouteSpImpl;
+import net.daw.control.route.specific.implementation.PropuestaControlRouteSpImpl;
 import net.daw.control.route.specific.implementation.ProveedorControlRouteSpImpl;
 import net.daw.control.route.specific.implementation.TemaControlRouteSpImpl;
 import net.daw.control.route.specific.implementation.TipoproductoControlRouteSpImpl;
