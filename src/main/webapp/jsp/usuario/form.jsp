@@ -78,6 +78,13 @@
     </div>
 
     <div class="form-group">
+        <label class="col-sm-2 control-label"  for="skin">Skin:</label>
+        <div class="col-sm-10">
+            <input type="text"  class="form-control"  id="skin" name="skin" size="15" placeholder="Plantilla" />
+        </div>
+    </div>    
+
+    <div class="form-group">
         <div class="col-sm-offset-2 col-sm-10">
             <div id="messages"></div>
         </div>

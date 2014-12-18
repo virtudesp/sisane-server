@@ -110,6 +110,8 @@ propuestaView.prototype.loadButtons = function (id) {
     botonera += '<a class="btn btn-default view" id="' + id + '"  href="jsp#/' + this.clase + '/view/' + id + '"><i class="glyphicon glyphicon-eye-open"></i></a>';
     botonera += '<a class="btn btn-default edit" id="' + id + '"  href="jsp#/' + this.clase + '/edit/' + id + '"><i class="glyphicon glyphicon-pencil"></i></a>';
     botonera += '<a class="btn btn-default remove" id="' + id + '"  href="jsp#/' + this.clase + '/remove/' + id + '"><i class="glyphicon glyphicon-remove"></i></a>';
+    botonera += '<a class="btn btn-default votararriba" id="' + id + '"  href="jsp#/' + this.clase + '/votararriba/' + id + '"><i class="glyphicon glyphicon-arrow-up"></i></a>';
+    botonera += '<a class="btn btn-default votarabajo" id="' + id + '"  href="jsp#/' + this.clase + '/votarabajo/' + id + '"><i class="glyphicon glyphicon-arrow-down"></i></a>';
     //botonera += '<a class="btn btn-default mp" id="' + id + '"  href="jsp#/' + "mensajeprivado" + '/new/' + id_usuario + '"><i class="glyphicon glyphicon-envelope"></i></a>';
     botonera += '</div></div>';
     return botonera;
@@ -121,7 +123,7 @@ propuestaView.prototype.printValue = function (value, valor, recortar) {
     var strResult = "";
     if (/obj_tipopropuesta/.test(valor)) {
         if (value[valor].id > 0) {
-            strResult = '<a href="jsp#/' + valor.substring(4) + '/view/' + value[valor].id + '">' + value[valor].id + ":" + value[valor].nombre + '</a>';
+            strResult = '<a href="jsp#/' + valor.substring(4) + '/view/' + value[valor].id + '">' + value[valor].id + ":" + value[valor].descripcion + '</a>';
         } else {
             strResult = '???';
         }        

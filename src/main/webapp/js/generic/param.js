@@ -70,8 +70,8 @@ var param = function () {
             if (objParams["page"] > 100000) {
                 objParams["page"] = 100000;
             }
-            if (objParams["rpp"] > 50) {
-                objParams["rpp"] = 50;
+            if (objParams["rpp"] > 100) {
+                objParams["rpp"] = 100;
             }
             return objParams;
         },

@@ -27,17 +27,17 @@ productoView.prototype.getClassNameProducto = function () {
 var oProductoView = new productoView('producto');
 
 
-productoView.prototype.loadButtons = function (id) {
-
-    var botonera = "";
-    botonera += '<div class="btn-toolbar" role="toolbar"><div class="btn-group btn-group-xs">';
-    botonera += '<a class="btn btn-default view" id="' + id + '"  href="jsp#/' + this.clase + '/view/' + id + '"><i class="glyphicon glyphicon-eye-open"></i></a>';
-    botonera += '<a class="btn btn-default edit" id="' + id + '"  href="jsp#/' + this.clase + '/edit/' + id + '"><i class="glyphicon glyphicon-pencil"></i></a>';
-    botonera += '<a class="btn btn-default remove" id="' + id + '"  href="jsp#/' + this.clase + '/remove/' + id + '"><i class="glyphicon glyphicon-remove"></i></a>';
-    botonera += '</div></div>';
-    return botonera;
-
-}
+//productoView.prototype.loadButtons = function (id) {
+//
+//    var botonera = "";
+//    botonera += '<div class="btn-toolbar" role="toolbar"><div class="btn-group btn-group-xs">';
+//    botonera += '<a class="btn btn-default view" id="' + id + '"  href="jsp#/' + this.clase + '/view/' + id + '"><i class="glyphicon glyphicon-eye-open"></i></a>';
+//    botonera += '<a class="btn btn-default edit" id="' + id + '"  href="jsp#/' + this.clase + '/edit/' + id + '"><i class="glyphicon glyphicon-pencil"></i></a>';
+//    botonera += '<a class="btn btn-default remove" id="' + id + '"  href="jsp#/' + this.clase + '/remove/' + id + '"><i class="glyphicon glyphicon-remove"></i></a>';
+//    botonera += '</div></div>';
+//    return botonera;
+//
+//}
 productoView.prototype.loadFormValues = function (valores, campos) {
 //                    $('#producto_form #titulo').val(valores['titulo']);
 //                    $('#producto_form #contenido').val(valores['contenido']);
@@ -71,70 +71,76 @@ productoView.prototype.getFormValues = function () {
 
 productoView.prototype.doEventsLoading = function () {
     var thisObject = this;
-    $('#productoForm #obj_usuario_button').unbind('click');
-    $("#productoForm #obj_usuario_button").click(function () {
-        var oControl = oUsuarioControl;  //para probar dejar producto
-        //vista('usuario').cargaModalBuscarClaveAjena('#modal01', "producto");
-
-        $("#productoForm").append(thisObject.getEmptyModal());
-        util().loadForm('#modal01', thisObject.getFormHeader('Elección de usuario'), "", thisObject.getFormFooter(), true);
-
-        $('#productoForm').append(thisObject.getEmptyModal());
-
-        oControl.list('#modal01 #modal-body', param().defaultizeUrlObjectParameters({}), true, oUsuarioModel, oUsuarioView);
-        oControl.modalListEventsLoading('#modal01 #modal-body', param().defaultizeUrlObjectParameters({}), function (id) {
-            $('#obj_usuario_id').val(id).change();
-            $('#obj_usuario_desc').text(decodeURIComponent(oUsuarioModel.getMeAsAForeignKey(id)));
-            $('#modal01').modal('hide');
-
-        },oUsuarioModel, oUsuarioView);
-        return false;
-    });
-    $('#productoForm #obj_tipoproducto_button').unbind('click');
-    $("#productoForm #obj_tipoproducto_button").click(function () {
-        var oControl = oProductoControl;
-
-        $("#productoForm").append(thisObject.getEmptyModal());
-        util().loadForm('#modal01', thisObject.getFormHeader('Elección de tipo de producto'), "", thisObject.getFormFooter(), true);
-
-        $('#productoForm').append(thisObject.getEmptyModal());
-
-        oControl.list('#modal01 #modal-body', param().defaultizeUrlObjectParameters({}), true, oProductoModel, oProductoView);
-        oControl.modalListEventsLoading('#modal01 #modal-body', param().defaultizeUrlObjectParameters({}), function (id) {
-            $('#obj_tipoproducto_id').val(id).change();
-            $('#obj_tipoproducto_desc').text(decodeURIComponent(oTipoproductoModel.getMeAsAForeignKey(id)));
-            $('#modal01').modal('hide');
-
-        },oProductoModel, oProductoView);
-        return false;
-    });
-    $('#contenido_button').unbind('click');
-    $('#contenido_button').click(function () {
-        //cabecera = '<button id="full-width" type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>' + '<h3 id="myModalLabel">Edición de contenidos</h3>';
-        cabecera = thisObject.getFormHeader('Edición de contenidos');
-        //pie = '<button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="true">Cerrar</button>';                        
-        pie = '<a class="btn btn-primary" href="http://creoleparser.googlecode.com/svn/trunk/creoleparser/test_pages/CheatSheetPlus.html">Sintaxis</a>';
-        pie += thisObject.getFormFooter();
-        contenido = '<div class="row"><div class="col-md-6">';
-        contenido += '<textarea type="text" id="contenidomodal" name="contenido" rows="20" cols="70" placeholder="contenido"></textarea>';
-        contenido += '</div><div class="col-md-6"><div id="textoparseado"></div></div>';
-        contenido += '</div>';
-
-        $('#productoForm').append(thisObject.getEmptyModal());
-
-        util().loadForm('#modal01', cabecera, contenido, pie, true);
-        var texto = $('#contenido').val();
-        $('#contenidomodal').val(texto);
-        util().creoleParse(texto, $('#textoparseado'));
-        $('#contenido').val($('#contenidomodal').val());
-        $('#contenidomodal').keyup(function () {
-            util().creoleParse($('#contenidomodal').val(), $('#textoparseado'));
-            $('#contenido').val($('#contenidomodal').val());
-        });
-        return false;
-    });
 };
 
 productoView.prototype.okValidation = function (f) {
     $('#productoForm').on('success.form.bv', f);
 };
+
+productoView.prototype.getEmptyCuadros = function () {
+    $.when(ajax().ajaxCallSync(path + '/jsp?ob=' + this.clase + '&op=cuadros&mode=1', 'GET', '')).done(function (data) {
+        form = data;
+    });
+    return form;
+};
+
+productoView.prototype.getBodyCuadros = function (page, fieldNames) {
+    var thisObject = this;
+    var tabla = "";
+    $.each(page, function (index, value) {
+        tabla += '<div class="wrapper"><div id="cuadro">';
+
+        var id;
+        var path;
+        var precio;
+        var descripcion;
+        var nom = "";
+        var price = "";
+        var it = 0;
+        var it2 = 0;
+
+        $.each(fieldNames, function (index, valor) {
+            if ("id" == valor) {
+                id = value[valor];
+            }
+
+            if ("path" == valor) {
+                path = value[valor];
+            }
+
+            if (path) {
+                tabla += "<div class=\"top\"></div>";
+                tabla += "<div class=\"imageinfo\"><a id=\"" + id + "\"  href=\"jsp#/producto/view/" + id + "\"><img class=\"img-responsive\"src=\"" + path + "\"></a></div>";
+
+            }
+
+            if ("precio" == valor) {
+                precio = value[valor];
+            }
+
+            if (precio && it == 0) {
+                price += "<div class=\"precio\">" + precio + " €</div>";
+                it++;
+            }
+            
+             if ("descripcion" == valor) {
+                descripcion = value[valor];
+            }
+
+            if (descripcion && it2 == 0) {
+                nom += "<div class=\"desc\">" + descripcion + "</div>";
+                it2++;
+            }
+        });
+        
+        tabla += price;
+        tabla += nom;  
+        tabla += '<a class="btn btn-primary botonprod" href="">Añadir al carrito</a>';
+        tabla += '</div></div>';
+    });
+    return tabla;
+};
+
+
+
+

@@ -16,12 +16,6 @@
  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 --%>
 
-<%@page import="net.daw.bean.generic.specific.implementation.UsuarioBeanGenSpImpl"%>
-<%UsuarioBeanGenSpImpl user = (UsuarioBeanGenSpImpl) request.getSession().getAttribute("usuarioBean");%>
-<%
-        int id = user.getId();
-%>
-
 <form class="form-horizontal" role="form" action="#" id="productoForm" name="formulario">
     <div class="form-group">
         <label class="col-sm-2 control-label" for="id">Id:</label>
@@ -29,64 +23,71 @@
             <input type="text" id="id" class="form-control"  name="id" placeholder="id" />
         </div>
     </div>
-    
-    
-
     <div class="form-group">
-        <label class="col-sm-2 control-label" for="obj_usuario_1_id">Usuario que envía: </label> 
-        <div class="col-sm-2">              
-            <input readonly="true" value="<%=id%>" class="form-control"  id="obj_usuario_1_id" class="input-mini" name="id_usuario_1" type="text" size="5" maxlength="5" />  
-        </div>
-        <div class="col-sm-1">              
-            <a class="btn btn-primary btn-sm" id="obj_usuario_1_button" href="#"><i class="glyphicon glyphicon-search"></i></a>
-        </div>        
-        <label class="col-sm-7" for="obj_usuario_desc" id="obj_usuario_1_desc"></label>                     
-    </div>
-
-    <div class="form-group">
-        <label class="col-sm-2 control-label" for="obj_usuario_2_id">Usuario que recibe: </label> 
-        <div class="col-sm-2">              
-            <input readonly="true"  class="form-control"  id="obj_usuario_2_id" class="input-mini" name="id_usuario_2" type="text" size="5" maxlength="5" />  
-        </div>
-        <div class="col-sm-1">              
-            <a class="btn btn-primary btn-sm" id="obj_usuario_2_button" href="#"><i class="glyphicon glyphicon-search"></i></a>
-        </div>        
-        <label class="col-sm-7" for="obj_usuario_desc" id="obj_usuario_2_desc"></label>                     
-    </div>   
-    
-    
-    
-    <div class="form-group">
-        <label class="col-sm-2 control-label"  for="asunto">Asunto:</label>
-        <div class="col-sm-6">
-            <input type="text" id="asunto" class="form-control"  name="asunto" size="15" placeholder="Asunto" />
-        </div>
-    </div>
-    <div class="form-group">
-        <label class="col-sm-2 control-label" for="mensaje">Mensaje:</label>
+        <label class="col-sm-2 control-label" for="codigo">Codigo:</label>
         <div class="col-sm-9">
-            <textarea type="text"  class="form-control pull-left"  id="mensaje" name="mensaje" size="15" placeholder="Mensaje"></textarea>
+            <input type="text"  class="form-control pull-left"  id="nia" name="codigo" size="15" placeholder="codigo" />
         </div>
     </div>
-
     <div class="form-group">
-        <div class="col-sm-offset-2 col-sm-10">
-            <div id="messages"></div>
+        <label class="col-sm-2 control-label"  for="descripcion">Descripcion:</label>
+        <div class="col-sm-9">
+            <input type="text" id="descripcion" class="form-control"  name="descripcion" size="15" placeholder="descripcion" />
         </div>
     </div>
-
     <div class="form-group">
-        <div class="col-sm-offset-2 col-sm-10">
-            <button class="btn btn-primary" id="submitForm">Guardar</button>
+        <label class="col-sm-2 control-label" for="precio">Precio:</label>
+        <div class="col-sm-9">
+            <input type="text"  class="form-control pull-left"  id="precio" name="precio" size="15" placeholder="precio" />
         </div>
     </div>
+    
+    <div class="form-group">
+        <label class="col-sm-2 control-label" for="obj_tipoproducto_id">Tipo producto: </label> 
+        <div class="col-sm-2">              
+            <input readonly="true"  class="form-control"  id="obj_tipoproducto_id" class="input-mini" name="id_tipoproducto" type="text" size="5" maxlength="5" />  
+        </div>
+        <div class="col-sm-1">              
+            <a class="btn btn-primary btn-sm" id="obj_tipoproducto_button" href="#"><i class="glyphicon glyphicon-search"></i></a>
+        </div>        
+        <label class="col-sm-7" for="obj_tipoproducto_desc" id="obj_tipoproducto_desc"></label>                     
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label" for="obj_id_proveedor_id">ID Proveedor: </label> 
+        <div class="col-sm-2">              
+            <input readonly="true"  class="form-control"  id="obj_id_proveedor_id" class="input-mini" name="id_id_proveedor" type="text" size="5" maxlength="5" />  
+        </div>
+        <div class="col-sm-1">              
+            <a class="btn btn-primary btn-sm" id="obj_id_proveedor_button" href="#"><i class="glyphicon glyphicon-search"></i></a>
+        </div>        
+        <label class="col-sm-7" for="obj_tipoproducto_desc" id="obj_id_proveedor_desc"></label>                     
+    </div>
+    
+    <div class="form-group">
+        <label class="col-sm-2 control-label" for="path">Path:</label>
+        <div class="col-sm-9">
+            <input type="text"  class="form-control pull-left"  id="path" name="path" size="15" placeholder="path" />
+        </div>
+
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <div id="messages"></div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button class="btn btn-primary" id="submitForm">Guardar</button>
+            </div>
+        </div>
 
 </form>
-        
+
 
 <script type="text/javascript">
 
-    $(document).ready(function() {
+    $(document).ready(function () {
+
         //http://jqueryvalidation.org/documentation/
         $('#productoForm')
                 .bootstrapValidator({
@@ -97,50 +98,85 @@
                         validating: 'glyphicon glyphicon-refresh'
                     },
                     fields: {
-                        asunto: {
+                        codigo: {
                             validators: {
                                 notEmpty: {
-                                    message: 'Debe introducir un asunto'
+                                    message: 'Debe introducir un codigo'
                                 },
                                 stringLength: {
                                     max: 255,
-                                    message: 'El asunto debe tener como máximo 255 caracteres'
+                                    message: 'El NIA debe tener como máximo 255 caracteres'
                                 }
                             }
                         },
-                        mensaje: {
+                        descripcion: {
                             validators: {
                                 notEmpty: {
-                                    message: 'Debe introducir un mensaje'
-                                }
-                            }
-                        },
-                        id_usuario_1: {
-                            validators: {
-                                notEmpty: {
-                                    message: 'Debe elegir el usuario que envía el mensaje'
+                                    message: 'Debe introducir una descripcion'
                                 },
-                                integer: {
-                                    message: 'El identificador de usuario que envía el mensaje debe ser un entero'
+                                stringLength: {
+                                    max: 255,
+                                    message: 'El nombre debe tener como máximo 255 caracteres'
                                 }
                             }
                         },
-                        id_usuario_2: {
+                        precio: {
                             validators: {
                                 notEmpty: {
-                                    message: 'Debe elegir el usuario que recibe el mensaje'
+                                    message: 'Debe introducir un precio'
                                 },
-                                integer: {
-                                    message: 'El identificador de usuario que recibe el mensaje debe ser un entero'
+                                stringLength: {
+                                    max: 255,
+                                    message: 'El teléfono debe tener como máximo 255 caracteres'
                                 }
+
+                            }
+                        },
+                        id_tipoproducto: {
+                            validators: {
+                                notEmpty: {
+                                    message: 'Debe introducir un ID Tipo producto'
+                                },
+                                stringLength: {
+                                    max: 255,
+                                    message: 'La dirección debe tener como máximo 255 caracteres'
+                                }
+
+                            }
+                        },
+                        id_preveedor: {
+                            validators: {
+                                notEmpty: {
+                                    message: 'Debe introducir un ID Proveedor'
+                                },
+                                stringLength: {
+                                    max: 255,
+                                    message: 'El email debe tener como máximo 255 caracteres'
+                                }
+
+                            }
+                        },
+                        path: {
+                            validators: {
+                                notEmpty: {
+                                    message: 'Debe introducir un path'
+                                },
+                                stringLength: {
+                                    max: 255,
+                                    message: 'El web debe tener como máximo 255 caracteres'
+                                }
+
                             }
                         }
 
                     }
                 })
-    });       
 
-    
-    
+                ;
+
+    });
+
+
+
+
 </script>
-     

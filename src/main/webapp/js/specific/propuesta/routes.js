@@ -75,4 +75,11 @@ function fPropuestaRoutes() {
         $('#indexContenidoJsp').empty();
         return false;
     });
+    Path.map("#/propuesta/votararriba/:id").to(function () {
+        $('#indexContenidoJsp').spinner();
+        var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
+        oPropuestaControl.remove($('#indexContenido'), paramsObject['id'], oPropuestaModel, oPropuestaView);
+        $('#indexContenidoJsp').empty();
+        return false;
+    });
 }

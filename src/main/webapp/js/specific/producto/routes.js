@@ -29,17 +29,17 @@ function fProductoRoutes() {
 
     Path.map("#/producto").to(function () {
         $('#indexContenidoJsp').spinner();
-        oProductoControl.list($('#indexContenido'), param().defaultizeUrlObjectParameters({}), null, oProductoModel, oProductoView);
+        oProductoControl.listCuadros($('#indexContenido'), param().defaultizeUrlObjectParameters({}), null, oProductoModel, oProductoView);
         //productoControl.modalListEventsLoading(productoObject, productoView, $('#indexContenido'), param().defaultizeUrlObjectParameters({}), null);        
         $('#indexContenidoJsp').empty();
-        //$('#indexContenidoJsp').append(oProductoControl.getClassNameProducto());
+        $('#indexContenidoJsp').append(oProductoControl.getClassNameProducto());
         return false;
     });
 
     Path.map("#/producto/list/:url").to(function () {
         $('#indexContenidoJsp').spinner();
         var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
-        oProductoControl.list($('#indexContenido'), paramsObject, null, oProductoModel, oProductoView);
+        oProductoControl.listCuadros($('#indexContenido'), paramsObject, null, oProductoModel, oProductoView);
         $('#indexContenidoJsp').empty();
         return false;
     });
@@ -78,6 +78,14 @@ function fProductoRoutes() {
         $('#indexContenidoJsp').spinner();
         var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
         oProductoControl.remove($('#indexContenido'), paramsObject['id'], oProductoModel, oProductoView);
+        $('#indexContenidoJsp').empty();
+        return false;
+    });
+
+    Path.map("#/producto/duplicate/:id").to(function () {
+        $('#indexContenidoJsp').spinner();
+        var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
+        oProductoControl.duplicate($('#indexContenido'), paramsObject['id'], oProductoModel, oProductoView);
         $('#indexContenidoJsp').empty();
         return false;
     });
