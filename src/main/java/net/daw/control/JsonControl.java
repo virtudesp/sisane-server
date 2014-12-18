@@ -29,7 +29,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import net.daw.control.operation.generic.specific.implementation.AmigoControlOperationGenSpImpl;
 import net.daw.control.operation.generic.specific.implementation.CuestionarioControlOperationGenSpImpl;
-import net.daw.control.operation.generic.specific.implementation.DetallePedidoControlOperationGenSpImpl;
+import net.daw.control.operation.specific.implementation.DetallePedidoControlOperationSpImpl;
 import net.daw.control.operation.generic.specific.implementation.DocumentoControlOperationGenSpImpl;
 import net.daw.control.operation.generic.specific.implementation.OpcionControlOperationGenSpImpl;
 import net.daw.control.operation.generic.specific.implementation.PedidoControlOperationGenSpImpl;
@@ -53,7 +53,6 @@ import net.daw.control.operation.specific.implementation.ProveedorControlOperati
 import net.daw.control.operation.specific.implementation.TemaControlOperationSpImpl;
 import net.daw.control.operation.specific.implementation.TipoproductoControlOperationSpImpl;
 import net.daw.control.route.generic.specific.implementation.CuestionarioControlRouteGenSpImpl;
-import net.daw.control.route.generic.specific.implementation.DetallePedidoControlRouteGenSpImpl;
 import net.daw.control.route.generic.specific.implementation.DocumentoControlRouteGenSpImpl;
 import net.daw.control.route.generic.specific.implementation.PreguntaControlRouteGenSpImpl;
 import net.daw.control.route.generic.specific.implementation.OpcionControlRouteGenSpImpl;
@@ -69,6 +68,7 @@ import net.daw.control.route.generic.specific.implementation.UsuarioProveedorCon
 import net.daw.control.route.specific.implementation.AmigoControlRouteSpImpl;
 import net.daw.control.route.specific.implementation.OrdenadorControlRouteSpImpl;
 import net.daw.control.route.specific.implementation.ActividadControlRouteSpImpl;
+import net.daw.control.route.specific.implementation.DetallePedidoControlRouteSpImpl;
 import net.daw.control.route.specific.implementation.ProductoControlRouteSpImpl;
 import net.daw.control.route.specific.implementation.EntregaControlRouteSpImpl;
 import net.daw.control.route.specific.implementation.MensajeprivadoControlRouteSpImpl;
@@ -222,8 +222,8 @@ public class JsonControl extends HttpServlet {
                         break;
 
                     case "detalle_pedido":
-                        DetallePedidoControlRouteGenSpImpl oDetallePedidoRoute = new DetallePedidoControlRouteGenSpImpl();
-                        DetallePedidoControlOperationGenSpImpl oDetallePedidoControlOperation = new DetallePedidoControlOperationGenSpImpl(request);
+                        DetallePedidoControlRouteSpImpl oDetallePedidoRoute = new DetallePedidoControlRouteSpImpl();
+                        DetallePedidoControlOperationSpImpl oDetallePedidoControlOperation = new DetallePedidoControlOperationSpImpl(request);
                         jsonResult = oDetallePedidoRoute.execute(request, oDetallePedidoControlOperation);
                         break;
                     case "actividad":

@@ -24,6 +24,7 @@ import java.util.Iterator;
 import net.daw.bean.generic.specific.implementation.DetallePedidoBeanGenSpImpl;
 import net.daw.bean.generic.specific.implementation.PedidoBeanGenSpImpl;
 import net.daw.bean.generic.specific.implementation.ProductoBeanGenSpImpl;
+import net.daw.dao.generic.specific.implementation.PedidoDaoGenSpImpl;
 import net.daw.dao.publicinterface.MetaDaoInterface;
 import net.daw.dao.publicinterface.TableDaoInterface;
 import net.daw.dao.publicinterface.ViewDaoInterface;
@@ -103,7 +104,7 @@ public class DetallePedidoDaoSpcImpl implements ViewDaoInterface<DetallePedidoBe
 
                         PedidoBeanGenSpImpl oPedido = new PedidoBeanGenSpImpl();
                         oPedido.setId(Integer.parseInt(oMysql.getOne(strTableName, "id_pedido", oDetallePedidoBean.getId())));
-                        PedidoDaoSpcImpl oPedidoDAO = new PedidoDaoSpcImpl("pedido", "Pedido", oConnection);
+                        PedidoDaoGenSpImpl oPedidoDAO = new PedidoDaoGenSpImpl("pedido", "Pedido", oConnection);
                         oPedido = oPedidoDAO.get(oPedido, AppConfigurationHelper.getJsonDepth());
                         oDetallePedidoBean.setObj_pedido(oPedido);
 
