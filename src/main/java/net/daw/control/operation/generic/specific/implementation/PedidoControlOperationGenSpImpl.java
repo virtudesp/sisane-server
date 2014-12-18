@@ -19,12 +19,20 @@ package net.daw.control.operation.generic.specific.implementation;
 
 import java.lang.reflect.InvocationTargetException;
 import javax.servlet.http.HttpServletRequest;
+import net.daw.bean.generic.specific.implementation.UsuarioBeanGenSpImpl;
 import net.daw.control.operation.generic.implementation.ControlOperationGenImpl;
 
 public class PedidoControlOperationGenSpImpl extends ControlOperationGenImpl {
 
     public PedidoControlOperationGenSpImpl(HttpServletRequest request) throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, Exception {
         super(request);
+            
+            UsuarioBeanGenSpImpl oUsuario = new UsuarioBeanGenSpImpl();
+            oUsuario=  (UsuarioBeanGenSpImpl) request.getSession().getAttribute("usuarioBean");           
+            int id = oUsuario.getId();
+            
+            oService.setPojo("Pedido");
+            oService.setSource("SELECT * FROM pedido WHERE id_usuario = "+id);
     }
 
 }
