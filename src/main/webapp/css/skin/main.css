@@ -34,3 +34,7 @@ th{
     background-color: white;
     color: black;
 }
+
+.list-group-item{
+    padding: 3px 8px;
+}
