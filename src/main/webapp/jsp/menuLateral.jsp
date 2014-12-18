@@ -52,7 +52,8 @@
         <a  class="list-group-item" id="lnkActividad" href="jsp#/actividad">Actividad</a>
         <a  class="list-group-item" id="lnkActividad" href="jsp#/entrega">Entrega</a> 
         <a  class="list-group-item" id="lnkActividad" href="jsp#/detalle_pedido">DetallePedido</a>
-        <a  class="list-group-item" id="lnkProducto" href="jsp#/producto">Producto</a> 
+        <a  class="list-group-item" id="lnkProducto" href="jsp#/producto">Producto</a>
+        <a  class="list-group-item" id="lnkTipoproducto" href="jsp#/tipoproducto">Tipo Producto</a> 
     </div>
 </div>
 
