@@ -51,8 +51,7 @@ redsocialperfilControl.prototype.view = function (place, id, oModel, oView) {
     
     if (myuser == id) {
         $(place).append('<a class="btn btn-primary" href="jsp#/usuario/edit/' + id + '">Editar</a>');
-        $(place).append('<a class="btn btn-primary" href="jsp#/usuario/remove/' + id + '">Borrar</a>');
-        $(place).append('<a class="btn btn-primary" href="jsp#/usuario/list/' + id + '">Listar</a><br /><br />');
+        $(place).append('<a class="btn btn-primary" href="jsp#/usuario/remove/' + id + '">Borrar</a><br /><br />');
     } else {
         if(!amigo){
             $(place).append('<a class="btn btn-primary" id=\"addfriend\">Añadir amigo</a>');
