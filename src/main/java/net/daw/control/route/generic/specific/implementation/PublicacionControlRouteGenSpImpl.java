@@ -37,6 +37,12 @@ public class PublicacionControlRouteGenSpImpl extends ControlRouteGenImpl {
                 case "duplicate":
                     jsonResult = oPublicationControl.duplicate(request);
                     break;
+                case "getcomentarioamigo":
+                    jsonResult = oPublicationControl.getcomentarioamigo(request);
+                    break;
+                case "getpagescomentarioamigo":
+                    jsonResult = oPublicationControl.getpagescomentarioamigo(request);
+                    break;
                 default:
                     jsonResult = super.execute(request, oControl);
                     break;

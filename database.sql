@@ -60,7 +60,7 @@ INSERT INTO `actividad` (`id`, `enunciado`, `fecha`, `evaluacion`, `activo`) VAL
 -- Estructura de tabla para la tabla `amigo`
 --
 
-CREATE TABLE IF NOT EXISTS `amistad` (
+CREATE TABLE IF NOT EXISTS `amigo` (
 `id` int(11) NOT NULL COMMENT 'Identificador',
   `id_usuario_1` int(11) DEFAULT NULL COMMENT 'Usuario',
   `id_usuario_2` int(11) DEFAULT NULL COMMENT 'Amigo'
@@ -70,7 +70,7 @@ CREATE TABLE IF NOT EXISTS `amistad` (
 -- Volcado de datos para la tabla `amigo`
 --
 
-INSERT INTO `amistad` (`id`, `id_usuario_1`, `id_usuario_2`) VALUES
+INSERT INTO `amigo` (`id`, `id_usuario_1`, `id_usuario_2`) VALUES
 (1, 2, 3),
 (2, 2, 4),
 (3, 2, 5),
@@ -1024,7 +1024,7 @@ CREATE TABLE IF NOT EXISTS `objeto` (
 
 INSERT INTO `objeto` (`id`, `descripcion`) VALUES
 (1, 'actividad'),
-(2, 'amistad'),
+(2, 'amigo'),
 (3, 'cliente'),
 (4, 'comentario'),
 (5, 'compra'),
@@ -2963,9 +2963,9 @@ ALTER TABLE `actividad`
  ADD PRIMARY KEY (`id`);
 
 --
--- Indices de la tabla `amistad`
+-- Indices de la tabla `amigo`
 --
-ALTER TABLE `amistad`
+ALTER TABLE `amigo`
  ADD PRIMARY KEY (`id`);
 
 --
@@ -3196,7 +3196,7 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Numero',AUTO_INCREMENT=22;
 --
 -- AUTO_INCREMENT de la tabla `amigo`
 --
-ALTER TABLE `amistad`
+ALTER TABLE `amigo`
 MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Identificador',AUTO_INCREMENT=21;
 --
 -- AUTO_INCREMENT de la tabla `cliente`

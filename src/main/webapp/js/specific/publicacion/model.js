@@ -49,7 +49,7 @@ publicacionModel.prototype.loadAggregateViewSome = function (objParams) {
     } else {
         systemfilterParams = "";
     }
-    $.when(ajax().ajaxCallSync(this.urlJson + '&op=getpage' + filterParams + '&rpp=' + objParams.rpp + orderParams + '&page=' + objParams.page + systemfilterParams, 'GET', '')).done(function (data) {
+    $.when(ajax().ajaxCallSync(this.urlJson + '&op=getcomentarioamigo' + filterParams + '&rpp=' + objParams.rpp + orderParams + '&page=' + objParams.page + systemfilterParams, 'GET', '')).done(function (data) {
         pagina_objs = data; //decodeURI htmlDecode
     });
     //return pagina_objs;
