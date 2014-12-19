@@ -16,11 +16,14 @@
  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 --%>           
 <%@page import="net.daw.bean.generic.specific.implementation.UsuarioBeanGenSpImpl"%>
-        
-<%  UsuarioBeanGenSpImpl user = (UsuarioBeanGenSpImpl) request.getSession().getAttribute("usuarioBean");
-    String level = user.getObj_tipousuario().getDescripcion(); 
-    int id_tipousuario = user.getId_tipousuario();
-    int id_usuario = user.getId(); 
+
+<%
+    int id_tipousuario = 0, id_usuario = 0;
+    UsuarioBeanGenSpImpl user = (UsuarioBeanGenSpImpl) request.getSession().getAttribute("usuarioBean");
+    if (user != null) {
+        id_tipousuario = user.getId_tipousuario();
+        id_usuario = user.getId();
+    }
 %>
 
 <div class="panel panel-primary">
@@ -40,7 +43,7 @@
         <a  class="list-group-item" id="lnkUsuario" href="jsp#/usuario">Usuario</a>
     </div>
 </div>
-    
+
 <div class="panel panel-primary">
     <div class="panel-heading">
         <h3 class="panel-title">Tienda Online</h3>
@@ -106,7 +109,7 @@
         <a  class="list-group-item" id="lnkPedido" href="jsp#/pedido">Pedido</a>        
     </div>
 </div>
-    
+
 <div class="panel panel-primary">
     <div class="panel-heading">
         <h3 class="panel-title">Tareas</h3>
@@ -118,7 +121,7 @@
         <a class="list-group-item" id="lnkPublicacion" href="jsp#/tipotarea">Tipo Tarea</a>
     </div>    
 </div>
-    
+
 <div class="panel panel-primary">
     <div class="panel-heading">
         <h3 class="panel-title">Propuestas y votaciones</h3>
@@ -138,7 +141,7 @@
         <a  class="list-group-item" id="lnkOrdenador" href="jsp?op=cambia">Cambia el campo</a>
     </div>
 </div>
-    
+
 <div class="panel panel-primary">
     <div class="panel-heading">
         <h3 class="panel-title">Cuestionario</h3>
@@ -151,7 +154,4 @@
     </div>
 </div>
 
-<script type="text/javascript">
-    myuser = <%=id_usuario%>;
-    mylevel = <%=id_tipousuario%>;
-</script>
+

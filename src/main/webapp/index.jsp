@@ -20,7 +20,15 @@
 <%@page import="net.daw.helper.EstadoHelper"%>
 <%@page import="net.daw.bean.generic.specific.implementation.UsuarioBeanGenSpImpl"%>
 <%@page import="net.daw.helper.AppInformationHelper"%>
-<%UsuarioBeanGenSpImpl user = (UsuarioBeanGenSpImpl) request.getSession().getAttribute("usuarioBean");%>
+
+<%
+    int id_tipousuario = 0, id_usuario = 0;
+    UsuarioBeanGenSpImpl user = (UsuarioBeanGenSpImpl) request.getSession().getAttribute("usuarioBean");
+    if (user != null) {
+        id_tipousuario = user.getId_tipousuario();
+        id_usuario = user.getId();
+    }
+%>
 
 <!DOCTYPE html>
 <html lang="es">
@@ -165,6 +173,8 @@
 
         <script type="text/javascript">
             var path = '<%=request.getContextPath()%>';
+            var myuser = <%=id_usuario%>;
+            var mylevel = <%=id_tipousuario%>;
         </script>
 
         <script src="js/specific/documento/control.js" charset="UTF-8"></script>
@@ -192,18 +202,18 @@
         <script src="js/specific/estado/model.js" charset="UTF-8"></script>
         <script src="js/specific/estado/view.js" charset="UTF-8"></script>
         <script src="js/specific/estado/routes.js" charset="UTF-8"></script>        
-        
+
         <script src="js/specific/redsocialperfil/control.js" charset="UTF-8"></script>
         <script src="js/specific/redsocialperfil/model.js" charset="UTF-8"></script>
         <script src="js/specific/redsocialperfil/view.js" charset="UTF-8"></script>
         <script src="js/specific/redsocialperfil/routes.js" charset="UTF-8"></script>
-        
+
         <script src="js/specific/inicioRedSocial/control.js" charset="UTF-8"></script>
         <script src="js/specific/inicioRedSocial/model.js" charset="UTF-8"></script>
         <script src="js/specific/inicioRedSocial/view.js" charset="UTF-8"></script>
         <script src="js/specific/inicioRedSocial/routes.js" charset="UTF-8"></script>
         <!-- ***********  FIN RED SOCIAL  *********** -->
-        
+
         <script src="js/specific/cuestionario/control.js" charset="UTF-8"></script>
         <script src="js/specific/cuestionario/model.js" charset="UTF-8"></script>
         <script src="js/specific/cuestionario/view.js" charset="UTF-8"></script>
@@ -307,12 +317,12 @@
         <script src="js/specific/respuesta/model.js" charset="UTF-8"></script>
         <script src="js/specific/respuesta/view.js" charset="UTF-8"></script>
         <script src="js/specific/respuesta/routes.js" charset="UTF-8"></script>
-        
+
         <script src="js/specific/producto/control.js" charset="UTF-8"></script>
         <script src="js/specific/producto/model.js" charset="UTF-8"></script>
         <script src="js/specific/producto/view.js" charset="UTF-8"></script>
         <script src="js/specific/producto/routes.js" charset="UTF-8"></script>
-        
+
         <script src="js/specific/tipoproducto/control.js" charset="UTF-8"></script>
         <script src="js/specific/tipoproducto/model.js" charset="UTF-8"></script>
         <script src="js/specific/tipoproducto/view.js" charset="UTF-8"></script>
@@ -343,7 +353,7 @@
         <script src="js/specific/estadotarea/model.js" charset="UTF-8"></script>
         <script src="js/specific/estadotarea/view.js" charset="UTF-8"></script>
         <script src="js/specific/estadotarea/routes.js" charset="UTF-8"></script>
-        
+
         <script src="js/specific/producto/control.js" charset="UTF-8"></script>
         <script src="js/specific/producto/model.js" charset="UTF-8"></script>
         <script src="js/specific/producto/view.js" charset="UTF-8"></script>
@@ -353,8 +363,6 @@
         <script src="js/specific/tipodocumento/model.js" charset="UTF-8"></script>
 
         <script type="text/javascript">
-
-            //path = '<%=request.getContextPath()%>';
 
             $(document).ready(function () {
 

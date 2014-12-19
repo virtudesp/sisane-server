@@ -16,6 +16,16 @@
  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 --%>
 
+<%@page import="net.daw.bean.generic.specific.implementation.UsuarioBeanGenSpImpl"%>
+
+<%
+    int id_tipousuario = 0, id_usuario = 0;
+    UsuarioBeanGenSpImpl user = (UsuarioBeanGenSpImpl) request.getSession().getAttribute("usuarioBean");
+    if (user != null) {
+        id_tipousuario = user.getId_tipousuario();
+        id_usuario = user.getId();
+    }
+%>
 
 <ul class="nav navbar-nav">
     <li><a href="jsp">Inicio</a></li>
