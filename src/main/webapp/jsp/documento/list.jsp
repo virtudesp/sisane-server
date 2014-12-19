@@ -51,7 +51,7 @@
 
                 <div id="pane1" class="tab-pane active">
                     <div class="row">
-                        <div class="col-md-7">
+                        <div class="col-md-5">
                             <div class="panel panel-default">
                                 <!-- Default panel contents -->
                                 <div class="panel-heading">Paginación</div>
@@ -62,6 +62,17 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="col-md-2">
+                            <div class="panel panel-default">
+                                <!-- Default panel contents -->
+                                <div class="panel-heading">Visualizacion</div>
+                                <div class="panel-body visualizacion">     
+                                  <a class="btn btn-default active botLista" href="#"><i class="glyphicon glyphicon-th-list"></i></a>
+                                  <a class="btn btn-default botFile" href="jsp#/documentobonito"><i class="glyphicon glyphicon-file"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                        
                         <div class="col-md-2">
                             <div class="panel panel-default">
                                 <!-- Default panel contents -->
@@ -125,7 +136,7 @@
                                 <div class="panel-body">
                                     <br />
                                     <div class="text-center">
-                                        <a id="newButton" class="btn btn-primary" href='jsp#/<%=strNombreMantenimiento%>/new'>Crear un nuevo <%=strNombreMantenimiento%></a> 
+                                        <a class="btn btn-primary" href='jsp#/<%=strNombreMantenimiento%>/new'>Crear un nuevo <%=strNombreMantenimiento%></a> 
                                     </div>
                                     <br />
                                 </div>
@@ -139,6 +150,7 @@
     </div>
 
 </div>
+                                    
 </div>
 <div class="row">
     <div class="col-md-12" id="menuLateralList">

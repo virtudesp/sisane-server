@@ -1,0 +1,38 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 16-abr-2014, 13:36:56
+    Author     : raznara
+*/
+
+
+/* Sticky footer styles
+-------------------------------------------------- */
+
+body {
+    padding-top: 80px;
+}
+
+.jumbotron {
+
+    background-color: #f0a30a ;
+}
+
+.panel-default>.panel-heading {
+    background-color:#60a917;
+    color:whitesmoke;
+}
+
+th{
+    min-width: 30px;
+    color: whitesmoke;
+    background-color: #9a1616;
+}
+
+.datepicker th{
+    background-color: white;
+    color: black;
+}

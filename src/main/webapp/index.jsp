@@ -32,15 +32,19 @@
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width">
         <link rel="stylesheet" href="css/bootstrap.min.css">
-        <% if (user != null) {%>
-        <link rel="stylesheet" href="css/skin/<%=user.getSkin()%>.css">
-        <% } else {%>
-        <link rel="stylesheet" href="css/skin/main.css">
-        <% } %>
+
         <!-- <link rel="stylesheet" href="css/jquery-ui.css"> -->
         <link rel="stylesheet" href="css/animate.css">
         <link rel="stylesheet" href="css/bootstrapValidator.min.css">
         <link rel="stylesheet" href="css/bootstrap-datetimepicker.min.css"  />
+
+
+        <% if (user != null) {%>
+        <link rel="stylesheet" href="css/skin/<%=user.getSkin()%>.css">
+        <% } else {%>
+        <link rel="stylesheet" href="css/skin/main.css">
+        <% }%>
+
         <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
         <!--[if lt IE 9]>
           <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
@@ -51,19 +55,20 @@
         <!--[if lt IE 7]>
         <p class="chromeframe">You are using an outdated browser. <a href="http://browsehappy.com/">Upgrade your browser today</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to better experience this site.</p>
         <![endif]-->
-        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation" id="menuSuperior">
-            <div class="container">
+
+        <!-- Fixed navbar -->
+        <div class="navbar navbar-default navbar-fixed-top">
+            <div class="container barra">
                 <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
-                        <span class="sr-only">Toggle navigation</span>
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
                     <a class="navbar-brand" href="jsp"><%=AppInformationHelper.getAppName()%></a>
                 </div>
-                <!-- Collect the nav links, forms, and other content for toggling -->
-                <div class="collapse navbar-collapse navbar-ex1-collapse">
+                <div class="collapse navbar-collapse">
+
                     <ul class="nav navbar-nav">
                         <%if (user != null) {%>
                         <jsp:include page="jsp/menuSuperior.jsp" /> 
@@ -72,9 +77,11 @@
                     <ul class="nav navbar-nav navbar-right">
                         <jsp:include page="jsp/usuario/infologin.jsp" />
                     </ul>
-                </div><!-- /.navbar-collapse -->
-            </div><!-- /.container -->
-        </nav>
+
+                </div><!--/.nav-collapse -->
+            </div>
+        </div>
+
 
         <% if (user != null) {%>
 
@@ -95,7 +102,7 @@
                 <div class="col-md-12" id="contenidoParseado"></div>   
             </div>
             <div class="row">
-                <div class="col-md-12"><hr><footer><p>&copy; <%=EstadoHelper.getAutor()%>: <%=EstadoHelper.getMailAutor()%> (<%=EstadoHelper.getAnyo()%>) - <%=EstadoHelper.getLicenciaLink()%></p></footer></div> 
+                <div class="col-md-12"><hr><footer><p class="pull-right">&copy; <%=EstadoHelper.getAutor()%>: <%=EstadoHelper.getMailAutor()%> (<%=EstadoHelper.getAnyo()%>) - <%=EstadoHelper.getLicenciaLink()%></p></footer></div> 
             </div>
         </div>            
 
@@ -113,7 +120,7 @@
                 <div class="col-md-12" id="contenidoParseado"></div>   
             </div>
             <div class="row">
-                <div class="col-md-12"><hr><footer><p>&copy; <%=EstadoHelper.getAutor()%>: <%=EstadoHelper.getMailAutor()%> (<%=EstadoHelper.getAnyo()%>) - <%=EstadoHelper.getLicenciaLink()%></p></footer></div>   
+                <div class="col-md-12"><hr><footer><p class="pull-right">&copy; <%=EstadoHelper.getAutor()%>: <%=EstadoHelper.getMailAutor()%> (<%=EstadoHelper.getAnyo()%>) - <%=EstadoHelper.getLicenciaLink()%></p></footer></div>   
             </div>
         </div>  
 
@@ -211,7 +218,10 @@
         <script src="js/specific/usuario/view.js" charset="UTF-8"></script>
         <script src="js/specific/usuario/routes.js" charset="UTF-8"></script>
 
+        <script src="js/specific/tipodocumento/control.js" charset="UTF-8"></script>
         <script src="js/specific/tipodocumento/model.js" charset="UTF-8"></script>
+        <script src="js/specific/tipodocumento/view.js" charset="UTF-8"></script>
+        <script src="js/specific/tipodocumento/routes.js" charset="UTF-8"></script>
 
         <script src="js/specific/pregunta/control.js" charset="UTF-8"></script>
         <script src="js/specific/pregunta/model.js" charset="UTF-8"></script>
@@ -296,23 +306,28 @@
         <script src="js/specific/respuesta/model.js" charset="UTF-8"></script>
         <script src="js/specific/respuesta/view.js" charset="UTF-8"></script>
         <script src="js/specific/respuesta/routes.js" charset="UTF-8"></script>
-        
+
+        <script src="js/specific/documentobonito/control.js" charset="UTF-8"></script>
+        <script src="js/specific/documentobonito/model.js" charset="UTF-8"></script>
+        <script src="js/specific/documentobonito/view.js" charset="UTF-8"></script>
+        <script src="js/specific/documentobonito/routes.js" charset="UTF-8"></script>
+
         <script src="js/specific/tarea/control.js" charset="UTF-8"></script>
         <script src="js/specific/tarea/model.js" charset="UTF-8"></script>
         <script src="js/specific/tarea/view.js" charset="UTF-8"></script>
         <script src="js/specific/tarea/routes.js" charset="UTF-8"></script>
-        
+
         <script src="js/specific/tipotarea/control.js" charset="UTF-8"></script>
         <script src="js/specific/tipotarea/model.js" charset="UTF-8"></script>
         <script src="js/specific/tipotarea/view.js" charset="UTF-8"></script>
         <script src="js/specific/tipotarea/routes.js" charset="UTF-8"></script>
-        
+
         <script src="js/specific/proyecto/control.js" charset="UTF-8"></script>
         <script src="js/specific/proyecto/model.js" charset="UTF-8"></script>
         <script src="js/specific/proyecto/view.js" charset="UTF-8"></script>
         <script src="js/specific/proyecto/routes.js" charset="UTF-8"></script>
-        
-        
+
+
         <script src="js/specific/estadotarea/control.js" charset="UTF-8"></script>
         <script src="js/specific/estadotarea/model.js" charset="UTF-8"></script>
         <script src="js/specific/estadotarea/view.js" charset="UTF-8"></script>
@@ -359,10 +374,11 @@
                 fPedidoRoutes();
                 fDetalle_pedidoRoutes();
                 fRespuestaRoutes();
-
                 fComentarioRoutes();
                 fPropuestaRoutes();
                 fTipopropuestaRoutes();
+                fDocumentobonitoRoutes();
+                fTipodocumentoRoutes();
 
 
 

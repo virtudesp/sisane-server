@@ -20,7 +20,7 @@ var comentarioModel = function (strClase) {
     this.clase = strClase;
 };
 comentarioModel.prototype = new model('comentario');
-comentarioModel.prototype.getClassNameComentario = function () {
+comentarioModel.prototype.getClassNamePedido = function () {
     return this.getClassName() + "Modelo";
 };
 var oComentarioModel = new comentarioModel('comentario');
