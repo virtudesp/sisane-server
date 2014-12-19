@@ -101,14 +101,14 @@ public class PublicacionServiceGenSpImpl extends TableServiceGenImpl {
         try {
             oConnection.setAutoCommit(false);
             PublicacionDaoGenSpImpl oPublicacionDAO = new PublicacionDaoGenSpImpl(strObjectName, oConnection);
-            AmistadBeanGenSpImpl oAmigo = new AmistadBeanGenSpImpl();
+            AmistadBeanGenSpImpl oAmistad = new AmistadBeanGenSpImpl();
             Gson gson = new GsonBuilder().setDateFormat("dd/MM/yyyy HH:mm:ss").create();
             jason = EncodingUtilHelper.decodeURIComponent(jason);
-            oAmigo = gson.fromJson(jason, oAmigo.getClass());
-            oAmigo = oPublicacionDAO.agregarAmigo(oAmigo);
+            oAmistad = gson.fromJson(jason, oAmistad.getClass());
+            oAmistad = oPublicacionDAO.agregarAmigo(oAmistad);
             Map<String, String> data = new HashMap<>();
             data.put("status", "200");
-            data.put("message", Integer.toString(oAmigo.getId()));
+            data.put("message", Integer.toString(oAmistad.getId()));
             resultado = gson.toJson(data);
             oConnection.commit();
         } catch (Exception ex) {
@@ -154,6 +154,67 @@ public class PublicacionServiceGenSpImpl extends TableServiceGenImpl {
         } catch (Exception ex) {
             oConnection.rollback();
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPage ERROR: " + ex.getMessage()));
+        }
+        return data;
+    }
+    
+    public String getPageComentarioAmigo(int id_usuario, int intRegsPerPag, int intPage, ArrayList<FilterBeanHelper> alFilter, HashMap<String, String> hmOrder) throws Exception {
+        String data = null;
+        try {
+            oConnection.setAutoCommit(false);
+            PublicacionDaoGenSpImpl oPublicacionDAO = new PublicacionDaoGenSpImpl(strObjectName, oConnection);
+            List<PublicacionBeanGenSpImpl> oPublicacions = oPublicacionDAO.getPageComentarioAmigo(id_usuario, intRegsPerPag, intPage, alFilter, hmOrder);
+            GsonBuilder gsonBuilder = new GsonBuilder();
+            gsonBuilder.setDateFormat("dd/MM/yyyy HH:mm:ss");
+            Gson gson = gsonBuilder.create();
+            data = gson.toJson(oPublicacions);
+            data = "{\"list\":" + data + "}";
+            oConnection.commit();
+        } catch (Exception ex) {
+            oConnection.rollback();
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPage ERROR: " + ex.getMessage()));
+        }
+        return data;
+    }
+    
+    public String getPagesComentarioAmigo(int id_usuario, int intRegsPerPag, ArrayList<FilterBeanHelper> alFilter) throws Exception {
+        String data = null;
+        try {
+            oConnection.setAutoCommit(false);
+            PublicacionDaoGenSpImpl oPublicacionDAO = new PublicacionDaoGenSpImpl(strObjectName, oConnection);
+            int pages = oPublicacionDAO.getPagesComentarioAmigo(id_usuario, intRegsPerPag, alFilter);
+            data = "{\"data\":\"" + Integer.toString(pages) + "\"}";
+            oConnection.commit();
+        } catch (Exception ex) {
+            oConnection.rollback();
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPages ERROR: " + ex.getMessage()));
+        }
+        return data;
+    }
+    
+    public String getComentarioAmigo(int id_usuario, int intRegsPerPag, int intPage, ArrayList<FilterBeanHelper> alFilter, HashMap<String, String> hmOrder) throws Exception {
+        String data = null;
+        try {
+            oConnection.setAutoCommit(false);
+            String columns = this.getColumns();
+            String prettyColumns = this.getPrettyColumns();
+            //String types = this.getTypes();
+            String page = this.getPageComentarioAmigo(id_usuario, intRegsPerPag, intPage, alFilter, hmOrder);
+            String pages = this.getPagesComentarioAmigo(id_usuario, intRegsPerPag, alFilter);
+            String registers = this.getCount(alFilter);
+            data = "{\"data\":{"
+                    + "\"columns\":" + columns
+                    + ",\"prettyColumns\":" + prettyColumns
+                    // + ",\"types\":" + types
+                    + ",\"page\":" + page
+                    + ",\"pages\":" + pages
+                    + ",\"registers\":" + registers
+                    + "}}";
+            oConnection.commit();
+
+        } catch (Exception ex) {
+            oConnection.rollback();
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getAggregateViewSome ERROR: " + ex.getMessage()));
         }
         return data;
     }

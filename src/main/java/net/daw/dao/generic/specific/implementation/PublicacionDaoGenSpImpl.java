@@ -58,7 +58,6 @@ public class PublicacionDaoGenSpImpl extends TableDaoGenImpl<PublicacionBeanGenS
                 } else {
                     expand--;
                     if (expand > 0) {
-                        int prueba = oPublicacionBean.getId();
                         oPublicacionBean.setContenido(oMysql.getOne(tabla, "contenido", oPublicacionBean.getId()));
 
                         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -148,35 +147,5 @@ public class PublicacionDaoGenSpImpl extends TableDaoGenImpl<PublicacionBeanGenS
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":set ERROR: " + ex.getMessage()));
         }
         return oAmigoBean;
-    }
-    
-    @Override
-    public ArrayList<PublicacionBeanGenSpImpl> getPage(int intRegsPerPag, int intPage, ArrayList<FilterBeanHelper> hmFilter, HashMap<String, String> hmOrder) throws Exception {
-        ArrayList<Integer> arrId;
-        ArrayList<PublicacionBeanGenSpImpl> arrPublicacion = new ArrayList<>();
-        try {
-                arrId = oMysql.getPage(strTabla, intRegsPerPag, intPage, hmFilter, hmOrder);
-            
-            Iterator<Integer> iterador = arrId.listIterator();
-            while (iterador.hasNext()) {
-                PublicacionBeanGenSpImpl oPublicacionBean = new PublicacionBeanGenSpImpl(iterador.next());
-                arrPublicacion.add(this.get(oPublicacionBean, AppConfigurationHelper.getJsonDepth()));
-            }
-        } catch (Exception ex) {
-            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPage ERROR: " + ex.getMessage()));
-        }
-        return arrPublicacion;
-    }
-
-    @Override
-    public int getPages(int intRegsPerPag, ArrayList<FilterBeanHelper> hmFilter) throws Exception {
-        int pages = 0;
-        try {
-                 pages = oMysql.getPages(strTableName, intRegsPerPag, hmFilter);
-
-        } catch (Exception ex) {
-            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPages ERROR: " + ex.getMessage()));
-        }
-        return pages;
     }
 }
