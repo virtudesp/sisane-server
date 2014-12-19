@@ -3384,3 +3384,5 @@ UPDATE `ausiasyield2014`.`publicacion` SET `fechacreacion` = '2014-11-13 15:15:2
 UPDATE `ausiasyield2014`.`publicacion` SET `fechacreacion` = '2014-11-07 06:59:10' WHERE `publicacion`.`id` = 18;
 
 INSERT INTO `ausiasyield2014`.`operacion` (`id`, `descripcion`, `id_objeto`, `id_tipooperacion`) VALUES (NULL, 'agregaramigo', '2', '2'), (NULL, 'removeamigo', '2', '2'), (NULL, 'existeamigo', '2', '1'), (NULL, 'duplicate', '26', '2'), (NULL, 'getcomentarioamigo', '26', '1'), (NULL, 'getpagescomentarioamigo', '26', '1');
+
+ALTER TABLE `estadotarea` CHANGE `descripcion` `descripcion` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT 'Descripción';

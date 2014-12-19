@@ -117,9 +117,6 @@ estadotareaControl.prototype.edit = function (place, id, oModel, oView) {
     oDocumentoModel.loadAggregateViewOne(id);
     oView.loadFormValues(oDocumentoModel.getCachedOne(), oDocumentoModel.getCachedFieldNames());
     $('#id').attr("disabled", true);
-    nombre = $('#nombre').val();
-    nombre = nombre.replace("<a href=\"jsp#/post/list/systemfilter=id_estadotarea&systemfilteroperator=equals&systemfiltervalue=" + $('#id').val() + "\">","").replace("</a>","");
-    $('#nombre').val(nombre);
     oView.doEventsLoading();
     $('#submitForm').unbind('click');
     $('#submitForm').click(function () {
