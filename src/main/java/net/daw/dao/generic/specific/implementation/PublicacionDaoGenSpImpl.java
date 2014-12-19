@@ -39,10 +39,12 @@ import net.daw.helper.FilterBeanHelper;
 public class PublicacionDaoGenSpImpl extends TableDaoGenImpl<PublicacionBeanGenSpImpl> {
 
     private String strTableName = null;
+    private String tabla = null;
     private Connection oConnection = null;
     
     public PublicacionDaoGenSpImpl(String strObject, Connection pooledConnection) throws Exception {
         super(strObject, strObject, pooledConnection);
+        tabla = "publicacion";
         strTableName = strObject;
         oConnection = pooledConnection;
     }
@@ -51,21 +53,22 @@ public class PublicacionDaoGenSpImpl extends TableDaoGenImpl<PublicacionBeanGenS
     public PublicacionBeanGenSpImpl get(PublicacionBeanGenSpImpl oPublicacionBean, Integer expand) throws Exception {
         if (oPublicacionBean.getId() > 0) {
             try {
-                if (!oMysql.existsOne(strTableName, oPublicacionBean.getId())) {
+                if (!oMysql.existsOne(tabla, oPublicacionBean.getId())) {
                     oPublicacionBean.setId(0);
                 } else {
                     expand--;
                     if (expand > 0) {
-                        oPublicacionBean.setContenido(oMysql.getOne(strTableName, "contenido", oPublicacionBean.getId()));
+                        int prueba = oPublicacionBean.getId();
+                        oPublicacionBean.setContenido(oMysql.getOne(tabla, "contenido", oPublicacionBean.getId()));
 
                         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                        String dateInString = oMysql.getOne(strTableName, "fechacreacion", oPublicacionBean.getId());         
+                        String dateInString = oMysql.getOne(tabla, "fechacreacion", oPublicacionBean.getId());         
                         oPublicacionBean.setFechacreacion(formatter.parse(dateInString));   
                         
-                        oPublicacionBean.setId_usuario(Integer.parseInt(oMysql.getOne(strTableName, "id_usuario", oPublicacionBean.getId())));
+                        oPublicacionBean.setId_usuario(Integer.parseInt(oMysql.getOne(tabla, "id_usuario", oPublicacionBean.getId())));
 
                         UsuarioBeanGenSpImpl oUsuario = new UsuarioBeanGenSpImpl();
-                        oUsuario.setId(Integer.parseInt(oMysql.getOne(strTableName, "id_usuario", oPublicacionBean.getId())));
+                        oUsuario.setId(Integer.parseInt(oMysql.getOne(tabla, "id_usuario", oPublicacionBean.getId())));
                         UsuarioDaoGenSpImpl oUsuarioDAO = new UsuarioDaoGenSpImpl("usuario", oConnection);
                         oUsuario = oUsuarioDAO.get(oUsuario, AppConfigurationHelper.getJsonDepth());
                         oUsuario.setPassword(null);
@@ -145,5 +148,35 @@ public class PublicacionDaoGenSpImpl extends TableDaoGenImpl<PublicacionBeanGenS
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":set ERROR: " + ex.getMessage()));
         }
         return oAmigoBean;
+    }
+    
+    @Override
+    public ArrayList<PublicacionBeanGenSpImpl> getPage(int intRegsPerPag, int intPage, ArrayList<FilterBeanHelper> hmFilter, HashMap<String, String> hmOrder) throws Exception {
+        ArrayList<Integer> arrId;
+        ArrayList<PublicacionBeanGenSpImpl> arrPublicacion = new ArrayList<>();
+        try {
+                arrId = oMysql.getPage(strTabla, intRegsPerPag, intPage, hmFilter, hmOrder);
+            
+            Iterator<Integer> iterador = arrId.listIterator();
+            while (iterador.hasNext()) {
+                PublicacionBeanGenSpImpl oPublicacionBean = new PublicacionBeanGenSpImpl(iterador.next());
+                arrPublicacion.add(this.get(oPublicacionBean, AppConfigurationHelper.getJsonDepth()));
+            }
+        } catch (Exception ex) {
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPage ERROR: " + ex.getMessage()));
+        }
+        return arrPublicacion;
+    }
+
+    @Override
+    public int getPages(int intRegsPerPag, ArrayList<FilterBeanHelper> hmFilter) throws Exception {
+        int pages = 0;
+        try {
+                 pages = oMysql.getPages(strTableName, intRegsPerPag, hmFilter);
+
+        } catch (Exception ex) {
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPages ERROR: " + ex.getMessage()));
+        }
+        return pages;
     }
 }
