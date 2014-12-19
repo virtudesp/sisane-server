@@ -37,6 +37,12 @@ public class ProductoBeanGenSpImpl extends BeanGenImpl implements BeanInterface 
     private Integer id_tipoproducto = 0; //importante inicializar a 0 las claves ajenas
     @Expose(deserialize = false)
     private TipoproductoBeanGenSpImpl obj_tipoproducto = null;
+    @Expose(serialize = false)
+    private Integer id_proveedor = 0; //importante inicializar a 0 las claves ajenas
+    @Expose(deserialize = false)
+    private ProveedorBeanGenSpImpl obj_proveedor = null;
+    @Expose
+    private String path;
 
     public ProductoBeanGenSpImpl() {
     }
@@ -95,6 +101,30 @@ public class ProductoBeanGenSpImpl extends BeanGenImpl implements BeanInterface 
      */
     public void setObj_tipoproducto(TipoproductoBeanGenSpImpl obj_tipoproducto) {
         this.obj_tipoproducto = obj_tipoproducto;
+    }
+
+    public Integer getId_proveedor() {
+        return id_proveedor;
+    }
+
+    public void setId_proveedor(Integer id_proveedor) {
+        this.id_proveedor = id_proveedor;
+    }
+
+    public ProveedorBeanGenSpImpl getObj_proveedor() {
+        return obj_proveedor;
+    }
+
+    public void setObj_proveedor(ProveedorBeanGenSpImpl obj_proveedor) {
+        this.obj_proveedor = obj_proveedor;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
     }
 
 }

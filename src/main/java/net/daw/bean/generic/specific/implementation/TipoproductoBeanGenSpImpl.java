@@ -17,12 +17,17 @@
  */
 package net.daw.bean.generic.specific.implementation;
 
+import com.google.gson.annotations.Expose;
 import net.daw.bean.generic.implementation.BeanGenImpl;
 import net.daw.bean.publicinterface.BeanInterface;
 
 public class TipoproductoBeanGenSpImpl extends BeanGenImpl implements BeanInterface {
 
     private String descripcion = "";
+    @Expose(serialize = false)
+    private Integer id_impuesto = 0;
+    @Expose(deserialize = false)
+    private ImpuestoBeanGenSpImpl obj_impuesto = null;
 
     public TipoproductoBeanGenSpImpl() {
 
@@ -39,4 +44,23 @@ public class TipoproductoBeanGenSpImpl extends BeanGenImpl implements BeanInterf
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
+
+    public Integer getId_impuesto() {
+        return id_impuesto;
+    }
+
+    public void setId_impuesto(Integer id_impuesto) {
+        this.id_impuesto = id_impuesto;
+    }
+
+    public ImpuestoBeanGenSpImpl getObj_impuesto() {
+        return obj_impuesto;
+    }
+
+    public void setObj_impuesto(ImpuestoBeanGenSpImpl obj_impuesto) {
+        this.obj_impuesto = obj_impuesto;
+    }
+
+    
+    
 }
