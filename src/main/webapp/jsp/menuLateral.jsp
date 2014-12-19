@@ -49,14 +49,16 @@
         <a  class="list-group-item" id="lnkDocumento" href="jsp#/documento">Documento</a> 
         <a  class="list-group-item" id="lnkDocumento" href="jsp#/tipodocumento">TipoDocumento</a> 
         <a  class="list-group-item" id="lnkOrdenador" href="jsp#/usuario">Usuario</a> 
- 
-        <a  class="list-group-item" id="lnkDocumento" href="jsp#/documento">Documento</a>
+        <a class="list-group-item" id="lnkProveedor" href="jsp#/proveedor">Proveedor</a>
+        <a class="list-group-item" id="lnkPedido" href="jsp#/pedido">Pedido</a>
         <a  class="list-group-item" id="lnkCuestionario" href="jsp#/cuestionario">Cuestionario</a> 
         <a  class="list-group-item" id="lnkPregunta" href="jsp#/pregunta">Pregunta</a>
         <a  class="list-group-item" id="lnkRespuesta" href="jsp#/respuesta">Respuesta</a>
         <a  class="list-group-item" id="lnkOpcion" href="jsp#/opcion">Opcion</a>
+        <a class="list-group-item" id="lnkImpuesto" href="jsp#/impuesto">Impuesto</a>
         <a  class="list-group-item" id="lnkActividad" href="jsp#/actividad">Actividad</a>
         <a  class="list-group-item" id="lnkActividad" href="jsp#/entrega">Entrega</a> 
+        <a class="list-group-item" id="lnkActividad" href="jsp#/detalle_pedido">DetallePedido</a> 
     </div>
 </div>
 
@@ -94,6 +96,29 @@
         <a  class="list-group-item" id="lnkPedido" href="jsp#/pedido">Pedido</a>        
     </div>
 </div>
+    
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        <h3 class="panel-title">Tareas</h3>
+    </div>
+    <div class="list-group">
+        <a class="list-group-item" id="lnkPublicacion" href="jsp#/tarea">Tarea</a>
+        <a class="list-group-item" id="lnkPublicacion" href="jsp#/proyecto">Proyecto</a>
+        <a class="list-group-item" id="lnkPublicacion" href="jsp#/estadotarea">Estado Tarea</a>
+        <a class="list-group-item" id="lnkPublicacion" href="jsp#/tipotarea">Tipo Tarea</a>
+    </div>    
+</div>
+    
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        <h3 class="panel-title">Propuestas y votaciones</h3>
+    </div>
+    <div class="list-group">
+        <a class="list-group-item" id="lnkTipotema" href="jsp#/comentario">Comentarios</a>
+        <a class="list-group-item" id="lnkTipopropuesta" href="jsp#/tipopropuesta">Tipo propuesta</a>
+        <a class="list-group-item" id="lnkPropuesta" href="jsp#/propuesta">Propuesta</a>
+    </div>
+</div>
 
 <div class="panel panel-primary">
     <div class="panel-heading">
@@ -101,6 +126,18 @@
     </div>
     <div class="list-group">
         <a  class="list-group-item" id="lnkOrdenador" href="jsp?op=cambia">Cambia el campo</a>
+    </div>
+</div>
+    
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        <h3 class="panel-title">Cuestionario</h3>
+    </div>
+    <div class="list-group">
+        <a class="list-group-item" id="lnkCuestionario" href="jsp#/cuestionario">Cuestionario</a>
+        <a class="list-group-item" id="lnkPregunta" href="jsp#/pregunta">Pregunta</a>
+        <a class="list-group-item" id="lnkOpcion" href="jsp#/opcion">Opcion</a>
+        <a class="list-group-item" id="lnkRespuesta" href="jsp#/respuesta">Respuesta</a>
     </div>
 </div>
 
