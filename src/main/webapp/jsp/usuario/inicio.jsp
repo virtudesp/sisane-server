@@ -41,16 +41,21 @@
                 <h3>¿Para qué sirve?</h3>
                 <p>Se trata de una aplicación de carácter didáctico. 
                     Se ha estructurado siguiendo un modelo MVC que permita a los alumnos 
-                    conocer un referente para diseñar en un futuro sus proyectos.                    
+                    conocer un referente estructurado para diseñar en un futuro sus proyectos
+                    y evitar el temino e inmantenible código espaguetti.
                 </p>
             </div>    
         </div>
         <div class="row">    
             <div class="col-md-6">
                 <h3>¿Quién la ha desarrollado?</h3>
-                <p>La ha desarrollado <%=EstadoHelper.getAutor()%>,
-                    profesor de DAW en el CPIFP Ausiàs March de Valencia (Spain).
-                    Puedes contactar en <%=EstadoHelper.getMailAutor()%>.</p>
+                <p>
+                    La ha desarrollado <%=EstadoHelper.getAutor()%>,
+                    profesor de DAW en el CPIFP Ausiàs March de Valencia (Spain).                    
+                    Puedes contactar en <%=EstadoHelper.getMailAutor()%>.
+                    En su desarrollo han participado los alumnos de segundo de 
+                    DAW de las promociones 2012-2013, 2013-2014 y 2014-2015.
+                </p>
             </div> 
             <div class="col-md-6">
                 <h3>¿Qué licencia tiene?</h3>
@@ -62,7 +67,7 @@
     <div class="col-md-4">
         <h3>¿Cuáles son sus características?</h3>
         <ul>
-            <li>Es un desarrollo didáctico</li>
+            <li>Es un desarrollo didáctico. Ha sido diseñana para aprender y divertirse programando aplicaciones web.</li>
             <li>Estructura de servidor MVC por niveles sin frameworks</li> 
             <li>Servidor escrito en Java (servlets y jsp)</li>  
             <li>Dos controladores, uno para servir jsp y otro para servir json</li>  

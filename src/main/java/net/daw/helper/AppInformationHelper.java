@@ -24,6 +24,6 @@ package net.daw.helper;
 public class AppInformationHelper {
 
     public static String getAppName() {
-        return "openAusiàs";
+        return "ausiàsYield";
     }
 }
