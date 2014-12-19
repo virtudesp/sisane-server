@@ -27,7 +27,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import net.daw.control.operation.generic.specific.implementation.AmigoControlOperationGenSpImpl;
+import net.daw.control.operation.generic.specific.implementation.AmistadControlOperationGenSpImpl;
 import net.daw.control.operation.generic.specific.implementation.CuestionarioControlOperationGenSpImpl;
 import net.daw.control.operation.specific.implementation.DetallePedidoControlOperationSpImpl;
 import net.daw.control.operation.generic.specific.implementation.DocumentoControlOperationGenSpImpl;
@@ -40,7 +40,7 @@ import net.daw.control.operation.generic.specific.implementation.EstadoControlOp
 import net.daw.control.operation.generic.specific.implementation.EstadotareaControlOperationGenSpImpl;
 import net.daw.control.operation.generic.specific.implementation.ProyectoControlOperationGenSpImpl;
 import net.daw.control.operation.generic.specific.implementation.RespuestaControlOperationGenSpImpl;
-import net.daw.control.operation.generic.specific.implementation.TareaControlOperationGenSpImpl;
+import net.daw.control.operation.generic.specific.implementation.TrabajoControlOperationGenSpImpl;
 import net.daw.control.operation.generic.specific.implementation.TipodocumentoControlOperationGenSpImpl;
 import net.daw.control.operation.generic.specific.implementation.TipotareaControlOperationGenSpImpl;
 import net.daw.control.operation.generic.specific.implementation.TipotemaControlOperationGenSpImpl;
@@ -60,6 +60,7 @@ import net.daw.control.operation.specific.implementation.ProveedorControlOperati
 import net.daw.control.operation.specific.implementation.TemaControlOperationSpImpl;
 import net.daw.control.operation.specific.implementation.TipoproductoControlOperationSpImpl;
 import net.daw.control.operation.specific.implementation.TipopropuestaControlOperationSpImpl;
+import net.daw.control.route.generic.specific.implementation.AmistadControlRouteGenSpImpl;
 import net.daw.control.route.generic.specific.implementation.CuestionarioControlRouteGenSpImpl;
 import net.daw.control.route.generic.specific.implementation.DocumentoControlRouteGenSpImpl;
 import net.daw.control.route.generic.specific.implementation.DocumentobonitoControlRouteGenSpImpl;
@@ -71,14 +72,13 @@ import net.daw.control.route.generic.specific.implementation.EstadotareaControlR
 import net.daw.control.route.generic.specific.implementation.PedidoControlRouteGenSpImpl;
 import net.daw.control.route.generic.specific.implementation.ProyectoControlRouteGenSpImpl;
 import net.daw.control.route.generic.specific.implementation.RespuestaControlRouteGenSpImpl;
-import net.daw.control.route.generic.specific.implementation.TareaControlRouteGenSpImpl;
+import net.daw.control.route.generic.specific.implementation.TrabajoControlRouteGenSpImpl;
 import net.daw.control.route.generic.specific.implementation.TipodocumentoControlRouteGenSpImpl;
 import net.daw.control.route.generic.specific.implementation.TipotareaControlRouteGenSpImpl;
 import net.daw.control.route.generic.specific.implementation.TipotemaControlRouteGenSpImpl;
 import net.daw.control.route.generic.specific.implementation.TipousuarioControlRouteGenSpImpl;
 import net.daw.control.route.generic.specific.implementation.UsuarioControlRouteGenSpImpl;
 import net.daw.control.route.generic.specific.implementation.UsuarioProveedorControlRouteGenSpImpl;
-import net.daw.control.route.specific.implementation.AmigoControlRouteSpImpl;
 import net.daw.control.route.specific.implementation.OrdenadorControlRouteSpImpl;
 import net.daw.control.route.specific.implementation.ActividadControlRouteSpImpl;
 import net.daw.control.route.specific.implementation.DetallePedidoControlRouteSpImpl;
@@ -186,10 +186,10 @@ public class JsonControl extends HttpServlet {
                         EstadoControlOperationGenSpImpl oEstadoControlOperation = new EstadoControlOperationGenSpImpl(request);
                         jsonResult = oEstadoRoute.execute(request, oEstadoControlOperation);
                         break;
-                    case "amigo":
-                        AmigoControlRouteSpImpl oAmigoRoute = new AmigoControlRouteSpImpl();
-                        AmigoControlOperationGenSpImpl oAmigoControlOperation = new AmigoControlOperationGenSpImpl(request);
-                        jsonResult = oAmigoRoute.execute(request, oAmigoControlOperation);
+                    case "amistad":
+                        AmistadControlRouteGenSpImpl oAmistadRoute = new AmistadControlRouteGenSpImpl();
+                        AmistadControlOperationGenSpImpl oAmistadControlOperation = new AmistadControlOperationGenSpImpl(request);
+                        jsonResult = oAmistadRoute.execute(request, oAmistadControlOperation);
                         break;
                     case "publicacion":
                         PublicacionControlRouteGenSpImpl oPublicacionRoute = new PublicacionControlRouteGenSpImpl();
@@ -291,9 +291,9 @@ public class JsonControl extends HttpServlet {
                         DocumentobonitoControlOperationGenSpImpl oDocumentobonitoControlOperation = new DocumentobonitoControlOperationGenSpImpl(request);
                         jsonResult = oDocumentobonitoRoute.execute(request, oDocumentobonitoControlOperation);
                         break;
-                    case "tarea":
-                        TareaControlRouteGenSpImpl oTareaRoute = new TareaControlRouteGenSpImpl();
-                        TareaControlOperationGenSpImpl oTareaControlOperation = new TareaControlOperationGenSpImpl(request);
+                    case "trabajo":
+                        TrabajoControlRouteGenSpImpl oTareaRoute = new TrabajoControlRouteGenSpImpl();
+                        TrabajoControlOperationGenSpImpl oTareaControlOperation = new TrabajoControlOperationGenSpImpl(request);
                         jsonResult = oTareaRoute.execute(request, oTareaControlOperation);
                         break;
                     case "estadotarea":

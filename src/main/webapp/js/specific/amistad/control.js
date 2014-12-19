@@ -16,16 +16,17 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
-var estadotareaControl = function (strClase) {
+var amistadControl = function (strClase) {
     this.clase = strClase;
 };
-estadotareaControl.prototype = new control('estadotarea');
-estadotareaControl.prototype.getClassNameEstadotarea = function () {
+
+amistadControl.prototype = new control('amistad');
+amistadControl.prototype.getClassNameAmistad = function () {
     return this.getClassName() + "Control";
 };
-var oEstadotareaControl = new estadotareaControl('estadotarea');
+var oAmistadControl = new amistadControl('amistad');
 
-estadotareaControl.prototype.list = function (place, objParams, callback, oModel, oView) {
+amistadControl.prototype.list = function (place, objParams, callback, oModel, oView) {
     var thisObject = this;
     objParams = param().validateUrlObjectParameters(objParams);
     //get all data from server in one http call and store it in cache
@@ -69,6 +70,8 @@ estadotareaControl.prototype.list = function (place, objParams, callback, oModel
     $("#pagination").empty().append(oView.getSpinner()).html(oView.getPageLinks(url, parseInt(objParams["page"]), parseInt(oDocumentoModel.getCachedPages()), 2));
 
     $("#tableHeaders").empty().append(oView.getSpinner()).html(oView.getHeaderPageTable(prettyFieldNames, fieldNames, parseInt(objParams["vf"]), strUrlFromParamsWithoutOrder));
+    
+    id_elemento = 0;
     $("#tableBody").empty().append(oView.getSpinner()).html(function () {
         return oView.getBodyPageTable(page, fieldNames, parseInt(objParams["vf"]), function (id) {
             if (callback) {
@@ -78,7 +81,7 @@ estadotareaControl.prototype.list = function (place, objParams, callback, oModel
                 botonera += '</div></div>';
                 return botonera;
             } else {
-                return oView.loadButtons(id);
+                return oView.loadButtons(id, page[id_elemento]["id_usuario_1"]);
             }
             //mejor pasar documento como parametro y crear un repo global de código personalizado
         });
@@ -107,49 +110,4 @@ estadotareaControl.prototype.list = function (place, objParams, callback, oModel
 
 
 
-};
-
-estadotareaControl.prototype.edit = function (place, id, oModel, oView) {
-    var thisObject = this;
-    $(place).empty();
-    $(place).append(oView.getPanel("Edición de " + this.clase, oView.getEmptyForm()));
-    var oDocumentoModel = oModel;
-    oDocumentoModel.loadAggregateViewOne(id);
-    oView.loadFormValues(oDocumentoModel.getCachedOne(), oDocumentoModel.getCachedFieldNames());
-    $('#id').attr("disabled", true);
-    oView.doEventsLoading();
-    $('#submitForm').unbind('click');
-    $('#submitForm').click(function () {
-        oView.okValidation(function (e) {
-            resultado = oModel.setOne({json: JSON.stringify(oView.getFormValues())});
-            oView.doResultOperationNotifyToUser(place, resultado["status"], "Se ha actualizado el registro con id=" + resultado["message"], resultado["message"], true);
-            e.preventDefault();
-            return false;
-        });
-    });
-};
-
-estadotareaControl.prototype.new = function (place, objParams, oModel, oView) {
-    var thisObject = this;
-    $(place).empty();
-    $(place).append(oView.getPanel("Alta de " + this.clase, oView.getEmptyForm()));
-    //id must not be enabled
-    $('#id').val('0').attr("disabled", true);
-    //soporte de claves ajenas
-    //var selector = objParams["systemfilter"].replace('id_', 'obj_');
-    //$('#' + selector + "_id").val(objParams["systemfiltervalue"]).attr("disabled", true);
-    //$('#' + selector + "_button").attr("disabled", true).hide();
-    //var oModelo = "o" + objParams["systemfilter"].replace('id_', '').charAt(0).toUpperCase() + objParams["systemfilter"].replace('id_', '').slice(1) + "Model";
-    //$('#' + selector + '_desc').text(decodeURIComponent(window[oModelo].getMeAsAForeignKey(objParams["systemfiltervalue"])));
-    //--
-    oView.doEventsLoading();
-    $('#submitForm').unbind('click');
-    $('#submitForm').click(function () {
-        oView.okValidation(function (e) {
-            resultado = oModel.setOne({json: JSON.stringify(oView.getFormValues())});
-            oView.doResultOperationNotifyToUser(place, resultado["status"], "Se ha creado el registro con id=" + resultado["message"], resultado["message"], true);
-            e.preventDefault();
-            return false;
-        });
-    });
 };

@@ -17,70 +17,68 @@
  */
 
 
-function fTareaRoutes() {
-    
+function fAmistadRoutes() {
 
-//    Path.map("#/tarea").to(function () {
+//    Path.map("#/amistad").to(function () {
 //        $('#indexContenidoJsp').spinner();
-//        control('tarea').list($('#indexContenido'), param().defaultizeUrlObjectParameters({}), null);
-//        //tareaControl.modalListEventsLoading(tareaObject, tareaView, $('#indexContenido'), param().defaultizeUrlObjectParameters({}), null);        
+//        control('amistad').list($('#indexContenido'), param().defaultizeUrlObjectParameters({}), null);
+//        //amistadControl.modalListEventsLoading(amistadObject, amistadView, $('#indexContenido'), param().defaultizeUrlObjectParameters({}), null);        
 //        $('#indexContenidoJsp').empty();
 //        return false;
 //    });
 
-    Path.map("#/tarea").to(function () {
+
+    Path.map("#/amistad").to(function () {
         $('#indexContenidoJsp').spinner();
-        oTareaControl.list($('#indexContenido'), param().defaultizeUrlObjectParameters({}), null, oTareaModel, oTareaView);
-        //tareaControl.modalListEventsLoading(tareaObject, tareaView, $('#indexContenido'), param().defaultizeUrlObjectParameters({}), null);        
+        oAmistadControl.list($('#indexContenido'), param().defaultizeUrlObjectParameters({}), null, oAmistadModel, oAmistadView);
+        //amistadControl.modalListEventsLoading(amistadObject, amistadView, $('#indexContenido'), param().defaultizeUrlObjectParameters({}), null);        
         $('#indexContenidoJsp').empty();
-        //$('#indexContenidoJsp').append(oTareaControl.getClassNameTarea());
+        //$('#indexContenidoJsp').append(oAmistadControl.getClassNameAmistad());
         return false;
     });
 
-    Path.map("#/tarea/list/:url").to(function () {
+    Path.map("#/amistad/list/:url").to(function () {
         $('#indexContenidoJsp').spinner();
         var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
-        oTareaControl.list($('#indexContenido'), paramsObject, null, oTareaModel, oTareaView);
-        $('#indexContenidoJsp').empty();
-        return false;
-    });
-
-    Path.map("#/tarea/view/:id").to(function () {
-        $('#indexContenidoJsp').spinner();
-        var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
-        oTareaControl.view($('#indexContenido'), paramsObject['id'], oTareaModel, oTareaView);
-        $('#indexContenidoJsp').empty();
-
-        return false;
-    });
-
-    Path.map("#/tarea/edit/:id").to(function () {
-        $('#indexContenidoJsp').spinner();
-        var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
-        oTareaControl.edit($('#indexContenido'), paramsObject['id'], oTareaModel, oTareaView);
-        $('#indexContenidoJsp').empty();
-    });
-
-    Path.map("#/tarea/new").to(function () {
-        $('#indexContenidoJsp').spinner();
-        var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
-        oTareaControl.new($('#indexContenido'), null, oTareaModel, oTareaView);
+        oAmistadControl.list($('#indexContenido'), paramsObject, null, oAmistadModel, oAmistadView);
         $('#indexContenidoJsp').empty();
         return false;
     });
 
-    Path.map("#/tarea/new/:id").to(function () {
+    Path.map("#/amistad/view/:id").to(function () {
         $('#indexContenidoJsp').spinner();
         var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
-        oTareaControl.new($('#indexContenido'), paramsObject['id'], oTareaModel, oTareaView);
+        oAmistadControl.view($('#indexContenido'), paramsObject['id'], oAmistadModel, oAmistadView);
+        $('#indexContenidoJsp').empty();
+
+        return false;
+    });
+
+    Path.map("#/amistad/edit/:id").to(function () {
+        $('#indexContenidoJsp').spinner();
+        var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
+        oAmistadControl.edit($('#indexContenido'), paramsObject['id'], oAmistadModel, oAmistadView);
+        $('#indexContenidoJsp').empty();
+    });
+    Path.map("#/amistad/new").to(function () {
+        $('#indexContenidoJsp').spinner();
+        //var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
+        oAmistadControl.new($('#indexContenido'), null, oAmistadModel, oAmistadView);
+        $('#indexContenidoJsp').empty();
+        return false;
+    });
+    Path.map("#/amistad/new/:url").to(function () {
+        $('#indexContenidoJsp').spinner();
+        var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
+        oAmistadControl.new($('#indexContenido'), paramsObject, oAmistadModel, oAmistadView);
         $('#indexContenidoJsp').empty();
         return false;
     });
 
-    Path.map("#/tarea/remove/:id").to(function () {
+    Path.map("#/amistad/remove/:id").to(function () {
         $('#indexContenidoJsp').spinner();
         var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
-        oTareaControl.remove($('#indexContenido'), paramsObject['id'], oTareaModel, oTareaView);
+        oAmistadControl.remove($('#indexContenido'), paramsObject['id'], oAmistadModel, oAmistadView);
         $('#indexContenidoJsp').empty();
         return false;
     });

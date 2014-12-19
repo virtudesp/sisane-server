@@ -17,18 +17,18 @@
 --%>
 
 <%@page import="java.sql.Connection"%>
-<%@page import="net.daw.dao.generic.specific.implementation.TareaDaoGenSpImpl"%>
+<%@page import="net.daw.dao.generic.specific.implementation.AmistadDaoGenSpImpl"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.Iterator"%>
 <%
     ArrayList<String> alColumnsNames;
     Iterator<String> oIterador;
-    String strNombreMantenimiento = "tarea";
+    String strNombreMantenimiento = "amistad";
     Connection connection = (Connection) request.getAttribute("connection");    
 %>
 <div class="row">
     <div class="col-md-12">
-        <div class="tabbable">
+        <div class="table">
             <ul class="nav nav-tabs">
                 <li class="active"><a href="#pane1" data-toggle="tab">Paginación</a></li>                
                 <li><a href="#pane2" data-toggle="tab">Filtro</a></li>
@@ -125,7 +125,7 @@
                                 <div class="panel-body">
                                     <br />
                                     <div class="text-center">
-                                        <a id="newButton" class="btn btn-primary" href='jsp#/<%=strNombreMantenimiento%>/new'>Crear un nuevo <%=strNombreMantenimiento%></a> 
+                                        <a class="btn btn-primary" href='jsp#/<%=strNombreMantenimiento%>/new'>Crear un nuevo <%=strNombreMantenimiento%></a> 
                                     </div>
                                     <br />
                                 </div>

@@ -19,11 +19,11 @@ package net.daw.dao.generic.specific.implementation;
 
 import net.daw.dao.generic.implementation.TableDaoGenImpl;
 import java.sql.Connection;
-import net.daw.bean.generic.specific.implementation.TareaBeanGenSpImpl;
+import net.daw.bean.generic.specific.implementation.TrabajoBeanGenSpImpl;
 
-public class TareaDaoGenSpImpl extends TableDaoGenImpl<TareaBeanGenSpImpl> {
+public class TrabajoDaoGenSpImpl extends TableDaoGenImpl<TrabajoBeanGenSpImpl> {
 
-   public TareaDaoGenSpImpl(String strFuente, Connection pooledConnection) throws Exception {
+   public TrabajoDaoGenSpImpl(String strFuente, Connection pooledConnection) throws Exception {
         super(strFuente, "Tarea", pooledConnection);
     }
 

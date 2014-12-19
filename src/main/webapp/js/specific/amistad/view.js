@@ -17,69 +17,71 @@
  */
 
 
-var amigoView = function (strClase) {
+var amistadView = function (strClase) {
     this.clase = strClase;
 };
-amigoView.prototype = new view('amigo');
-amigoView.prototype.getClassNameAmigo = function () {
+amistadView.prototype = new view('amistad');
+amistadView.prototype.getClassNameAmistad = function () {
     return this.getClassName() + "Vista";
 };
-var oAmigoView = new amigoView('amigo');
+var oAmistadView = new amistadView('amistad');
 
-
-amigoView.prototype.loadButtons = function (id) {
+amistadView.prototype.loadButtons = function (id, id_usuario_1) {
 
     var botonera = "";
     botonera += '<div class="btn-toolbar" role="toolbar"><div class="btn-group btn-group-xs">';
     botonera += '<a class="btn btn-default view" id="' + id + '"  href="jsp#/' + this.clase + '/view/' + id + '"><i class="glyphicon glyphicon-eye-open"></i></a>';
-    botonera += '<a class="btn btn-default edit" id="' + id + '"  href="jsp#/' + this.clase + '/edit/' + id + '"><i class="glyphicon glyphicon-pencil"></i></a>';
-    botonera += '<a class="btn btn-default remove" id="' + id + '"  href="jsp#/' + this.clase + '/remove/' + id + '"><i class="glyphicon glyphicon-remove"></i></a>';
+    
+    if (myuser == id_usuario_1) {
+        botonera += '<a class="btn btn-default remove" id="' + id + '"  href="jsp#/' + this.clase + '/remove/' + id + '"><i class="glyphicon glyphicon-remove"></i></a>';
+    }
+    
     botonera += '</div></div>';
     return botonera;
 
 }
-amigoView.prototype.loadFormValues = function (valores, campos) {
-//                    $('#amigo_form #titulo').val(valores['titulo']);
-//                    $('#amigo_form #contenido').val(valores['contenido']);
-//                    $('#amigo_form #alta').val(valores['alta']);
-//                    $('#amigo_form #cambio').val(valores['cambio']);
-//                    $('#amigo_form #hits').val(valores['hits']);
-//                    $('#amigo_form #id_usuario').val(valores['id_usuario']);
-//                    $('#amigo_form #etiquetas').val(valores['etiquetas']);
-//                    $('#amigo_form #publicado').val(valores['publicado']);
-//                    $('#amigo_form #portada').val(valores['portada']);
+amistadView.prototype.loadFormValues = function (valores, campos) {
+//                    $('#amistad_form #titulo').val(valores['titulo']);
+//                    $('#amistad_form #contenido').val(valores['contenido']);
+//                    $('#amistad_form #alta').val(valores['alta']);
+//                    $('#amistad_form #cambio').val(valores['cambio']);
+//                    $('#amistad_form #hits').val(valores['hits']);
+//                    $('#amistad_form #id_usuario').val(valores['id_usuario']);
+//                    $('#amistad_form #etiquetas').val(valores['etiquetas']);
+//                    $('#amistad_form #publicado').val(valores['publicado']);
+//                    $('#amistad_form #portada').val(valores['portada']);
     this.doFillForm(valores, campos);
 };
 
-amigoView.prototype.getFormValues = function () {
+amistadView.prototype.getFormValues = function () {
     var valores = [];
-//                    valores['titulo'] = $('#amigo_form #titulo');
-//                    valores['contenido'] = $('#amigo_form #contenido');
-//                    valores['alta'] = $('#amigo_form #alta');
-//                    valores['cambio'] = $('#amigo_form #cambio');
-//                    valores['hits'] = $('#amigo_form #hits');
-//                    valores['id_usuario'] = $('#amigo_form #id_usuario');
-//                    valores['etiquetas'] = $('#amigo_form #etiquetas');
-//                    valores['publicado'] = $('#amigo_form #publicado');
-//                    valores['portada'] = $('#amigo_form #portada');
+//                    valores['titulo'] = $('#amistad_form #titulo');
+//                    valores['contenido'] = $('#amistad_form #contenido');
+//                    valores['alta'] = $('#amistad_form #alta');
+//                    valores['cambio'] = $('#amistad_form #cambio');
+//                    valores['hits'] = $('#amistad_form #hits');
+//                    valores['id_usuario'] = $('#amistad_form #id_usuario');
+//                    valores['etiquetas'] = $('#amistad_form #etiquetas');
+//                    valores['publicado'] = $('#amistad_form #publicado');
+//                    valores['portada'] = $('#amistad_form #portada');
 
-    var disabled = $('#amigoForm').find(':input:disabled').removeAttr('disabled');
-    valores = $('#amigoForm').serializeObject();
+    var disabled = $('#amistadForm').find(':input:disabled').removeAttr('disabled');
+    valores = $('#amistadForm').serializeObject();
     disabled.attr('disabled', 'disabled');
     return valores;
 };
 
-amigoView.prototype.doEventsLoading = function () {
+amistadView.prototype.doEventsLoading = function () {
     var thisObject = this;
-    $('#amigoForm #obj_usuario_button').unbind('click');
-    $("#amigoForm #obj_usuario_button").click(function () {
-        var oControl = oUsuarioControl;  //para probar dejar amigo
-        //vista('usuario').cargaModalBuscarClaveAjena('#modal01', "amigo");
+    $('#amistadForm #obj_usuario_button').unbind('click');
+    $("#amistadForm #obj_usuario_button").click(function () {
+        var oControl = oUsuarioControl;  //para probar dejar amistad
+        //vista('usuario').cargaModalBuscarClaveAjena('#modal01', "amistad");
 
-        $("#amigoForm").append(thisObject.getEmptyModal());
+        $("#amistadForm").append(thisObject.getEmptyModal());
         util().loadForm('#modal01', thisObject.getFormHeader('Elección de usuario'), "", thisObject.getFormFooter(), true);
 
-        $('#amigoForm').append(thisObject.getEmptyModal());
+        $('#amistadForm').append(thisObject.getEmptyModal());
 
         oControl.list('#modal01 #modal-body', param().defaultizeUrlObjectParameters({}), true, oUsuarioModel, oUsuarioView);
         oControl.modalListEventsLoading('#modal01 #modal-body', param().defaultizeUrlObjectParameters({}), function (id) {
@@ -90,22 +92,22 @@ amigoView.prototype.doEventsLoading = function () {
         },oUsuarioModel, oUsuarioView);
         return false;
     });
-    $('#amigoForm #obj_amigo_button').unbind('click');
-    $("#amigoForm #obj_amigo_button").click(function () {
-        var oControl = oAmigoControl;
+    $('#amistadForm #obj_amistad_button').unbind('click');
+    $("#amistadForm #obj_amistad_button").click(function () {
+        var oControl = oAmistadControl;
 
-        $("#amigoForm").append(thisObject.getEmptyModal());
-        util().loadForm('#modal01', thisObject.getFormHeader('Elección de  de amigo'), "", thisObject.getFormFooter(), true);
+        $("#amistadForm").append(thisObject.getEmptyModal());
+        util().loadForm('#modal01', thisObject.getFormHeader('Elección de  de amistad'), "", thisObject.getFormFooter(), true);
 
-        $('#amigoForm').append(thisObject.getEmptyModal());
+        $('#amistadForm').append(thisObject.getEmptyModal());
 
-        oControl.list('#modal01 #modal-body', param().defaultizeUrlObjectParameters({}), true, oAmigoModel, oAmigoView);
+        oControl.list('#modal01 #modal-body', param().defaultizeUrlObjectParameters({}), true, oAmistadModel, oAmistadView);
         oControl.modalListEventsLoading('#modal01 #modal-body', param().defaultizeUrlObjectParameters({}), function (id) {
-            $('#obj_amigo_id').val(id).change();
-            $('#obj_amigo_desc').text(decodeURIComponent(oAmigoModel.getMeAsAForeignKey(id)));
+            $('#obj_amistad_id').val(id).change();
+            $('#obj_amistad_desc').text(decodeURIComponent(oAmistadModel.getMeAsAForeignKey(id)));
             $('#modal01').modal('hide');
 
-        },oAmigoModel, oAmigoView);
+        },oAmistadModel, oAmistadView);
         return false;
     });
     $('#contenido_button').unbind('click');
@@ -120,7 +122,7 @@ amigoView.prototype.doEventsLoading = function () {
         contenido += '</div><div class="col-md-6"><div id="textoparseado"></div></div>';
         contenido += '</div>';
 
-        $('#amigoForm').append(thisObject.getEmptyModal());
+        $('#amistadForm').append(thisObject.getEmptyModal());
 
         util().loadForm('#modal01', cabecera, contenido, pie, true);
         var texto = $('#contenido').val();
@@ -135,22 +137,22 @@ amigoView.prototype.doEventsLoading = function () {
     });
 };
 
-amigoView.prototype.okValidation = function (f) {
-    $('#amigoForm').on('success.form.bv', f);
+amistadView.prototype.okValidation = function (f) {
+    $('#amistadForm').on('success.form.bv', f);
 };
 
 
-amigoView.prototype.doEventsLoading = function () {
+amistadView.prototype.doEventsLoading = function () {
     var thisObject = this;
-    $('#amigoForm #obj_usuario_1_button').unbind('click');
-    $("#amigoForm #obj_usuario_1_button").click(function () {
+    $('#amistadForm #obj_usuario_1_button').unbind('click');
+    $("#amistadForm #obj_usuario_1_button").click(function () {
         var oControl = oUsuarioControl;  //para probar dejar documento
         //vista('usuario').cargaModalBuscarClaveAjena('#modal01', "documento");
 
-        $("#amigoForm").append(thisObject.getEmptyModal());
+        $("#amistadForm").append(thisObject.getEmptyModal());
         util().loadForm('#modal01', thisObject.getFormHeader('Elección de usuario'), "", thisObject.getFormFooter(), true);
 
-        $('#amigoForm').append(thisObject.getEmptyModal());
+        $('#amistadForm').append(thisObject.getEmptyModal());
 
         oControl.list('#modal01 #modal-body', param().defaultizeUrlObjectParameters({}), true, oUsuarioModel, oUsuarioView);
         oControl.modalListEventsLoading('#modal01 #modal-body', param().defaultizeUrlObjectParameters({}), function (id) {
@@ -161,15 +163,15 @@ amigoView.prototype.doEventsLoading = function () {
         },oUsuarioModel, oUsuarioView);
         return false;
     });
-    $('#amigoForm #obj_usuario_2_button').unbind('click');
-    $("#amigoForm #obj_usuario_2_button").click(function () {
+    $('#amistadForm #obj_usuario_2_button').unbind('click');
+    $("#amistadForm #obj_usuario_2_button").click(function () {
         var oControl = oUsuarioControl;  //para probar dejar documento
         //vista('usuario').cargaModalBuscarClaveAjena('#modal01', "documento");
 
-        $("#amigoForm").append(thisObject.getEmptyModal());
+        $("#amistadForm").append(thisObject.getEmptyModal());
         util().loadForm('#modal01', thisObject.getFormHeader('Elección de usuario'), "", thisObject.getFormFooter(), true);
 
-        $('#amigoForm').append(thisObject.getEmptyModal());
+        $('#amistadForm').append(thisObject.getEmptyModal());
 
         oControl.list('#modal01 #modal-body', param().defaultizeUrlObjectParameters({}), true, oUsuarioModel, oUsuarioView);
         oControl.modalListEventsLoading('#modal01 #modal-body', param().defaultizeUrlObjectParameters({}), function (id) {
@@ -182,14 +184,14 @@ amigoView.prototype.doEventsLoading = function () {
     });
 };
 
-amigoView.prototype.printValue = function (value, valor, recortar) {
+amistadView.prototype.printValue = function (value, valor, recortar) {
     var thisObject = this;
     var strResult = "";
     if (/obj_usuario_/.test(valor)) {
         if (value[valor].id > 0) {
             val = valor.substring(4);
             val = val.substring(0, val.length-2);
-            strResult = '<a href="jsp#/' + val + '/view/' + value[valor].id + '">' + value[valor].id + ":" + value[valor].login + '</a>';
+            strResult = '<a href="jsp#/' + 'redsocialperfil' + '/list/systemfilter=id_usuario&systemfilteroperator=equals&systemfiltervalue=' + value[valor].id + '&page=1&id=1&rpp=10&vf=4&order=fechacreacion&ordervalue=desc' + '">' + value[valor].login.charAt(0).toUpperCase() + value[valor].login.slice(1)+ '</a>';
         } else {
             strResult = '???';
         }

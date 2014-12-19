@@ -26,5 +26,6 @@ public class EstadotareaControlOperationGenSpImpl extends ControlOperationGenImp
     public EstadotareaControlOperationGenSpImpl(HttpServletRequest request) throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, Exception {
         super(request);
     }
+    
 
 }

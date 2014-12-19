@@ -15,19 +15,16 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-package net.daw.dao.generic.specific.implementation;
+package net.daw.control.operation.generic.specific.implementation;
 
-import net.daw.dao.generic.implementation.TableDaoGenImpl;
-import java.sql.Connection;
-import net.daw.bean.generic.specific.implementation.AmigoBeanGenSpImpl;
-import net.daw.dao.publicinterface.MetaDaoInterface;
-import net.daw.dao.publicinterface.TableDaoInterface;
-import net.daw.dao.publicinterface.ViewDaoInterface;
+import java.lang.reflect.InvocationTargetException;
+import javax.servlet.http.HttpServletRequest;
+import net.daw.control.operation.generic.implementation.ControlOperationGenImpl;
 
-public class AmigoDaoGenSpImpl extends TableDaoGenImpl<AmigoBeanGenSpImpl> implements TableDaoInterface<AmigoBeanGenSpImpl>, ViewDaoInterface<AmigoBeanGenSpImpl>, MetaDaoInterface {
+public class TrabajoControlOperationGenSpImpl extends ControlOperationGenImpl {
 
-    public AmigoDaoGenSpImpl(String strFuente, Connection pooledConnection) throws Exception {
-        super(strFuente, "Amigo", pooledConnection);
+    public TrabajoControlOperationGenSpImpl(HttpServletRequest request) throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, Exception {
+        super(request);
     }
 
 }

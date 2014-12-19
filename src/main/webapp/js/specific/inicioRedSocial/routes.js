@@ -17,27 +17,26 @@
  */
 
 
-function fPublicacionRoutes() {
+function fInicioRedSocialRoutes() {
 
-//    Path.map("#/publicacion").to(function () {
+//    Path.map("#/inicioRedSocial").to(function () {
 //        $('#indexContenidoJsp').spinner();
-//        control('publicacion').list($('#indexContenido'), param().defaultizeUrlObjectParameters({}), null);
-//        //publicacionControl.modalListEventsLoading(publicacionObject, publicacionView, $('#indexContenido'), param().defaultizeUrlObjectParameters({}), null);        
+//        control('inicioRedSocial').list($('#indexContenido'), param().defaultizeUrlObjectParameters({}), null);
+//        //inicioRedSocialControl.modalListEventsLoading(inicioRedSocialObject, inicioRedSocialView, $('#indexContenido'), param().defaultizeUrlObjectParameters({}), null);        
 //        $('#indexContenidoJsp').empty();
 //        return false;
 //    });
 
-
-    Path.map("#/publicacion").to(function () {
+    Path.map("#/inicioRedSocial").to(function () {
         $('#indexContenidoJsp').spinner();
         oPublicacionControl.list($('#indexContenido'), param().defaultizeUrlObjectParameters({}), null, oPublicacionModel, oPublicacionView);
-        //publicacionControl.modalListEventsLoading(publicacionObject, publicacionView, $('#indexContenido'), param().defaultizeUrlObjectParameters({}), null);        
+        //inicioRedSocialControl.modalListEventsLoading(inicioRedSocialObject, inicioRedSocialView, $('#indexContenido'), param().defaultizeUrlObjectParameters({}), null);        
         $('#indexContenidoJsp').empty();
-        //$('#indexContenidoJsp').append(oPublicacionControl.getClassNamePublicacion());
+        $('#indexContenidoJsp').append(oPublicacionControl.getClassNamePublicacion());
         return false;
     });
 
-    Path.map("#/publicacion/list/:url").to(function () {
+    Path.map("#/inicioRedSocial/list/:url").to(function () {
         $('#indexContenidoJsp').spinner();
         var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
         oPublicacionControl.list($('#indexContenido'), paramsObject, null, oPublicacionModel, oPublicacionView);
@@ -45,7 +44,7 @@ function fPublicacionRoutes() {
         return false;
     });
 
-    Path.map("#/publicacion/view/:id").to(function () {
+    Path.map("#/inicioRedSocial/view/:id").to(function () {
         $('#indexContenidoJsp').spinner();
         var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
         oPublicacionControl.view($('#indexContenido'), paramsObject['id'], oPublicacionModel, oPublicacionView);
@@ -54,20 +53,20 @@ function fPublicacionRoutes() {
         return false;
     });
 
-    Path.map("#/publicacion/edit/:id").to(function () {
+    Path.map("#/inicioRedSocial/edit/:id").to(function () {
         $('#indexContenidoJsp').spinner();
         var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
         oPublicacionControl.edit($('#indexContenido'), paramsObject['id'], oPublicacionModel, oPublicacionView);
         $('#indexContenidoJsp').empty();
     });
-    Path.map("#/publicacion/new").to(function () {
+    Path.map("#/inicioRedSocial/new").to(function () {
         $('#indexContenidoJsp').spinner();
         //var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
         oPublicacionControl.new($('#indexContenido'), null, oPublicacionModel, oPublicacionView);
         $('#indexContenidoJsp').empty();
         return false;
     });
-    Path.map("#/publicacion/new/:url").to(function () {
+    Path.map("#/inicioRedSocial/new/:url").to(function () {
         $('#indexContenidoJsp').spinner();
         var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
         oPublicacionControl.new($('#indexContenido'), paramsObject, oPublicacionModel, oPublicacionView);
@@ -75,7 +74,7 @@ function fPublicacionRoutes() {
         return false;
     });
 
-    Path.map("#/publicacion/remove/:id").to(function () {
+    Path.map("#/inicioRedSocial/remove/:id").to(function () {
         $('#indexContenidoJsp').spinner();
         var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
         oPublicacionControl.remove($('#indexContenido'), paramsObject['id'], oPublicacionModel, oPublicacionView);
@@ -83,7 +82,7 @@ function fPublicacionRoutes() {
         return false;
     });
 
-    Path.map("#/publicacion/duplicate/:id").to(function () {
+    Path.map("#/inicioRedSocial/duplicate/:id").to(function () {
         $('#indexContenidoJsp').spinner();
         var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
         oPublicacionControl.duplicate($('#indexContenido'), paramsObject['id'], oPublicacionModel, oPublicacionView);

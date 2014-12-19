@@ -17,16 +17,17 @@
  */
 
 
-var publicacionView = function (strClase) {
+var redsocialperfilView = function (strClase) {
     this.clase = strClase;
 };
-publicacionView.prototype = new view('publicacion');
-publicacionView.prototype.getClassNamePublicacion = function () {
+redsocialperfilView.prototype = new view('publicacion');
+redsocialperfilView.prototype.getClassNameRedsocialperfil = function () {
     return this.getClassName() + "Vista";
 };
-var oPublicacionView = new publicacionView('publicacion');
+var oRedsocialperfilView = new redsocialperfilView('publicacion');
 
-publicacionView.prototype.loadButtons = function (id, id_usuario) {
+
+redsocialperfilView.prototype.loadButtons = function (id, id_usuario) {
 
     var botonera = "";
     botonera += '<div class="btn-toolbar" role="toolbar"><div class="btn-group btn-group-xs">';
@@ -41,7 +42,7 @@ publicacionView.prototype.loadButtons = function (id, id_usuario) {
     return botonera;
 
 }
-publicacionView.prototype.loadFormValues = function (valores, campos) {
+redsocialperfilView.prototype.loadFormValues = function (valores, campos) {
 //                    $('#publicacion_form #titulo').val(valores['titulo']);
 //                    $('#publicacion_form #contenido').val(valores['contenido']);
 //                    $('#publicacion_form #alta').val(valores['alta']);
@@ -54,7 +55,7 @@ publicacionView.prototype.loadFormValues = function (valores, campos) {
     this.doFillForm(valores, campos);
 };
 
-publicacionView.prototype.getFormValues = function () {
+redsocialperfilView.prototype.getFormValues = function () {
     var valores = [];
 //                    valores['titulo'] = $('#publicacion_form #titulo');
 //                    valores['contenido'] = $('#publicacion_form #contenido');
@@ -72,7 +73,7 @@ publicacionView.prototype.getFormValues = function () {
     return valores;
 };
 
-publicacionView.prototype.doEventsLoading = function () {
+redsocialperfilView.prototype.doEventsLoading = function () {
     var thisObject = this;
     $('#publicacionForm #obj_usuario_button').unbind('click');
     $("#publicacionForm #obj_usuario_button").click(function () {
@@ -90,30 +91,72 @@ publicacionView.prototype.doEventsLoading = function () {
             $('#obj_usuario_desc').text(decodeURIComponent(oUsuarioModel.getMeAsAForeignKey(id)));
             $('#modal01').modal('hide');
 
-        },oUsuarioModel, oUsuarioView);
+        }, oUsuarioModel, oUsuarioView);
+        return false;
+    });
+    $('#publicacionForm #obj_tipopublicacion_button').unbind('click');
+    $("#publicacionForm #obj_tipopublicacion_button").click(function () {
+        var oControl = oPublicacionControl;
+
+        $("#publicacionForm").append(thisObject.getEmptyModal());
+        util().loadForm('#modal01', thisObject.getFormHeader('Elección de tipo de publicacion'), "", thisObject.getFormFooter(), true);
+
+        $('#publicacionForm').append(thisObject.getEmptyModal());
+
+        oControl.list('#modal01 #modal-body', param().defaultizeUrlObjectParameters({}), true, oPublicacionModel, oPublicacionView);
+        oControl.modalListEventsLoading('#modal01 #modal-body', param().defaultizeUrlObjectParameters({}), function (id) {
+            $('#obj_tipopublicacion_id').val(id).change();
+            $('#obj_tipopublicacion_desc').text(decodeURIComponent(oTipopublicacionModel.getMeAsAForeignKey(id)));
+            $('#modal01').modal('hide');
+
+        }, oPublicacionModel, oPublicacionView);
+        return false;
+    });
+    $('#contenido_button').unbind('click');
+    $('#contenido_button').click(function () {
+        //cabecera = '<button id="full-width" type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>' + '<h3 id="myModalLabel">Edición de contenidos</h3>';
+        cabecera = thisObject.getFormHeader('Edición de contenidos');
+        //pie = '<button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="true">Cerrar</button>';                        
+        pie = '<a class="btn btn-primary" href="http://creoleparser.googlecode.com/svn/trunk/creoleparser/test_pages/CheatSheetPlus.html">Sintaxis</a>';
+        pie += thisObject.getFormFooter();
+        contenido = '<div class="row"><div class="col-md-6">';
+        contenido += '<textarea type="text" id="contenidomodal" name="contenido" rows="20" cols="70" placeholder="contenido"></textarea>';
+        contenido += '</div><div class="col-md-6"><div id="textoparseado"></div></div>';
+        contenido += '</div>';
+
+        $('#publicacionForm').append(thisObject.getEmptyModal());
+
+        util().loadForm('#modal01', cabecera, contenido, pie, true);
+        var texto = $('#contenido').val();
+        $('#contenidomodal').val(texto);
+        util().creoleParse(texto, $('#textoparseado'));
+        $('#contenido').val($('#contenidomodal').val());
+        $('#contenidomodal').keyup(function () {
+            util().creoleParse($('#contenidomodal').val(), $('#textoparseado'));
+            $('#contenido').val($('#contenidomodal').val());
+        });
         return false;
     });
 };
 
-publicacionView.prototype.okValidation = function (f) {
+redsocialperfilView.prototype.okValidation = function (f) {
     $('#publicacionForm').on('success.form.bv', f);
 };
 
-publicacionView.prototype.printValue = function (value, valor, recortar) {
+redsocialperfilView.prototype.printValue = function (value, valor, recortar) {
     var thisObject = this;
     var strResult = "";
     if (/obj_usuario/.test(valor)) {
         if (value[valor].id > 0) {
             val = valor.substring(4);
-            strResult = '<a href="jsp#/' + 'redsocialperfil' + '/list/systemfilter=id_usuario&systemfilteroperator=equals&systemfiltervalue=' + value[valor].id + '&page=1&id=1&rpp=10&vf=4&order=fechacreacion&ordervalue=desc' + '">' + value[valor].login.charAt(0).toUpperCase() + value[valor].login.slice(1)+ '</a>';
-            //function MaysPrimera(string){ return string.charAt(0).toUpperCase() + string.slice(1); }
+            strResult = '<a href="jsp#/' + 'redsocialperfil' + '/list/systemfilter=id_usuario&systemfilteroperator=equals&systemfiltervalue=' + value[valor].id + '&page=1&id=1&rpp=10&vf=4&order=fechacreacion&ordervalue=desc' + '">' + value[valor].id + ":" + value[valor].login + '</a>';
         } else {
             strResult = '???';
         }
     } else if (/obj_/.test(valor)) {
         if (value[valor].id > 0) {
             strResult = '<a href="jsp#/' + valor.substring(4) + '/view/' + value[valor].id + '">' + value[valor].id + ":" + util().getForeign(value[valor]) + '</a>';
-            
+
         } else {
             strResult = '???';
         }
@@ -127,17 +170,58 @@ publicacionView.prototype.printValue = function (value, valor, recortar) {
                 break;
             default:
                 strResult = decodeURIComponent(value[valor]);
-                
-                    if (recortar) 
-                        if (strResult.length > 50) //don't show too long fields
-                            strResult = strResult.substr(0, 20) + " ...";     
 
-            };
-    };
+                if (recortar)
+                    if (strResult.length > 50) //don't show too long fields
+                        strResult = strResult.substr(0, 20) + " ...";
+
+        }
+        ;
+    }
+    ;
     return strResult;
 };
 
-publicacionView.prototype.getBodyPageTable = function (page, fieldNames, visibleFields, tdbuttons) {
+redsocialperfilView.prototype.getObjectTable = function (nombresCamposBonitos, valoresRegistro, nombresCampos) {
+    var thisObject = this;
+    nombresCamposBonitos.splice(index, 0);
+    valoresRegistro.splice(index, 0);
+
+    var tabla = "<table class=\"table table table-bordered table-condensed\">";
+    $.each(nombresCampos, function (index, nombreDeCampo) {
+        tabla += '<tr><td><strong>' + nombresCamposBonitos[index] + '</strong></td>';
+        tabla += '<td>' + thisObject.printValue(valoresRegistro, nombreDeCampo, false) + '</td>';
+    });
+    tabla += '</table>';
+    return tabla;
+};
+
+redsocialperfilView.prototype.doResultOperationNotifyToUser = function (place, resultadoStatus, resultadoMessage, id, mostrar, id_usuario_2) {
+    var strNombreClase = this.clase;
+    if (resultadoStatus == "200") {
+        mensaje = "<h3>La operacion se ha ejecutado con éxito</h3>";
+    } else {
+        mensaje = "<h3>ERROR</h3>";
+        resultadoMessage = "Error, el usuario con ID = " + id_usuario_2 + " usuario ya es tu amigo.";
+    }
+    mensaje += "<h5>Código: " + resultadoStatus + "</h5><h5>" + resultadoMessage + "</h5>";
+    $(place).append(this.getEmptyModal());
+    util().loadForm('#modal01', this.getFormHeader('Respuesta del servidor'), mensaje, this.getFormFooter(), true);
+    $('#modal01').css({
+        'right': '20px',
+        'left': '20px',
+        'width': 'auto',
+        'margin': '10px',
+        'display': 'block'
+    });
+
+    $('#modal01').on('hidden.bs.modal', function () {
+        location.reload();
+    })
+    ;
+};
+
+redsocialperfilView.prototype.getBodyPageTable = function (page, fieldNames, visibleFields, tdbuttons) {
     var thisObject = this;
     var tabla = "";
     $.each(page, function (index, value) {

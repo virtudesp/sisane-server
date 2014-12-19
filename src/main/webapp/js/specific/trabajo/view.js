@@ -17,26 +17,26 @@
  */
 
 
-var tareaView = function (strClase) {
+var trabajoView = function (strClase) {
     this.clase = strClase;
 };
-tareaView.prototype = new view('tarea');
-tareaView.prototype.getClassNameTarea = function () {
+trabajoView.prototype = new view('trabajo');
+trabajoView.prototype.getClassNameTarea = function () {
     return this.getClassName() + "Vista";
 };
-var oTareaView = new tareaView('tarea');
+var oTrabajoView = new trabajoView('trabajo');
 
-tareaView.prototype.doEventsLoading = function () {
+trabajoView.prototype.doEventsLoading = function () {
     var thisObject = this;
-    $('#tareaForm #obj_usuario_button').unbind('click');
-    $("#tareaForm #obj_usuario_button").click(function () {
+    $('#trabajoForm #obj_usuario_button').unbind('click');
+    $("#trabajoForm #obj_usuario_button").click(function () {
         var oControl = oUsuarioControl;  //para probar dejar documento
         //vista('usuario').cargaModalBuscarClaveAjena('#modal01', "documento");
 
-        $("#tareaForm").append(thisObject.getEmptyModal());
+        $("#trabajoForm").append(thisObject.getEmptyModal());
         util().loadForm('#modal01', thisObject.getFormHeader('Elección de usuario'), "", thisObject.getFormFooter(), true);
 
-        $('#tareaForm').append(thisObject.getEmptyModal());
+        $('#trabajoForm').append(thisObject.getEmptyModal());
 
         oControl.list('#modal01 #modal-body', param().defaultizeUrlObjectParameters({}), true, oUsuarioModel, oUsuarioView);
         oControl.modalListEventsLoading('#modal01 #modal-body', param().defaultizeUrlObjectParameters({}), function (id) {
@@ -47,15 +47,15 @@ tareaView.prototype.doEventsLoading = function () {
         },oUsuarioModel, oUsuarioView);
         return false;
     });
-    $('#tareaForm #obj_tipotarea_button').unbind('click');
-    $("#tareaForm #obj_tipotarea_button").click(function () {
+    $('#trabajoForm #obj_tipotarea_button').unbind('click');
+    $("#trabajoForm #obj_tipotarea_button").click(function () {
         var oControl = oTipotareaControl;  //para probar dejar documento
         //vista('usuario').cargaModalBuscarClaveAjena('#modal01', "documento");
 
-        $("#tareaForm").append(thisObject.getEmptyModal());
+        $("#trabajoForm").append(thisObject.getEmptyModal());
         util().loadForm('#modal01', thisObject.getFormHeader('Elección de tipotarea'), "", thisObject.getFormFooter(), true);
 
-        $('#tareaForm').append(thisObject.getEmptyModal());
+        $('#trabajoForm').append(thisObject.getEmptyModal());
 
         oControl.list('#modal01 #modal-body', param().defaultizeUrlObjectParameters({}), true, oTipotareaModel, oTipotareaView);
         oControl.modalListEventsLoading('#modal01 #modal-body', param().defaultizeUrlObjectParameters({}), function (id) {
@@ -67,15 +67,15 @@ tareaView.prototype.doEventsLoading = function () {
         return false;
     });
     
-    $('#tareaForm #obj_estadotarea_button').unbind('click');
-    $("#tareaForm #obj_estadotarea_button").click(function () {
+    $('#trabajoForm #obj_estadotarea_button').unbind('click');
+    $("#trabajoForm #obj_estadotarea_button").click(function () {
         var oControl = oEstadotareaControl;  //para probar dejar documento
         //vista('usuario').cargaModalBuscarClaveAjena('#modal01', "documento");
 
-        $("#tareaForm").append(thisObject.getEmptyModal());
+        $("#trabajoForm").append(thisObject.getEmptyModal());
         util().loadForm('#modal01', thisObject.getFormHeader('Elección de estadotarea'), "", thisObject.getFormFooter(), true);
 
-        $('#tareaForm').append(thisObject.getEmptyModal());
+        $('#trabajoForm').append(thisObject.getEmptyModal());
 
         oControl.list('#modal01 #modal-body', param().defaultizeUrlObjectParameters({}), true, oEstadotareaModel, oEstadotareaView);
         oControl.modalListEventsLoading('#modal01 #modal-body', param().defaultizeUrlObjectParameters({}), function (id) {
@@ -89,8 +89,8 @@ tareaView.prototype.doEventsLoading = function () {
 };
 
 
-tareaView.prototype.loadButtons = function (id) {
-    var page = oTareaModel.getCachedPage();
+trabajoView.prototype.loadButtons = function (id) {
+    var page = oTrabajoModel.getCachedPage();
     var pagelength = page.length;
     var idNow = id;
     var id_usuario_1;
@@ -106,12 +106,11 @@ tareaView.prototype.loadButtons = function (id) {
     botonera += '<a class="btn btn-default view" id="' + id + '"  href="jsp#/' + this.clase + '/view/' + id + '"><i class="glyphicon glyphicon-eye-open"></i></a>';
     botonera += '<a class="btn btn-default edit" id="' + id + '"  href="jsp#/' + this.clase + '/edit/' + id + '"><i class="glyphicon glyphicon-pencil"></i></a>';
     botonera += '<a class="btn btn-default remove" id="' + id + '"  href="jsp#/' + this.clase + '/remove/' + id + '"><i class="glyphicon glyphicon-remove"></i></a>';
-    botonera += '<a class="btn btn-default mp" id="' + id + '"  href="jsp#/' + "tarea" + '/new/' + id_usuario_1 + '"><i class="glyphicon glyphicon-envelope"></i></a>';
     botonera += '</div></div>';
     return botonera;
 };
 
-tareaView.prototype.printValue = function (value, valor, recortar) {
+trabajoView.prototype.printValue = function (value, valor, recortar) {
     var thisObject = this;
     var strResult = "";
     if (/obj_usuario/.test(valor)) {

@@ -1,5 +1,5 @@
-/* 
- * Copyright (C) 2014 rafa
+/*
+ * Copyright (C) July 2014 Rafael Aznar
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -15,13 +15,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
+package net.daw.control.route.generic.specific.implementation;
 
-var amigoControl = function (strClase) {
-    this.clase = strClase;
-};
-amigoControl.prototype = new control('amigo');
-amigoControl.prototype.getClassNameAmigo = function () {
-    return this.getClassName() + "Control";
-};
-var oAmigoControl = new amigoControl('amigo');
+import net.daw.control.route.generic.implementation.ControlRouteGenImpl;
 
+public class TrabajoControlRouteGenSpImpl extends ControlRouteGenImpl {
+
+}

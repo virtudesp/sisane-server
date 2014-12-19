@@ -176,20 +176,33 @@
         <script src="js/specific/opcion/view.js" charset="UTF-8"></script>
         <script src="js/specific/opcion/routes.js" charset="UTF-8"></script>
 
+        <!-- ***********  RED SOCIAL  *********** -->
         <script src="js/specific/publicacion/control.js" charset="UTF-8"></script>
         <script src="js/specific/publicacion/model.js" charset="UTF-8"></script>
         <script src="js/specific/publicacion/view.js" charset="UTF-8"></script>
         <script src="js/specific/publicacion/routes.js" charset="UTF-8"></script>
 
-        <script src="js/specific/amigo/control.js" charset="UTF-8"></script>
-        <script src="js/specific/amigo/model.js" charset="UTF-8"></script>
-        <script src="js/specific/amigo/view.js" charset="UTF-8"></script>
-        <script src="js/specific/amigo/routes.js" charset="UTF-8"></script>
+        <script src="js/specific/amistad/control.js" charset="UTF-8"></script>
+        <script src="js/specific/amistad/model.js" charset="UTF-8"></script>
+        <script src="js/specific/amistad/view.js" charset="UTF-8"></script>
+        <script src="js/specific/amistad/routes.js" charset="UTF-8"></script>
 
         <script src="js/specific/estado/control.js" charset="UTF-8"></script>
         <script src="js/specific/estado/model.js" charset="UTF-8"></script>
         <script src="js/specific/estado/view.js" charset="UTF-8"></script>
-        <script src="js/specific/estado/routes.js" charset="UTF-8"></script>
+        <script src="js/specific/estado/routes.js" charset="UTF-8"></script>        
+        
+        <script src="js/specific/redsocialperfil/control.js" charset="UTF-8"></script>
+        <script src="js/specific/redsocialperfil/model.js" charset="UTF-8"></script>
+        <script src="js/specific/redsocialperfil/view.js" charset="UTF-8"></script>
+        <script src="js/specific/redsocialperfil/routes.js" charset="UTF-8"></script>
+        
+        <script src="js/specific/inicioRedSocial/control.js" charset="UTF-8"></script>
+        <script src="js/specific/inicioRedSocial/model.js" charset="UTF-8"></script>
+        <script src="js/specific/inicioRedSocial/view.js" charset="UTF-8"></script>
+        <script src="js/specific/inicioRedSocial/routes.js" charset="UTF-8"></script>
+        <!-- ***********  FIN RED SOCIAL  *********** -->
+        
         <script src="js/specific/cuestionario/control.js" charset="UTF-8"></script>
         <script src="js/specific/cuestionario/model.js" charset="UTF-8"></script>
         <script src="js/specific/cuestionario/view.js" charset="UTF-8"></script>
@@ -214,11 +227,6 @@
         <script src="js/specific/pregunta/model.js" charset="UTF-8"></script>
         <script src="js/specific/pregunta/view.js" charset="UTF-8"></script>
         <script src="js/specific/pregunta/routes.js" charset="UTF-8"></script>
-
-        <script src="js/specific/publicacion/control.js" charset="UTF-8"></script>
-        <script src="js/specific/publicacion/model.js" charset="UTF-8"></script>
-        <script src="js/specific/publicacion/view.js" charset="UTF-8"></script>
-        <script src="js/specific/publicacion/routes.js" charset="UTF-8"></script>
 
         <script src="js/specific/entrega/control.js" charset="UTF-8"></script>
         <script src="js/specific/entrega/model.js" charset="UTF-8"></script>
@@ -304,10 +312,10 @@
         <script src="js/specific/documentobonito/view.js" charset="UTF-8"></script>
         <script src="js/specific/documentobonito/routes.js" charset="UTF-8"></script>
 
-        <script src="js/specific/tarea/control.js" charset="UTF-8"></script>
-        <script src="js/specific/tarea/model.js" charset="UTF-8"></script>
-        <script src="js/specific/tarea/view.js" charset="UTF-8"></script>
-        <script src="js/specific/tarea/routes.js" charset="UTF-8"></script>
+        <script src="js/specific/trabajo/control.js" charset="UTF-8"></script>
+        <script src="js/specific/trabajo/model.js" charset="UTF-8"></script>
+        <script src="js/specific/trabajo/view.js" charset="UTF-8"></script>
+        <script src="js/specific/trabajo/routes.js" charset="UTF-8"></script>
 
         <script src="js/specific/tipotarea/control.js" charset="UTF-8"></script>
         <script src="js/specific/tipotarea/model.js" charset="UTF-8"></script>
@@ -343,15 +351,17 @@
 
                 fDocumentoRoutes();
                 fTipotareaRoutes();
-                fTareaRoutes();
+                fTrabajoRoutes();
                 fEstadotareaRoutes();
                 fProyectoRoutes();
                 fOpcionRoutes();
                 fPreguntaRoutes();
                 fCuestionarioRoutes();
-                fAmigoRoutes();
+                fAmistadRoutes();
                 fUsuarioRoutes();
                 fPublicacionRoutes();
+                fRedsocialperfilRoutes();
+                fInicioRedSocialRoutes();
                 fPostRoutes();
                 fMensajeprivadoRoutes();
                 fTemaRoutes();

@@ -19,13 +19,22 @@ package net.daw.dao.generic.specific.implementation;
 
 import net.daw.dao.generic.implementation.TableDaoGenImpl;
 import java.sql.Connection;
+import net.daw.bean.generic.specific.implementation.EstadoBeanGenSpImpl;
+import net.daw.bean.generic.specific.implementation.TipousuarioBeanGenSpImpl;
 import net.daw.bean.generic.specific.implementation.UsuarioBeanGenSpImpl;
+import net.daw.data.specific.implementation.MysqlDataSpImpl;
 import net.daw.helper.AppConfigurationHelper;
+import net.daw.helper.ExceptionBooster;
 
 public class UsuarioDaoGenSpImpl extends TableDaoGenImpl<UsuarioBeanGenSpImpl> {
-
-    public UsuarioDaoGenSpImpl(String strFuente, Connection pooledConnection) throws Exception {
-        super(strFuente, "usuario", pooledConnection);
+    private String strTableName = "usuario";   
+    private MysqlDataSpImpl oMysql = null;
+    private Connection oConnection = null;
+    
+    public UsuarioDaoGenSpImpl(String strObject, Connection pooledConnection) throws Exception {
+        super(strObject, strObject, pooledConnection);
+            oConnection = pooledConnection;
+            oMysql = new MysqlDataSpImpl(oConnection);
     }
 
     public UsuarioBeanGenSpImpl getFromLogin(UsuarioBeanGenSpImpl oUsuario) throws Exception {
@@ -50,6 +59,79 @@ public class UsuarioDaoGenSpImpl extends TableDaoGenImpl<UsuarioBeanGenSpImpl> {
             throw new Exception("UsuarioDao.getFromLogin: Error: " + e.getMessage());
         }
     }
+    
+    @Override
+    public UsuarioBeanGenSpImpl get(UsuarioBeanGenSpImpl oUsuarioBean, Integer expand) throws Exception {
+        if (oUsuarioBean.getId() > 0) {
+            try {
+                if (!oMysql.existsOne(strTableName, oUsuarioBean.getId())) {
+                    oUsuarioBean.setId(0);
+                } else {
+                    expand--;
+                    if (expand > 0) {
+                        oUsuarioBean.setLogin(oMysql.getOne(strTableName, "login", oUsuarioBean.getId()));
+                        oUsuarioBean.setPassword(null);
+                        oUsuarioBean.setCiudad(oMysql.getOne(strTableName, "ciudad", oUsuarioBean.getId()));
+                        oUsuarioBean.setFirma(oMysql.getOne(strTableName, "firma", oUsuarioBean.getId()));
+                        oUsuarioBean.setSkin(oMysql.getOne(strTableName, "skin", oUsuarioBean.getId()));
+                        
+                        oUsuarioBean.setId_tipousuario(Integer.parseInt(oMysql.getOne(strTableName, "id_tipousuario", oUsuarioBean.getId())));
+                        oUsuarioBean.setId_estado(Integer.parseInt(oMysql.getOne(strTableName, "id_estado", oUsuarioBean.getId())));
+
+                        TipousuarioBeanGenSpImpl oTipousuario = new TipousuarioBeanGenSpImpl();
+                        oTipousuario.setId(Integer.parseInt(oMysql.getOne(strTableName, "id_tipousuario", oUsuarioBean.getId())));
+                        TipousuarioDaoGenSpImpl oTipousuarioDAO = new TipousuarioDaoGenSpImpl("tipousuario", oConnection);
+                        oTipousuario = oTipousuarioDAO.get(oTipousuario, AppConfigurationHelper.getJsonDepth());                        
+                        oUsuarioBean.setObj_tipousuario(oTipousuario);
+                        
+                        EstadoBeanGenSpImpl oEstado = new EstadoBeanGenSpImpl();
+                        oEstado.setId(Integer.parseInt(oMysql.getOne(strTableName, "id_estado", oUsuarioBean.getId())));
+                        EstadoDaoGenSpImpl oEstadoDAO = new EstadoDaoGenSpImpl("estado", oConnection);
+                        oEstado = oEstadoDAO.get(oEstado, AppConfigurationHelper.getJsonDepth());                        
+                        oUsuarioBean.setObj_estado(oEstado);
+                    }
+                }
+            } catch (Exception ex) {
+                ExceptionBooster.boost(new Exception(this.getClass().getName() + ":get ERROR: " + ex.getMessage()));
+            }
+        } else {
+            oUsuarioBean.setId(0);
+        }
+        return oUsuarioBean;
+    }
+
+    @Override
+    public UsuarioBeanGenSpImpl set(UsuarioBeanGenSpImpl oUsuarioBean) throws Exception {
+        try {
+            Boolean isNew = false;
+
+            if (oUsuarioBean.getId() == 0) {
+                oUsuarioBean.setId(oMysql.insertOne(strTableName));
+                isNew = true;
+            }
+            oMysql.updateOne(oUsuarioBean.getId(), strTableName, "login", oUsuarioBean.getLogin());
+            oMysql.updateOne(oUsuarioBean.getId(), strTableName, "id_tipousuario", oUsuarioBean.getId_tipousuario().toString());
+            oMysql.updateOne(oUsuarioBean.getId(), strTableName, "id_estado", oUsuarioBean.getId_estado().toString());
+            oMysql.updateOne(oUsuarioBean.getId(), strTableName, "ciudad", oUsuarioBean.getCiudad());
+            oMysql.updateOne(oUsuarioBean.getId(), strTableName, "firma", oUsuarioBean.getFirma());
+            oMysql.updateOne(oUsuarioBean.getId(), strTableName, "skin", oUsuarioBean.getSkin());
+            String prueba = oUsuarioBean.getPassword();
+
+            if (isNew == false) {
+                if (oUsuarioBean.getPassword() == null || oUsuarioBean.getPassword().equals("")) {
+                    oMysql.updateOne(oUsuarioBean.getId(), strTableName, "password", oMysql.getOne(strTableName, "password", oUsuarioBean.getId()));                
+                } else {
+                    oMysql.updateOne(oUsuarioBean.getId(), strTableName, "password", oUsuarioBean.getPassword());
+                }                
+            } else {
+                oMysql.updateOne(oUsuarioBean.getId(), strTableName, "password", oUsuarioBean.getPassword());
+            }
+        } catch (Exception ex) {
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":set ERROR: " + ex.getMessage()));
+        }
+        return oUsuarioBean;
+    }
+
 
 //    public UsuarioBean type(UsuarioBean oUsuarioBean) throws Exception {
 //

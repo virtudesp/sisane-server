@@ -16,18 +16,18 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
-var tareaControl = function (strClase) {
+var trabajoControl = function (strClase) {
     this.clase = strClase;
 };
 
-tareaControl.prototype = new control('tarea');
-tareaControl.prototype.getClassNameTarea = function () {
+trabajoControl.prototype = new control('trabajo');
+trabajoControl.prototype.getClassNameTrabajo = function () {
     return this.getClassName() + "Control";
 };
-var oTareaControl = new tareaControl('tarea');
+var oTrabajoControl = new trabajoControl('trabajo');
 
 
-temaControl.prototype.edit = function (place, id, oModel, oView) {
+trabajoControl.prototype.edit = function (place, id, oModel, oView) {
     var thisObject = this;
     $(place).empty();
     $(place).append(oView.getPanel("Edición de " + this.clase, oView.getEmptyForm()));
@@ -36,7 +36,7 @@ temaControl.prototype.edit = function (place, id, oModel, oView) {
     oView.loadFormValues(oDocumentoModel.getCachedOne(), oDocumentoModel.getCachedFieldNames());
     $('#id').attr("disabled", true);
     descripcion = $('#descripcion').val();
-    descripcion = descripcion.replace("<a href=\"jsp#/tipotarea/list/systemfilter=id_tema&systemfilteroperator=equals&systemfiltervalue=" + $('#id').val() + "\">","").replace("</a>","");
+    descripcion = descripcion.replace("<a href=\"jsp#/tipotarea/list/systemfilter=id_tarea&systemfilteroperator=equals&systemfiltervalue=" + $('#id').val() + "\">","").replace("</a>","");
     $('#descripcion').val(descripcion);
     oView.doEventsLoading();
     $('#submitForm').unbind('click');
@@ -50,7 +50,7 @@ temaControl.prototype.edit = function (place, id, oModel, oView) {
     });
 };
 
-tareaControl.prototype.new = function (place, objParams, oModel, oView) {
+trabajoControl.prototype.new = function (place, objParams, oModel, oView) {
     var thisObject = this;
     $(place).empty();
     $(place).append(oView.getPanel("Alta de " + this.clase, oView.getEmptyForm()));

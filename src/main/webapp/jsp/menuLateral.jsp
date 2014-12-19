@@ -18,7 +18,10 @@
 <%@page import="net.daw.bean.generic.specific.implementation.UsuarioBeanGenSpImpl"%>
         
 <%  UsuarioBeanGenSpImpl user = (UsuarioBeanGenSpImpl) request.getSession().getAttribute("usuarioBean");
-    String level = user.getObj_tipousuario().getDescripcion(); %>
+    String level = user.getObj_tipousuario().getDescripcion(); 
+    int id_tipousuario = user.getId_tipousuario();
+    int id_usuario = user.getId(); 
+%>
 
 <div class="panel panel-primary">
     <div class="panel-heading">
@@ -46,14 +49,16 @@
         <a  class="list-group-item" id="lnkDocumento" href="jsp#/documento">Documento</a> 
         <a  class="list-group-item" id="lnkDocumento" href="jsp#/tipodocumento">TipoDocumento</a> 
         <a  class="list-group-item" id="lnkOrdenador" href="jsp#/usuario">Usuario</a> 
- 
-        <a  class="list-group-item" id="lnkDocumento" href="jsp#/documento">Documento</a>
+        <a class="list-group-item" id="lnkProveedor" href="jsp#/proveedor">Proveedor</a>
+        <a class="list-group-item" id="lnkPedido" href="jsp#/pedido">Pedido</a>
         <a  class="list-group-item" id="lnkCuestionario" href="jsp#/cuestionario">Cuestionario</a> 
         <a  class="list-group-item" id="lnkPregunta" href="jsp#/pregunta">Pregunta</a>
         <a  class="list-group-item" id="lnkRespuesta" href="jsp#/respuesta">Respuesta</a>
         <a  class="list-group-item" id="lnkOpcion" href="jsp#/opcion">Opcion</a>
+        <a class="list-group-item" id="lnkImpuesto" href="jsp#/impuesto">Impuesto</a>
         <a  class="list-group-item" id="lnkActividad" href="jsp#/actividad">Actividad</a>
         <a  class="list-group-item" id="lnkActividad" href="jsp#/entrega">Entrega</a> 
+        <a class="list-group-item" id="lnkActividad" href="jsp#/detalle_pedido">DetallePedido</a> 
     </div>
 </div>
 
@@ -62,11 +67,8 @@
         <h3 class="panel-title">Red Social</h3>
     </div>
     <div class="list-group">
-
-        <a  class="list-group-item" id="lnkPublicacion" href="jsp#/publicacion">Publicacion</a> 
-        <a  class="list-group-item" id="lnkPublicacion" href="jsp#/estado">Estado</a>
-        <a  class="list-group-item" id="lnkPublicacion" href="jsp#/amigo">Amigo</a>
-
+        <a  class="list-group-item" id="lnkPublicacion" href="jsp#/inicioRedSocial/list/page=1&id=1&rpp=10&vf=4&order=fechacreacion&ordervalue=desc">Inicio</a> 
+        <a  class="list-group-item" id="lnkPublicacion" href="jsp#/redsocialperfil/list/systemfilter=id_usuario&systemfilteroperator=equals&systemfiltervalue=<%=id_usuario%>&page=1&id=1&rpp=10&vf=4&order=fechacreacion&ordervalue=desc">Mi perfil</a> 
     </div>
 </div>
 
@@ -94,6 +96,29 @@
         <a  class="list-group-item" id="lnkPedido" href="jsp#/pedido">Pedido</a>        
     </div>
 </div>
+    
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        <h3 class="panel-title">Tareas</h3>
+    </div>
+    <div class="list-group">
+        <a class="list-group-item" id="lnkPublicacion" href="jsp#/trabajo">Tarea</a>
+        <a class="list-group-item" id="lnkPublicacion" href="jsp#/proyecto">Proyecto</a>
+        <a class="list-group-item" id="lnkPublicacion" href="jsp#/estadotarea">Estado Tarea</a>
+        <a class="list-group-item" id="lnkPublicacion" href="jsp#/tipotarea">Tipo Tarea</a>
+    </div>    
+</div>
+    
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        <h3 class="panel-title">Propuestas y votaciones</h3>
+    </div>
+    <div class="list-group">
+        <a class="list-group-item" id="lnkTipotema" href="jsp#/comentario">Comentarios</a>
+        <a class="list-group-item" id="lnkTipopropuesta" href="jsp#/tipopropuesta">Tipo propuesta</a>
+        <a class="list-group-item" id="lnkPropuesta" href="jsp#/propuesta">Propuesta</a>
+    </div>
+</div>
 
 <div class="panel panel-primary">
     <div class="panel-heading">
@@ -103,3 +128,20 @@
         <a  class="list-group-item" id="lnkOrdenador" href="jsp?op=cambia">Cambia el campo</a>
     </div>
 </div>
+    
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        <h3 class="panel-title">Cuestionario</h3>
+    </div>
+    <div class="list-group">
+        <a class="list-group-item" id="lnkCuestionario" href="jsp#/cuestionario">Cuestionario</a>
+        <a class="list-group-item" id="lnkPregunta" href="jsp#/pregunta">Pregunta</a>
+        <a class="list-group-item" id="lnkOpcion" href="jsp#/opcion">Opcion</a>
+        <a class="list-group-item" id="lnkRespuesta" href="jsp#/respuesta">Respuesta</a>
+    </div>
+</div>
+
+<script type="text/javascript">
+    myuser = <%=id_usuario%>;
+    mylevel = <%=id_tipousuario%>;
+</script>

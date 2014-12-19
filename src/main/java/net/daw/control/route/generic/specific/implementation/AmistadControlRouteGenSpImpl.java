@@ -15,54 +15,34 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-package net.daw.control.route.specific.implementation;
+package net.daw.control.route.generic.specific.implementation;
 
 import javax.servlet.http.HttpServletRequest;
+import net.daw.control.operation.generic.specific.implementation.AmistadControlOperationGenSpImpl;
 import net.daw.control.operation.publicinterface.ControlOperationInterface;
-import net.daw.control.route.publicinterface.ControlRouteInterface;
+import net.daw.control.route.generic.implementation.ControlRouteGenImpl;
 import net.daw.helper.ExceptionBooster;
 import net.daw.helper.ParameterCooker;
 
-public class AmigoControlRouteSpImpl implements ControlRouteInterface {
-
+public class AmistadControlRouteGenSpImpl extends ControlRouteGenImpl {
     @Override
     public String execute(HttpServletRequest request, ControlOperationInterface oControl) throws Exception {
+        AmistadControlOperationGenSpImpl oAmistadControl = (AmistadControlOperationGenSpImpl) oControl;
         String operation = ParameterCooker.prepareOperation(request);
         String jsonResult = "";
         try {
             switch (operation) {
-                case "get":
-                    jsonResult = oControl.get(request);
+                case "agregaramigo":
+                    jsonResult = oAmistadControl.agregarAmigo(request);
                     break;
-                case "getaggregateviewone":
-                    jsonResult = oControl.getaggregateviewone(request);
+                case "removeamigo":
+                    jsonResult = oAmistadControl.removeAmigo(request);
                     break;
-                case "getprettycolumns":
-                    jsonResult = oControl.getprettycolumns(request);
-                    break;
-                case "getcolumns":
-                    jsonResult = oControl.getcolumns(request);
-                    break;
-                case "getpage":
-                    jsonResult = oControl.getpage(request);
-                    break;
-                case "getpages":
-                    jsonResult = oControl.getpages(request);
-                    break;
-                case "getregisters":
-                    jsonResult = oControl.getregisters(request);
-                    break;
-                case "getaggregateviewsome":
-                    jsonResult = oControl.getaggregateviewsome(request);
-                    break;
-                case "remove":
-                    jsonResult = oControl.remove(request);
-                    break;
-                case "set":
-                    jsonResult = oControl.set(request);
+                case "existeamigo":
+                    jsonResult = oAmistadControl.existeAmigo(request);
                     break;
                 default:
-                    ExceptionBooster.boost(new Exception(this.getClass().getName() + ":execute ERROR: error de operación: la operación no existe"));
+                    jsonResult = super.execute(request, oControl);
                     break;
             }
         } catch (Exception ex) {
@@ -70,5 +50,4 @@ public class AmigoControlRouteSpImpl implements ControlRouteInterface {
         }
         return jsonResult;
     }
-
 }

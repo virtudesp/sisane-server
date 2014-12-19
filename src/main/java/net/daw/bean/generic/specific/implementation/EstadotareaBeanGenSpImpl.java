@@ -29,7 +29,7 @@ public class EstadotareaBeanGenSpImpl extends BeanGenImpl implements BeanInterfa
 
     @Expose
     private String descripcion = "";
-    
+
     public EstadotareaBeanGenSpImpl() {
     }
 
@@ -45,7 +45,4 @@ public class EstadotareaBeanGenSpImpl extends BeanGenImpl implements BeanInterfa
         this.descripcion = descripcion;
     }
 
-   
-
-   
 }

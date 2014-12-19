@@ -17,76 +17,70 @@
  */
 
 
-function fPublicacionRoutes() {
+function fTrabajoRoutes() {
+    
 
-//    Path.map("#/publicacion").to(function () {
+//    Path.map("#/trabajo").to(function () {
 //        $('#indexContenidoJsp').spinner();
-//        control('publicacion').list($('#indexContenido'), param().defaultizeUrlObjectParameters({}), null);
-//        //publicacionControl.modalListEventsLoading(publicacionObject, publicacionView, $('#indexContenido'), param().defaultizeUrlObjectParameters({}), null);        
+//        control('trabajo').list($('#indexContenido'), param().defaultizeUrlObjectParameters({}), null);
+//        //trabajoControl.modalListEventsLoading(trabajoObject, trabajoView, $('#indexContenido'), param().defaultizeUrlObjectParameters({}), null);        
 //        $('#indexContenidoJsp').empty();
 //        return false;
 //    });
 
-
-    Path.map("#/publicacion").to(function () {
+    Path.map("#/trabajo").to(function () {
         $('#indexContenidoJsp').spinner();
-        oPublicacionControl.list($('#indexContenido'), param().defaultizeUrlObjectParameters({}), null, oPublicacionModel, oPublicacionView);
-        //publicacionControl.modalListEventsLoading(publicacionObject, publicacionView, $('#indexContenido'), param().defaultizeUrlObjectParameters({}), null);        
+        oTrabajoControl.list($('#indexContenido'), param().defaultizeUrlObjectParameters({}), null, oTrabajoModel, oTrabajoView);
+        //trabajoControl.modalListEventsLoading(trabajoObject, trabajoView, $('#indexContenido'), param().defaultizeUrlObjectParameters({}), null);        
         $('#indexContenidoJsp').empty();
-        //$('#indexContenidoJsp').append(oPublicacionControl.getClassNamePublicacion());
+        //$('#indexContenidoJsp').append(oTrabajoControl.getClassNameTrabajo());
         return false;
     });
 
-    Path.map("#/publicacion/list/:url").to(function () {
+    Path.map("#/trabajo/list/:url").to(function () {
         $('#indexContenidoJsp').spinner();
         var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
-        oPublicacionControl.list($('#indexContenido'), paramsObject, null, oPublicacionModel, oPublicacionView);
-        $('#indexContenidoJsp').empty();
-        return false;
-    });
-
-    Path.map("#/publicacion/view/:id").to(function () {
-        $('#indexContenidoJsp').spinner();
-        var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
-        oPublicacionControl.view($('#indexContenido'), paramsObject['id'], oPublicacionModel, oPublicacionView);
-        $('#indexContenidoJsp').empty();
-
-        return false;
-    });
-
-    Path.map("#/publicacion/edit/:id").to(function () {
-        $('#indexContenidoJsp').spinner();
-        var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
-        oPublicacionControl.edit($('#indexContenido'), paramsObject['id'], oPublicacionModel, oPublicacionView);
-        $('#indexContenidoJsp').empty();
-    });
-    Path.map("#/publicacion/new").to(function () {
-        $('#indexContenidoJsp').spinner();
-        //var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
-        oPublicacionControl.new($('#indexContenido'), null, oPublicacionModel, oPublicacionView);
-        $('#indexContenidoJsp').empty();
-        return false;
-    });
-    Path.map("#/publicacion/new/:url").to(function () {
-        $('#indexContenidoJsp').spinner();
-        var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
-        oPublicacionControl.new($('#indexContenido'), paramsObject, oPublicacionModel, oPublicacionView);
+        oTrabajoControl.list($('#indexContenido'), paramsObject, null, oTrabajoModel, oTrabajoView);
         $('#indexContenidoJsp').empty();
         return false;
     });
 
-    Path.map("#/publicacion/remove/:id").to(function () {
+    Path.map("#/trabajo/view/:id").to(function () {
         $('#indexContenidoJsp').spinner();
         var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
-        oPublicacionControl.remove($('#indexContenido'), paramsObject['id'], oPublicacionModel, oPublicacionView);
+        oTrabajoControl.view($('#indexContenido'), paramsObject['id'], oTrabajoModel, oTrabajoView);
+        $('#indexContenidoJsp').empty();
+
+        return false;
+    });
+
+    Path.map("#/trabajo/edit/:id").to(function () {
+        $('#indexContenidoJsp').spinner();
+        var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
+        oTrabajoControl.edit($('#indexContenido'), paramsObject['id'], oTrabajoModel, oTrabajoView);
+        $('#indexContenidoJsp').empty();
+    });
+
+    Path.map("#/trabajo/new").to(function () {
+        $('#indexContenidoJsp').spinner();
+        var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
+        oTrabajoControl.new($('#indexContenido'), null, oTrabajoModel, oTrabajoView);
         $('#indexContenidoJsp').empty();
         return false;
     });
 
-    Path.map("#/publicacion/duplicate/:id").to(function () {
+    Path.map("#/trabajo/new/:id").to(function () {
         $('#indexContenidoJsp').spinner();
         var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
-        oPublicacionControl.duplicate($('#indexContenido'), paramsObject['id'], oPublicacionModel, oPublicacionView);
+        oTrabajoControl.new($('#indexContenido'), paramsObject['id'], oTrabajoModel, oTrabajoView);
+        $('#indexContenidoJsp').empty();
+        return false;
+    });
+
+    Path.map("#/trabajo/remove/:id").to(function () {
+        $('#indexContenidoJsp').spinner();
+        var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
+        oTrabajoControl.remove($('#indexContenido'), paramsObject['id'], oTrabajoModel, oTrabajoView);
         $('#indexContenidoJsp').empty();
         return false;
     });

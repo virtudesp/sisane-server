@@ -23,6 +23,7 @@ publicacionModel.prototype = new model('publicacion');
 publicacionModel.prototype.getClassNamePublicacion = function () {
     return this.getClassName() + "Modelo";
 };
+
 publicacionModel.prototype.duplicateOne = function (id) {
     $.when(ajax().ajaxCallSync(this.urlJson + '&op=duplicate&id=' + id, 'GET', '')).done(function (data) {
         feedback = data;
@@ -30,3 +31,51 @@ publicacionModel.prototype.duplicateOne = function (id) {
     return feedback;
 };
 var oPublicacionModel = new publicacionModel('publicacion');
+
+
+publicacionModel.prototype.loadAggregateViewSome = function (objParams) {
+    if (objParams.order) {
+        orderParams = '&order=' + objParams.order + '&ordervalue=' + objParams.ordervalue;
+    } else {
+        orderParams = "";
+    }
+    if (objParams.filter) {
+        filterParams = "&filter=" + objParams.filter + "&filteroperator=" + objParams.filteroperator + "&filtervalue=" + objParams.filtervalue;
+    } else {
+        filterParams = "";
+    }
+    if (objParams.systemfilter) {
+        systemfilterParams = "&systemfilter=" + objParams.systemfilter + "&systemfilteroperator=" + objParams.systemfilteroperator + "&systemfiltervalue=" + objParams.systemfiltervalue;
+    } else {
+        systemfilterParams = "";
+    }
+    $.when(ajax().ajaxCallSync(this.urlJson + '&op=getcomentarioamigo' + filterParams + '&rpp=' + objParams.rpp + orderParams + '&page=' + objParams.page + systemfilterParams, 'GET', '')).done(function (data) {
+        pagina_objs = data; //decodeURI htmlDecode
+    });
+    //return pagina_objs;
+    this.cFieldNames = pagina_objs.data.columns;
+    this.cCountFields = this.cFieldNames.length;
+    this.cPrettyFieldNames = pagina_objs.data.prettyColumns;
+    this.cPrettyFieldNamesAcciones = this.cPrettyFieldNames;
+    this.cPrettyFieldNamesAcciones.push("acciones");
+    this.cPage = pagina_objs.data.page.list;
+    this.cPages = pagina_objs.data.pages.data;
+    this.cRegisters = pagina_objs.data.registers.data;
+};
+publicacionModel.prototype.getPages = function (rpp, filter, filteroperator, filtervalue, systemfilter, systemfilteroperator, systemfiltervalue) {
+    if (filter) {
+        filterParams = "&filter=" + filter + "&filteroperator=" + filteroperator + "&filtervalue=" + filtervalue;
+    } else {
+        filterParams = "";
+    }
+    if (systemfilter) {
+        systemfilterParams = "&systemfilter=" + systemfilter + "&systemfilteroperator=" + systemfilteroperator + "&systemfiltervalue=" + systemfiltervalue;
+    } else {
+        systemfilterParams = "";
+    }
+    $.when(ajax().ajaxCallSync(this.urlJson + '&op=getpagescomentarioamigo' + filterParams + '&rpp=' + rpp + systemfilterParams, 'GET', '')).done(function (data) {
+        pages = data['data'];
+    });
+    this.cPages = pages;
+    return pages;
+};

@@ -22,12 +22,12 @@ import net.daw.bean.publicinterface.BeanInterface;
 import com.google.gson.annotations.Expose;
 import java.util.Date;
 
-public class TareaBeanGenSpImpl extends BeanGenImpl implements BeanInterface {
+public class TrabajoBeanGenSpImpl extends BeanGenImpl implements BeanInterface {
 
-    public TareaBeanGenSpImpl() {
+    public TrabajoBeanGenSpImpl() {
     }
 
-    public TareaBeanGenSpImpl(Integer id) {
+    public TrabajoBeanGenSpImpl(Integer id) {
         super(id);
     }
 
