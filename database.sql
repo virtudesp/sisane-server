@@ -1058,7 +1058,7 @@ INSERT INTO `objeto` (`id`, `descripcion`) VALUES
 (33, 'tipotema'),
 (34, 'tipousuario'),
 (35, 'usuario'),
-(36, 'tarea'),
+(36, 'trabajo'),
 (37, 'tipotarea'),
 (38, 'estadotarea'),
 (39, 'proyecto'),
@@ -2609,10 +2609,10 @@ CREATE TABLE IF NOT EXISTS `respuesta` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `tarea`
+-- Estructura de tabla para la tabla `trabajo`
 --
 
-CREATE TABLE IF NOT EXISTS `tarea` (
+CREATE TABLE IF NOT EXISTS `trabajo` (
 `id` int(11) NOT NULL COMMENT 'Id',
   `descripcion` varchar(255) DEFAULT NULL COMMENT 'Descripción',
   `fechaentrega` datetime DEFAULT NULL COMMENT 'Fecha Entrega',
@@ -2622,10 +2622,10 @@ CREATE TABLE IF NOT EXISTS `tarea` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=26 ;
 
 --
--- Volcado de datos para la tabla `tarea`
+-- Volcado de datos para la tabla `trabajo`
 --
 
-INSERT INTO `tarea` (`id`, `descripcion`, `fechaentrega`, `id_usuario`, `id_tipotarea`, `id_estadotarea`) VALUES
+INSERT INTO `trabajo` (`id`, `descripcion`, `fechaentrega`, `id_usuario`, `id_tipotarea`, `id_estadotarea`) VALUES
 (1, 'diseño de la base de datos', '2014-12-17 15:16:27', 1, 3, 1),
 (2, 'programación de un mantenimiento', '2015-03-18 06:11:35', 2, 4, 2),
 (3, 'programación de una clave ajena', '2014-12-10 10:17:40', 3, 5, 3),
@@ -3125,9 +3125,9 @@ ALTER TABLE `respuesta`
  ADD PRIMARY KEY (`id`);
 
 --
--- Indices de la tabla `tarea`
+-- Indices de la tabla `trabajo`
 --
-ALTER TABLE `tarea`
+ALTER TABLE `trabajo`
  ADD PRIMARY KEY (`id`);
 
 --
@@ -3329,9 +3329,9 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Identificador',AUTO_INCREME
 ALTER TABLE `respuesta`
 MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
 --
--- AUTO_INCREMENT de la tabla `tarea`
+-- AUTO_INCREMENT de la tabla `trabajo`
 --
-ALTER TABLE `tarea`
+ALTER TABLE `trabajo`
 MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Id',AUTO_INCREMENT=26;
 --
 -- AUTO_INCREMENT de la tabla `tema`

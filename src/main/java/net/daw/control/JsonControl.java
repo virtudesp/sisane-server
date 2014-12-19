@@ -40,7 +40,7 @@ import net.daw.control.operation.generic.specific.implementation.EstadoControlOp
 import net.daw.control.operation.generic.specific.implementation.EstadotareaControlOperationGenSpImpl;
 import net.daw.control.operation.generic.specific.implementation.ProyectoControlOperationGenSpImpl;
 import net.daw.control.operation.generic.specific.implementation.RespuestaControlOperationGenSpImpl;
-import net.daw.control.operation.generic.specific.implementation.TareaControlOperationGenSpImpl;
+import net.daw.control.operation.generic.specific.implementation.TrabajoControlOperationGenSpImpl;
 import net.daw.control.operation.generic.specific.implementation.TipodocumentoControlOperationGenSpImpl;
 import net.daw.control.operation.generic.specific.implementation.TipotareaControlOperationGenSpImpl;
 import net.daw.control.operation.generic.specific.implementation.TipotemaControlOperationGenSpImpl;
@@ -72,7 +72,7 @@ import net.daw.control.route.generic.specific.implementation.EstadotareaControlR
 import net.daw.control.route.generic.specific.implementation.PedidoControlRouteGenSpImpl;
 import net.daw.control.route.generic.specific.implementation.ProyectoControlRouteGenSpImpl;
 import net.daw.control.route.generic.specific.implementation.RespuestaControlRouteGenSpImpl;
-import net.daw.control.route.generic.specific.implementation.TareaControlRouteGenSpImpl;
+import net.daw.control.route.generic.specific.implementation.TrabajoControlRouteGenSpImpl;
 import net.daw.control.route.generic.specific.implementation.TipodocumentoControlRouteGenSpImpl;
 import net.daw.control.route.generic.specific.implementation.TipotareaControlRouteGenSpImpl;
 import net.daw.control.route.generic.specific.implementation.TipotemaControlRouteGenSpImpl;
@@ -291,9 +291,9 @@ public class JsonControl extends HttpServlet {
                         DocumentobonitoControlOperationGenSpImpl oDocumentobonitoControlOperation = new DocumentobonitoControlOperationGenSpImpl(request);
                         jsonResult = oDocumentobonitoRoute.execute(request, oDocumentobonitoControlOperation);
                         break;
-                    case "tarea":
-                        TareaControlRouteGenSpImpl oTareaRoute = new TareaControlRouteGenSpImpl();
-                        TareaControlOperationGenSpImpl oTareaControlOperation = new TareaControlOperationGenSpImpl(request);
+                    case "trabajo":
+                        TrabajoControlRouteGenSpImpl oTareaRoute = new TrabajoControlRouteGenSpImpl();
+                        TrabajoControlOperationGenSpImpl oTareaControlOperation = new TrabajoControlOperationGenSpImpl(request);
                         jsonResult = oTareaRoute.execute(request, oTareaControlOperation);
                         break;
                     case "estadotarea":

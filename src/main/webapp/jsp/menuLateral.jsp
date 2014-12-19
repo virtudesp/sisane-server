@@ -102,7 +102,7 @@
         <h3 class="panel-title">Tareas</h3>
     </div>
     <div class="list-group">
-        <a class="list-group-item" id="lnkPublicacion" href="jsp#/tarea">Tarea</a>
+        <a class="list-group-item" id="lnkPublicacion" href="jsp#/trabajo">Tarea</a>
         <a class="list-group-item" id="lnkPublicacion" href="jsp#/proyecto">Proyecto</a>
         <a class="list-group-item" id="lnkPublicacion" href="jsp#/estadotarea">Estado Tarea</a>
         <a class="list-group-item" id="lnkPublicacion" href="jsp#/tipotarea">Tipo Tarea</a>

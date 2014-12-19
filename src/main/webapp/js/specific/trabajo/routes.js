@@ -17,70 +17,70 @@
  */
 
 
-function fTareaRoutes() {
+function fTrabajoRoutes() {
     
 
-//    Path.map("#/tarea").to(function () {
+//    Path.map("#/trabajo").to(function () {
 //        $('#indexContenidoJsp').spinner();
-//        control('tarea').list($('#indexContenido'), param().defaultizeUrlObjectParameters({}), null);
-//        //tareaControl.modalListEventsLoading(tareaObject, tareaView, $('#indexContenido'), param().defaultizeUrlObjectParameters({}), null);        
+//        control('trabajo').list($('#indexContenido'), param().defaultizeUrlObjectParameters({}), null);
+//        //trabajoControl.modalListEventsLoading(trabajoObject, trabajoView, $('#indexContenido'), param().defaultizeUrlObjectParameters({}), null);        
 //        $('#indexContenidoJsp').empty();
 //        return false;
 //    });
 
-    Path.map("#/tarea").to(function () {
+    Path.map("#/trabajo").to(function () {
         $('#indexContenidoJsp').spinner();
-        oTareaControl.list($('#indexContenido'), param().defaultizeUrlObjectParameters({}), null, oTareaModel, oTareaView);
-        //tareaControl.modalListEventsLoading(tareaObject, tareaView, $('#indexContenido'), param().defaultizeUrlObjectParameters({}), null);        
+        oTrabajoControl.list($('#indexContenido'), param().defaultizeUrlObjectParameters({}), null, oTrabajoModel, oTrabajoView);
+        //trabajoControl.modalListEventsLoading(trabajoObject, trabajoView, $('#indexContenido'), param().defaultizeUrlObjectParameters({}), null);        
         $('#indexContenidoJsp').empty();
-        //$('#indexContenidoJsp').append(oTareaControl.getClassNameTarea());
+        //$('#indexContenidoJsp').append(oTrabajoControl.getClassNameTrabajo());
         return false;
     });
 
-    Path.map("#/tarea/list/:url").to(function () {
+    Path.map("#/trabajo/list/:url").to(function () {
         $('#indexContenidoJsp').spinner();
         var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
-        oTareaControl.list($('#indexContenido'), paramsObject, null, oTareaModel, oTareaView);
-        $('#indexContenidoJsp').empty();
-        return false;
-    });
-
-    Path.map("#/tarea/view/:id").to(function () {
-        $('#indexContenidoJsp').spinner();
-        var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
-        oTareaControl.view($('#indexContenido'), paramsObject['id'], oTareaModel, oTareaView);
-        $('#indexContenidoJsp').empty();
-
-        return false;
-    });
-
-    Path.map("#/tarea/edit/:id").to(function () {
-        $('#indexContenidoJsp').spinner();
-        var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
-        oTareaControl.edit($('#indexContenido'), paramsObject['id'], oTareaModel, oTareaView);
-        $('#indexContenidoJsp').empty();
-    });
-
-    Path.map("#/tarea/new").to(function () {
-        $('#indexContenidoJsp').spinner();
-        var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
-        oTareaControl.new($('#indexContenido'), null, oTareaModel, oTareaView);
+        oTrabajoControl.list($('#indexContenido'), paramsObject, null, oTrabajoModel, oTrabajoView);
         $('#indexContenidoJsp').empty();
         return false;
     });
 
-    Path.map("#/tarea/new/:id").to(function () {
+    Path.map("#/trabajo/view/:id").to(function () {
         $('#indexContenidoJsp').spinner();
         var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
-        oTareaControl.new($('#indexContenido'), paramsObject['id'], oTareaModel, oTareaView);
+        oTrabajoControl.view($('#indexContenido'), paramsObject['id'], oTrabajoModel, oTrabajoView);
+        $('#indexContenidoJsp').empty();
+
+        return false;
+    });
+
+    Path.map("#/trabajo/edit/:id").to(function () {
+        $('#indexContenidoJsp').spinner();
+        var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
+        oTrabajoControl.edit($('#indexContenido'), paramsObject['id'], oTrabajoModel, oTrabajoView);
+        $('#indexContenidoJsp').empty();
+    });
+
+    Path.map("#/trabajo/new").to(function () {
+        $('#indexContenidoJsp').spinner();
+        var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
+        oTrabajoControl.new($('#indexContenido'), null, oTrabajoModel, oTrabajoView);
         $('#indexContenidoJsp').empty();
         return false;
     });
 
-    Path.map("#/tarea/remove/:id").to(function () {
+    Path.map("#/trabajo/new/:id").to(function () {
         $('#indexContenidoJsp').spinner();
         var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
-        oTareaControl.remove($('#indexContenido'), paramsObject['id'], oTareaModel, oTareaView);
+        oTrabajoControl.new($('#indexContenido'), paramsObject['id'], oTrabajoModel, oTrabajoView);
+        $('#indexContenidoJsp').empty();
+        return false;
+    });
+
+    Path.map("#/trabajo/remove/:id").to(function () {
+        $('#indexContenidoJsp').spinner();
+        var paramsObject = param().defaultizeUrlObjectParameters(param().getUrlObjectFromUrlString(this.params['url']));
+        oTrabajoControl.remove($('#indexContenido'), paramsObject['id'], oTrabajoModel, oTrabajoView);
         $('#indexContenidoJsp').empty();
         return false;
     });

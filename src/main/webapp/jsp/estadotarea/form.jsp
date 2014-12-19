@@ -16,7 +16,7 @@
  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 --%>
 
-<form class="form-horizontal" role="form" action="#" id="tipoestadotareaForm" name="formulario">
+<form class="form-horizontal" role="form" action="#" id="estadotareaForm" name="formulario">
     <div class="form-group">
         <label class="col-sm-2 control-label" for="id">Id:</label>
         <div class="col-sm-2">
@@ -24,9 +24,9 @@
         </div>
     </div>
     <div class="form-group">
-        <label class="col-sm-2 control-label"  for="titulo">Descripcion:</label>
+        <label class="col-sm-2 control-label"  for="descripcion">Descripcion:</label>
         <div class="col-sm-6">
-            <input type="text" id="descripcion" class="form-control"  name="descripcion" size="15" placeholder="descripcion de la estadotarea" />
+            <input type="text" id="descripcion" class="form-control"  name="descripcion" size="15" placeholder="descripcion de la estado tarea" />
         </div>
     </div>
     
@@ -63,7 +63,7 @@
 
     $(document).ready(function() {
         //http://jqueryvalidation.org/documentation/
-        $('#tipoestadotareaForm')
+        $('#estadotareaForm')
                 .bootstrapValidator({
                     container: '#messages',
                     feedbackIcons: {
@@ -72,10 +72,10 @@
                         validating: 'glyphicon glyphicon-refresh'
                     },
                     fields: {
-                        valor: {
+                        descripcion: {
                             validators: {
                                 notEmpty: {
-                                    message: 'Debe introducir un valor'
+                                    message: 'Debe introducir una descripcion'
                                 },
                                 stringLength: {
                                     max: 255,
@@ -83,16 +83,7 @@
                                 }
                             }
                         },
-                        id_pregunta: {
-                            validators: {
-                                notEmpty: {
-                                    message: 'Debe elegir una pregunta'
-                                },
-                                integer: {
-                                    message: 'El identificador de pregunta debe ser un entero'
-                                }
-                            }
-                        }
+                        
                     }
                 })
     });       

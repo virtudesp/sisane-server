@@ -19,6 +19,6 @@ package net.daw.control.route.generic.specific.implementation;
 
 import net.daw.control.route.generic.implementation.ControlRouteGenImpl;
 
-public class TareaControlRouteGenSpImpl extends ControlRouteGenImpl {
+public class TrabajoControlRouteGenSpImpl extends ControlRouteGenImpl {
 
 }

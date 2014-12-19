@@ -16,7 +16,7 @@
  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 --%>
 
-<form class="form-horizontal" role="form" action="#" id="tareaForm" name="formulario">
+<form class="form-horizontal" role="form" action="#" id="trabajoForm" name="formulario">
     <div class="form-group">
         <label class="col-sm-2 control-label" for="id">Id:</label>
         <div class="col-sm-2">
@@ -31,16 +31,16 @@
     </div>   
     
     <div class="form-group">
-        <label class="col-sm-2 control-label" for="fechaentrega">Alta:</label> 
+        <label class="col-sm-2 control-label" for="fechaentrega_group">Fecha de entrega:</label> 
         <div class="col-sm-3">           
-            <div class='input-group date' id='fechaentrega'>
-                <input type='text' class="form-control" id='alta' name="fechaentrega" placeholder="Fecha de alta" />
+            <div class='input-group date' id='fechaentrega_group'>
+                <input type='text' class="form-control" id='fechaentrega' name="fechaentrega_group" placeholder="Fecha de entrega" />
                 <span class="input-group-addon">
                     <span class="glyphicon glyphicon-calendar"></span>
                 </span>
             </div>
         </div>
-    </div>     
+    </div> 
 
     <div class="form-group">
         <label class="col-sm-2 control-label" for="obj_usuario_id">Usuario: </label> 
@@ -94,18 +94,13 @@
 <script type="text/javascript">
 
     $(document).ready(function() {
-        $('#fechaentrega').datetimepicker({
-            pickTime: false,
-            language: 'es',
-            showToday: true
-        });
-        $('#cambio_group').datetimepicker({
+        $('#fechaentrega_group').datetimepicker({
             pickTime: false,
             language: 'es',
             showToday: true
         });
         //http://jqueryvalidation.org/documentation/
-        $('#tareaForm')
+        $('#trabajoForm')
                 .bootstrapValidator({
                     container: '#messages',
                     feedbackIcons: {
@@ -125,14 +120,7 @@
                                 }
                             }
                         },
-                        contenido: {
-                            validators: {
-                                notEmpty: {
-                                    message: 'Debe introducir contenido'
-                                }
-                            }
-                        },
-                        fechaentrega: {
+                        fechaentrega_group: {
                             validators: {
                                 notEmpty: {
                                     message: 'Debe introducir una fecha de alta'
@@ -142,33 +130,6 @@
                                     message: 'La fecha de alta no tiene formato DD/MM/YYYY'
                                 }
                             }
-                        },
-                        cambio_group: {
-                            validators: {
-                                notEmpty: {
-                                    message: 'Debe introducir una fecha de cambio'
-                                },
-                                date: {
-                                    format: 'DD/MM/YYYY',
-                                    message: 'La fecha de cambio no tiene formato DD/MM/YYYY'
-                                }
-                            }
-                        },
-                        hits: {
-                            validators: {
-                                notEmpty: {
-                                    message: 'Debe introducir un número de hits'
-                                },
-                                integer: {
-                                    message: 'El valor de hits debe ser un entero'
-                                },
-                                between: {
-                                    min: -0,
-                                    max: 99999999,
-                                    message: 'El número de hits debe ser un entero entre 0 y 99999999'
-                                }
-                            }
-
                         },
                         id_usuario: {
                             validators: {
@@ -190,14 +151,13 @@
                                 }
                             }
                         },
-                        etiquetas: {
+                        id_estadotarea: {
                             validators: {
                                 notEmpty: {
-                                    message: 'Debe introducir una etiqueta'
+                                    message: 'Debe elegir un estado de tarea'
                                 },
-                                stringLength: {
-                                    max: 100,
-                                    message: 'La longitud de las etiquetas debe ser de 100 caracteres como mucho'
+                                integer: {
+                                    message: 'El identificador de estado de tarea debe ser un entero'
                                 }
                             }
                         }
@@ -205,20 +165,20 @@
                     }
                 })
                 .on('change', '[name="id_usuario"]', function() {
-                    $('#tareaForm').bootstrapValidator('revalidateField', 'id_usuario');
+                    $('#trabajoForm').bootstrapValidator('revalidateField', 'id_usuario');
                 })
 
                 .on('change', '[name="id_tipotarea"]', function() {
-                    $('#tareaForm').bootstrapValidator('revalidateField', 'id_tipotarea');
+                    $('#trabajoForm').bootstrapValidator('revalidateField', 'id_tipotarea');
+                })
+
+                .on('change', '[name="id_estadotarea"]', function() {
+                    $('#trabajoForm').bootstrapValidator('revalidateField', 'id_estadotarea');
                 })
                 ;
-        $('#fechaentrega').on('dp.change dp.show', function(e) {
+        $('#fechaentrega_group').on('dp.change dp.show', function(e) {
 // Revalidate the date when user change it
-            $('#tareaForm').bootstrapValidator('revalidateField', 'fechaentrega');
-        });
-        $('#cambio_group').on('dp.change dp.show', function(e) {
-// Revalidate the date when user change it
-            $('#tareaForm').bootstrapValidator('revalidateField', 'cambio_group');
+            $('#trabajoForm').bootstrapValidator('revalidateField', 'fechaentrega_group');
         });
     });       
 

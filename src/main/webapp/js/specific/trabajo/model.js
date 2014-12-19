@@ -1,5 +1,5 @@
-/*
- * Copyright (C) July 2014 Rafael Aznar
+/* 
+ * Copyright (C) 2014 raznara
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -15,16 +15,13 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-package net.daw.control.operation.generic.specific.implementation;
 
-import java.lang.reflect.InvocationTargetException;
-import javax.servlet.http.HttpServletRequest;
-import net.daw.control.operation.generic.implementation.ControlOperationGenImpl;
+var trabajoModel = function (strClase) {
+    this.clase = strClase;
+};
 
-public class TareaControlOperationGenSpImpl extends ControlOperationGenImpl {
-
-    public TareaControlOperationGenSpImpl(HttpServletRequest request) throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, Exception {
-        super(request);
-    }
-
-}
+trabajoModel.prototype = new model('trabajo');
+trabajoModel.prototype.getClassNameTrabajo = function () {
+    return this.getClassName() + "Modelo";
+};
+var oTrabajoModel = new trabajoModel('trabajo');

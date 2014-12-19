@@ -312,10 +312,10 @@
         <script src="js/specific/documentobonito/view.js" charset="UTF-8"></script>
         <script src="js/specific/documentobonito/routes.js" charset="UTF-8"></script>
 
-        <script src="js/specific/tarea/control.js" charset="UTF-8"></script>
-        <script src="js/specific/tarea/model.js" charset="UTF-8"></script>
-        <script src="js/specific/tarea/view.js" charset="UTF-8"></script>
-        <script src="js/specific/tarea/routes.js" charset="UTF-8"></script>
+        <script src="js/specific/trabajo/control.js" charset="UTF-8"></script>
+        <script src="js/specific/trabajo/model.js" charset="UTF-8"></script>
+        <script src="js/specific/trabajo/view.js" charset="UTF-8"></script>
+        <script src="js/specific/trabajo/routes.js" charset="UTF-8"></script>
 
         <script src="js/specific/tipotarea/control.js" charset="UTF-8"></script>
         <script src="js/specific/tipotarea/model.js" charset="UTF-8"></script>
@@ -351,7 +351,7 @@
 
                 fDocumentoRoutes();
                 fTipotareaRoutes();
-                fTareaRoutes();
+                fTrabajoRoutes();
                 fEstadotareaRoutes();
                 fProyectoRoutes();
                 fOpcionRoutes();
