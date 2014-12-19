@@ -21,4 +21,5 @@ import net.daw.control.route.generic.implementation.ControlRouteGenImpl;
 
 public class EstadotareaControlRouteGenSpImpl extends ControlRouteGenImpl {
 
+    
 }
