@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import net.daw.bean.generic.specific.implementation.AmigoBeanGenSpImpl;
+import net.daw.bean.generic.specific.implementation.AmistadBeanGenSpImpl;
 import net.daw.bean.generic.specific.implementation.PublicacionBeanGenSpImpl;
 import net.daw.bean.generic.specific.implementation.UsuarioBeanGenSpImpl;
 import net.daw.dao.generic.specific.implementation.PublicacionDaoGenSpImpl;
@@ -101,7 +101,7 @@ public class PublicacionServiceGenSpImpl extends TableServiceGenImpl {
         try {
             oConnection.setAutoCommit(false);
             PublicacionDaoGenSpImpl oPublicacionDAO = new PublicacionDaoGenSpImpl(strObjectName, oConnection);
-            AmigoBeanGenSpImpl oAmigo = new AmigoBeanGenSpImpl();
+            AmistadBeanGenSpImpl oAmigo = new AmistadBeanGenSpImpl();
             Gson gson = new GsonBuilder().setDateFormat("dd/MM/yyyy HH:mm:ss").create();
             jason = EncodingUtilHelper.decodeURIComponent(jason);
             oAmigo = gson.fromJson(jason, oAmigo.getClass());

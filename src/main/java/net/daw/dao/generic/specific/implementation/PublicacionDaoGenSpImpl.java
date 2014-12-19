@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
-import net.daw.bean.generic.specific.implementation.AmigoBeanGenSpImpl;
+import net.daw.bean.generic.specific.implementation.AmistadBeanGenSpImpl;
 import net.daw.bean.generic.specific.implementation.DocumentoBeanGenSpImpl;
 import net.daw.bean.generic.specific.implementation.PublicacionBeanGenSpImpl;
 import net.daw.bean.generic.specific.implementation.UsuarioBeanGenSpImpl;
@@ -136,7 +136,7 @@ public class PublicacionDaoGenSpImpl extends TableDaoGenImpl<PublicacionBeanGenS
         return arrPublicacion;
     }
     
-    public AmigoBeanGenSpImpl agregarAmigo(AmigoBeanGenSpImpl oAmigoBean) throws Exception {
+    public AmistadBeanGenSpImpl agregarAmigo(AmistadBeanGenSpImpl oAmigoBean) throws Exception {
         try {
 
             oMysql.agregarAmigo(oAmigoBean.getId_usuario_1(), oAmigoBean.getId_usuario_2());

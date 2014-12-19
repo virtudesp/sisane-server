@@ -25,7 +25,7 @@ import net.daw.bean.publicinterface.BeanInterface;
  *
  * @author a021008858z
  */
-public class AmigoBeanGenSpImpl extends BeanGenImpl implements BeanInterface {
+public class AmistadBeanGenSpImpl extends BeanGenImpl implements BeanInterface {
     
     @Expose(serialize = false)
     private Integer id_usuario_1 = 0; //id_usuario_1 //importante inicializar a 0 las claves ajenas
@@ -36,10 +36,10 @@ public class AmigoBeanGenSpImpl extends BeanGenImpl implements BeanInterface {
     @Expose(deserialize = false)
     private UsuarioBeanGenSpImpl obj_usuario_2 = null;
  
-    public AmigoBeanGenSpImpl(){ 
+    public AmistadBeanGenSpImpl(){ 
         
     }
-    public AmigoBeanGenSpImpl(int id){
+    public AmistadBeanGenSpImpl(int id){
         super(id);
     }
 

@@ -16,7 +16,7 @@
  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 --%>
 
-<form class="form-horizontal" role="form" action="#" id="amigoForm" name="formulario">
+<form class="form-horizontal" role="form" action="#" id="amistadForm" name="formulario">
     <div class="form-group">
         <label class="col-sm-2 control-label" for="id">Id:</label>
         <div class="col-sm-2">
@@ -65,7 +65,7 @@
     $(document).ready(function() {
 
         //http://jqueryvalidation.org/documentation/
-        $('#amigoForm')
+        $('#amistadForm')
                 .bootstrapValidator({
                     container: '#messages',
                     feedbackIcons: {

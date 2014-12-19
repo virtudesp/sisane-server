@@ -23,14 +23,14 @@ import net.daw.service.generic.implementation.TableServiceGenImpl;
 import java.sql.Connection;
 import java.util.HashMap;
 import java.util.Map;
-import net.daw.bean.generic.specific.implementation.AmigoBeanGenSpImpl;
-import net.daw.dao.generic.specific.implementation.AmigoDaoGenSpImpl;
+import net.daw.bean.generic.specific.implementation.AmistadBeanGenSpImpl;
+import net.daw.dao.generic.specific.implementation.AmistadDaoGenSpImpl;
 import net.daw.helper.ExceptionBooster;
 
-public class AmigoServiceGenSpImpl extends TableServiceGenImpl {
+public class AmistadServiceGenSpImpl extends TableServiceGenImpl {
 
-    public AmigoServiceGenSpImpl(String strObject, String pojo, Connection con) {
-        super(strObject, "amigo", con);
+    public AmistadServiceGenSpImpl(String strObject, String pojo, Connection con) {
+        super(strObject, "amistad", con);
     }
     
     public String agregarAmigo(int id_usuario_1, int id_usuario_2) throws Exception {
@@ -38,8 +38,8 @@ public class AmigoServiceGenSpImpl extends TableServiceGenImpl {
         try {
             oConnection.setAutoCommit(false);
          
-            AmigoDaoGenSpImpl oAmigoDAO = new AmigoDaoGenSpImpl(strObjectName, oConnection); 
-            AmigoBeanGenSpImpl oAmigo = new AmigoBeanGenSpImpl();
+            AmistadDaoGenSpImpl oAmigoDAO = new AmistadDaoGenSpImpl(strObjectName, oConnection); 
+            AmistadBeanGenSpImpl oAmigo = new AmistadBeanGenSpImpl();
             oAmigo.setId_usuario_1(id_usuario_1);
             oAmigo.setId_usuario_2(id_usuario_2);
             
@@ -72,8 +72,8 @@ public class AmigoServiceGenSpImpl extends TableServiceGenImpl {
         String resultado = null;
         try {
             oConnection.setAutoCommit(false);
-            AmigoDaoGenSpImpl oAmigoDAO = new AmigoDaoGenSpImpl(strObjectName, oConnection);
-            AmigoBeanGenSpImpl oAmigo = new AmigoBeanGenSpImpl();
+            AmistadDaoGenSpImpl oAmigoDAO = new AmistadDaoGenSpImpl(strObjectName, oConnection);
+            AmistadBeanGenSpImpl oAmigo = new AmistadBeanGenSpImpl();
             oAmigo.setId_usuario_1(id_usuario_1);
             oAmigo.setId_usuario_2(id_usuario_2);
             Gson gson = new GsonBuilder().create();       
@@ -95,8 +95,8 @@ public class AmigoServiceGenSpImpl extends TableServiceGenImpl {
         String resultado = null;
         try {
             oConnection.setAutoCommit(false);
-            AmigoDaoGenSpImpl oAmigoDAO = new AmigoDaoGenSpImpl(strObjectName, oConnection);
-            AmigoBeanGenSpImpl oAmigo = new AmigoBeanGenSpImpl();
+            AmistadDaoGenSpImpl oAmigoDAO = new AmistadDaoGenSpImpl(strObjectName, oConnection);
+            AmistadBeanGenSpImpl oAmigo = new AmistadBeanGenSpImpl();
             oAmigo.setId_usuario_1(id_usuario_1);
             oAmigo.setId_usuario_2(id_usuario_2);
             

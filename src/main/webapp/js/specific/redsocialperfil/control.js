@@ -61,7 +61,7 @@ redsocialperfilControl.prototype.view = function (place, id, oModel, oView) {
         }        
     }
     
-    $(place).append('<a class="btn btn-primary" href="jsp#/amigo/list/systemfilter=id_usuario_1&systemfilteroperator=equals&systemfiltervalue=' + id + '">Ver amigos</a><br /><br />');
+    $(place).append('<a class="btn btn-primary" href="jsp#/amistad/list/systemfilter=id_usuario_1&systemfilteroperator=equals&systemfiltervalue=' + id + '">Ver amigos</a><br /><br />');
     
     $('#addfriend').click(function () {
         resultado = oRedsocialperfilModel.agregarAmigo(id);

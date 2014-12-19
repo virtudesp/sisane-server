@@ -41,7 +41,7 @@ public class PublicacionControlOperationGenSpImpl extends ControlOperationGenImp
 
     private PublicacionServiceGenSpImpl oPublicacionService = (PublicacionServiceGenSpImpl) oService;
 
-    public PublicacionControlOperationGenSpImpl(HttpServletRequest request) throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, Exception {
+    public PublicacionControlOperationGenSpImpl(HttpServletRequest request) throws Exception {
         super(request);
     }
 

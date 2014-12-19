@@ -19,21 +19,21 @@ package net.daw.dao.generic.specific.implementation;
 
 import net.daw.dao.generic.implementation.TableDaoGenImpl;
 import java.sql.Connection;
-import net.daw.bean.generic.specific.implementation.AmigoBeanGenSpImpl;
+import net.daw.bean.generic.specific.implementation.AmistadBeanGenSpImpl;
 import net.daw.dao.publicinterface.MetaDaoInterface;
 import net.daw.dao.publicinterface.TableDaoInterface;
 import net.daw.dao.publicinterface.ViewDaoInterface;
 import net.daw.helper.ExceptionBooster;
 
-public class AmigoDaoGenSpImpl extends TableDaoGenImpl<AmigoBeanGenSpImpl> implements TableDaoInterface<AmigoBeanGenSpImpl>, ViewDaoInterface<AmigoBeanGenSpImpl>, MetaDaoInterface {
+public class AmistadDaoGenSpImpl extends TableDaoGenImpl<AmistadBeanGenSpImpl> {
 
-    public AmigoDaoGenSpImpl(String strObject, Connection pooledConnection) throws Exception {
+    public AmistadDaoGenSpImpl(String strObject, Connection pooledConnection) throws Exception {
         super(strObject, strObject, pooledConnection);
     }
 
 
 
-    public AmigoBeanGenSpImpl agregarAmigo(AmigoBeanGenSpImpl oAmigoBean) throws Exception {
+    public AmistadBeanGenSpImpl agregarAmigo(AmistadBeanGenSpImpl oAmigoBean) throws Exception {
         try {
             oMysql.agregarAmigo(oAmigoBean.getId_usuario_1(), oAmigoBean.getId_usuario_2());
 
@@ -43,7 +43,7 @@ public class AmigoDaoGenSpImpl extends TableDaoGenImpl<AmigoBeanGenSpImpl> imple
         return oAmigoBean;
     }
 
-    public AmigoBeanGenSpImpl removeAmigo(AmigoBeanGenSpImpl oAmigoBean) throws Exception {
+    public AmistadBeanGenSpImpl removeAmigo(AmistadBeanGenSpImpl oAmigoBean) throws Exception {
         try {
             oMysql.removeAmigo(oAmigoBean.getId_usuario_1(), oAmigoBean.getId_usuario_2());
 
@@ -53,7 +53,7 @@ public class AmigoDaoGenSpImpl extends TableDaoGenImpl<AmigoBeanGenSpImpl> imple
         return oAmigoBean;
     }
     
-    public Boolean existeAmigo(AmigoBeanGenSpImpl oAmigoBean) throws Exception {
+    public Boolean existeAmigo(AmistadBeanGenSpImpl oAmigoBean) throws Exception {
         int oAmigo = 0;
         Boolean amigo = false;
         try {

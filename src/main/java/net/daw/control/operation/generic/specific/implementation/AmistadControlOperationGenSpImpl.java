@@ -26,19 +26,19 @@ import net.daw.connection.publicinterface.ConnectionInterface;
 import net.daw.control.operation.generic.implementation.ControlOperationGenImpl;
 import net.daw.helper.ExceptionBooster;
 import net.daw.helper.ParameterCooker;
-import net.daw.service.specific.implementation.AmigoServiceSpImpl;
+import net.daw.service.generic.specific.implementation.AmistadServiceGenSpImpl;
 
-public class AmigoControlOperationGenSpImpl extends ControlOperationGenImpl {
+public class AmistadControlOperationGenSpImpl extends ControlOperationGenImpl {
 
     private ConnectionInterface DataConnectionSource = null;
     private Connection oConnection = null;
-    private AmigoServiceSpImpl oAmigoService = null;
+    private AmistadServiceGenSpImpl oAmistadService = null;
 
-    public AmigoControlOperationGenSpImpl(HttpServletRequest request) throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, Exception {
+    public AmistadControlOperationGenSpImpl(HttpServletRequest request) throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, Exception {
         super(request);
         DataConnectionSource = new BoneConnectionPoolImpl();
         oConnection = DataConnectionSource.newConnection();
-        oAmigoService = new AmigoServiceSpImpl(ParameterCooker.prepareObject(request), ParameterCooker.prepareObject(request), oConnection);
+        oAmistadService = new AmistadServiceGenSpImpl(ParameterCooker.prepareObject(request), ParameterCooker.prepareObject(request), oConnection);
     }
 
     public String agregarAmigo(HttpServletRequest request) throws Exception {
@@ -49,7 +49,7 @@ public class AmigoControlOperationGenSpImpl extends ControlOperationGenImpl {
                 int id_usuario_1 = user.getId();
                 int id_usuario_2 = ParameterCooker.prepareId(request);
                 if (id_usuario_1 != id_usuario_2) {
-                    result = oAmigoService.agregarAmigo(id_usuario_1, id_usuario_2);
+                    result = oAmistadService.agregarAmigo(id_usuario_1, id_usuario_2);
                 } else {
                     result = "Error, un usuario no puede agregarse a sí miismo.";
                 }
@@ -68,7 +68,7 @@ public class AmigoControlOperationGenSpImpl extends ControlOperationGenImpl {
         try {
             if (perm) {
                 UsuarioBeanGenSpImpl user = (UsuarioBeanGenSpImpl) request.getSession().getAttribute("usuarioBean");
-                result = oAmigoService.removeAmigo(user.getId(), ParameterCooker.prepareId(request));
+                result = oAmistadService.removeAmigo(user.getId(), ParameterCooker.prepareId(request));
                 closeDB();
             } else {
                 result = "Error, su usuario no tiene permisos para realizar esta operación.";
@@ -84,7 +84,7 @@ public class AmigoControlOperationGenSpImpl extends ControlOperationGenImpl {
         try {
             if (perm) {
                 UsuarioBeanGenSpImpl user = (UsuarioBeanGenSpImpl) request.getSession().getAttribute("usuarioBean");
-                result = oAmigoService.existeAmigo(user.getId(), ParameterCooker.prepareId(request));
+                result = oAmistadService.existeAmigo(user.getId(), ParameterCooker.prepareId(request));
                 closeDB();
             } else {
                 result = "Error, su usuario no tiene permisos para realizar esta operación.";

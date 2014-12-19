@@ -659,8 +659,8 @@ public class MysqlDataSpImpl implements DataInterface {
             vector = new ArrayList<>();
             int intOffset;
             oStatement = (Statement) connection.createStatement();
-            String strSQL = "select distinct p.* from publicacion p inner join amigo a where p.id_usuario = a.id_usuario_2 and a.id_usuario_1 = " + id_usuario + " OR p.id_usuario = " + id_usuario + " ";
-            String strSQLcount = "SELECT COUNT(*) from publicacion p inner join amigo a where p.id_usuario = a.id_usuario_2 and a.id_usuario_1 = " + id_usuario + " OR p.id_usuario = " + id_usuario + " ";
+            String strSQL = "select distinct p.* from publicacion p inner join amistad a where p.id_usuario = a.id_usuario_2 and a.id_usuario_1 = " + id_usuario + " OR p.id_usuario = " + id_usuario + " ";
+            String strSQLcount = "SELECT COUNT(*) from publicacion p inner join amistad a where p.id_usuario = a.id_usuario_2 and a.id_usuario_1 = " + id_usuario + " OR p.id_usuario = " + id_usuario + " ";
             // select p.* from publicacion p inner join amigo a where p.id_usuario = a.id_usuario_2 and a.id_usuario_1 = 2 ORDER BY `fechacreacion` DESC
             if (alFilter != null) {
                 String strSQLFilter = "";
@@ -824,7 +824,7 @@ public class MysqlDataSpImpl implements DataInterface {
         Statement oStatement = null;
         try {
             oStatement = (Statement) connection.createStatement();
-            String strSQL = "SELECT count(*) from publicacion p inner join amigo a where p.id_usuario = a.id_usuario_2 and a.id_usuario_1 = " + id_usuario + " OR p.id_usuario = " + id_usuario + " ";
+            String strSQL = "SELECT count(*) from publicacion p inner join amistad a where p.id_usuario = a.id_usuario_2 and a.id_usuario_1 = " + id_usuario + " OR p.id_usuario = " + id_usuario + " ";
             if (alFilter != null) {
                 Iterator iterator = alFilter.iterator();
                 while (iterator.hasNext()) {
@@ -960,7 +960,7 @@ public class MysqlDataSpImpl implements DataInterface {
         java.sql.PreparedStatement oPreparedStatement = null;
         int id = 0;
         try {
-            String strSQL = "INSERT INTO `amigo` (`id`, `id_usuario_1`, `id_usuario_2`) VALUES (NULL, '" + idamigo + "', '" + idamigo2 + "'); ";
+            String strSQL = "INSERT INTO `amistad` (`id`, `id_usuario_1`, `id_usuario_2`) VALUES (NULL, '" + idamigo + "', '" + idamigo2 + "'); ";
             oPreparedStatement = connection.prepareStatement(strSQL, Statement.RETURN_GENERATED_KEYS);
             int returnLastInsertId = oPreparedStatement.executeUpdate();
             if (returnLastInsertId != -1) {
@@ -985,7 +985,7 @@ public class MysqlDataSpImpl implements DataInterface {
         java.sql.PreparedStatement oPreparedStatement = null;
         int intResult = 0;
         try {
-            String strSQL = "DELETE FROM `amigo` WHERE `id_usuario_1` = " + idamigo + " AND `id_usuario_2` = " + idamigo2;
+            String strSQL = "DELETE FROM `amistad` WHERE `id_usuario_1` = " + idamigo + " AND `id_usuario_2` = " + idamigo2;
             oPreparedStatement = connection.prepareStatement(strSQL, Statement.RETURN_GENERATED_KEYS);
             intResult = oPreparedStatement.executeUpdate();
         } catch (SQLException ex) {
@@ -1004,7 +1004,7 @@ public class MysqlDataSpImpl implements DataInterface {
         Statement oStatement = null;
         try {
             oStatement = (Statement) connection.createStatement();
-            String strSQL = "SELECT COUNT(id) FROM `amigo` WHERE `id_usuario_1` = " + idamigo + " AND `id_usuario_2` = " + idamigo2;
+            String strSQL = "SELECT COUNT(id) FROM `amistad` WHERE `id_usuario_1` = " + idamigo + " AND `id_usuario_2` = " + idamigo2;
             
             ResultSet oResultSet = oStatement.executeQuery(strSQL);
             while (oResultSet.next()) {

@@ -16,17 +16,17 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
-var amigoControl = function (strClase) {
+var amistadControl = function (strClase) {
     this.clase = strClase;
 };
 
-amigoControl.prototype = new control('amigo');
-amigoControl.prototype.getClassNameAmigo = function () {
+amistadControl.prototype = new control('amistad');
+amistadControl.prototype.getClassNameAmistad = function () {
     return this.getClassName() + "Control";
 };
-var oAmigoControl = new amigoControl('amigo');
+var oAmistadControl = new amistadControl('amistad');
 
-amigoControl.prototype.list = function (place, objParams, callback, oModel, oView) {
+amistadControl.prototype.list = function (place, objParams, callback, oModel, oView) {
     var thisObject = this;
     objParams = param().validateUrlObjectParameters(objParams);
     //get all data from server in one http call and store it in cache
