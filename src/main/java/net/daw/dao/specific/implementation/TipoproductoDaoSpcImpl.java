@@ -21,7 +21,10 @@ import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import net.daw.bean.generic.specific.implementation.DocumentoBeanGenSpImpl;
+import net.daw.bean.generic.specific.implementation.ImpuestoBeanGenSpImpl;
 import net.daw.bean.generic.specific.implementation.TipoproductoBeanGenSpImpl;
+import net.daw.dao.generic.specific.implementation.DocumentoDaoGenSpImpl;
 import net.daw.dao.publicinterface.MetaDaoInterface;
 import net.daw.dao.publicinterface.TableDaoInterface;
 import net.daw.dao.publicinterface.ViewDaoInterface;
@@ -95,6 +98,13 @@ public class TipoproductoDaoSpcImpl implements ViewDaoInterface<TipoproductoBean
                     expand--;
                     if (expand > 0) {
                         oTipoproductoBean.setDescripcion(oMysql.getOne(strTableName, "descripcion", oTipoproductoBean.getId()));
+                        oTipoproductoBean.setId_impuesto(Integer.parseInt(oMysql.getOne(strTableName, "id_impuesto", oTipoproductoBean.getId())));
+
+                    ImpuestoBeanGenSpImpl oImpuesto = new ImpuestoBeanGenSpImpl();
+                    oImpuesto.setId(Integer.parseInt(oMysql.getOne(strTableName, "id_impuesto", oTipoproductoBean.getId())));
+                    ImpuestoDaoSpcImpl oImpuestoDAO = new ImpuestoDaoSpcImpl("impuesto", oConnection);
+                    oImpuesto = oImpuestoDAO.get(oImpuesto, AppConfigurationHelper.getJsonDepth());
+                    oTipoproductoBean.setObj_impuesto(oImpuesto);
                     }
                 }
             } catch (Exception ex) {

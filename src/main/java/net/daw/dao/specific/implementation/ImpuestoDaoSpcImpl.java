@@ -46,6 +46,10 @@ public class ImpuestoDaoSpcImpl implements ViewDaoInterface<ImpuestoBeanGenSpImp
         }
     }
 
+    ImpuestoDaoSpcImpl(String impuesto, String impuesto0, Connection oConnection) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
     @Override
     public int getPages(int intRegsPerPag, ArrayList<FilterBeanHelper> hmFilter) throws Exception {
         int pages = 0;

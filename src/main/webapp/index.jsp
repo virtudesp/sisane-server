@@ -37,6 +37,7 @@
         <link rel="stylesheet" href="css/animate.css">
         <link rel="stylesheet" href="css/bootstrapValidator.min.css">
         <link rel="stylesheet" href="css/bootstrap-datetimepicker.min.css"  />
+        <link rel="stylesheet" href="css/producto.css">
 
 
         <% if (user != null) {%>
@@ -306,6 +307,16 @@
         <script src="js/specific/respuesta/model.js" charset="UTF-8"></script>
         <script src="js/specific/respuesta/view.js" charset="UTF-8"></script>
         <script src="js/specific/respuesta/routes.js" charset="UTF-8"></script>
+        
+        <script src="js/specific/producto/control.js" charset="UTF-8"></script>
+        <script src="js/specific/producto/model.js" charset="UTF-8"></script>
+        <script src="js/specific/producto/view.js" charset="UTF-8"></script>
+        <script src="js/specific/producto/routes.js" charset="UTF-8"></script>
+        
+        <script src="js/specific/tipoproducto/control.js" charset="UTF-8"></script>
+        <script src="js/specific/tipoproducto/model.js" charset="UTF-8"></script>
+        <script src="js/specific/tipoproducto/view.js" charset="UTF-8"></script>
+        <script src="js/specific/tipoproducto/routes.js" charset="UTF-8"></script>
 
         <script src="js/specific/documentobonito/control.js" charset="UTF-8"></script>
         <script src="js/specific/documentobonito/model.js" charset="UTF-8"></script>
@@ -332,6 +343,11 @@
         <script src="js/specific/estadotarea/model.js" charset="UTF-8"></script>
         <script src="js/specific/estadotarea/view.js" charset="UTF-8"></script>
         <script src="js/specific/estadotarea/routes.js" charset="UTF-8"></script>
+        
+        <script src="js/specific/producto/control.js" charset="UTF-8"></script>
+        <script src="js/specific/producto/model.js" charset="UTF-8"></script>
+        <script src="js/specific/producto/view.js" charset="UTF-8"></script>
+        <script src="js/specific/producto/routes.js" charset="UTF-8"></script>
 
 
         <script src="js/specific/tipodocumento/model.js" charset="UTF-8"></script>
@@ -377,7 +393,8 @@
                 fComentarioRoutes();
                 fPropuestaRoutes();
                 fTipopropuestaRoutes();
-                fDocumentobonitoRoutes();
+                fProductoRoutes();
+                fTipoproductoRoutes();
                 fTipodocumentoRoutes();
 
 

@@ -40,6 +40,15 @@
         <a  class="list-group-item" id="lnkUsuario" href="jsp#/usuario">Usuario</a>
     </div>
 </div>
+    
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        <h3 class="panel-title">Tienda Online</h3>
+    </div>
+    <div class="list-group">
+        <a  class="list-group-item" id="lnkProducto" href="jsp#/producto">Producto</a>
+    </div>
+</div>
 
 <div class="panel panel-primary">
     <div class="panel-heading">
@@ -58,7 +67,8 @@
         <a class="list-group-item" id="lnkImpuesto" href="jsp#/impuesto">Impuesto</a>
         <a  class="list-group-item" id="lnkActividad" href="jsp#/actividad">Actividad</a>
         <a  class="list-group-item" id="lnkActividad" href="jsp#/entrega">Entrega</a> 
-        <a class="list-group-item" id="lnkActividad" href="jsp#/detalle_pedido">DetallePedido</a> 
+        <a  class="list-group-item" id="lnkActividad" href="jsp#/detalle_pedido">DetallePedido</a>
+        <a  class="list-group-item" id="lnkTipoproducto" href="jsp#/tipoproducto">Tipo Producto</a> 
     </div>
 </div>
 
