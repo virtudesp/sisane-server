@@ -17,6 +17,7 @@
  */
 package net.daw.bean.generic.specific.implementation;
 
+import com.google.gson.annotations.Expose;
 import net.daw.bean.generic.implementation.BeanGenImpl;
 import net.daw.bean.publicinterface.BeanInterface;
 
@@ -33,6 +34,14 @@ public class ProveedorBeanGenSpImpl extends BeanGenImpl implements BeanInterface
     private String web;
     private String fax;
     private String localidad;
+//    @Expose(serialize = false)
+//    private Integer id_usuario_1 = 0; //id_usuario_1 //importante inicializar a 0 las claves ajenas
+//    @Expose(deserialize = false)
+//    private UsuarioBeanGenSpImpl obj_usuario_1 = null;
+//    @Expose(serialize = false)
+//     private Integer id_usuario_2 = 0; //id_usuario_2//importante inicializar a 0 las claves ajenas
+//    @Expose(deserialize = false)
+//    private UsuarioBeanGenSpImpl obj_usuario_2 = null;
     
     
     public ProveedorBeanGenSpImpl() {
@@ -105,6 +114,36 @@ public class ProveedorBeanGenSpImpl extends BeanGenImpl implements BeanInterface
     public void setLocalidad(String localidad) {
         this.localidad = localidad;
     }
-    
+//    public Integer getId_usuario_1() {
+//        return id_usuario_1;
+//    }
+//
+//    public void setId_usuario_1(Integer id_usuario_1) {
+//        this.id_usuario_1 = id_usuario_1;
+//    }
+//
+//    public UsuarioBeanGenSpImpl getObj_usuario_1() {
+//        return obj_usuario_1;
+//    }
+//
+//    public void setObj_usuario_1(UsuarioBeanGenSpImpl obj_usuario_1) {
+//        this.obj_usuario_1 = obj_usuario_1;
+//    }
+//
+//    public Integer getId_usuario_2() {
+//        return id_usuario_2;
+//    }
+//
+//    public void setId_usuario_2(Integer id_usuario_2) {
+//        this.id_usuario_2 = id_usuario_2;
+//    }
+//
+//    public UsuarioBeanGenSpImpl getObj_usuario_2() {
+//        return obj_usuario_2;
+//    }
+//
+//    public void setObj_usuario_2(UsuarioBeanGenSpImpl obj_usuario_2) {
+//        this.obj_usuario_2 = obj_usuario_2;
+//    }
     
 }

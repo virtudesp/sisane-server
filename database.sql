@@ -60,7 +60,7 @@ INSERT INTO `actividad` (`id`, `enunciado`, `fecha`, `evaluacion`, `activo`) VAL
 -- Estructura de tabla para la tabla `amigo`
 --
 
-CREATE TABLE IF NOT EXISTS `amigo` (
+CREATE TABLE IF NOT EXISTS `amistad` (
 `id` int(11) NOT NULL COMMENT 'Identificador',
   `id_usuario_1` int(11) DEFAULT NULL COMMENT 'Usuario',
   `id_usuario_2` int(11) DEFAULT NULL COMMENT 'Amigo'
@@ -70,7 +70,7 @@ CREATE TABLE IF NOT EXISTS `amigo` (
 -- Volcado de datos para la tabla `amigo`
 --
 
-INSERT INTO `amigo` (`id`, `id_usuario_1`, `id_usuario_2`) VALUES
+INSERT INTO `amistad` (`id`, `id_usuario_1`, `id_usuario_2`) VALUES
 (1, 2, 3),
 (2, 2, 4),
 (3, 2, 5),
@@ -1024,7 +1024,7 @@ CREATE TABLE IF NOT EXISTS `objeto` (
 
 INSERT INTO `objeto` (`id`, `descripcion`) VALUES
 (1, 'actividad'),
-(2, 'amigo'),
+(2, 'amistad'),
 (3, 'cliente'),
 (4, 'comentario'),
 (5, 'compra'),
@@ -1058,7 +1058,7 @@ INSERT INTO `objeto` (`id`, `descripcion`) VALUES
 (33, 'tipotema'),
 (34, 'tipousuario'),
 (35, 'usuario'),
-(36, 'tarea'),
+(36, 'trabajo'),
 (37, 'tipotarea'),
 (38, 'estadotarea'),
 (39, 'proyecto'),
@@ -2609,10 +2609,10 @@ CREATE TABLE IF NOT EXISTS `respuesta` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `tarea`
+-- Estructura de tabla para la tabla `trabajo`
 --
 
-CREATE TABLE IF NOT EXISTS `tarea` (
+CREATE TABLE IF NOT EXISTS `trabajo` (
 `id` int(11) NOT NULL COMMENT 'Id',
   `descripcion` varchar(255) DEFAULT NULL COMMENT 'Descripción',
   `fechaentrega` datetime DEFAULT NULL COMMENT 'Fecha Entrega',
@@ -2622,10 +2622,10 @@ CREATE TABLE IF NOT EXISTS `tarea` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=26 ;
 
 --
--- Volcado de datos para la tabla `tarea`
+-- Volcado de datos para la tabla `trabajo`
 --
 
-INSERT INTO `tarea` (`id`, `descripcion`, `fechaentrega`, `id_usuario`, `id_tipotarea`, `id_estadotarea`) VALUES
+INSERT INTO `trabajo` (`id`, `descripcion`, `fechaentrega`, `id_usuario`, `id_tipotarea`, `id_estadotarea`) VALUES
 (1, 'diseño de la base de datos', '2014-12-17 15:16:27', 1, 3, 1),
 (2, 'programación de un mantenimiento', '2015-03-18 06:11:35', 2, 4, 2),
 (3, 'programación de una clave ajena', '2014-12-10 10:17:40', 3, 5, 3),
@@ -2963,9 +2963,9 @@ ALTER TABLE `actividad`
  ADD PRIMARY KEY (`id`);
 
 --
--- Indices de la tabla `amigo`
+-- Indices de la tabla `amistad`
 --
-ALTER TABLE `amigo`
+ALTER TABLE `amistad`
  ADD PRIMARY KEY (`id`);
 
 --
@@ -3125,9 +3125,9 @@ ALTER TABLE `respuesta`
  ADD PRIMARY KEY (`id`);
 
 --
--- Indices de la tabla `tarea`
+-- Indices de la tabla `trabajo`
 --
-ALTER TABLE `tarea`
+ALTER TABLE `trabajo`
  ADD PRIMARY KEY (`id`);
 
 --
@@ -3196,7 +3196,7 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Numero',AUTO_INCREMENT=22;
 --
 -- AUTO_INCREMENT de la tabla `amigo`
 --
-ALTER TABLE `amigo`
+ALTER TABLE `amistad`
 MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Identificador',AUTO_INCREMENT=21;
 --
 -- AUTO_INCREMENT de la tabla `cliente`
@@ -3329,9 +3329,9 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Identificador',AUTO_INCREME
 ALTER TABLE `respuesta`
 MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
 --
--- AUTO_INCREMENT de la tabla `tarea`
+-- AUTO_INCREMENT de la tabla `trabajo`
 --
-ALTER TABLE `tarea`
+ALTER TABLE `trabajo`
 MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Id',AUTO_INCREMENT=26;
 --
 -- AUTO_INCREMENT de la tabla `tema`
@@ -3378,3 +3378,11 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Identificador',AUTO_INCREME
 --
 ALTER TABLE `usuario`
 MODIFY `id` int(6) NOT NULL AUTO_INCREMENT COMMENT 'Identificador',AUTO_INCREMENT=31;
+
+ALTER TABLE `publicacion` ADD `fechacreacion` DATETIME NULL COMMENT 'Fecha de creación' ;
+UPDATE `ausiasyield2014`.`publicacion` SET `fechacreacion` = '2014-11-13 15:15:27' WHERE `publicacion`.`id` = 1; UPDATE `ausiasyield2014`.`publicacion` SET `fechacreacion` = '2014-11-18 05:30:12' WHERE `publicacion`.`id` = 2; UPDATE `ausiasyield2014`.`publicacion` SET `fechacreacion` = '2014-11-12 07:25:26' WHERE `publicacion`.`id` = 3; UPDATE `ausiasyield2014`.`publicacion` SET `fechacreacion` = '2014-11-11 03:38:17' WHERE `publicacion`.`id` = 4; UPDATE `ausiasyield2014`.`publicacion` SET `fechacreacion` = '2014-11-04 10:18:23' WHERE `publicacion`.`id` = 5; UPDATE `ausiasyield2014`.`publicacion` SET `fechacreacion` = '2014-11-06 19:12:59' WHERE `publicacion`.`id` = 6; UPDATE `ausiasyield2014`.`publicacion` SET `fechacreacion` = '2014-11-16 00:37:20' WHERE `publicacion`.`id` = 7; UPDATE `ausiasyield2014`.`publicacion` SET `fechacreacion` = '2014-11-01 23:59:00' WHERE `publicacion`.`id` = 8; UPDATE `ausiasyield2014`.`publicacion` SET `fechacreacion` = '2014-11-21 00:00:59' WHERE `publicacion`.`id` = 9; UPDATE `ausiasyield2014`.`publicacion` SET `fechacreacion` = '2014-11-19 10:46:09' WHERE `publicacion`.`id` = 10; UPDATE `ausiasyield2014`.`publicacion` SET `fechacreacion` = '2014-11-17 04:07:04' WHERE `publicacion`.`id` = 11; UPDATE `ausiasyield2014`.`publicacion` SET `fechacreacion` = '2014-11-12 23:21:18' WHERE `publicacion`.`id` = 12; UPDATE `ausiasyield2014`.`publicacion` SET `fechacreacion` = '2014-11-11 15:11:52' WHERE `publicacion`.`id` = 13; UPDATE `ausiasyield2014`.`publicacion` SET `fechacreacion` = '2014-11-05 17:59:59' WHERE `publicacion`.`id` = 14; UPDATE `ausiasyield2014`.`publicacion` SET `fechacreacion` = '2014-11-19 08:13:05' WHERE `publicacion`.`id` = 15; UPDATE `ausiasyield2014`.`publicacion` SET `fechacreacion` = '2014-11-13 23:40:22' WHERE `publicacion`.`id` = 16; UPDATE `ausiasyield2014`.`publicacion` SET `fechacreacion` = '2014-11-14 17:14:22' WHERE `publicacion`.`id` = 17; UPDATE `ausiasyield2014`.`publicacion` SET `fechacreacion` = '2014-11-10 10:08:06' WHERE `publicacion`.`id` = 19; UPDATE `ausiasyield2014`.`publicacion` SET `fechacreacion` = '2014-11-22 15:40:22' WHERE `publicacion`.`id` = 20;
+UPDATE `ausiasyield2014`.`publicacion` SET `fechacreacion` = '2014-11-07 06:59:10' WHERE `publicacion`.`id` = 18;
+
+INSERT INTO `ausiasyield2014`.`operacion` (`id`, `descripcion`, `id_objeto`, `id_tipooperacion`) VALUES (NULL, 'agregaramigo', '2', '2'), (NULL, 'removeamigo', '2', '2'), (NULL, 'existeamigo', '2', '1'), (NULL, 'duplicate', '26', '2'), (NULL, 'getcomentarioamigo', '26', '1'), (NULL, 'getpagescomentarioamigo', '26', '1');
+
+ALTER TABLE `estadotarea` CHANGE `descripcion` `descripcion` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT 'Descripción';

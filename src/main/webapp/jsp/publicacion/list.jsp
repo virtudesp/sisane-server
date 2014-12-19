@@ -32,7 +32,6 @@
             <ul class="nav nav-tabs">
                 <li class="active"><a href="#pane1" data-toggle="tab">Paginación</a></li>                
                 <li><a href="#pane2" data-toggle="tab">Filtro</a></li>
-                <li><a href="#pane3" data-toggle="tab">Nuevo</a></li>
             </ul>
             <div class="tab-content">
                 <br />
@@ -125,7 +124,7 @@
                                 <div class="panel-body">
                                     <br />
                                     <div class="text-center">
-                                        <a class="btn btn-primary" href='jsp#/<%=strNombreMantenimiento%>/new'>Crear un nuevo <%=strNombreMantenimiento%></a> 
+                                        <a class="btn btn-primary" id="newPublicacion" href=''>Crear un nuevo <%=strNombreMantenimiento%></a> 
                                     </div>
                                     <br />
                                 </div>
@@ -170,3 +169,9 @@
     </div>
 </div>
 
+<script type="text/javascript">
+    if (mylevel != 3) {
+        $('.nav-tabs').append("<li><a href=\"#pane3\" data-toggle=\"tab\">Nuevo</a></li>");
+        $('#newPublicacion').attr("href","jsp#/<%=strNombreMantenimiento%>/new/systemfilter=id_usuario&systemfilteroperator=equals&systemfiltervalue=" + myuser);
+    }
+</script>

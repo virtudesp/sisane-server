@@ -25,4 +25,5 @@ public class EstadotareaServiceGenSpImpl extends TableServiceGenImpl {
     public EstadotareaServiceGenSpImpl(String strObject, String pojo, Connection con) {
         super(strObject, pojo, con);
     }
+    
 }

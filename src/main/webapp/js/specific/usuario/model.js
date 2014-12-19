@@ -25,3 +25,19 @@ usuarioModel.prototype.getClassNameUsuario = function () {
     return this.getClassName() + "Modelo";
 };
 var oUsuarioModel = new usuarioModel('usuario');
+
+usuarioModel.prototype.getCachedPrettyFieldNames = function () {
+    var prettyFieldNames = this.cPrettyFieldNames;
+    var i = prettyFieldNames.indexOf("Contraseña");    
+    prettyFieldNames.splice(i, 1);
+    
+    return prettyFieldNames;
+};
+
+usuarioModel.prototype.getCachedFieldNames = function () {
+    var fieldNames = this.cFieldNames;
+    var i = fieldNames.indexOf("password");    
+    fieldNames.splice(i, 1);
+    
+    return this.cFieldNames;
+};
