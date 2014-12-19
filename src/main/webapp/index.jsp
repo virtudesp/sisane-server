@@ -385,6 +385,7 @@
                 fTipopropuestaRoutes();
                 fProductoRoutes();
                 fTipoproductoRoutes();
+                fTipodocumentoRoutes();
 
 
 

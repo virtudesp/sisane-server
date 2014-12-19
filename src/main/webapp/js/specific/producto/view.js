@@ -71,6 +71,44 @@ productoView.prototype.getFormValues = function () {
 
 productoView.prototype.doEventsLoading = function () {
     var thisObject = this;
+    $('#productoForm #obj_proveedor_button').unbind('click');
+    $("#productoForm #obj_proveedor_button").click(function () {
+        var oControl = oProveedorControl;  //para probar dejar documento
+        //vista('usuario').cargaModalBuscarClaveAjena('#modal01', "documento");
+
+        $("#productoForm").append(thisObject.getEmptyModal());
+        util().loadForm('#modal01', thisObject.getFormHeader('Elección de proveedor'), "", thisObject.getFormFooter(), true);
+
+        $('#productoForm').append(thisObject.getEmptyModal());
+
+        oControl.list('#modal01 #modal-body', param().defaultizeUrlObjectParameters({}), true, oProveedorModel, oProveedorView);
+        oControl.modalListEventsLoading('#modal01 #modal-body', param().defaultizeUrlObjectParameters({}), function (id) {
+            $('#obj_proveedor_id').val(id).change();
+            $('#obj_proveedor_desc').text(decodeURIComponent(oProveedorModel.getMeAsAForeignKey(id)));
+            $('#modal01').modal('hide');
+
+        },oProveedorModel, oProveedorView);
+        return false;
+    });
+    $('#productoForm #obj_tipoproducto_button').unbind('click');
+    $("#productoForm #obj_tipoproducto_button").click(function () {
+        var oControl = oTipoproductoControl;  //para probar dejar documento
+        //vista('usuario').cargaModalBuscarClaveAjena('#modal01', "documento");
+
+        $("#productoForm").append(thisObject.getEmptyModal());
+        util().loadForm('#modal01', thisObject.getFormHeader('Elección de tipo producto'), "", thisObject.getFormFooter(), true);
+
+        $('#productoForm').append(thisObject.getEmptyModal());
+
+        oControl.list('#modal01 #modal-body', param().defaultizeUrlObjectParameters({}), true, oTipoproductoModel, oTipoproductoView);
+        oControl.modalListEventsLoading('#modal01 #modal-body', param().defaultizeUrlObjectParameters({}), function (id) {
+            $('#obj_tipoproducto_id').val(id).change();
+            $('#obj_tipoproducto_desc').text(decodeURIComponent(oTipoproductoModel.getMeAsAForeignKey(id)));
+            $('#modal01').modal('hide');
+
+        },oTipoproductoModel, oTipoproductoView);
+        return false;
+    });
 };
 
 productoView.prototype.okValidation = function (f) {

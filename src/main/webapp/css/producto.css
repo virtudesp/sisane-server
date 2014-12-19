@@ -26,10 +26,8 @@ div.wrapper{
 
 .top{
     background: #428bca;
-    height: 30px;
+    height: 20px;
     border: 2px solid black;
-    border-top-left-radius: 14px;
-    border-top-right-radius: 14px;
 }
 
 .imageinfo{
@@ -48,7 +46,6 @@ div.wrapper{
     top: 61%;
     position: absolute;
     left: 10%;
-    border-radius: 21px;
     border: 2px solid black;
 }
 .desc{
@@ -59,18 +56,32 @@ div.wrapper{
     padding-top: 25px;
     border-left: 2px solid black;
     border-right: 2px solid black;
+    color: white;
 }
 
 #cuadro a.btn.btn-primary{
     width: 100%; 
     border: 2px solid black;
-    border-bottom-left-radius: 14px;
-    border-bottom-right-radius: 14px;
+}
+
+
+@media screen and (max-width: 1200px) {
+    div.wrapper{
+        width: 40%; 
+        margin-left: 20px;
+    }
+    .precio{
+        top:62%
+    }
 }
 
 @media screen and (max-width: 990px) {
     div.wrapper{
-        width: 46%; 
+        width: 44%; 
+    }
+    
+    .precio{
+        top:62%
     }
 }
 

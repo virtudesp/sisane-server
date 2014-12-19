@@ -45,7 +45,7 @@
     <div class="form-group">
         <label class="col-sm-2 control-label" for="obj_tipoproducto_id">Tipo producto: </label> 
         <div class="col-sm-2">              
-            <input readonly="true"  class="form-control"  id="obj_tipoproducto_id" class="input-mini" name="id_tipoproducto" type="text" size="5" maxlength="5" />  
+            <input readonly  class="form-control input-mini"  id="obj_tipoproducto_id" name="id_tipoproducto" type="text" size="5" maxlength="5" />  
         </div>
         <div class="col-sm-1">              
             <a class="btn btn-primary btn-sm" id="obj_tipoproducto_button" href="#"><i class="glyphicon glyphicon-search"></i></a>
@@ -53,20 +53,20 @@
         <label class="col-sm-7" for="obj_tipoproducto_desc" id="obj_tipoproducto_desc"></label>                     
     </div>
     <div class="form-group">
-        <label class="col-sm-2 control-label" for="obj_id_proveedor_id">ID Proveedor: </label> 
+        <label class="col-sm-2 control-label" for="obj_proveedor_id">ID Proveedor: </label> 
         <div class="col-sm-2">              
-            <input readonly="true"  class="form-control"  id="obj_id_proveedor_id" class="input-mini" name="id_id_proveedor" type="text" size="5" maxlength="5" />  
+            <input readonly  class="form-control input-mini"  id="obj_proveedor_id" name="id_proveedor" type="text" size="5" maxlength="5" />  
         </div>
         <div class="col-sm-1">              
-            <a class="btn btn-primary btn-sm" id="obj_id_proveedor_button" href="#"><i class="glyphicon glyphicon-search"></i></a>
+            <a class="btn btn-primary btn-sm" id="obj_proveedor_button" href="#"><i class="glyphicon glyphicon-search"></i></a>
         </div>        
-        <label class="col-sm-7" for="obj_tipoproducto_desc" id="obj_id_proveedor_desc"></label>                     
+        <label class="col-sm-7" for="obj_proveedor_desc" id="obj_proveedor_desc"></label>                     
     </div>
     
     <div class="form-group">
         <label class="col-sm-2 control-label" for="path">Path:</label>
         <div class="col-sm-9">
-            <input type="text"  class="form-control pull-left"  id="path" name="path" size="15" placeholder="path" />
+            <input type="text"  class="form-control pull-left"  id="path" name="path" size="15" placeholder="images/noimagen.jpg" />
         </div>
 
         <div class="form-group">
@@ -105,7 +105,7 @@
                                 },
                                 stringLength: {
                                     max: 255,
-                                    message: 'El NIA debe tener como máximo 255 caracteres'
+                                    message: 'El codigo debe tener como máximo 255 caracteres'
                                 }
                             }
                         },
@@ -116,7 +116,7 @@
                                 },
                                 stringLength: {
                                     max: 255,
-                                    message: 'El nombre debe tener como máximo 255 caracteres'
+                                    message: 'La descripcion debe tener como máximo 255 caracteres'
                                 }
                             }
                         },
@@ -125,12 +125,16 @@
                                 notEmpty: {
                                     message: 'Debe introducir un precio'
                                 },
-                                stringLength: {
-                                    max: 255,
-                                    message: 'El teléfono debe tener como máximo 255 caracteres'
+                                integer: {
+                                    message: 'El precio debe ser un entero'
+                                },
+                                between: {
+                                    min: -0,
+                                    max: 99999999,
+                                    message: 'El precio debe ser un entero entre 0 y 99999999'
                                 }
-
                             }
+
                         },
                         id_tipoproducto: {
                             validators: {
@@ -139,19 +143,19 @@
                                 },
                                 stringLength: {
                                     max: 255,
-                                    message: 'La dirección debe tener como máximo 255 caracteres'
+                                    message: 'El tipo producto debe tener como máximo 255 caracteres'
                                 }
 
                             }
                         },
-                        id_preveedor: {
+                        id_proveedor: {
                             validators: {
                                 notEmpty: {
                                     message: 'Debe introducir un ID Proveedor'
                                 },
                                 stringLength: {
                                     max: 255,
-                                    message: 'El email debe tener como máximo 255 caracteres'
+                                    message: 'El proveedor debe tener como máximo 255 caracteres'
                                 }
 
                             }
@@ -163,7 +167,7 @@
                                 },
                                 stringLength: {
                                     max: 255,
-                                    message: 'El web debe tener como máximo 255 caracteres'
+                                    message: 'El path debe tener como máximo 255 caracteres'
                                 }
 
                             }
@@ -171,6 +175,14 @@
 
                     }
                 })
+                .on('change', '[name="id_proveedor"]', function() {
+                    $('#productoForm').bootstrapValidator('revalidateField', 'id_proveedor');
+                })
+
+                .on('change', '[name="id_tipoproducto"]', function() {
+                    $('#productoForm').bootstrapValidator('revalidateField', 'id_tipoproducto');
+                })
+                ;
 
                 ;
 
