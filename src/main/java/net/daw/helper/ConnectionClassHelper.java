@@ -19,24 +19,63 @@ package net.daw.helper;
 
 public class ConnectionClassHelper {
 
+    public static Boolean getOpenShift() {
+        Boolean openshift = false;
+        if (System.getenv() != null
+                && System.getenv("OPENSHIFT_APP_NAME") != null
+                && System.getenv("OPENSHIFT_MYSQL_DB_PASSWORD") != null
+                && System.getenv("OPENSHIFT_MYSQL_DB_PORT") != null
+                && System.getenv("OPENSHIFT_MYSQL_DB_USERNAME") != null) {
+            if (!System.getenv("OPENSHIFT_MYSQL_DB_HOST").equals("")
+                    && !System.getenv("OPENSHIFT_APP_NAME").equals("")
+                    && !System.getenv("OPENSHIFT_MYSQL_DB_PASSWORD").equals("")
+                    && !System.getenv("OPENSHIFT_MYSQL_DB_PORT").equals("")
+                    && !System.getenv("OPENSHIFT_MYSQL_DB_USERNAME").equals("")) {
+                openshift = true;
+            }
+        }
+        return openshift;
+    }
+
     public static String getDatabaseName() {
-        return "ausiasYield2014";
+        if (ConnectionClassHelper.getOpenShift()) {
+            return System.getenv("OPENSHIFT_APP_NAME");
+        } else {
+            return "ausiasYield2014";
+        }
     }
 
     public static String getDatabaseLogin() {
-        return "root";
+        if (ConnectionClassHelper.getOpenShift()) {
+            return System.getenv("OPENSHIFT_MYSQL_DB_USERNAME");
+        } else {
+            return "root";
+        }
     }
 
     public static String getDatabasePassword() {
-        return "bitnami";
+        if (ConnectionClassHelper.getOpenShift()) {
+            return System.getenv("OPENSHIFT_MYSQL_DB_PASSWORD");
+        } else {
+            return "bitnami";
+        }
     }
 
     public static String getDatabasePort() {
-        return "3306";
+        if (ConnectionClassHelper.getOpenShift()) {
+            return System.getenv("OPENSHIFT_MYSQL_DB_PORT");
+        } else {
+            return "3306";
+        }
     }
 
     public static String getDatabaseHost() {
-        return "127.0.0.1";
+        if (ConnectionClassHelper.getOpenShift()) {
+            return System.getenv("OPENSHIFT_MYSQL_DB_IP");
+        } else {
+            return "127.0.0.1";
+        }
+
     }
 
     public static String getConnectionChain() {
