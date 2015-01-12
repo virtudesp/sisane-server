@@ -44,20 +44,20 @@ public class BoneConnectionPoolImpl implements ConnectionInterface {
         } catch (SQLException ex) {
             ExceptionBooster.boost(new Exception(
                     this.getClass().getName() + ":newConnection ERROR al crear la clase BoneCP: " + ex.getMessage() 
-                            + " // " 
-                            + ConnectionClassHelper.getConnectionChain() 
-                            + " // " 
-                            + ConnectionClassHelper.getOpenShift() 
-                            + " // " 
-                            + ConnectionClassHelper.getDatabaseName()
-                            + " // " 
-                            + ConnectionClassHelper.getDatabaseLogin()
-                            + " // " 
-                            + ConnectionClassHelper.getDatabasePassword() 
-                            + " // " 
-                            + ConnectionClassHelper.getDatabasePort()
-                            + " // " 
-                            + ConnectionClassHelper.getDatabaseHost()
+//                            + " // " 
+//                            + ConnectionClassHelper.getConnectionChain() 
+//                            + " // " 
+//                            + ConnectionClassHelper.getOpenShift() 
+//                            + " // " 
+//                            + ConnectionClassHelper.getDatabaseName()
+//                            + " // " 
+//                            + ConnectionClassHelper.getDatabaseLogin()
+//                            + " // " 
+//                            + ConnectionClassHelper.getDatabasePassword() 
+//                            + " // " 
+//                            + ConnectionClassHelper.getDatabasePort()
+//                            + " // " 
+//                            + ConnectionClassHelper.getDatabaseHost()
             ));
         }
         try {
