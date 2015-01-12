@@ -23,16 +23,8 @@ public class ConnectionClassHelper {
         Boolean openshift = false;
         if (System.getenv() != null
                 && System.getenv("OPENSHIFT_APP_NAME") != null
-                && System.getenv("OPENSHIFT_MYSQL_DB_PASSWORD") != null
-                && System.getenv("OPENSHIFT_MYSQL_DB_PORT") != null
-                && System.getenv("OPENSHIFT_MYSQL_DB_USERNAME") != null) {
-            if (!System.getenv("OPENSHIFT_MYSQL_DB_HOST").equals("")
-                    && !System.getenv("OPENSHIFT_APP_NAME").equals("")
-                    && !System.getenv("OPENSHIFT_MYSQL_DB_PASSWORD").equals("")
-                    && !System.getenv("OPENSHIFT_MYSQL_DB_PORT").equals("")
-                    && !System.getenv("OPENSHIFT_MYSQL_DB_USERNAME").equals("")) {
-                openshift = true;
-            }
+                && !System.getenv("OPENSHIFT_APP_NAME").equals("")) {
+            openshift = true;
         }
         return openshift;
     }
@@ -40,6 +32,7 @@ public class ConnectionClassHelper {
     public static String getDatabaseName() {
         if (ConnectionClassHelper.getOpenShift()) {
             return System.getenv("OPENSHIFT_APP_NAME");
+
         } else {
             return "ausiasYield2014";
         }
@@ -47,7 +40,8 @@ public class ConnectionClassHelper {
 
     public static String getDatabaseLogin() {
         if (ConnectionClassHelper.getOpenShift()) {
-            return System.getenv("OPENSHIFT_MYSQL_DB_USERNAME");
+            //return System.getenv("OPENSHIFT_MYSQL_DB_USERNAME");
+            return "el username esta en la web de openshift";
         } else {
             return "root";
         }
@@ -55,7 +49,8 @@ public class ConnectionClassHelper {
 
     public static String getDatabasePassword() {
         if (ConnectionClassHelper.getOpenShift()) {
-            return System.getenv("OPENSHIFT_MYSQL_DB_PASSWORD");
+            //return System.getenv("OPENSHIFT_MYSQL_DB_PASSWORD");
+            return "la contraseña esta en la web de openshift";
         } else {
             return "bitnami";
         }
@@ -63,7 +58,9 @@ public class ConnectionClassHelper {
 
     public static String getDatabasePort() {
         if (ConnectionClassHelper.getOpenShift()) {
-            return System.getenv("OPENSHIFT_MYSQL_DB_PORT");
+            //return System.getenv("OPENSHIFT_MYSQL_DB_PORT");
+            //return System.getenv("OPENSHIFT_DIY_PORT");
+            return "3306";
         } else {
             return "3306";
         }
@@ -71,14 +68,21 @@ public class ConnectionClassHelper {
 
     public static String getDatabaseHost() {
         if (ConnectionClassHelper.getOpenShift()) {
-            return System.getenv("OPENSHIFT_MYSQL_DB_IP");
+            //return System.getenv("OPENSHIFT_MYSQL_DB_IP");
+            //return System.getenv("OPENSHIFT_DIY_IP");
+            return "la ip aparece en la ventana de entrada al phpMyadmin";
+
         } else {
             return "127.0.0.1";
         }
-
     }
 
     public static String getConnectionChain() {
-        return "jdbc:mysql://" + ConnectionClassHelper.getDatabaseHost() + ":" + ConnectionClassHelper.getDatabasePort() + "/" + ConnectionClassHelper.getDatabaseName();
+        if (ConnectionClassHelper.getOpenShift()) {
+            //return "jdbc:" + System.getenv("OPENSHIFT_MYSQL_DB_URL") + ConnectionClassHelper.getDatabaseName();
+            return "jdbc:mysql://" + ConnectionClassHelper.getDatabaseHost() + ":" + ConnectionClassHelper.getDatabasePort() + "/" + ConnectionClassHelper.getDatabaseName();
+        } else {
+            return "jdbc:mysql://" + ConnectionClassHelper.getDatabaseHost() + ":" + ConnectionClassHelper.getDatabasePort() + "/" + ConnectionClassHelper.getDatabaseName();
+        }
     }
 }
