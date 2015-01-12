@@ -15,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-package net.daw.dao.generic.specific.implementation;
+/*package net.daw.dao.generic.specific.implementation;
 
 import java.sql.Connection;
 import java.util.ArrayList;
@@ -34,7 +34,7 @@ import static org.junit.Assert.*;
  *
  * @author al038513
  */
-public class EstadoDaoGenSpImplTest {
+/*public class EstadoDaoGenSpImplTest {
 
     private BoneConnectionPoolImpl DataConnectionSource = new BoneConnectionPoolImpl();
     private Connection connection = DataConnectionSource.newConnection();
@@ -59,7 +59,7 @@ public class EstadoDaoGenSpImplTest {
     }
 
     /*ARMANDO*/
-    @Test
+   /* @Test
     public void testSetMethod() throws Exception {
         System.out.println("set");
 
@@ -80,7 +80,7 @@ public class EstadoDaoGenSpImplTest {
     }
 
     /*JUAN MANUEL*/
-    @Test
+   /* @Test
     public void testGetMethod() throws Exception {
         System.out.println("get");
 
@@ -106,7 +106,7 @@ public class EstadoDaoGenSpImplTest {
     }
 
     /*VICTOR*/
-    @Test
+   /* @Test
     public void testGetCountMethod() throws Exception {
         System.out.println("getcount");
 
@@ -119,7 +119,7 @@ public class EstadoDaoGenSpImplTest {
     }
 
     /*JOSE CORONADO*/
-    @Test
+   /* @Test
     public void testGetPagesMethod() throws Exception {
         System.out.println("getpages");
 
