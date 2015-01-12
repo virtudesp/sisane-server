@@ -31,29 +31,11 @@ public class BoneConnectionPoolImpl implements ConnectionInterface {
 
     @Override
     public Connection newConnection() throws Exception {
-        boolean openshift = false;
-        if (System.getenv() != null
-                && System.getenv("OPENSHIFT_MYSQL_DB_PASSWORD") != null
-                && System.getenv("OPENSHIFT_MYSQL_DB_PORT") != null
-                && System.getenv("OPENSHIFT_MYSQL_DB_USERNAME") != null) {
-            if (!System.getenv("OPENSHIFT_MYSQL_DB_HOST").equals("")
-                    && !System.getenv("OPENSHIFT_MYSQL_DB_PASSWORD").equals("")
-                    && !System.getenv("OPENSHIFT_MYSQL_DB_PORT").equals("")
-                    && !System.getenv("OPENSHIFT_MYSQL_DB_USERNAME").equals("")) {
-                openshift = true;
-            }
-        }
         Connection c = null;
         BoneCPConfig config = new BoneCPConfig();
-        if (openshift) {
-            config.setJdbcUrl("jdbc:mysql://" + System.getenv("OPENSHIFT_MYSQL_DB_HOST") + ":" + System.getenv("OPENSHIFT_MYSQL_DB_PORT") + "/" + System.getenv(ConnectionClassHelper.getDatabaseName()));
-            config.setUsername(ConnectionClassHelper.getDatabaseLogin());
-            config.setPassword(ConnectionClassHelper.getDatabasePassword());
-        } else {
-            config.setJdbcUrl(ConnectionClassHelper.getConnectionChain());
-            config.setUsername(ConnectionClassHelper.getDatabaseLogin());
-            config.setPassword(ConnectionClassHelper.getDatabasePassword());
-        }
+        config.setJdbcUrl(ConnectionClassHelper.getConnectionChain());
+        config.setUsername(ConnectionClassHelper.getDatabaseLogin());
+        config.setPassword(ConnectionClassHelper.getDatabasePassword());
         config.setMinConnectionsPerPartition(1);
         config.setMaxConnectionsPerPartition(2);
         config.setPartitionCount(1);
