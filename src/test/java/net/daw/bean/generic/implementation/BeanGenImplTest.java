@@ -49,6 +49,7 @@ public class BeanGenImplTest {
     public void tearDown() {
     }
 
+    
     /**
      * Test of getId method, of class BeanGenImpl.
      */
