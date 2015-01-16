@@ -56,8 +56,8 @@ public class BeanGenImplTest {
     @Test
     public void testGetId() {
         System.out.println("getId");
-        BeanGenImpl instance = new BeanGenImpl(1);
-        Integer expResult = 1;
+        Integer expResult = 2;
+        BeanGenImpl instance = new BeanGenImpl(expResult);
         Integer result = instance.getId();
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
@@ -70,7 +70,7 @@ public class BeanGenImplTest {
     @Test
     public void testSetId() {
         System.out.println("setId");
-        Integer id = 1;
+        Integer id = 2;
         BeanGenImpl instance = new BeanGenImpl();
         instance.setId(id);
         assertEquals(instance.getId(), id);
