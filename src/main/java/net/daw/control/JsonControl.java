@@ -137,6 +137,7 @@ public class JsonControl extends HttpServlet {
             }
 
             //----------------------------------------------------------------------          
+            retardo(0);
             retardo(0); //debug delay
             String jsonResult = "";
             if (request.getSession().getAttribute("usuarioBean") != null) {
