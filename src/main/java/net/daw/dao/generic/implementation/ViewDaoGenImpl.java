@@ -119,42 +119,44 @@ public class ViewDaoGenImpl<TIPO_OBJETO> extends MetaDaoGenImpl<TIPO_OBJETO> imp
                         if (method.getName().substring(0, 3).equalsIgnoreCase("set")) {
                             final Class<?> classTipoParamMetodoSet = method.getParameterTypes()[0];
                             if (method.getName().length() >= 5) {
-                                if (method.getName().substring(3).toLowerCase(Locale.ENGLISH).substring(0, 4).equalsIgnoreCase("obj_")) {
+                                if (method.getName().substring(3).length()>=4) {
+                                    if (method.getName().substring(3).toLowerCase(Locale.ENGLISH).substring(0, 4).equalsIgnoreCase("obj_")) {
                                     //prueba: method.getName().substring(method.getName().indexOf("_")+1,method.getName().lastIndexOf("_")))
-                                    //ojo: en los pojos, los id_ deben preceder a los obj_ del mismo objeto siempre!
-                                    //only two _ allowed in foreign keys
-                                    String strAjena, strTabla = null;
+                                        //ojo: en los pojos, los id_ deben preceder a los obj_ del mismo objeto siempre!
+                                        //only two _ allowed in foreign keys
+                                        String strAjena, strTabla = null;
 
-                                    if (!(method.getName().indexOf("_") == (method.getName().lastIndexOf("_")))) {
-                                        strTabla = method.getName().substring(method.getName().indexOf("_") + 1, method.getName().lastIndexOf("_")).toLowerCase(Locale.ENGLISH);
-                                        strAjena = method.getName().substring(3).toLowerCase(Locale.ENGLISH).substring(4);
-                                    } else {
-                                        strAjena = method.getName().substring(3).toLowerCase(Locale.ENGLISH).substring(4);
-                                        strTabla = strAjena;
-                                    }
-                                    Method metodo_getId_Ajena = tipo.getMethod("getId_" + strAjena);
-                                    strTabla = strTabla.substring(0, 1).toUpperCase(Locale.ENGLISH) + strTabla.substring(1);
+                                        if (!(method.getName().indexOf("_") == (method.getName().lastIndexOf("_")))) {
+                                            strTabla = method.getName().substring(method.getName().indexOf("_") + 1, method.getName().lastIndexOf("_")).toLowerCase(Locale.ENGLISH);
+                                            strAjena = method.getName().substring(3).toLowerCase(Locale.ENGLISH).substring(4);
+                                        } else {
+                                            strAjena = method.getName().substring(3).toLowerCase(Locale.ENGLISH).substring(4);
+                                            strTabla = strAjena;
+                                        }
+                                        Method metodo_getId_Ajena = tipo.getMethod("getId_" + strAjena);
+                                        strTabla = strTabla.substring(0, 1).toUpperCase(Locale.ENGLISH) + strTabla.substring(1);
                                 //GenericDaoImplementation oAjenaDao = (GenericDaoImplementation) Class.forName("net.daw.dao." + strAjena + "Dao").newInstance();
 
                                     //rafa: aqui intentamos crear el DAO de la clave ajena generico-específico y si no espcífico
-                                    //pte porque da error
-                                    Constructor c;
-                                    try {
-                                        c = Class.forName("net.daw.dao.generic.specific.implementation." + strTabla + "DaoGenSpImpl").getConstructor(String.class, Connection.class);
-                                    } catch (ClassNotFoundException | NoSuchMethodException | SecurityException ex) {
-                                        //aqui da el error--> pte d eestudiar
-                                        c = Class.forName("net.daw.dao.specific.implementation." + strTabla + "DaoSpcImpl").getConstructor(String.class, Connection.class);
+                                        //pte porque da error
+                                        Constructor c;
+                                        try {
+                                            c = Class.forName("net.daw.dao.generic.specific.implementation." + strTabla + "DaoGenSpImpl").getConstructor(String.class, Connection.class);
+                                        } catch (ClassNotFoundException | NoSuchMethodException | SecurityException ex) {
+                                            //aqui da el error--> pte d eestudiar
+                                            c = Class.forName("net.daw.dao.specific.implementation." + strTabla + "DaoSpcImpl").getConstructor(String.class, Connection.class);
+                                        }
+                                        //------------------------------------
+
+                                        TableDaoGenImpl oAjenaDao = (TableDaoGenImpl) c.newInstance(strTabla, connection);
+
+                                        BeanGenImpl oAjenaBean = (BeanGenImpl) Class.forName("net.daw.bean.generic.specific.implementation." + strTabla + "BeanGenSpImpl").newInstance();
+                                        int intIdAjena = (Integer) metodo_getId_Ajena.invoke(oBean);
+                                        oAjenaBean.setId(intIdAjena);
+                                        oAjenaBean = (BeanGenImpl) oAjenaDao.get(oAjenaBean, AppConfigurationHelper.getJsonDepth());
+                                        //String strDescription = oAjenaDao.getDescription((Integer) metodo_getId_Ajena.invoke(oBean));
+                                        method.invoke(oBean, oAjenaBean);
                                     }
-                                    //------------------------------------
-
-                                    TableDaoGenImpl oAjenaDao = (TableDaoGenImpl) c.newInstance(strTabla, connection);
-
-                                    BeanGenImpl oAjenaBean = (BeanGenImpl) Class.forName("net.daw.bean.generic.specific.implementation." + strTabla + "BeanGenSpImpl").newInstance();
-                                    int intIdAjena = (Integer) metodo_getId_Ajena.invoke(oBean);
-                                    oAjenaBean.setId(intIdAjena);
-                                    oAjenaBean = (BeanGenImpl) oAjenaDao.get(oAjenaBean, AppConfigurationHelper.getJsonDepth());
-                                    //String strDescription = oAjenaDao.getDescription((Integer) metodo_getId_Ajena.invoke(oBean));
-                                    method.invoke(oBean, oAjenaBean);
                                 }
                             }
                         }
@@ -174,7 +176,14 @@ public class ViewDaoGenImpl<TIPO_OBJETO> extends MetaDaoGenImpl<TIPO_OBJETO> imp
                     if (method.getName().substring(0, 3).equalsIgnoreCase("set")) {
                         final Class<?> classTipoParamMetodoSet = method.getParameterTypes()[0];
                         if (method.getName().length() >= 5) {
-                            if (!method.getName().substring(3).toLowerCase(Locale.ENGLISH).substring(0, 4).equalsIgnoreCase("obj_")) {
+                            if (method.getName().substring(3).length() >= 4) {
+                                if (!method.getName().substring(3).toLowerCase(Locale.ENGLISH).substring(0, 4).equalsIgnoreCase("obj_")) {
+                                    String strValor = oMysql.getOne(strView, method.getName().substring(3).toLowerCase(Locale.ENGLISH), (Integer) metodo_getId.invoke(oBean));
+                                    if (strValor != null) {
+                                        parseValue(oBean, method, classTipoParamMetodoSet.getName(), strValor);
+                                    }
+                                }
+                            } else {
                                 String strValor = oMysql.getOne(strView, method.getName().substring(3).toLowerCase(Locale.ENGLISH), (Integer) metodo_getId.invoke(oBean));
                                 if (strValor != null) {
                                     parseValue(oBean, method, classTipoParamMetodoSet.getName(), strValor);
@@ -187,10 +196,10 @@ public class ViewDaoGenImpl<TIPO_OBJETO> extends MetaDaoGenImpl<TIPO_OBJETO> imp
                             }
                         }
 
-                        }
                     }
                 }
-            
+            }
+
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":fill ERROR: " + ex.getMessage()));
         }
