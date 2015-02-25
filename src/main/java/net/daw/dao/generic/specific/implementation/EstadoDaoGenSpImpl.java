@@ -24,7 +24,7 @@ import net.daw.bean.generic.specific.implementation.EstadoBeanGenSpImpl;
 public class EstadoDaoGenSpImpl extends TableDaoGenImpl<EstadoBeanGenSpImpl> {
 
     public EstadoDaoGenSpImpl(String strFuente, Connection pooledConnection) throws Exception {
-        super(strFuente, "Estado", pooledConnection);
+        super(strFuente,  pooledConnection);
     }
 
 }

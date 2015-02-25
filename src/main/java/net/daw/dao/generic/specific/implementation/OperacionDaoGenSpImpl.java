@@ -33,7 +33,7 @@ public class OperacionDaoGenSpImpl extends TableDaoGenImpl<OperacionBeanGenSpImp
     protected String strObjectName = null;
 
     public OperacionDaoGenSpImpl(String strObject, Connection pooledConnection) throws Exception {
-        super(strObject, "Operacion", pooledConnection);
+        super(strObject,  pooledConnection);
         strObjectName = strObject;
         oConnection = pooledConnection;
 

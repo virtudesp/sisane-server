@@ -24,6 +24,6 @@ import net.daw.bean.generic.specific.implementation.TipotemaBeanGenSpImpl;
 public class TipotemaDaoGenSpImpl extends TableDaoGenImpl<TipotemaBeanGenSpImpl> {
 
     public TipotemaDaoGenSpImpl(String strFuente, Connection pooledConnection) throws Exception {
-        super(strFuente, "Tipotema", pooledConnection);
+        super(strFuente, pooledConnection);
     }
 }

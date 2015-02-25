@@ -28,7 +28,7 @@ import net.daw.helper.ExceptionBooster;
 public class AmistadDaoGenSpImpl extends TableDaoGenImpl<AmistadBeanGenSpImpl> {
 
     public AmistadDaoGenSpImpl(String strObject, Connection pooledConnection) throws Exception {
-        super(strObject, strObject, pooledConnection);
+        super(strObject,  pooledConnection);
     }
 
 

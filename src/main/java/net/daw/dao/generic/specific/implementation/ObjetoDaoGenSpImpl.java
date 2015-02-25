@@ -32,7 +32,7 @@ public class ObjetoDaoGenSpImpl extends TableDaoGenImpl<ObjetoBeanGenSpImpl> imp
     protected String strObjectName = null;
 
     public ObjetoDaoGenSpImpl(String strObject, Connection pooledConnection) throws Exception {
-        super(strObject, "Objeto", pooledConnection);
+        super(strObject, pooledConnection);
         strObjectName = strObject;
         oConnection = pooledConnection;
 

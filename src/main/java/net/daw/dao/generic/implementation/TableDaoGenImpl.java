@@ -31,8 +31,8 @@ public abstract class TableDaoGenImpl<TIPO_OBJETO> extends ViewDaoGenImpl<TIPO_O
 
     protected final String strTabla;
 
-    public TableDaoGenImpl(String view, String pojo, Connection pooledConnection) throws Exception {
-        super(view, pojo, pooledConnection);
+    public TableDaoGenImpl(String view, Connection pooledConnection) throws Exception {
+        super(view, pooledConnection);
         strTabla = view;
     }
 

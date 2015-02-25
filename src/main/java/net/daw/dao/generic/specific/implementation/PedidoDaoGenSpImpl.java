@@ -24,7 +24,7 @@ import net.daw.bean.generic.specific.implementation.PedidoBeanGenSpImpl;
 public class PedidoDaoGenSpImpl extends TableDaoGenImpl<PedidoBeanGenSpImpl> {
 
     public PedidoDaoGenSpImpl(String strFuente, Connection pooledConnection) throws Exception {
-        super(strFuente, "Pedido", pooledConnection);
+        super(strFuente, pooledConnection);
     }
 
 //    public PedidoBean type(PedidoBean oPedidoBean) throws Exception {

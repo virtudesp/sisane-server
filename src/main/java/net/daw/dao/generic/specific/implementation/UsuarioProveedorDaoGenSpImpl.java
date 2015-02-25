@@ -29,8 +29,8 @@ import net.daw.dao.generic.implementation.TableDaoGenImpl;
 
 public class UsuarioProveedorDaoGenSpImpl extends TableDaoGenImpl<UsuarioProveedorBeanGenSpImpl> {
 
-    public UsuarioProveedorDaoGenSpImpl (String strObject, String pojo, Connection pooledConnection) throws Exception {
-        super(strObject, pojo, pooledConnection);
+    public UsuarioProveedorDaoGenSpImpl (String strObject,Connection pooledConnection) throws Exception {
+        super(strObject,  pooledConnection);
     }
     
 }

@@ -43,7 +43,7 @@ public class PublicacionDaoGenSpImpl extends TableDaoGenImpl<PublicacionBeanGenS
     private Connection oConnection = null;
     
     public PublicacionDaoGenSpImpl(String strObject, Connection pooledConnection) throws Exception {
-        super(strObject, strObject, pooledConnection);
+        super(strObject,  pooledConnection);
         tabla = "publicacion";
         strTableName = strObject;
         oConnection = pooledConnection;

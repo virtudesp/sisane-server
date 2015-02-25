@@ -24,6 +24,6 @@ import net.daw.dao.generic.implementation.TableDaoGenImpl;
 public class EntregaDaoGenSpImpl extends TableDaoGenImpl<EntregaBeanGenSpImpl> {
 
     public EntregaDaoGenSpImpl(String strFuente, Connection pooledConnection) throws Exception {
-        super(strFuente, "Entrega", pooledConnection);
+        super(strFuente,  pooledConnection);
     }
 }

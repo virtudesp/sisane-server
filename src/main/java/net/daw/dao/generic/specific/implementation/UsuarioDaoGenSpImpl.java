@@ -32,7 +32,7 @@ public class UsuarioDaoGenSpImpl extends TableDaoGenImpl<UsuarioBeanGenSpImpl> {
     private Connection oConnection = null;
     
     public UsuarioDaoGenSpImpl(String strObject, Connection pooledConnection) throws Exception {
-        super(strObject, strObject, pooledConnection);
+        super(strObject, pooledConnection);
             oConnection = pooledConnection;
             oMysql = new MysqlDataSpImpl(oConnection);
     }

@@ -24,7 +24,7 @@ import net.daw.bean.generic.specific.implementation.DocumentobonitoBeanGenSpImpl
 public class DocumentobonitoDaoGenSpImpl extends TableDaoGenImpl<DocumentobonitoBeanGenSpImpl> {
 
     public DocumentobonitoDaoGenSpImpl(String strFuente, Connection pooledConnection) throws Exception {
-        super(strFuente, "Documentobonito", pooledConnection);
+        super(strFuente, pooledConnection);
     }
 
 //    public String getDescription(int id) throws Exception {

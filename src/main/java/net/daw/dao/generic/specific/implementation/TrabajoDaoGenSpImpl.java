@@ -24,7 +24,7 @@ import net.daw.bean.generic.specific.implementation.TrabajoBeanGenSpImpl;
 public class TrabajoDaoGenSpImpl extends TableDaoGenImpl<TrabajoBeanGenSpImpl> {
 
    public TrabajoDaoGenSpImpl(String strFuente, Connection pooledConnection) throws Exception {
-        super(strFuente, "Tarea", pooledConnection);
+        super(strFuente, pooledConnection);
     }
 
 //    public String getDescription(int id) throws Exception {

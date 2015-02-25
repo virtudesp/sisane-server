@@ -24,7 +24,7 @@ import net.daw.bean.generic.specific.implementation.ProyectoBeanGenSpImpl;
 public class ProyectoDaoGenSpImpl extends TableDaoGenImpl<ProyectoBeanGenSpImpl> {
 
    public ProyectoDaoGenSpImpl(String strFuente, Connection pooledConnection) throws Exception {
-        super(strFuente, "Proyecto", pooledConnection);
+        super(strFuente,  pooledConnection);
     }
 
 }

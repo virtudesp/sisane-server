@@ -35,8 +35,8 @@ import net.daw.helper.FilterBeanHelper;
 
 public class ViewDaoGenImpl<TIPO_OBJETO> extends MetaDaoGenImpl<TIPO_OBJETO> implements ViewDaoInterface<TIPO_OBJETO>, MetaDaoInterface {
 
-    public ViewDaoGenImpl(String view, String pojo, Connection pooledConnection) throws Exception {
-        super(view, pojo, pooledConnection);
+    public ViewDaoGenImpl(String view, Connection pooledConnection) throws Exception {
+        super(view, pooledConnection);
     }
 
     @Override
@@ -119,9 +119,9 @@ public class ViewDaoGenImpl<TIPO_OBJETO> extends MetaDaoGenImpl<TIPO_OBJETO> imp
                         if (method.getName().substring(0, 3).equalsIgnoreCase("set")) {
                             final Class<?> classTipoParamMetodoSet = method.getParameterTypes()[0];
                             if (method.getName().length() >= 5) {
-                                if (method.getName().substring(3).length()>=4) {
+                                if (method.getName().substring(3).length() >= 4) {
                                     if (method.getName().substring(3).toLowerCase(Locale.ENGLISH).substring(0, 4).equalsIgnoreCase("obj_")) {
-                                    //prueba: method.getName().substring(method.getName().indexOf("_")+1,method.getName().lastIndexOf("_")))
+                                        //prueba: method.getName().substring(method.getName().indexOf("_")+1,method.getName().lastIndexOf("_")))
                                         //ojo: en los pojos, los id_ deben preceder a los obj_ del mismo objeto siempre!
                                         //only two _ allowed in foreign keys
                                         String strAjena, strTabla = null;
@@ -137,7 +137,7 @@ public class ViewDaoGenImpl<TIPO_OBJETO> extends MetaDaoGenImpl<TIPO_OBJETO> imp
                                         strTabla = strTabla.substring(0, 1).toUpperCase(Locale.ENGLISH) + strTabla.substring(1);
                                 //GenericDaoImplementation oAjenaDao = (GenericDaoImplementation) Class.forName("net.daw.dao." + strAjena + "Dao").newInstance();
 
-                                    //rafa: aqui intentamos crear el DAO de la clave ajena generico-específico y si no espcífico
+                                        //rafa: aqui intentamos crear el DAO de la clave ajena generico-específico y si no espcífico
                                         //pte porque da error
                                         Constructor c;
                                         try {
