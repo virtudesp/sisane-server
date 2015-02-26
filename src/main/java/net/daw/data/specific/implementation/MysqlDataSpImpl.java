@@ -146,14 +146,14 @@ public class MysqlDataSpImpl implements DataInterface {
         }
         return strResult;
     }
-    
-    public String getIdByTwoValues(String strTabla, String strCampo1, String strValor1,String strCampo2, String strValor2) throws Exception {
+
+    public String getIdByTwoValues(String strTabla, String strCampo1, String strValor1, String strCampo2, String strValor2) throws Exception {
         String strResult = null;
         Statement oStatement = null;
         ResultSet oResultSet;
         try {
             oStatement = (Statement) connection.createStatement();
-            String strSQL = "SELECT id FROM " + strTabla + " WHERE " + strCampo1 + "='" + strValor1 + "' AND "+ strCampo2 + "='" + strValor2 + "'";
+            String strSQL = "SELECT id FROM " + strTabla + " WHERE " + strCampo1 + "='" + strValor1 + "' AND " + strCampo2 + "='" + strValor2 + "'";
             oResultSet = oStatement.executeQuery(strSQL);
             if (oResultSet.next()) {
                 strResult = oResultSet.getString("id");
@@ -180,7 +180,7 @@ public class MysqlDataSpImpl implements DataInterface {
         if (strTabla.substring(0, 6).equalsIgnoreCase("SELECT")) {
             try {
                 strSQL = strTabla;
-                strSQL+= " AND id=" + id;
+                strSQL += " AND id=" + id;
                 oPreparedStatement = connection.prepareStatement(strSQL);
                 //oPreparedStatement.setInt(1, id);
                 oResultSet = oPreparedStatement.executeQuery();
@@ -534,6 +534,7 @@ public class MysqlDataSpImpl implements DataInterface {
 //
 //        }
 //    }
+
     @Override
     public ArrayList<Integer> getPage(String strTabla, int intRegsPerPage, int intPagina, ArrayList<FilterBeanHelper> alFilter, HashMap<String, String> hmOrder) throws Exception {
         Boolean strOrigenTabla = true;
@@ -1005,7 +1006,7 @@ public class MysqlDataSpImpl implements DataInterface {
         try {
             oStatement = (Statement) connection.createStatement();
             String strSQL = "SELECT COUNT(id) FROM `amistad` WHERE `id_usuario_1` = " + idamigo + " AND `id_usuario_2` = " + idamigo2;
-            
+
             ResultSet oResultSet = oStatement.executeQuery(strSQL);
             while (oResultSet.next()) {
                 intResult = oResultSet.getInt("COUNT(id)");
@@ -1019,7 +1020,68 @@ public class MysqlDataSpImpl implements DataInterface {
         }
         return intResult;
     }
-    
 
+    //***********************************************************************
+    //***********************************************************************
+    //***********************************************************************
+    //***********************************************************************
+    //***********************************************************************
+    public int getNewPages(String strSqlDataSource, int intRegsPerPage) throws Exception {
+        int intResult = 0;
+        Statement oStatement = null;
+        try {
+            oStatement = (Statement) connection.createStatement();
+            strSqlDataSource = "SELECT COUNT(*) " + strSqlDataSource.substring(strSqlDataSource.indexOf("FROM"), strSqlDataSource.length());
+
+            ResultSet oResultSet = oStatement.executeQuery(strSqlDataSource);
+            while (oResultSet.next()) {
+                intResult = oResultSet.getInt("COUNT(*)") / intRegsPerPage;
+                if ((oResultSet.getInt("COUNT(*)") % intRegsPerPage) > 0) {
+                    intResult++;
+                }
+            }
+        } catch (SQLException ex) {
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPagesSQL ERROR:  Can't process query: " + ex.getMessage()));
+        } finally {
+            if (oStatement != null) {
+                oStatement.close();
+            }
+        }
+        return intResult;
+
+    }
+
+    public ArrayList<Integer> getNewPage(String strSqlDataSource, int intRegsPerPage, int intPagina) throws Exception {
+        ArrayList<Integer> vector = null;
+        Statement oStatement = null;
+        try {
+            vector = new ArrayList<>();
+            int intOffset;
+            oStatement = (Statement) connection.createStatement();
+            String strSQLcount = "SELECT COUNT(*) " + strSqlDataSource.substring(strSqlDataSource.indexOf("FROM"), strSqlDataSource.length());
+            //when limit of pages exceed, show last page
+            ResultSet oResultSet = oStatement.executeQuery(strSQLcount);
+            int intCuenta = 0;
+            if (oResultSet.next()) {
+                intCuenta = oResultSet.getInt("COUNT(*)");
+            }
+            int maxPaginas = new Double(intCuenta / intRegsPerPage).intValue();
+            intPagina = Math.min(intPagina - 1, maxPaginas) + 1;
+            intOffset = Math.max(((intPagina - 1) * intRegsPerPage), 0);
+            //--                        
+            strSqlDataSource += " LIMIT " + intOffset + " , " + intRegsPerPage;
+            oResultSet = oStatement.executeQuery(strSqlDataSource);
+            while (oResultSet.next()) {
+                vector.add(oResultSet.getInt("id"));
+            }
+        } catch (SQLException ex) {
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPageSQL ERROR:  Can't process query: " + ex.getMessage()));
+        } finally {
+            if (oStatement != null) {
+                oStatement.close();
+            }
+        }
+        return vector;
+    }
 
 }

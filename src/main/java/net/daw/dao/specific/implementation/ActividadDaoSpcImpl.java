@@ -18,7 +18,6 @@
 package net.daw.dao.specific.implementation;
 
 import java.sql.Connection;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -38,13 +37,14 @@ import net.daw.helper.FilterBeanHelper;
  */
 public class ActividadDaoSpcImpl implements ViewDaoInterface<ActividadBeanGenSpImpl>, TableDaoInterface<ActividadBeanGenSpImpl>, MetaDaoInterface {
 
-    private String strTableName = null;
+    private String strSqlDataSource = null;
     private MysqlDataSpImpl oMysql = null;
     private Connection oConnection = null;
 
     public ActividadDaoSpcImpl(String ob, Connection oConexion) throws Exception {
+        //ob a extinguir como parametro
         try {
-            strTableName = ob;
+            strSqlDataSource = "select * from actividad";
             oConnection = oConexion;
             oMysql = new MysqlDataSpImpl(oConnection);
         } catch (Exception ex) {
@@ -56,7 +56,7 @@ public class ActividadDaoSpcImpl implements ViewDaoInterface<ActividadBeanGenSpI
     public int getPages(int intRegsPerPag, ArrayList<FilterBeanHelper> hmFilter) throws Exception {
         int pages = 0;
         try {
-            pages = oMysql.getPages(strTableName, intRegsPerPag, hmFilter);
+            pages = oMysql.getPages(strSqlDataSource, intRegsPerPag, hmFilter);
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPages ERROR: " + ex.getMessage()));
         }
@@ -67,7 +67,7 @@ public class ActividadDaoSpcImpl implements ViewDaoInterface<ActividadBeanGenSpI
     public int getCount(ArrayList<FilterBeanHelper> hmFilter) throws Exception {
         int pages = 0;
         try {
-            pages = oMysql.getCount(strTableName, hmFilter);
+            pages = oMysql.getCount(strSqlDataSource, hmFilter);
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getCount ERROR: " + ex.getMessage()));
         }
@@ -79,7 +79,7 @@ public class ActividadDaoSpcImpl implements ViewDaoInterface<ActividadBeanGenSpI
         ArrayList<Integer> arrId;
         ArrayList<ActividadBeanGenSpImpl> arrActividad = new ArrayList<>();
         try {
-            arrId = oMysql.getPage(strTableName, intRegsPerPag, intPage, hmFilter, hmOrder);
+            arrId = oMysql.getPage(strSqlDataSource, intRegsPerPag, intPage, hmFilter, hmOrder);
             Iterator<Integer> iterador = arrId.listIterator();
             while (iterador.hasNext()) {
                 ActividadBeanGenSpImpl oActividadBean = new ActividadBeanGenSpImpl(iterador.next());
@@ -95,18 +95,18 @@ public class ActividadDaoSpcImpl implements ViewDaoInterface<ActividadBeanGenSpI
     public ActividadBeanGenSpImpl get(ActividadBeanGenSpImpl oActividadBean, Integer expand) throws Exception {
         if (oActividadBean.getId() > 0) {
             try {
-                if (!oMysql.existsOne(strTableName, oActividadBean.getId())) {
+                if (!oMysql.existsOne(strSqlDataSource, oActividadBean.getId())) {
                     oActividadBean.setId(0);
                 } else {
-                    oActividadBean.setEnunciado(oMysql.getOne(strTableName, "enunciado", oActividadBean.getId()));
+                    oActividadBean.setEnunciado(oMysql.getOne(strSqlDataSource, "enunciado", oActividadBean.getId()));
 
                     String fecha = "";
-                    fecha = oMysql.getOne(strTableName, "fecha", oActividadBean.getId());
+                    fecha = oMysql.getOne(strSqlDataSource, "fecha", oActividadBean.getId());
                     SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
                     oActividadBean.setFecha(date.parse(fecha));
 
-                    oActividadBean.setEvaluacion(Integer.valueOf(oMysql.getOne(strTableName, "evaluacion", oActividadBean.getId())));
-                    oActividadBean.setActivo((byte) Integer.parseInt(oMysql.getOne(strTableName, "activo", oActividadBean.getId())));
+                    oActividadBean.setEvaluacion(Integer.valueOf(oMysql.getOne(strSqlDataSource, "evaluacion", oActividadBean.getId())));
+                    oActividadBean.setActivo((byte) Integer.parseInt(oMysql.getOne(strSqlDataSource, "activo", oActividadBean.getId())));
 
                 }
             } catch (Exception ex) {
@@ -122,16 +122,16 @@ public class ActividadDaoSpcImpl implements ViewDaoInterface<ActividadBeanGenSpI
     public ActividadBeanGenSpImpl set(ActividadBeanGenSpImpl oActividadBean) throws Exception {
         try {
             if (oActividadBean.getId() == 0) {
-                oActividadBean.setId(oMysql.insertOne(strTableName));
+                oActividadBean.setId(oMysql.insertOne(strSqlDataSource));
             }
-            oMysql.updateOne(oActividadBean.getId(), strTableName, "enunciado", oActividadBean.getEnunciado());
+            oMysql.updateOne(oActividadBean.getId(), strSqlDataSource, "enunciado", oActividadBean.getEnunciado());
 
             SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
-            oMysql.updateOne(oActividadBean.getId(), strTableName, "fecha", date.format(oActividadBean.getFecha()));
+            oMysql.updateOne(oActividadBean.getId(), strSqlDataSource, "fecha", date.format(oActividadBean.getFecha()));
 
-            oMysql.updateOne(oActividadBean.getId(), strTableName, "evaluacion", oActividadBean.getEvaluacion().toString());
+            oMysql.updateOne(oActividadBean.getId(), strSqlDataSource, "evaluacion", oActividadBean.getEvaluacion().toString());
 
-            oMysql.updateOne(oActividadBean.getId(), strTableName, "activo", Integer.toString(oActividadBean.getActivo()));
+            oMysql.updateOne(oActividadBean.getId(), strSqlDataSource, "activo", Integer.toString(oActividadBean.getActivo()));
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":set ERROR: " + ex.getMessage()));
         }
@@ -142,7 +142,7 @@ public class ActividadDaoSpcImpl implements ViewDaoInterface<ActividadBeanGenSpI
     public int remove(ActividadBeanGenSpImpl oActividadBean) throws Exception {
         int result = 0;
         try {
-            result = oMysql.removeOne(oActividadBean.getId(), strTableName);
+            result = oMysql.removeOne(oActividadBean.getId(), strSqlDataSource);
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":remove ERROR: " + ex.getMessage()));
         }
@@ -153,7 +153,7 @@ public class ActividadDaoSpcImpl implements ViewDaoInterface<ActividadBeanGenSpI
     public ArrayList<String> getColumnsNames() throws Exception {
         ArrayList<String> alColumns = null;
         try {
-            alColumns = oMysql.getColumnsName(strTableName);
+            alColumns = oMysql.getColumnsName(strSqlDataSource);
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getColumnsNames ERROR: " + ex.getMessage()));
         }
@@ -164,7 +164,7 @@ public class ActividadDaoSpcImpl implements ViewDaoInterface<ActividadBeanGenSpI
     public ArrayList<String> getPrettyColumnsNames() throws Exception {
         ArrayList<String> alColumns = null;
         try {
-            alColumns = oMysql.getPrettyColumns(strTableName);
+            alColumns = oMysql.getPrettyColumns(strSqlDataSource);
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPrettyColumnsNames ERROR: " + ex.getMessage()));
         }
