@@ -38,13 +38,13 @@ import net.daw.helper.FilterBeanHelper;
  */
 public class ActividadDaoSpcImpl implements ViewDaoInterface<ActividadBeanGenSpImpl>, TableDaoInterface<ActividadBeanGenSpImpl>, MetaDaoInterface {
 
-    private String strTableName = null;
+    private String strTableName = "";
     private MysqlDataSpImpl oMysql = null;
     private Connection oConnection = null;
 
     public ActividadDaoSpcImpl(String ob, Connection oConexion) throws Exception {
         try {
-            strTableName = ob;
+            strTableName = "select * from actividad";
             oConnection = oConexion;
             oMysql = new MysqlDataSpImpl(oConnection);
         } catch (Exception ex) {
@@ -56,6 +56,9 @@ public class ActividadDaoSpcImpl implements ViewDaoInterface<ActividadBeanGenSpI
     public int getPages(int intRegsPerPag, ArrayList<FilterBeanHelper> hmFilter) throws Exception {
         int pages = 0;
         try {
+            
+            
+            
             pages = oMysql.getPages(strTableName, intRegsPerPag, hmFilter);
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPages ERROR: " + ex.getMessage()));
