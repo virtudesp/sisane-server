@@ -5,7 +5,7 @@
  * http://stackoverflow.com/questions/607176/java-equivalent-to-javascripts-encodeuricomponent-that-produces-identical-output
  * @author John Topley
  */
-package net.daw.helper;
+package net.daw.helper.statics;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;

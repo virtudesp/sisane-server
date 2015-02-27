@@ -29,7 +29,7 @@ import java.util.Map;
 import net.daw.bean.generic.implementation.BeanGenImpl;
 import net.daw.bean.publicinterface.BeanInterface;
 import net.daw.dao.generic.implementation.TableDaoGenImpl;
-import net.daw.helper.ExceptionBooster;
+import net.daw.helper.statics.ExceptionBooster;
 
 public abstract class TableServiceGenImpl extends ViewServiceGenImpl implements TableServiceInterface, ViewServiceInterface, MetaServiceInterface {
 

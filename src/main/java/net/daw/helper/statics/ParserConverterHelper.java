@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package net.daw.helper;
+package net.daw.helper.statics;
 
 import javax.servlet.ServletException;
 

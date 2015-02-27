@@ -25,7 +25,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 import net.daw.connection.publicinterface.ConnectionInterface;
-import net.daw.helper.ConnectionClassHelper;
+import net.daw.helper.statics.ConnectionClassHelper;
 
 public class DataSourceConnectionImpl implements ConnectionInterface {
 

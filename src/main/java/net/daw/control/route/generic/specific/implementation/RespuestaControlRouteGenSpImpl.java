@@ -21,8 +21,8 @@ import javax.servlet.http.HttpServletRequest;
 import net.daw.control.operation.generic.specific.implementation.RespuestaControlOperationGenSpImpl;
 import net.daw.control.operation.publicinterface.ControlOperationInterface;
 import net.daw.control.route.generic.implementation.ControlRouteGenImpl;
-import net.daw.helper.ExceptionBooster;
-import net.daw.helper.ParameterCooker;
+import net.daw.helper.statics.ExceptionBooster;
+import net.daw.helper.statics.ParameterCooker;
 
 public class RespuestaControlRouteGenSpImpl extends ControlRouteGenImpl {
 

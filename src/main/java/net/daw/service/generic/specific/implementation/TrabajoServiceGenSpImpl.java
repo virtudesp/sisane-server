@@ -22,7 +22,7 @@ import java.sql.Connection;
 import javax.servlet.ServletException;
 import net.daw.bean.generic.specific.implementation.TrabajoBeanGenSpImpl;
 import net.daw.dao.generic.specific.implementation.TrabajoDaoGenSpImpl;
-import net.daw.helper.AppConfigurationHelper;
+import net.daw.helper.statics.AppConfigurationHelper;
 
 public class TrabajoServiceGenSpImpl extends TableServiceGenImpl {
 

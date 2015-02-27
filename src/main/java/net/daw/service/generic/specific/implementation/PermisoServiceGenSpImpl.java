@@ -28,7 +28,7 @@ import net.daw.bean.generic.specific.implementation.UsuarioBeanGenSpImpl;
 import net.daw.dao.generic.specific.implementation.ObjetoDaoGenSpImpl;
 import net.daw.dao.generic.specific.implementation.OperacionDaoGenSpImpl;
 import net.daw.dao.generic.specific.implementation.PermisoDaoGenSpImpl;
-import net.daw.helper.ExceptionBooster;
+import net.daw.helper.statics.ExceptionBooster;
 
 public class PermisoServiceGenSpImpl extends TableServiceGenImpl {
 

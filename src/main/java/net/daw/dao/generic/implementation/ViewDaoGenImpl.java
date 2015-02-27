@@ -29,9 +29,9 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Locale;
 import net.daw.bean.generic.implementation.BeanGenImpl;
-import net.daw.helper.AppConfigurationHelper;
-import net.daw.helper.ExceptionBooster;
-import net.daw.helper.FilterBeanHelper;
+import net.daw.helper.statics.AppConfigurationHelper;
+import net.daw.helper.statics.ExceptionBooster;
+import net.daw.helper.statics.FilterBeanHelper;
 
 public class ViewDaoGenImpl<TIPO_OBJETO> extends MetaDaoGenImpl<TIPO_OBJETO> implements ViewDaoInterface<TIPO_OBJETO>, MetaDaoInterface {
 

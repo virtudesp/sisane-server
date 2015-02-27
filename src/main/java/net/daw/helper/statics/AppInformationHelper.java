@@ -15,15 +15,15 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-package net.daw.helper;
+package net.daw.helper.statics;
 
 /**
  *
  * @author rafa
  */
-public class AppConfigurationHelper {
+public class AppInformationHelper {
 
-    public static int getJsonDepth() {
-        return 2;
+    public static String getAppName() {
+        return "ausiàsYield";
     }
 }

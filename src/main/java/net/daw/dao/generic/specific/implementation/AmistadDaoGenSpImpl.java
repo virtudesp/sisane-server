@@ -23,7 +23,7 @@ import net.daw.bean.generic.specific.implementation.AmistadBeanGenSpImpl;
 import net.daw.dao.publicinterface.MetaDaoInterface;
 import net.daw.dao.publicinterface.TableDaoInterface;
 import net.daw.dao.publicinterface.ViewDaoInterface;
-import net.daw.helper.ExceptionBooster;
+import net.daw.helper.statics.ExceptionBooster;
 
 public class AmistadDaoGenSpImpl extends TableDaoGenImpl<AmistadBeanGenSpImpl> {
 

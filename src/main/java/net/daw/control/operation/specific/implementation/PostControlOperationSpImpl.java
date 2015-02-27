@@ -27,9 +27,9 @@ import net.daw.bean.generic.specific.implementation.UsuarioBeanGenSpImpl;
 import net.daw.connection.implementation.BoneConnectionPoolImpl;
 import net.daw.connection.publicinterface.ConnectionInterface;
 import net.daw.control.operation.publicinterface.ControlOperationInterface;
-import net.daw.helper.ExceptionBooster;
-import net.daw.helper.FilterBeanHelper;
-import net.daw.helper.ParameterCooker;
+import net.daw.helper.statics.ExceptionBooster;
+import net.daw.helper.statics.FilterBeanHelper;
+import net.daw.helper.statics.ParameterCooker;
 import net.daw.service.specific.implementation.PostServiceSpImpl;
 
 public class PostControlOperationSpImpl implements ControlOperationInterface {

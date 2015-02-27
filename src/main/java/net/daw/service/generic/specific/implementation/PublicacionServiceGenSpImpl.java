@@ -28,10 +28,10 @@ import net.daw.bean.generic.specific.implementation.AmistadBeanGenSpImpl;
 import net.daw.bean.generic.specific.implementation.PublicacionBeanGenSpImpl;
 import net.daw.bean.generic.specific.implementation.UsuarioBeanGenSpImpl;
 import net.daw.dao.generic.specific.implementation.PublicacionDaoGenSpImpl;
-import net.daw.helper.AppConfigurationHelper;
-import net.daw.helper.EncodingUtilHelper;
-import net.daw.helper.ExceptionBooster;
-import net.daw.helper.FilterBeanHelper;
+import net.daw.helper.statics.AppConfigurationHelper;
+import net.daw.helper.statics.EncodingUtilHelper;
+import net.daw.helper.statics.ExceptionBooster;
+import net.daw.helper.statics.FilterBeanHelper;
 import net.daw.service.generic.implementation.TableServiceGenImpl;
 
 /**

@@ -29,9 +29,9 @@ import net.daw.bean.generic.specific.implementation.UsuarioBeanGenSpImpl;
 import net.daw.connection.implementation.BoneConnectionPoolImpl;
 import net.daw.connection.publicinterface.ConnectionInterface;
 import net.daw.dao.generic.specific.implementation.UsuarioDaoGenSpImpl;
-import net.daw.helper.EstadoHelper;
-import net.daw.helper.EstadoHelper.Tipo_estado;
-import net.daw.helper.ParameterCooker;
+import net.daw.helper.statics.EstadoHelper;
+import net.daw.helper.statics.EstadoHelper.Tipo_estado;
+import net.daw.helper.statics.ParameterCooker;
 
 public class JspControl extends HttpServlet {
 

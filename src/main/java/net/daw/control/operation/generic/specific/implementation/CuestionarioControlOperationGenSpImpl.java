@@ -19,8 +19,8 @@ package net.daw.control.operation.generic.specific.implementation;
 
 import javax.servlet.http.HttpServletRequest;
 import net.daw.control.operation.generic.implementation.ControlOperationGenImpl;
-import net.daw.helper.ExceptionBooster;
-import net.daw.helper.ParameterCooker;
+import net.daw.helper.statics.ExceptionBooster;
+import net.daw.helper.statics.ParameterCooker;
 import net.daw.service.generic.specific.implementation.CuestionarioServiceGenSpImpl;
 import net.daw.service.generic.specific.implementation.PublicacionServiceGenSpImpl;
 

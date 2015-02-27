@@ -23,9 +23,9 @@ import java.util.HashMap;
 import java.util.Iterator;
 import net.daw.bean.generic.specific.implementation.ActividadBeanGenSpImpl;
 import net.daw.data.specific.implementation.MysqlDataSpImpl;
-import net.daw.helper.ExceptionBooster;
-import net.daw.helper.FilterBeanHelper;
-import net.daw.helper.SqlBuilder;
+import net.daw.helper.statics.ExceptionBooster;
+import net.daw.helper.statics.FilterBeanHelper;
+import net.daw.helper.statics.SqlBuilder;
 
 /**
  *
@@ -50,7 +50,7 @@ public class Actividad01DaoSqlSpcImpl {
         try {
             strSelect = "SELECT id, Count(enunciado) As NumberOfEnunciado ";
             strFrom = "FROM actividad ";
-            strWhere = "WHERE id > 3 ";
+            strWhere = "WHERE 1=1 and id > 3 ";
             strGroupBy = "GROUP BY evaluacion ";
             strHaving = "HAVING NumberOfEnunciado >2 ";
             strOrderBy = "ORDER BY NumberOfEnunciado DESC ";

@@ -20,8 +20,8 @@ package net.daw.control.route.specific.implementation;
 import javax.servlet.http.HttpServletRequest;
 import net.daw.control.operation.publicinterface.ControlOperationInterface;
 import net.daw.control.route.publicinterface.ControlRouteInterface;
-import net.daw.helper.ExceptionBooster;
-import net.daw.helper.ParameterCooker;
+import net.daw.helper.statics.ExceptionBooster;
+import net.daw.helper.statics.ParameterCooker;
 
 public class PostControlRouteSpImpl implements ControlRouteInterface {
 

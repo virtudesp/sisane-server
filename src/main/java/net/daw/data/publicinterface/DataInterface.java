@@ -20,7 +20,7 @@ package net.daw.data.publicinterface;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import net.daw.helper.FilterBeanHelper;
+import net.daw.helper.statics.FilterBeanHelper;
 
 public interface DataInterface {
 

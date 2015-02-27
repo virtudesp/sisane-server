@@ -25,7 +25,7 @@ import java.util.HashMap;
 import java.util.Map;
 import net.daw.bean.generic.specific.implementation.AmistadBeanGenSpImpl;
 import net.daw.dao.generic.specific.implementation.AmistadDaoGenSpImpl;
-import net.daw.helper.ExceptionBooster;
+import net.daw.helper.statics.ExceptionBooster;
 
 public class AmistadServiceGenSpImpl extends TableServiceGenImpl {
 

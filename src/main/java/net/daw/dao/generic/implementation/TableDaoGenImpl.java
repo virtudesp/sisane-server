@@ -25,7 +25,7 @@ import java.lang.reflect.ParameterizedType;
 import java.sql.Connection;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
-import net.daw.helper.ExceptionBooster;
+import net.daw.helper.statics.ExceptionBooster;
 
 public abstract class TableDaoGenImpl<TIPO_OBJETO> extends ViewDaoGenImpl<TIPO_OBJETO> implements TableDaoInterface<TIPO_OBJETO>, ViewDaoInterface<TIPO_OBJETO>, MetaDaoInterface {
 

@@ -22,8 +22,8 @@ import com.jolbox.bonecp.BoneCPConfig;
 import java.sql.Connection;
 import java.sql.SQLException;
 import net.daw.connection.publicinterface.ConnectionInterface;
-import net.daw.helper.ConnectionClassHelper;
-import net.daw.helper.ExceptionBooster;
+import net.daw.helper.statics.ConnectionClassHelper;
+import net.daw.helper.statics.ExceptionBooster;
 
 public class BoneConnectionPoolImpl implements ConnectionInterface {
 

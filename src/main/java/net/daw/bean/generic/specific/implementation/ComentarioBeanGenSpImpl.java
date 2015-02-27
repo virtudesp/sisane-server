@@ -20,6 +20,8 @@ package net.daw.bean.generic.specific.implementation;
 import net.daw.bean.generic.implementation.BeanGenImpl;
 import net.daw.bean.publicinterface.BeanInterface;
 import com.google.gson.annotations.Expose;
+import net.daw.helper.annotations.IdForeignKey;
+import net.daw.helper.annotations.ObjForeignKey;
 
 public class ComentarioBeanGenSpImpl extends BeanGenImpl implements BeanInterface {
 
@@ -33,16 +35,22 @@ public class ComentarioBeanGenSpImpl extends BeanGenImpl implements BeanInterfac
     @Expose
     private String contenido = "";
     
+    @IdForeignKey(tableReference = "propuesta")
     @Expose(serialize = false)
     private Integer id_propuesta = 0; //importante inicializar a 0 las claves ajenas
+    @ObjForeignKey(tableReference = "propuesta")
     @Expose(deserialize = false)
     private PropuestaBeanGenSpImpl obj_propuesta = null;
     
+    
+    @IdForeignKey(tableReference = "usuario")
     @Expose(serialize = false)
     private Integer id_usuario = 0; //importante inicializar a 0 las claves ajenas
+    @ObjForeignKey(tableReference = "usuario")
     @Expose(deserialize = false)
     private UsuarioBeanGenSpImpl obj_usuario = null;
 
+    
     public String getContenido() {
         return contenido;
     }

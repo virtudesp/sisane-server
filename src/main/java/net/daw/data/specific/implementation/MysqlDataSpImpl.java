@@ -28,9 +28,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-import net.daw.helper.ExceptionBooster;
-import net.daw.helper.FilterBeanHelper;
-import net.daw.helper.SqlBuilder;
+import net.daw.helper.statics.ExceptionBooster;
+import net.daw.helper.statics.FilterBeanHelper;
+import net.daw.helper.statics.SqlBuilder;
 
 public class MysqlDataSpImpl implements DataInterface {
 

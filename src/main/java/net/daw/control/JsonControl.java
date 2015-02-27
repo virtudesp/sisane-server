@@ -96,10 +96,10 @@ import net.daw.control.route.specific.implementation.ProveedorControlRouteSpImpl
 import net.daw.control.route.specific.implementation.TemaControlRouteSpImpl;
 import net.daw.control.route.specific.implementation.TipoproductoControlRouteSpImpl;
 import net.daw.control.route.specific.implementation.TipopropuestaControlRouteSpImpl;
-import net.daw.helper.EstadoHelper;
-import net.daw.helper.EstadoHelper.Tipo_estado;
-import net.daw.helper.ExceptionBooster;
-import net.daw.helper.ParameterCooker;
+import net.daw.helper.statics.EstadoHelper;
+import net.daw.helper.statics.EstadoHelper.Tipo_estado;
+import net.daw.helper.statics.ExceptionBooster;
+import net.daw.helper.statics.ParameterCooker;
 import net.daw.service.publicinterface.ServiceInterface;
 
 public class JsonControl extends HttpServlet {

@@ -23,7 +23,7 @@ import java.lang.reflect.Constructor;
 import java.sql.Connection;
 import java.util.ArrayList;
 import net.daw.dao.generic.implementation.TableDaoGenImpl;
-import net.daw.helper.ExceptionBooster;
+import net.daw.helper.statics.ExceptionBooster;
 import net.daw.service.publicinterface.MetaServiceInterface;
 
 public abstract class MetaServiceGenImpl implements MetaServiceInterface {

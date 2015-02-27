@@ -1,4 +1,4 @@
-package net.daw.helper;
+package net.daw.helper.statics;
 
 public class EnumHelper {
 

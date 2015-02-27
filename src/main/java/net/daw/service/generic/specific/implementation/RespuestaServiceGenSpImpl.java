@@ -29,7 +29,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import net.daw.bean.generic.specific.implementation.RespuestaBeanGenSpImpl;
 import net.daw.dao.generic.specific.implementation.RespuestaDaoGenSpImpl;
-import net.daw.helper.ExceptionBooster;
+import net.daw.helper.statics.ExceptionBooster;
 
 public class RespuestaServiceGenSpImpl extends TableServiceGenImpl {
 

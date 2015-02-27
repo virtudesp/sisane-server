@@ -1,6 +1,8 @@
 /*
- * Copyright (C) July 2014 Rafael Aznar
- *
+ * Copyright (C) 2014 
+ * 
+ * source:http://www.cursohibernate.es/doku.php?id=patrones:excepciones
+ * 
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
@@ -15,19 +17,17 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-package net.daw.dao.publicinterface;
+package net.daw.helper.statics;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import net.daw.helper.statics.FilterBeanHelper;
+public class ExceptionBooster {
 
-public interface ViewDaoInterface<GenericBeanImplementation> {
+    public static void boost(Exception ex) {
+        ExceptionBooster.<RuntimeException>throwAsUnchecked(ex);
 
-    public int getPages(int intRegsPerPag, ArrayList<FilterBeanHelper> hmFilter) throws Exception;
+        throw new AssertionError("Esta línea  nunca se ejecutará pero Java no lo sabe");
+    }
 
-    public int getCount(ArrayList<FilterBeanHelper> hmFilter) throws Exception;
-
-    public ArrayList<GenericBeanImplementation> getPage(int intRegsPerPag, int intPage, ArrayList<FilterBeanHelper> hmFilter, HashMap<String, String> hmOrder) throws Exception;
-
-    public GenericBeanImplementation get(GenericBeanImplementation oBean, Integer expand) throws Exception;
+    private static <T extends Exception> void throwAsUnchecked(Exception toThrow) throws T {
+        throw (T) toThrow;
+    }
 }

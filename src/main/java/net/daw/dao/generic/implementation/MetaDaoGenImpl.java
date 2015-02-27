@@ -21,7 +21,7 @@ import net.daw.dao.publicinterface.MetaDaoInterface;
 import java.sql.Connection;
 import java.util.ArrayList;
 import net.daw.data.specific.implementation.MysqlDataSpImpl;
-import net.daw.helper.ExceptionBooster;
+import net.daw.helper.statics.ExceptionBooster;
 
 public abstract class MetaDaoGenImpl<TIPO_OBJETO> implements MetaDaoInterface {
 

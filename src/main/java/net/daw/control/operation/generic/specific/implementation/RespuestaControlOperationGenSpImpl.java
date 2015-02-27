@@ -21,8 +21,8 @@ import java.lang.reflect.InvocationTargetException;
 import javax.servlet.http.HttpServletRequest;
 import net.daw.bean.generic.specific.implementation.UsuarioBeanGenSpImpl;
 import net.daw.control.operation.generic.implementation.ControlOperationGenImpl;
-import net.daw.helper.ExceptionBooster;
-import net.daw.helper.ParameterCooker;
+import net.daw.helper.statics.ExceptionBooster;
+import net.daw.helper.statics.ParameterCooker;
 import net.daw.service.generic.specific.implementation.RespuestaServiceGenSpImpl;
 
 public class RespuestaControlOperationGenSpImpl extends ControlOperationGenImpl {

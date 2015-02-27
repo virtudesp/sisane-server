@@ -19,7 +19,7 @@ package net.daw.service.publicinterface;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import net.daw.helper.FilterBeanHelper;
+import net.daw.helper.statics.FilterBeanHelper;
 
 public interface ViewServiceInterface {
 

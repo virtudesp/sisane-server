@@ -28,9 +28,9 @@ import net.daw.dao.publicinterface.MetaDaoInterface;
 import net.daw.dao.publicinterface.TableDaoInterface;
 import net.daw.dao.publicinterface.ViewDaoInterface;
 import net.daw.data.specific.implementation.MysqlDataSpImpl;
-import net.daw.helper.AppConfigurationHelper;
-import net.daw.helper.ExceptionBooster;
-import net.daw.helper.FilterBeanHelper;
+import net.daw.helper.statics.AppConfigurationHelper;
+import net.daw.helper.statics.ExceptionBooster;
+import net.daw.helper.statics.FilterBeanHelper;
 
 public class ProveedorDaoSpcImpl implements ViewDaoInterface<ProveedorBeanGenSpImpl>, TableDaoInterface<ProveedorBeanGenSpImpl>, MetaDaoInterface {
 

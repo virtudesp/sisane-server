@@ -33,8 +33,8 @@ import net.daw.dao.generic.specific.implementation.CuestionarioDaoGenSpImpl;
 import net.daw.dao.generic.specific.implementation.DocumentoDaoGenSpImpl;
 import net.daw.dao.generic.specific.implementation.OpcionDaoGenSpImpl;
 import net.daw.dao.generic.specific.implementation.PreguntaDaoGenSpImpl;
-import net.daw.helper.ExceptionBooster;
-import net.daw.helper.FilterBeanHelper;
+import net.daw.helper.statics.ExceptionBooster;
+import net.daw.helper.statics.FilterBeanHelper;
 import net.daw.service.generic.implementation.TableServiceGenImpl;
 
 /**

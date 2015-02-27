@@ -27,10 +27,10 @@ import net.daw.control.operation.publicinterface.ControlOperationInterface;
 import net.daw.service.generic.implementation.TableServiceGenImpl;
 import net.daw.connection.implementation.BoneConnectionPoolImpl;
 import net.daw.connection.publicinterface.ConnectionInterface;
-import net.daw.helper.ExceptionBooster;
-import net.daw.helper.FilterBeanHelper;
-import net.daw.helper.ParameterCooker;
-import net.daw.helper.PermissionManager;
+import net.daw.helper.statics.ExceptionBooster;
+import net.daw.helper.statics.FilterBeanHelper;
+import net.daw.helper.statics.ParameterCooker;
+import net.daw.helper.statics.PermissionManager;
 
 public class ControlOperationGenImpl implements ControlOperationInterface {
 

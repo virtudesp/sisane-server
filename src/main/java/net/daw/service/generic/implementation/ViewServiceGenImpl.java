@@ -29,9 +29,9 @@ import java.util.List;
 import net.daw.bean.generic.implementation.BeanGenImpl;
 import net.daw.bean.publicinterface.BeanInterface;
 import net.daw.dao.generic.implementation.TableDaoGenImpl;
-import net.daw.helper.AppConfigurationHelper;
-import net.daw.helper.ExceptionBooster;
-import net.daw.helper.FilterBeanHelper;
+import net.daw.helper.statics.AppConfigurationHelper;
+import net.daw.helper.statics.ExceptionBooster;
+import net.daw.helper.statics.FilterBeanHelper;
 
 public abstract class ViewServiceGenImpl extends MetaServiceGenImpl implements ViewServiceInterface, MetaServiceInterface {
 

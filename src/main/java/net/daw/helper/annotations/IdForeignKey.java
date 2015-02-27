@@ -1,5 +1,5 @@
 /*
- * Copyright (C) July 2014 Rafael Aznar
+ * Copyright (C) 2015 rafa
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -15,15 +15,20 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-package net.daw.helper;
+package net.daw.helper.annotations;
+
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 /**
  *
  * @author rafa
  */
-public class AppInformationHelper {
+@Retention(RetentionPolicy.RUNTIME)
+//@Target(ElementType.TYPE)
+public @interface IdForeignKey {
 
-    public static String getAppName() {
-        return "ausiàsYield";
-    }
+    public String tableReference() default "";
 }

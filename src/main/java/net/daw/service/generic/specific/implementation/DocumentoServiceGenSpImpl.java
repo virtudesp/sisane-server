@@ -22,7 +22,7 @@ import java.sql.Connection;
 import javax.servlet.ServletException;
 import net.daw.bean.generic.specific.implementation.DocumentoBeanGenSpImpl;
 import net.daw.dao.generic.specific.implementation.DocumentoDaoGenSpImpl;
-import net.daw.helper.AppConfigurationHelper;
+import net.daw.helper.statics.AppConfigurationHelper;
 
 public class DocumentoServiceGenSpImpl extends TableServiceGenImpl {
 
