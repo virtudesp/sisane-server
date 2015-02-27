@@ -30,6 +30,7 @@ import java.util.Iterator;
 import java.util.Map;
 import net.daw.helper.ExceptionBooster;
 import net.daw.helper.FilterBeanHelper;
+import net.daw.helper.SqlBuilder;
 
 public class MysqlDataSpImpl implements DataInterface {
 
@@ -1026,19 +1027,35 @@ public class MysqlDataSpImpl implements DataInterface {
     //***********************************************************************
     //***********************************************************************
     //***********************************************************************
-    public int getNewPages(String strSqlDataSource, int intRegsPerPage) throws Exception {
+    public int getNewCount(String strSqlDataSource) throws Exception {
         int intResult = 0;
         Statement oStatement = null;
         try {
             oStatement = (Statement) connection.createStatement();
             strSqlDataSource = "SELECT COUNT(*) " + strSqlDataSource.substring(strSqlDataSource.indexOf("FROM"), strSqlDataSource.length());
-
             ResultSet oResultSet = oStatement.executeQuery(strSqlDataSource);
             while (oResultSet.next()) {
-                intResult = oResultSet.getInt("COUNT(*)") / intRegsPerPage;
-                if ((oResultSet.getInt("COUNT(*)") % intRegsPerPage) > 0) {
-                    intResult++;
-                }
+                intResult = oResultSet.getInt("COUNT(*)");
+            }
+        } catch (SQLException ex) {
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getCountSQL ERROR:  Can't process query: " + ex.getMessage()));
+        } finally {
+            if (oStatement != null) {
+                oStatement.close();
+            }
+        }
+        return intResult;
+    }
+
+    public int getNewPages(String strSqlDataSource, int intRegsPerPage) throws Exception {
+        int intResult = 0;
+        int intCount = 0;
+        Statement oStatement = null;
+        try {
+            intCount = this.getNewCount(strSqlDataSource);
+            intResult = intCount / intRegsPerPage;
+            if ((intResult % intRegsPerPage) > 0) {
+                intResult++;
             }
         } catch (SQLException ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPagesSQL ERROR:  Can't process query: " + ex.getMessage()));
@@ -1048,28 +1065,16 @@ public class MysqlDataSpImpl implements DataInterface {
             }
         }
         return intResult;
-
     }
 
     public ArrayList<Integer> getNewPage(String strSqlDataSource, int intRegsPerPage, int intPagina) throws Exception {
         ArrayList<Integer> vector = null;
         Statement oStatement = null;
+        ResultSet oResultSet;
+        vector = new ArrayList<>();
         try {
-            vector = new ArrayList<>();
-            int intOffset;
-            oStatement = (Statement) connection.createStatement();
-            String strSQLcount = "SELECT COUNT(*) " + strSqlDataSource.substring(strSqlDataSource.indexOf("FROM"), strSqlDataSource.length());
-            //when limit of pages exceed, show last page
-            ResultSet oResultSet = oStatement.executeQuery(strSQLcount);
-            int intCuenta = 0;
-            if (oResultSet.next()) {
-                intCuenta = oResultSet.getInt("COUNT(*)");
-            }
-            int maxPaginas = new Double(intCuenta / intRegsPerPage).intValue();
-            intPagina = Math.min(intPagina - 1, maxPaginas) + 1;
-            intOffset = Math.max(((intPagina - 1) * intRegsPerPage), 0);
-            //--                        
-            strSqlDataSource += " LIMIT " + intOffset + " , " + intRegsPerPage;
+            int intCount = this.getNewCount(strSqlDataSource);
+            strSqlDataSource += SqlBuilder.buildSqlLimit(intCount, intRegsPerPage, intPagina);
             oResultSet = oStatement.executeQuery(strSqlDataSource);
             while (oResultSet.next()) {
                 vector.add(oResultSet.getInt("id"));
@@ -1084,4 +1089,10 @@ public class MysqlDataSpImpl implements DataInterface {
         return vector;
     }
 
+    
+    
+    
+    
+    
+    
 }

@@ -83,6 +83,16 @@ public class ParameterCooker {
         return result;
     }
 
+    public static String prepareCamelCaseOperation(HttpServletRequest request) {
+        String result = null;
+        if (request.getParameter("op") == null) {
+            result = "Inicio";
+        } else {
+            result = Character.toUpperCase(request.getParameter("op").charAt(0)) + request.getParameter("op").substring(1);
+        }
+        return result;
+    }
+
     public static Integer prepareRpp(HttpServletRequest request) {
         int intRegsPerPag;
         if (request.getParameter("rpp") == null) {

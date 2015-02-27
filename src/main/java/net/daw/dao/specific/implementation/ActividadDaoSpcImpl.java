@@ -30,6 +30,7 @@ import net.daw.dao.publicinterface.ViewDaoInterface;
 import net.daw.data.specific.implementation.MysqlDataSpImpl;
 import net.daw.helper.ExceptionBooster;
 import net.daw.helper.FilterBeanHelper;
+import net.daw.helper.SqlBuilder;
 
 /**
  *
@@ -44,7 +45,7 @@ public class ActividadDaoSpcImpl implements ViewDaoInterface<ActividadBeanGenSpI
     public ActividadDaoSpcImpl(String ob, Connection oConexion) throws Exception {
         //ob a extinguir como parametro
         try {
-            strSqlDataSource = "select * from actividad";
+            strSqlDataSource = "select * from actividad where 1=1 ";
             oConnection = oConexion;
             oMysql = new MysqlDataSpImpl(oConnection);
         } catch (Exception ex) {
@@ -56,7 +57,8 @@ public class ActividadDaoSpcImpl implements ViewDaoInterface<ActividadBeanGenSpI
     public int getPages(int intRegsPerPag, ArrayList<FilterBeanHelper> hmFilter) throws Exception {
         int pages = 0;
         try {
-            pages = oMysql.getPages(strSqlDataSource, intRegsPerPag, hmFilter);
+            strSqlDataSource += SqlBuilder.buildSqlWhere(hmFilter);
+            pages = oMysql.getNewPages(strSqlDataSource, intRegsPerPag);
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPages ERROR: " + ex.getMessage()));
         }
@@ -67,7 +69,8 @@ public class ActividadDaoSpcImpl implements ViewDaoInterface<ActividadBeanGenSpI
     public int getCount(ArrayList<FilterBeanHelper> hmFilter) throws Exception {
         int pages = 0;
         try {
-            pages = oMysql.getCount(strSqlDataSource, hmFilter);
+            strSqlDataSource += SqlBuilder.buildSqlWhere(hmFilter);
+            pages = oMysql.getNewCount(strSqlDataSource);
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getCount ERROR: " + ex.getMessage()));
         }
@@ -79,7 +82,9 @@ public class ActividadDaoSpcImpl implements ViewDaoInterface<ActividadBeanGenSpI
         ArrayList<Integer> arrId;
         ArrayList<ActividadBeanGenSpImpl> arrActividad = new ArrayList<>();
         try {
-            arrId = oMysql.getPage(strSqlDataSource, intRegsPerPag, intPage, hmFilter, hmOrder);
+            strSqlDataSource += SqlBuilder.buildSqlWhere(hmFilter);
+            strSqlDataSource += SqlBuilder.buildSqlOrder(hmOrder);
+            arrId = oMysql.getNewPage(strSqlDataSource, intRegsPerPag, intPage);
             Iterator<Integer> iterador = arrId.listIterator();
             while (iterador.hasNext()) {
                 ActividadBeanGenSpImpl oActividadBean = new ActividadBeanGenSpImpl(iterador.next());
@@ -175,5 +180,10 @@ public class ActividadDaoSpcImpl implements ViewDaoInterface<ActividadBeanGenSpI
     public int updateOne(int intId, String strTabla, String strCampo, String strValor) throws Exception {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    
+    
+    
+    
 
 }
