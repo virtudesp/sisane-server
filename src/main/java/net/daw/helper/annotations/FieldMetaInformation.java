@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015 rafa
+ * Copyright (C) 2015 raznara
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -22,10 +22,15 @@ import java.lang.annotation.RetentionPolicy;
 
 /**
  *
- * @author rafa
+ * @author raznara
  */
 @Retention(RetentionPolicy.RUNTIME)
 //@Target(ElementType.TYPE)
-public @interface  ObjForeignKey {
-    public String tableReference() default "";
+public @interface FieldMetaInformation {
+    public String ShortName() default "";
+    public String Description() default "";
+    public boolean IsIdForeignKey() default false;
+    public boolean IsObjForeignKey() default false;
+    public String ReferencesTable() default "";
+    //public FieldType Type() default FieldType.String;    
 }

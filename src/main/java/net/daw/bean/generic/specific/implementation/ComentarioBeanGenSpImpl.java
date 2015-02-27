@@ -20,37 +20,42 @@ package net.daw.bean.generic.specific.implementation;
 import net.daw.bean.generic.implementation.BeanGenImpl;
 import net.daw.bean.publicinterface.BeanInterface;
 import com.google.gson.annotations.Expose;
-import net.daw.helper.annotations.IdForeignKey;
-import net.daw.helper.annotations.ObjForeignKey;
+
+import net.daw.helper.annotations.FieldMetaInformation;
 
 public class ComentarioBeanGenSpImpl extends BeanGenImpl implements BeanInterface {
 
-    public ComentarioBeanGenSpImpl() {
-    }
-
-    public ComentarioBeanGenSpImpl(Integer id) {
-        super(id);
-    }
-
+    @FieldMetaInformation(
+            ShortName = "Contenido"
+    )
     @Expose
     private String contenido = "";
-    
-    @IdForeignKey(tableReference = "propuesta")
+
+    @FieldMetaInformation(
+            ShortName = "Nº de Propuesta"
+    )
     @Expose(serialize = false)
     private Integer id_propuesta = 0; //importante inicializar a 0 las claves ajenas
-    @ObjForeignKey(tableReference = "propuesta")
+
+    @FieldMetaInformation(
+            ShortName = "Propuesta",
+            IsObjForeignKey = true,
+            ReferencesTable = "propuesta"
+    )
     @Expose(deserialize = false)
     private PropuestaBeanGenSpImpl obj_propuesta = null;
-    
-    
-    @IdForeignKey(tableReference = "usuario")
+
+    @FieldMetaInformation(
+            ShortName = "Propuesta",
+            IsIdForeignKey = true,
+            ReferencesTable = "propuesta"
+    )
     @Expose(serialize = false)
     private Integer id_usuario = 0; //importante inicializar a 0 las claves ajenas
-    @ObjForeignKey(tableReference = "usuario")
+
     @Expose(deserialize = false)
     private UsuarioBeanGenSpImpl obj_usuario = null;
 
-    
     public String getContenido() {
         return contenido;
     }
@@ -91,6 +96,11 @@ public class ComentarioBeanGenSpImpl extends BeanGenImpl implements BeanInterfac
         this.obj_propuesta = obj_propuesta;
     }
 
-   
-    
+    public ComentarioBeanGenSpImpl() {
+    }
+
+    public ComentarioBeanGenSpImpl(Integer id) {
+        super(id);
+    }
+
 }

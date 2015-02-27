@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015 rafa
+ * Copyright (C) 2015 raznara
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -17,18 +17,19 @@
  */
 package net.daw.helper.annotations;
 
-import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+
+import net.daw.helper.statics.MetaEnum;
 
 /**
  *
- * @author rafa
+ * @author raznara
  */
 @Retention(RetentionPolicy.RUNTIME)
 //@Target(ElementType.TYPE)
-public @interface IdForeignKey {
-
-    public String tableReference() default "";
+public @interface SourceMetaInformation {
+    public String TableName() default "";
+    public String Description() default "";
+    //public MetaEnum SourceType() default MetaEnum.SourceType.Table;
 }
