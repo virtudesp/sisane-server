@@ -39,17 +39,17 @@ public abstract class MetaServiceGenImpl implements MetaServiceInterface {
     }
 
     @Override
-    public void setSource(String source) throws Exception {
+    public void setsource(String source) throws Exception {
         strObjectName = source;
     }
     
     @Override
-    public void setPojo(String pojo) throws Exception {
+    public void setpojo(String pojo) throws Exception {
         strPojo = Character.toUpperCase(pojo.charAt(0)) + pojo.substring(1);
     }
 
     @Override
-    public String getPrettyColumns() throws Exception {
+    public String getprettycolumns() throws Exception {
         String data = null;
         try {
             oConnection.setAutoCommit(false);
@@ -70,7 +70,7 @@ public abstract class MetaServiceGenImpl implements MetaServiceInterface {
     }
 
     @Override
-    public String getColumns() throws Exception {
+    public String getcolumns() throws Exception {
         String data = null;
         try {
             oConnection.setAutoCommit(false);

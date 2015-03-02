@@ -21,89 +21,88 @@ import net.daw.bean.generic.implementation.BeanGenImpl;
 import net.daw.bean.publicinterface.BeanInterface;
 import com.google.gson.annotations.Expose;
 import java.util.Date;
+import net.daw.helper.annotations.FieldMetaInformation;
+import net.daw.helper.annotations.SourceMetaInformation;
 
 /**
  *
  * @author al037805
  */
-public class ActividadBeanGenSpImpl extends BeanGenImpl implements BeanInterface{
-    
+@SourceMetaInformation(
+        TableName = "actividad"
+)
+public class ActividadBeanGenSpImpl extends BeanGenImpl implements BeanInterface {
+
     public ActividadBeanGenSpImpl() {
     }
 
     public ActividadBeanGenSpImpl(Integer id) {
         super(id);
     }
-    
+
+    @FieldMetaInformation(
+            ShortName = "Enunciado"
+    )
     @Expose
     private String enunciado = "";
     //private String presentacion = "";
+
+    @FieldMetaInformation(
+            ShortName = "Fecha"
+    )
     @Expose
     private Date fecha = new Date();
+
+    @FieldMetaInformation(
+            ShortName = "Evaluación"
+    )
     @Expose
     private Integer evaluacion = 0;
+
+    @FieldMetaInformation(
+            ShortName = "Activo"
+    )
     @Expose
     private byte activo = 0;
 
-    /**
-     * @return the enunciado
-     */
+
     public String getEnunciado() {
         return enunciado;
     }
 
-    /**
-     * @param enunciado the enunciado to set
-     */
+
     public void setEnunciado(String enunciado) {
         this.enunciado = enunciado;
     }
 
-    /**
-     * @return the fecha
-     */
+
     public Date getFecha() {
         return fecha;
     }
 
-    /**
-     * @param fecha the fecha to set
-     */
+
     public void setFecha(Date fecha) {
         this.fecha = fecha;
     }
 
-    /**
-     * @return the evaluacion
-     */
+
     public Integer getEvaluacion() {
         return evaluacion;
     }
 
-    /**
-     * @param evaluacion the evaluacion to set
-     */
+
     public void setEvaluacion(Integer evaluacion) {
         this.evaluacion = evaluacion;
     }
 
-    /**
-     * @return the activo
-     */
+
     public byte getActivo() {
         return activo;
     }
 
-    /**
-     * @param activo the activo to set
-     */
+
     public void setActivo(byte activo) {
         this.activo = activo;
     }
-    
-    
-    
-    
-    
-    
+
 }

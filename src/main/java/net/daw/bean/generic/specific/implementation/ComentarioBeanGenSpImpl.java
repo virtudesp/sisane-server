@@ -22,7 +22,11 @@ import net.daw.bean.publicinterface.BeanInterface;
 import com.google.gson.annotations.Expose;
 
 import net.daw.helper.annotations.FieldMetaInformation;
+import net.daw.helper.annotations.SourceMetaInformation;
 
+@SourceMetaInformation(
+        TableName = "comentario"
+)
 public class ComentarioBeanGenSpImpl extends BeanGenImpl implements BeanInterface {
 
     @FieldMetaInformation(
@@ -32,7 +36,9 @@ public class ComentarioBeanGenSpImpl extends BeanGenImpl implements BeanInterfac
     private String contenido = "";
 
     @FieldMetaInformation(
-            ShortName = "Nº de Propuesta"
+            ShortName = "Nº de Propuesta",
+            IsIdForeignKey = true,
+            ReferencesTable = "propuesta"
     )
     @Expose(serialize = false)
     private Integer id_propuesta = 0; //importante inicializar a 0 las claves ajenas
@@ -46,13 +52,18 @@ public class ComentarioBeanGenSpImpl extends BeanGenImpl implements BeanInterfac
     private PropuestaBeanGenSpImpl obj_propuesta = null;
 
     @FieldMetaInformation(
-            ShortName = "Propuesta",
+            ShortName = "Usuario",
             IsIdForeignKey = true,
-            ReferencesTable = "propuesta"
+            ReferencesTable = "usuario"
     )
     @Expose(serialize = false)
     private Integer id_usuario = 0; //importante inicializar a 0 las claves ajenas
 
+    @FieldMetaInformation(
+            ShortName = "Usuario",
+            IsObjForeignKey = true,
+            ReferencesTable = "usuario"
+    )
     @Expose(deserialize = false)
     private UsuarioBeanGenSpImpl obj_usuario = null;
 

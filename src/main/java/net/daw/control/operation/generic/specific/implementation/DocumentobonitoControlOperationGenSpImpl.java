@@ -25,8 +25,8 @@ public class DocumentobonitoControlOperationGenSpImpl extends ControlOperationGe
 
     public DocumentobonitoControlOperationGenSpImpl(HttpServletRequest request) throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, Exception {
         super(request);
-        oService.setPojo("Documento");
-        oService.setSource("SELECT *  FROM documento where id>=1 order by alta desc");
+        oService.setpojo("Documento");
+        oService.setsource("SELECT *  FROM documento where id>=1 order by alta desc");
     }
 
 }

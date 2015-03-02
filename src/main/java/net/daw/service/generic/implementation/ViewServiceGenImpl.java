@@ -63,7 +63,7 @@ public abstract class ViewServiceGenImpl extends MetaServiceGenImpl implements V
     }
 
     @Override
-    public String getPage(int intRegsPerPag, int intPage, ArrayList<FilterBeanHelper> alFilter, HashMap<String, String> hmOrder) throws Exception {
+    public String getpage(int intRegsPerPag, int intPage, ArrayList<FilterBeanHelper> alFilter, HashMap<String, String> hmOrder) throws Exception {
         String data = null;
         try {
             oConnection.setAutoCommit(false);
@@ -86,7 +86,7 @@ public abstract class ViewServiceGenImpl extends MetaServiceGenImpl implements V
     }
 
     @Override
-    public String getPages(int intRegsPerPag, ArrayList<FilterBeanHelper> alFilter) throws Exception {
+    public String getpages(int intRegsPerPag, ArrayList<FilterBeanHelper> alFilter) throws Exception {
         String data = null;
         try {
             oConnection.setAutoCommit(false);
@@ -104,7 +104,7 @@ public abstract class ViewServiceGenImpl extends MetaServiceGenImpl implements V
     }
 
     @Override
-    public String getCount(ArrayList<FilterBeanHelper> alFilter) throws Exception {
+    public String getcount(ArrayList<FilterBeanHelper> alFilter) throws Exception {
         String data = null;
         try {
             oConnection.setAutoCommit(false);
@@ -124,16 +124,16 @@ public abstract class ViewServiceGenImpl extends MetaServiceGenImpl implements V
 
     @Override
     //no se utiliza por ahora
-    public String getAggregateViewSome(int intRegsPerPag, int intPage, ArrayList<FilterBeanHelper> alFilter, HashMap<String, String> hmOrder) throws Exception {
+    public String getaggregateviewsome(int intRegsPerPag, int intPage, ArrayList<FilterBeanHelper> alFilter, HashMap<String, String> hmOrder) throws Exception {
         String data = null;
         try {
             //falta controlar la transacción a esta altura
-            String columns = this.getColumns();
-            String prettyColumns = this.getPrettyColumns();
+            String columns = this.getcolumns();
+            String prettyColumns = this.getprettycolumns();
             //String types = this.getTypes();
-            String page = this.getPage(intRegsPerPag, intPage, alFilter, hmOrder);
-            String pages = this.getPages(intRegsPerPag, alFilter);
-            String registers = this.getCount(alFilter);
+            String page = this.getpage(intRegsPerPag, intPage, alFilter, hmOrder);
+            String pages = this.getpages(intRegsPerPag, alFilter);
+            String registers = this.getcount(alFilter);
             data = "{\"data\":{"
                     + "\"columns\":" + columns
                     + ",\"prettyColumns\":" + prettyColumns
@@ -149,12 +149,12 @@ public abstract class ViewServiceGenImpl extends MetaServiceGenImpl implements V
     }
 
     @Override
-    public String getAggregateViewOne(Integer id) throws Exception {
+    public String getaggregateviewone(Integer id) throws Exception {
         String data = null;
         try {
             //falta controlar la transacción a esta altura
-            String columns = this.getColumns();
-            String prettyColumns = this.getPrettyColumns();
+            String columns = this.getcolumns();
+            String prettyColumns = this.getprettycolumns();
             //String types = this.getTypes();
             String one = this.get(id);
             data = "{\"data\":{"

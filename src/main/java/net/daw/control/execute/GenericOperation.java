@@ -1,5 +1,5 @@
 /*
- * Copyright (C) July 2014 Rafael Aznar
+ * Copyright (C) 2015 rafa
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -15,15 +15,13 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-package net.daw.service.publicinterface;
+package net.daw.control.execute;
 
-public interface MetaServiceInterface {
-    
-    public void setsource(String source) throws Exception;
-    
-    public void setpojo(String pojo) throws Exception;    
 
-    public String getprettycolumns() throws Exception;
 
-    public String getcolumns() throws Exception;
+import javax.servlet.http.HttpServletRequest;
+
+public interface GenericOperation {
+
+    public abstract String execute(HttpServletRequest request) throws Exception;
 }

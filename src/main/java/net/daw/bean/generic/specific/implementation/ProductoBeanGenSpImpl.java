@@ -20,6 +20,7 @@ package net.daw.bean.generic.specific.implementation;
 import com.google.gson.annotations.Expose;
 import net.daw.bean.generic.implementation.BeanGenImpl;
 import net.daw.bean.publicinterface.BeanInterface;
+import net.daw.helper.annotations.FieldMetaInformation;
 
 /**
  *
@@ -28,20 +29,56 @@ import net.daw.bean.publicinterface.BeanInterface;
 public class ProductoBeanGenSpImpl extends BeanGenImpl implements BeanInterface {
 
     @Expose
+    @FieldMetaInformation(ShortName = "Código")
     private String codigo = "";
+
     @Expose
+    @FieldMetaInformation(ShortName = "Descripción")
     private String descripcion = "";
+
     @Expose
+    @FieldMetaInformation(ShortName = "Precio")
     private Double precio = 0.0;
+
     @Expose(serialize = false)
+    @FieldMetaInformation(
+            UltraShortName = "Tipo",
+            ShortName = "Tipo de producto",
+            IsIdForeignKey = true,
+            ReferencesTable = "tipoproducto"
+    )
     private Integer id_tipoproducto = 0; //importante inicializar a 0 las claves ajenas
+
     @Expose(deserialize = false)
+    @FieldMetaInformation(
+            ShortName = "Tipo de producto",
+            IsObjForeignKey = true,
+            ReferencesTable = "tipoproducto"
+    )
     private TipoproductoBeanGenSpImpl obj_tipoproducto = null;
+
     @Expose(serialize = false)
+    @FieldMetaInformation(
+            UltraShortName = "Prov.",
+            ShortName = "Proveedor",
+            IsIdForeignKey = true,
+            ReferencesTable = "proveedor"
+    )    
     private Integer id_proveedor = 0; //importante inicializar a 0 las claves ajenas
+
     @Expose(deserialize = false)
+    @FieldMetaInformation(
+            ShortName = "Proveedor",
+            IsObjForeignKey = true,
+            ReferencesTable = "proveedor"
+    )    
     private ProveedorBeanGenSpImpl obj_proveedor = null;
+
     @Expose
+    @FieldMetaInformation(
+            ShortName = "Ruta", 
+            IsPathToObject = true
+    )
     private String path;
 
     public ProductoBeanGenSpImpl() {

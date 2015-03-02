@@ -15,7 +15,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-
 package net.daw.control;
 
 import com.google.gson.Gson;
@@ -36,7 +35,6 @@ import net.daw.helper.statics.ExceptionBooster;
 import net.daw.helper.statics.ParameterCooker;
 import net.daw.service.publicinterface.MetaServiceInterface;
 
-
 public class JsonControl extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
@@ -49,7 +47,7 @@ public class JsonControl extends HttpServlet {
         }
     }
 
-        protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, Exception {
         try {
             try {
@@ -74,14 +72,34 @@ public class JsonControl extends HttpServlet {
                 return;
             }
 
-            //----------------------------------------------------------------------          
-            retardo(0); //debug delay
+            //----------------------------------------------------------------------  
+            if (EstadoHelper.getTipo_estado() == Tipo_estado.Debug) {
+                retardo(EstadoHelper.getDelay()); //debug delay
+            }
             String jsonResult = "";
             if (request.getSession().getAttribute("usuarioBean") != null) {
                 try {
-                    MetaServiceInterface oService = (MetaServiceInterface) Class.forName("net.daw.control.service.generic.specific.implementation." + ParameterCooker.prepareCamelCaseObject(request) + "GenSpImpl").getDeclaredConstructor(HttpServletRequest.class).newInstance(request);                    
-                    Method oMethodService = MetaServiceInterface.class.getMethod(ParameterCooker.prepareCamelCaseOperation(request));
-                    jsonResult = (String) oMethodService.invoke(oService);
+
+//                    String callop = ParameterCooker.prepareCamelCaseObject(request) + ParameterCooker.prepareCamelCaseOperation(request);
+//                    GenericOperation operation = (GenericOperation) Class.forName("net.daw.control.execute." + callop).newInstance();
+//                    jsonResult = operation.execute(request);
+                    
+                    
+                    
+//                    String strClassName = "net.daw.control.route.generic.specific.implementation." + ParameterCooker.prepareCamelCaseObject(request) + "GenSpImpl";
+//                    ControlOperationInterface oControl = (ControlOperationInterface) Class.forName(strClassName).newInstance();
+//                    Constructor oConstructor = Class.forName(strClassName).getConstructor();
+//                    ControlRouteInterface oGenericControlRoute = (ControlRouteInterface) oConstructor.newInstance();
+//                    oGenericControlRoute.execute(request);
+
+                    //ControlOperationInterface oControl = (ControlOperationInterface) Class.forName(strClassName).getDeclaredConstructor(HttpServletRequest.class).newInstance(request);
+                    //Method oMethodService = MetaServiceInterface.class.getMethod(ParameterCooker.prepareCamelCaseOperation(request));
+
+                    String strClassName = "net.daw.service.specific.implementation." + ParameterCooker.prepareCamelCaseObject(request) + "ServiceSpImpl";
+                    MetaServiceInterface oService = (MetaServiceInterface) Class.forName(strClassName).getDeclaredConstructor(HttpServletRequest.class).newInstance(request);
+                    //MetaServiceInterface oService = (MetaServiceInterface) Class.forName("net.daw.control.service.generic.specific.implementation." + ParameterCooker.prepareCamelCaseObject(request) + "GenSpImpl").getDeclaredConstructor(HttpServletRequest.class).newInstance(request);
+                    Method oMethodService = oService.getClass().getMethod(ParameterCooker.prepareOperation(request),HttpServletRequest.class);
+                    jsonResult = (String) oMethodService.invoke(oService,request);
                 } catch (ClassNotFoundException | InstantiationException | IllegalAccessException ex) {
                     ExceptionBooster.boost(new Exception(this.getClass().getName() + ":processRequest ERROR: no such operation"));
                 }

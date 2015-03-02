@@ -71,7 +71,7 @@ public class ControlOperationGenImpl implements ControlOperationInterface {
     public String getaggregateviewone(HttpServletRequest request) throws Exception {
         String result = "";
         if (perm) {
-            result = result = oService.getAggregateViewOne(ParameterCooker.prepareId(request));
+            result = result = oService.getaggregateviewone(ParameterCooker.prepareId(request));
             closeDB();
         } else {
             result = "error";
@@ -84,7 +84,7 @@ public class ControlOperationGenImpl implements ControlOperationInterface {
     public String getprettycolumns(HttpServletRequest request) throws Exception {
         String result = "";
         if (perm) {
-            result = oService.getPrettyColumns();
+            result = oService.getprettycolumns();
             closeDB();
         } else {
             result = "error";
@@ -97,7 +97,7 @@ public class ControlOperationGenImpl implements ControlOperationInterface {
     public String getcolumns(HttpServletRequest request) throws Exception {
         String result = "";
         if (perm) {
-            result = oService.getColumns();
+            result = oService.getcolumns();
             closeDB();
         } else {
             result = "error";
@@ -114,7 +114,7 @@ public class ControlOperationGenImpl implements ControlOperationInterface {
             Integer intPage = ParameterCooker.preparePage(request);
             ArrayList<FilterBeanHelper> alFilter = ParameterCooker.prepareFilter(request);
             HashMap<String, String> hmOrder = ParameterCooker.prepareOrder(request);
-            result = oService.getPage(intRegsPerPag, intPage, alFilter, hmOrder);
+            result = oService.getpage(intRegsPerPag, intPage, alFilter, hmOrder);
             closeDB();
         } else {
             result = "error";
@@ -129,7 +129,7 @@ public class ControlOperationGenImpl implements ControlOperationInterface {
         if (perm) {
             Integer intRegsPerPag = ParameterCooker.prepareRpp(request);
             ArrayList<FilterBeanHelper> alFilter = ParameterCooker.prepareFilter(request);
-            result = oService.getPages(intRegsPerPag, alFilter);
+            result = oService.getpages(intRegsPerPag, alFilter);
             closeDB();
         } else {
             result = "error";
@@ -142,7 +142,7 @@ public class ControlOperationGenImpl implements ControlOperationInterface {
         String result = "";
         if (perm) {
             ArrayList<FilterBeanHelper> alFilter = ParameterCooker.prepareFilter(request);
-            result = oService.getCount(alFilter);
+            result = oService.getcount(alFilter);
             closeDB();
         } else {
             result = "error";
@@ -158,7 +158,7 @@ public class ControlOperationGenImpl implements ControlOperationInterface {
             Integer intPage = ParameterCooker.preparePage(request);
             ArrayList<FilterBeanHelper> alFilter = ParameterCooker.prepareFilter(request);
             HashMap<String, String> hmOrder = ParameterCooker.prepareOrder(request);
-            result = oService.getAggregateViewSome(intRegsPerPag, intPage, alFilter, hmOrder);
+            result = oService.getaggregateviewsome(intRegsPerPag, intPage, alFilter, hmOrder);
             closeDB();
         } else {
             result = "error";
@@ -199,7 +199,7 @@ public class ControlOperationGenImpl implements ControlOperationInterface {
             String campo = request.getParameter("campo");
             String valor = request.getParameter("valor");
 
-            result = oService.updateOne(id, tabla, campo, valor);
+            result = oService.updateone(id, tabla, campo, valor);
         } else {
             result = "error";
         }

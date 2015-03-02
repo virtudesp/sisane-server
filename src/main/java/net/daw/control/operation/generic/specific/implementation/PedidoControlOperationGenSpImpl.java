@@ -32,11 +32,11 @@ public class PedidoControlOperationGenSpImpl extends ControlOperationGenImpl {
             int id = oUsuario.getId();
             int tipoUsuario = oUsuario.getId_tipousuario();
             
-            oService.setPojo("Pedido");
+            oService.setpojo("Pedido");
             if (tipoUsuario == 1){
-                oService.setSource("SELECT * FROM pedido WHERE 1=1");
+                oService.setsource("SELECT * FROM pedido WHERE 1=1");
             }else{               
-                oService.setSource("SELECT * FROM pedido WHERE id_usuario = "+id);
+                oService.setsource("SELECT * FROM pedido WHERE id_usuario = "+id);
             }
     }
 

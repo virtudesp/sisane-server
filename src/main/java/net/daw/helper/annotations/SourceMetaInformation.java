@@ -31,5 +31,5 @@ import net.daw.helper.statics.MetaEnum;
 public @interface SourceMetaInformation {
     public String TableName() default "";
     public String Description() default "";
-    //public MetaEnum SourceType() default MetaEnum.SourceType.Table;
+    public MetaEnum.SourceType SourceType() default MetaEnum.SourceType.Table;
 }

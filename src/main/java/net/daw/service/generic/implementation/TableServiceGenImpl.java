@@ -96,7 +96,7 @@ public abstract class TableServiceGenImpl extends ViewServiceGenImpl implements 
     }
 
     @Override
-    public String updateOne(int intId, String strTabla, String strCampo, String strValor) throws Exception {
+    public String updateone(int intId, String strTabla, String strCampo, String strValor) throws Exception {
         String data = null;
         try {
             oConnection.setAutoCommit(false);

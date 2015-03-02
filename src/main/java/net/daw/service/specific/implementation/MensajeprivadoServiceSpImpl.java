@@ -47,12 +47,12 @@ public class MensajeprivadoServiceSpImpl implements TableServiceInterface, ViewS
     }
 
     @Override
-    public void setSource(String source) throws Exception {
+    public void setsource(String source) throws Exception {
         strObjectName = source;
     }
 
     @Override
-    public void setPojo(String pojo) throws Exception {
+    public void setpojo(String pojo) throws Exception {
         strPojo = Character.toUpperCase(pojo.charAt(0)) + pojo.substring(1);
     }
 
@@ -154,7 +154,7 @@ public class MensajeprivadoServiceSpImpl implements TableServiceInterface, ViewS
     }
 
     @Override
-    public String getPage(int intRegsPerPag, int intPage, ArrayList<FilterBeanHelper> alFilter, HashMap<String, String> hmOrder) throws Exception {
+    public String getpage(int intRegsPerPag, int intPage, ArrayList<FilterBeanHelper> alFilter, HashMap<String, String> hmOrder) throws Exception {
         String data = null;
         try {
             oConnection.setAutoCommit(false);
@@ -168,13 +168,13 @@ public class MensajeprivadoServiceSpImpl implements TableServiceInterface, ViewS
             oConnection.commit();
         } catch (Exception ex) {
             oConnection.rollback();
-            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPage ERROR: " + ex.getMessage()));
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getpage ERROR: " + ex.getMessage()));
         }
         return data;
     }
 
     @Override
-    public String getPages(int intRegsPerPag, ArrayList<FilterBeanHelper> alFilter) throws Exception {
+    public String getpages(int intRegsPerPag, ArrayList<FilterBeanHelper> alFilter) throws Exception {
         String data = null;
         try {
             oConnection.setAutoCommit(false);
@@ -184,13 +184,13 @@ public class MensajeprivadoServiceSpImpl implements TableServiceInterface, ViewS
             oConnection.commit();
         } catch (Exception ex) {
             oConnection.rollback();
-            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPages ERROR: " + ex.getMessage()));
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getpages ERROR: " + ex.getMessage()));
         }
         return data;
     }
 
     @Override
-    public String getCount(ArrayList<FilterBeanHelper> alFilter) throws Exception {
+    public String getcount(ArrayList<FilterBeanHelper> alFilter) throws Exception {
         String data = null;
         try {
             oConnection.setAutoCommit(false);
@@ -201,13 +201,13 @@ public class MensajeprivadoServiceSpImpl implements TableServiceInterface, ViewS
 
         } catch (Exception ex) {
             oConnection.rollback();
-            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getCount ERROR: " + ex.getMessage()));
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getcount ERROR: " + ex.getMessage()));
         }
         return data;
     }
 
     @Override
-    public String getPrettyColumns() throws Exception {
+    public String getprettycolumns() throws Exception {
         String data = null;
         ArrayList<String> alColumns = null;
         try {
@@ -219,13 +219,13 @@ public class MensajeprivadoServiceSpImpl implements TableServiceInterface, ViewS
             oConnection.commit();
         } catch (Exception ex) {
             oConnection.rollback();
-            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPrettyColumns ERROR: " + ex.getMessage()));
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getprettycolumns ERROR: " + ex.getMessage()));
         }
         return data;
     }
 
     @Override
-    public String getColumns() throws Exception {
+    public String getcolumns() throws Exception {
         String data = null;
         try {
             oConnection.setAutoCommit(false);
@@ -238,18 +238,18 @@ public class MensajeprivadoServiceSpImpl implements TableServiceInterface, ViewS
 
         } catch (Exception ex) {
             oConnection.rollback();
-            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getColumns ERROR: " + ex.getMessage()));
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getcolumns ERROR: " + ex.getMessage()));
         }
         return data;
     }
 
     @Override
-    public String getAggregateViewOne(Integer id) throws Exception {
+    public String getaggregateviewone(Integer id) throws Exception {
         String data = null;
         try {
             oConnection.setAutoCommit(false);
-            String columns = this.getColumns();
-            String prettyColumns = this.getPrettyColumns();
+            String columns = this.getcolumns();
+            String prettyColumns = this.getprettycolumns();
             //String types = this.getTypes();
             String one = this.get(id);
             data = "{\"data\":{"
@@ -262,22 +262,22 @@ public class MensajeprivadoServiceSpImpl implements TableServiceInterface, ViewS
 
         } catch (Exception ex) {
             oConnection.rollback();
-            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getAggregateViewOne ERROR: " + ex.getMessage()));
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getaggregateviewone ERROR: " + ex.getMessage()));
         }
         return data;
     }
 
     @Override
-    public String getAggregateViewSome(int intRegsPerPag, int intPage, ArrayList<FilterBeanHelper> alFilter, HashMap<String, String> hmOrder) throws Exception {
+    public String getaggregateviewsome(int intRegsPerPag, int intPage, ArrayList<FilterBeanHelper> alFilter, HashMap<String, String> hmOrder) throws Exception {
         String data = null;
         try {
             oConnection.setAutoCommit(false);
-            String columns = this.getColumns();
-            String prettyColumns = this.getPrettyColumns();
+            String columns = this.getcolumns();
+            String prettyColumns = this.getprettycolumns();
             //String types = this.getTypes();
-            String page = this.getPage(intRegsPerPag, intPage, alFilter, hmOrder);
-            String pages = this.getPages(intRegsPerPag, alFilter);
-            String registers = this.getCount(alFilter);
+            String page = this.getpage(intRegsPerPag, intPage, alFilter, hmOrder);
+            String pages = this.getpages(intRegsPerPag, alFilter);
+            String registers = this.getcount(alFilter);
             data = "{\"data\":{"
                     + "\"columns\":" + columns
                     + ",\"prettyColumns\":" + prettyColumns
@@ -290,21 +290,21 @@ public class MensajeprivadoServiceSpImpl implements TableServiceInterface, ViewS
 
         } catch (Exception ex) {
             oConnection.rollback();
-            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getAggregateViewSome ERROR: " + ex.getMessage()));
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getaggregateviewsome ERROR: " + ex.getMessage()));
         }
         return data;
     }
 
-    public String getAggregateViewSomeId(int intRegsPerPag, int intPage, ArrayList<FilterBeanHelper> alFilter, HashMap<String, String> hmOrder, int idusuario, int tipousuario) throws Exception {
+    public String getaggregateviewsomeId(int intRegsPerPag, int intPage, ArrayList<FilterBeanHelper> alFilter, HashMap<String, String> hmOrder, int idusuario, int tipousuario) throws Exception {
         String data = null;
         try {
             oConnection.setAutoCommit(false);
-            String columns = this.getColumns();
-            String prettyColumns = this.getPrettyColumns();
+            String columns = this.getcolumns();
+            String prettyColumns = this.getprettycolumns();
             //String types = this.getTypes();
-            String page = this.getPage(intRegsPerPag, intPage, alFilter, hmOrder);
-            String pages = this.getPages(intRegsPerPag, alFilter);
-            String registers = this.getCount(alFilter);
+            String page = this.getpage(intRegsPerPag, intPage, alFilter, hmOrder);
+            String pages = this.getpages(intRegsPerPag, alFilter);
+            String registers = this.getcount(alFilter);
             data = "{\"data\":{"
                     + "\"columns\":" + columns
                     + ",\"prettyColumns\":" + prettyColumns
@@ -317,13 +317,13 @@ public class MensajeprivadoServiceSpImpl implements TableServiceInterface, ViewS
 
         } catch (Exception ex) {
             oConnection.rollback();
-            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getAggregateViewSome ERROR: " + ex.getMessage()));
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getaggregateviewsome ERROR: " + ex.getMessage()));
         }
         return data;
     }
 
     @Override
-    public String updateOne(int intId, String strTabla, String strCampo, String strValor) throws Exception {
+    public String updateone(int intId, String strTabla, String strCampo, String strValor) throws Exception {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

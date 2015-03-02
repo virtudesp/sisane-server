@@ -17,9 +17,9 @@
 --%>
 
 
-<%@page import="net.daw.helper.EstadoHelper"%>
+<%@page import="net.daw.helper.statics.EstadoHelper"%>
 <%@page import="net.daw.bean.generic.specific.implementation.UsuarioBeanGenSpImpl"%>
-<%@page import="net.daw.helper.AppInformationHelper"%>
+<%@page import="net.daw.helper.statics.AppInformationHelper"%>
 
 <%
     int id_tipousuario = 0, id_usuario = 0;

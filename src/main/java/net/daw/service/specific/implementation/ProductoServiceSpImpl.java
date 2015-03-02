@@ -24,39 +24,34 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javax.servlet.http.HttpServletRequest;
 import net.daw.bean.generic.specific.implementation.ProductoBeanGenSpImpl;
+import net.daw.connection.implementation.BoneConnectionPoolImpl;
+import net.daw.connection.publicinterface.ConnectionInterface;
 import net.daw.dao.specific.implementation.ProductoDaoSpcImpl;
 import net.daw.helper.statics.AppConfigurationHelper;
 import net.daw.helper.statics.EncodingUtilHelper;
 import net.daw.helper.statics.ExceptionBooster;
 import net.daw.helper.statics.FilterBeanHelper;
+import net.daw.helper.statics.ParameterCooker;
 import net.daw.service.publicinterface.MetaServiceInterface;
-import net.daw.service.publicinterface.TableServiceInterface;
-import net.daw.service.publicinterface.ViewServiceInterface;
 
-public class ProductoServiceSpImpl implements TableServiceInterface, ViewServiceInterface, MetaServiceInterface {
 
-    protected Connection oConnection = null;
+public class ProductoServiceSpImpl implements MetaServiceInterface{
+
+    private ConnectionInterface DataConnectionSource = null;
+    private Connection oConnection = null;
     protected String strObjectName = null;
-    protected String strPojo = null;
 
-    public ProductoServiceSpImpl(String strObject, String pojo, Connection con) {
-        strObjectName = strObject;
-        oConnection = con;
-        strPojo = Character.toUpperCase(pojo.charAt(0)) + pojo.substring(1);
+
+    public ProductoServiceSpImpl(HttpServletRequest request) throws Exception {
+        DataConnectionSource = new BoneConnectionPoolImpl();
+        oConnection = DataConnectionSource.newConnection();
+        strObjectName = ParameterCooker.prepareCamelCaseObject(request);
+
     }
 
-    @Override
-    public void setSource(String source) throws Exception {
-        strObjectName = source;
-    }
 
-    @Override
-    public void setPojo(String pojo) throws Exception {
-        strPojo = Character.toUpperCase(pojo.charAt(0)) + pojo.substring(1);
-    }
-
-    @Override
     public String remove(Integer id) throws Exception {
         String resultado = null;
         try {
@@ -77,7 +72,7 @@ public class ProductoServiceSpImpl implements TableServiceInterface, ViewService
         return resultado;
     }
 
-    @Override
+    
     public String set(String jason) throws Exception {
         String resultado = null;
         try {
@@ -100,7 +95,7 @@ public class ProductoServiceSpImpl implements TableServiceInterface, ViewService
         return resultado;
     }
 
-    @Override
+    
     public String get(Integer id) throws Exception {
         String data = null;
         try {
@@ -120,8 +115,8 @@ public class ProductoServiceSpImpl implements TableServiceInterface, ViewService
         return data;
     }
 
-    @Override
-    public String getPage(int intRegsPerPag, int intPage, ArrayList<FilterBeanHelper> alFilter, HashMap<String, String> hmOrder) throws Exception {
+    
+    public String getpage(int intRegsPerPag, int intPage, ArrayList<FilterBeanHelper> alFilter, HashMap<String, String> hmOrder) throws Exception {
         String data = null;
         try {
             oConnection.setAutoCommit(false);
@@ -135,13 +130,13 @@ public class ProductoServiceSpImpl implements TableServiceInterface, ViewService
             oConnection.commit();
         } catch (Exception ex) {
             oConnection.rollback();
-            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPage ERROR: " + ex.getMessage()));
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getpage ERROR: " + ex.getMessage()));
         }
         return data;
     }
 
-    @Override
-    public String getPages(int intRegsPerPag, ArrayList<FilterBeanHelper> alFilter) throws Exception {
+    
+    public String getpages(int intRegsPerPag, ArrayList<FilterBeanHelper> alFilter) throws Exception {
         String data = null;
         try {
             oConnection.setAutoCommit(false);
@@ -151,13 +146,13 @@ public class ProductoServiceSpImpl implements TableServiceInterface, ViewService
             oConnection.commit();
         } catch (Exception ex) {
             oConnection.rollback();
-            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPages ERROR: " + ex.getMessage()));
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getpages ERROR: " + ex.getMessage()));
         }
         return data;
     }
 
-    @Override
-    public String getCount(ArrayList<FilterBeanHelper> alFilter) throws Exception {
+    
+    public String getcount(ArrayList<FilterBeanHelper> alFilter) throws Exception {
         String data = null;
         try {
             oConnection.setAutoCommit(false);
@@ -168,13 +163,13 @@ public class ProductoServiceSpImpl implements TableServiceInterface, ViewService
 
         } catch (Exception ex) {
             oConnection.rollback();
-            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getCount ERROR: " + ex.getMessage()));
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getcount ERROR: " + ex.getMessage()));
         }
         return data;
     }
 
-    @Override
-    public String getPrettyColumns() throws Exception {
+    
+    public String getprettycolumns() throws Exception {
         String data = null;
         ArrayList<String> alColumns = null;
         try {
@@ -186,13 +181,13 @@ public class ProductoServiceSpImpl implements TableServiceInterface, ViewService
             oConnection.commit();
         } catch (Exception ex) {
             oConnection.rollback();
-            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPrettyColumns ERROR: " + ex.getMessage()));
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getprettycolumns ERROR: " + ex.getMessage()));
         }
         return data;
     }
 
-    @Override
-    public String getColumns() throws Exception {
+    
+    public String getcolumns() throws Exception {
         String data = null;
         try {
             oConnection.setAutoCommit(false);
@@ -205,18 +200,18 @@ public class ProductoServiceSpImpl implements TableServiceInterface, ViewService
 
         } catch (Exception ex) {
             oConnection.rollback();
-            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getColumns ERROR: " + ex.getMessage()));
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getcolumns ERROR: " + ex.getMessage()));
         }
         return data;
     }
 
-    @Override
-    public String getAggregateViewOne(Integer id) throws Exception {
+    
+    public String getaggregateviewone(Integer id) throws Exception {
         String data = null;
         try {
             oConnection.setAutoCommit(false);
-            String columns = this.getColumns();
-            String prettyColumns = this.getPrettyColumns();
+            String columns = this.getcolumns();
+            String prettyColumns = this.getprettycolumns();
             //String types = this.getTypes();
             String one = this.get(id);
             data = "{\"data\":{"
@@ -229,22 +224,26 @@ public class ProductoServiceSpImpl implements TableServiceInterface, ViewService
 
         } catch (Exception ex) {
             oConnection.rollback();
-            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getAggregateViewOne ERROR: " + ex.getMessage()));
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getaggregateviewone ERROR: " + ex.getMessage()));
         }
         return data;
     }
 
-    @Override
-    public String getAggregateViewSome(int intRegsPerPag, int intPage, ArrayList<FilterBeanHelper> alFilter, HashMap<String, String> hmOrder) throws Exception {
+    
+    public String getaggregateviewsome(HttpServletRequest request) throws Exception {
         String data = null;
+        int intRegsPerPag = 0;
+        int intPage = 0;
+        ArrayList<FilterBeanHelper> alFilter = null;
+        HashMap<String, String> hmOrder = null;
         try {
             oConnection.setAutoCommit(false);
-            String columns = this.getColumns();
-            String prettyColumns = this.getPrettyColumns();
+            String columns = this.getcolumns();
+            String prettyColumns = this.getprettycolumns();
             //String types = this.getTypes();
-            String page = this.getPage(intRegsPerPag, intPage, alFilter, hmOrder);
-            String pages = this.getPages(intRegsPerPag, alFilter);
-            String registers = this.getCount(alFilter);
+            String page = this.getpage(intRegsPerPag, intPage, alFilter, hmOrder);
+            String pages = this.getpages(intRegsPerPag, alFilter);
+            String registers = this.getcount(alFilter);
             data = "{\"data\":{"
                     + "\"columns\":" + columns
                     + ",\"prettyColumns\":" + prettyColumns
@@ -257,13 +256,23 @@ public class ProductoServiceSpImpl implements TableServiceInterface, ViewService
 
         } catch (Exception ex) {
             oConnection.rollback();
-            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getAggregateViewSome ERROR: " + ex.getMessage()));
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getaggregateviewsome ERROR: " + ex.getMessage()));
         }
         return data;
     }
 
+    
+    public String updateone(int intId, String strTabla, String strCampo, String strValor) throws Exception {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
     @Override
-    public String updateOne(int intId, String strTabla, String strCampo, String strValor) throws Exception {
+    public void setsource(String source) throws Exception {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void setpojo(String pojo) throws Exception {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

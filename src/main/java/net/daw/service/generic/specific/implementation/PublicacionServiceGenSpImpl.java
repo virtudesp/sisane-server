@@ -139,7 +139,7 @@ public class PublicacionServiceGenSpImpl extends TableServiceGenImpl {
     }
 
     @Override
-    public String getPage(int intRegsPerPag, int intPage, ArrayList<FilterBeanHelper> alFilter, HashMap<String, String> hmOrder) throws Exception {
+    public String getpage(int intRegsPerPag, int intPage, ArrayList<FilterBeanHelper> alFilter, HashMap<String, String> hmOrder) throws Exception {
         String data = null;
         try {
             oConnection.setAutoCommit(false);
@@ -196,12 +196,12 @@ public class PublicacionServiceGenSpImpl extends TableServiceGenImpl {
         String data = null;
         try {
             oConnection.setAutoCommit(false);
-            String columns = this.getColumns();
-            String prettyColumns = this.getPrettyColumns();
+            String columns = this.getcolumns();
+            String prettyColumns = this.getprettycolumns();
             //String types = this.getTypes();
             String page = this.getPageComentarioAmigo(id_usuario, intRegsPerPag, intPage, alFilter, hmOrder);
             String pages = this.getPagesComentarioAmigo(id_usuario, intRegsPerPag, alFilter);
-            String registers = this.getCount(alFilter);
+            String registers = this.getcount(alFilter);
             data = "{\"data\":{"
                     + "\"columns\":" + columns
                     + ",\"prettyColumns\":" + prettyColumns

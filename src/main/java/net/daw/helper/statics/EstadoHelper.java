@@ -56,4 +56,8 @@ public class EstadoHelper {
     public static String getLicenciaLink() {
         return "<a href=\"http://www.gnu.org/licenses/gpl-2.0.html\">GNU General Public License, version 2</a>";
     }
+
+    public static int getDelay() {
+        return 0;
+    }
 }
