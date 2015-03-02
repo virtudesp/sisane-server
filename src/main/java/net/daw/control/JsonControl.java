@@ -32,7 +32,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.daw.helper.statics.EstadoHelper;
 import net.daw.helper.statics.EstadoHelper.Tipo_estado;
 import net.daw.helper.statics.ExceptionBooster;
-import net.daw.helper.statics.ParameterCooker;
+import net.daw.helper.statics.ParameterCook;
 import net.daw.service.publicinterface.MetaServiceInterface;
 
 public class JsonControl extends HttpServlet {
@@ -95,10 +95,10 @@ public class JsonControl extends HttpServlet {
                     //ControlOperationInterface oControl = (ControlOperationInterface) Class.forName(strClassName).getDeclaredConstructor(HttpServletRequest.class).newInstance(request);
                     //Method oMethodService = MetaServiceInterface.class.getMethod(ParameterCooker.prepareCamelCaseOperation(request));
 
-                    String strClassName = "net.daw.service.specific.implementation." + ParameterCooker.prepareCamelCaseObject(request) + "ServiceSpImpl";
+                    String strClassName = "net.daw.service.specific.implementation." + ParameterCook.prepareCamelCaseObject(request) + "ServiceSpImpl";
                     MetaServiceInterface oService = (MetaServiceInterface) Class.forName(strClassName).getDeclaredConstructor(HttpServletRequest.class).newInstance(request);
                     //MetaServiceInterface oService = (MetaServiceInterface) Class.forName("net.daw.control.service.generic.specific.implementation." + ParameterCooker.prepareCamelCaseObject(request) + "GenSpImpl").getDeclaredConstructor(HttpServletRequest.class).newInstance(request);
-                    Method oMethodService = oService.getClass().getMethod(ParameterCooker.prepareOperation(request),HttpServletRequest.class);
+                    Method oMethodService = oService.getClass().getMethod(ParameterCook.prepareOperation(request),HttpServletRequest.class);
                     jsonResult = (String) oMethodService.invoke(oService,request);
                 } catch (ClassNotFoundException | InstantiationException | IllegalAccessException ex) {
                     ExceptionBooster.boost(new Exception(this.getClass().getName() + ":processRequest ERROR: no such operation"));

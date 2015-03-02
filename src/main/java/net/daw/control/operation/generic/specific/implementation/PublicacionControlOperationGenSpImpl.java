@@ -29,7 +29,7 @@ import net.daw.connection.publicinterface.ConnectionInterface;
 import net.daw.control.operation.generic.implementation.ControlOperationGenImpl;
 import net.daw.helper.statics.ExceptionBooster;
 import net.daw.helper.statics.FilterBeanHelper;
-import net.daw.helper.statics.ParameterCooker;
+import net.daw.helper.statics.ParameterCook;
 import net.daw.service.generic.specific.implementation.PublicacionServiceGenSpImpl;
 import net.daw.service.specific.implementation.ProductoServiceSpImpl;
 
@@ -51,7 +51,7 @@ public class PublicacionControlOperationGenSpImpl extends ControlOperationGenImp
         if (perm) {
             UsuarioBeanGenSpImpl user = (UsuarioBeanGenSpImpl) request.getSession().getAttribute("usuarioBean");
             
-            result = oPublicacionService.set(ParameterCooker.prepareJson(request), user.getId(), user.getId_tipousuario());
+            result = oPublicacionService.set(ParameterCook.prepareJson(request), user.getId(), user.getId_tipousuario());
             closeDB();
         } else {
             result = "error";
@@ -63,7 +63,7 @@ public class PublicacionControlOperationGenSpImpl extends ControlOperationGenImp
         String result = null;
         try {
             if (perm) {
-                result = oPublicacionService.duplicate(ParameterCooker.prepareId(request));
+                result = oPublicacionService.duplicate(ParameterCook.prepareId(request));
                 closeDB();
             } else {
                 result = "Error, su usuario no tiene permisos para realizar esta operación.";
@@ -78,9 +78,9 @@ public class PublicacionControlOperationGenSpImpl extends ControlOperationGenImp
         String result = null;
         try {
             if (perm) {
-                Integer intRegsPerPag = ParameterCooker.prepareRpp(request);
+                Integer intRegsPerPag = ParameterCook.prepareRpp(request);
                 UsuarioBeanGenSpImpl user = (UsuarioBeanGenSpImpl) request.getSession().getAttribute("usuarioBean");
-                ArrayList<FilterBeanHelper> alFilter = ParameterCooker.prepareFilter(request);
+                ArrayList<FilterBeanHelper> alFilter = ParameterCook.prepareFilter(request);
                 result = oPublicacionService.getPagesComentarioAmigo(user.getId(), intRegsPerPag, alFilter);
                 closeDB();
             } else {
@@ -96,12 +96,12 @@ public class PublicacionControlOperationGenSpImpl extends ControlOperationGenImp
         String result = null;
         try {
             if (perm) {
-                Integer intRegsPerPag = ParameterCooker.prepareRpp(request);
-                Integer intPage = ParameterCooker.preparePage(request);
+                Integer intRegsPerPag = ParameterCook.prepareRpp(request);
+                Integer intPage = ParameterCook.preparePage(request);
                 UsuarioBeanGenSpImpl user = (UsuarioBeanGenSpImpl) request.getSession().getAttribute("usuarioBean");
 
-                ArrayList<FilterBeanHelper> alFilter = ParameterCooker.prepareFilter(request);
-                HashMap<String, String> hmOrder = ParameterCooker.prepareOrder(request);
+                ArrayList<FilterBeanHelper> alFilter = ParameterCook.prepareFilter(request);
+                HashMap<String, String> hmOrder = ParameterCook.prepareOrder(request);
                 result = oPublicacionService.getComentarioAmigo(user.getId(), intRegsPerPag, intPage, alFilter, hmOrder);
                 closeDB();
             } else {

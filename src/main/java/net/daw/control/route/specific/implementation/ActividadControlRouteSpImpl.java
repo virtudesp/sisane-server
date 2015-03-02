@@ -21,7 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 import net.daw.control.operation.publicinterface.ControlOperationInterface;
 import net.daw.control.route.publicinterface.ControlRouteInterface;
 import net.daw.helper.statics.ExceptionBooster;
-import net.daw.helper.statics.ParameterCooker;
+import net.daw.helper.statics.ParameterCook;
 
 /**
  *
@@ -31,7 +31,7 @@ public class ActividadControlRouteSpImpl implements ControlRouteInterface{
     
     @Override
     public String execute(HttpServletRequest request, ControlOperationInterface oControl) throws Exception {
-        String operation = ParameterCooker.prepareOperation(request);
+        String operation = ParameterCook.prepareOperation(request);
         String jsonResult = "";
         try {
             switch (operation) {

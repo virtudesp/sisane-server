@@ -22,7 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 import net.daw.bean.generic.specific.implementation.UsuarioBeanGenSpImpl;
 import net.daw.control.operation.generic.implementation.ControlOperationGenImpl;
 import net.daw.helper.statics.ExceptionBooster;
-import net.daw.helper.statics.ParameterCooker;
+import net.daw.helper.statics.ParameterCook;
 import net.daw.service.generic.specific.implementation.RespuestaServiceGenSpImpl;
 
 public class RespuestaControlOperationGenSpImpl extends ControlOperationGenImpl {
@@ -37,7 +37,7 @@ public class RespuestaControlOperationGenSpImpl extends ControlOperationGenImpl 
         String result = null;
         try {
             UsuarioBeanGenSpImpl oUsuario = (UsuarioBeanGenSpImpl) request.getSession().getAttribute("usuarioBean");
-            result = oRespuestaService.setForm(oUsuario.getId(), ParameterCooker.prepareJson(request));
+            result = oRespuestaService.setForm(oUsuario.getId(), ParameterCook.prepareJson(request));
             closeDB();
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":set ERROR: " + ex.getMessage()));

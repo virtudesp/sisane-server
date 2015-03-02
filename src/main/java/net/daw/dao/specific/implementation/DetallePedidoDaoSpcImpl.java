@@ -110,7 +110,7 @@ public class DetallePedidoDaoSpcImpl implements ViewDaoInterface<DetallePedidoBe
 
                         ProductoBeanGenSpImpl oProducto = new ProductoBeanGenSpImpl();
                         oProducto.setId(Integer.parseInt(oMysql.getOne(strTableName, "id_producto", oDetallePedidoBean.getId())));
-                        ProductoDaoSpcImpl oProductoDAO = new ProductoDaoSpcImpl("producto", oConnection);
+                        ProductoDaoSpcImpl oProductoDAO = new ProductoDaoSpcImpl(oConnection);
                         oProducto = oProductoDAO.get(oProducto, AppConfigurationHelper.getJsonDepth());
                         oDetallePedidoBean.setObj_producto(oProducto);
                     }

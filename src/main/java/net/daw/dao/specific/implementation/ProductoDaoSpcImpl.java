@@ -34,13 +34,15 @@ import net.daw.helper.statics.FilterBeanHelper;
 
 public class ProductoDaoSpcImpl implements ViewDaoInterface<ProductoBeanGenSpImpl>, TableDaoInterface<ProductoBeanGenSpImpl>, MetaDaoInterface {
 
-    private String strTableName = null;
+    private String strDataOrigin = null;
+    private String strTableOrigin = null;
     private MysqlDataSpImpl oMysql = null;
     private Connection oConnection = null;
 
-    public ProductoDaoSpcImpl(String ob, Connection oConexion) throws Exception {
+    public ProductoDaoSpcImpl(Connection oConexion) throws Exception {
         try {
-            strTableName = ob;
+            strDataOrigin = "select * from producto where 1=1 ";
+            strTableOrigin="producto";
             oConnection = oConexion;
             oMysql = new MysqlDataSpImpl(oConnection);
         } catch (Exception ex) {
@@ -50,9 +52,10 @@ public class ProductoDaoSpcImpl implements ViewDaoInterface<ProductoBeanGenSpImp
 
     @Override
     public int getPages(int intRegsPerPag, ArrayList<FilterBeanHelper> hmFilter) throws Exception {
+        
         int pages = 0;
         try {
-            pages = oMysql.getPages(strTableName, intRegsPerPag, hmFilter);
+            pages = oMysql.getNewPages(strDataOrigin, intRegsPerPag);
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPages ERROR: " + ex.getMessage()));
         }
@@ -63,7 +66,7 @@ public class ProductoDaoSpcImpl implements ViewDaoInterface<ProductoBeanGenSpImp
     public int getCount(ArrayList<FilterBeanHelper> hmFilter) throws Exception {
         int pages = 0;
         try {
-            pages = oMysql.getCount(strTableName, hmFilter);
+            pages = oMysql.getNewCount(strDataOrigin);
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getCount ERROR: " + ex.getMessage()));
         }
@@ -75,7 +78,7 @@ public class ProductoDaoSpcImpl implements ViewDaoInterface<ProductoBeanGenSpImp
         ArrayList<Integer> arrId;
         ArrayList<ProductoBeanGenSpImpl> arrProducto = new ArrayList<>();
         try {
-            arrId = oMysql.getPage(strTableName, intRegsPerPag, intPage, hmFilter, hmOrder);
+            arrId = oMysql.getNewPage(strDataOrigin, intRegsPerPag, intPage);
             Iterator<Integer> iterador = arrId.listIterator();
             while (iterador.hasNext()) {
                 ProductoBeanGenSpImpl oProductoBean = new ProductoBeanGenSpImpl(iterador.next());
@@ -91,31 +94,31 @@ public class ProductoDaoSpcImpl implements ViewDaoInterface<ProductoBeanGenSpImp
     public ProductoBeanGenSpImpl get(ProductoBeanGenSpImpl oProductoBean, Integer expand) throws Exception {
         if (oProductoBean.getId() > 0) {
             try {
-                if (!oMysql.existsOne(strTableName, oProductoBean.getId())) {
+                if (!oMysql.existsNewOne(strDataOrigin, oProductoBean.getId())) {
                     oProductoBean.setId(0);
                 } else {
                     expand--;
                     if (expand > 0) {
-                        oProductoBean.setCodigo(oMysql.getOne(strTableName, "codigo", oProductoBean.getId()));
-                        oProductoBean.setDescripcion(oMysql.getOne(strTableName, "descripcion", oProductoBean.getId()));
-                        oProductoBean.setPrecio(Double.parseDouble(oMysql.getOne(strTableName, "precio", oProductoBean.getId())));
+                        oProductoBean.setCodigo(oMysql.getNewOne(strDataOrigin, "codigo", oProductoBean.getId()));
+                        oProductoBean.setDescripcion(oMysql.getNewOne(strDataOrigin, "descripcion", oProductoBean.getId()));
+                        oProductoBean.setPrecio(Double.parseDouble(oMysql.getNewOne(strDataOrigin, "precio", oProductoBean.getId())));
 
-                        oProductoBean.setId_tipoproducto(Integer.parseInt(oMysql.getOne(strTableName, "id_tipoproducto", oProductoBean.getId())));
-                        oProductoBean.setId_proveedor(Integer.parseInt(oMysql.getOne(strTableName, "id_proveedor", oProductoBean.getId())));
+//                        oProductoBean.setId_tipoproducto(Integer.parseInt(oMysql.getNewOne(strDataOrigin, "id_tipoproducto", oProductoBean.getId())));
+//                        oProductoBean.setId_proveedor(Integer.parseInt(oMysql.getNewOne(strDataOrigin, "id_proveedor", oProductoBean.getId())));
+//                        
+//                        TipoproductoBeanGenSpImpl oTipoproducto = new TipoproductoBeanGenSpImpl();
+//                        oTipoproducto.setId(Integer.parseInt(oMysql.getNewOne(strDataOrigin, "id_tipoproducto", oProductoBean.getId())));
+//                        TipoproductoDaoSpcImpl oTipoproductoDAO = new TipoproductoDaoSpcImpl("tipoproducto", oConnection);
+//                        oTipoproducto = oTipoproductoDAO.get(oTipoproducto, AppConfigurationHelper.getJsonDepth());
+//                        oProductoBean.setObj_tipoproducto(oTipoproducto);
+//                        
+//                        ProveedorBeanGenSpImpl oProveedor = new ProveedorBeanGenSpImpl();
+//                        oProveedor.setId(Integer.parseInt(oMysql.getNewOne(strDataOrigin, "id_proveedor", oProductoBean.getId())));
+//                        ProveedorDaoSpcImpl oProveedorDAO = new ProveedorDaoSpcImpl("proveedor", oConnection);
+//                        oProveedor = oProveedorDAO.get(oProveedor, AppConfigurationHelper.getJsonDepth());
+//                        oProductoBean.setObj_proveedor(oProveedor);
                         
-                        TipoproductoBeanGenSpImpl oTipoproducto = new TipoproductoBeanGenSpImpl();
-                        oTipoproducto.setId(Integer.parseInt(oMysql.getOne(strTableName, "id_tipoproducto", oProductoBean.getId())));
-                        TipoproductoDaoSpcImpl oTipoproductoDAO = new TipoproductoDaoSpcImpl("tipoproducto", oConnection);
-                        oTipoproducto = oTipoproductoDAO.get(oTipoproducto, AppConfigurationHelper.getJsonDepth());
-                        oProductoBean.setObj_tipoproducto(oTipoproducto);
-                        
-                        ProveedorBeanGenSpImpl oProveedor = new ProveedorBeanGenSpImpl();
-                        oProveedor.setId(Integer.parseInt(oMysql.getOne(strTableName, "id_proveedor", oProductoBean.getId())));
-                        ProveedorDaoSpcImpl oProveedorDAO = new ProveedorDaoSpcImpl("proveedor", oConnection);
-                        oProveedor = oProveedorDAO.get(oProveedor, AppConfigurationHelper.getJsonDepth());
-                        oProductoBean.setObj_proveedor(oProveedor);
-                        
-                        oProductoBean.setPath(oMysql.getOne(strTableName, "path", oProductoBean.getId()));
+                        oProductoBean.setPath(oMysql.getNewOne(strDataOrigin, "path", oProductoBean.getId()));
                     }
                 }
             } catch (Exception ex) {
@@ -131,14 +134,14 @@ public class ProductoDaoSpcImpl implements ViewDaoInterface<ProductoBeanGenSpImp
     public ProductoBeanGenSpImpl set(ProductoBeanGenSpImpl oProductoBean) throws Exception {
         try {
             if (oProductoBean.getId() == 0) {
-                oProductoBean.setId(oMysql.insertOne(strTableName));
+                oProductoBean.setId(oMysql.insertOne(strTableOrigin));
             }
-            oMysql.updateOne(oProductoBean.getId(), strTableName, "codigo", oProductoBean.getCodigo());
-            oMysql.updateOne(oProductoBean.getId(), strTableName, "descripcion", oProductoBean.getDescripcion());
-            oMysql.updateOne(oProductoBean.getId(), strTableName, "precio", oProductoBean.getPrecio().toString());
-            oMysql.updateOne(oProductoBean.getId(), strTableName, "id_tipoproducto", oProductoBean.getId_tipoproducto().toString());
-            oMysql.updateOne(oProductoBean.getId(), strTableName, "id_proveedor", oProductoBean.getId_tipoproducto().toString());
-            oMysql.updateOne(oProductoBean.getId(), strTableName, "path", oProductoBean.getPath());
+            oMysql.updateOne(oProductoBean.getId(), strTableOrigin, "codigo", oProductoBean.getCodigo());
+            oMysql.updateOne(oProductoBean.getId(), strTableOrigin, "descripcion", oProductoBean.getDescripcion());
+            oMysql.updateOne(oProductoBean.getId(), strTableOrigin, "precio", oProductoBean.getPrecio().toString());
+            oMysql.updateOne(oProductoBean.getId(), strTableOrigin, "id_tipoproducto", oProductoBean.getId_tipoproducto().toString());
+            oMysql.updateOne(oProductoBean.getId(), strTableOrigin, "id_proveedor", oProductoBean.getId_tipoproducto().toString());
+            oMysql.updateOne(oProductoBean.getId(), strTableOrigin, "path", oProductoBean.getPath());
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":set ERROR: " + ex.getMessage()));
         }
@@ -149,7 +152,7 @@ public class ProductoDaoSpcImpl implements ViewDaoInterface<ProductoBeanGenSpImp
     public int remove(ProductoBeanGenSpImpl oProductoBean) throws Exception {
         int result = 0;
         try {
-            result = oMysql.removeOne(oProductoBean.getId(), strTableName);
+            result = oMysql.removeOne(oProductoBean.getId(), strTableOrigin);
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":remove ERROR: " + ex.getMessage()));
         }
@@ -160,7 +163,7 @@ public class ProductoDaoSpcImpl implements ViewDaoInterface<ProductoBeanGenSpImp
     public ArrayList<String> getColumnsNames() throws Exception {
         ArrayList<String> alColumns = null;
         try {
-            alColumns = oMysql.getColumnsName(strTableName);
+            alColumns = oMysql.getColumnsName(strDataOrigin);
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getColumnsNames ERROR: " + ex.getMessage()));
         }
@@ -171,7 +174,7 @@ public class ProductoDaoSpcImpl implements ViewDaoInterface<ProductoBeanGenSpImp
     public ArrayList<String> getPrettyColumnsNames() throws Exception {
         ArrayList<String> alColumns = null;
         try {
-            alColumns = oMysql.getPrettyColumns(strTableName);
+            alColumns = oMysql.getPrettyColumns(strDataOrigin);
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPrettyColumnsNames ERROR: " + ex.getMessage()));
         }

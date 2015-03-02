@@ -33,30 +33,27 @@ import net.daw.helper.statics.AppConfigurationHelper;
 import net.daw.helper.statics.EncodingUtilHelper;
 import net.daw.helper.statics.ExceptionBooster;
 import net.daw.helper.statics.FilterBeanHelper;
-import net.daw.helper.statics.ParameterCooker;
+import net.daw.helper.statics.ParameterCook;
 import net.daw.service.publicinterface.MetaServiceInterface;
 
-
-public class ProductoServiceSpImpl implements MetaServiceInterface{
+public class ProductoServiceSpImpl implements MetaServiceInterface {
 
     private ConnectionInterface DataConnectionSource = null;
     private Connection oConnection = null;
     protected String strObjectName = null;
 
-
     public ProductoServiceSpImpl(HttpServletRequest request) throws Exception {
         DataConnectionSource = new BoneConnectionPoolImpl();
         oConnection = DataConnectionSource.newConnection();
-        strObjectName = ParameterCooker.prepareCamelCaseObject(request);
-
+        strObjectName = ParameterCook.prepareCamelCaseObject(request);
     }
 
-
-    public String remove(Integer id) throws Exception {
+    public String remove(HttpServletRequest request) throws Exception {
+        Integer id=ParameterCook.prepareId(request);
         String resultado = null;
         try {
             oConnection.setAutoCommit(false);
-            ProductoDaoSpcImpl oProductoDAO = new ProductoDaoSpcImpl(strObjectName, oConnection);
+            ProductoDaoSpcImpl oProductoDAO = new ProductoDaoSpcImpl(oConnection);
             ProductoBeanGenSpImpl oProducto = new ProductoBeanGenSpImpl(id);
             Map<String, String> data = new HashMap<>();
             oProductoDAO.remove(oProducto);
@@ -72,12 +69,12 @@ public class ProductoServiceSpImpl implements MetaServiceInterface{
         return resultado;
     }
 
-    
-    public String set(String jason) throws Exception {
+    public String set(HttpServletRequest request) throws Exception {
+        String jason=ParameterCook.prepareJson(request);
         String resultado = null;
         try {
             oConnection.setAutoCommit(false);
-            ProductoDaoSpcImpl oProductoDAO = new ProductoDaoSpcImpl(strObjectName, oConnection);
+            ProductoDaoSpcImpl oProductoDAO = new ProductoDaoSpcImpl(oConnection);
             ProductoBeanGenSpImpl oProducto = new ProductoBeanGenSpImpl();
             Gson gson = new GsonBuilder().setDateFormat("dd/MM/yyyy").create();
             jason = EncodingUtilHelper.decodeURIComponent(jason);
@@ -95,12 +92,12 @@ public class ProductoServiceSpImpl implements MetaServiceInterface{
         return resultado;
     }
 
-    
-    public String get(Integer id) throws Exception {
+    public String get(HttpServletRequest request) throws Exception {
+        Integer id = ParameterCook.prepareId(request);
         String data = null;
         try {
             oConnection.setAutoCommit(false);
-            ProductoDaoSpcImpl oProductoDAO = new ProductoDaoSpcImpl(strObjectName, oConnection);
+            ProductoDaoSpcImpl oProductoDAO = new ProductoDaoSpcImpl(oConnection);
             ProductoBeanGenSpImpl oProducto = new ProductoBeanGenSpImpl(id);
             oProducto = oProductoDAO.get(oProducto, AppConfigurationHelper.getJsonDepth());
             GsonBuilder gsonBuilder = new GsonBuilder();
@@ -115,12 +112,16 @@ public class ProductoServiceSpImpl implements MetaServiceInterface{
         return data;
     }
 
-    
-    public String getpage(int intRegsPerPag, int intPage, ArrayList<FilterBeanHelper> alFilter, HashMap<String, String> hmOrder) throws Exception {
+    public String getpage(HttpServletRequest request) throws Exception {
+        HashMap<String, String> hmOrder = ParameterCook.prepareOrder(request);
+        int intPage = ParameterCook.preparePage(request);
+        int intRegsPerPag = ParameterCook.prepareRpp(request);
+        ArrayList<FilterBeanHelper> alFilter = ParameterCook.prepareFilter(request);
+
         String data = null;
         try {
             oConnection.setAutoCommit(false);
-            ProductoDaoSpcImpl oProductoDAO = new ProductoDaoSpcImpl(strObjectName, oConnection);
+            ProductoDaoSpcImpl oProductoDAO = new ProductoDaoSpcImpl(oConnection);
             List<ProductoBeanGenSpImpl> oProductos = oProductoDAO.getPage(intRegsPerPag, intPage, alFilter, hmOrder);
             GsonBuilder gsonBuilder = new GsonBuilder();
             gsonBuilder.setDateFormat("dd/MM/yyyy");
@@ -135,12 +136,15 @@ public class ProductoServiceSpImpl implements MetaServiceInterface{
         return data;
     }
 
-    
-    public String getpages(int intRegsPerPag, ArrayList<FilterBeanHelper> alFilter) throws Exception {
+    public String getpages(HttpServletRequest request) throws Exception {
+
+        int intRegsPerPag = ParameterCook.prepareRpp(request);
+        ArrayList<FilterBeanHelper> alFilter = ParameterCook.prepareFilter(request);
+
         String data = null;
         try {
             oConnection.setAutoCommit(false);
-            ProductoDaoSpcImpl oProductoDAO = new ProductoDaoSpcImpl(strObjectName, oConnection);
+            ProductoDaoSpcImpl oProductoDAO = new ProductoDaoSpcImpl(oConnection);
             int pages = oProductoDAO.getPages(intRegsPerPag, alFilter);
             data = "{\"data\":\"" + Integer.toString(pages) + "\"}";
             oConnection.commit();
@@ -151,12 +155,12 @@ public class ProductoServiceSpImpl implements MetaServiceInterface{
         return data;
     }
 
-    
-    public String getcount(ArrayList<FilterBeanHelper> alFilter) throws Exception {
+    public String getcount(HttpServletRequest request) throws Exception {
+        ArrayList<FilterBeanHelper> alFilter = ParameterCook.prepareFilter(request);
         String data = null;
         try {
             oConnection.setAutoCommit(false);
-            ProductoDaoSpcImpl oProductoDAO = new ProductoDaoSpcImpl(strObjectName, oConnection);
+            ProductoDaoSpcImpl oProductoDAO = new ProductoDaoSpcImpl(oConnection);
             int registers = oProductoDAO.getCount(alFilter);
             data = "{\"data\":\"" + Integer.toString(registers) + "\"}";
             oConnection.commit();
@@ -168,13 +172,12 @@ public class ProductoServiceSpImpl implements MetaServiceInterface{
         return data;
     }
 
-    
     public String getprettycolumns() throws Exception {
         String data = null;
         ArrayList<String> alColumns = null;
         try {
             oConnection.setAutoCommit(false);
-            ProductoDaoSpcImpl oProductoDAO = new ProductoDaoSpcImpl(strObjectName, oConnection);
+            ProductoDaoSpcImpl oProductoDAO = new ProductoDaoSpcImpl(oConnection);
             alColumns = oProductoDAO.getPrettyColumnsNames();
             data = new Gson().toJson(alColumns);
             //data = "{\"data\":" + data + "}";
@@ -186,13 +189,12 @@ public class ProductoServiceSpImpl implements MetaServiceInterface{
         return data;
     }
 
-    
     public String getcolumns() throws Exception {
         String data = null;
         try {
             oConnection.setAutoCommit(false);
             ArrayList<String> alColumns = null;
-            ProductoDaoSpcImpl oProductoDAO = new ProductoDaoSpcImpl(strObjectName, oConnection);
+            ProductoDaoSpcImpl oProductoDAO = new ProductoDaoSpcImpl(oConnection);
             alColumns = oProductoDAO.getColumnsNames();
             data = new Gson().toJson(alColumns);
             //data = "{\"data\":" + data + "}";
@@ -205,15 +207,14 @@ public class ProductoServiceSpImpl implements MetaServiceInterface{
         return data;
     }
 
-    
-    public String getaggregateviewone(Integer id) throws Exception {
+    public String getaggregateviewone(HttpServletRequest request) throws Exception {
         String data = null;
         try {
             oConnection.setAutoCommit(false);
             String columns = this.getcolumns();
             String prettyColumns = this.getprettycolumns();
             //String types = this.getTypes();
-            String one = this.get(id);
+            String one = this.get(request);
             data = "{\"data\":{"
                     + "\"columns\":" + columns
                     + ",\"prettyColumns\":" + prettyColumns
@@ -229,7 +230,6 @@ public class ProductoServiceSpImpl implements MetaServiceInterface{
         return data;
     }
 
-    
     public String getaggregateviewsome(HttpServletRequest request) throws Exception {
         String data = null;
         int intRegsPerPag = 0;
@@ -241,9 +241,9 @@ public class ProductoServiceSpImpl implements MetaServiceInterface{
             String columns = this.getcolumns();
             String prettyColumns = this.getprettycolumns();
             //String types = this.getTypes();
-            String page = this.getpage(intRegsPerPag, intPage, alFilter, hmOrder);
-            String pages = this.getpages(intRegsPerPag, alFilter);
-            String registers = this.getcount(alFilter);
+            String page = this.getpage(request);
+            String pages = this.getpages(request);
+            String registers = this.getcount(request);
             data = "{\"data\":{"
                     + "\"columns\":" + columns
                     + ",\"prettyColumns\":" + prettyColumns
@@ -261,7 +261,6 @@ public class ProductoServiceSpImpl implements MetaServiceInterface{
         return data;
     }
 
-    
     public String updateone(int intId, String strTabla, String strCampo, String strValor) throws Exception {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }

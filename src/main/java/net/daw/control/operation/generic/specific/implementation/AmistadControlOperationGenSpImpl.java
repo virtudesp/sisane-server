@@ -25,7 +25,7 @@ import net.daw.connection.implementation.BoneConnectionPoolImpl;
 import net.daw.connection.publicinterface.ConnectionInterface;
 import net.daw.control.operation.generic.implementation.ControlOperationGenImpl;
 import net.daw.helper.statics.ExceptionBooster;
-import net.daw.helper.statics.ParameterCooker;
+import net.daw.helper.statics.ParameterCook;
 import net.daw.service.generic.specific.implementation.AmistadServiceGenSpImpl;
 
 public class AmistadControlOperationGenSpImpl extends ControlOperationGenImpl {
@@ -38,7 +38,7 @@ public class AmistadControlOperationGenSpImpl extends ControlOperationGenImpl {
         super(request);
         DataConnectionSource = new BoneConnectionPoolImpl();
         oConnection = DataConnectionSource.newConnection();
-        oAmistadService = new AmistadServiceGenSpImpl(ParameterCooker.prepareObject(request), ParameterCooker.prepareObject(request), oConnection);
+        oAmistadService = new AmistadServiceGenSpImpl(ParameterCook.prepareObject(request), ParameterCook.prepareObject(request), oConnection);
     }
 
     public String agregarAmigo(HttpServletRequest request) throws Exception {
@@ -47,7 +47,7 @@ public class AmistadControlOperationGenSpImpl extends ControlOperationGenImpl {
             if (perm) {
                 UsuarioBeanGenSpImpl user = (UsuarioBeanGenSpImpl) request.getSession().getAttribute("usuarioBean");
                 int id_usuario_1 = user.getId();
-                int id_usuario_2 = ParameterCooker.prepareId(request);
+                int id_usuario_2 = ParameterCook.prepareId(request);
                 if (id_usuario_1 != id_usuario_2) {
                     result = oAmistadService.agregarAmigo(id_usuario_1, id_usuario_2);
                 } else {
@@ -68,7 +68,7 @@ public class AmistadControlOperationGenSpImpl extends ControlOperationGenImpl {
         try {
             if (perm) {
                 UsuarioBeanGenSpImpl user = (UsuarioBeanGenSpImpl) request.getSession().getAttribute("usuarioBean");
-                result = oAmistadService.removeAmigo(user.getId(), ParameterCooker.prepareId(request));
+                result = oAmistadService.removeAmigo(user.getId(), ParameterCook.prepareId(request));
                 closeDB();
             } else {
                 result = "Error, su usuario no tiene permisos para realizar esta operación.";
@@ -84,7 +84,7 @@ public class AmistadControlOperationGenSpImpl extends ControlOperationGenImpl {
         try {
             if (perm) {
                 UsuarioBeanGenSpImpl user = (UsuarioBeanGenSpImpl) request.getSession().getAttribute("usuarioBean");
-                result = oAmistadService.existeAmigo(user.getId(), ParameterCooker.prepareId(request));
+                result = oAmistadService.existeAmigo(user.getId(), ParameterCook.prepareId(request));
                 closeDB();
             } else {
                 result = "Error, su usuario no tiene permisos para realizar esta operación.";

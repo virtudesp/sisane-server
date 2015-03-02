@@ -41,25 +41,6 @@ public class MysqlDataSpImpl implements DataInterface {
     }
 
     @Override
-    public int removeOne(int intId, String strTabla) throws Exception {
-        PreparedStatement oPreparedStatement = null;
-        int intResult = 0;
-        try {
-            String strSQL = "DELETE FROM " + strTabla + " WHERE id = ?";
-            oPreparedStatement = (PreparedStatement) connection.prepareStatement(strSQL);
-            oPreparedStatement.setInt(1, intId);
-            intResult = oPreparedStatement.executeUpdate();
-        } catch (SQLException ex) {
-            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":removeOne ERROR removing register: " + ex.getMessage()));
-        } finally {
-            if (oPreparedStatement != null) {
-                oPreparedStatement.close();
-            }
-        }
-        return intResult;
-    }
-
-    @Override
     public int insertOne(String strTabla) throws Exception {
 
         ResultSet oResultSet;
@@ -1032,8 +1013,9 @@ public class MysqlDataSpImpl implements DataInterface {
         Statement oStatement = null;
         try {
             oStatement = (Statement) connection.createStatement();
-            strSqlDataSource = "SELECT COUNT(*) " + strSqlDataSource.substring(strSqlDataSource.indexOf("FROM"), strSqlDataSource.length());
-            ResultSet oResultSet = oStatement.executeQuery(strSqlDataSource);
+            String strNewSqlDataSource = "SELECT COUNT(*) " + strSqlDataSource.substring(strSqlDataSource.indexOf("from"), strSqlDataSource.length());
+            oStatement = (Statement) connection.createStatement();
+            ResultSet oResultSet = oStatement.executeQuery(strNewSqlDataSource);
             while (oResultSet.next()) {
                 intResult = oResultSet.getInt("COUNT(*)");
             }
@@ -1075,11 +1057,12 @@ public class MysqlDataSpImpl implements DataInterface {
         try {
             int intCount = this.getNewCount(strSqlDataSource);
             strSqlDataSource += SqlBuilder.buildSqlLimit(intCount, intRegsPerPage, intPagina);
+            oStatement = (Statement) connection.createStatement();
             oResultSet = oStatement.executeQuery(strSqlDataSource);
             while (oResultSet.next()) {
                 vector.add(oResultSet.getInt("id"));
             }
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPageSQL ERROR:  Can't process query: " + ex.getMessage()));
         } finally {
             if (oStatement != null) {
@@ -1089,10 +1072,73 @@ public class MysqlDataSpImpl implements DataInterface {
         return vector;
     }
 
-    
-    
-    
-    
-    
-    
+    @Override
+    public int removeOne(int intId, String strTabla) throws Exception {
+        PreparedStatement oPreparedStatement = null;
+        int intResult = 0;
+        try {
+            String strSQL = "DELETE FROM " + strTabla + " WHERE id = ?";
+            oPreparedStatement = (PreparedStatement) connection.prepareStatement(strSQL);
+            oPreparedStatement.setInt(1, intId);
+            intResult = oPreparedStatement.executeUpdate();
+        } catch (SQLException ex) {
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":removeOne ERROR removing register: " + ex.getMessage()));
+        } finally {
+            if (oPreparedStatement != null) {
+                oPreparedStatement.close();
+            }
+        }
+        return intResult;
+    }
+
+    public Boolean existsNewOne(String strTabla, int id) throws Exception {
+
+        int intResult = 0;
+        Statement oStatement = null;
+        try {
+            oStatement = (Statement) connection.createStatement();
+            String strSQL = "SELECT COUNT(*) " + strTabla.substring(strTabla.indexOf("from"), strTabla.length());
+            ResultSet oResultSet = oStatement.executeQuery(strSQL);
+            while (oResultSet.next()) {
+                intResult = oResultSet.getInt("COUNT(*)");
+            }
+        } catch (SQLException ex) {
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getCountSQL ERROR:  Can't process query: " + ex.getMessage()));
+        } finally {
+            if (oStatement != null) {
+                oStatement.close();
+            }
+        }
+        return intResult > 0;
+
+    }
+
+    public String getNewOne(String strTabla, String strCampo, int id) throws Exception {
+        String strResult = null;
+        PreparedStatement oPreparedStatement = null;
+        ResultSet oResultSet;
+        String strSQL = "";
+
+        try {
+            strSQL = strTabla;
+            strSQL += " AND id=" + id;
+            oPreparedStatement = connection.prepareStatement(strSQL);
+            //oPreparedStatement.setInt(1, id);
+            oResultSet = oPreparedStatement.executeQuery();
+            if (oResultSet.next()) {
+                strResult = oResultSet.getString(strCampo);
+            } else {
+                ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getOne ERROR: ID not exists: " + id));
+            }
+        } catch (Exception ex) {
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getOne ERROR: Can't process query: " + ex.getMessage()));
+        } finally {
+            if (oPreparedStatement != null) {
+                oPreparedStatement.close();
+            }
+        }
+
+        return strResult;
+    }
+
 }
