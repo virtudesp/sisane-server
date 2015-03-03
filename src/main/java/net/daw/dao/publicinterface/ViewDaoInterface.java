@@ -23,11 +23,11 @@ import net.daw.helper.statics.FilterBeanHelper;
 
 public interface ViewDaoInterface<GenericBeanImplementation> {
 
-    public int getPages(int intRegsPerPag, ArrayList<FilterBeanHelper> hmFilter) throws Exception;
+    public int getPages(int intRegsPerPag, ArrayList<FilterBeanHelper> alFilter) throws Exception;
 
-    public int getCount(ArrayList<FilterBeanHelper> hmFilter) throws Exception;
+    public int getCount(ArrayList<FilterBeanHelper> alFilter) throws Exception;
 
-    public ArrayList<GenericBeanImplementation> getPage(int intRegsPerPag, int intPage, ArrayList<FilterBeanHelper> hmFilter, HashMap<String, String> hmOrder) throws Exception;
+    public ArrayList<GenericBeanImplementation> getPage(int intRegsPerPag, int intPage, ArrayList<FilterBeanHelper> alFilter, HashMap<String, String> hmOrder) throws Exception;
 
     public GenericBeanImplementation get(GenericBeanImplementation oBean, Integer expand) throws Exception;
 }

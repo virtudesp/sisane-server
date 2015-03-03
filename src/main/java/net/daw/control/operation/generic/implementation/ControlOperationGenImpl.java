@@ -190,27 +190,18 @@ public class ControlOperationGenImpl implements ControlOperationInterface {
         return result;
     }
 
-    @Override
-    public String updateOne(HttpServletRequest request) throws Exception {
-        String result = "";
-        if (perm) {
-            int id = Integer.parseInt(request.getParameter("id"));
-            String tabla = request.getParameter("ob");
-            String campo = request.getParameter("campo");
-            String valor = request.getParameter("valor");
 
-            result = oService.updateone(id, tabla, campo, valor);
-        } else {
-            result = "error";
-        }
-        return result;
-    }
 
     protected void closeDB() throws SQLException, Exception {
         if (connection != null) {
             connection.close();
         }
         DataConnectionSource.disposeConnection();
+    }
+
+    @Override
+    public String updateOne(HttpServletRequest request) throws Exception {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

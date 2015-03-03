@@ -31,6 +31,7 @@ import net.daw.data.specific.implementation.MysqlDataSpImpl;
 import net.daw.helper.statics.AppConfigurationHelper;
 import net.daw.helper.statics.ExceptionBooster;
 import net.daw.helper.statics.FilterBeanHelper;
+import net.daw.helper.statics.SqlBuilder;
 
 public class ProductoDaoSpcImpl implements ViewDaoInterface<ProductoBeanGenSpImpl>, TableDaoInterface<ProductoBeanGenSpImpl>, MetaDaoInterface {
 
@@ -42,7 +43,7 @@ public class ProductoDaoSpcImpl implements ViewDaoInterface<ProductoBeanGenSpImp
     public ProductoDaoSpcImpl(Connection oConexion) throws Exception {
         try {
             strDataOrigin = "select * from producto where 1=1 ";
-            strTableOrigin="producto";
+            strTableOrigin = "producto";
             oConnection = oConexion;
             oMysql = new MysqlDataSpImpl(oConnection);
         } catch (Exception ex) {
@@ -51,43 +52,25 @@ public class ProductoDaoSpcImpl implements ViewDaoInterface<ProductoBeanGenSpImp
     }
 
     @Override
-    public int getPages(int intRegsPerPag, ArrayList<FilterBeanHelper> hmFilter) throws Exception {
-        
-        int pages = 0;
+    public ArrayList<String> getColumnsNames() throws Exception {
+        ArrayList<String> alColumns = null;
         try {
-            pages = oMysql.getNewPages(strDataOrigin, intRegsPerPag);
+            alColumns = oMysql.getColumnsName(strDataOrigin);
         } catch (Exception ex) {
-            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPages ERROR: " + ex.getMessage()));
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getColumnsNames ERROR: " + ex.getMessage()));
         }
-        return pages;
+        return alColumns;
     }
 
     @Override
-    public int getCount(ArrayList<FilterBeanHelper> hmFilter) throws Exception {
-        int pages = 0;
+    public ArrayList<String> getPrettyColumnsNames() throws Exception {
+        ArrayList<String> alColumns = null;
         try {
-            pages = oMysql.getNewCount(strDataOrigin);
+            alColumns = oMysql.getPrettyColumns(strDataOrigin);
         } catch (Exception ex) {
-            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getCount ERROR: " + ex.getMessage()));
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPrettyColumnsNames ERROR: " + ex.getMessage()));
         }
-        return pages;
-    }
-
-    @Override
-    public ArrayList<ProductoBeanGenSpImpl> getPage(int intRegsPerPag, int intPage, ArrayList<FilterBeanHelper> hmFilter, HashMap<String, String> hmOrder) throws Exception {
-        ArrayList<Integer> arrId;
-        ArrayList<ProductoBeanGenSpImpl> arrProducto = new ArrayList<>();
-        try {
-            arrId = oMysql.getNewPage(strDataOrigin, intRegsPerPag, intPage);
-            Iterator<Integer> iterador = arrId.listIterator();
-            while (iterador.hasNext()) {
-                ProductoBeanGenSpImpl oProductoBean = new ProductoBeanGenSpImpl(iterador.next());
-                arrProducto.add(this.get(oProductoBean, AppConfigurationHelper.getJsonDepth()));
-            }
-        } catch (Exception ex) {
-            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPage ERROR: " + ex.getMessage()));
-        }
-        return arrProducto;
+        return alColumns;
     }
 
     @Override
@@ -112,12 +95,11 @@ public class ProductoDaoSpcImpl implements ViewDaoInterface<ProductoBeanGenSpImp
 //                        oTipoproducto = oTipoproductoDAO.get(oTipoproducto, AppConfigurationHelper.getJsonDepth());
 //                        oProductoBean.setObj_tipoproducto(oTipoproducto);
 //                        
-//                        ProveedorBeanGenSpImpl oProveedor = new ProveedorBeanGenSpImpl();
-//                        oProveedor.setId(Integer.parseInt(oMysql.getNewOne(strDataOrigin, "id_proveedor", oProductoBean.getId())));
-//                        ProveedorDaoSpcImpl oProveedorDAO = new ProveedorDaoSpcImpl("proveedor", oConnection);
-//                        oProveedor = oProveedorDAO.get(oProveedor, AppConfigurationHelper.getJsonDepth());
-//                        oProductoBean.setObj_proveedor(oProveedor);
-                        
+                        ProveedorBeanGenSpImpl oProveedor = new ProveedorBeanGenSpImpl();
+                        oProveedor.setId(Integer.parseInt(oMysql.getNewOne(strDataOrigin, "id_proveedor", oProductoBean.getId())));
+                        ProveedorDaoSpcImpl oProveedorDAO = new ProveedorDaoSpcImpl(oConnection);
+                        oProveedor = oProveedorDAO.get(oProveedor, AppConfigurationHelper.getJsonDepth());
+                        oProductoBean.setObj_proveedor(oProveedor);
                         oProductoBean.setPath(oMysql.getNewOne(strDataOrigin, "path", oProductoBean.getId()));
                     }
                 }
@@ -128,6 +110,49 @@ public class ProductoDaoSpcImpl implements ViewDaoInterface<ProductoBeanGenSpImp
             oProductoBean.setId(0);
         }
         return oProductoBean;
+    }
+
+    @Override
+    public int getPages(int intRegsPerPag, ArrayList<FilterBeanHelper> alFilter) throws Exception {
+        strDataOrigin += SqlBuilder.buildSqlWhere(alFilter);
+        int pages = 0;
+        try {
+            pages = oMysql.getNewPages(strDataOrigin, intRegsPerPag);
+        } catch (Exception ex) {
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPages ERROR: " + ex.getMessage()));
+        }
+        return pages;
+    }
+
+    @Override
+    public int getCount(ArrayList<FilterBeanHelper> alFilter) throws Exception {
+        strDataOrigin += SqlBuilder.buildSqlWhere(alFilter);
+        int pages = 0;
+        try {
+            pages = oMysql.getNewCount(strDataOrigin);
+        } catch (Exception ex) {
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getCount ERROR: " + ex.getMessage()));
+        }
+        return pages;
+    }
+
+    @Override
+    public ArrayList<ProductoBeanGenSpImpl> getPage(int intRegsPerPag, int intPage, ArrayList<FilterBeanHelper> alFilter, HashMap<String, String> hmOrder) throws Exception {             
+        strDataOrigin += SqlBuilder.buildSqlWhere(alFilter);
+        strDataOrigin += SqlBuilder.buildSqlOrder(hmOrder);        
+        ArrayList<Integer> arrId;
+        ArrayList<ProductoBeanGenSpImpl> arrProducto = new ArrayList<>();
+        try {
+            arrId = oMysql.getNewPage(strDataOrigin, intRegsPerPag, intPage);
+            Iterator<Integer> iterador = arrId.listIterator();
+            while (iterador.hasNext()) {
+                ProductoBeanGenSpImpl oProductoBean = new ProductoBeanGenSpImpl(iterador.next());
+                arrProducto.add(this.get(oProductoBean, AppConfigurationHelper.getJsonDepth()));
+            }
+        } catch (Exception ex) {
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPage ERROR: " + ex.getMessage()));
+        }
+        return arrProducto;
     }
 
     @Override
@@ -157,33 +182,6 @@ public class ProductoDaoSpcImpl implements ViewDaoInterface<ProductoBeanGenSpImp
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":remove ERROR: " + ex.getMessage()));
         }
         return result;
-    }
-
-    @Override
-    public ArrayList<String> getColumnsNames() throws Exception {
-        ArrayList<String> alColumns = null;
-        try {
-            alColumns = oMysql.getColumnsName(strDataOrigin);
-        } catch (Exception ex) {
-            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getColumnsNames ERROR: " + ex.getMessage()));
-        }
-        return alColumns;
-    }
-
-    @Override
-    public ArrayList<String> getPrettyColumnsNames() throws Exception {
-        ArrayList<String> alColumns = null;
-        try {
-            alColumns = oMysql.getPrettyColumns(strDataOrigin);
-        } catch (Exception ex) {
-            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPrettyColumnsNames ERROR: " + ex.getMessage()));
-        }
-        return alColumns;
-    }
-
-    @Override
-    public int updateOne(int intId, String strTabla, String strCampo, String strValor) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

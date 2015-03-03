@@ -176,10 +176,7 @@ public class ActividadDaoSpcImpl implements ViewDaoInterface<ActividadBeanGenSpI
         return alColumns;
     }
 
-    @Override
-    public int updateOne(int intId, String strTabla, String strCampo, String strValor) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+
 
     
     

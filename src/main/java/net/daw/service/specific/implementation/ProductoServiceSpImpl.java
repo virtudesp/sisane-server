@@ -35,21 +35,23 @@ import net.daw.helper.statics.ExceptionBooster;
 import net.daw.helper.statics.FilterBeanHelper;
 import net.daw.helper.statics.ParameterCook;
 import net.daw.service.publicinterface.MetaServiceInterface;
+import net.daw.service.publicinterface.TableServiceInterface;
+import net.daw.service.publicinterface.ViewServiceInterface;
 
-public class ProductoServiceSpImpl implements MetaServiceInterface {
+public class ProductoServiceSpImpl implements  TableServiceInterface, ViewServiceInterface, MetaServiceInterface {
 
-    private ConnectionInterface DataConnectionSource = null;
     private Connection oConnection = null;
-    protected String strObjectName = null;
 
-    public ProductoServiceSpImpl(HttpServletRequest request) throws Exception {
-        DataConnectionSource = new BoneConnectionPoolImpl();
-        oConnection = DataConnectionSource.newConnection();
-        strObjectName = ParameterCook.prepareCamelCaseObject(request);
+    public ProductoServiceSpImpl() throws Exception {
+        try {
+            oConnection = new BoneConnectionPoolImpl().newConnection();
+        } catch (Exception ex) {
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":constructor ERROR: " + ex.getMessage()));
+        }
     }
 
     public String remove(HttpServletRequest request) throws Exception {
-        Integer id=ParameterCook.prepareId(request);
+        Integer id = ParameterCook.prepareId(request);
         String resultado = null;
         try {
             oConnection.setAutoCommit(false);
@@ -70,7 +72,7 @@ public class ProductoServiceSpImpl implements MetaServiceInterface {
     }
 
     public String set(HttpServletRequest request) throws Exception {
-        String jason=ParameterCook.prepareJson(request);
+        String jason = ParameterCook.prepareJson(request);
         String resultado = null;
         try {
             oConnection.setAutoCommit(false);
@@ -272,6 +274,46 @@ public class ProductoServiceSpImpl implements MetaServiceInterface {
 
     @Override
     public void setpojo(String pojo) throws Exception {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String remove(Integer id) throws Exception {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String set(String jason) throws Exception {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String get(Integer id) throws Exception {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String getpage(int intRegsPerPag, int intPage, ArrayList<FilterBeanHelper> alFilter, HashMap<String, String> hmOrder) throws Exception {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String getpages(int intRegsPerPag, ArrayList<FilterBeanHelper> alFilter) throws Exception {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String getcount(ArrayList<FilterBeanHelper> alFilter) throws Exception {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String getaggregateviewone(Integer id) throws Exception {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String getaggregateviewsome(int intRegsPerPag, int intPage, ArrayList<FilterBeanHelper> alFilter, HashMap<String, String> hmOrder) throws Exception {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

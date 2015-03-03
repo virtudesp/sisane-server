@@ -96,7 +96,7 @@ public class JsonControl extends HttpServlet {
                     //Method oMethodService = MetaServiceInterface.class.getMethod(ParameterCooker.prepareCamelCaseOperation(request));
 
                     String strClassName = "net.daw.service.specific.implementation." + ParameterCook.prepareCamelCaseObject(request) + "ServiceSpImpl";
-                    MetaServiceInterface oService = (MetaServiceInterface) Class.forName(strClassName).getDeclaredConstructor(HttpServletRequest.class).newInstance(request);
+                    MetaServiceInterface oService = (MetaServiceInterface) Class.forName(strClassName).getDeclaredConstructor().newInstance();
                     //MetaServiceInterface oService = (MetaServiceInterface) Class.forName("net.daw.control.service.generic.specific.implementation." + ParameterCooker.prepareCamelCaseObject(request) + "GenSpImpl").getDeclaredConstructor(HttpServletRequest.class).newInstance(request);
                     Method oMethodService = oService.getClass().getMethod(ParameterCook.prepareOperation(request),HttpServletRequest.class);
                     jsonResult = (String) oMethodService.invoke(oService,request);
