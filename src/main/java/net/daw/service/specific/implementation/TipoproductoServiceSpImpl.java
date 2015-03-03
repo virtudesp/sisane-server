@@ -61,7 +61,7 @@ public class TipoproductoServiceSpImpl implements TableServiceInterface, ViewSer
         String resultado = null;
         try {
             oConnection.setAutoCommit(false);
-            TipoproductoDaoSpcImpl oTipoproductoDAO = new TipoproductoDaoSpcImpl(strObjectName, oConnection);
+            TipoproductoDaoSpcImpl oTipoproductoDAO = new TipoproductoDaoSpcImpl(oConnection);
             TipoproductoBeanGenSpImpl oTipoproducto = new TipoproductoBeanGenSpImpl(id);
             Map<String, String> data = new HashMap<>();
             oTipoproductoDAO.remove(oTipoproducto);
@@ -82,7 +82,7 @@ public class TipoproductoServiceSpImpl implements TableServiceInterface, ViewSer
         String resultado = null;
         try {
             oConnection.setAutoCommit(false);
-            TipoproductoDaoSpcImpl oTipoproductoDAO = new TipoproductoDaoSpcImpl(strObjectName, oConnection);
+            TipoproductoDaoSpcImpl oTipoproductoDAO = new TipoproductoDaoSpcImpl(oConnection);
             TipoproductoBeanGenSpImpl oTipoproducto = new TipoproductoBeanGenSpImpl();
             Gson gson = new GsonBuilder().setDateFormat("dd/MM/yyyy").create();
             jason = EncodingUtilHelper.decodeURIComponent(jason);
@@ -105,7 +105,7 @@ public class TipoproductoServiceSpImpl implements TableServiceInterface, ViewSer
         String data = null;
         try {
             oConnection.setAutoCommit(false);
-            TipoproductoDaoSpcImpl oTipoproductoDAO = new TipoproductoDaoSpcImpl(strObjectName, oConnection);
+            TipoproductoDaoSpcImpl oTipoproductoDAO = new TipoproductoDaoSpcImpl(oConnection);
             TipoproductoBeanGenSpImpl oTipoproducto = new TipoproductoBeanGenSpImpl(id);
             oTipoproducto = oTipoproductoDAO.get(oTipoproducto, AppConfigurationHelper.getJsonDepth());
             GsonBuilder gsonBuilder = new GsonBuilder();
@@ -125,7 +125,7 @@ public class TipoproductoServiceSpImpl implements TableServiceInterface, ViewSer
         String data = null;
         try {
             oConnection.setAutoCommit(false);
-            TipoproductoDaoSpcImpl oTipoproductoDAO = new TipoproductoDaoSpcImpl(strObjectName, oConnection);
+            TipoproductoDaoSpcImpl oTipoproductoDAO = new TipoproductoDaoSpcImpl(oConnection);
             List<TipoproductoBeanGenSpImpl> oTipoproductos = oTipoproductoDAO.getPage(intRegsPerPag, intPage, alFilter, hmOrder);
             GsonBuilder gsonBuilder = new GsonBuilder();
             gsonBuilder.setDateFormat("dd/MM/yyyy");
@@ -145,7 +145,7 @@ public class TipoproductoServiceSpImpl implements TableServiceInterface, ViewSer
         String data = null;
         try {
             oConnection.setAutoCommit(false);
-            TipoproductoDaoSpcImpl oTipoproductoDAO = new TipoproductoDaoSpcImpl(strObjectName, oConnection);
+            TipoproductoDaoSpcImpl oTipoproductoDAO = new TipoproductoDaoSpcImpl(oConnection);
             int pages = oTipoproductoDAO.getPages(intRegsPerPag, alFilter);
             data = "{\"data\":\"" + Integer.toString(pages) + "\"}";
             oConnection.commit();
@@ -161,7 +161,7 @@ public class TipoproductoServiceSpImpl implements TableServiceInterface, ViewSer
         String data = null;
         try {
             oConnection.setAutoCommit(false);
-            TipoproductoDaoSpcImpl oTipoproductoDAO = new TipoproductoDaoSpcImpl(strObjectName, oConnection);
+            TipoproductoDaoSpcImpl oTipoproductoDAO = new TipoproductoDaoSpcImpl(oConnection);
             int registers = oTipoproductoDAO.getCount(alFilter);
             data = "{\"data\":\"" + Integer.toString(registers) + "\"}";
             oConnection.commit();
@@ -179,7 +179,7 @@ public class TipoproductoServiceSpImpl implements TableServiceInterface, ViewSer
         ArrayList<String> alColumns = null;
         try {
             oConnection.setAutoCommit(false);
-            TipoproductoDaoSpcImpl oTipoproductoDAO = new TipoproductoDaoSpcImpl(strObjectName, oConnection);
+            TipoproductoDaoSpcImpl oTipoproductoDAO = new TipoproductoDaoSpcImpl(oConnection);
             alColumns = oTipoproductoDAO.getPrettyColumnsNames();
             data = new Gson().toJson(alColumns);
             oConnection.commit();
@@ -196,7 +196,7 @@ public class TipoproductoServiceSpImpl implements TableServiceInterface, ViewSer
         try {
             oConnection.setAutoCommit(false);
             ArrayList<String> alColumns = null;
-            TipoproductoDaoSpcImpl oTipoproductoDAO = new TipoproductoDaoSpcImpl(strObjectName, oConnection);
+            TipoproductoDaoSpcImpl oTipoproductoDAO = new TipoproductoDaoSpcImpl(oConnection);
             alColumns = oTipoproductoDAO.getColumnsNames();
             data = new Gson().toJson(alColumns);
             oConnection.commit();
@@ -259,6 +259,5 @@ public class TipoproductoServiceSpImpl implements TableServiceInterface, ViewSer
         }
         return data;
     }
-
 
 }

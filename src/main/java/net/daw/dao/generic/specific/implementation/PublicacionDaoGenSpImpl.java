@@ -24,7 +24,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import net.daw.bean.generic.specific.implementation.AmistadBeanGenSpImpl;
-import net.daw.bean.generic.specific.implementation.DocumentoBeanGenSpImpl;
 import net.daw.bean.generic.specific.implementation.PublicacionBeanGenSpImpl;
 import net.daw.bean.generic.specific.implementation.UsuarioBeanGenSpImpl;
 import net.daw.dao.generic.implementation.TableDaoGenImpl;
@@ -38,37 +37,31 @@ import net.daw.helper.statics.FilterBeanHelper;
  */
 public class PublicacionDaoGenSpImpl extends TableDaoGenImpl<PublicacionBeanGenSpImpl> {
 
-    private String strTableName = null;
-    private String tabla = null;
-    private Connection oConnection = null;
-    
-    public PublicacionDaoGenSpImpl(String strObject, Connection pooledConnection) throws Exception {
-        super(strObject,  pooledConnection);
-        tabla = "publicacion";
-        strTableName = strObject;
-        oConnection = pooledConnection;
+    public PublicacionDaoGenSpImpl(Connection pooledConnection) throws Exception {
+        super(pooledConnection);
+
     }
 
     @Override
     public PublicacionBeanGenSpImpl get(PublicacionBeanGenSpImpl oPublicacionBean, Integer expand) throws Exception {
         if (oPublicacionBean.getId() > 0) {
             try {
-                if (!oMysql.existsOne(tabla, oPublicacionBean.getId())) {
+                if (!oMysql.existsOne(strTableOrigin, oPublicacionBean.getId())) {
                     oPublicacionBean.setId(0);
                 } else {
                     expand--;
                     if (expand > 0) {
-                        oPublicacionBean.setContenido(oMysql.getOne(tabla, "contenido", oPublicacionBean.getId()));
+                        oPublicacionBean.setContenido(oMysql.getOne(strTableOrigin, "contenido", oPublicacionBean.getId()));
 
                         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                        String dateInString = oMysql.getOne(tabla, "fechacreacion", oPublicacionBean.getId());         
-                        oPublicacionBean.setFechacreacion(formatter.parse(dateInString));   
-                        
-                        oPublicacionBean.setId_usuario(Integer.parseInt(oMysql.getOne(tabla, "id_usuario", oPublicacionBean.getId())));
+                        String dateInString = oMysql.getOne(strTableOrigin, "fechacreacion", oPublicacionBean.getId());
+                        oPublicacionBean.setFechacreacion(formatter.parse(dateInString));
+
+                        oPublicacionBean.setId_usuario(Integer.parseInt(oMysql.getOne(strTableOrigin, "id_usuario", oPublicacionBean.getId())));
 
                         UsuarioBeanGenSpImpl oUsuario = new UsuarioBeanGenSpImpl();
-                        oUsuario.setId(Integer.parseInt(oMysql.getOne(tabla, "id_usuario", oPublicacionBean.getId())));
-                        UsuarioDaoGenSpImpl oUsuarioDAO = new UsuarioDaoGenSpImpl("usuario", oConnection);
+                        oUsuario.setId(Integer.parseInt(oMysql.getOne(strTableOrigin, "id_usuario", oPublicacionBean.getId())));
+                        UsuarioDaoGenSpImpl oUsuarioDAO = new UsuarioDaoGenSpImpl(oConnection);
                         oUsuario = oUsuarioDAO.get(oUsuario, AppConfigurationHelper.getJsonDepth());
                         oUsuario.setPassword(null);
                         oPublicacionBean.setObj_usuario(oUsuario);
@@ -87,31 +80,29 @@ public class PublicacionDaoGenSpImpl extends TableDaoGenImpl<PublicacionBeanGenS
     public PublicacionBeanGenSpImpl set(PublicacionBeanGenSpImpl oPublicacionBean) throws Exception {
         try {
             Boolean isNew = false;
-            
+
             if (oPublicacionBean.getId() == 0) {
-                oPublicacionBean.setId(oMysql.insertOne(strTableName));
+                oPublicacionBean.setId(oMysql.insertOne(strTableOrigin));
                 isNew = true;
             }
-            
-            oMysql.updateOne(oPublicacionBean.getId(), strTableName, "contenido", oPublicacionBean.getContenido());
-            oMysql.updateOne(oPublicacionBean.getId(), strTableName, "id_usuario", oPublicacionBean.getId_usuario().toString());
-            
 
-            
+            oMysql.updateOne(oPublicacionBean.getId(), strTableOrigin, "contenido", oPublicacionBean.getContenido());
+            oMysql.updateOne(oPublicacionBean.getId(), strTableOrigin, "id_usuario", oPublicacionBean.getId_usuario().toString());
+
             if (isNew == false) {
-                oMysql.updateOne(oPublicacionBean.getId(), strTableName, "fechacreacion", oMysql.getOne(strTableName, "fechacreacion", oPublicacionBean.getId()));
+                oMysql.updateOne(oPublicacionBean.getId(), strTableOrigin, "fechacreacion", oMysql.getOne(strTableOrigin, "fechacreacion", oPublicacionBean.getId()));
             } else {
-                SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");      
-                Date newDate = new Date();       
+                SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                Date newDate = new Date();
                 String date = formatter.format(newDate);
-                oMysql.updateOne(oPublicacionBean.getId(), strTableName, "fechacreacion", date);
+                oMysql.updateOne(oPublicacionBean.getId(), strTableOrigin, "fechacreacion", date);
             }
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":set ERROR: " + ex.getMessage()));
         }
         return oPublicacionBean;
     }
-    
+
     public int getPagesComentarioAmigo(int id_usuario, int intRegsPerPag, ArrayList<FilterBeanHelper> hmFilter) throws Exception {
         int pages = 0;
         try {
@@ -121,7 +112,7 @@ public class PublicacionDaoGenSpImpl extends TableDaoGenImpl<PublicacionBeanGenS
         }
         return pages;
     }
-    
+
     public ArrayList<PublicacionBeanGenSpImpl> getPageComentarioAmigo(int id_usuario, int intRegsPerPag, int intPage, ArrayList<FilterBeanHelper> hmFilter, HashMap<String, String> hmOrder) throws Exception {
         ArrayList<Integer> arrId;
         ArrayList<PublicacionBeanGenSpImpl> arrPublicacion = new ArrayList<>();
@@ -137,12 +128,12 @@ public class PublicacionDaoGenSpImpl extends TableDaoGenImpl<PublicacionBeanGenS
         }
         return arrPublicacion;
     }
-    
+
     public AmistadBeanGenSpImpl agregarAmigo(AmistadBeanGenSpImpl oAmigoBean) throws Exception {
         try {
 
             oMysql.agregarAmigo(oAmigoBean.getId_usuario_1(), oAmigoBean.getId_usuario_2());
-        
+
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":set ERROR: " + ex.getMessage()));
         }

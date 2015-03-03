@@ -21,14 +21,14 @@ import net.daw.bean.generic.implementation.BeanGenImpl;
 import net.daw.bean.publicinterface.BeanInterface;
 import com.google.gson.annotations.Expose;
 import java.util.Date;
-import net.daw.helper.annotations.FieldMetaInformation;
-import net.daw.helper.annotations.SourceMetaInformation;
+import net.daw.helper.annotations.MethodMetaInformation;
+import net.daw.helper.annotations.TableSourceMetaInformation;
 
 /**
  *
  * @author al037805
  */
-@SourceMetaInformation(
+@TableSourceMetaInformation(
         TableName = "actividad"
 )
 public class ActividadBeanGenSpImpl extends BeanGenImpl implements BeanInterface {
@@ -40,26 +40,26 @@ public class ActividadBeanGenSpImpl extends BeanGenImpl implements BeanInterface
         super(id);
     }
 
-    @FieldMetaInformation(
+    @MethodMetaInformation(
             ShortName = "Enunciado"
     )
     @Expose
     private String enunciado = "";
     //private String presentacion = "";
 
-    @FieldMetaInformation(
+    @MethodMetaInformation(
             ShortName = "Fecha"
     )
     @Expose
     private Date fecha = new Date();
 
-    @FieldMetaInformation(
+    @MethodMetaInformation(
             ShortName = "Evaluación"
     )
     @Expose
     private Integer evaluacion = 0;
 
-    @FieldMetaInformation(
+    @MethodMetaInformation(
             ShortName = "Activo"
     )
     @Expose

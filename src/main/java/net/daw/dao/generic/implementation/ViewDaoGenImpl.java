@@ -33,10 +33,10 @@ import net.daw.helper.statics.AppConfigurationHelper;
 import net.daw.helper.statics.ExceptionBooster;
 import net.daw.helper.statics.FilterBeanHelper;
 
-public class ViewDaoGenImpl<TIPO_OBJETO> extends MetaDaoGenImpl<TIPO_OBJETO> implements ViewDaoInterface<TIPO_OBJETO>, MetaDaoInterface {
+public class ViewDaoGenImpl<BEAN_CLASS> extends MetaDaoGenImpl<BEAN_CLASS> implements ViewDaoInterface<BEAN_CLASS>, MetaDaoInterface<BEAN_CLASS> {
 
-    public ViewDaoGenImpl(String view, Connection pooledConnection) throws Exception {
-        super(view, pooledConnection);
+    public ViewDaoGenImpl(Connection pooledConnection) throws Exception {
+        super(pooledConnection);
     }
 
     @Override
@@ -62,18 +62,18 @@ public class ViewDaoGenImpl<TIPO_OBJETO> extends MetaDaoGenImpl<TIPO_OBJETO> imp
     }
 
     @Override
-    public ArrayList<TIPO_OBJETO> getPage(int intRegsPerPag, int intPage, ArrayList<FilterBeanHelper> hmFilter, HashMap<String, String> hmOrder) throws Exception {
-        Class<TIPO_OBJETO> tipo = (Class<TIPO_OBJETO>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
+    public ArrayList<BEAN_CLASS> getPage(int intRegsPerPag, int intPage, ArrayList<FilterBeanHelper> hmFilter, HashMap<String, String> hmOrder) throws Exception {
+        Class<BEAN_CLASS> tipo = (Class<BEAN_CLASS>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
         Method metodo_setId = tipo.getMethod("setId", Integer.class);
         ArrayList<Integer> arrId;
-        ArrayList<TIPO_OBJETO> arrCliente = new ArrayList<>();
+        ArrayList<BEAN_CLASS> arrCliente = new ArrayList<>();
         try {
             arrId = oMysql.getPage(strView, intRegsPerPag, intPage, hmFilter, hmOrder);
             Iterator<Integer> iterador = arrId.listIterator();
             while (iterador.hasNext()) {
                 Object oBean = Class.forName(tipo.getName()).newInstance();
                 metodo_setId.invoke(oBean, iterador.next());
-                arrCliente.add(this.get((TIPO_OBJETO) oBean, AppConfigurationHelper.getJsonDepth()));
+                arrCliente.add(this.get((BEAN_CLASS) oBean, AppConfigurationHelper.getJsonDepth()));
             }
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPage ERROR: " + ex.getMessage()));
@@ -82,7 +82,7 @@ public class ViewDaoGenImpl<TIPO_OBJETO> extends MetaDaoGenImpl<TIPO_OBJETO> imp
 
     }
 
-    private void parseValue(TIPO_OBJETO oBean, Method method, String strTipoParamMetodoSet, String strValor) throws Exception {
+    private void parseValue(BEAN_CLASS oBean, Method method, String strTipoParamMetodoSet, String strValor) throws Exception {
         try {
             switch (strTipoParamMetodoSet) {
                 case "java.lang.Double":
@@ -111,7 +111,7 @@ public class ViewDaoGenImpl<TIPO_OBJETO> extends MetaDaoGenImpl<TIPO_OBJETO> imp
         }
     }
 
-    private TIPO_OBJETO fillForeign(TIPO_OBJETO oBean, Class<TIPO_OBJETO> tipo) throws Exception {
+    private BEAN_CLASS fillForeign(BEAN_CLASS oBean, Class<BEAN_CLASS> tipo) throws Exception {
         try {
             for (Method method : tipo.getMethods()) {
                 if (method.getName().length() >= 5) { //los campos como minimo han de tener dos caracteres + el get o el set = 5 caracteres
@@ -169,7 +169,7 @@ public class ViewDaoGenImpl<TIPO_OBJETO> extends MetaDaoGenImpl<TIPO_OBJETO> imp
         return oBean;
     }
 
-    private TIPO_OBJETO fill(TIPO_OBJETO oBean, Class<TIPO_OBJETO> tipo, Method metodo_getId) throws Exception {
+    private BEAN_CLASS fill(BEAN_CLASS oBean, Class<BEAN_CLASS> tipo, Method metodo_getId) throws Exception {
         try {
             for (Method method : tipo.getMethods()) {
                 if (!method.getName().substring(3).equalsIgnoreCase("id")) {
@@ -207,9 +207,9 @@ public class ViewDaoGenImpl<TIPO_OBJETO> extends MetaDaoGenImpl<TIPO_OBJETO> imp
     }
 
     @Override
-    public TIPO_OBJETO get(TIPO_OBJETO oBean, Integer expand) throws Exception {
+    public BEAN_CLASS get(BEAN_CLASS oBean, Integer expand) throws Exception {
         try {
-            Class<TIPO_OBJETO> tipo = (Class<TIPO_OBJETO>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
+            Class<BEAN_CLASS> tipo = (Class<BEAN_CLASS>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
             Method metodo_getId = tipo.getMethod("getId");
             Method metodo_setId = tipo.getMethod("setId", Integer.class);
             if ((Integer) metodo_getId.invoke(oBean) > 0) {

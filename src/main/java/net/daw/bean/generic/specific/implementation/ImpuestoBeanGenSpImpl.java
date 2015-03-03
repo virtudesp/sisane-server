@@ -19,12 +19,16 @@ package net.daw.bean.generic.specific.implementation;
 
 import net.daw.bean.generic.implementation.BeanGenImpl;
 import net.daw.bean.publicinterface.BeanInterface;
+import net.daw.helper.annotations.TableSourceMetaInformation;
 
+@TableSourceMetaInformation(
+        TableName = "impuesto",
+        Description = "Impuestos"
+)
 public class ImpuestoBeanGenSpImpl extends BeanGenImpl implements BeanInterface {
-
+    
     private String nombre;
     private String valor;
-
 
     public ImpuestoBeanGenSpImpl() {
     }
@@ -49,7 +53,4 @@ public class ImpuestoBeanGenSpImpl extends BeanGenImpl implements BeanInterface 
         this.valor = valor;
     }
 
-    
-    
-    
 }

@@ -21,19 +21,15 @@ import net.daw.dao.generic.implementation.TableDaoGenImpl;
 import java.sql.Connection;
 import java.sql.SQLException;
 import net.daw.bean.generic.specific.implementation.ObjetoBeanGenSpImpl;
-import net.daw.dao.publicinterface.MetaDaoInterface;
-import net.daw.dao.publicinterface.TableDaoInterface;
-import net.daw.dao.publicinterface.ViewDaoInterface;
 import net.daw.helper.statics.ExceptionBooster;
 
-public class ObjetoDaoGenSpImpl extends TableDaoGenImpl<ObjetoBeanGenSpImpl> implements TableDaoInterface<ObjetoBeanGenSpImpl>, ViewDaoInterface<ObjetoBeanGenSpImpl>, MetaDaoInterface {
+public class ObjetoDaoGenSpImpl extends TableDaoGenImpl<ObjetoBeanGenSpImpl> {
 
-    protected Connection oConnection = null;
-    protected String strObjectName = null;
+ 
 
-    public ObjetoDaoGenSpImpl(String strObject, Connection pooledConnection) throws Exception {
-        super(strObject, pooledConnection);
-        strObjectName = strObject;
+    public ObjetoDaoGenSpImpl(  Connection pooledConnection) throws Exception {
+        super( pooledConnection);
+        
         oConnection = pooledConnection;
 
     }
@@ -42,7 +38,7 @@ public class ObjetoDaoGenSpImpl extends TableDaoGenImpl<ObjetoBeanGenSpImpl> imp
         int id = 0;
         try {
             oConnection.setAutoCommit(false);
-            id = Integer.parseInt(oMysql.getId(strObjectName, "descripcion", oObjeto.getDescripcion()));
+            id = Integer.parseInt(oMysql.getId(strTableOrigin, "descripcion", oObjeto.getDescripcion()));
 
         } catch (Exception ex) {
             oConnection.rollback();

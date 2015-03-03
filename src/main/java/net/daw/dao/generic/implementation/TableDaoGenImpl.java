@@ -27,23 +27,20 @@ import java.text.SimpleDateFormat;
 import java.util.Locale;
 import net.daw.helper.statics.ExceptionBooster;
 
-public abstract class TableDaoGenImpl<TIPO_OBJETO> extends ViewDaoGenImpl<TIPO_OBJETO> implements TableDaoInterface<TIPO_OBJETO>, ViewDaoInterface<TIPO_OBJETO>, MetaDaoInterface {
-
-    protected final String strTabla;
-
-    public TableDaoGenImpl(String view, Connection pooledConnection) throws Exception {
-        super(view, pooledConnection);
-        strTabla = view;
+public abstract class TableDaoGenImpl<BEAN_CLASS> extends ViewDaoGenImpl<BEAN_CLASS> implements TableDaoInterface<BEAN_CLASS>, ViewDaoInterface<BEAN_CLASS>, MetaDaoInterface<BEAN_CLASS> {
+   
+    public TableDaoGenImpl(Connection pooledConnection) throws Exception {
+        super(pooledConnection);       
     }
-
+    
     @Override
-    public TIPO_OBJETO set(TIPO_OBJETO oBean) throws Exception {
-        Class<TIPO_OBJETO> tipo = (Class<TIPO_OBJETO>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
+    public BEAN_CLASS set(BEAN_CLASS oBean) throws Exception {
+        Class<BEAN_CLASS> tipo = (Class<BEAN_CLASS>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
         Method metodo_getId = tipo.getMethod("getId");
         Method metodo_setId = tipo.getMethod("setId", Integer.class);
         try {
             if ((Integer) metodo_getId.invoke(oBean) == 0) {
-                metodo_setId.invoke(oBean, oMysql.insertOne(strTabla));
+                metodo_setId.invoke(oBean, oMysql.insertOne(strTableOrigin));
             }
             for (Method method : tipo.getMethods()) {
                 if (method.getName().length() >= 5) { //los campos como minimo han de tener dos caracteres + el get o el set = 5 caracteres
@@ -67,7 +64,7 @@ public abstract class TableDaoGenImpl<TIPO_OBJETO> extends ViewDaoGenImpl<TIPO_O
                                             break;
                                     }
                                     String strCampo = method.getName().substring(3).toLowerCase(Locale.ENGLISH);
-                                    oMysql.updateOne((Integer) metodo_getId.invoke(oBean), strTabla, strCampo, value);
+                                    oMysql.updateOne((Integer) metodo_getId.invoke(oBean), strTableOrigin, strCampo, value);
                                 }
                             }
                         }
@@ -81,12 +78,12 @@ public abstract class TableDaoGenImpl<TIPO_OBJETO> extends ViewDaoGenImpl<TIPO_O
     }
 
     @Override
-    public int remove(TIPO_OBJETO oBean) throws Exception {
+    public int remove(BEAN_CLASS oBean) throws Exception {
         int result = 0;
-        Class<TIPO_OBJETO> tipo = (Class<TIPO_OBJETO>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
+        Class<BEAN_CLASS> tipo = (Class<BEAN_CLASS>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
         Method metodo_getId = tipo.getMethod("getId");
         try {
-            result = oMysql.removeOne((Integer) metodo_getId.invoke(oBean), strTabla);
+            result = oMysql.removeOne((Integer) metodo_getId.invoke(oBean), strTableOrigin);
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":remove ERROR: " + ex.getMessage()));
         }

@@ -23,9 +23,8 @@ import net.daw.bean.generic.specific.implementation.TipotareaBeanGenSpImpl;
 
 public class TipotareaDaoGenSpImpl extends TableDaoGenImpl<TipotareaBeanGenSpImpl> {
 
-   public TipotareaDaoGenSpImpl(String strFuente, Connection pooledConnection) throws Exception {
-        super(strFuente,  pooledConnection);
+    public TipotareaDaoGenSpImpl(Connection pooledConnection) throws Exception {
+        super(pooledConnection);
     }
-
 
 }

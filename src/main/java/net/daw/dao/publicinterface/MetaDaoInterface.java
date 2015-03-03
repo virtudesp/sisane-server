@@ -19,7 +19,7 @@ package net.daw.dao.publicinterface;
 
 import java.util.ArrayList;
 
-public interface MetaDaoInterface {
+public interface MetaDaoInterface<BEAN_CLASS> {
 
     public ArrayList<String> getColumnsNames() throws Exception;
 

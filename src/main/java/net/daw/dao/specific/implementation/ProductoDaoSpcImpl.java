@@ -28,6 +28,8 @@ import net.daw.dao.publicinterface.MetaDaoInterface;
 import net.daw.dao.publicinterface.TableDaoInterface;
 import net.daw.dao.publicinterface.ViewDaoInterface;
 import net.daw.data.specific.implementation.MysqlDataSpImpl;
+import net.daw.helper.annotations.SelectSourceMetaInformation;
+import net.daw.helper.annotations.TableSourceMetaInformation;
 import net.daw.helper.statics.AppConfigurationHelper;
 import net.daw.helper.statics.ExceptionBooster;
 import net.daw.helper.statics.FilterBeanHelper;
@@ -42,8 +44,22 @@ public class ProductoDaoSpcImpl implements ViewDaoInterface<ProductoBeanGenSpImp
 
     public ProductoDaoSpcImpl(Connection oConexion) throws Exception {
         try {
-            strDataOrigin = "select * from producto where 1=1 ";
-            strTableOrigin = "producto";
+            Class<ProductoBeanGenSpImpl> classProductoBeanGenSpImpl = ProductoBeanGenSpImpl.class;
+            if (classProductoBeanGenSpImpl.isAnnotationPresent(TableSourceMetaInformation.class)) {
+                TableSourceMetaInformation annotationTableSourceMetaInformation = classProductoBeanGenSpImpl.getAnnotation(TableSourceMetaInformation.class);
+                //TableSourceMetaInformation annotationTableSourceMetaInformation = (TableSourceMetaInformation) annotation;
+                strTableOrigin = annotationTableSourceMetaInformation.TableName();
+                strDataOrigin = "select * from " + strTableOrigin + " where 1=1 ";
+            }
+            if (classProductoBeanGenSpImpl.isAnnotationPresent(SelectSourceMetaInformation.class)) {
+                SelectSourceMetaInformation annotationSelectSourceMetaInformation = classProductoBeanGenSpImpl.getAnnotation(SelectSourceMetaInformation.class);
+                //SelectSourceMetaInformation annotationSelectSourceMetaInformation = (SelectSourceMetaInformation) annotation;
+                strTableOrigin = null;
+                strDataOrigin = annotationSelectSourceMetaInformation.SqlSelection() + " where 1=1 ";
+            }
+            if (strDataOrigin.equals(null)) {
+                ExceptionBooster.boost(new Exception(this.getClass().getName() + ":constructor ERROR: " + classProductoBeanGenSpImpl.getName() + " Beans must be annotated by SelectSourceMetaInformation or TableSourceMetaInformation "));
+            }
             oConnection = oConexion;
             oMysql = new MysqlDataSpImpl(oConnection);
         } catch (Exception ex) {
@@ -55,7 +71,11 @@ public class ProductoDaoSpcImpl implements ViewDaoInterface<ProductoBeanGenSpImp
     public ArrayList<String> getColumnsNames() throws Exception {
         ArrayList<String> alColumns = null;
         try {
-            alColumns = oMysql.getColumnsName(strDataOrigin);
+            //if (!strTableOrigin.equals(null)) {
+                alColumns = oMysql.getColumnsName(strTableOrigin);
+            //} else {
+                ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getColumnsNames ERROR: Please, specify Table annotation in Bean"));
+            //}
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getColumnsNames ERROR: " + ex.getMessage()));
         }
@@ -66,7 +86,12 @@ public class ProductoDaoSpcImpl implements ViewDaoInterface<ProductoBeanGenSpImp
     public ArrayList<String> getPrettyColumnsNames() throws Exception {
         ArrayList<String> alColumns = null;
         try {
-            alColumns = oMysql.getPrettyColumns(strDataOrigin);
+            //if (!strTableOrigin.equals(null)) {
+                alColumns = oMysql.getPrettyColumns(strTableOrigin);
+            //} else {
+                ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPrettyColumnsNames ERROR: Please, specify Table annotation in Bean"));
+            //}
+
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPrettyColumnsNames ERROR: " + ex.getMessage()));
         }
@@ -75,40 +100,44 @@ public class ProductoDaoSpcImpl implements ViewDaoInterface<ProductoBeanGenSpImp
 
     @Override
     public ProductoBeanGenSpImpl get(ProductoBeanGenSpImpl oProductoBean, Integer expand) throws Exception {
-        if (oProductoBean.getId() > 0) {
-            try {
-                if (!oMysql.existsNewOne(strDataOrigin, oProductoBean.getId())) {
-                    oProductoBean.setId(0);
-                } else {
-                    expand--;
-                    if (expand > 0) {
-                        oProductoBean.setCodigo(oMysql.getNewOne(strDataOrigin, "codigo", oProductoBean.getId()));
-                        oProductoBean.setDescripcion(oMysql.getNewOne(strDataOrigin, "descripcion", oProductoBean.getId()));
-                        oProductoBean.setPrecio(Double.parseDouble(oMysql.getNewOne(strDataOrigin, "precio", oProductoBean.getId())));
+        //if (!strDataOrigin.equals(null)) {
+            if (oProductoBean.getId() > 0) {
+                try {
+                    if (!oMysql.existsNewOne(strDataOrigin, oProductoBean.getId())) {
+                        oProductoBean.setId(0);
+                    } else {
+                        expand--;
+                        if (expand > 0) {
+                            oProductoBean.setCodigo(oMysql.getNewOne(strDataOrigin, "codigo", oProductoBean.getId()));
+                            oProductoBean.setDescripcion(oMysql.getNewOne(strDataOrigin, "descripcion", oProductoBean.getId()));
+                            oProductoBean.setPrecio(Double.parseDouble(oMysql.getNewOne(strDataOrigin, "precio", oProductoBean.getId())));
 
-//                        oProductoBean.setId_tipoproducto(Integer.parseInt(oMysql.getNewOne(strDataOrigin, "id_tipoproducto", oProductoBean.getId())));
-//                        oProductoBean.setId_proveedor(Integer.parseInt(oMysql.getNewOne(strDataOrigin, "id_proveedor", oProductoBean.getId())));
-//                        
-//                        TipoproductoBeanGenSpImpl oTipoproducto = new TipoproductoBeanGenSpImpl();
-//                        oTipoproducto.setId(Integer.parseInt(oMysql.getNewOne(strDataOrigin, "id_tipoproducto", oProductoBean.getId())));
-//                        TipoproductoDaoSpcImpl oTipoproductoDAO = new TipoproductoDaoSpcImpl("tipoproducto", oConnection);
-//                        oTipoproducto = oTipoproductoDAO.get(oTipoproducto, AppConfigurationHelper.getJsonDepth());
-//                        oProductoBean.setObj_tipoproducto(oTipoproducto);
-//                        
-                        ProveedorBeanGenSpImpl oProveedor = new ProveedorBeanGenSpImpl();
-                        oProveedor.setId(Integer.parseInt(oMysql.getNewOne(strDataOrigin, "id_proveedor", oProductoBean.getId())));
-                        ProveedorDaoSpcImpl oProveedorDAO = new ProveedorDaoSpcImpl(oConnection);
-                        oProveedor = oProveedorDAO.get(oProveedor, AppConfigurationHelper.getJsonDepth());
-                        oProductoBean.setObj_proveedor(oProveedor);
-                        oProductoBean.setPath(oMysql.getNewOne(strDataOrigin, "path", oProductoBean.getId()));
+                            oProductoBean.setId_tipoproducto(Integer.parseInt(oMysql.getNewOne(strDataOrigin, "id_tipoproducto", oProductoBean.getId())));
+                            oProductoBean.setId_proveedor(Integer.parseInt(oMysql.getNewOne(strDataOrigin, "id_proveedor", oProductoBean.getId())));
+
+                            TipoproductoBeanGenSpImpl oTipoproducto = new TipoproductoBeanGenSpImpl();
+                            oTipoproducto.setId(Integer.parseInt(oMysql.getNewOne(strDataOrigin, "id_tipoproducto", oProductoBean.getId())));
+                            TipoproductoDaoSpcImpl oTipoproductoDAO = new TipoproductoDaoSpcImpl(oConnection);
+                            oTipoproducto = oTipoproductoDAO.get(oTipoproducto, AppConfigurationHelper.getJsonDepth());
+                            oProductoBean.setObj_tipoproducto(oTipoproducto);
+
+                            ProveedorBeanGenSpImpl oProveedor = new ProveedorBeanGenSpImpl();
+                            oProveedor.setId(Integer.parseInt(oMysql.getNewOne(strDataOrigin, "id_proveedor", oProductoBean.getId())));
+                            ProveedorDaoSpcImpl oProveedorDAO = new ProveedorDaoSpcImpl(oConnection);
+                            oProveedor = oProveedorDAO.get(oProveedor, AppConfigurationHelper.getJsonDepth());
+                            oProductoBean.setObj_proveedor(oProveedor);
+                            oProductoBean.setPath(oMysql.getNewOne(strDataOrigin, "path", oProductoBean.getId()));
+                        }
                     }
+                } catch (Exception ex) {
+                    ExceptionBooster.boost(new Exception(this.getClass().getName() + ":get ERROR: " + ex.getMessage()));
                 }
-            } catch (Exception ex) {
-                ExceptionBooster.boost(new Exception(this.getClass().getName() + ":get ERROR: " + ex.getMessage()));
+            } else {
+                oProductoBean.setId(0);
             }
-        } else {
-            oProductoBean.setId(0);
-        }
+        //} else {
+        //    ExceptionBooster.boost(new Exception(this.getClass().getName() + ":get ERROR: strDataOrigin not valid"));
+        //}
         return oProductoBean;
     }
 
@@ -137,9 +166,9 @@ public class ProductoDaoSpcImpl implements ViewDaoInterface<ProductoBeanGenSpImp
     }
 
     @Override
-    public ArrayList<ProductoBeanGenSpImpl> getPage(int intRegsPerPag, int intPage, ArrayList<FilterBeanHelper> alFilter, HashMap<String, String> hmOrder) throws Exception {             
+    public ArrayList<ProductoBeanGenSpImpl> getPage(int intRegsPerPag, int intPage, ArrayList<FilterBeanHelper> alFilter, HashMap<String, String> hmOrder) throws Exception {
         strDataOrigin += SqlBuilder.buildSqlWhere(alFilter);
-        strDataOrigin += SqlBuilder.buildSqlOrder(hmOrder);        
+        strDataOrigin += SqlBuilder.buildSqlOrder(hmOrder);
         ArrayList<Integer> arrId;
         ArrayList<ProductoBeanGenSpImpl> arrProducto = new ArrayList<>();
         try {

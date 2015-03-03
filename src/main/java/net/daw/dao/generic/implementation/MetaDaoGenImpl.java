@@ -17,24 +17,42 @@
  */
 package net.daw.dao.generic.implementation;
 
+import java.lang.reflect.ParameterizedType;
 import net.daw.dao.publicinterface.MetaDaoInterface;
 import java.sql.Connection;
 import java.util.ArrayList;
 import net.daw.data.specific.implementation.MysqlDataSpImpl;
+import net.daw.helper.annotations.SelectSourceMetaInformation;
+import net.daw.helper.annotations.TableSourceMetaInformation;
 import net.daw.helper.statics.ExceptionBooster;
 
-public abstract class MetaDaoGenImpl<TIPO_OBJETO> implements MetaDaoInterface {
+public abstract class MetaDaoGenImpl<BEAN_CLASS> implements MetaDaoInterface<BEAN_CLASS> {
 
+    protected String strDataOrigin = null;
+    protected String strTableOrigin = null;
     protected MysqlDataSpImpl oMysql = null;
-    protected String strView = null;
+    protected Connection oConnection = null;
 
-    protected Connection connection = null;
-
-    public MetaDaoGenImpl(String view, Connection pooledConnection) throws Exception {
+    public MetaDaoGenImpl(Connection pooledConnection) throws Exception {
         try {
-            connection = pooledConnection;
-            strView = view;
-            oMysql = new MysqlDataSpImpl(connection);
+            Class<BEAN_CLASS> classBEAN = (Class<BEAN_CLASS>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
+            if (classBEAN.isAnnotationPresent(TableSourceMetaInformation.class)) {
+                TableSourceMetaInformation annotationTableSourceMetaInformation = classBEAN.getAnnotation(TableSourceMetaInformation.class);
+                //TableSourceMetaInformation annotationTableSourceMetaInformation = (TableSourceMetaInformation) annotation;
+                strTableOrigin = annotationTableSourceMetaInformation.TableName();
+                strDataOrigin = "select * from " + strTableOrigin + " where 1=1 ";
+            }
+            if (classBEAN.isAnnotationPresent(SelectSourceMetaInformation.class)) {
+                SelectSourceMetaInformation annotationSelectSourceMetaInformation = classBEAN.getAnnotation(SelectSourceMetaInformation.class);
+                //SelectSourceMetaInformation annotationSelectSourceMetaInformation = (SelectSourceMetaInformation) annotation;
+                strTableOrigin = null;
+                strDataOrigin = annotationSelectSourceMetaInformation.SqlSelection() + " where 1=1 ";
+            }
+            if (strDataOrigin.equals(null)) {
+                ExceptionBooster.boost(new Exception(this.getClass().getName() + ":constructor ERROR: " + classBEAN.getName() + " Beans must be annotated by SelectSourceMetaInformation or TableSourceMetaInformation "));
+            }
+            oConnection = pooledConnection;
+            oMysql = new MysqlDataSpImpl(oConnection);
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":constructor ERROR: " + ex.getMessage()));
         }
@@ -44,7 +62,7 @@ public abstract class MetaDaoGenImpl<TIPO_OBJETO> implements MetaDaoInterface {
     public ArrayList<String> getColumnsNames() throws Exception {
         ArrayList<String> alColumns = null;
         try {
-            alColumns = oMysql.getColumnsName(strView);
+            alColumns = oMysql.getColumnsName(strTableOrigin);
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getColumnsNames ERROR: " + ex.getMessage()));
         }
@@ -55,7 +73,7 @@ public abstract class MetaDaoGenImpl<TIPO_OBJETO> implements MetaDaoInterface {
     public ArrayList<String> getPrettyColumnsNames() throws Exception {
         ArrayList<String> alColumns = null;
         try {
-            alColumns = oMysql.getPrettyColumns(strView);
+            alColumns = oMysql.getPrettyColumns(strTableOrigin);
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPrettyColumnsNames ERROR: " + ex.getMessage()));
         }

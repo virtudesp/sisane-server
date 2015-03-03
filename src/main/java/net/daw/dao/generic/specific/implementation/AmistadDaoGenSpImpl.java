@@ -20,15 +20,12 @@ package net.daw.dao.generic.specific.implementation;
 import net.daw.dao.generic.implementation.TableDaoGenImpl;
 import java.sql.Connection;
 import net.daw.bean.generic.specific.implementation.AmistadBeanGenSpImpl;
-import net.daw.dao.publicinterface.MetaDaoInterface;
-import net.daw.dao.publicinterface.TableDaoInterface;
-import net.daw.dao.publicinterface.ViewDaoInterface;
 import net.daw.helper.statics.ExceptionBooster;
 
 public class AmistadDaoGenSpImpl extends TableDaoGenImpl<AmistadBeanGenSpImpl> {
 
-    public AmistadDaoGenSpImpl(String strObject, Connection pooledConnection) throws Exception {
-        super(strObject,  pooledConnection);
+    public AmistadDaoGenSpImpl(Connection pooledConnection) throws Exception {
+        super(pooledConnection);
     }
 
 

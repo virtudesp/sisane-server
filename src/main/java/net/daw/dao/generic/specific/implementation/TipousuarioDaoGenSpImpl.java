@@ -23,8 +23,8 @@ import net.daw.bean.generic.specific.implementation.TipousuarioBeanGenSpImpl;
 
 public class TipousuarioDaoGenSpImpl extends TableDaoGenImpl<TipousuarioBeanGenSpImpl> {
 
-    public TipousuarioDaoGenSpImpl(String strFuente, Connection pooledConnection) throws Exception {
-        super(strFuente,  pooledConnection);
+    public TipousuarioDaoGenSpImpl(Connection pooledConnection) throws Exception {
+        super(pooledConnection);
     }
 
 }

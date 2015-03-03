@@ -32,16 +32,19 @@ import net.daw.data.specific.implementation.MysqlDataSpImpl;
 import net.daw.helper.statics.AppConfigurationHelper;
 import net.daw.helper.statics.ExceptionBooster;
 import net.daw.helper.statics.FilterBeanHelper;
+import net.daw.helper.statics.SqlBuilder;
 
 public class TipoproductoDaoSpcImpl implements ViewDaoInterface<TipoproductoBeanGenSpImpl>, TableDaoInterface<TipoproductoBeanGenSpImpl>, MetaDaoInterface {
 
-    private String strTableName = null;
+    private String strDataOrigin = null;
+    private String strTableOrigin = null;
     private MysqlDataSpImpl oMysql = null;
     private Connection oConnection = null;
 
-    public TipoproductoDaoSpcImpl(String ob, Connection oConexion) throws Exception {
+    public TipoproductoDaoSpcImpl(Connection oConexion) throws Exception {
         try {
-            strTableName = ob;
+            strTableOrigin = "tipoproducto";
+            strDataOrigin = "select * from " + strTableOrigin + " where 1=1 ";
             oConnection = oConexion;
             oMysql = new MysqlDataSpImpl(oConnection);
         } catch (Exception ex) {
@@ -50,10 +53,33 @@ public class TipoproductoDaoSpcImpl implements ViewDaoInterface<TipoproductoBean
     }
 
     @Override
-    public int getPages(int intRegsPerPag, ArrayList<FilterBeanHelper> hmFilter) throws Exception {
+    public ArrayList<String> getColumnsNames() throws Exception {
+        ArrayList<String> alColumns = null;
+        try {
+            alColumns = oMysql.getColumnsName(strTableOrigin);
+        } catch (Exception ex) {
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getColumnsNames ERROR: " + ex.getMessage()));
+        }
+        return alColumns;
+    }
+
+    @Override
+    public ArrayList<String> getPrettyColumnsNames() throws Exception {
+        ArrayList<String> alColumns = null;
+        try {
+            alColumns = oMysql.getPrettyColumns(strTableOrigin);
+        } catch (Exception ex) {
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPrettyColumnsNames ERROR: " + ex.getMessage()));
+        }
+        return alColumns;
+    }
+
+    @Override
+    public int getPages(int intRegsPerPag, ArrayList<FilterBeanHelper> alFilter) throws Exception {
+        strDataOrigin += SqlBuilder.buildSqlWhere(alFilter);
         int pages = 0;
         try {
-            pages = oMysql.getPages(strTableName, intRegsPerPag, hmFilter);
+            pages = oMysql.getNewPages(strDataOrigin, intRegsPerPag);
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPages ERROR: " + ex.getMessage()));
         }
@@ -61,10 +87,11 @@ public class TipoproductoDaoSpcImpl implements ViewDaoInterface<TipoproductoBean
     }
 
     @Override
-    public int getCount(ArrayList<FilterBeanHelper> hmFilter) throws Exception {
+    public int getCount(ArrayList<FilterBeanHelper> alFilter) throws Exception {
+        strDataOrigin += SqlBuilder.buildSqlWhere(alFilter);
         int pages = 0;
         try {
-            pages = oMysql.getCount(strTableName, hmFilter);
+            pages = oMysql.getNewCount(strDataOrigin);
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getCount ERROR: " + ex.getMessage()));
         }
@@ -72,11 +99,13 @@ public class TipoproductoDaoSpcImpl implements ViewDaoInterface<TipoproductoBean
     }
 
     @Override
-    public ArrayList<TipoproductoBeanGenSpImpl> getPage(int intRegsPerPag, int intPage, ArrayList<FilterBeanHelper> hmFilter, HashMap<String, String> hmOrder) throws Exception {
+    public ArrayList<TipoproductoBeanGenSpImpl> getPage(int intRegsPerPag, int intPage, ArrayList<FilterBeanHelper> alFilter, HashMap<String, String> hmOrder) throws Exception {
+        strDataOrigin += SqlBuilder.buildSqlWhere(alFilter);
+        strDataOrigin += SqlBuilder.buildSqlOrder(hmOrder);
         ArrayList<Integer> arrId;
         ArrayList<TipoproductoBeanGenSpImpl> arrTipoproducto = new ArrayList<>();
         try {
-            arrId = oMysql.getPage(strTableName, intRegsPerPag, intPage, hmFilter, hmOrder);
+            arrId = oMysql.getNewPage(strDataOrigin, intRegsPerPag, intPage);
             Iterator<Integer> iterador = arrId.listIterator();
             while (iterador.hasNext()) {
                 TipoproductoBeanGenSpImpl oTipoproductoBean = new TipoproductoBeanGenSpImpl(iterador.next());
@@ -92,19 +121,19 @@ public class TipoproductoDaoSpcImpl implements ViewDaoInterface<TipoproductoBean
     public TipoproductoBeanGenSpImpl get(TipoproductoBeanGenSpImpl oTipoproductoBean, Integer expand) throws Exception {
         if (oTipoproductoBean.getId() > 0) {
             try {
-                if (!oMysql.existsOne(strTableName, oTipoproductoBean.getId())) {
+                if (!oMysql.existsNewOne(strDataOrigin, oTipoproductoBean.getId())) {
                     oTipoproductoBean.setId(0);
                 } else {
                     expand--;
                     if (expand > 0) {
-                        oTipoproductoBean.setDescripcion(oMysql.getOne(strTableName, "descripcion", oTipoproductoBean.getId()));
-                        oTipoproductoBean.setId_impuesto(Integer.parseInt(oMysql.getOne(strTableName, "id_impuesto", oTipoproductoBean.getId())));
+                        oTipoproductoBean.setDescripcion(oMysql.getNewOne(strDataOrigin, "descripcion", oTipoproductoBean.getId()));
+                        oTipoproductoBean.setId_impuesto(Integer.parseInt(oMysql.getOne(strDataOrigin, "id_impuesto", oTipoproductoBean.getId())));
 
-                    ImpuestoBeanGenSpImpl oImpuesto = new ImpuestoBeanGenSpImpl();
-                    oImpuesto.setId(Integer.parseInt(oMysql.getOne(strTableName, "id_impuesto", oTipoproductoBean.getId())));
-                    ImpuestoDaoSpcImpl oImpuestoDAO = new ImpuestoDaoSpcImpl("impuesto", oConnection);
-                    oImpuesto = oImpuestoDAO.get(oImpuesto, AppConfigurationHelper.getJsonDepth());
-                    oTipoproductoBean.setObj_impuesto(oImpuesto);
+                        ImpuestoBeanGenSpImpl oImpuesto = new ImpuestoBeanGenSpImpl();
+                        oImpuesto.setId(Integer.parseInt(oMysql.getNewOne(strDataOrigin, "id_impuesto", oTipoproductoBean.getId())));
+                        ImpuestoDaoSpcImpl oImpuestoDAO = new ImpuestoDaoSpcImpl(oConnection);
+                        oImpuesto = oImpuestoDAO.get(oImpuesto, AppConfigurationHelper.getJsonDepth());
+                        oTipoproductoBean.setObj_impuesto(oImpuesto);
                     }
                 }
             } catch (Exception ex) {
@@ -120,9 +149,9 @@ public class TipoproductoDaoSpcImpl implements ViewDaoInterface<TipoproductoBean
     public TipoproductoBeanGenSpImpl set(TipoproductoBeanGenSpImpl oTipoproductoBean) throws Exception {
         try {
             if (oTipoproductoBean.getId() == 0) {
-                oTipoproductoBean.setId(oMysql.insertOne(strTableName));
+                oTipoproductoBean.setId(oMysql.insertOne(strTableOrigin));
             }
-            oMysql.updateOne(oTipoproductoBean.getId(), strTableName, "descripcion", oTipoproductoBean.getDescripcion());
+            oMysql.updateOne(oTipoproductoBean.getId(), strTableOrigin, "descripcion", oTipoproductoBean.getDescripcion());
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":set ERROR: " + ex.getMessage()));
         }
@@ -133,35 +162,11 @@ public class TipoproductoDaoSpcImpl implements ViewDaoInterface<TipoproductoBean
     public int remove(TipoproductoBeanGenSpImpl oTipoproductoBean) throws Exception {
         int result = 0;
         try {
-            result = oMysql.removeOne(oTipoproductoBean.getId(), strTableName);
+            result = oMysql.removeOne(oTipoproductoBean.getId(), strTableOrigin);
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":remove ERROR: " + ex.getMessage()));
         }
         return result;
     }
-
-    @Override
-    public ArrayList<String> getColumnsNames() throws Exception {
-        ArrayList<String> alColumns = null;
-        try {
-            alColumns = oMysql.getColumnsName(strTableName);
-        } catch (Exception ex) {
-            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getColumnsNames ERROR: " + ex.getMessage()));
-        }
-        return alColumns;
-    }
-
-    @Override
-    public ArrayList<String> getPrettyColumnsNames() throws Exception {
-        ArrayList<String> alColumns = null;
-        try {
-            alColumns = oMysql.getPrettyColumns(strTableName);
-        } catch (Exception ex) {
-            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPrettyColumnsNames ERROR: " + ex.getMessage()));
-        }
-        return alColumns;
-    }
-
-
 
 }

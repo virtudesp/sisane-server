@@ -19,8 +19,8 @@ package net.daw.helper.annotations;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
+
 import net.daw.helper.statics.MetaEnum;
-import net.daw.helper.statics.MetaEnum.FieldType;
 
 /**
  *
@@ -28,17 +28,10 @@ import net.daw.helper.statics.MetaEnum.FieldType;
  */
 @Retention(RetentionPolicy.RUNTIME)
 //@Target(ElementType.TYPE)
-public @interface FieldMetaInformation {
-    public String UltraShortName() default "";
-    public String ShortName() default "";
+public @interface SelectSourceMetaInformation {
+
+    public String SqlSelection() default "";
+
     public String Description() default "";
-    public boolean IsIdForeignKey() default false;
-    public boolean IsObjForeignKey() default false;
-    public String ReferencesTable() default "";
-    public MetaEnum.FieldType Type() default FieldType.String;  
-    public int MaxLenght() default 255;
-    public int MaxDecimal() default 2;
-    public int MaxInteger() default 10;
-    public String DefaultValue() default "";
-    public boolean IsPathToObject() default false;
+
 }

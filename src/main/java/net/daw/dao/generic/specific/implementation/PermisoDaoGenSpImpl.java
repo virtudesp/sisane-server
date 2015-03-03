@@ -21,19 +21,14 @@ import net.daw.dao.generic.implementation.TableDaoGenImpl;
 import java.sql.Connection;
 import java.sql.SQLException;
 import net.daw.bean.generic.specific.implementation.PermisoBeanGenSpImpl;
-import net.daw.bean.generic.specific.implementation.TipooperacionBeanGenSpImpl;
-import net.daw.bean.generic.specific.implementation.TipousuarioBeanGenSpImpl;
-import net.daw.dao.publicinterface.MetaDaoInterface;
-import net.daw.dao.publicinterface.TableDaoInterface;
-import net.daw.dao.publicinterface.ViewDaoInterface;
 import net.daw.helper.statics.ExceptionBooster;
 
-public class PermisoDaoGenSpImpl extends TableDaoGenImpl<PermisoBeanGenSpImpl> implements TableDaoInterface<PermisoBeanGenSpImpl>, ViewDaoInterface<PermisoBeanGenSpImpl>, MetaDaoInterface {
+public class PermisoDaoGenSpImpl extends TableDaoGenImpl<PermisoBeanGenSpImpl> {
 
     
 
-    public PermisoDaoGenSpImpl(String strObject, Connection pooledConnection) throws Exception {
-        super(strObject, pooledConnection);
+    public PermisoDaoGenSpImpl(  Connection pooledConnection) throws Exception {
+        super( pooledConnection);
        
     }
 
@@ -55,7 +50,7 @@ public class PermisoDaoGenSpImpl extends TableDaoGenImpl<PermisoBeanGenSpImpl> i
         boolean permiso = false;
         try {
             int id = this.getPermissionId(oPermisoBean);
-            if (oMysql.existsOne(strTabla, id)) {
+            if (oMysql.existsOne(strTableOrigin, id)) {
                 if (Integer.parseInt(oMysql.getOne("permiso", "permitido", id))==1) {
                     permiso = true;
                 } else {

@@ -20,14 +20,11 @@ package net.daw.dao.generic.specific.implementation;
 import net.daw.dao.generic.implementation.TableDaoGenImpl;
 import java.sql.Connection;
 import net.daw.bean.generic.specific.implementation.TipooperacionBeanGenSpImpl;
-import net.daw.dao.publicinterface.MetaDaoInterface;
-import net.daw.dao.publicinterface.TableDaoInterface;
-import net.daw.dao.publicinterface.ViewDaoInterface;
 
-public class TipooperacionDaoGenSpImpl extends TableDaoGenImpl<TipooperacionBeanGenSpImpl> implements TableDaoInterface<TipooperacionBeanGenSpImpl>, ViewDaoInterface<TipooperacionBeanGenSpImpl>, MetaDaoInterface {
+public class TipooperacionDaoGenSpImpl extends TableDaoGenImpl<TipooperacionBeanGenSpImpl> {
 
-    public TipooperacionDaoGenSpImpl(String strFuente, Connection pooledConnection) throws Exception {
-        super(strFuente,  pooledConnection);
+    public TipooperacionDaoGenSpImpl(  Connection pooledConnection) throws Exception {
+        super(  pooledConnection);
     }
 
 }

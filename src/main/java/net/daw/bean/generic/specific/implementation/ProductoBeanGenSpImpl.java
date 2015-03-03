@@ -20,28 +20,33 @@ package net.daw.bean.generic.specific.implementation;
 import com.google.gson.annotations.Expose;
 import net.daw.bean.generic.implementation.BeanGenImpl;
 import net.daw.bean.publicinterface.BeanInterface;
-import net.daw.helper.annotations.FieldMetaInformation;
+import net.daw.helper.annotations.TableSourceMetaInformation;
+import net.daw.helper.annotations.MethodMetaInformation;
 
 /**
  *
  * @author rafa
  */
+@TableSourceMetaInformation(
+        TableName="producto",
+        Description="Productos"            
+)
 public class ProductoBeanGenSpImpl extends BeanGenImpl implements BeanInterface {
 
     @Expose
-    @FieldMetaInformation(ShortName = "Código")
+    @MethodMetaInformation(ShortName = "Cód.")
     private String codigo = "";
 
     @Expose
-    @FieldMetaInformation(ShortName = "Descripción")
+    @MethodMetaInformation(ShortName = "Descripción")
     private String descripcion = "";
 
     @Expose
-    @FieldMetaInformation(ShortName = "Precio")
+    @MethodMetaInformation(ShortName = "Precio")
     private Double precio = 0.0;
 
     @Expose(serialize = false)
-    @FieldMetaInformation(
+    @MethodMetaInformation(
             UltraShortName = "Tipo",
             ShortName = "Tipo de producto",
             IsIdForeignKey = true,
@@ -50,7 +55,7 @@ public class ProductoBeanGenSpImpl extends BeanGenImpl implements BeanInterface 
     private Integer id_tipoproducto = 0; //importante inicializar a 0 las claves ajenas
 
     @Expose(deserialize = false)
-    @FieldMetaInformation(
+    @MethodMetaInformation(
             ShortName = "Tipo de producto",
             IsObjForeignKey = true,
             ReferencesTable = "tipoproducto"
@@ -58,7 +63,7 @@ public class ProductoBeanGenSpImpl extends BeanGenImpl implements BeanInterface 
     private TipoproductoBeanGenSpImpl obj_tipoproducto = null;
 
     @Expose(serialize = false)
-    @FieldMetaInformation(
+    @MethodMetaInformation(
             UltraShortName = "Prov.",
             ShortName = "Proveedor",
             IsIdForeignKey = true,
@@ -67,7 +72,7 @@ public class ProductoBeanGenSpImpl extends BeanGenImpl implements BeanInterface 
     private Integer id_proveedor = 0; //importante inicializar a 0 las claves ajenas
 
     @Expose(deserialize = false)
-    @FieldMetaInformation(
+    @MethodMetaInformation(
             ShortName = "Proveedor",
             IsObjForeignKey = true,
             ReferencesTable = "proveedor"
@@ -75,7 +80,7 @@ public class ProductoBeanGenSpImpl extends BeanGenImpl implements BeanInterface 
     private ProveedorBeanGenSpImpl obj_proveedor = null;
 
     @Expose
-    @FieldMetaInformation(
+    @MethodMetaInformation(
             ShortName = "Ruta", 
             IsPathToObject = true
     )

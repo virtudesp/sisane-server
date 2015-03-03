@@ -21,24 +21,14 @@ import net.daw.dao.generic.implementation.TableDaoGenImpl;
 import java.sql.Connection;
 import java.sql.SQLException;
 import net.daw.bean.generic.specific.implementation.OperacionBeanGenSpImpl;
-import net.daw.bean.generic.specific.implementation.PermisoBeanGenSpImpl;
-import net.daw.dao.publicinterface.MetaDaoInterface;
-import net.daw.dao.publicinterface.TableDaoInterface;
-import net.daw.dao.publicinterface.ViewDaoInterface;
 import net.daw.helper.statics.ExceptionBooster;
 
-public class OperacionDaoGenSpImpl extends TableDaoGenImpl<OperacionBeanGenSpImpl> implements TableDaoInterface<OperacionBeanGenSpImpl>, ViewDaoInterface<OperacionBeanGenSpImpl>, MetaDaoInterface {
+public class OperacionDaoGenSpImpl extends TableDaoGenImpl<OperacionBeanGenSpImpl> {
 
-    protected Connection oConnection = null;
-    protected String strObjectName = null;
-
-    public OperacionDaoGenSpImpl(String strObject, Connection pooledConnection) throws Exception {
-        super(strObject,  pooledConnection);
-        strObjectName = strObject;
-        oConnection = pooledConnection;
+    public OperacionDaoGenSpImpl(Connection pooledConnection) throws Exception {
+        super(pooledConnection);
 
     }
-
 
     public int getOperationId(OperacionBeanGenSpImpl oOperacionBean) throws SQLException {
         int id = 0;
@@ -46,7 +36,7 @@ public class OperacionDaoGenSpImpl extends TableDaoGenImpl<OperacionBeanGenSpImp
             oConnection.setAutoCommit(false);
             String strIdObj = oOperacionBean.getId_objeto().toString();
             String descripcion = oOperacionBean.getDescripcion().toString();
-            id = Integer.parseInt(oMysql.getIdByTwoValues(strObjectName, "id_objeto", strIdObj, "descripcion", descripcion));
+            id = Integer.parseInt(oMysql.getIdByTwoValues(strTableOrigin, "id_objeto", strIdObj, "descripcion", descripcion));
 
         } catch (Exception ex) {
             oConnection.rollback();
@@ -55,6 +45,5 @@ public class OperacionDaoGenSpImpl extends TableDaoGenImpl<OperacionBeanGenSpImp
         return id;
 
     }
-
 
 }

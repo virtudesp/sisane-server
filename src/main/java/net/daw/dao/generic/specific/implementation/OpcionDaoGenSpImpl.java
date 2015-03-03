@@ -23,8 +23,8 @@ import net.daw.bean.generic.specific.implementation.OpcionBeanGenSpImpl;
 
 public class OpcionDaoGenSpImpl extends TableDaoGenImpl<OpcionBeanGenSpImpl> {
 
-    public OpcionDaoGenSpImpl(String strFuente, Connection pooledConnection) throws Exception {
-        super(strFuente, pooledConnection);
+    public OpcionDaoGenSpImpl(Connection pooledConnection) throws Exception {
+        super(pooledConnection);
     }
 
 }

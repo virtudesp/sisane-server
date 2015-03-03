@@ -28,8 +28,7 @@ import net.daw.helper.statics.MetaEnum;
  */
 @Retention(RetentionPolicy.RUNTIME)
 //@Target(ElementType.TYPE)
-public @interface SourceMetaInformation {
+public @interface TableSourceMetaInformation {
     public String TableName() default "";
     public String Description() default "";
-    public MetaEnum.SourceType SourceType() default MetaEnum.SourceType.Table;
 }

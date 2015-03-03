@@ -23,8 +23,8 @@ import net.daw.bean.generic.specific.implementation.TrabajoBeanGenSpImpl;
 
 public class TrabajoDaoGenSpImpl extends TableDaoGenImpl<TrabajoBeanGenSpImpl> {
 
-   public TrabajoDaoGenSpImpl(String strFuente, Connection pooledConnection) throws Exception {
-        super(strFuente, pooledConnection);
+    public TrabajoDaoGenSpImpl(Connection pooledConnection) throws Exception {
+        super(pooledConnection);
     }
 
 //    public String getDescription(int id) throws Exception {

@@ -40,8 +40,8 @@ public class ProveedorDaoSpcImpl implements ViewDaoInterface<ProveedorBeanGenSpI
 
     public ProveedorDaoSpcImpl(Connection oConexion) throws Exception {
         try {
-            strDataOrigin = "select * from proveedor where 1=1 ";
             strTableOrigin = "proveedor";
+            strDataOrigin = "select * from " + strTableOrigin + " where 1=1 ";
             oConnection = oConexion;
             oMysql = new MysqlDataSpImpl(oConnection);
         } catch (Exception ex) {
