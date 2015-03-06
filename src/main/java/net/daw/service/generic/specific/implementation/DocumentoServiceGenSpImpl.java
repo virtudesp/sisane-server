@@ -35,7 +35,7 @@ public class DocumentoServiceGenSpImpl extends TableServiceGenImpl {
         try {
             DocumentoBeanGenSpImpl oDocumentoBean = new DocumentoBeanGenSpImpl();
             oDocumentoBean.setId(id);
-            DocumentoDaoGenSpImpl oDocumentoDao = new DocumentoDaoGenSpImpl(strObjectName, oConnection);
+            DocumentoDaoGenSpImpl oDocumentoDao = new DocumentoDaoGenSpImpl(oConnection);
             oDocumentoBean = oDocumentoDao.get(oDocumentoBean, AppConfigurationHelper.getJsonDepth());
             return "{\"data\":\"" + oDocumentoBean.getContenido() + "\"}";
         } catch (Exception e) {

@@ -20,26 +20,69 @@ package net.daw.bean.generic.specific.implementation;
 import net.daw.bean.generic.implementation.BeanGenImpl;
 import net.daw.bean.publicinterface.BeanInterface;
 import com.google.gson.annotations.Expose;
+import net.daw.helper.annotations.MethodMetaInformation;
+import net.daw.helper.annotations.TableSourceMetaInformation;
 
+@TableSourceMetaInformation(
+        TableName = "usuario",
+        Description = "Usuarios del sistema"
+)
 public class UsuarioBeanGenSpImpl extends BeanGenImpl implements BeanInterface {
 
     @Expose
+    @MethodMetaInformation(ShortName = "Login")
     private String login = "";
+
     @Expose
+    @MethodMetaInformation(ShortName = "Password")
     private String password = "";
+
     @Expose(serialize = false)
+    @MethodMetaInformation(
+            UltraShortName = "Tipo",
+            ShortName = "Tipo de usuario",
+            IsIdForeignKey = true,
+            ReferencesTable = "tipousuario"
+    )
     private Integer id_tipousuario = 0; //importante inicializar a 0 las claves ajenas
+
     @Expose(deserialize = false)
+    @MethodMetaInformation(
+            UltraShortName = "Tipo",
+            ShortName = "Tipo de usuario",
+            IsObjForeignKey = true,
+            ReferencesTable = "tipousuario"
+    )
     private TipousuarioBeanGenSpImpl obj_tipousuario = null;
+
     @Expose(serialize = false)
+    @MethodMetaInformation(
+            UltraShortName = "Estado",
+            ShortName = "Estado de usuario",
+            IsIdForeignKey = true,
+            ReferencesTable = "estado"
+    )
     private Integer id_estado = 0; //importante inicializar a 0 las claves ajenas
+
     @Expose(deserialize = false)
+    @MethodMetaInformation(
+            UltraShortName = "Estado",
+            ShortName = "Estado de usuario",
+            IsObjForeignKey = true,
+            ReferencesTable = "estado"
+    )
     private EstadoBeanGenSpImpl obj_estado = null;
+
     @Expose
+    @MethodMetaInformation(ShortName = "Ciudad")
     private String ciudad = "";
+
     @Expose
+    @MethodMetaInformation(ShortName = "Firma")
     private String firma = "";
+
     @Expose
+    @MethodMetaInformation(ShortName = "Skin")
     private String skin = "";
 
     public String getLogin() {

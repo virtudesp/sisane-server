@@ -1008,12 +1008,12 @@ public class MysqlDataSpImpl implements DataInterface {
     //***********************************************************************
     //***********************************************************************
     //***********************************************************************
-    public int getNewCount(String strSqlDataSource) throws Exception {
+    public int getNewCount(String strSqlSelectDataOrigin) throws Exception {
         int intResult = 0;
         Statement oStatement = null;
         try {
             oStatement = (Statement) connection.createStatement();
-            String strNewSqlDataSource = "SELECT COUNT(*) " + strSqlDataSource.substring(strSqlDataSource.indexOf("from"), strSqlDataSource.length());
+            String strNewSqlDataSource = "SELECT COUNT(*) " + strSqlSelectDataOrigin.substring(strSqlSelectDataOrigin.indexOf("from"), strSqlSelectDataOrigin.length());
             oStatement = (Statement) connection.createStatement();
             ResultSet oResultSet = oStatement.executeQuery(strNewSqlDataSource);
             while (oResultSet.next()) {
@@ -1029,12 +1029,12 @@ public class MysqlDataSpImpl implements DataInterface {
         return intResult;
     }
 
-    public int getNewPages(String strSqlDataSource, int intRegsPerPage) throws Exception {
+    public int getNewPages(String strSqlSelectDataOrigin, int intRegsPerPage) throws Exception {
         int intResult = 0;
         int intCount = 0;
         Statement oStatement = null;
         try {
-            intCount = this.getNewCount(strSqlDataSource);
+            intCount = this.getNewCount(strSqlSelectDataOrigin);
             intResult = intCount / intRegsPerPage;
             if ((intResult % intRegsPerPage) > 0) {
                 intResult++;
@@ -1049,16 +1049,16 @@ public class MysqlDataSpImpl implements DataInterface {
         return intResult;
     }
 
-    public ArrayList<Integer> getNewPage(String strSqlDataSource, int intRegsPerPage, int intPagina) throws Exception {
+    public ArrayList<Integer> getNewPage(String strSqlSelectDataOrigin, int intRegsPerPage, int intPagina) throws Exception {
         ArrayList<Integer> vector = null;
         Statement oStatement = null;
         ResultSet oResultSet;
         vector = new ArrayList<>();
         try {
-            int intCount = this.getNewCount(strSqlDataSource);
-            strSqlDataSource += SqlBuilder.buildSqlLimit(intCount, intRegsPerPage, intPagina);
+            int intCount = this.getNewCount(strSqlSelectDataOrigin);
+            strSqlSelectDataOrigin += SqlBuilder.buildSqlLimit(intCount, intRegsPerPage, intPagina);
             oStatement = (Statement) connection.createStatement();
-            oResultSet = oStatement.executeQuery(strSqlDataSource);
+            oResultSet = oStatement.executeQuery(strSqlSelectDataOrigin);
             while (oResultSet.next()) {
                 vector.add(oResultSet.getInt("id"));
             }
@@ -1091,13 +1091,13 @@ public class MysqlDataSpImpl implements DataInterface {
         return intResult;
     }
 
-    public Boolean existsNewOne(String strTabla, int id) throws Exception {
+    public Boolean existsNewOne(String strSqlSelectDataOrigin, int id) throws Exception {
 
         int intResult = 0;
         Statement oStatement = null;
         try {
             oStatement = (Statement) connection.createStatement();
-            String strSQL = "SELECT COUNT(*) " + strTabla.substring(strTabla.indexOf("from"), strTabla.length());
+            String strSQL = "SELECT COUNT(*) " + strSqlSelectDataOrigin.substring(strSqlSelectDataOrigin.indexOf("from"), strSqlSelectDataOrigin.length());
             ResultSet oResultSet = oStatement.executeQuery(strSQL);
             while (oResultSet.next()) {
                 intResult = oResultSet.getInt("COUNT(*)");
@@ -1113,14 +1113,14 @@ public class MysqlDataSpImpl implements DataInterface {
 
     }
 
-    public String getNewOne(String strTabla, String strCampo, int id) throws Exception {
+    public String getNewOne(String strSqlSelectDataOrigin, String strCampo, int id) throws Exception {
         String strResult = null;
         PreparedStatement oPreparedStatement = null;
         ResultSet oResultSet;
         String strSQL = "";
 
         try {
-            strSQL = strTabla;
+            strSQL = strSqlSelectDataOrigin;
             strSQL += " AND id=" + id;
             oPreparedStatement = connection.prepareStatement(strSQL);
             //oPreparedStatement.setInt(1, id);

@@ -53,7 +53,7 @@ public abstract class MetaServiceGenImpl implements MetaServiceInterface {
         String data = null;
         try {
             oConnection.setAutoCommit(false);
-            Constructor c = Class.forName("net.daw.dao.generic.specific.implementation." + strPojo + "DaoGenSpImpl").getConstructor(String.class, Connection.class);
+            Constructor c = Class.forName("net.daw.dao.generic.specific.implementation." + strPojo + "DaoGenSpImpl").getConstructor(Connection.class);
             TableDaoGenImpl oDao = (TableDaoGenImpl) c.newInstance(strObjectName, oConnection);
             ArrayList<String> alColumns = null;
             alColumns = oDao.getPrettyColumnsNames();
@@ -74,7 +74,7 @@ public abstract class MetaServiceGenImpl implements MetaServiceInterface {
         String data = null;
         try {
             oConnection.setAutoCommit(false);
-            Constructor c = Class.forName("net.daw.dao.generic.specific.implementation." + strPojo + "DaoGenSpImpl").getConstructor(String.class, Connection.class);
+            Constructor c = Class.forName("net.daw.dao.generic.specific.implementation." + strPojo + "DaoGenSpImpl").getConstructor(Connection.class);
             TableDaoGenImpl oDao = (TableDaoGenImpl) c.newInstance(strObjectName, oConnection);
             ArrayList<String> alColumns = null;
             alColumns = oDao.getColumnsNames();

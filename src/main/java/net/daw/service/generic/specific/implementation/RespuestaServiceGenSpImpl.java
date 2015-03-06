@@ -61,7 +61,7 @@ public class RespuestaServiceGenSpImpl extends TableServiceGenImpl {
                 oRespuesta.setId_pregunta(Integer.parseInt(preguntas.get(i)));
                 oRespuesta.setId_opcion(opcion);
 
-                RespuestaDaoGenSpImpl oRespuestaDao = new RespuestaDaoGenSpImpl("Respuesta", oConnection);
+                RespuestaDaoGenSpImpl oRespuestaDao = new RespuestaDaoGenSpImpl(oConnection);
                 oRespuestaDao.set(oRespuesta);
 
                 resultado += oRespuesta.getId() + ", ";

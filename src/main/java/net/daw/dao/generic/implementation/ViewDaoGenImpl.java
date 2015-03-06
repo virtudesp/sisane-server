@@ -32,6 +32,7 @@ import net.daw.bean.generic.implementation.BeanGenImpl;
 import net.daw.helper.statics.AppConfigurationHelper;
 import net.daw.helper.statics.ExceptionBooster;
 import net.daw.helper.statics.FilterBeanHelper;
+import net.daw.helper.statics.SqlBuilder;
 
 public class ViewDaoGenImpl<BEAN_CLASS> extends MetaDaoGenImpl<BEAN_CLASS> implements ViewDaoInterface<BEAN_CLASS>, MetaDaoInterface<BEAN_CLASS> {
 
@@ -40,10 +41,11 @@ public class ViewDaoGenImpl<BEAN_CLASS> extends MetaDaoGenImpl<BEAN_CLASS> imple
     }
 
     @Override
-    public int getPages(int intRegsPerPag, ArrayList<FilterBeanHelper> hmFilter) throws Exception {
+    public int getPages(int intRegsPerPag, ArrayList<FilterBeanHelper> alFilter) throws Exception {
+        strSqlSelectDataOrigin += SqlBuilder.buildSqlWhere(alFilter);
         int pages = 0;
         try {
-            pages = oMysql.getPages(strView, intRegsPerPag, hmFilter);
+            pages = oMysql.getNewPages(strSqlSelectDataOrigin, intRegsPerPag);
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPages ERROR: " + ex.getMessage()));
         }
@@ -51,10 +53,11 @@ public class ViewDaoGenImpl<BEAN_CLASS> extends MetaDaoGenImpl<BEAN_CLASS> imple
     }
 
     @Override
-    public int getCount(ArrayList<FilterBeanHelper> hmFilter) throws Exception {
+    public int getCount(ArrayList<FilterBeanHelper> alFilter) throws Exception {
+        strSqlSelectDataOrigin += SqlBuilder.buildSqlWhere(alFilter);
         int pages = 0;
         try {
-            pages = oMysql.getCount(strView, hmFilter);
+            pages = oMysql.getNewCount(strSqlSelectDataOrigin);
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getCount ERROR: " + ex.getMessage()));
         }
@@ -62,13 +65,15 @@ public class ViewDaoGenImpl<BEAN_CLASS> extends MetaDaoGenImpl<BEAN_CLASS> imple
     }
 
     @Override
-    public ArrayList<BEAN_CLASS> getPage(int intRegsPerPag, int intPage, ArrayList<FilterBeanHelper> hmFilter, HashMap<String, String> hmOrder) throws Exception {
+    public ArrayList<BEAN_CLASS> getPage(int intRegsPerPag, int intPage, ArrayList<FilterBeanHelper> alFilter, HashMap<String, String> hmOrder) throws Exception {
+        strSqlSelectDataOrigin += SqlBuilder.buildSqlWhere(alFilter);
+        strSqlSelectDataOrigin += SqlBuilder.buildSqlOrder(hmOrder);
         Class<BEAN_CLASS> tipo = (Class<BEAN_CLASS>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
         Method metodo_setId = tipo.getMethod("setId", Integer.class);
         ArrayList<Integer> arrId;
         ArrayList<BEAN_CLASS> arrCliente = new ArrayList<>();
         try {
-            arrId = oMysql.getPage(strView, intRegsPerPag, intPage, hmFilter, hmOrder);
+            arrId = oMysql.getNewPage(strSqlSelectDataOrigin, intRegsPerPag, intPage);
             Iterator<Integer> iterador = arrId.listIterator();
             while (iterador.hasNext()) {
                 Object oBean = Class.forName(tipo.getName()).newInstance();
@@ -141,14 +146,14 @@ public class ViewDaoGenImpl<BEAN_CLASS> extends MetaDaoGenImpl<BEAN_CLASS> imple
                                         //pte porque da error
                                         Constructor c;
                                         try {
-                                            c = Class.forName("net.daw.dao.generic.specific.implementation." + strTabla + "DaoGenSpImpl").getConstructor(String.class, Connection.class);
+                                            c = Class.forName("net.daw.dao.generic.specific.implementation." + strTabla + "DaoGenSpImpl").getConstructor(Connection.class);
                                         } catch (ClassNotFoundException | NoSuchMethodException | SecurityException ex) {
                                             //aqui da el error--> pte d eestudiar
-                                            c = Class.forName("net.daw.dao.specific.implementation." + strTabla + "DaoSpcImpl").getConstructor(String.class, Connection.class);
+                                            c = Class.forName("net.daw.dao.specific.implementation." + strTabla + "DaoSpcImpl").getConstructor(Connection.class);
                                         }
                                         //------------------------------------
 
-                                        TableDaoGenImpl oAjenaDao = (TableDaoGenImpl) c.newInstance(strTabla, connection);
+                                        TableDaoGenImpl oAjenaDao = (TableDaoGenImpl) c.newInstance(oConnection);
 
                                         BeanGenImpl oAjenaBean = (BeanGenImpl) Class.forName("net.daw.bean.generic.specific.implementation." + strTabla + "BeanGenSpImpl").newInstance();
                                         int intIdAjena = (Integer) metodo_getId_Ajena.invoke(oBean);
@@ -178,19 +183,19 @@ public class ViewDaoGenImpl<BEAN_CLASS> extends MetaDaoGenImpl<BEAN_CLASS> imple
                         if (method.getName().length() >= 5) {
                             if (method.getName().substring(3).length() >= 4) {
                                 if (!method.getName().substring(3).toLowerCase(Locale.ENGLISH).substring(0, 4).equalsIgnoreCase("obj_")) {
-                                    String strValor = oMysql.getOne(strView, method.getName().substring(3).toLowerCase(Locale.ENGLISH), (Integer) metodo_getId.invoke(oBean));
+                                    String strValor = oMysql.getNewOne(strSqlSelectDataOrigin, method.getName().substring(3).toLowerCase(Locale.ENGLISH), (Integer) metodo_getId.invoke(oBean));
                                     if (strValor != null) {
                                         parseValue(oBean, method, classTipoParamMetodoSet.getName(), strValor);
                                     }
                                 }
                             } else {
-                                String strValor = oMysql.getOne(strView, method.getName().substring(3).toLowerCase(Locale.ENGLISH), (Integer) metodo_getId.invoke(oBean));
+                                String strValor = oMysql.getNewOne(strSqlSelectDataOrigin, method.getName().substring(3).toLowerCase(Locale.ENGLISH), (Integer) metodo_getId.invoke(oBean));
                                 if (strValor != null) {
                                     parseValue(oBean, method, classTipoParamMetodoSet.getName(), strValor);
                                 }
                             }
                         } else {
-                            String strValor = oMysql.getOne(strView, method.getName().substring(3).toLowerCase(Locale.ENGLISH), (Integer) metodo_getId.invoke(oBean));
+                            String strValor = oMysql.getNewOne(strSqlSelectDataOrigin, method.getName().substring(3).toLowerCase(Locale.ENGLISH), (Integer) metodo_getId.invoke(oBean));
                             if (strValor != null) {
                                 parseValue(oBean, method, classTipoParamMetodoSet.getName(), strValor);
                             }
@@ -214,7 +219,7 @@ public class ViewDaoGenImpl<BEAN_CLASS> extends MetaDaoGenImpl<BEAN_CLASS> imple
             Method metodo_setId = tipo.getMethod("setId", Integer.class);
             if ((Integer) metodo_getId.invoke(oBean) > 0) {
                 try {
-                    if (!oMysql.existsOne(strView, (Integer) metodo_getId.invoke(oBean))) {
+                    if (!oMysql.existsNewOne(strSqlSelectDataOrigin, (Integer) metodo_getId.invoke(oBean))) {
                         metodo_setId.invoke(oBean, 0);
                     } else {
                         oBean = fill(oBean, tipo, metodo_getId);

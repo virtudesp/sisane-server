@@ -35,7 +35,7 @@ public class DocumentobonitoServiceGenSpImpl extends TableServiceGenImpl {
         try {
             DocumentobonitoBeanGenSpImpl oDocumentobonitoBean = new DocumentobonitoBeanGenSpImpl();
             oDocumentobonitoBean.setId(id);
-            DocumentobonitoDaoGenSpImpl oDocumentobonitoDao = new DocumentobonitoDaoGenSpImpl(strObjectName, oConnection);
+            DocumentobonitoDaoGenSpImpl oDocumentobonitoDao = new DocumentobonitoDaoGenSpImpl(oConnection);
             oDocumentobonitoBean = oDocumentobonitoDao.get(oDocumentobonitoBean, AppConfigurationHelper.getJsonDepth());
             return "{\"data\":\"" + oDocumentobonitoBean.getContenido() + "\"}";
         } catch (Exception e) {

@@ -33,7 +33,7 @@ import net.daw.helper.statics.SqlBuilder;
 
 public class ImpuestoDaoSpcImpl implements ViewDaoInterface<ImpuestoBeanGenSpImpl>, TableDaoInterface<ImpuestoBeanGenSpImpl>, MetaDaoInterface {
 
-    private String strDataOrigin = null;
+    private String strSqlSelectDataOrigin = null;
     private String strTableOrigin = null;
     private MysqlDataSpImpl oMysql = null;
     private Connection oConnection = null;
@@ -41,7 +41,7 @@ public class ImpuestoDaoSpcImpl implements ViewDaoInterface<ImpuestoBeanGenSpImp
     public ImpuestoDaoSpcImpl(Connection oConexion) throws Exception {
         try {
             strTableOrigin = "impuesto";
-            strDataOrigin = "select * from " + strTableOrigin + " where 1=1 ";
+            strSqlSelectDataOrigin = "select * from " + strTableOrigin + " where 1=1 ";
             oConnection = oConexion;
             oMysql = new MysqlDataSpImpl(oConnection);
         } catch (Exception ex) {
@@ -75,11 +75,11 @@ public class ImpuestoDaoSpcImpl implements ViewDaoInterface<ImpuestoBeanGenSpImp
     public ImpuestoBeanGenSpImpl get(ImpuestoBeanGenSpImpl oImpuestoBean, Integer expand) throws Exception {
         if (oImpuestoBean.getId() > 0) {
             try {
-                if (!oMysql.existsNewOne(strDataOrigin, oImpuestoBean.getId())) {
+                if (!oMysql.existsNewOne(strSqlSelectDataOrigin, oImpuestoBean.getId())) {
                     oImpuestoBean.setId(0);
                 } else {
-                    oImpuestoBean.setNombre(oMysql.getNewOne(strDataOrigin, "nombre", oImpuestoBean.getId()));
-                    oImpuestoBean.setValor(oMysql.getNewOne(strDataOrigin, "valor", oImpuestoBean.getId()));
+                    oImpuestoBean.setNombre(oMysql.getNewOne(strSqlSelectDataOrigin, "nombre", oImpuestoBean.getId()));
+                    oImpuestoBean.setValor(oMysql.getNewOne(strSqlSelectDataOrigin, "valor", oImpuestoBean.getId()));
                 }
             } catch (Exception ex) {
                 ExceptionBooster.boost(new Exception(this.getClass().getName() + ":get ERROR: " + ex.getMessage()));
@@ -92,10 +92,10 @@ public class ImpuestoDaoSpcImpl implements ViewDaoInterface<ImpuestoBeanGenSpImp
 
     @Override
     public int getPages(int intRegsPerPag, ArrayList<FilterBeanHelper> alFilter) throws Exception {
-        strDataOrigin += SqlBuilder.buildSqlWhere(alFilter);
+        strSqlSelectDataOrigin += SqlBuilder.buildSqlWhere(alFilter);
         int pages = 0;
         try {
-            pages = oMysql.getNewPages(strDataOrigin,intRegsPerPag);
+            pages = oMysql.getNewPages(strSqlSelectDataOrigin,intRegsPerPag);
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPages ERROR: " + ex.getMessage()));
         }
@@ -104,10 +104,10 @@ public class ImpuestoDaoSpcImpl implements ViewDaoInterface<ImpuestoBeanGenSpImp
 
     @Override
     public int getCount(ArrayList<FilterBeanHelper> alFilter) throws Exception {
-        strDataOrigin += SqlBuilder.buildSqlWhere(alFilter);
+        strSqlSelectDataOrigin += SqlBuilder.buildSqlWhere(alFilter);
         int pages = 0;
         try {
-            pages = oMysql.getNewCount(strDataOrigin);
+            pages = oMysql.getNewCount(strSqlSelectDataOrigin);
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getCount ERROR: " + ex.getMessage()));
         }
@@ -116,12 +116,12 @@ public class ImpuestoDaoSpcImpl implements ViewDaoInterface<ImpuestoBeanGenSpImp
 
     @Override
     public ArrayList<ImpuestoBeanGenSpImpl> getPage(int intRegsPerPag, int intPage, ArrayList<FilterBeanHelper> alFilter, HashMap<String, String> hmOrder) throws Exception {
-        strDataOrigin += SqlBuilder.buildSqlWhere(alFilter);
-        strDataOrigin += SqlBuilder.buildSqlOrder(hmOrder);
+        strSqlSelectDataOrigin += SqlBuilder.buildSqlWhere(alFilter);
+        strSqlSelectDataOrigin += SqlBuilder.buildSqlOrder(hmOrder);
         ArrayList<Integer> arrId;
         ArrayList<ImpuestoBeanGenSpImpl> arrImpuesto = new ArrayList<>();
         try {
-            arrId = oMysql.getNewPage(strDataOrigin, intRegsPerPag, intPage);
+            arrId = oMysql.getNewPage(strSqlSelectDataOrigin, intRegsPerPag, intPage);
             Iterator<Integer> iterador = arrId.listIterator();
             while (iterador.hasNext()) {
                 ImpuestoBeanGenSpImpl oImpuestoBean = new ImpuestoBeanGenSpImpl(iterador.next());

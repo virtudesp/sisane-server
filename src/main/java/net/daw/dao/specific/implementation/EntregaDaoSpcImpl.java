@@ -108,7 +108,7 @@ public class EntregaDaoSpcImpl implements ViewDaoInterface<EntregaBeanGenSpImpl>
 
                     DocumentoBeanGenSpImpl oDocumento = new DocumentoBeanGenSpImpl();
                     oDocumento.setId(Integer.parseInt(oMysql.getOne(strTableName, "id_documento", oEntregaBean.getId())));
-                    DocumentoDaoGenSpImpl oDocumentoDAO = new DocumentoDaoGenSpImpl("documento", oConnection);
+                    DocumentoDaoGenSpImpl oDocumentoDAO = new DocumentoDaoGenSpImpl(oConnection);
                     oDocumento = oDocumentoDAO.get(oDocumento, AppConfigurationHelper.getJsonDepth());
                     oEntregaBean.setObj_documento(oDocumento);
 

@@ -33,7 +33,7 @@ import net.daw.helper.statics.SqlBuilder;
 
 public class ProveedorDaoSpcImpl implements ViewDaoInterface<ProveedorBeanGenSpImpl>, TableDaoInterface<ProveedorBeanGenSpImpl>, MetaDaoInterface {
 
-    private String strDataOrigin = null;
+    private String strSqlSelectDataOrigin = null;
     private String strTableOrigin = null;
     private MysqlDataSpImpl oMysql = null;
     private Connection oConnection = null;
@@ -41,7 +41,7 @@ public class ProveedorDaoSpcImpl implements ViewDaoInterface<ProveedorBeanGenSpI
     public ProveedorDaoSpcImpl(Connection oConexion) throws Exception {
         try {
             strTableOrigin = "proveedor";
-            strDataOrigin = "select * from " + strTableOrigin + " where 1=1 ";
+            strSqlSelectDataOrigin = "select * from " + strTableOrigin + " where 1=1 ";
             oConnection = oConexion;
             oMysql = new MysqlDataSpImpl(oConnection);
         } catch (Exception ex) {
@@ -75,19 +75,19 @@ public class ProveedorDaoSpcImpl implements ViewDaoInterface<ProveedorBeanGenSpI
     public ProveedorBeanGenSpImpl get(ProveedorBeanGenSpImpl oProveedorBean, Integer expand) throws Exception {
         if (oProveedorBean.getId() > 0) {
             try {
-                if (!oMysql.existsNewOne(strDataOrigin, oProveedorBean.getId())) {
+                if (!oMysql.existsNewOne(strSqlSelectDataOrigin, oProveedorBean.getId())) {
                     oProveedorBean.setId(0);
                 } else {
                     expand--;
                     if (expand > 0) {
-                        oProveedorBean.setNia(oMysql.getNewOne(strDataOrigin, "nia", oProveedorBean.getId()));
-                        oProveedorBean.setNombre(oMysql.getNewOne(strDataOrigin, "nombre", oProveedorBean.getId()));
-                        oProveedorBean.setTelefono(oMysql.getNewOne(strDataOrigin, "telefono", oProveedorBean.getId()));
-                        oProveedorBean.setDireccion(oMysql.getNewOne(strDataOrigin, "direccion", oProveedorBean.getId()));
-                        oProveedorBean.setEmail(oMysql.getNewOne(strDataOrigin, "email", oProveedorBean.getId()));
-                        oProveedorBean.setWeb(oMysql.getNewOne(strDataOrigin, "web", oProveedorBean.getId()));
-                        oProveedorBean.setFax(oMysql.getNewOne(strDataOrigin, "fax", oProveedorBean.getId()));
-                        oProveedorBean.setLocalidad(oMysql.getNewOne(strDataOrigin, "localidad", oProveedorBean.getId()));
+                        oProveedorBean.setNia(oMysql.getNewOne(strSqlSelectDataOrigin, "nia", oProveedorBean.getId()));
+                        oProveedorBean.setNombre(oMysql.getNewOne(strSqlSelectDataOrigin, "nombre", oProveedorBean.getId()));
+                        oProveedorBean.setTelefono(oMysql.getNewOne(strSqlSelectDataOrigin, "telefono", oProveedorBean.getId()));
+                        oProveedorBean.setDireccion(oMysql.getNewOne(strSqlSelectDataOrigin, "direccion", oProveedorBean.getId()));
+                        oProveedorBean.setEmail(oMysql.getNewOne(strSqlSelectDataOrigin, "email", oProveedorBean.getId()));
+                        oProveedorBean.setWeb(oMysql.getNewOne(strSqlSelectDataOrigin, "web", oProveedorBean.getId()));
+                        oProveedorBean.setFax(oMysql.getNewOne(strSqlSelectDataOrigin, "fax", oProveedorBean.getId()));
+                        oProveedorBean.setLocalidad(oMysql.getNewOne(strSqlSelectDataOrigin, "localidad", oProveedorBean.getId()));
 //
 //                        oProveedorBean.setId_usuario_1(Integer.parseInt(oMysql.getOne(strTableOrigin, "id_usuario_1", oProveedorBean.getId())));
 //                        oProveedorBean.setId_usuario_2(Integer.parseInt(oMysql.getOne(strTableOrigin, "id_usuario_2", oProveedorBean.getId())));
@@ -117,10 +117,10 @@ public class ProveedorDaoSpcImpl implements ViewDaoInterface<ProveedorBeanGenSpI
 
     @Override
     public int getPages(int intRegsPerPag, ArrayList<FilterBeanHelper> alFilter) throws Exception {
-        strDataOrigin += SqlBuilder.buildSqlWhere(alFilter);
+        strSqlSelectDataOrigin += SqlBuilder.buildSqlWhere(alFilter);
         int pages = 0;
         try {
-            pages = oMysql.getNewPages(strDataOrigin, intRegsPerPag);
+            pages = oMysql.getNewPages(strSqlSelectDataOrigin, intRegsPerPag);
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPages ERROR: " + ex.getMessage()));
         }
@@ -129,10 +129,10 @@ public class ProveedorDaoSpcImpl implements ViewDaoInterface<ProveedorBeanGenSpI
 
     @Override
     public int getCount(ArrayList<FilterBeanHelper> alFilter) throws Exception {
-        strDataOrigin += SqlBuilder.buildSqlWhere(alFilter);
+        strSqlSelectDataOrigin += SqlBuilder.buildSqlWhere(alFilter);
         int pages = 0;
         try {
-            pages = oMysql.getNewCount(strDataOrigin);
+            pages = oMysql.getNewCount(strSqlSelectDataOrigin);
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getCount ERROR: " + ex.getMessage()));
         }
@@ -141,8 +141,8 @@ public class ProveedorDaoSpcImpl implements ViewDaoInterface<ProveedorBeanGenSpI
 
     @Override
     public ArrayList<ProveedorBeanGenSpImpl> getPage(int intRegsPerPag, int intPage, ArrayList<FilterBeanHelper> alFilter, HashMap<String, String> hmOrder) throws Exception {
-        strDataOrigin += SqlBuilder.buildSqlWhere(alFilter);
-        strDataOrigin += SqlBuilder.buildSqlOrder(hmOrder);
+        strSqlSelectDataOrigin += SqlBuilder.buildSqlWhere(alFilter);
+        strSqlSelectDataOrigin += SqlBuilder.buildSqlOrder(hmOrder);
         ArrayList<Integer> arrId;
         ArrayList<ProveedorBeanGenSpImpl> arrProveedor = new ArrayList<>();
         try {

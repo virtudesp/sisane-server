@@ -119,7 +119,7 @@ public class ComentarioDaoSpcImpl implements ViewDaoInterface<ComentarioBeanGenS
 
                     UsuarioBeanGenSpImpl oUsuario = new UsuarioBeanGenSpImpl();
                     oUsuario.setId(Integer.parseInt(oMysql.getOne(strTableName, "id_usuario", oComentarioBean.getId())));
-                    UsuarioDaoGenSpImpl oUsuarioDAO = new UsuarioDaoGenSpImpl(strTableName, oConnection);
+                    UsuarioDaoGenSpImpl oUsuarioDAO = new UsuarioDaoGenSpImpl(oConnection);
                     oUsuario = oUsuarioDAO.get(oUsuario, AppConfigurationHelper.getJsonDepth());
                     oComentarioBean.setObj_usuario(oUsuario);
 

@@ -20,7 +20,12 @@ package net.daw.bean.generic.specific.implementation;
 import com.google.gson.annotations.Expose;
 import net.daw.bean.generic.implementation.BeanGenImpl;
 import net.daw.bean.publicinterface.BeanInterface;
+import net.daw.helper.annotations.TableSourceMetaInformation;
 
+@TableSourceMetaInformation(
+        TableName = "tipousuario",
+        Description = "Tipos de usuarios en el sistema"
+)
 public class TipousuarioBeanGenSpImpl extends BeanGenImpl implements BeanInterface {
     @Expose
     private String descripcion = "";

@@ -71,7 +71,7 @@ public class PublicacionServiceGenSpImpl extends TableServiceGenImpl {
         String resultado = null;
         try {
             oConnection.setAutoCommit(false);
-            PublicacionDaoGenSpImpl oPublicacionDAO = new PublicacionDaoGenSpImpl(strObjectName, oConnection);
+            PublicacionDaoGenSpImpl oPublicacionDAO = new PublicacionDaoGenSpImpl(oConnection);
             PublicacionBeanGenSpImpl oPublicacion = new PublicacionBeanGenSpImpl();
             Gson gson = new GsonBuilder().setDateFormat("dd/MM/yyyy HH:mm:ss").create();
             jason = EncodingUtilHelper.decodeURIComponent(jason);
@@ -100,7 +100,7 @@ public class PublicacionServiceGenSpImpl extends TableServiceGenImpl {
         String resultado = null;
         try {
             oConnection.setAutoCommit(false);
-            PublicacionDaoGenSpImpl oPublicacionDAO = new PublicacionDaoGenSpImpl(strObjectName, oConnection);
+            PublicacionDaoGenSpImpl oPublicacionDAO = new PublicacionDaoGenSpImpl(oConnection);
             AmistadBeanGenSpImpl oAmistad = new AmistadBeanGenSpImpl();
             Gson gson = new GsonBuilder().setDateFormat("dd/MM/yyyy HH:mm:ss").create();
             jason = EncodingUtilHelper.decodeURIComponent(jason);
@@ -123,7 +123,7 @@ public class PublicacionServiceGenSpImpl extends TableServiceGenImpl {
         String data = null;
         try {
             oConnection.setAutoCommit(false);
-            PublicacionDaoGenSpImpl oPublicacionDAO = new PublicacionDaoGenSpImpl(strObjectName, oConnection);
+            PublicacionDaoGenSpImpl oPublicacionDAO = new PublicacionDaoGenSpImpl(oConnection);
             PublicacionBeanGenSpImpl oPublicacion = new PublicacionBeanGenSpImpl(id);
             oPublicacion = oPublicacionDAO.get(oPublicacion, AppConfigurationHelper.getJsonDepth());
             GsonBuilder gsonBuilder = new GsonBuilder();
@@ -143,7 +143,7 @@ public class PublicacionServiceGenSpImpl extends TableServiceGenImpl {
         String data = null;
         try {
             oConnection.setAutoCommit(false);
-            PublicacionDaoGenSpImpl oPublicacionDAO = new PublicacionDaoGenSpImpl(strObjectName, oConnection);
+            PublicacionDaoGenSpImpl oPublicacionDAO = new PublicacionDaoGenSpImpl(oConnection);
             List<PublicacionBeanGenSpImpl> oPublicacions = oPublicacionDAO.getPage(intRegsPerPag, intPage, alFilter, hmOrder);
             GsonBuilder gsonBuilder = new GsonBuilder();
             gsonBuilder.setDateFormat("dd/MM/yyyy HH:mm:ss");
@@ -162,7 +162,7 @@ public class PublicacionServiceGenSpImpl extends TableServiceGenImpl {
         String data = null;
         try {
             oConnection.setAutoCommit(false);
-            PublicacionDaoGenSpImpl oPublicacionDAO = new PublicacionDaoGenSpImpl(strObjectName, oConnection);
+            PublicacionDaoGenSpImpl oPublicacionDAO = new PublicacionDaoGenSpImpl(oConnection);
             List<PublicacionBeanGenSpImpl> oPublicacions = oPublicacionDAO.getPageComentarioAmigo(id_usuario, intRegsPerPag, intPage, alFilter, hmOrder);
             GsonBuilder gsonBuilder = new GsonBuilder();
             gsonBuilder.setDateFormat("dd/MM/yyyy HH:mm:ss");
@@ -181,7 +181,7 @@ public class PublicacionServiceGenSpImpl extends TableServiceGenImpl {
         String data = null;
         try {
             oConnection.setAutoCommit(false);
-            PublicacionDaoGenSpImpl oPublicacionDAO = new PublicacionDaoGenSpImpl(strObjectName, oConnection);
+            PublicacionDaoGenSpImpl oPublicacionDAO = new PublicacionDaoGenSpImpl(oConnection);
             int pages = oPublicacionDAO.getPagesComentarioAmigo(id_usuario, intRegsPerPag, alFilter);
             data = "{\"data\":\"" + Integer.toString(pages) + "\"}";
             oConnection.commit();

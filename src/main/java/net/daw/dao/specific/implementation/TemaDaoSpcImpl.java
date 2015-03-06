@@ -111,13 +111,13 @@ public class TemaDaoSpcImpl implements ViewDaoInterface<TemaBeanGenSpImpl>, Tabl
 
                         TipotemaBeanGenSpImpl oTipotema = new TipotemaBeanGenSpImpl();
                         oTipotema.setId(Integer.parseInt(oMysql.getOne(strTableName, "id_tipotema", oTemaBean.getId())));
-                        TipotemaDaoGenSpImpl oTipotemaDAO = new TipotemaDaoGenSpImpl("tipotema", oConnection);
+                        TipotemaDaoGenSpImpl oTipotemaDAO = new TipotemaDaoGenSpImpl(oConnection);
                         oTipotema = oTipotemaDAO.get(oTipotema, AppConfigurationHelper.getJsonDepth());
                         oTemaBean.setObj_tipotema(oTipotema);
 
                         UsuarioBeanGenSpImpl oUsuario = new UsuarioBeanGenSpImpl();
                         oUsuario.setId(Integer.parseInt(oMysql.getOne(strTableName, "id_usuario", oTemaBean.getId())));
-                        UsuarioDaoGenSpImpl oUsuarioDAO = new UsuarioDaoGenSpImpl("usuario", oConnection);
+                        UsuarioDaoGenSpImpl oUsuarioDAO = new UsuarioDaoGenSpImpl(oConnection);
                         oUsuario = oUsuarioDAO.get(oUsuario, AppConfigurationHelper.getJsonDepth());
                         oTemaBean.setObj_usuario(oUsuario);
                     }

@@ -49,7 +49,7 @@ public class JspControl extends HttpServlet {
             throws ServletException, IOException, Exception {
         retardo(0); //debug delay
         ConnectionInterface DataConnectionSource = null;
-        Connection connection = null;
+        Connection oConnection = null;
         try {
             try {
                 Class.forName("com.mysql.jdbc.Driver");
@@ -83,10 +83,10 @@ public class JspControl extends HttpServlet {
                     if (!login.equals("") && !pass.equals("")) {
                         try {
                             DataConnectionSource = new BoneConnectionPoolImpl();
-                            connection = DataConnectionSource.newConnection();
+                            oConnection = DataConnectionSource.newConnection();
                             oUsuario.setLogin(login);
                             oUsuario.setPassword(pass);
-                            UsuarioDaoGenSpImpl oUsuarioDao = new UsuarioDaoGenSpImpl("usuario", connection);
+                            UsuarioDaoGenSpImpl oUsuarioDao = new UsuarioDaoGenSpImpl(oConnection);
                             oUsuario = oUsuarioDao.getFromLogin(oUsuario);
                             if (oUsuario.getId() != 0) {
                                 //oUsuario = oUsuarioDao.type(oUsuario); //fill user level -> pending
@@ -106,8 +106,8 @@ public class JspControl extends HttpServlet {
                             }
                             Logger.getLogger(JsonControl.class.getName()).log(Level.SEVERE, null, ex);
                         } finally {
-                            if (connection != null) {
-                                connection.close();
+                            if (oConnection != null) {
+                                oConnection.close();
                             }
                             if (DataConnectionSource != null) {
                                 DataConnectionSource.disposeConnection();
@@ -124,11 +124,11 @@ public class JspControl extends HttpServlet {
             //delivering jsp page
             if ("wrappered".equals(mode)) {
                 request.setAttribute("contenido", "jsp/" + ob + "/" + op + ".jsp");
-                request.setAttribute("connection", connection);
+                request.setAttribute("connection", oConnection);
                 getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
             } else {
                 response.setContentType("text/html; charset=UTF-8");
-                request.setAttribute("connection", connection);
+                request.setAttribute("connection", oConnection);
                 getServletContext().getRequestDispatcher("/jsp/" + ob + "/" + op + ".jsp").forward(request, response);
             }
         } catch (Exception ex) {

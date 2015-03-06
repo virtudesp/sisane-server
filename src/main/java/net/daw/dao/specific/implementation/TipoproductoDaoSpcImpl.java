@@ -36,7 +36,7 @@ import net.daw.helper.statics.SqlBuilder;
 
 public class TipoproductoDaoSpcImpl implements ViewDaoInterface<TipoproductoBeanGenSpImpl>, TableDaoInterface<TipoproductoBeanGenSpImpl>, MetaDaoInterface {
 
-    private String strDataOrigin = null;
+    private String strSqlSelectDataOrigin = null;
     private String strTableOrigin = null;
     private MysqlDataSpImpl oMysql = null;
     private Connection oConnection = null;
@@ -44,7 +44,7 @@ public class TipoproductoDaoSpcImpl implements ViewDaoInterface<TipoproductoBean
     public TipoproductoDaoSpcImpl(Connection oConexion) throws Exception {
         try {
             strTableOrigin = "tipoproducto";
-            strDataOrigin = "select * from " + strTableOrigin + " where 1=1 ";
+            strSqlSelectDataOrigin = "select * from " + strTableOrigin + " where 1=1 ";
             oConnection = oConexion;
             oMysql = new MysqlDataSpImpl(oConnection);
         } catch (Exception ex) {
@@ -76,10 +76,10 @@ public class TipoproductoDaoSpcImpl implements ViewDaoInterface<TipoproductoBean
 
     @Override
     public int getPages(int intRegsPerPag, ArrayList<FilterBeanHelper> alFilter) throws Exception {
-        strDataOrigin += SqlBuilder.buildSqlWhere(alFilter);
+        strSqlSelectDataOrigin += SqlBuilder.buildSqlWhere(alFilter);
         int pages = 0;
         try {
-            pages = oMysql.getNewPages(strDataOrigin, intRegsPerPag);
+            pages = oMysql.getNewPages(strSqlSelectDataOrigin, intRegsPerPag);
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPages ERROR: " + ex.getMessage()));
         }
@@ -88,10 +88,10 @@ public class TipoproductoDaoSpcImpl implements ViewDaoInterface<TipoproductoBean
 
     @Override
     public int getCount(ArrayList<FilterBeanHelper> alFilter) throws Exception {
-        strDataOrigin += SqlBuilder.buildSqlWhere(alFilter);
+        strSqlSelectDataOrigin += SqlBuilder.buildSqlWhere(alFilter);
         int pages = 0;
         try {
-            pages = oMysql.getNewCount(strDataOrigin);
+            pages = oMysql.getNewCount(strSqlSelectDataOrigin);
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getCount ERROR: " + ex.getMessage()));
         }
@@ -100,12 +100,12 @@ public class TipoproductoDaoSpcImpl implements ViewDaoInterface<TipoproductoBean
 
     @Override
     public ArrayList<TipoproductoBeanGenSpImpl> getPage(int intRegsPerPag, int intPage, ArrayList<FilterBeanHelper> alFilter, HashMap<String, String> hmOrder) throws Exception {
-        strDataOrigin += SqlBuilder.buildSqlWhere(alFilter);
-        strDataOrigin += SqlBuilder.buildSqlOrder(hmOrder);
+        strSqlSelectDataOrigin += SqlBuilder.buildSqlWhere(alFilter);
+        strSqlSelectDataOrigin += SqlBuilder.buildSqlOrder(hmOrder);
         ArrayList<Integer> arrId;
         ArrayList<TipoproductoBeanGenSpImpl> arrTipoproducto = new ArrayList<>();
         try {
-            arrId = oMysql.getNewPage(strDataOrigin, intRegsPerPag, intPage);
+            arrId = oMysql.getNewPage(strSqlSelectDataOrigin, intRegsPerPag, intPage);
             Iterator<Integer> iterador = arrId.listIterator();
             while (iterador.hasNext()) {
                 TipoproductoBeanGenSpImpl oTipoproductoBean = new TipoproductoBeanGenSpImpl(iterador.next());
@@ -121,16 +121,16 @@ public class TipoproductoDaoSpcImpl implements ViewDaoInterface<TipoproductoBean
     public TipoproductoBeanGenSpImpl get(TipoproductoBeanGenSpImpl oTipoproductoBean, Integer expand) throws Exception {
         if (oTipoproductoBean.getId() > 0) {
             try {
-                if (!oMysql.existsNewOne(strDataOrigin, oTipoproductoBean.getId())) {
+                if (!oMysql.existsNewOne(strSqlSelectDataOrigin, oTipoproductoBean.getId())) {
                     oTipoproductoBean.setId(0);
                 } else {
                     expand--;
                     if (expand > 0) {
-                        oTipoproductoBean.setDescripcion(oMysql.getNewOne(strDataOrigin, "descripcion", oTipoproductoBean.getId()));
-                        oTipoproductoBean.setId_impuesto(Integer.parseInt(oMysql.getOne(strDataOrigin, "id_impuesto", oTipoproductoBean.getId())));
+                        oTipoproductoBean.setDescripcion(oMysql.getNewOne(strSqlSelectDataOrigin, "descripcion", oTipoproductoBean.getId()));
+                        oTipoproductoBean.setId_impuesto(Integer.parseInt(oMysql.getOne(strSqlSelectDataOrigin, "id_impuesto", oTipoproductoBean.getId())));
 
                         ImpuestoBeanGenSpImpl oImpuesto = new ImpuestoBeanGenSpImpl();
-                        oImpuesto.setId(Integer.parseInt(oMysql.getNewOne(strDataOrigin, "id_impuesto", oTipoproductoBean.getId())));
+                        oImpuesto.setId(Integer.parseInt(oMysql.getNewOne(strSqlSelectDataOrigin, "id_impuesto", oTipoproductoBean.getId())));
                         ImpuestoDaoSpcImpl oImpuestoDAO = new ImpuestoDaoSpcImpl(oConnection);
                         oImpuesto = oImpuestoDAO.get(oImpuesto, AppConfigurationHelper.getJsonDepth());
                         oTipoproductoBean.setObj_impuesto(oImpuesto);

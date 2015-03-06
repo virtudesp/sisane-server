@@ -28,7 +28,7 @@ import net.daw.helper.statics.ExceptionBooster;
 
 public abstract class MetaDaoGenImpl<BEAN_CLASS> implements MetaDaoInterface<BEAN_CLASS> {
 
-    protected String strDataOrigin = null;
+    protected String strSqlSelectDataOrigin = null;
     protected String strTableOrigin = null;
     protected MysqlDataSpImpl oMysql = null;
     protected Connection oConnection = null;
@@ -40,15 +40,15 @@ public abstract class MetaDaoGenImpl<BEAN_CLASS> implements MetaDaoInterface<BEA
                 TableSourceMetaInformation annotationTableSourceMetaInformation = classBEAN.getAnnotation(TableSourceMetaInformation.class);
                 //TableSourceMetaInformation annotationTableSourceMetaInformation = (TableSourceMetaInformation) annotation;
                 strTableOrigin = annotationTableSourceMetaInformation.TableName();
-                strDataOrigin = "select * from " + strTableOrigin + " where 1=1 ";
+                strSqlSelectDataOrigin = "select * from " + strTableOrigin + " where 1=1 ";
             }
             if (classBEAN.isAnnotationPresent(SelectSourceMetaInformation.class)) {
                 SelectSourceMetaInformation annotationSelectSourceMetaInformation = classBEAN.getAnnotation(SelectSourceMetaInformation.class);
                 //SelectSourceMetaInformation annotationSelectSourceMetaInformation = (SelectSourceMetaInformation) annotation;
                 strTableOrigin = null;
-                strDataOrigin = annotationSelectSourceMetaInformation.SqlSelection() + " where 1=1 ";
+                strSqlSelectDataOrigin = annotationSelectSourceMetaInformation.SqlSelection() + " where 1=1 ";
             }
-            if (strDataOrigin.equals(null)) {
+            if (strSqlSelectDataOrigin.equals(null)) {
                 ExceptionBooster.boost(new Exception(this.getClass().getName() + ":constructor ERROR: " + classBEAN.getName() + " Beans must be annotated by SelectSourceMetaInformation or TableSourceMetaInformation "));
             }
             oConnection = pooledConnection;

@@ -110,13 +110,13 @@ public class MensajeprivadoDaoSpcImpl implements ViewDaoInterface<Mensajeprivado
 
                         UsuarioBeanGenSpImpl oUsuario1 = new UsuarioBeanGenSpImpl();
                         oUsuario1.setId(Integer.parseInt(oMysql.getOne(strTableName, "id_usuario_1", oMensajeprivadoBean.getId())));
-                        UsuarioDaoGenSpImpl oUsuarioDAO1 = new UsuarioDaoGenSpImpl("usuario", oConnection);
+                        UsuarioDaoGenSpImpl oUsuarioDAO1 = new UsuarioDaoGenSpImpl(oConnection);
                         oUsuario1 = oUsuarioDAO1.get(oUsuario1, AppConfigurationHelper.getJsonDepth());
                         oMensajeprivadoBean.setObj_usuario_1(oUsuario1);
 
                         UsuarioBeanGenSpImpl oUsuario2 = new UsuarioBeanGenSpImpl();
                         oUsuario2.setId(Integer.parseInt(oMysql.getOne(strTableName, "id_usuario_2", oMensajeprivadoBean.getId())));
-                        UsuarioDaoGenSpImpl oUsuarioDAO2 = new UsuarioDaoGenSpImpl("usuario", oConnection);
+                        UsuarioDaoGenSpImpl oUsuarioDAO2 = new UsuarioDaoGenSpImpl(oConnection);
                         oUsuario2 = oUsuarioDAO2.get(oUsuario2, AppConfigurationHelper.getJsonDepth());
                         oMensajeprivadoBean.setObj_usuario_2(oUsuario2);
                     }

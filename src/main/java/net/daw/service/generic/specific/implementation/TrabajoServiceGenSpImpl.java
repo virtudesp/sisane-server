@@ -35,7 +35,7 @@ public class TrabajoServiceGenSpImpl extends TableServiceGenImpl {
         try {
             TrabajoBeanGenSpImpl oTareaBean = new TrabajoBeanGenSpImpl();
             oTareaBean.setId(id);
-            TrabajoDaoGenSpImpl oTareaDao = new TrabajoDaoGenSpImpl(strObjectName, oConnection);
+            TrabajoDaoGenSpImpl oTareaDao = new TrabajoDaoGenSpImpl(oConnection);
             oTareaBean = oTareaDao.get(oTareaBean, AppConfigurationHelper.getJsonDepth());
             return "{\"data\":\"" + oTareaBean.getDescripcion() + "\"}";
         } catch (Exception e) {

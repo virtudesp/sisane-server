@@ -38,7 +38,7 @@ public class AmistadServiceGenSpImpl extends TableServiceGenImpl {
         try {
             oConnection.setAutoCommit(false);
          
-            AmistadDaoGenSpImpl oAmigoDAO = new AmistadDaoGenSpImpl(strObjectName, oConnection); 
+            AmistadDaoGenSpImpl oAmigoDAO = new AmistadDaoGenSpImpl(oConnection); 
             AmistadBeanGenSpImpl oAmigo = new AmistadBeanGenSpImpl();
             oAmigo.setId_usuario_1(id_usuario_1);
             oAmigo.setId_usuario_2(id_usuario_2);
@@ -72,7 +72,7 @@ public class AmistadServiceGenSpImpl extends TableServiceGenImpl {
         String resultado = null;
         try {
             oConnection.setAutoCommit(false);
-            AmistadDaoGenSpImpl oAmigoDAO = new AmistadDaoGenSpImpl(strObjectName, oConnection);
+            AmistadDaoGenSpImpl oAmigoDAO = new AmistadDaoGenSpImpl(oConnection);
             AmistadBeanGenSpImpl oAmigo = new AmistadBeanGenSpImpl();
             oAmigo.setId_usuario_1(id_usuario_1);
             oAmigo.setId_usuario_2(id_usuario_2);
@@ -95,7 +95,7 @@ public class AmistadServiceGenSpImpl extends TableServiceGenImpl {
         String resultado = null;
         try {
             oConnection.setAutoCommit(false);
-            AmistadDaoGenSpImpl oAmigoDAO = new AmistadDaoGenSpImpl(strObjectName, oConnection);
+            AmistadDaoGenSpImpl oAmigoDAO = new AmistadDaoGenSpImpl(oConnection);
             AmistadBeanGenSpImpl oAmigo = new AmistadBeanGenSpImpl();
             oAmigo.setId_usuario_1(id_usuario_1);
             oAmigo.setId_usuario_2(id_usuario_2);

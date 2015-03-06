@@ -47,10 +47,10 @@ public class PermisoServiceGenSpImpl extends TableServiceGenImpl {
             oConnection.setAutoCommit(false);
             ObjetoBeanGenSpImpl oObjetoBean = new ObjetoBeanGenSpImpl();
             oObjetoBean.setDescripcion(strObjeto);
-            ObjetoDaoGenSpImpl oObjetoDao = new ObjetoDaoGenSpImpl("objeto", oConnection);
+            ObjetoDaoGenSpImpl oObjetoDao = new ObjetoDaoGenSpImpl(oConnection);
             oObjetoBean.setId(oObjetoDao.getId(oObjetoBean));
 
-            OperacionDaoGenSpImpl oOperacionDao = new OperacionDaoGenSpImpl("operacion", oConnection);
+            OperacionDaoGenSpImpl oOperacionDao = new OperacionDaoGenSpImpl(oConnection);
             OperacionBeanGenSpImpl oOperacionBean = new OperacionBeanGenSpImpl();
             oOperacionBean.setDescripcion(strOperacion);
             oOperacionBean.setId_objeto(oObjetoBean.getId());
@@ -64,7 +64,7 @@ public class PermisoServiceGenSpImpl extends TableServiceGenImpl {
             PermisoBeanGenSpImpl oPermisoBean = new PermisoBeanGenSpImpl();
             oPermisoBean.setId_tipooperacion(idTipooperacion);
             oPermisoBean.setId_tipousuario(idTipousuario);
-            PermisoDaoGenSpImpl oPermisoDao = new PermisoDaoGenSpImpl("permiso",oConnection);
+            PermisoDaoGenSpImpl oPermisoDao = new PermisoDaoGenSpImpl(oConnection);
             permiso=oPermisoDao.hasPermission(oPermisoBean);
             
         } catch (Exception ex) {

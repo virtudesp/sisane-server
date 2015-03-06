@@ -52,7 +52,7 @@ public class CuestionarioServiceGenSpImpl extends TableServiceGenImpl {
         try {
             CuestionarioBeanGenSpImpl oCuestionarioBean = new CuestionarioBeanGenSpImpl();
             oCuestionarioBean.setId(id);
-            CuestionarioDaoGenSpImpl oCuestionarioDao = new CuestionarioDaoGenSpImpl(strObjectName, oConnection);
+            CuestionarioDaoGenSpImpl oCuestionarioDao = new CuestionarioDaoGenSpImpl(oConnection);
             oCuestionarioBean = oCuestionarioDao.get(oCuestionarioBean, 1);
             return "{\"data\":\"" + oCuestionarioBean.getTipo() + "\"}";
         } catch (Exception e) {
@@ -65,8 +65,8 @@ public class CuestionarioServiceGenSpImpl extends TableServiceGenImpl {
 
         ArrayList<OpcionBeanGenSpImpl> resultado = new ArrayList<OpcionBeanGenSpImpl>();
 
-        PreguntaDaoGenSpImpl oPreguntaDao = new PreguntaDaoGenSpImpl("pregunta", oConnection);
-        OpcionDaoGenSpImpl oOpcionDao = new OpcionDaoGenSpImpl("opcion", oConnection);
+        PreguntaDaoGenSpImpl oPreguntaDao = new PreguntaDaoGenSpImpl(oConnection);
+        OpcionDaoGenSpImpl oOpcionDao = new OpcionDaoGenSpImpl(oConnection);
         try {
             oConnection.setAutoCommit(false);
             Gson gson = new GsonBuilder().setDateFormat("dd/MM/yyyy").create();
