@@ -17,7 +17,7 @@
 --%>
 
 <%@page import="java.sql.Connection"%>
-<%@page import="net.daw.dao.specific.implementation.PropuestaDaoSpcImpl"%>
+<%@page import="net.daw.dao.specific.implementation.PropuestaDao"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.Iterator"%>
 <%

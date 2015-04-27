@@ -25,10 +25,10 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import net.daw.bean.generic.specific.implementation.UsuarioBeanGenSpImpl;
+import net.daw.bean.specific.implementation.UsuarioBean;
 import net.daw.connection.implementation.BoneConnectionPoolImpl;
 import net.daw.connection.publicinterface.ConnectionInterface;
-import net.daw.dao.generic.specific.implementation.UsuarioDaoGenSpImpl;
+import net.daw.dao.specific.implementation.UsuarioDao;
 import net.daw.helper.statics.EstadoHelper;
 import net.daw.helper.statics.EstadoHelper.Tipo_estado;
 import net.daw.helper.statics.ParameterCook;
@@ -77,7 +77,7 @@ public class JspControl extends HttpServlet {
             //login & logout management
             if (ob.equalsIgnoreCase("usuario")) {
                 if (op.equalsIgnoreCase("login02")) {
-                    UsuarioBeanGenSpImpl oUsuario = new UsuarioBeanGenSpImpl();
+                    UsuarioBean oUsuario = new UsuarioBean();
                     String login = request.getParameter("login");
                     String pass = request.getParameter("password");
                     if (!login.equals("") && !pass.equals("")) {
@@ -86,7 +86,7 @@ public class JspControl extends HttpServlet {
                             oConnection = DataConnectionSource.newConnection();
                             oUsuario.setLogin(login);
                             oUsuario.setPassword(pass);
-                            UsuarioDaoGenSpImpl oUsuarioDao = new UsuarioDaoGenSpImpl(oConnection);
+                            UsuarioDao oUsuarioDao = new UsuarioDao(oConnection);
                             oUsuario = oUsuarioDao.getFromLogin(oUsuario);
                             if (oUsuario.getId() != 0) {
                                 //oUsuario = oUsuarioDao.type(oUsuario); //fill user level -> pending

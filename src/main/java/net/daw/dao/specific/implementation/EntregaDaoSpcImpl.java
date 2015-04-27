@@ -23,10 +23,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Locale;
-import net.daw.bean.generic.specific.implementation.ActividadBeanGenSpImpl;
-import net.daw.bean.generic.specific.implementation.DocumentoBeanGenSpImpl;
-import net.daw.bean.generic.specific.implementation.EntregaBeanGenSpImpl;
-import net.daw.dao.generic.specific.implementation.DocumentoDaoGenSpImpl;
+import net.daw.bean.specific.implementation.ActividadBean;
+import net.daw.bean.specific.implementation.DocumentoBean;
+import net.daw.bean.specific.implementation.EntregaBean;
 import net.daw.dao.publicinterface.MetaDaoInterface;
 import net.daw.dao.publicinterface.TableDaoInterface;
 import net.daw.dao.publicinterface.ViewDaoInterface;
@@ -35,7 +34,7 @@ import net.daw.helper.statics.AppConfigurationHelper;
 import net.daw.helper.statics.ExceptionBooster;
 import net.daw.helper.statics.FilterBeanHelper;
 
-public class EntregaDaoSpcImpl implements ViewDaoInterface<EntregaBeanGenSpImpl>, TableDaoInterface<EntregaBeanGenSpImpl>, MetaDaoInterface {
+public class EntregaDaoSpcImpl implements ViewDaoInterface<EntregaBean>,TableDaoInterface<EntregaBean>, MetaDaoInterface {
 
     private String strTableName = null;
     private MysqlDataSpImpl oMysql = null;
@@ -74,14 +73,14 @@ public class EntregaDaoSpcImpl implements ViewDaoInterface<EntregaBeanGenSpImpl>
     }
 
     @Override
-    public ArrayList<EntregaBeanGenSpImpl> getPage(int intRegsPerPag, int intPage, ArrayList<FilterBeanHelper> hmFilter, HashMap<String, String> hmOrder) throws Exception {
+    public ArrayList<EntregaBean> getPage(int intRegsPerPag, int intPage, ArrayList<FilterBeanHelper> hmFilter, HashMap<String, String> hmOrder) throws Exception {
         ArrayList<Integer> arrId;
-        ArrayList<EntregaBeanGenSpImpl> arrEntrega = new ArrayList<>();
+        ArrayList<EntregaBean> arrEntrega = new ArrayList<>();
         try {
             arrId = oMysql.getPage(strTableName, intRegsPerPag, intPage, hmFilter, hmOrder);
             Iterator<Integer> iterador = arrId.listIterator();
             while (iterador.hasNext()) {
-                EntregaBeanGenSpImpl oEntregaBean = new EntregaBeanGenSpImpl(iterador.next());
+                EntregaBean oEntregaBean = new EntregaBean(iterador.next());
                 arrEntrega.add(this.get(oEntregaBean, AppConfigurationHelper.getJsonDepth()));
             }
         } catch (Exception ex) {
@@ -91,7 +90,7 @@ public class EntregaDaoSpcImpl implements ViewDaoInterface<EntregaBeanGenSpImpl>
     }
 
     @Override
-    public EntregaBeanGenSpImpl get(EntregaBeanGenSpImpl oEntregaBean, Integer expand) throws Exception {
+    public EntregaBean get(EntregaBean oEntregaBean, Integer expand) throws Exception {
         if (oEntregaBean.getId() > 0) {
             try {
                 if (!oMysql.existsOne(strTableName, oEntregaBean.getId())) {
@@ -106,16 +105,16 @@ public class EntregaDaoSpcImpl implements ViewDaoInterface<EntregaBeanGenSpImpl>
 
                     oEntregaBean.setId_documento(Integer.parseInt(oMysql.getOne(strTableName, "id_documento", oEntregaBean.getId())));
 
-                    DocumentoBeanGenSpImpl oDocumento = new DocumentoBeanGenSpImpl();
+                    DocumentoBean oDocumento = new DocumentoBean();
                     oDocumento.setId(Integer.parseInt(oMysql.getOne(strTableName, "id_documento", oEntregaBean.getId())));
-                    DocumentoDaoGenSpImpl oDocumentoDAO = new DocumentoDaoGenSpImpl(oConnection);
+                    DocumentoDao oDocumentoDAO = new DocumentoDao(oConnection);
                     oDocumento = oDocumentoDAO.get(oDocumento, AppConfigurationHelper.getJsonDepth());
                     oEntregaBean.setObj_documento(oDocumento);
 
                     oEntregaBean.setId_documento(Integer.parseInt(oMysql.getOne(strTableName, "id_actividad", oEntregaBean.getId())));
-                    ActividadBeanGenSpImpl oActividad = new ActividadBeanGenSpImpl();
+                    ActividadBean oActividad = new ActividadBean();
                     oActividad.setId(Integer.parseInt(oMysql.getOne(strTableName, "id_actividad", oEntregaBean.getId())));
-                    ActividadDaoSpcImpl oActividadDAO = new ActividadDaoSpcImpl("actividad", oConnection);
+                    ActividadDao oActividadDAO = new ActividadDao(oConnection);
                     oActividad = oActividadDAO.get(oActividad, AppConfigurationHelper.getJsonDepth());
                     oEntregaBean.setObj_actividad(oActividad);
 
@@ -130,7 +129,7 @@ public class EntregaDaoSpcImpl implements ViewDaoInterface<EntregaBeanGenSpImpl>
     }
 
     @Override
-    public EntregaBeanGenSpImpl set(EntregaBeanGenSpImpl oEntregaBean) throws Exception {
+    public EntregaBean set(EntregaBean oEntregaBean) throws Exception {
         try {
             if (oEntregaBean.getId() == 0) {
                 oEntregaBean.setId(oMysql.insertOne(strTableName));
@@ -151,7 +150,7 @@ public class EntregaDaoSpcImpl implements ViewDaoInterface<EntregaBeanGenSpImpl>
     }
 
     @Override
-    public int remove(EntregaBeanGenSpImpl oEntregaBean) throws Exception {
+    public int remove(EntregaBean oEntregaBean) throws Exception {
         int result = 0;
         try {
             result = oMysql.removeOne(oEntregaBean.getId(), strTableName);

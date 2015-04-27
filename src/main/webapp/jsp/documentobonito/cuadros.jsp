@@ -5,7 +5,7 @@
 --%>
 
 <%@page import="java.sql.Connection"%>
-<%@page import="net.daw.dao.generic.specific.implementation.DocumentobonitoDaoGenSpImpl"%>
+<%@page import="net.daw.dao.specific.implementation.DocumentobonitoDao"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.Iterator"%>
 <%

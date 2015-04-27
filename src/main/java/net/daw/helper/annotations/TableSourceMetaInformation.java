@@ -17,16 +17,18 @@
  */
 package net.daw.helper.annotations;
 
+import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
-import net.daw.helper.statics.MetaEnum;
 
 /**
  *
  * @author raznara
  */
 @Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.TYPE)
 //@Target(ElementType.TYPE)
 public @interface TableSourceMetaInformation {
     public String TableName() default "";

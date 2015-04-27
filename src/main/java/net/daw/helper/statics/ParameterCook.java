@@ -155,4 +155,14 @@ public class ParameterCook {
         }
         return hmOrder;
     }
+
+    public static int prepareInt(String strParameter, HttpServletRequest request) {
+        int result = 0;
+        if (request.getParameter(strParameter) == null) {
+            result = 0;
+        } else {
+            result = Integer.parseInt(request.getParameter(strParameter));
+        }
+        return result;
+    }
 }

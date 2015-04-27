@@ -17,34 +17,38 @@
  */
 package net.daw.service.generic.implementation;
 
-import net.daw.service.publicinterface.ViewServiceInterface;
 import net.daw.service.publicinterface.TableServiceInterface;
-import net.daw.service.publicinterface.MetaServiceInterface;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import java.lang.reflect.Constructor;
 import java.sql.Connection;
 import java.util.HashMap;
 import java.util.Map;
+import javax.servlet.http.HttpServletRequest;
 import net.daw.bean.generic.implementation.BeanGenImpl;
 import net.daw.bean.publicinterface.BeanInterface;
+import net.daw.connection.implementation.BoneConnectionPoolImpl;
 import net.daw.dao.generic.implementation.TableDaoGenImpl;
 import net.daw.helper.statics.ExceptionBooster;
+import net.daw.helper.statics.ParameterCook;
 
-public abstract class TableServiceGenImpl extends ViewServiceGenImpl implements TableServiceInterface, ViewServiceInterface, MetaServiceInterface {
+public abstract class TableServiceGenImpl extends ViewServiceGenImpl implements TableServiceInterface {
 
-    public TableServiceGenImpl(String ob, String pojo, Connection con) {
-        super(ob, pojo, con);
+    public TableServiceGenImpl(HttpServletRequest request) {
+        super(request);
     }
 
     @Override
-    public String remove(Integer id) throws Exception {
+    public String remove() throws Exception {
+        Integer id = ParameterCook.prepareId(oRequest);
         String resultado = null;
+        Connection oConnection = null;
         try {
+            oConnection = new BoneConnectionPoolImpl().newConnection();
             oConnection.setAutoCommit(false);
-            BeanGenImpl oGenericBean = (BeanGenImpl) Class.forName("net.daw.bean.generic.specific.implementation." + strObjectName + "BeanGenSpImpl").newInstance();
-            Constructor c = Class.forName("net.daw.dao.generic.specific.implementation." + strObjectName + "DaoGenSpImpl").getConstructor(Connection.class);
-            TableDaoGenImpl oGenericDao = (TableDaoGenImpl) c.newInstance(strObjectName, oConnection);
+            BeanGenImpl oGenericBean = (BeanGenImpl) Class.forName("net.daw.bean.specific.implementation." + ParameterCook.prepareCamelCaseObject(oRequest) + "Bean").newInstance();
+            Constructor c = Class.forName("net.daw.dao.specific.implementation." + ParameterCook.prepareCamelCaseObject(oRequest) + "Dao").getConstructor(Connection.class);
+            TableDaoGenImpl oGenericDao = (TableDaoGenImpl) c.newInstance(oConnection);
             oGenericBean.setId(id);
             Map<String, String> data = new HashMap<>();
             if (oGenericBean != null) {
@@ -57,23 +61,27 @@ public abstract class TableServiceGenImpl extends ViewServiceGenImpl implements 
             }
             Gson gson = new Gson();
             resultado = gson.toJson(data);
+            oConnection.commit();
         } catch (Exception ex) {
             oConnection.rollback();
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":remove ERROR: " + ex.getMessage()));
         } finally {
-            oConnection.commit();
+            oConnection.close();
         }
         return resultado;
     }
 
     @Override
-    public String set(String jason) throws Exception {
+    public String set() throws Exception {
+        String jason = ParameterCook.prepareJson(oRequest);
         String resultado = null;
+        Connection oConnection = null;
         try {
+            oConnection = new BoneConnectionPoolImpl().newConnection();
             oConnection.setAutoCommit(false);
-            BeanGenImpl oGenericBean = (BeanGenImpl) Class.forName("net.daw.bean.generic.specific.implementation." + strObjectName + "BeanGenSpImpl").newInstance();
-            Constructor c = Class.forName("net.daw.dao.generic.specific.implementation." + strObjectName + "DaoGenSpImpl").getConstructor(Connection.class);
-            TableDaoGenImpl oGenericDao = (TableDaoGenImpl) c.newInstance(strObjectName, oConnection);
+            BeanGenImpl oGenericBean = (BeanGenImpl) Class.forName("net.daw.bean.specific.implementation." + ParameterCook.prepareCamelCaseObject(oRequest) + "Bean").newInstance();
+            Constructor c = Class.forName("net.daw.dao.specific.implementation." + ParameterCook.prepareCamelCaseObject(oRequest) + "Dao").getConstructor(Connection.class);
+            TableDaoGenImpl oGenericDao = (TableDaoGenImpl) c.newInstance(oConnection);
             Gson gson = new GsonBuilder().setDateFormat("dd/MM/yyyy").excludeFieldsWithoutExposeAnnotation().create();
             oGenericBean = gson.fromJson(jason, oGenericBean.getClass());
             Map<String, String> data = new HashMap<>();

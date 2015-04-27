@@ -16,8 +16,8 @@
  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 --%>
 <!--Obtiene el usuario a traves del id del pojo.-->
-<%@page import="net.daw.bean.generic.specific.implementation.UsuarioBeanGenSpImpl"%>
-<%UsuarioBeanGenSpImpl user = (UsuarioBeanGenSpImpl) request.getSession().getAttribute("usuarioBean");%>
+<%@page import="net.daw.bean.specific.implementation.UsuarioBean"%>
+<%UsuarioBean user = (UsuarioBean) request.getSession().getAttribute("usuarioBean");%>
 <%
         int id = user.getId();
 %>

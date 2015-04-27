@@ -18,7 +18,6 @@
 package net.daw.service.generic.implementation;
 
 import net.daw.service.publicinterface.ViewServiceInterface;
-import net.daw.service.publicinterface.MetaServiceInterface;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import java.lang.reflect.Constructor;
@@ -26,50 +25,71 @@ import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import javax.servlet.http.HttpServletRequest;
 import net.daw.bean.generic.implementation.BeanGenImpl;
 import net.daw.bean.publicinterface.BeanInterface;
+import net.daw.connection.implementation.BoneConnectionPoolImpl;
 import net.daw.dao.generic.implementation.TableDaoGenImpl;
 import net.daw.helper.statics.AppConfigurationHelper;
 import net.daw.helper.statics.ExceptionBooster;
 import net.daw.helper.statics.FilterBeanHelper;
+import net.daw.helper.statics.JsonMessage;
+import net.daw.helper.statics.ParameterCook;
 
-public abstract class ViewServiceGenImpl extends MetaServiceGenImpl implements ViewServiceInterface, MetaServiceInterface {
+public abstract class ViewServiceGenImpl extends MetaServiceGenImpl implements ViewServiceInterface {
 
-    public ViewServiceGenImpl(String ob, String pojo, Connection con) {
-        super(ob, pojo, con);
+    public ViewServiceGenImpl(HttpServletRequest request) {
+        super(request);
+    }
+
+    protected Boolean canexecute_get() {
+        return true;
     }
 
     @Override
-    public String get(Integer id) throws Exception {
-        String data = null;
-        try {
-            oConnection.setAutoCommit(false);
-            BeanGenImpl oGenericBean = (BeanGenImpl) Class.forName("net.daw.bean.generic.specific.implementation." + strPojo + "BeanGenSpImpl").newInstance();
-            Constructor c = Class.forName("net.daw.dao.generic.specific.implementation." + strPojo + "DaoGenSpImpl").getConstructor( Connection.class);
-            TableDaoGenImpl oGenericDao = (TableDaoGenImpl) c.newInstance(strObjectName, oConnection);
-            oGenericBean.setId(id);
-            oGenericBean = (BeanGenImpl) (BeanInterface) oGenericDao.get(oGenericBean, AppConfigurationHelper.getJsonDepth());
-            GsonBuilder gsonBuilder = new GsonBuilder();
-            gsonBuilder.setDateFormat("dd/MM/yyyy");
-            Gson gson = gsonBuilder.excludeFieldsWithoutExposeAnnotation().create();
-            data = gson.toJson(oGenericBean);
-        } catch (Exception ex) {
-            oConnection.rollback();
-            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":get ERROR: " + ex.getMessage()));
-        } finally {
-            oConnection.commit();
+    public String get() throws Exception {
+        if (this.canexecute_get()) {
+            int id = ParameterCook.prepareId(oRequest);
+            String data = null;
+            Connection oConnection = null;
+            try {
+                oConnection = new BoneConnectionPoolImpl().newConnection();
+                oConnection.setAutoCommit(false);
+                BeanGenImpl oGenericBean = (BeanGenImpl) Class.forName("net.daw.bean.specific.implementation." + ParameterCook.prepareCamelCaseObject(oRequest) + "Bean").newInstance();
+                Constructor c = Class.forName("net.daw.dao.specific.implementation." + ParameterCook.prepareCamelCaseObject(oRequest) + "Dao").getConstructor(Connection.class);
+                TableDaoGenImpl oGenericDao = (TableDaoGenImpl) c.newInstance(oConnection);
+                oGenericBean.setId(id);
+                oGenericBean = (BeanGenImpl) (BeanInterface) oGenericDao.get(oGenericBean, AppConfigurationHelper.getJsonDepth());
+                GsonBuilder gsonBuilder = new GsonBuilder();
+                gsonBuilder.setDateFormat("dd/MM/yyyy");
+                Gson gson = gsonBuilder.excludeFieldsWithoutExposeAnnotation().create();
+                data = gson.toJson(oGenericBean);
+            } catch (Exception ex) {
+                oConnection.rollback();
+                ExceptionBooster.boost(new Exception(this.getClass().getName() + ":get ERROR: " + ex.getMessage()));
+            } finally {
+                oConnection.commit();
+            }
+            return data;
+        } else {
+            return JsonMessage.get("500", "ERROR: Invalid permission: You aren't allowed to execute this command");
         }
-        return data;
     }
 
     @Override
-    public String getpage(int intRegsPerPag, int intPage, ArrayList<FilterBeanHelper> alFilter, HashMap<String, String> hmOrder) throws Exception {
+    public String getpage() throws Exception {
+        int intRegsPerPag = ParameterCook.prepareRpp(oRequest);;
+        int intPage = ParameterCook.preparePage(oRequest);
+        ArrayList<FilterBeanHelper> alFilter = ParameterCook.prepareFilter(oRequest);
+        HashMap<String, String> hmOrder = ParameterCook.prepareOrder(oRequest);
         String data = null;
+        Connection oConnection = null;
         try {
+            oConnection = new BoneConnectionPoolImpl().newConnection();
             oConnection.setAutoCommit(false);
-            BeanGenImpl oGenericBean = (BeanGenImpl) Class.forName("net.daw.bean.generic.specific.implementation." + strPojo + "BeanGenSpImpl").newInstance();
-            Constructor c = Class.forName("net.daw.dao.generic.specific.implementation." + strPojo + "DaoGenSpImpl").getConstructor(Connection.class);
-            TableDaoGenImpl oGenericDao = (TableDaoGenImpl) c.newInstance(strObjectName, oConnection);
+            BeanGenImpl oGenericBean = (BeanGenImpl) Class.forName("net.daw.bean.specific.implementation." + ParameterCook.prepareCamelCaseObject(oRequest) + "Bean").newInstance();
+            Constructor c = Class.forName("net.daw.dao.specific.implementation." + ParameterCook.prepareCamelCaseObject(oRequest) + "Dao").getConstructor(Connection.class);
+            TableDaoGenImpl oGenericDao = (TableDaoGenImpl) c.newInstance(oConnection);
             List<BeanInterface> loGenericBean = oGenericDao.getPage(intRegsPerPag, intPage, alFilter, hmOrder);
             GsonBuilder gsonBuilder = new GsonBuilder();
             gsonBuilder.setDateFormat("dd/MM/yyyy");
@@ -86,12 +106,17 @@ public abstract class ViewServiceGenImpl extends MetaServiceGenImpl implements V
     }
 
     @Override
-    public String getpages(int intRegsPerPag, ArrayList<FilterBeanHelper> alFilter) throws Exception {
+    public String getpages() throws Exception {
+        int intRegsPerPag = ParameterCook.prepareRpp(oRequest);
+        ArrayList<FilterBeanHelper> alFilter = ParameterCook.prepareFilter(oRequest);
         String data = null;
+        Connection oConnection = null;
         try {
+            oConnection = new BoneConnectionPoolImpl().newConnection();
             oConnection.setAutoCommit(false);
-            Constructor c = Class.forName("net.daw.dao.generic.specific.implementation." + strPojo + "DaoGenSpImpl").getConstructor(Connection.class);
-            TableDaoGenImpl oGenericDao = (TableDaoGenImpl) c.newInstance(strObjectName, oConnection);
+
+            Constructor c = Class.forName("net.daw.dao.specific.implementation." + ParameterCook.prepareCamelCaseObject(oRequest) + "Dao").getConstructor(Connection.class);
+            TableDaoGenImpl oGenericDao = (TableDaoGenImpl) c.newInstance(oConnection);
             int pages = oGenericDao.getPages(intRegsPerPag, alFilter);
             data = "{\"data\":\"" + Integer.toString(pages) + "\"}";
         } catch (Exception ex) {
@@ -104,12 +129,15 @@ public abstract class ViewServiceGenImpl extends MetaServiceGenImpl implements V
     }
 
     @Override
-    public String getcount(ArrayList<FilterBeanHelper> alFilter) throws Exception {
+    public String getcount() throws Exception {
         String data = null;
+        ArrayList<FilterBeanHelper> alFilter = ParameterCook.prepareFilter(oRequest);
+        Connection oConnection = null;
         try {
+            oConnection = new BoneConnectionPoolImpl().newConnection();
             oConnection.setAutoCommit(false);
-            Constructor c = Class.forName("net.daw.dao.generic.specific.implementation." + strPojo + "DaoGenSpImpl").getConstructor(Connection.class);
-            TableDaoGenImpl oGenericDao = (TableDaoGenImpl) c.newInstance(strObjectName, oConnection);
+            Constructor c = Class.forName("net.daw.dao.specific.implementation." + ParameterCook.prepareCamelCaseObject(oRequest) + "Dao").getConstructor(Connection.class);
+            TableDaoGenImpl oGenericDao = (TableDaoGenImpl) c.newInstance(oConnection);
             int registers = oGenericDao.getCount(alFilter);
             data = "{\"data\":\"" + Integer.toString(registers) + "\"}";
             return data;
@@ -124,16 +152,16 @@ public abstract class ViewServiceGenImpl extends MetaServiceGenImpl implements V
 
     @Override
     //no se utiliza por ahora
-    public String getaggregateviewsome(int intRegsPerPag, int intPage, ArrayList<FilterBeanHelper> alFilter, HashMap<String, String> hmOrder) throws Exception {
+    public String getaggregateviewsome() throws Exception {
         String data = null;
         try {
             //falta controlar la transacción a esta altura
             String columns = this.getcolumns();
             String prettyColumns = this.getprettycolumns();
             //String types = this.getTypes();
-            String page = this.getpage(intRegsPerPag, intPage, alFilter, hmOrder);
-            String pages = this.getpages(intRegsPerPag, alFilter);
-            String registers = this.getcount(alFilter);
+            String page = this.getpage();
+            String pages = this.getpages();
+            String registers = this.getcount();
             data = "{\"data\":{"
                     + "\"columns\":" + columns
                     + ",\"prettyColumns\":" + prettyColumns
@@ -149,14 +177,14 @@ public abstract class ViewServiceGenImpl extends MetaServiceGenImpl implements V
     }
 
     @Override
-    public String getaggregateviewone(Integer id) throws Exception {
+    public String getaggregateviewone() throws Exception {
         String data = null;
         try {
             //falta controlar la transacción a esta altura
             String columns = this.getcolumns();
             String prettyColumns = this.getprettycolumns();
             //String types = this.getTypes();
-            String one = this.get(id);
+            String one = this.get();
             data = "{\"data\":{"
                     + "\"columns\":" + columns
                     + ",\"prettyColumns\":" + prettyColumns

@@ -22,9 +22,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
-import net.daw.bean.generic.specific.implementation.UsuarioBeanGenSpImpl;
-import net.daw.bean.generic.specific.implementation.PedidoBeanGenSpImpl;
-import net.daw.dao.generic.specific.implementation.UsuarioDaoGenSpImpl;
+import net.daw.bean.specific.implementation.UsuarioBean;
+import net.daw.bean.specific.implementation.PedidoBean;
 import net.daw.dao.publicinterface.MetaDaoInterface;
 import net.daw.dao.publicinterface.TableDaoInterface;
 import net.daw.dao.publicinterface.ViewDaoInterface;
@@ -33,7 +32,7 @@ import net.daw.helper.statics.AppConfigurationHelper;
 import net.daw.helper.statics.ExceptionBooster;
 import net.daw.helper.statics.FilterBeanHelper;
 
-public class PedidoDaoSpcImpl implements ViewDaoInterface<PedidoBeanGenSpImpl>, TableDaoInterface<PedidoBeanGenSpImpl>, MetaDaoInterface {
+public class PedidoDaoSpcImpl implements ViewDaoInterface<PedidoBean>,TableDaoInterface<PedidoBean>, MetaDaoInterface {
 
     private String strTableName = null;
     private MysqlDataSpImpl oMysql = null;
@@ -72,14 +71,14 @@ public class PedidoDaoSpcImpl implements ViewDaoInterface<PedidoBeanGenSpImpl>, 
     }
 
     @Override
-    public ArrayList<PedidoBeanGenSpImpl> getPage(int intRegsPerPag, int intPage, ArrayList<FilterBeanHelper> hmFilter, HashMap<String, String> hmOrder) throws Exception {
+    public ArrayList<PedidoBean> getPage(int intRegsPerPag, int intPage, ArrayList<FilterBeanHelper> hmFilter, HashMap<String, String> hmOrder) throws Exception {
         ArrayList<Integer> arrId;
-        ArrayList<PedidoBeanGenSpImpl> arrPedido = new ArrayList<>();
+        ArrayList<PedidoBean> arrPedido = new ArrayList<>();
         try {
             arrId = oMysql.getPage(strTableName, intRegsPerPag, intPage, hmFilter, hmOrder);
             Iterator<Integer> iterador = arrId.listIterator();
             while (iterador.hasNext()) {
-                PedidoBeanGenSpImpl oPedidoBean = new PedidoBeanGenSpImpl(iterador.next());
+                PedidoBean oPedidoBean = new PedidoBean(iterador.next());
                 arrPedido.add(this.get(oPedidoBean, AppConfigurationHelper.getJsonDepth()));
             }
         } catch (Exception ex) {
@@ -89,7 +88,7 @@ public class PedidoDaoSpcImpl implements ViewDaoInterface<PedidoBeanGenSpImpl>, 
     }
 
     @Override
-    public PedidoBeanGenSpImpl get(PedidoBeanGenSpImpl oPedidoBean, Integer expand) throws Exception {
+    public PedidoBean get(PedidoBean oPedidoBean, Integer expand) throws Exception {
         if (oPedidoBean.getId() > 0) {
             try {
                 if (!oMysql.existsOne(strTableName, oPedidoBean.getId())) {
@@ -102,9 +101,9 @@ public class PedidoDaoSpcImpl implements ViewDaoInterface<PedidoBeanGenSpImpl>, 
                         oPedidoBean.setFecha(formatter.parse(dateInString));
                         oPedidoBean.setId_usuario(Integer.parseInt(oMysql.getOne(strTableName, "id_usuario", oPedidoBean.getId())));
 
-                        UsuarioBeanGenSpImpl oUsuario = new UsuarioBeanGenSpImpl();
+                        UsuarioBean oUsuario = new UsuarioBean();
                         oUsuario.setId(Integer.parseInt(oMysql.getOne(strTableName, "id_usuario", oPedidoBean.getId())));
-                        UsuarioDaoGenSpImpl oUsuarioDAO = new UsuarioDaoGenSpImpl(oConnection);
+                        UsuarioDao oUsuarioDAO = new UsuarioDao(oConnection);
                         oUsuario = oUsuarioDAO.get(oUsuario, AppConfigurationHelper.getJsonDepth());
                         oPedidoBean.setObj_usuario(oUsuario);
                     }
@@ -120,7 +119,7 @@ public class PedidoDaoSpcImpl implements ViewDaoInterface<PedidoBeanGenSpImpl>, 
     }
 
     @Override
-    public PedidoBeanGenSpImpl set(PedidoBeanGenSpImpl oPedidoBean) throws Exception {
+    public PedidoBean set(PedidoBean oPedidoBean) throws Exception {
         try {
             if (oPedidoBean.getId() == 0) {
                 oPedidoBean.setId(oMysql.insertOne(strTableName));
@@ -134,7 +133,7 @@ public class PedidoDaoSpcImpl implements ViewDaoInterface<PedidoBeanGenSpImpl>, 
     }
 
     @Override
-    public int remove(PedidoBeanGenSpImpl oPedidoBean) throws Exception {
+    public int remove(PedidoBean oPedidoBean) throws Exception {
         int result = 0;
         try {
             result = oMysql.removeOne(oPedidoBean.getId(), strTableName);

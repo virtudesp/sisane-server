@@ -15,11 +15,11 @@
  along with this program; if not, write to the Free Software
  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 --%>           
-<%@page import="net.daw.bean.generic.specific.implementation.UsuarioBeanGenSpImpl"%>
+<%@page import="net.daw.bean.specific.implementation.UsuarioBean"%>
 
 <%
     int id_tipousuario = 0, id_usuario = 0;
-    UsuarioBeanGenSpImpl user = (UsuarioBeanGenSpImpl) request.getSession().getAttribute("usuarioBean");
+    UsuarioBean user = (UsuarioBean) request.getSession().getAttribute("usuarioBean");
     if (user != null) {
         id_tipousuario = user.getId_tipousuario();
         id_usuario = user.getId();

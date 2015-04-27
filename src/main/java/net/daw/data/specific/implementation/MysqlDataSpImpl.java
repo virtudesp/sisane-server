@@ -1034,11 +1034,9 @@ public class MysqlDataSpImpl implements DataInterface {
         int intCount = 0;
         Statement oStatement = null;
         try {
-            intCount = this.getNewCount(strSqlSelectDataOrigin);
-            intResult = intCount / intRegsPerPage;
-            if ((intResult % intRegsPerPage) > 0) {
-                intResult++;
-            }
+            intCount = Math.max(this.getNewCount(strSqlSelectDataOrigin), 1);
+            intResult = (intCount - 1) / intRegsPerPage;
+            intResult++;
         } catch (SQLException ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPagesSQL ERROR:  Can't process query: " + ex.getMessage()));
         } finally {

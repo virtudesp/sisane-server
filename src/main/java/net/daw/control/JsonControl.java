@@ -32,6 +32,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.daw.helper.statics.EstadoHelper;
 import net.daw.helper.statics.EstadoHelper.Tipo_estado;
 import net.daw.helper.statics.ExceptionBooster;
+import net.daw.helper.statics.JsonMessage;
 import net.daw.helper.statics.ParameterCook;
 import net.daw.service.publicinterface.MetaServiceInterface;
 
@@ -53,19 +54,11 @@ public class JsonControl extends HttpServlet {
             try {
                 Class.forName("com.mysql.jdbc.Driver");
             } catch (Exception ex) {
-                if (EstadoHelper.getTipo_estado() == Tipo_estado.Debug) {
-                    Map<String, String> data = new HashMap<>();
-                    data.put("status", "500");
-                    data.put("message", "ERROR: " + ex.getMessage());
-                    Gson gson = new Gson();
-                    request.setAttribute("contenido", gson.toJson(data));
+                if (EstadoHelper.getTipo_estado() == Tipo_estado.Debug) {     
+                    request.setAttribute("contenido", JsonMessage.get("500",  "ERROR: " + ex.getMessage()));
                     getServletContext().getRequestDispatcher("/jsp/messageAjax.jsp").forward(request, response);
-                } else {
-                    Map<String, String> data = new HashMap<>();
-                    data.put("status", "500");
-                    data.put("message", "Applications server error. Please, contact your administrator.");
-                    Gson gson = new Gson();
-                    request.setAttribute("contenido", gson.toJson(data));
+                } else {                    
+                    request.setAttribute("contenido", JsonMessage.get("500", "Applications server error. Please, contact your administrator."));
                     getServletContext().getRequestDispatcher("/jsp/messageAjax.jsp").forward(request, response);
                 }
                 Logger.getLogger(JsonControl.class.getName()).log(Level.SEVERE, null, ex);
@@ -95,11 +88,11 @@ public class JsonControl extends HttpServlet {
                     //ControlOperationInterface oControl = (ControlOperationInterface) Class.forName(strClassName).getDeclaredConstructor(HttpServletRequest.class).newInstance(request);
                     //Method oMethodService = MetaServiceInterface.class.getMethod(ParameterCooker.prepareCamelCaseOperation(request));
 
-                    String strClassName = "net.daw.service.specific.implementation." + ParameterCook.prepareCamelCaseObject(request) + "ServiceSpImpl";
-                    MetaServiceInterface oService = (MetaServiceInterface) Class.forName(strClassName).getDeclaredConstructor().newInstance();
+                    String strClassName = "net.daw.service.specific.implementation." + ParameterCook.prepareCamelCaseObject(request) + "Service";
+                    MetaServiceInterface oService = (MetaServiceInterface) Class.forName(strClassName).getDeclaredConstructor(HttpServletRequest.class).newInstance(request);
                     //MetaServiceInterface oService = (MetaServiceInterface) Class.forName("net.daw.control.service.generic.specific.implementation." + ParameterCooker.prepareCamelCaseObject(request) + "GenSpImpl").getDeclaredConstructor(HttpServletRequest.class).newInstance(request);
-                    Method oMethodService = oService.getClass().getMethod(ParameterCook.prepareOperation(request),HttpServletRequest.class);
-                    jsonResult = (String) oMethodService.invoke(oService,request);
+                    Method oMethodService = oService.getClass().getMethod(ParameterCook.prepareOperation(request));
+                    jsonResult = (String) oMethodService.invoke(oService);
                 } catch (ClassNotFoundException | InstantiationException | IllegalAccessException ex) {
                     ExceptionBooster.boost(new Exception(this.getClass().getName() + ":processRequest ERROR: no such operation"));
                 }

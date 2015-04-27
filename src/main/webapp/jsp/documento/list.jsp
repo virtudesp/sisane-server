@@ -1,3 +1,4 @@
+
 <%-- 
  Copyright (C) July 2014 Rafael Aznar
 
@@ -17,7 +18,7 @@
 --%>
 
 <%@page import="java.sql.Connection"%>
-<%@page import="net.daw.dao.generic.specific.implementation.DocumentoDaoGenSpImpl"%>
+<%@page import="net.daw.dao.specific.implementation.DocumentoDao"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.Iterator"%>
 <%

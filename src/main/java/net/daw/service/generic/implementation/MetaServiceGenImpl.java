@@ -22,40 +22,31 @@ import com.google.gson.GsonBuilder;
 import java.lang.reflect.Constructor;
 import java.sql.Connection;
 import java.util.ArrayList;
+import javax.servlet.http.HttpServletRequest;
+import net.daw.connection.implementation.BoneConnectionPoolImpl;
 import net.daw.dao.generic.implementation.TableDaoGenImpl;
 import net.daw.helper.statics.ExceptionBooster;
+import net.daw.helper.statics.ParameterCook;
 import net.daw.service.publicinterface.MetaServiceInterface;
 
 public abstract class MetaServiceGenImpl implements MetaServiceInterface {
 
-    protected Connection oConnection = null;
-    protected String strObjectName = null;
-    protected String strPojo = null;
+    protected HttpServletRequest oRequest = null;
 
-    public MetaServiceGenImpl(String ob, String pojo, Connection con) {
-        strObjectName = Character.toUpperCase(ob.charAt(0)) + ob.substring(1);
-        oConnection = con;
-        strPojo = Character.toUpperCase(pojo.charAt(0)) + pojo.substring(1);
-    }
-
-    @Override
-    public void setsource(String source) throws Exception {
-        strObjectName = source;
-    }
-    
-    @Override
-    public void setpojo(String pojo) throws Exception {
-        strPojo = Character.toUpperCase(pojo.charAt(0)) + pojo.substring(1);
+    public MetaServiceGenImpl(HttpServletRequest request) {
+        oRequest = request;
     }
 
     @Override
     public String getprettycolumns() throws Exception {
         String data = null;
+        Connection oConnection = null;
+        ArrayList<String> alColumns = null;
         try {
+            oConnection = new BoneConnectionPoolImpl().newConnection();
             oConnection.setAutoCommit(false);
-            Constructor c = Class.forName("net.daw.dao.generic.specific.implementation." + strPojo + "DaoGenSpImpl").getConstructor(Connection.class);
-            TableDaoGenImpl oDao = (TableDaoGenImpl) c.newInstance(strObjectName, oConnection);
-            ArrayList<String> alColumns = null;
+            Constructor c = Class.forName("net.daw.dao.specific.implementation." + ParameterCook.prepareCamelCaseObject(oRequest) + "Dao").getConstructor(Connection.class);
+            TableDaoGenImpl oDao = (TableDaoGenImpl) c.newInstance(oConnection);
             alColumns = oDao.getPrettyColumnsNames();
             GsonBuilder gsonBuilder = new GsonBuilder();
             Gson gson = gsonBuilder.create();
@@ -71,11 +62,13 @@ public abstract class MetaServiceGenImpl implements MetaServiceInterface {
 
     @Override
     public String getcolumns() throws Exception {
+        Connection oConnection = null;
         String data = null;
         try {
+            oConnection = new BoneConnectionPoolImpl().newConnection();
             oConnection.setAutoCommit(false);
-            Constructor c = Class.forName("net.daw.dao.generic.specific.implementation." + strPojo + "DaoGenSpImpl").getConstructor(Connection.class);
-            TableDaoGenImpl oDao = (TableDaoGenImpl) c.newInstance(strObjectName, oConnection);
+            Constructor c = Class.forName("net.daw.dao.specific.implementation." + ParameterCook.prepareCamelCaseObject(oRequest) + "Dao").getConstructor(Connection.class);
+            TableDaoGenImpl oDao = (TableDaoGenImpl) c.newInstance(oConnection);
             ArrayList<String> alColumns = null;
             alColumns = oDao.getColumnsNames();
             GsonBuilder gsonBuilder = new GsonBuilder();

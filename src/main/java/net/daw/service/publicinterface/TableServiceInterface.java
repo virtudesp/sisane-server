@@ -19,9 +19,9 @@ package net.daw.service.publicinterface;
 
 public interface TableServiceInterface {
 
-    public String remove(Integer id) throws Exception;
+    public String remove() throws Exception;
 
-    public String set(String jason) throws Exception;
+    public String set() throws Exception;
 
 
 }

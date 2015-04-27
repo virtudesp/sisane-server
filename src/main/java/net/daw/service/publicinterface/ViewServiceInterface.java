@@ -17,22 +17,18 @@
  */
 package net.daw.service.publicinterface;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import net.daw.helper.statics.FilterBeanHelper;
-
 public interface ViewServiceInterface {
 
-    public String get(Integer id) throws Exception;
+    public String get() throws Exception;
 
-    public String getpage(int intRegsPerPag, int intPage, ArrayList<FilterBeanHelper> alFilter, HashMap<String, String> hmOrder) throws Exception;
+    public String getpage() throws Exception;
 
-    public String getpages(int intRegsPerPag, ArrayList<FilterBeanHelper> alFilter) throws Exception;
+    public String getpages() throws Exception;
 
-    public String getcount(ArrayList<FilterBeanHelper> alFilter) throws Exception;
+    public String getcount() throws Exception;
 
-    public String getaggregateviewone(Integer id) throws Exception;
+    public String getaggregateviewone() throws Exception;
 
-    public String getaggregateviewsome(int intRegsPerPag, int intPage, ArrayList<FilterBeanHelper> alFilter, HashMap<String, String> hmOrder) throws Exception;
+    public String getaggregateviewsome() throws Exception;
 
 }

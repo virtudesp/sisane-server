@@ -19,10 +19,20 @@ package net.daw.bean.generic.implementation;
 
 import net.daw.bean.publicinterface.BeanInterface;
 import com.google.gson.annotations.Expose;
+import net.daw.helper.annotations.MethodMetaInformation;
+import net.daw.helper.statics.MetaEnum;
 
 public class BeanGenImpl implements BeanInterface {
 
     @Expose
+        @MethodMetaInformation(
+            IsId = true,
+            UltraShortName = "Id.",
+            ShortName = "Identif.",
+            Description = "Número Identificador",
+            Type = MetaEnum.FieldType.Integer,
+            DefaultValue = "0"
+    )
     private Integer id;
 
     public BeanGenImpl() {

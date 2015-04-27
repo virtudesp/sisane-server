@@ -26,7 +26,8 @@ public class MetaEnum {
         String,
         Integer,
         Decimal,
-        Date
+        Date,
+        Boolean
     };
               public static enum SourceType {
         SQL,

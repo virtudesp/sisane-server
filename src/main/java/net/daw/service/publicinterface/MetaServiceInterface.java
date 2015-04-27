@@ -18,10 +18,6 @@
 package net.daw.service.publicinterface;
 
 public interface MetaServiceInterface {
-    
-    public void setsource(String source) throws Exception;
-    
-    public void setpojo(String pojo) throws Exception;    
 
     public String getprettycolumns() throws Exception;
 

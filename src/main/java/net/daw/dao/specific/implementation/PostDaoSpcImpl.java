@@ -23,10 +23,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
-import net.daw.bean.generic.specific.implementation.PostBeanGenSpImpl;
-import net.daw.bean.generic.specific.implementation.TemaBeanGenSpImpl;
-import net.daw.bean.generic.specific.implementation.UsuarioBeanGenSpImpl;
-import net.daw.dao.generic.specific.implementation.UsuarioDaoGenSpImpl;
+import net.daw.bean.specific.implementation.PostBean;
+import net.daw.bean.specific.implementation.TemaBean;
+import net.daw.bean.specific.implementation.UsuarioBean;
 import net.daw.dao.publicinterface.MetaDaoInterface;
 import net.daw.dao.publicinterface.TableDaoInterface;
 import net.daw.dao.publicinterface.ViewDaoInterface;
@@ -35,7 +34,7 @@ import net.daw.helper.statics.AppConfigurationHelper;
 import net.daw.helper.statics.ExceptionBooster;
 import net.daw.helper.statics.FilterBeanHelper;
 
-public class PostDaoSpcImpl implements ViewDaoInterface<PostBeanGenSpImpl>, TableDaoInterface<PostBeanGenSpImpl>, MetaDaoInterface {
+public class PostDaoSpcImpl implements ViewDaoInterface<PostBean>,TableDaoInterface<PostBean>, MetaDaoInterface {
 
     private String strTableName = null;
     private MysqlDataSpImpl oMysql = null;
@@ -74,14 +73,14 @@ public class PostDaoSpcImpl implements ViewDaoInterface<PostBeanGenSpImpl>, Tabl
     }
 
     @Override
-    public ArrayList<PostBeanGenSpImpl> getPage(int intRegsPerPag, int intPage, ArrayList<FilterBeanHelper> hmFilter, HashMap<String, String> hmOrder) throws Exception {
+    public ArrayList<PostBean> getPage(int intRegsPerPag, int intPage, ArrayList<FilterBeanHelper> hmFilter, HashMap<String, String> hmOrder) throws Exception {
         ArrayList<Integer> arrId;
-        ArrayList<PostBeanGenSpImpl> arrPost = new ArrayList<>();
+        ArrayList<PostBean> arrPost = new ArrayList<>();
         try {
             arrId = oMysql.getPage(strTableName, intRegsPerPag, intPage, hmFilter, hmOrder);
             Iterator<Integer> iterador = arrId.listIterator();
             while (iterador.hasNext()) {
-                PostBeanGenSpImpl oPostBean = new PostBeanGenSpImpl(iterador.next());
+                PostBean oPostBean = new PostBean(iterador.next());
                 arrPost.add(this.get(oPostBean, AppConfigurationHelper.getJsonDepth()));
             }
         } catch (Exception ex) {
@@ -91,7 +90,7 @@ public class PostDaoSpcImpl implements ViewDaoInterface<PostBeanGenSpImpl>, Tabl
     }
 
     @Override
-    public PostBeanGenSpImpl get(PostBeanGenSpImpl oPostBean, Integer expand) throws Exception {
+    public PostBean get(PostBean oPostBean, Integer expand) throws Exception {
         if (oPostBean.getId() > 0) {
             try {
                 if (!oMysql.existsOne(strTableName, oPostBean.getId())) {
@@ -111,15 +110,15 @@ public class PostDaoSpcImpl implements ViewDaoInterface<PostBeanGenSpImpl>, Tabl
                         oPostBean.setId_tema(Integer.parseInt(oMysql.getOne(strTableName, "id_tema", oPostBean.getId())));
                         oPostBean.setId_usuario(Integer.parseInt(oMysql.getOne(strTableName, "id_usuario", oPostBean.getId())));
 
-                        TemaBeanGenSpImpl oTema = new TemaBeanGenSpImpl();
+                        TemaBean oTema = new TemaBean();
                         oTema.setId(Integer.parseInt(oMysql.getOne(strTableName, "id_tema", oPostBean.getId())));
-                        TemaDaoSpcImpl oTemaDAO = new TemaDaoSpcImpl("tema", oConnection);
+                        TemaDao oTemaDAO = new TemaDao("tema", oConnection);
                         oTema = oTemaDAO.get(oTema, AppConfigurationHelper.getJsonDepth());
                         oPostBean.setObj_tema(oTema);
 
-                        UsuarioBeanGenSpImpl oUsuario = new UsuarioBeanGenSpImpl();
+                        UsuarioBean oUsuario = new UsuarioBean();
                         oUsuario.setId(Integer.parseInt(oMysql.getOne(strTableName, "id_usuario", oPostBean.getId())));
-                        UsuarioDaoGenSpImpl oUsuarioDAO = new UsuarioDaoGenSpImpl(oConnection);
+                        UsuarioDao oUsuarioDAO = new UsuarioDao(oConnection);
                         oUsuario = oUsuarioDAO.get(oUsuario, AppConfigurationHelper.getJsonDepth());
                         oPostBean.setObj_usuario(oUsuario);
                     }
@@ -134,7 +133,7 @@ public class PostDaoSpcImpl implements ViewDaoInterface<PostBeanGenSpImpl>, Tabl
     }
 
     @Override
-    public PostBeanGenSpImpl set(PostBeanGenSpImpl oPostBean) throws Exception {
+    public PostBean set(PostBean oPostBean) throws Exception {
         try {
             Boolean isNew = false;
 
@@ -166,7 +165,7 @@ public class PostDaoSpcImpl implements ViewDaoInterface<PostBeanGenSpImpl>, Tabl
     }
 
     @Override
-    public int remove(PostBeanGenSpImpl oPostBean) throws Exception {
+    public int remove(PostBean oPostBean) throws Exception {
         int result = 0;
         try {
             result = oMysql.removeOne(oPostBean.getId(), strTableName);
