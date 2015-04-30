@@ -162,6 +162,7 @@
         <script src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
         -->
 
+        <script src="js/generic/validation.js" charset="UTF-8"></script>    
 
         <script src="js/generic/view.js" charset="UTF-8"></script>    
         <script src="js/generic/param.js" charset="UTF-8"></script>
@@ -358,6 +359,8 @@
         <script src="js/specific/producto/model.js" charset="UTF-8"></script>
         <script src="js/specific/producto/view.js" charset="UTF-8"></script>
         <script src="js/specific/producto/routes.js" charset="UTF-8"></script>
+        
+        
 
 
         <script src="js/specific/tipodocumento/model.js" charset="UTF-8"></script>
@@ -365,7 +368,7 @@
         <script type="text/javascript">
 
             $(document).ready(function () {
-
+ 
                 //$('#indexContenidoJsp').addClass('animated slideInDown');
                 //$('#menuSuperior').addClass('animated slideInLeft');
                 //$('#menuLateral').addClass('animated slideInRight');

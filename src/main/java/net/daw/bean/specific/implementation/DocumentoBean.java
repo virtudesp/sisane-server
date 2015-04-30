@@ -44,8 +44,8 @@ public class DocumentoBean extends BeanGenImpl implements BeanInterface {
             ShortName = "Título",
             Description = "Título del documento",
             Type = MetaEnum.FieldType.String,
-            MinLenght = 0,
-            MaxLenght = 255,
+            MinLength = 1,
+            MaxLength = 255,
             DefaultValue = "Sin título"
     )
     private String titulo = "";
@@ -56,8 +56,8 @@ public class DocumentoBean extends BeanGenImpl implements BeanInterface {
             ShortName = "Contenido",
             Description = "Cuerpo del documento",
             Type = MetaEnum.FieldType.String,
-            MinLenght = 0,
-            MaxLenght = 999999999,
+            MinLength = 1,
+            MaxLength = 999999999,
             DefaultValue = "Sin contenido"
     )
     private String contenido = "";
@@ -139,8 +139,8 @@ public class DocumentoBean extends BeanGenImpl implements BeanInterface {
             ShortName = "Etiquetas",
             Description = "Etiquetas del documento",
             Type = MetaEnum.FieldType.String,
-            MinLenght = 0,
-            MaxLenght = 255,
+            MinLength = 0,
+            MaxLength = 255,
             DefaultValue = ""
     )
     private String etiquetas = "";

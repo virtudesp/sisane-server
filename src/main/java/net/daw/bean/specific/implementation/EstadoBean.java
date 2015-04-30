@@ -40,8 +40,8 @@ public class EstadoBean extends BeanGenImpl implements BeanInterface {
             ShortName = "Descripción",
             Description = "Descripción del estado",
             Type = MetaEnum.FieldType.String,
-            MinLenght = 0,
-            MaxLenght = 255,
+            MinLength = 0,
+            MaxLength = 255,
             DefaultValue = "Sin estado")
     private String tipo;
 

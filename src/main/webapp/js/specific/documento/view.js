@@ -90,6 +90,9 @@ documentoView.prototype.doEventsLoading = function () {
         },oUsuarioModel, oUsuarioView);
         return false;
     });
+    
+    
+    
     $('#documentoForm #obj_tipodocumento_button').unbind('click');
     $("#documentoForm #obj_tipodocumento_button").click(function () {
         var oControl = oTipodocumentoControl;
@@ -108,6 +111,9 @@ documentoView.prototype.doEventsLoading = function () {
         },oTipodocumentoModel, oTipodocumentoView);
         return false;
     });
+    
+    
+    
     $('#contenido_button').unbind('click');
     $('#contenido_button').click(function () {
         //cabecera = '<button id="full-width" type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>' + '<h3 id="myModalLabel">Edición de contenidos</h3>';

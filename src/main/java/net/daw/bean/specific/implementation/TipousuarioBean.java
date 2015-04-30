@@ -35,8 +35,8 @@ public class TipousuarioBean extends BeanGenImpl implements BeanInterface {
             ShortName = "Descripción",
             Description = "Descripción del tipo de usuario",
             Type = MetaEnum.FieldType.String,
-            MinLenght = 0,
-            MaxLenght = 255,
+            MinLength = 0,
+            MaxLength = 255,
             DefaultValue = "Sin tipo"
     )
     private String descripcion = "";

@@ -45,8 +45,8 @@ public @interface MethodMetaInformation {
     public String ReferencesTable() default "";
     
     public MetaEnum.FieldType Type() default FieldType.String;  
-    public int MaxLenght() default 255;
-    public int MinLenght() default 0;
+    public int MaxLength() default 255;
+    public int MinLength() default 0;
     public int MaxDecimal() default 2;
     public int MaxInteger() default 10;
     public String DefaultValue() default "";
