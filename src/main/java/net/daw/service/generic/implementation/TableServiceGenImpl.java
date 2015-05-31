@@ -94,11 +94,12 @@ public abstract class TableServiceGenImpl extends ViewServiceGenImpl implements 
                 data.put("message", "error");
             }
             resultado = gson.toJson(data);
+            oConnection.commit();
         } catch (Exception ex) {
             oConnection.rollback();
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":set ERROR: " + ex.getMessage()));
         } finally {
-            oConnection.commit();
+            oConnection.close();
         }
         return resultado;
     }

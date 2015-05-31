@@ -20,7 +20,9 @@ package net.daw.bean.specific.implementation;
 import net.daw.bean.generic.implementation.BeanGenImpl;
 import net.daw.bean.publicinterface.BeanInterface;
 import com.google.gson.annotations.Expose;
+import java.util.ArrayList;
 import java.util.Date;
+import net.daw.bean.meta.MetaBeanGenImpl;
 import net.daw.helper.annotations.MethodMetaInformation;
 import net.daw.helper.annotations.TableSourceMetaInformation;
 import net.daw.helper.statics.MetaEnum;
@@ -46,7 +48,8 @@ public class DocumentoBean extends BeanGenImpl implements BeanInterface {
             Type = MetaEnum.FieldType.String,
             MinLength = 1,
             MaxLength = 255,
-            DefaultValue = "Sin título"
+            DefaultValue = "Sin título",
+            IsForeignKeyDescriptor = true
     )
     private String titulo = "";
 
@@ -59,6 +62,7 @@ public class DocumentoBean extends BeanGenImpl implements BeanInterface {
             MinLength = 1,
             MaxLength = 999999999,
             DefaultValue = "Sin contenido"
+            
     )
     private String contenido = "";
 
@@ -68,7 +72,8 @@ public class DocumentoBean extends BeanGenImpl implements BeanInterface {
             ShortName = "Fecha de alta",
             Description = "Fecha de creación del documento",
             Type = MetaEnum.FieldType.Date,
-            DefaultValue = "01/01/2000"
+            DefaultValue = "01/01/2000",
+            IsForeignKeyDescriptor = true
     )
     private Date alta = new Date();
 
@@ -87,7 +92,7 @@ public class DocumentoBean extends BeanGenImpl implements BeanInterface {
             UltraShortName = "Hits",
             ShortName = "Hits",
             Description = "Número de visitas del documento",
-            Type = MetaEnum.FieldType.Integer            
+            Type = MetaEnum.FieldType.Integer
     )
     private Integer hits = 0;
 
@@ -97,7 +102,7 @@ public class DocumentoBean extends BeanGenImpl implements BeanInterface {
             ShortName = "Usuario",
             Description = "Identificador de Usuario",
             IsIdForeignKey = true,
-            ReferencesTable = "usuario"            
+            ReferencesTable = "usuario"
     )
     private Integer id_usuario = 0; //importante inicializar a 0 las claves ajenas
 
@@ -105,12 +110,24 @@ public class DocumentoBean extends BeanGenImpl implements BeanInterface {
     @MethodMetaInformation(
             UltraShortName = "Usuario",
             ShortName = "Usuario",
-            Description = "Objeto usuario",
-            IsObjForeignKey = true,
+            Description = "Referencia al usuario propietario",
+            IsObjForeignKey = true,            
             ReferencesTable = "usuario",
-            MyObjIdName = "id_usuario"
+            MyIdName = "id_usuario",
+            MyMetaName = "meta_usuario"
+    //            ForeignKeyDescription1="login",
+    //            ForeignKeyDescription2="ciudad"
     )
     private UsuarioBean obj_usuario = null;
+
+    @Expose(deserialize = false)
+    @MethodMetaInformation(
+            IsMetaForeignKey = true,
+            ReferencesTable = "usuario",
+            MyIdName = "id_usuario",
+            MyObjName = "obj_usuario"
+    )
+    private ArrayList<MetaBeanGenImpl> meta_usuario = null;
 
     @Expose(serialize = false)
     @MethodMetaInformation(
@@ -126,12 +143,24 @@ public class DocumentoBean extends BeanGenImpl implements BeanInterface {
     @MethodMetaInformation(
             UltraShortName = "Tipo",
             ShortName = "Tipo de documento",
-            Description = "Objeto tipo de documento",
+            Description = "Referencia al tipo de documento",
             IsObjForeignKey = true,
             ReferencesTable = "tipodocumento",
-            MyObjIdName = "id_tipodocumento"
+            MyIdName = "id_tipodocumento",
+            MyMetaName = "meta_tipodocumento"
+    //            ForeignKeyDescription1="descripcion"
     )
     private TipodocumentoBean obj_tipodocumento = null;
+
+    @Expose(deserialize = false)
+    @MethodMetaInformation(
+            UltraShortName = "Tipo",
+            IsMetaForeignKey = true,
+            ReferencesTable = "tipodocumento",
+            MyIdName = "id_tipodocumento",
+            MyObjName = "obj_tipodocumento"
+    )
+    private ArrayList<MetaBeanGenImpl> meta_tipodocumento = null;
 
     @Expose
     @MethodMetaInformation(
@@ -152,7 +181,7 @@ public class DocumentoBean extends BeanGenImpl implements BeanInterface {
             Description = "¿El documento ha sido publicado?",
             Type = MetaEnum.FieldType.Boolean,
             DefaultValue = "0"
-    )    
+    )
     private Boolean publicado = false;
 
     @Expose
@@ -162,7 +191,7 @@ public class DocumentoBean extends BeanGenImpl implements BeanInterface {
             Description = "¿El documento es portada?",
             Type = MetaEnum.FieldType.Boolean,
             DefaultValue = "0"
-    )  
+    )
     private Boolean portada = false;
 
     @Expose
@@ -172,7 +201,7 @@ public class DocumentoBean extends BeanGenImpl implements BeanInterface {
             Description = "¿El documento debe ser destacado?",
             Type = MetaEnum.FieldType.Boolean,
             DefaultValue = "0"
-    )  
+    )
     private Boolean destacado = false;
 
     public String getTitulo() {
@@ -286,4 +315,30 @@ public class DocumentoBean extends BeanGenImpl implements BeanInterface {
         this.obj_tipodocumento = obj_tipodocumento;
     }
 
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+        public ArrayList<MetaBeanGenImpl> getMeta_usuario() {
+        return meta_usuario;
+    }
+
+    public void setMeta_usuario(ArrayList<MetaBeanGenImpl> meta_usuario) {
+        this.meta_usuario = meta_usuario;
+    }
+
+    public ArrayList<MetaBeanGenImpl> getMeta_tipodocumento() {
+        return meta_tipodocumento;
+    }
+
+    public void setMeta_tipodocumento(ArrayList<MetaBeanGenImpl> meta_tipodocumento) {
+        this.meta_tipodocumento = meta_tipodocumento;
+    }
+    
 }

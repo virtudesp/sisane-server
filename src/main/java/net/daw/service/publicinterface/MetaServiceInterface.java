@@ -22,4 +22,8 @@ public interface MetaServiceInterface {
     public String getprettycolumns() throws Exception;
 
     public String getcolumns() throws Exception;
+    
+    public String getmetainformation() throws Exception;
+    
+    
 }

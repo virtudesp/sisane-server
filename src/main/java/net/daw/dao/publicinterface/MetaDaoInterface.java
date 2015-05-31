@@ -18,8 +18,11 @@
 package net.daw.dao.publicinterface;
 
 import java.util.ArrayList;
+import net.daw.bean.meta.MetaBeanGenImpl;
 
 public interface MetaDaoInterface<BEAN_CLASS> {
+
+    public ArrayList<MetaBeanGenImpl> getmetainformation() throws Exception;
 
     public ArrayList<String> getColumnsNames() throws Exception;
 

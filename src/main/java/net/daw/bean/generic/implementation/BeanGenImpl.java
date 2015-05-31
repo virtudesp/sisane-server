@@ -27,7 +27,7 @@ public class BeanGenImpl implements BeanInterface {
     @Expose
         @MethodMetaInformation(
             IsId = true,
-            UltraShortName = "Id.",
+            UltraShortName = "Iden.",
             ShortName = "Identif.",
             Description = "Número Identificador",
             Type = MetaEnum.FieldType.Integer,

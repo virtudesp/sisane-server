@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<!--
+Copyright (C) 2015 rafa
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+-->
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="">
+
+        <title>SB Admin - Bootstrap Admin Template</title>
+
+        <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css" />
+
+        <!-- 
+        <link href="css/bootstrap/sb-admin.css" rel="stylesheet">
+        <link rel="stylesheet" href="css/jquery-ui.css"> 
+        <link rel="stylesheet" href="css/animate.css"/>
+        <link rel="stylesheet" href="css/plugins/morris.css" />
+        -->
+        
+
+        <link rel="stylesheet" href="css/datetimepicker/bootstrap-datetimepicker.min.css"  />
+        <link href="css/font-awesome-4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">        
+        <link href="css/main/main.css" rel="stylesheet" type="text/css">
+        <link href='http://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>
+        <link href='http://fonts.googleapis.com/css?family=Questrial' rel='stylesheet' type='text/css'>
+        
+        
+        <!-- Custom Fonts -->
+
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+    </head>
+    <body style="font-family: Questrial, serif;">
+        <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+
+        <nav class="navbar navbar-default navbar-fixed-top" >
+            <div class="container-fluid">
+                <div class="navbar-header" >
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-controls="navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class='navbar-brand'  href=''>
+                        <i class="fa fa-comments fa-1x"></i> ausiàsBROTH
+                    </a>
+                </div>
+                <div id="navbar" class="navbar-collapse collapse" >
+                    <ul class="nav navbar-nav">
+                        <li class="active"><a href="#">Home</a></li>
+                        <li><a href="#about"><i class="fa fa-icon-smile"></i> About</a></li>
+                        <li class="dropdown">                                                                                                                                                                                                                             
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" >
+                                <i class="fa fa-icon-list-alt"></i>
+                                Entidades
+                                <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu" role="menu">                                
+                                <li><a href="#/documento/list/page=1&rpp=10"><i class="fa fa-fw fa-file-text"></i> Documento</a></li>
+                                <li class="divider"></li>
+                                <li><a href="#/documento/new"><i class="fa fa-fw fa-user"></i> Documento</a></li>
+                                <li class="dropdown-header">Nav header</li>
+                                <li><a href="#/documento/edit/1"><i class="fa fa-fw fa-power-off"></i> edit</a></li>
+                                <li><a href="#/documento/view/1"><i class="fa fa-fw fa-power-off"></i> view</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+
+
+                    <ul class="nav navbar-nav navbar-right">
+                        <!-- <li class="active"><a href="./">Fixed top <span class="sr-only">(current)</span></a></li> -->
+                        <li class="dropdown broth_show_when_logged_in">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <i class="fa fa-user"></i>
+                                <span id="broth_username_id">Login</span>
+                                <b class="caret"></b>
+                            </a>
+                            <ul class="dropdown-menu dropdown">
+                                <li><a href="#"><i class="fa fa-fw fa-user"></i> Profile</a></li>
+                                <li><a href="#"><i class="fa fa-fw fa-envelope"></i> Inbox</a></li>
+                                <li><a href="#"><i class="fa fa-fw fa-gear"></i> Settings</a></li>
+                                <li class="divider"></li>
+                                <li id="broth_logout"><a href="#"><i class="fa fa-fw fa-power-off"></i> Log Out</a></li>
+                            </ul>
+                        </li>
+                        <li class="broth_show_when_logged_out"  id="broth_login"><a href="#"><i class="fa fa-user"></i> Login</a></li>
+                    </ul>
+
+
+                </div>
+            </div>
+        </nav>
+        <!-- ********************************************* -->
+        <div id="wrapper">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="panel panel-default">
+                            <div class="panel-heading" style="font-family:Oswald , serif;">
+                                <div class="row">
+                                    <div class="col-xs-9 text-left">
+                                        <h1 id="broth_title">Documento</h1>
+                                        <h1><small id="broth_subtitle">Formulario de entrada al sistema</small></h1>
+                                    </div>
+                                    <div class="col-xs-3 text-right" id="broth_operationicon">
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel-body" >
+                                <div id="broth_content"></div>
+                            </div>
+                            <a href="#"  style="font-family: Questrial, serif;">
+                                <div class="panel-footer">
+                                    <span class="pull-left"></span>
+                                    <span class="pull-right"> Powered by ausiàsBROTH <i class="fa fa-github-alt"></i></span>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Modals -->
+            <div id="broth_modal_01" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header" id="modal-header"></div>
+                        <div class="modal-body" id="modal-body"></div>
+                        <div class="modal-footer" id="modal-footer"></div>
+                    </div>
+                </div>
+            </div>
+            <div id="broth_modal_02" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header"></div>
+                        <div class="modal-body"></div>
+                        <div class="modal-footer"></div>
+                    </div>                
+                </div>
+            </div>
+            <div id="broth_modal_login" class="modal fade bs-modal-sm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-sm">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <div class="panel-title text-center">Introduce login y password</div>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-md-12 col-lg-12">
+                                    <form role="form">
+                                        <fieldset>
+                                            <div class="form-group">
+                                                <input class="form-control" id="broth_input_login" placeholder="Login" name="email" type="email" value="rafael" autofocus>
+                                            </div>
+                                            <div class="form-group">
+                                                <input class="form-control" id="broth_input_password" placeholder="Password" name="password" type="password" value="rafael">
+                                            </div>
+                                            <!--
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input name="remember" type="checkbox" value="Remember Me">Remember Me
+                                                </label>
+                                            </div>
+                                            <!-- Change this to a button or input when using this as a form -->
+                                            <a href="index.html" id="broth_button_login" class="btn btn-lg btn-success btn-block">Login</a>
+                                        </fieldset>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer" id="broth_login_modal_footer"></div>
+                    </div>                
+                </div>
+            </div>
+        </div>
+        <!-- Bootstrap Core JavaScript -->
+        <script type="text/javascript"  src="./js/vendor/jquery-1.11.1.min.js"></script>
+        <script src="js/vendor/bootstrap.min.js"></script>
+        <script type="text/javascript"  src="./js/vendor/path.min.js"></script> 
+
+        
+        
+        
+        
+        <script type="text/javascript"  src="js/js/modules/base.js"></script>
+        <script type="text/javascript"  src="js/js/modules/funjascript.js"></script>
+        
+        
+        
+        
+        <script type="text/javascript"  src="js/js/modules/new.js"></script>
+        <script type="text/javascript"  src="js/js/modules/edit.js"></script>
+        <script type="text/javascript"  src="js/js/modules/view.js"></script>
+        <script type="text/javascript"  src="js/js/modules/list.js"></script>
+
+        <script type="text/javascript"  src="js/js/form.js"></script>
+
+        <script type="text/javascript"  src="js/js/init.js"></script>
+
+        <script type="text/javascript"  src="js/js/modules/util.js"></script>
+
+
+
+
+        <script type="text/javascript"  src="js/js/specific/documento.js"></script>
+
+
+
+
+        <script type="text/javascript">
+            var urlJson;
+
+            function appInit() {
+
+
+
+
+
+                $("#broth_logout").click(function () {
+
+                    $.ajax({
+                        type: "POST",
+                        url: "json",
+                        data: "ob=user&op=logout",
+                        success: function (response) {
+                            $("#infoPanel").html(response.message);
+                            ns.login.checkAndUpdateUserConnectionState();
+                        }
+                    });
+                    return false;
+                });
+
+                fDocumentoRoutes();
+                Path.listen();
+            }
+
+            $(document).ready(function () {
+                //$('#broth-navigation').load("navigation.html");
+                //$('#loginFormBroth').load("loginform.html");
+                urlJson = ns.util.getRequestsUrl();
+
+                $('.broth_show_when_logged_in').hide();
+                $('.broth_show_when_logged_out').show();
+
+                $("#broth_login").click(function () {
+                    ns.login.loadLoginForm();
+                })
+
+                ns.login.checkAndUpdateUserConnectionState();
+            });
+
+            $("#comprobar").click(function () {
+
+                $.ajax({
+                    type: "POST",
+                    url: "json",
+                    data: "ob=user&op=comprobar",
+                    success: function (response) {
+                        $("#infoPanel").html(response.message);
+                    }
+                });
+                return false;
+            });
+        </script>
+    </body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

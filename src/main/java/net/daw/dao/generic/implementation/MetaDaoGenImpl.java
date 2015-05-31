@@ -17,11 +17,15 @@
  */
 package net.daw.dao.generic.implementation;
 
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 import net.daw.dao.publicinterface.MetaDaoInterface;
 import java.sql.Connection;
 import java.util.ArrayList;
+import net.daw.bean.meta.MetaBeanGenImpl;
 import net.daw.data.specific.implementation.MysqlDataSpImpl;
+import net.daw.helper.annotations.MethodMetaInformation;
 import net.daw.helper.annotations.SelectSourceMetaInformation;
 import net.daw.helper.annotations.TableSourceMetaInformation;
 import net.daw.helper.statics.ExceptionBooster;
@@ -56,6 +60,116 @@ public abstract class MetaDaoGenImpl<BEAN_CLASS> implements MetaDaoInterface<BEA
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":constructor ERROR: " + ex.getMessage()));
         }
+    }
+
+    @Override
+    public ArrayList<MetaBeanGenImpl> getmetainformation() throws Exception {
+        ArrayList<MetaBeanGenImpl> alVector = null;
+        try {
+            Class<BEAN_CLASS> classBEAN = (Class<BEAN_CLASS>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
+            alVector = new ArrayList<>();
+            //getsuperclass para obtener el id
+            Class<? super BEAN_CLASS> superClassBean = classBEAN.getSuperclass();
+            for (Field field : superClassBean.getDeclaredFields()) {
+                Annotation[] fieldAnnotations = field.getDeclaredAnnotations();
+                for (Integer i = 0; i < fieldAnnotations.length; i++) {
+                    if (fieldAnnotations[i].annotationType().equals(MethodMetaInformation.class)) {
+                        MethodMetaInformation fieldAnnotation = (MethodMetaInformation) fieldAnnotations[i];
+                        if (!fieldAnnotation.IsIdForeignKey()) {
+                            MetaBeanGenImpl oMeta = new MetaBeanGenImpl();
+                            oMeta.setName(field.getName());
+                            oMeta.setDefaultValue(fieldAnnotation.DefaultValue());
+                            oMeta.setDescription(fieldAnnotation.Description());
+                            oMeta.setIsId(fieldAnnotation.IsId());
+                            //oMeta.setIsIdForeignKey(fieldAnnotation.IsIdForeignKey());
+                            oMeta.setIsObjForeignKey(fieldAnnotation.IsObjForeignKey());
+                            oMeta.setIsPathToObject(fieldAnnotation.IsPathToObject());
+                            oMeta.setIsMetaForeignKey(fieldAnnotation.IsMetaForeignKey());
+                            
+                            
+                            oMeta.setMaxDecimal(fieldAnnotation.MaxDecimal());
+                            oMeta.setMaxInteger(fieldAnnotation.MaxInteger());
+                            oMeta.setMaxLength(fieldAnnotation.MaxLength());
+                            oMeta.setMinLength(fieldAnnotation.MinLength());
+                            
+                            
+                            
+                            oMeta.setMyIdName(fieldAnnotation.MyIdName());
+                            oMeta.setMyObjName(fieldAnnotation.MyObjName());
+                            oMeta.setMyMetaName(fieldAnnotation.MyMetaName());
+                            
+                            oMeta.setReferencesTable(fieldAnnotation.ReferencesTable());
+
+//                            oMeta.setForeignKeyDescription1(fieldAnnotation.ForeignKeyDescription1());
+//                            oMeta.setForeignKeyDescription2(fieldAnnotation.ForeignKeyDescription2());
+//                            oMeta.setForeignKeyDescription3(fieldAnnotation.ForeignKeyDescription3());
+
+                            
+                            oMeta.setIsForeignKeyDescriptor(fieldAnnotation.IsForeignKeyDescriptor());
+                            
+                            
+                            
+                            oMeta.setShortName(fieldAnnotation.ShortName());
+                            oMeta.setType(fieldAnnotation.Type());
+                            oMeta.setUltraShortName(fieldAnnotation.UltraShortName());
+                            alVector.add(oMeta);
+                        }
+                    }
+                }
+            }
+            //now fill the other fileds metainformation
+            for (Field field : classBEAN.getDeclaredFields()) {
+                Annotation[] fieldAnnotations = field.getDeclaredAnnotations();
+                for (Integer i = 0; i < fieldAnnotations.length; i++) {
+                    if (fieldAnnotations[i].annotationType().equals(MethodMetaInformation.class)) {
+                        MethodMetaInformation fieldAnnotation = (MethodMetaInformation) fieldAnnotations[i];
+                        if (!fieldAnnotation.IsIdForeignKey()) {
+                            MetaBeanGenImpl oMeta = new MetaBeanGenImpl();
+                            oMeta.setName(field.getName());
+                            oMeta.setDefaultValue(fieldAnnotation.DefaultValue());
+                            oMeta.setDescription(fieldAnnotation.Description());
+                            oMeta.setIsId(fieldAnnotation.IsId());
+                            //oMeta.setIsIdForeignKey(fieldAnnotation.IsIdForeignKey());
+                            oMeta.setIsObjForeignKey(fieldAnnotation.IsObjForeignKey());
+                            oMeta.setIsPathToObject(fieldAnnotation.IsPathToObject());
+                            oMeta.setIsMetaForeignKey(fieldAnnotation.IsMetaForeignKey());
+                            
+                            
+                            
+                            oMeta.setMaxDecimal(fieldAnnotation.MaxDecimal());
+                            oMeta.setMaxInteger(fieldAnnotation.MaxInteger());
+                            oMeta.setMaxLength(fieldAnnotation.MaxLength());
+                            oMeta.setMinLength(fieldAnnotation.MinLength());
+                            
+                            oMeta.setMyIdName(fieldAnnotation.MyIdName());
+                            oMeta.setMyObjName(fieldAnnotation.MyObjName());
+                            oMeta.setMyMetaName(fieldAnnotation.MyMetaName());
+                            
+                            oMeta.setReferencesTable(fieldAnnotation.ReferencesTable());
+
+//                            oMeta.setForeignKeyDescription1(fieldAnnotation.ForeignKeyDescription1());
+//                            oMeta.setForeignKeyDescription2(fieldAnnotation.ForeignKeyDescription2());
+//                            oMeta.setForeignKeyDescription3(fieldAnnotation.ForeignKeyDescription3());
+
+                            
+                            
+                            oMeta.setIsForeignKeyDescriptor(fieldAnnotation.IsForeignKeyDescriptor());
+                            
+                            
+                            
+                            oMeta.setShortName(fieldAnnotation.ShortName());
+                            oMeta.setType(fieldAnnotation.Type());
+                            oMeta.setUltraShortName(fieldAnnotation.UltraShortName());
+                            alVector.add(oMeta);
+                        }
+                    }
+                }
+            }
+
+        } catch (Exception ex) {
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getmetainformation ERROR: " + ex.getMessage()));
+        }
+        return alVector;
     }
 
     @Override

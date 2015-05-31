@@ -20,6 +20,8 @@ package net.daw.bean.specific.implementation;
 import net.daw.bean.generic.implementation.BeanGenImpl;
 import net.daw.bean.publicinterface.BeanInterface;
 import com.google.gson.annotations.Expose;
+import java.util.ArrayList;
+import net.daw.bean.meta.MetaBeanGenImpl;
 import net.daw.helper.annotations.MethodMetaInformation;
 import net.daw.helper.annotations.TableSourceMetaInformation;
 
@@ -30,7 +32,7 @@ import net.daw.helper.annotations.TableSourceMetaInformation;
 public class UsuarioBean extends BeanGenImpl implements BeanInterface {
 
     @Expose
-    @MethodMetaInformation(ShortName = "Login")
+    @MethodMetaInformation(ShortName = "Login", IsForeignKeyDescriptor = true)
     private String login = "";
 
     @Expose
@@ -52,9 +54,19 @@ public class UsuarioBean extends BeanGenImpl implements BeanInterface {
             ShortName = "Tipo de usuario",
             IsObjForeignKey = true,
             ReferencesTable = "tipousuario",
-            MyObjIdName = "id_tipousuario"
+            MyIdName = "id_tipousuario",
+            MyMetaName = "meta_tipousuario"
     )
     private TipousuarioBean obj_tipousuario = null;
+
+    @Expose(deserialize = false)
+    @MethodMetaInformation(
+            IsMetaForeignKey = true,
+            ReferencesTable = "tipousuario",
+            MyIdName = "id_tipousuario",
+            MyObjName = "obj_tipousuario"
+    )
+    private ArrayList<MetaBeanGenImpl> meta_tipousuario = null;
 
     @Expose(serialize = false)
     @MethodMetaInformation(
@@ -71,12 +83,22 @@ public class UsuarioBean extends BeanGenImpl implements BeanInterface {
             ShortName = "Estado de usuario",
             IsObjForeignKey = true,
             ReferencesTable = "estado",
-            MyObjIdName = "id_estado"
+            MyIdName = "id_estado",
+            MyMetaName = "meta_estado"
     )
     private EstadoBean obj_estado = null;
 
+    @Expose(deserialize = false)
+    @MethodMetaInformation(
+            IsMetaForeignKey = true,
+            ReferencesTable = "estado",
+            MyIdName = "id_estado",
+            MyObjName = "obj_estado"
+    )
+    private ArrayList<MetaBeanGenImpl> meta_estado = null;
+
     @Expose
-    @MethodMetaInformation(ShortName = "Ciudad")
+    @MethodMetaInformation(ShortName = "Ciudad", IsForeignKeyDescriptor=true)
     private String ciudad = "";
 
     @Expose
@@ -157,6 +179,22 @@ public class UsuarioBean extends BeanGenImpl implements BeanInterface {
 
     public void setSkin(String skin) {
         this.skin = skin;
+    }
+
+    public ArrayList<MetaBeanGenImpl> getMeta_tipousuario() {
+        return meta_tipousuario;
+    }
+
+    public void setMeta_tipousuario(ArrayList<MetaBeanGenImpl> meta_tipousuario) {
+        this.meta_tipousuario = meta_tipousuario;
+    }
+
+    public ArrayList<MetaBeanGenImpl> getMeta_estado() {
+        return meta_estado;
+    }
+
+    public void setMeta_estado(ArrayList<MetaBeanGenImpl> meta_estado) {
+        this.meta_estado = meta_estado;
     }
 
 }

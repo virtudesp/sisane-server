@@ -23,6 +23,7 @@ import java.lang.reflect.Constructor;
 import java.sql.Connection;
 import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
+import net.daw.bean.meta.MetaBeanGenImpl;
 import net.daw.connection.implementation.BoneConnectionPoolImpl;
 import net.daw.dao.generic.implementation.TableDaoGenImpl;
 import net.daw.helper.statics.ExceptionBooster;
@@ -36,7 +37,24 @@ public abstract class MetaServiceGenImpl implements MetaServiceInterface {
     public MetaServiceGenImpl(HttpServletRequest request) {
         oRequest = request;
     }
-
+ @Override
+    public String getmetainformation() throws Exception {        
+        String data = null;
+        ArrayList<MetaBeanGenImpl> alMeta = null;
+        try {
+            Constructor c = Class.forName("net.daw.dao.specific.implementation." + ParameterCook.prepareCamelCaseObject(oRequest) + "Dao").getConstructor(Connection.class);
+            TableDaoGenImpl oDao = (TableDaoGenImpl) c.newInstance((Object) null);
+            alMeta = oDao.getmetainformation();
+            GsonBuilder gsonBuilder = new GsonBuilder();
+            Gson gson = gsonBuilder.create();
+            data = gson.toJson(alMeta);
+        } catch (Exception ex) {
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getmetainformation ERROR: " + ex.getMessage()));
+        } finally {
+        }
+        return data;
+        
+    }
     @Override
     public String getprettycolumns() throws Exception {
         String data = null;

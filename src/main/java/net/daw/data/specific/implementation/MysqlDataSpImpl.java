@@ -43,7 +43,7 @@ public class MysqlDataSpImpl implements DataInterface {
     @Override
     public int insertOne(String strTabla) throws Exception {
 
-        ResultSet oResultSet;
+        ResultSet oResultSet = null;
         java.sql.PreparedStatement oPreparedStatement = null;
         int id = 0;
         try {
@@ -60,6 +60,9 @@ public class MysqlDataSpImpl implements DataInterface {
         } catch (SQLException ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":insertOne ERROR inserting register: " + ex.getMessage()));
         } finally {
+            if (oResultSet != null) {
+                oResultSet.close();
+            }
             if (oPreparedStatement != null) {
                 oPreparedStatement.close();
             }
@@ -109,7 +112,7 @@ public class MysqlDataSpImpl implements DataInterface {
     public String getId(String strTabla, String strCampo, String strValor) throws Exception {
         String strResult = null;
         Statement oStatement = null;
-        ResultSet oResultSet;
+        ResultSet oResultSet = null;
         try {
             oStatement = (Statement) connection.createStatement();
             String strSQL = "SELECT id FROM " + strTabla + " WHERE " + strCampo + "='" + strValor + "'";
@@ -122,6 +125,9 @@ public class MysqlDataSpImpl implements DataInterface {
         } catch (SQLException ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getId ERROR: Can't process query: " + ex.getMessage()));
         } finally {
+            if (oResultSet != null) {
+                oResultSet.close();
+            }
             if (oStatement != null) {
                 oStatement.close();
             }
@@ -132,7 +138,7 @@ public class MysqlDataSpImpl implements DataInterface {
     public String getIdByTwoValues(String strTabla, String strCampo1, String strValor1, String strCampo2, String strValor2) throws Exception {
         String strResult = null;
         Statement oStatement = null;
-        ResultSet oResultSet;
+        ResultSet oResultSet = null;
         try {
             oStatement = (Statement) connection.createStatement();
             String strSQL = "SELECT id FROM " + strTabla + " WHERE " + strCampo1 + "='" + strValor1 + "' AND " + strCampo2 + "='" + strValor2 + "'";
@@ -145,6 +151,9 @@ public class MysqlDataSpImpl implements DataInterface {
         } catch (SQLException ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getId ERROR: Can't process query: " + ex.getMessage()));
         } finally {
+            if (oResultSet != null) {
+                oResultSet.close();
+            }
             if (oStatement != null) {
                 oStatement.close();
             }
@@ -156,7 +165,7 @@ public class MysqlDataSpImpl implements DataInterface {
     public String getOne(String strTabla, String strCampo, int id) throws Exception {
         String strResult = null;
         PreparedStatement oPreparedStatement = null;
-        ResultSet oResultSet;
+        ResultSet oResultSet = null;
         String strSQL = "";
 
         if (strTabla.substring(0, 6).equalsIgnoreCase("SELECT")) {
@@ -174,6 +183,9 @@ public class MysqlDataSpImpl implements DataInterface {
             } catch (Exception ex) {
                 ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getOne ERROR: Can't process query: " + ex.getMessage()));
             } finally {
+                if (oResultSet != null) {
+                    oResultSet.close();
+                }
                 if (oPreparedStatement != null) {
                     oPreparedStatement.close();
                 }
@@ -210,21 +222,25 @@ public class MysqlDataSpImpl implements DataInterface {
                 strOrigenTabla = false;
             }
         }
+        ResultSet oResultSet = null;
         if (strOrigenTabla) {
             int result = 0;
             Statement oStatement = null;
             try {
                 oStatement = (Statement) connection.createStatement();
                 String strSQL = "SELECT COUNT(*) FROM " + strTabla + " WHERE 1=1";
-                ResultSet rs = oStatement.executeQuery(strSQL);
-                if (rs.next()) {
-                    result = rs.getInt("COUNT(*)");
+                oResultSet = oStatement.executeQuery(strSQL);
+                if (oResultSet.next()) {
+                    result = oResultSet.getInt("COUNT(*)");
                 } else {
                     return false;
                 }
             } catch (SQLException ex) {
                 ExceptionBooster.boost(new Exception(this.getClass().getName() + ":existsOne ERROR:  Can't process query: " + ex.getMessage()));
             } finally {
+                if (oResultSet != null) {
+                    oResultSet.close();
+                }
                 if (oStatement != null) {
                     oStatement.close();
                 }
@@ -237,13 +253,16 @@ public class MysqlDataSpImpl implements DataInterface {
             try {
                 oStatement = (Statement) connection.createStatement();
                 String strSQL = "SELECT COUNT(*) " + strTabla.substring(strTabla.indexOf("FROM"), strTabla.length());
-                ResultSet oResultSet = oStatement.executeQuery(strSQL);
+                oResultSet = oStatement.executeQuery(strSQL);
                 while (oResultSet.next()) {
                     intResult = oResultSet.getInt("COUNT(*)");
                 }
             } catch (SQLException ex) {
                 ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getCountSQL ERROR:  Can't process query: " + ex.getMessage()));
             } finally {
+                if (oResultSet != null) {
+                    oResultSet.close();
+                }
                 if (oStatement != null) {
                     oStatement.close();
                 }
@@ -1011,17 +1030,21 @@ public class MysqlDataSpImpl implements DataInterface {
     public int getNewCount(String strSqlSelectDataOrigin) throws Exception {
         int intResult = 0;
         Statement oStatement = null;
+        ResultSet oResultSet = null;
         try {
             oStatement = (Statement) connection.createStatement();
             String strNewSqlDataSource = "SELECT COUNT(*) " + strSqlSelectDataOrigin.substring(strSqlSelectDataOrigin.indexOf("from"), strSqlSelectDataOrigin.length());
             oStatement = (Statement) connection.createStatement();
-            ResultSet oResultSet = oStatement.executeQuery(strNewSqlDataSource);
+            oResultSet = oStatement.executeQuery(strNewSqlDataSource);
             while (oResultSet.next()) {
                 intResult = oResultSet.getInt("COUNT(*)");
             }
         } catch (SQLException ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getCountSQL ERROR:  Can't process query: " + ex.getMessage()));
         } finally {
+            if (oResultSet != null) {
+                oResultSet.close();
+            }
             if (oStatement != null) {
                 oStatement.close();
             }
@@ -1040,6 +1063,7 @@ public class MysqlDataSpImpl implements DataInterface {
         } catch (SQLException ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPagesSQL ERROR:  Can't process query: " + ex.getMessage()));
         } finally {
+
             if (oStatement != null) {
                 oStatement.close();
             }
@@ -1050,7 +1074,7 @@ public class MysqlDataSpImpl implements DataInterface {
     public ArrayList<Integer> getNewPage(String strSqlSelectDataOrigin, int intRegsPerPage, int intPagina) throws Exception {
         ArrayList<Integer> vector = null;
         Statement oStatement = null;
-        ResultSet oResultSet;
+        ResultSet oResultSet = null;
         vector = new ArrayList<>();
         try {
             int intCount = this.getNewCount(strSqlSelectDataOrigin);
@@ -1063,6 +1087,9 @@ public class MysqlDataSpImpl implements DataInterface {
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPageSQL ERROR:  Can't process query: " + ex.getMessage()));
         } finally {
+            if (oResultSet != null) {
+                oResultSet.close();
+            }
             if (oStatement != null) {
                 oStatement.close();
             }
@@ -1090,19 +1117,22 @@ public class MysqlDataSpImpl implements DataInterface {
     }
 
     public Boolean existsNewOne(String strSqlSelectDataOrigin, int id) throws Exception {
-
+        ResultSet oResultSet = null;
         int intResult = 0;
         Statement oStatement = null;
         try {
             oStatement = (Statement) connection.createStatement();
             String strSQL = "SELECT COUNT(*) " + strSqlSelectDataOrigin.substring(strSqlSelectDataOrigin.indexOf("from"), strSqlSelectDataOrigin.length());
-            ResultSet oResultSet = oStatement.executeQuery(strSQL);
+            oResultSet = oStatement.executeQuery(strSQL);
             while (oResultSet.next()) {
                 intResult = oResultSet.getInt("COUNT(*)");
             }
         } catch (SQLException ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getCountSQL ERROR:  Can't process query: " + ex.getMessage()));
         } finally {
+            if (oResultSet != null) {
+                oResultSet.close();
+            }
             if (oStatement != null) {
                 oStatement.close();
             }
@@ -1114,14 +1144,12 @@ public class MysqlDataSpImpl implements DataInterface {
     public String getNewOne(String strSqlSelectDataOrigin, String strCampo, int id) throws Exception {
         String strResult = null;
         PreparedStatement oPreparedStatement = null;
-        ResultSet oResultSet;
+        ResultSet oResultSet = null;
         String strSQL = "";
 
         try {
-            strSQL = strSqlSelectDataOrigin;
-            strSQL += " AND id=" + id;
+            strSQL = strSqlSelectDataOrigin.substring(0, strSqlSelectDataOrigin.indexOf("1=1") + 3) + " AND id=" + id + " " + strSqlSelectDataOrigin.substring(strSqlSelectDataOrigin.indexOf("1=1") + 3, strSqlSelectDataOrigin.length());
             oPreparedStatement = connection.prepareStatement(strSQL);
-            //oPreparedStatement.setInt(1, id);
             oResultSet = oPreparedStatement.executeQuery();
             if (oResultSet.next()) {
                 strResult = oResultSet.getString(strCampo);
@@ -1131,6 +1159,9 @@ public class MysqlDataSpImpl implements DataInterface {
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getOne ERROR: Can't process query: " + ex.getMessage()));
         } finally {
+            if (oResultSet != null) {
+                oResultSet.close();
+            }
             if (oPreparedStatement != null) {
                 oPreparedStatement.close();
             }

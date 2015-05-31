@@ -8,13 +8,21 @@
         <servlet-name>ControlJsp</servlet-name>
         <servlet-class>net.daw.control.JspControl</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>json</servlet-name>
+        <servlet-class>net.daw.control.json</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ControlJson</servlet-name>
-        <url-pattern>/json</url-pattern>
+        <url-pattern>/json_old</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ControlJsp</servlet-name>
         <url-pattern>/jsp</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>json</servlet-name>
+        <url-pattern>/json</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
@@ -22,6 +30,6 @@
         </session-timeout>
     </session-config>
     <welcome-file-list>
-        <welcome-file>redirect.jsp</welcome-file>
+        <welcome-file>index.html</welcome-file>
     </welcome-file-list>
 </web-app>

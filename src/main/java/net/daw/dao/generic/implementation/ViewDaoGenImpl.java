@@ -35,6 +35,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Locale;
 import net.daw.bean.generic.implementation.BeanGenImpl;
+import net.daw.bean.meta.MetaBeanGenImpl;
 import net.daw.helper.annotations.MethodMetaInformation;
 import net.daw.helper.statics.AppConfigurationHelper;
 import net.daw.helper.statics.ExceptionBooster;
@@ -148,7 +149,14 @@ public class ViewDaoGenImpl<BEAN_CLASS> extends MetaDaoGenImpl<BEAN_CLASS> imple
                             TableDaoGenImpl oAjenaDao = (TableDaoGenImpl) DaoConstructor.newInstance(oConnection);
                             BeanGenImpl oAjenaBean = (BeanGenImpl) Class.forName("net.daw.bean.specific.implementation." + strTabla + "Bean").newInstance();
                             //Method metodo_getId_Ajena = tipo.getMethod("getId_" + strMethod);
-                            String strForeignIdName = fieldAnnotation.MyObjIdName().substring(0, 1).toUpperCase(Locale.ENGLISH) + fieldAnnotation.MyObjIdName().substring(1);
+                            
+                            
+                            
+                            String strForeignIdName = fieldAnnotation.MyIdName().substring(0, 1).toUpperCase(Locale.ENGLISH) + fieldAnnotation.MyIdName().substring(1);
+                            
+                            
+                            
+                            
                             Method metodo_getId_Ajena = tipo.getMethod("get" + strForeignIdName);
                             int intIdAjena = (Integer) metodo_getId_Ajena.invoke(oBean);
                             oAjenaBean.setId(intIdAjena);
@@ -172,6 +180,60 @@ public class ViewDaoGenImpl<BEAN_CLASS> extends MetaDaoGenImpl<BEAN_CLASS> imple
         return oBean;
     }
 
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      private BEAN_CLASS fillMetaForeign(BEAN_CLASS oBean, Class<BEAN_CLASS> tipo) throws Exception {
+        try {
+            for (Field field : tipo.getDeclaredFields()) {
+                Annotation[] fieldAnnotations = field.getDeclaredAnnotations();
+                for (Integer i = 0; i < fieldAnnotations.length; i++) {
+                    if (fieldAnnotations[i].annotationType().equals(MethodMetaInformation.class)) {
+                        MethodMetaInformation fieldAnnotation = (MethodMetaInformation) fieldAnnotations[i];
+                        if (fieldAnnotation.IsMetaForeignKey() == true) {
+                            ArrayList<MetaBeanGenImpl> oMetaBeanList= new ArrayList<>();
+                                                        
+                            String strTabla = fieldAnnotation.ReferencesTable().substring(0, 1).toUpperCase(Locale.ENGLISH) + fieldAnnotation.ReferencesTable().substring(1);
+                                                        
+                            Constructor DaoConstructor;
+                            DaoConstructor = Class.forName("net.daw.dao.specific.implementation." + strTabla + "Dao").getConstructor(Connection.class);
+                            MetaDaoGenImpl oAjenaMetaDao = (MetaDaoGenImpl) DaoConstructor.newInstance(oConnection);
+                                                                                                                
+                            oMetaBeanList=oAjenaMetaDao.getmetainformation();
+                                                                                                                                                                                      
+                            Method method_setObj_Propia = getWriteMethod(field);                      
+                            method_setObj_Propia.invoke(oBean, oMetaBeanList);                       
+                        }
+                    }
+                }
+            }
+        } catch (Exception ex) {
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":fillForeign ERROR: " + ex.getMessage()));
+        }
+        return oBean;
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 //    private BEAN_CLASS fillForeign(BEAN_CLASS oBean, Class<BEAN_CLASS> tipo) throws Exception {
 //        try {
 //            for (Method method : tipo.getMethods()) {
@@ -281,7 +343,7 @@ public class ViewDaoGenImpl<BEAN_CLASS> extends MetaDaoGenImpl<BEAN_CLASS> imple
                     for (Integer i = 0; i < methodAnnotations.length; i++) {
                         if (methodAnnotations[i].annotationType().equals(MethodMetaInformation.class)) {
                             MethodMetaInformation methodAnnotation = (MethodMetaInformation) methodAnnotations[i];
-                            if ((methodAnnotation.IsObjForeignKey() == false) && (methodAnnotation.IsId() == false)) {
+                            if ( (methodAnnotation.IsMetaForeignKey() == false) && (methodAnnotation.IsObjForeignKey() == false) && (methodAnnotation.IsId() == false)) {
                                 String strValor = oMysql.getNewOne(strSqlSelectDataOrigin, field.getName().toLowerCase(Locale.ENGLISH), (Integer) metodo_getId.invoke(oBean));
 //                                System.out.println("            ---> metodo: " + methodAnnotation.ShortName());
 //                                System.out.println("            ---> valor: " + strValor);
@@ -398,6 +460,7 @@ public class ViewDaoGenImpl<BEAN_CLASS> extends MetaDaoGenImpl<BEAN_CLASS> imple
                         expand--;
                         if (expand > 0) {
                             oBean = fillForeign(oBean, tipo);
+                            oBean = fillMetaForeign(oBean, tipo);
                         }
                     }
                 } catch (Exception ex) {
@@ -412,5 +475,7 @@ public class ViewDaoGenImpl<BEAN_CLASS> extends MetaDaoGenImpl<BEAN_CLASS> imple
         return oBean;
 
     }
+
+
 
 }

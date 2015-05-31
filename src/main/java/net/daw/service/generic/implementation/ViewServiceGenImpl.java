@@ -29,6 +29,7 @@ import javax.servlet.http.HttpServletRequest;
 import net.daw.bean.generic.implementation.BeanGenImpl;
 import net.daw.bean.publicinterface.BeanInterface;
 import net.daw.connection.implementation.BoneConnectionPoolImpl;
+import net.daw.connection.publicinterface.ConnectionInterface;
 import net.daw.dao.generic.implementation.TableDaoGenImpl;
 import net.daw.helper.statics.AppConfigurationHelper;
 import net.daw.helper.statics.ExceptionBooster;
@@ -52,9 +53,10 @@ public abstract class ViewServiceGenImpl extends MetaServiceGenImpl implements V
             int id = ParameterCook.prepareId(oRequest);
             String data = null;
             Connection oConnection = null;
+            ConnectionInterface oDataConnectionSource = null;
             try {
-                oConnection = new BoneConnectionPoolImpl().newConnection();
-                oConnection.setAutoCommit(false);
+                oDataConnectionSource = new BoneConnectionPoolImpl();
+                oConnection = oDataConnectionSource.newConnection();
                 BeanGenImpl oGenericBean = (BeanGenImpl) Class.forName("net.daw.bean.specific.implementation." + ParameterCook.prepareCamelCaseObject(oRequest) + "Bean").newInstance();
                 Constructor c = Class.forName("net.daw.dao.specific.implementation." + ParameterCook.prepareCamelCaseObject(oRequest) + "Dao").getConstructor(Connection.class);
                 TableDaoGenImpl oGenericDao = (TableDaoGenImpl) c.newInstance(oConnection);
@@ -65,10 +67,14 @@ public abstract class ViewServiceGenImpl extends MetaServiceGenImpl implements V
                 Gson gson = gsonBuilder.excludeFieldsWithoutExposeAnnotation().create();
                 data = gson.toJson(oGenericBean);
             } catch (Exception ex) {
-                oConnection.rollback();
                 ExceptionBooster.boost(new Exception(this.getClass().getName() + ":get ERROR: " + ex.getMessage()));
             } finally {
-                oConnection.commit();
+                if (oConnection != null) {
+                    oConnection.close();
+                }
+                if (oDataConnectionSource != null) {
+                    oDataConnectionSource.disposeConnection();
+                }
             }
             return data;
         } else {
@@ -84,9 +90,10 @@ public abstract class ViewServiceGenImpl extends MetaServiceGenImpl implements V
         HashMap<String, String> hmOrder = ParameterCook.prepareOrder(oRequest);
         String data = null;
         Connection oConnection = null;
+        ConnectionInterface oDataConnectionSource = null;
         try {
-            oConnection = new BoneConnectionPoolImpl().newConnection();
-            oConnection.setAutoCommit(false);
+            oDataConnectionSource = new BoneConnectionPoolImpl();
+            oConnection = oDataConnectionSource.newConnection();
             BeanGenImpl oGenericBean = (BeanGenImpl) Class.forName("net.daw.bean.specific.implementation." + ParameterCook.prepareCamelCaseObject(oRequest) + "Bean").newInstance();
             Constructor c = Class.forName("net.daw.dao.specific.implementation." + ParameterCook.prepareCamelCaseObject(oRequest) + "Dao").getConstructor(Connection.class);
             TableDaoGenImpl oGenericDao = (TableDaoGenImpl) c.newInstance(oConnection);
@@ -97,10 +104,14 @@ public abstract class ViewServiceGenImpl extends MetaServiceGenImpl implements V
             data = gson.toJson(loGenericBean);
             data = "{\"list\":" + data + "}";
         } catch (Exception ex) {
-            oConnection.rollback();
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPage ERROR: " + ex.getMessage()));
         } finally {
-            oConnection.commit();
+            if (oConnection != null) {
+                oConnection.close();
+            }
+            if (oDataConnectionSource != null) {
+                oDataConnectionSource.disposeConnection();
+            }
         }
         return data;
     }
@@ -111,19 +122,23 @@ public abstract class ViewServiceGenImpl extends MetaServiceGenImpl implements V
         ArrayList<FilterBeanHelper> alFilter = ParameterCook.prepareFilter(oRequest);
         String data = null;
         Connection oConnection = null;
+        ConnectionInterface oDataConnectionSource = null;
         try {
-            oConnection = new BoneConnectionPoolImpl().newConnection();
-            oConnection.setAutoCommit(false);
-
+            oDataConnectionSource = new BoneConnectionPoolImpl();
+            oConnection = oDataConnectionSource.newConnection();
             Constructor c = Class.forName("net.daw.dao.specific.implementation." + ParameterCook.prepareCamelCaseObject(oRequest) + "Dao").getConstructor(Connection.class);
             TableDaoGenImpl oGenericDao = (TableDaoGenImpl) c.newInstance(oConnection);
             int pages = oGenericDao.getPages(intRegsPerPag, alFilter);
             data = "{\"data\":\"" + Integer.toString(pages) + "\"}";
         } catch (Exception ex) {
-            oConnection.rollback();
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPages ERROR: " + ex.getMessage()));
         } finally {
-            oConnection.commit();
+            if (oConnection != null) {
+                oConnection.close();
+            }
+            if (oDataConnectionSource != null) {
+                oDataConnectionSource.disposeConnection();
+            }
         }
         return data;
     }
@@ -133,39 +148,38 @@ public abstract class ViewServiceGenImpl extends MetaServiceGenImpl implements V
         String data = null;
         ArrayList<FilterBeanHelper> alFilter = ParameterCook.prepareFilter(oRequest);
         Connection oConnection = null;
+        ConnectionInterface oDataConnectionSource = null;
         try {
-            oConnection = new BoneConnectionPoolImpl().newConnection();
-            oConnection.setAutoCommit(false);
+            oDataConnectionSource = new BoneConnectionPoolImpl();
+            oConnection = oDataConnectionSource.newConnection();
             Constructor c = Class.forName("net.daw.dao.specific.implementation." + ParameterCook.prepareCamelCaseObject(oRequest) + "Dao").getConstructor(Connection.class);
             TableDaoGenImpl oGenericDao = (TableDaoGenImpl) c.newInstance(oConnection);
             int registers = oGenericDao.getCount(alFilter);
             data = "{\"data\":\"" + Integer.toString(registers) + "\"}";
             return data;
         } catch (Exception ex) {
-            oConnection.rollback();
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getCount ERROR: " + ex.getMessage()));
         } finally {
-            oConnection.commit();
+            if (oConnection != null) {
+                oConnection.close();
+            }
+            if (oDataConnectionSource != null) {
+                oDataConnectionSource.disposeConnection();
+            }
         }
         return data;
     }
 
     @Override
-    //no se utiliza por ahora
     public String getaggregateviewsome() throws Exception {
         String data = null;
         try {
-            //falta controlar la transacción a esta altura
-            String columns = this.getcolumns();
-            String prettyColumns = this.getprettycolumns();
-            //String types = this.getTypes();
+            String meta = this.getmetainformation();
             String page = this.getpage();
             String pages = this.getpages();
             String registers = this.getcount();
             data = "{\"data\":{"
-                    + "\"columns\":" + columns
-                    + ",\"prettyColumns\":" + prettyColumns
-                    // + ",\"types\":" + types
+                    + "\"meta\":" + meta
                     + ",\"page\":" + page
                     + ",\"pages\":" + pages
                     + ",\"registers\":" + registers
@@ -180,16 +194,11 @@ public abstract class ViewServiceGenImpl extends MetaServiceGenImpl implements V
     public String getaggregateviewone() throws Exception {
         String data = null;
         try {
-            //falta controlar la transacción a esta altura
-            String columns = this.getcolumns();
-            String prettyColumns = this.getprettycolumns();
-            //String types = this.getTypes();
+            String meta = this.getmetainformation();
             String one = this.get();
             data = "{\"data\":{"
-                    + "\"columns\":" + columns
-                    + ",\"prettyColumns\":" + prettyColumns
-                    // + ",\"types\":" + types
-                    + ",\"data\":" + one
+                    + "\"meta\":" + meta
+                    + ",\"one\":" + one
                     + "}}";
             return data;
         } catch (Exception ex) {

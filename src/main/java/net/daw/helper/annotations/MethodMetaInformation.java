@@ -40,9 +40,19 @@ public @interface MethodMetaInformation {
     
     public boolean IsIdForeignKey() default false;
     public boolean IsObjForeignKey() default false;    
-    public String MyObjName() default "";
-    public String MyObjIdName() default "";    
+    public boolean IsMetaForeignKey() default false;    
+
+    
+    public String MyObjName() default "";    
+    public String MyMetaName() default "";    
+    public String MyIdName() default "";
+    
+      
     public String ReferencesTable() default "";
+//    public String ForeignKeyDescription1() default "";
+//    public String ForeignKeyDescription2() default "";
+//    public String ForeignKeyDescription3() default "";
+    public boolean IsForeignKeyDescriptor() default false;
     
     public MetaEnum.FieldType Type() default FieldType.String;  
     public int MaxLength() default 255;

@@ -38,7 +38,8 @@ public class TipodocumentoBean extends BeanGenImpl implements BeanInterface {
             Type = MetaEnum.FieldType.String,
             MinLength = 0,
             MaxLength = 255,
-            DefaultValue = "Sin tipo"
+            DefaultValue = "Sin tipo",
+            IsForeignKeyDescriptor = true
     )
     private String descripcion = "";
     @Expose

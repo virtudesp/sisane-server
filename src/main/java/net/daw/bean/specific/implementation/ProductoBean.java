@@ -60,7 +60,7 @@ public class ProductoBean extends BeanGenImpl implements BeanInterface {
             ShortName = "Tipo de producto",
             IsObjForeignKey = true,
             ReferencesTable = "tipoproducto",
-            MyObjIdName = "id_tipoproducto"
+            MyIdName = "id_tipoproducto"
     )
     private TipoproductoBean obj_tipoproducto = null;
 
@@ -78,7 +78,7 @@ public class ProductoBean extends BeanGenImpl implements BeanInterface {
             ShortName = "Proveedor",
             IsObjForeignKey = true,
             ReferencesTable = "proveedor",
-            MyObjIdName = "id_proveedor"
+            MyIdName = "id_proveedor"
     )    
     private ProveedorBean obj_proveedor = null;
 
