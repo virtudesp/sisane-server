@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <!--
 Copyright (C) 2015 rafa
 
@@ -25,7 +24,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
         <meta name="description" content="">
         <meta name="author" content="">
 
-        <title>SB Admin - Bootstrap Admin Template</title>
+        <title>ausiàsBROTH</title>
 
         <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css" />
 
@@ -35,17 +34,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
         <link rel="stylesheet" href="css/animate.css"/>
         <link rel="stylesheet" href="css/plugins/morris.css" />
         -->
-        
 
         <link rel="stylesheet" href="css/datetimepicker/bootstrap-datetimepicker.min.css"  />
         <link href="css/font-awesome-4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">        
         <link href="css/main/main.css" rel="stylesheet" type="text/css">
         <link href='http://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>
         <link href='http://fonts.googleapis.com/css?family=Questrial' rel='stylesheet' type='text/css'>
-        
-        
-        <!-- Custom Fonts -->
 
+        <!-- Custom Fonts -->
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <!--[if lt IE 9]>
@@ -58,7 +54,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
         <!--[if lt IE 7]>
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
-
+        <!-- Menu -->
         <nav class="navbar navbar-default navbar-fixed-top" >
             <div class="container-fluid">
                 <div class="navbar-header" >
@@ -82,13 +78,15 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
                                 Entidades
                                 <span class="caret"></span>
                             </a>
-                            <ul class="dropdown-menu" role="menu">                                
-                                <li><a href="#/documento/list/page=1&rpp=10"><i class="fa fa-fw fa-file-text"></i> Documento</a></li>
+                            <ul class="dropdown-menu" role="menu">  
+                                <li><a href="#/documento/abc"><i class="fa fa-fw fa-file-text"></i> Documento abc</a></li>
+                                <li><a href="#/documento/plist/page=1&rpp=10"><i class="fa fa-fw fa-file-text"></i> Documento paginated list</a></li>
+                                <li><a href="#/documento/list"><i class="fa fa-fw fa-file-text"></i> Documento list</a></li>
                                 <li class="divider"></li>
-                                <li><a href="#/documento/new"><i class="fa fa-fw fa-user"></i> Documento</a></li>
+                                <li><a href="#/documento/new"><i class="fa fa-fw fa-user"></i> New Documento</a></li>
                                 <li class="dropdown-header">Nav header</li>
-                                <li><a href="#/documento/edit/1"><i class="fa fa-fw fa-power-off"></i> edit</a></li>
-                                <li><a href="#/documento/view/1"><i class="fa fa-fw fa-power-off"></i> view</a></li>
+                                <li><a href="#/documento/edit/1"><i class="fa fa-fw fa-power-off"></i> edit Documento 1</a></li>
+                                <li><a href="#/documento/view/1"><i class="fa fa-fw fa-power-off"></i> view Documento 1</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -117,22 +115,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
                 </div>
             </div>
         </nav>
-        <!-- ********************************************* -->
+        <!-- Main Content -->
         <div id="wrapper">
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="panel panel-default">
-                            <div class="panel-heading" style="font-family:Oswald , serif;">
-                                <div class="row">
-                                    <div class="col-xs-9 text-left">
-                                        <h1 id="broth_title">Documento</h1>
-                                        <h1><small id="broth_subtitle">Formulario de entrada al sistema</small></h1>
-                                    </div>
-                                    <div class="col-xs-3 text-right" id="broth_operationicon">
-
-                                    </div>
-                                </div>
+                            <div class="panel-heading" id="broth_panel_heading" style="font-family:Oswald , serif;">
                             </div>
                             <div class="panel-body" >
                                 <div id="broth_content"></div>
@@ -202,49 +191,43 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
                 </div>
             </div>
         </div>
-        <!-- Bootstrap Core JavaScript -->
+        <!-- Vendor -->
         <script type="text/javascript"  src="./js/vendor/jquery-1.11.1.min.js"></script>
         <script src="js/vendor/bootstrap.min.js"></script>
         <script type="text/javascript"  src="./js/vendor/path.min.js"></script> 
-
-        
-        
-        
-        
-        <script type="text/javascript"  src="js/js/modules/base.js"></script>
-        <script type="text/javascript"  src="js/js/modules/funjascript.js"></script>
-        
-        
-        
-        
-        <script type="text/javascript"  src="js/js/modules/new.js"></script>
-        <script type="text/javascript"  src="js/js/modules/edit.js"></script>
-        <script type="text/javascript"  src="js/js/modules/view.js"></script>
-        <script type="text/javascript"  src="js/js/modules/list.js"></script>
-
-        <script type="text/javascript"  src="js/js/form.js"></script>
-
-        <script type="text/javascript"  src="js/js/init.js"></script>
-
-        <script type="text/javascript"  src="js/js/modules/util.js"></script>
-
-
-
-
-        <script type="text/javascript"  src="js/js/specific/documento.js"></script>
-
-
-
+        <script type="text/javascript"  src="./js/vendor/underscore-min.js"></script> 
+        <!-- Lib -->
+        <script src="js/generic/lib/util/config.js" type="text/javascript"></script>
+        <script src="js/generic/lib/util/util.js" type="text/javascript"></script>
+        <script src="js/generic/lib/util/login.js" type="text/javascript"></script>
+        <script src="js/generic/lib/util/session.js" type="text/javascript"></script>
+        <script src="js/generic/lib/util/parameter.js" type="text/javascript"></script>
+        <script src="js/generic/lib/util/html.js" type="text/javascript"></script>
+        <!-- Base Module Y Base Lib -->
+        <script src="js/generic/lib/base/base.js" type="text/javascript"></script>
+        <script src="js/generic/lib/base/promise.js" type="text/javascript"></script>
+        <script src="js/generic/lib/base/validation.js" type="text/javascript"></script>
+        <script src="js/generic/lib/base/parameter.js" type="text/javascript"></script>
+        <script src="js/generic/lib/util/string.js" type="text/javascript"></script>
+        <!-- Ausiàs -->
+        <script src="js/vendor/ausiasDOM.js" type="text/javascript"></script>
+        <script src="js/vendor/ausiasFLOW.js" type="text/javascript"></script>
+        <!-- Generic Modules -->    
+        <script src="js/generic/modules/list.js" type="text/javascript"></script>
+        <script src="js/generic/modules/paginatedList.js" type="text/javascript"></script>
+        <script src="js/generic/modules/new.js" type="text/javascript"></script>
+        <script src="js/generic/modules/view.js" type="text/javascript"></script>
+        <script src="js/generic/modules/edit.js" type="text/javascript"></script>
+        <!-- Specific modules -->
+        <script src="js/specific/documento/modules/view.js" type="text/javascript"></script>
+        <script src="js/specific/documento/modules/paginatedList.js" type="text/javascript"></script>
+        <!-- Specific routes & components -->
+        <script src="js/specific/documento/components.js" type="text/javascript"></script>
+        <script src="js/specific/documento/routes.js" type="text/javascript"></script>
 
         <script type="text/javascript">
-            var urlJson;
-
+            var dom = ausiasDOM.dom;
             function appInit() {
-
-
-
-
-
                 $("#broth_logout").click(function () {
 
                     $.ajax({
@@ -253,7 +236,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
                         data: "ob=user&op=logout",
                         success: function (response) {
                             $("#infoPanel").html(response.message);
-                            ns.login.checkAndUpdateUserConnectionState();
+                            session.checkAndUpdateUserConnectionState();
                         }
                     });
                     return false;
@@ -266,7 +249,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
             $(document).ready(function () {
                 //$('#broth-navigation').load("navigation.html");
                 //$('#loginFormBroth').load("loginform.html");
-                urlJson = ns.util.getRequestsUrl();
+                //urlJson = ns.util.getRequestsUrl();
+
 
                 $('.broth_show_when_logged_in').hide();
                 $('.broth_show_when_logged_out').show();
@@ -275,7 +259,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
                     ns.login.loadLoginForm();
                 })
 
-                ns.login.checkAndUpdateUserConnectionState();
+                session.checkAndUpdateUserConnectionState();
             });
 
             $("#comprobar").click(function () {

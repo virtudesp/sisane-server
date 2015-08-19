@@ -82,6 +82,40 @@ public abstract class ViewServiceGenImpl extends MetaServiceGenImpl implements V
         }
     }
 
+    //@Override
+    public String getall() throws Exception {
+//        int intRegsPerPag = ParameterCook.prepareRpp(oRequest);;
+//        int intPage = ParameterCook.preparePage(oRequest);
+        ArrayList<FilterBeanHelper> alFilter = ParameterCook.prepareFilter(oRequest);
+        HashMap<String, String> hmOrder = ParameterCook.prepareOrder(oRequest);
+        String data = null;
+        Connection oConnection = null;
+        ConnectionInterface oDataConnectionSource = null;
+        try {
+            oDataConnectionSource = new BoneConnectionPoolImpl();
+            oConnection = oDataConnectionSource.newConnection();
+            BeanGenImpl oGenericBean = (BeanGenImpl) Class.forName("net.daw.bean.specific.implementation." + ParameterCook.prepareCamelCaseObject(oRequest) + "Bean").newInstance();
+            Constructor c = Class.forName("net.daw.dao.specific.implementation." + ParameterCook.prepareCamelCaseObject(oRequest) + "Dao").getConstructor(Connection.class);
+            TableDaoGenImpl oGenericDao = (TableDaoGenImpl) c.newInstance(oConnection);
+            List<BeanInterface> loGenericBean = oGenericDao.getAll(alFilter, hmOrder);
+            GsonBuilder gsonBuilder = new GsonBuilder();
+            gsonBuilder.setDateFormat("dd/MM/yyyy");
+            Gson gson = gsonBuilder.excludeFieldsWithoutExposeAnnotation().create();
+            data = gson.toJson(loGenericBean);
+            data = "{\"list\":" + data + "}";
+        } catch (Exception ex) {
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getAll ERROR: " + ex.getMessage()));
+        } finally {
+            if (oConnection != null) {
+                oConnection.close();
+            }
+            if (oDataConnectionSource != null) {
+                oDataConnectionSource.disposeConnection();
+            }
+        }
+        return data;
+    }
+
     @Override
     public String getpage() throws Exception {
         int intRegsPerPag = ParameterCook.prepareRpp(oRequest);;
@@ -178,12 +212,12 @@ public abstract class ViewServiceGenImpl extends MetaServiceGenImpl implements V
             String page = this.getpage();
             String pages = this.getpages();
             String registers = this.getcount();
-            data = "{\"data\":{"
+            data = "{"
                     + "\"meta\":" + meta
                     + ",\"page\":" + page
                     + ",\"pages\":" + pages
                     + ",\"registers\":" + registers
-                    + "}}";
+                    + "}";
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getAggregateViewSome ERROR: " + ex.getMessage()));
         }
@@ -196,13 +230,32 @@ public abstract class ViewServiceGenImpl extends MetaServiceGenImpl implements V
         try {
             String meta = this.getmetainformation();
             String one = this.get();
-            data = "{\"data\":{"
+            data = "{"
                     + "\"meta\":" + meta
-                    + ",\"one\":" + one
-                    + "}}";
+                    + ",\"bean\":" + one
+                    + "}";
             return data;
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getAggregateViewOne ERROR: " + ex.getMessage()));
+        }
+        return data;
+    }
+
+    //@Override
+
+    public String getaggregateviewall() throws Exception {
+        String data = null;
+        try {
+            String meta = this.getmetainformation();
+            String all = this.getall();
+            String registers = this.getcount();
+            data = "{"
+                    + "\"meta\":" + meta
+                    + ",\"page\":" + all
+                    + ",\"registers\":" + registers
+                    + "}";
+        } catch (Exception ex) {
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getAggregateViewSome ERROR: " + ex.getMessage()));
         }
         return data;
     }

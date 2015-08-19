@@ -162,15 +162,15 @@
         <script src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
         -->
 
-        <script src="js/generic/validation.js" charset="UTF-8"></script>    
+        <script src="js/generic-old-old/validation.js" charset="UTF-8"></script>    
 
-        <script src="js/generic/view.js" charset="UTF-8"></script>    
-        <script src="js/generic/param.js" charset="UTF-8"></script>
-        <script src="js/generic/ajax.js" charset="UTF-8"></script>
-        <script src="js/generic/util.js" charset="UTF-8"></script>
-        <script src="js/generic/model.js" charset="UTF-8"></script>        
-        <script src="js/generic/control.js" charset="UTF-8"></script> 
-        <script src="js/generic/initialization.js" charset="UTF-8"></script>
+        <script src="js/generic-old-old/view.js" charset="UTF-8"></script>    
+        <script src="js/generic-old-old/param.js" charset="UTF-8"></script>
+        <script src="js/generic-old-old/ajax.js" charset="UTF-8"></script>
+        <script src="js/generic-old-old/util.js" charset="UTF-8"></script>
+        <script src="js/generic-old-old/model.js" charset="UTF-8"></script>        
+        <script src="js/generic-old-old/control.js" charset="UTF-8"></script> 
+        <script src="js/generic-old-old/initialization.js" charset="UTF-8"></script>
 
         <script type="text/javascript">
             var path = '<%=request.getContextPath()%>';

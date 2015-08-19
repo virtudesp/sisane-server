@@ -26,7 +26,7 @@ var listOperation = function (strClase, strPlace, objParams) {
     this.jsonPages = 'error';
     this.jsonRegisters = 'error';
 
-    this.urlRequest = urlJson + '?ob=' + this.strClase;
+    this.urlRequest = broth.getAppUrl() + '?ob=' + this.strClase;
     this.objParams = objParams;
 };
 listOperation.prototype = Object.create(baseOperation.prototype);
@@ -141,7 +141,7 @@ listOperation.prototype.printTemplate = function () {
     info += this.getRegistersInfo(this.jsonRegisters);
     info += this.getOrderInfo(this.objParams);
     info += this.getFilterInfo(this.objParams);
-    info += '</div>';
+    info += '</div>';        
     info += '<div class="col-lg-6  col-md-6 col-sm-8 text-center">'
     var strUrlFromParamsWithoutPage = ns.param.getUrlStringFromParamsObject(ns.param.getUrlObjectFromParamsWithoutParamArray(this.objParams, ["page"]));
     var url = '#/' + this.strClase + '/list/' + strUrlFromParamsWithoutPage;

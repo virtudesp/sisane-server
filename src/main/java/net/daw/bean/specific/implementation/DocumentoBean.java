@@ -22,6 +22,7 @@ import net.daw.bean.publicinterface.BeanInterface;
 import com.google.gson.annotations.Expose;
 import java.util.ArrayList;
 import java.util.Date;
+import net.daw.bean.group.GroupBeanImpl;
 import net.daw.bean.meta.MetaBeanGenImpl;
 import net.daw.helper.annotations.MethodMetaInformation;
 import net.daw.helper.annotations.TableSourceMetaInformation;
@@ -118,16 +119,16 @@ public class DocumentoBean extends BeanGenImpl implements BeanInterface {
     //            ForeignKeyDescription1="login",
     //            ForeignKeyDescription2="ciudad"
     )
-    private UsuarioBean obj_usuario = null;
+    private GroupBeanImpl obj_usuario = null;
 
-    @Expose(deserialize = false)
-    @MethodMetaInformation(
-            IsMetaForeignKey = true,
-            ReferencesTable = "usuario",
-            MyIdName = "id_usuario",
-            MyObjName = "obj_usuario"
-    )
-    private ArrayList<MetaBeanGenImpl> meta_usuario = null;
+//    @Expose(deserialize = false)
+//    @MethodMetaInformation(
+//            IsMetaForeignKey = true,
+//            ReferencesTable = "usuario",
+//            MyIdName = "id_usuario",
+//            MyObjName = "obj_usuario"
+//    )
+//    private ArrayList<MetaBeanGenImpl> meta_usuario = null;
 
     @Expose(serialize = false)
     @MethodMetaInformation(
@@ -150,17 +151,17 @@ public class DocumentoBean extends BeanGenImpl implements BeanInterface {
             MyMetaName = "meta_tipodocumento"
     //            ForeignKeyDescription1="descripcion"
     )
-    private TipodocumentoBean obj_tipodocumento = null;
+    private GroupBeanImpl obj_tipodocumento = null;
 
-    @Expose(deserialize = false)
-    @MethodMetaInformation(
-            UltraShortName = "Tipo",
-            IsMetaForeignKey = true,
-            ReferencesTable = "tipodocumento",
-            MyIdName = "id_tipodocumento",
-            MyObjName = "obj_tipodocumento"
-    )
-    private ArrayList<MetaBeanGenImpl> meta_tipodocumento = null;
+//    @Expose(deserialize = false)
+//    @MethodMetaInformation(
+//            UltraShortName = "Tipo",
+//            IsMetaForeignKey = true,
+//            ReferencesTable = "tipodocumento",
+//            MyIdName = "id_tipodocumento",
+//            MyObjName = "obj_tipodocumento"
+//    )
+//    private ArrayList<MetaBeanGenImpl> meta_tipodocumento = null;
 
     @Expose
     @MethodMetaInformation(
@@ -299,46 +300,22 @@ public class DocumentoBean extends BeanGenImpl implements BeanInterface {
         this.destacado = destacado;
     }
 
-    public UsuarioBean getObj_usuario() {
+    public GroupBeanImpl getObj_usuario() {
         return obj_usuario;
     }
 
-    public void setObj_usuario(UsuarioBean obj_usuario) {
+    public void setObj_usuario(GroupBeanImpl obj_usuario) {
         this.obj_usuario = obj_usuario;
     }
 
-    public TipodocumentoBean getObj_tipodocumento() {
+    public GroupBeanImpl getObj_tipodocumento() {
         return obj_tipodocumento;
     }
 
-    public void setObj_tipodocumento(TipodocumentoBean obj_tipodocumento) {
+    public void setObj_tipodocumento(GroupBeanImpl obj_tipodocumento) {
         this.obj_tipodocumento = obj_tipodocumento;
     }
 
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-        public ArrayList<MetaBeanGenImpl> getMeta_usuario() {
-        return meta_usuario;
-    }
-
-    public void setMeta_usuario(ArrayList<MetaBeanGenImpl> meta_usuario) {
-        this.meta_usuario = meta_usuario;
-    }
-
-    public ArrayList<MetaBeanGenImpl> getMeta_tipodocumento() {
-        return meta_tipodocumento;
-    }
-
-    public void setMeta_tipodocumento(ArrayList<MetaBeanGenImpl> meta_tipodocumento) {
-        this.meta_tipodocumento = meta_tipodocumento;
-    }
+  
     
 }

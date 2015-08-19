@@ -60,7 +60,7 @@ public class ProductoDao implements ViewDaoInterface<ProductoBean>,TableDaoInter
                 SelectSourceMetaInformation annotationSelectSourceMetaInformation = classProductoBean.getAnnotation(SelectSourceMetaInformation.class);
                 //SelectSourceMetaInformation annotationSelectSourceMetaInformation = (SelectSourceMetaInformation) annotation;
                 strTableOrigin = null;
-                strSqlSelectDataOrigin = annotationSelectSourceMetaInformation.SqlSelection() + " where 1=1 ";
+                strSqlSelectDataOrigin = annotationSelectSourceMetaInformation.SqlSelect() + " where 1=1 ";
             }
             if (strSqlSelectDataOrigin.equals(null)) {
                 ExceptionBooster.boost(new Exception(this.getClass().getName() + ":constructor ERROR: " + classProductoBean.getName() + " Beans must be annotated by SelectSourceMetaInformation or TableSourceMetaInformation "));

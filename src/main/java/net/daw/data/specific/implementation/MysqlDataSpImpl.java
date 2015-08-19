@@ -1097,6 +1097,52 @@ public class MysqlDataSpImpl implements DataInterface {
         return vector;
     }
 
+    public ArrayList<Integer> getAll(String strSqlSelectDataOrigin) throws Exception {
+        ArrayList<Integer> vector = null;
+        Statement oStatement = null;
+        ResultSet oResultSet = null;
+        vector = new ArrayList<>();
+        try {
+            oStatement = (Statement) connection.createStatement();
+            oResultSet = oStatement.executeQuery(strSqlSelectDataOrigin);
+            while (oResultSet.next()) {
+                vector.add(oResultSet.getInt("id"));
+            }
+        } catch (Exception ex) {
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getAllSQL ERROR:  Can't process query: " + ex.getMessage()));
+        } finally {
+            if (oResultSet != null) {
+                oResultSet.close();
+            }
+            if (oStatement != null) {
+                oStatement.close();
+            }
+        }
+        return vector;
+    }
+
+    public ResultSet getAllSql(String strSqlSelectDataOrigin) throws Exception {
+        ArrayList<Integer> vector = null;
+        Statement oStatement = null;
+        ResultSet oResultSet = null;
+        vector = new ArrayList<>();
+        try {
+            oStatement = (Statement) connection.createStatement();
+            oResultSet = oStatement.executeQuery(strSqlSelectDataOrigin);
+
+        } catch (Exception ex) {
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getAllSQL ERROR:  Can't process query: " + ex.getMessage()));
+        } finally {
+            //if (oResultSet != null) {
+            //    oResultSet.close();
+            //}
+            //if (oStatement != null) {
+            //    oStatement.close();
+            //}
+        }
+        return oResultSet;
+    }
+
     @Override
     public int removeOne(int intId, String strTabla) throws Exception {
         PreparedStatement oPreparedStatement = null;

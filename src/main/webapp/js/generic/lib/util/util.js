@@ -15,96 +15,363 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
+$.fn.serializeObject = function ()
+{
+    // http://jsfiddle.net/davidhong/gP9bh/
+    var o = {};
+    var a = this.serializeArray();
+    $.each(a, function () {
+        if (o[this.name] !== undefined) {
+            if (!o[this.name].push) {
+                o[this.name] = [o[this.name]];
+            }
+            o[this.name].push(this.value || '');
+        } else {
+            o[this.name] = encodeURIComponent(this.value) || '';
+        }
+    });
+    return o;
+};
+var broth = {
+    defaultizeParameter: function (parameter, defaultValue) {
+        if (typeof parameter !== 'undefined') {
+            return parameter;
+        } else {
+            return defaultValue;
+        }
+    },
+
+    
+    
+    
+    
+    
+
+    
+    _p: function (strText) {
+        return this.append('<p>' + strText + '</p>');
+    },
+    _i: function (strText) {
+        return this.append('<i>' + strText + '</i>');
+    },
+    _h1: function (strText) {
+        return this.append('<h1>' + strText + '</h1>');
+    },
+    _form: function (id, content) {
+        return(
+                '<form class="form-horizontal" role="form" action="#" id="' + id + '" name="formulario">\n\
+                    <div id="' + 'fields' + id + '">\n\
+                        ' + content + '\n\
+                    </div>\n\
+                    <div class="form-group">\n\
+                        <div class="col-sm-offset-2 col-sm-10">\n\
+                            <div id="messages"></div>\n\
+                            </div>\n\
+                        </div>\n\
+                    <div class="form-group">\n\
+                    <div class="col-sm-offset-2 col-sm-10">\n\
+                        <button class="btn btn-primary" id="submitForm">Guardar</button>\n\
+                    </div>\n\
+                </form>'
+                );
+    },
+    _formInputTypeDate: function (fieldName, fieldShortName, fieldUltraShortName, controlWidth) {
+        return(
+                '<div id="' + fieldName + '-group" class="form-group">\n\
+                    <label class="col-sm-2 control-label" for="' + fieldName + '">' + fieldShortName + ':</label>\n\
+                        <div class="control col-sm-' + controlWidth + '">\n\
+                            <div class="input-group date" id="' + fieldName + '_group">\n\
+                                <span class="input-group-addon">\n\
+                                    <span class="glyphicon glyphicon-calendar"></span>\n\
+                                </span>\n\
+                                <input type="text" class="form-control" id="' + fieldName + '" name="' + fieldName + '" placeholder="' + fieldUltraShortName + '" />\n\
+                            </div>\n\
+                        </div>\n\
+                </div>\n'
+                );
+    },
+    _formForeign: function (fieldName, fieldShortName) {
+        return(
+                '<div class="form-group">\n\
+                    <label class="col-sm-2 control-label" for="' + fieldName + '">' + fieldShortName + ':</label>\n\
+                    <div class="control col-sm-3">\n\
+                        <div class="input-group foreign" id="' + fieldName + '_group">\n\
+                            <span class="input-group-addon" id="' + fieldName + '_button">\n\
+                                <span class="glyphicon glyphicon-search"></span>\n\
+                            </span>\n\
+                            <input readonly="true" class="form-control" id="' + fieldName + '" class="input-mini" name="' + fieldName + '" type="text" size="5" maxlength="5" />\n\
+                        </div>\n\
+                    </div>\n\
+                    <label class="col-sm-7" for="' + fieldName + '_desc" id="' + fieldName + '_desc"></label>\n\
+                </div>\n'
+                );
+    },
+    _formCheckBox: function (fieldName, fieldShortName) {
+        return("<div id=\"" + fieldName + "-group\" <div class=\"form-group\">"
+                + "<label class=\"col-sm-2 control-label\"  for=\"" + fieldName + "\">" + fieldShortName + ":</label>"
+                + "<div class=\"col-sm-1\">"
+                + "<input type=\"checkbox\" id=\"" + fieldName + "\" name=\"" + fieldName + "\" value=\"true\" />"
+                + "</div>"
+                + "</div>\n");
+        return this;
+    },
+    _formInputTypeInteger: function (fieldName, fieldShortName, controlWidth) {
+        return('<div id="' + fieldName + '-group" class="form-group  has-success has-feedback">'
+                + "<label class=\"col-sm-2 control-label\"  for=\"" + fieldName + "\">" + fieldShortName + ":</label>"
+                + "<div class=\"control col-sm-" + controlWidth + "\">    "
+                + "<input type=\"text\" id=\"" + fieldName + "\" class=\"form-control\"  name=\"" + fieldName + "\" size=\"15\" placeholder=\"" + fieldName + "\" />"
+                + "</div>"
+                + "</div>\n");
+    },
+    _formInputTypeText: function (fieldName, fieldShortName, controlWidth) {
+        return("<div id=\"" + fieldName + "-group\" class=\"form-group has-feedback\">"
+                + "<label class=\"col-sm-2 control-label\"  for=\"" + fieldName + "\">" + fieldShortName + ":</label>"
+                + "<div class=\"control col-sm-" + controlWidth + "\">    "
+                + "<input type=\"text\" id=\"" + fieldName + "\" class=\"form-control\"  name=\"" + fieldName + "\" size=\"15\" placeholder=\"" + fieldName + "\" />"
+                + "</div>"
+                + "</div>\n");
+    },
+    getFormTemplate: function (strClass, jsonMeta) {
+        var matrix_form = _.map(jsonMeta, function (value, index) {
+            if (value.IsIdForeignKey == false && value.IsObjForeignKey == false) {
+                if (value.Type == "String") {
+                    return broth._formInputTypeText(value.Name, value.ShortName, ns.util.getInputTypeTextLenght(value.MaxLength));
+                }
+                if (value.Type == "Boolean") {
+                    return broth._formCheckBox(value.Name, value.ShortName);
+                }
+                if (value.Type == "Integer") {
+                    return broth._formInputTypeInteger(value.Name, value.ShortName, ns.util.getInputTypeTextLenght(value.MaxInteger.toString().length));
+                }
+                if (value.Type == "Date") {
+                    return broth._formInputTypeDate(value.Name, value.ShortName, value.ShortName, ns.util.getInputTypeTextLenght(10));
+                }
+            } else {
+                if (value.IsObjForeignKey) {
+                    return broth._formForeign(value.Name, value.ShortName);
+                }
+            }
+        });
+        var string_form = _.reduce(matrix_form, function (memo, control) {
+            return memo + control;
+        });
+
+        return broth._form(strClass + 'Form', string_form);
+    },
+    getViewTemplate_func: function (strClass, jsonData) {
+        arr_meta_data = _.map(jsonData.meta, function (value) {
+            return  {meta: value, data: jsonData.bean[value.Name]};
+        });
+        arr_meta_data_table = _.map(arr_meta_data, function (value, key) {
+            return  '<tr><td><strong>' + value.meta.Name + '</strong></td><td>' + html.printPrincipal(value) + '</td></tr>';
+        });
+        return "<table class=\"table table table-bordered table-condensed\">"
+                + arr_meta_data_table.join('')
+                + '</table>';
+    },
+    getViewTemplate_nofunc: function (strClass, jsonMeta) {
+        var thisObject = this;
+        var viewTable = "";
+
+        //$(place).append(oView.getObjectTable(oDocumentoModel.getCachedPrettyFieldNames(), oDocumentoModel.getCachedOne(), oDocumentoModel.getCachedFieldNames()));
+        viewTable = "<table class=\"table table table-bordered table-condensed\">";
+        $.each(this.jsonMeta, function (index, value) {
+            if (!value.IsMetaForeignKey) {
+                //this.strPlace.append("Tabla..");
+                viewTable += '<tr><td><strong>' + value.Description + '</strong></td>';
+                if (value.IsObjForeignKey) {
+                    viewTable += '<td>' + thisObject.printForeignValues(thisObject.jsonData[value.MyMetaName], thisObject.jsonData[value.Name], value.ReferencesTable) + '</td>';
+                } else {
+                    viewTable += '<td>' + ns.strings.printValue(value, thisObject.jsonData[value.Name], true) + '</td>'; // printValue(valoresRegistro, nombreDeCampo, false) 
+                }
+            }
+        });
+        viewTable += '</table>';
+
+        viewTable += ('<p>');
+        viewTable += ('<a class="btn btn-primary" role="button" href="#/' + this.strClase + '/edit/' + this.objParams['id'] + '">Editar</a>   ');
+        viewTable += ('<a class="btn btn-danger" role="button" href="#/' + this.strClase + '/remove/' + this.objParams['id'] + '">Borrar</a>');
+        viewTable += ('</p>');
+        return viewTable;
+    },
+    getFormValidationCode: function (jsonMeta) {
+        var matrix_form = _.map(jsonMeta, function (value, index) {
+            if (value.IsIdForeignKey == false && value.IsObjForeignKey == false) {
+                if (value.Type == "String") {
+                    return  function () {
+                        $('#' + value.Name).keyup(function (event) {
+                            broth.resetValidationControl(value.Name);
+                            var controlValue = $('#' + value.Name).val();
+                            if (validateMinLength(value.MinLength, controlValue)) {
+                                if (validateMaxLength(value.MaxLength, controlValue)) {
+                                    broth.showValidationOKControl(value.Name);
+                                } else {
+                                    broth.showValidationErrorControl(value.Name, 'El valor ha de tener como máximo ' + value.MaxLength + ' caracteres');
+                                }
+                            } else {
+                                broth.showValidationErrorControl(value.Name, 'El valor ha de tener como mínimo ' + value.MinLength + ' caracteres');
+                            }
+                        })
+                    }
+                }
+                if (value.Type == "Boolean") {
+
+                }
+                if (value.Type == "Integer") {
+                    return  function () {
+                        $('#' + value.Name).keyup(function (event) {
+                            broth.resetValidationControl(value.Name);
+                            var controlValue = $('#' + value.Name).val();
+                            if (validateInteger(controlValue)) {
+                                if (validateMaxInteger(value.MaxInteger, controlValue)) {
+                                    broth.showValidationOKControl(value.Name);
+                                } else {
+                                    broth.showValidationErrorControl(value.Name, 'EL valor entero ha de ser menor que ' + value.MaxInteger);
+                                }
+                            } else {
+                                broth.showValidationErrorControl(value.Name, 'El valor ha de ser un número entero');
+                            }
+                        })
+                    }
+                }
+                if (value.Type == "Date") {
+                    return  function () {
+                        $('#' + value.Name).keyup(function (event) {
+                            broth.resetValidationControl(value.Name);
+                            var controlValue = $('#' + value.Name).val();
+                            if (validateSpanishDate(controlValue)) {
+                                broth.showValidationOKControl(value.Name);
+                            } else {
+                                broth.showValidationErrorControl(value.Name, 'Introduzca una fecha válida');
+                            }
+                        })
+                    }
+                }
+            } else {
+                if (value.IsObjForeignKey) {
+                    return '';
+                }
+            }
+        });
 
 
+        return matrix_form;
+    },
+    getFormValues: function (strClass) {
+        var valores = [];
+        var disabled = $('#' + strClass + 'Form').find(':input:disabled').removeAttr('disabled');
+        valores = $('#' + strClass + 'Form').serializeObject();
+        disabled.attr('disabled', 'disabled');
+        return valores;
+    },
+    loadForm: function (modalName, headerData, bodyData, footerData, keyb) {
+        $(modalName + ' .modal-header').empty().append(headerData);
+        $(modalName + ' .modal-body').empty().append(bodyData);
+        $(modalName + ' .modal-footer').empty().append(footerData);
+        $(modalName).modal({
+            keyboard: keyb
+        })
+    },
+    //pte
+    doResultOperationNotifyToUser: function (place, resultadoStatus, resultadoMessage, id, mostrar) {
+        var strNombreClase = this.clase;
+        if (resultadoStatus == "200") {
+            mensaje = "<h3>La operacion se ha ejecutado con éxito</h3>";
+        } else {
+            mensaje = "<h3>ERROR</h3>";
+        }
+        mensaje += "<h5>Código: " + resultadoStatus + "</h5><h5>" + resultadoMessage + "</h5>";
+        $(place).append(this.getEmptyModal());
+        broth.loadForm('#modal01', this.getFormHeader('Respuesta del servidor'), mensaje, this.getFormFooter(), true);
+        $('#modal01').css({
+            'right': '20px',
+            'left': '20px',
+            'width': 'auto',
+            'margin': '10px',
+            'display': 'block'
+        });
+        if (mostrar && resultadoStatus == "200") {
+            $('#modal01').on('hidden.bs.modal', function () {
+                window.location.href = "jsp#/" + strNombreClase + "/view/" + id;
+            })
+        } else {
+            $('#modal01').on('hidden.bs.modal', function () {
+                $(place).empty();
+            });
+        }
+        ;
+    },
+    setOne: function (strClass, jsonfile) {
+        $.when(ns.ajax.callSync(broth.getAppUrl() + '?ob=' + strClass + '&op=set', 'GET', jsonfile)).done(function (data) {
+            feedback = data;
+        });
+        return feedback;
+    },
+    actionEditOkMessage: function (msg) {
+        return 'Se ha modificado el registro con id=' + msg.message;
+    },
+    loadFormValues: function (objParams) {
+        $('#id').val('0').attr("disabled", true);
+        if (objParams) { //soporte claves ajenas pte revision
+            var selector;
+            selector = objParams["systemfilter"];
+            if (selector) {
+                if (selector.split("_").length - 1 >= 2) {
+                    selector = selector.replace('id_', 'obj_');
+                    selector2 = selector.substring(0, selector.lastIndexOf('_'))
+                    selector3 = selector2.replace('obj_', '');
+                } else {
+                    selector = selector.replace('id_', 'obj_');
+                    selector2 = selector;
+                    selector3 = selector2.replace('obj_', '')
+                }
+                $('#' + selector + "_id").val(objParams["systemfiltervalue"]).attr("disabled", true);
+                $('#' + selector + "_button").attr("disabled", true).hide();
+                var oModelo = "o" + selector3.charAt(0).toUpperCase() + selector3.slice(1) + "Model";
+                $('#' + selector + '_desc').text(decodeURIComponent(window[oModelo].getMeAsAForeignKey(objParams["systemfiltervalue"])));
+            }
+        }
+    },
+    notifyException: function (errorStatus, errorMessage) {
+        console.log("Error " + errorStatus + ": " + errorMessage)
+        return "Error " + errorStatus + ": " + errorMessage;
+
+    },
+    resetValidationForm: function () {
+        $(".feedback").remove();
+        $(".form-group").removeClass("has-success");
+        $(".form-group").removeClass("has-error");
+        $(".form-group").removeClass("has-feedback");
+    },
+    resetValidationControl: function (strIdAttr) {
+        $("#" + strIdAttr + "-group .feedback").remove();
+        $("#" + strIdAttr + "-group").removeClass("has-success");
+        $("#" + strIdAttr + "-group").removeClass("has-error");
+        $("#" + strIdAttr + "-group").removeClass("has-feedback");
+    },
+    showValidationErrorControl: function (strIdAttr, strMsg) {
+        $("#" + strIdAttr + "-group").addClass("has-error");
+        $("#" + strIdAttr + "-group").addClass("has-feedback");
+        $("#" + strIdAttr + "-group .control").append('<span class="feedback glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>');
+        $("#" + strIdAttr + "-group .control").append('<span class="feedback control-label" for="' + strIdAttr + '">' + strMsg + '</span>');
+    },
+    showValidationOKControl: function (strIdAttr) {
+        $("#" + strIdAttr + "-group").addClass("has-success");
+        $("#" + strIdAttr + "-group").addClass("has-feedback");
+        $("#" + strIdAttr + "-group .control").append('<span class="feedback glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>');
+    },
+    delay: function () {
+        var timer = 0;
+        return function (callback, ms) {
+            clearTimeout(timer);
+            timer = setTimeout(callback, ms);
+        };
+    }
+}
 
 var ns = {
     strings: {
-        replaceAll: function (str, search, rpl) {
-            return str.split(search).join(rpl);
-        },
-        clipValue: function (strResult) {
-            if (strResult.length > 30)
-                return strResult.substr(0, 30).trim() + " ...";
-            else
-                return strResult.trim();
-        },
-        safe_tags_replace: function (str) {
-            return str.replace(/[&<>]/g, function (tag) {
-                var tagsToReplace = {
-                    '&': '&amp;',
-                    '<': '&lt;',
-                    '>': '&gt;'
-                }
-                return tagsToReplace[tag] || tag;
-            });
-        },
-        escapeHtml: function (unsafe) {
-            if (typeof (unsafe) === 'string') {
-                return unsafe
-                        .replace(/&/g, "&amp;")
-                        .replace(/</g, "&lt;")
-                        .replace(/>/g, "&gt;")
-                        .replace(/"/g, "&quot;")
-                        .replace(/'/g, "&#039;");
-            } else
-                return unsafe;
-
-        },
-        print: function (value) {
-            return ns.strings.escapeHtml(decodeURIComponent(value));
-        },
-        printForeignValue: function (meta, valor, recortar) {
-
-        },
-        printValue: function (meta, valor, recortar) {
-            var strResult = "";
-            if (meta.IsObjForeignKey) {
-                strResult = "obj";
-                
-                
-                ns.view.printObjectValue(rowValues[metaValue.MyMetaName], rowValues[metaValue.Name],metaValue.ReferencesTable)
-                
-            } else {
-                switch (meta.Type) {
-                    case 'Boolean':
-                        if (valor == true) {
-                            strResult = '<i class="glyphicon glyphicon-ok"></i>';
-                        } else {
-                            strResult = '<i class="glyphicon glyphicon-remove"></i>';
-                        }
-                        break;
-                    default:
-                        strResult = ns.strings.print(valor);
-                        if (recortar)
-                            if (strResult.length > 30)
-                                strResult = strResult.substr(0, 30) + " ...";
-                }
-            }
-            return strResult;
-        },
-        printPlainValue: function (meta, valor, recortar) {
-            var strResult = "";
-            if (meta.IsObjForeignKey) {
-                strResult = "obj";
-            } else {
-                switch (meta.Type) {
-                    case 'Boolean':
-                        if (valor == true) {
-                            strResult = 'YES';
-                        } else {
-                            strResult = 'NO';
-                        }
-                        break;
-                    default:
-                        strResult = ns.strings.print(valor);
-                        if (recortar)
-                            if (strResult.length > 30)
-                                strResult = strResult.substr(0, 30) + " ...";
-                }
-            }
-            return strResult;
-        }
+        
 
     },
     arrays: {
@@ -113,8 +380,6 @@ var ns = {
             $.each(arrayToBeSliced, function (index, value) {
 
                 resultArray.push(value[field]);
-
-
             })
             return resultArray;
         },
@@ -174,7 +439,18 @@ var ns = {
                     desc += valor[metaValue.Name] + " ";
                 }
             })
-            return '<a href="#/' + name + '/view/' + valor.id + '">' + valor.id + ": " + ns.strings.clipValue(desc) + '</a>';
+            return '<a href="#/' + name + '/view/' + valor.id + '">' + valor.id + ": " + broth.clipString(desc) + '</a>';
+        },
+        printObjectValue2: function (value) {
+            var arr_metadata = _.map(value.data.meta, function (oMeta) {
+                if (oMeta.IsForeignKeyDescriptor) {
+                    return  value.data.bean[oMeta.Name];
+                } else {
+                    return "";
+                }
+            });
+            var strForeign = arr_metadata.join(' ');
+            return '<a href="#/' + value.meta.ReferencesTable + '/view/' + value.data.bean.id + '">' + value.data.bean.id + ": " + broth.clipString(strForeign, 30) + '</a>';
         },
         getSpinner: function () {
             return '<img src="images/ajax-loading.gif" alt="cargando..." />';
@@ -182,45 +458,18 @@ var ns = {
 //        getEmptyDiv: function() {
 //            return '<div id="content"></div>';
 //        }        ,
-        getObjectTable: function (nombresCamposBonitos, valoresRegistro, nombresCampos) {
-            var thisObject = this;
-            var tabla = "<table class=\"table table table-bordered table-condensed\">";
-            $.each(nombresCampos, function (index, nombreDeCampo) {
-                tabla += '<tr><td><strong>' + nombresCamposBonitos[index] + '</strong></td>';
-                tabla += '<td>' + thisObject.printValue(valoresRegistro, nombreDeCampo, false) + '</td>';
-            });
-            tabla += '</table>';
-            return tabla;
-        }
-        ,
-        doResultOperationNotifyToUser: function (place, resultadoStatus, resultadoMessage, id, mostrar) {
-            var strNombreClase = this.clase;
-            if (resultadoStatus == "200") {
-                mensaje = "<h3>La operacion se ha ejecutado con éxito</h3>";
-            } else {
-                mensaje = "<h3>ERROR</h3>";
-            }
-            mensaje += "<h5>Código: " + resultadoStatus + "</h5><h5>" + resultadoMessage + "</h5>";
-            $(place).append(this.getEmptyModal());
-            util().loadForm('#modal01', this.getFormHeader('Respuesta del servidor'), mensaje, this.getFormFooter(), true);
-            $('#modal01').css({
-                'right': '20px',
-                'left': '20px',
-                'width': 'auto',
-                'margin': '10px',
-                'display': 'block'
-            });
-            if (mostrar && resultadoStatus == "200") {
-                $('#modal01').on('hidden.bs.modal', function () {
-                    window.location.href = "jsp#/" + strNombreClase + "/view/" + id;
-                })
-            } else {
-                $('#modal01').on('hidden.bs.modal', function () {
-                    $(place).empty();
-                });
-            }
-            ;
-        },
+//        getObjectTable: function (nombresCamposBonitos, valoresRegistro, nombresCampos) {
+//            var thisObject = this;
+//            var tabla = "<table class=\"table table table-bordered table-condensed\">";
+//            $.each(nombresCampos, function (index, nombreDeCampo) {
+//                tabla += '<tr><td><strong>' + nombresCamposBonitos[index] + '</strong></td>';
+//                tabla += '<td>' + thisObject.printValue(valoresRegistro, nombreDeCampo, false) + '</td>';
+//            });
+//            tabla += '</table>';
+//            return tabla;
+//        }
+//        ,
+
 //        getHeaderPageTable: function (prettyFieldNames, fieldNames, visibleFields, UrlFromParamsWithoutOrder) {
 //            var strNombreClase = this.clase;
 //            var numField = 0; //visible field counter
@@ -295,13 +544,9 @@ var ns = {
         nofunction: function () {
 
         },
-        getAppName: function () {
-            var strPath = window.location.pathname;
-            return strPath.substr(1, strPath.substr(1, strPath.length).indexOf('/'));
-        },
-        getRequestsUrl: function () {
-            return location.protocol + '//' + location.hostname + ':' + location.port + '/' + this.getAppName() + '/json';
-        },
+//        getRequestsUrl: function () {
+//            return location.protocol + '//' + location.hostname + ':' + location.port + '/' + this.getAppName() + '/json';
+//        },
         setSpinner: function (htmlSpinner) {
             spinner = htmlSpinner;
         },
@@ -555,13 +800,6 @@ var ns = {
             loadFormValues: function (valores, campos) {
                 this.doFillForm(valores, campos);
             },
-            getFormValues: function () {
-                var valores = [];
-                var disabled = $('#' + this.clase + 'Form').find(':input:disabled').removeAttr('disabled');
-                valores = $('#' + this.clase + 'Form').serializeObject();
-                disabled.attr('disabled', 'disabled');
-                return valores;
-            },
             getFormHeader: function (title) {
                 cabecera = '<button id="full-width" type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>';
                 cabecera += '<h1 id="myModalLabel">' + title + '</h1>';
@@ -571,29 +809,6 @@ var ns = {
                 return pie = '<button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Cerrar</button>';
             },
             validation: {
-                resetValidationForm: function () {
-                    $(".feedback").remove();
-                    $(".form-group").removeClass("has-success");
-                    $(".form-group").removeClass("has-error");
-                    $(".form-group").removeClass("has-feedback");
-                },
-                resetValidationControl: function (strIdAttr) {
-                    $("#" + strIdAttr + "-group .feedback").remove();
-                    $("#" + strIdAttr + "-group").removeClass("has-success");
-                    $("#" + strIdAttr + "-group").removeClass("has-error");
-                    $("#" + strIdAttr + "-group").removeClass("has-feedback");
-                },
-                showValidationErrorControl: function (strIdAttr, strMsg) {
-                    $("#" + strIdAttr + "-group").addClass("has-error");
-                    $("#" + strIdAttr + "-group").addClass("has-feedback");
-                    $("#" + strIdAttr + "-group .control").append('<span class="feedback glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>');
-                    $("#" + strIdAttr + "-group .control").append('<span class="feedback control-label" for="' + strIdAttr + '">' + strMsg + '</span>');
-                },
-                showValidationOKControl: function (strIdAttr) {
-                    $("#" + strIdAttr + "-group").addClass("has-success");
-                    $("#" + strIdAttr + "-group").addClass("has-feedback");
-                    $("#" + strIdAttr + "-group .control").append('<span class="feedback glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>');
-                },
                 validateLeapYear: function (year) {
                     if ((year % 100 != 0) && ((year % 4 == 0) || (year % 400 == 0))) {
                         return true;
@@ -849,166 +1064,8 @@ var ns = {
                 return strResult;
             }
         },
-    },
-    param: {
-        getUrlObjectFromUrlString: function (url) {
-            var a;
-            if (typeof url == 'undefined') {
-                return {};
-            } else {
-                if (url == "") {
-                    return {};
-                } else {
-                    a = url.split('&');
-                }
-            }
-            var b = {};
-            for (var i = 0; i < a.length; ++i)
-            {
-                var p = a[i].split('=');
-                if (p.length != 2)
-                    p = ['id', p[0]]; //id parameter by default
-                b[p[0]] = decodeURIComponent(p[1].replace(/\+/g, " "));
-            }
-            return b;
-        },
-        getUrlObjectFromParamsWithoutParamArray: function (urlObj, nameParameterArray) {
-            var newUrlObj = jQuery.extend(true, {}, urlObj); //http://stackoverflow.com/questions/122102/what-is-the-most-efficient-way-to-clone-an-object
-            $.each(nameParameterArray, function () {
-                delete newUrlObj[this];
-            })
-            return newUrlObj;
-        },
-        getUrlStringFromParamsObject: function (urlObj) {
-            var result = "";
-            for (var key in urlObj) {
-                result += "&" + key + "=" + urlObj[key];
-            }
-            return result.substring(1);
-        },
-        getStrSystemFilters: function (objFields) {
-            var strResult = "";
-            if (objFields['systemfilter'] != "") {
-                strResult += objFields['systemfilter'];
-                strResult += "=";
-                strResult += objFields['systemfiltervalue'];
-            }
-            return strResult;
-        },
-        validateUrlObjectParameters: function (objParams) {
-            //security borders comprobation, pendent of moving
-            if (objParams["vf"] > 20) {
-                objParams["vf"] = 20;
-            }
-            if (objParams["page"] > 100000) {
-                objParams["page"] = 100000;
-            }
-            if (objParams["rpp"] > 100) {
-                objParams["rpp"] = 100;
-            }
-            return objParams;
-        },
-        defaultizeUrlObjectParametersForLists: function (objParams) {
-            if (typeof objParams["page"] == 'undefined')
-                objParams["page"] = 1;
-            if (typeof objParams["rpp"] == 'undefined')
-                objParams["rpp"] = 10;
-            if (typeof objParams["vf"] == 'undefined')
-                objParams["vf"] = 10;
-            return objParams;
-        },
-        defaultizeUrlObjectParameters: function (objParams) {
-            if (typeof objParams["id"] == 'undefined')
-                objParams["id"] = 1;
-            return objParams;
-        }
-    },
-    login: {
-        loadLoginForm: function () {
-
-            //$('#loginFormBroth').css('display', 'block');
-            //$("#documentoForm").append(thisObject.getEmptyModal());
-            $("#broth_login_modal_footer").html("");
-            ns.html.modal.load('#broth_modal_login', true);
-            //$('#broth_modal_login').css('width', '20%');
-
-
-            $("#broth_button_login").unbind('click');
-            $("#broth_button_login").click(function () {
-                username = $("#broth_input_login").val();
-                password = $("#broth_input_password").val();
-                $("#broth_login_modal_footer").html("Please, wait while contacting server for authentication...");
-                $.ajax({
-                    type: "POST",
-                    url: "json",
-                    data: "ob=user&op=login&login=" + username + "&password=" + password,
-                    success: function (response) {
-                        if (response.status == 200) {
-                            $("#broth_login_modal_footer").html("Welcome, you're allowed to enter the site!");
-                            $('#broth_username_id').text(response.message);
-
-                            $('.broth_show_when_logged_in').show();
-                            $('.broth_show_when_logged_out').hide();
-
-                            //$("#broth_username_menu_id").css('display', 'block', 'important');
-                            ns.login.unloadLoginForm();
-                            appInit();
-                        } else {
-
-
-                            $('.broth_show_when_logged_in').hide();
-                            $('.broth_show_when_logged_out').show();
-
-                            $("#broth_login_modal_footer").html("Login, password or both are incorrect. Please try it again.");
-                        }
-                    }
-                });
-                return false;
-            });
-        },
-        unloadLoginForm: function () {
-            //$("#login").unbind('click');
-            //$('#loginFormBroth').css('display', 'none');
-            $('#broth_modal_login').modal('hide');
-        },
-        checkAndUpdateUserConnectionState: function () {
-            $.when(ns.promise.session()).done(function (data) {
-                if (data['status'] == 200) {
-                    $('#broth_username_id').text(data.message);
-
-                    $('.broth_show_when_logged_in').show();
-                    $('.broth_show_when_logged_out').hide();
-                    //$("#broth_username_menu_id").css('display', 'block', 'important');
-                    ns.login.unloadLoginForm();
-                    appInit();
-
-
-                } else {
-                    $('#broth_username_id').text("Login");
-
-                    $('.broth_show_when_logged_in').hide();
-                    $('.broth_show_when_logged_out').show();
-
-                    //$("#broth_username_menu_id").css('display', 'none', 'important');
-                    ns.login.loadLoginForm();
-                }
-                fDocumentoRoutes();
-                Path.listen();
-            });
-        }
-    },
-    promise: {
-        session: function () {
-            return ns.ajax.callSync(urlJson + '?op=status', 'GET', '');
-        },
-        one: function (strClass, id) {
-            return ns.ajax.callSync(urlJson + '?ob=' + strClass + '&op=getaggregateviewone&id=' + id, 'GET', '');
-        },
-        meta: function (strClass, id) {
-            return ns.ajax.callSync(urlJson + '?ob=' + strClass + '&op=getmetainformation', 'GET', '');
-        }
-
     }
+    
 };
 
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015 raznara
+ * Copyright (C) 2015 rafa
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -15,23 +15,38 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-package net.daw.helper.annotations;
+package net.daw.bean.group;
 
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-
-import net.daw.helper.statics.MetaEnum;
+import com.google.gson.annotations.Expose;
+import java.util.ArrayList;
+import net.daw.bean.generic.implementation.BeanGenImpl;
+import net.daw.bean.meta.MetaBeanGenImpl;
 
 /**
  *
- * @author raznara
+ * @author rafa
  */
-@Retention(RetentionPolicy.RUNTIME)
-//@Target(ElementType.TYPE)
-public @interface SelectSourceMetaInformation {
+public class GroupBeanImpl {
+    @Expose(deserialize = false)
+    private BeanGenImpl bean =null;
+    @Expose(deserialize = false)
+    ArrayList<MetaBeanGenImpl> meta = null;
 
-    public String SqlSelect() default "";
+    public BeanGenImpl getBean() {
+        return bean;
+    }
 
-    public String Description() default "";
+    public void setBean(BeanGenImpl bean) {
+        this.bean = bean;
+    }
+
+    public ArrayList<MetaBeanGenImpl> getMeta() {
+        return meta;
+    }
+
+    public void setMeta(ArrayList<MetaBeanGenImpl> meta) {
+        this.meta = meta;
+    }
+
 
 }

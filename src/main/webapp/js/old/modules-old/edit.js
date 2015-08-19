@@ -21,16 +21,9 @@ var editOperation = function (strClase, strPlace, objParams) {
 };
 editOperation.prototype = Object.create(newOperation.prototype);
 editOperation.prototype.constructor = editOperation;
-editOperation.prototype.prepareData = function () {
-    this.gettingData = ns.promise.one(this.strClase,this.objParams['id']);
-};
-editOperation.prototype.pickData = function () {
-    this.jsonMeta = this.jsonData.message.data.meta;
-    this.jsonData = this.jsonData.message.data.one;
-}
-editOperation.prototype.loadValues = function () {
-    ns.html.form.doFillForm(this.jsonMeta, this.jsonData);
-    $('#id').attr("disabled", true);
+
+editOperation.prototype.loadValues = function (jsonData) {
+
 }
 editOperation.prototype.actionOkMessage = function (id) {
     return 'Se ha modificado el registro con id=' + resultado["message"];

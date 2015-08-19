@@ -134,6 +134,13 @@ function validateInteger(strString) {
         return false;
     }
 }
+function validateMaxInteger(intMaxInteger, intInteger) {
+    if (intInteger > intMaxInteger) {
+        return false;
+    } else {
+        return true;
+    }
+}
 function validateMaxLength(intMaxLength, strString) {
     if (strString.length > intMaxLength) {
         return false;
@@ -148,4 +155,14 @@ function validateMinLength(intMinLength, strString) {
     } else {
         return true;
     }
+}
+
+var loadValidationCallbacks = function (meta) {
+    resetValidationForm();
+    var validationFunctionArray = broth.getFormValidationCode(meta);
+    _.each(validationFunctionArray, function (validationFunction) {
+        if (typeof (validationFunction) === "function") {
+            validationFunction();
+        }
+    });
 }

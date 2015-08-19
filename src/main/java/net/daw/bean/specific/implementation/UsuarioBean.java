@@ -21,6 +21,7 @@ import net.daw.bean.generic.implementation.BeanGenImpl;
 import net.daw.bean.publicinterface.BeanInterface;
 import com.google.gson.annotations.Expose;
 import java.util.ArrayList;
+import net.daw.bean.group.GroupBeanImpl;
 import net.daw.bean.meta.MetaBeanGenImpl;
 import net.daw.helper.annotations.MethodMetaInformation;
 import net.daw.helper.annotations.TableSourceMetaInformation;
@@ -57,17 +58,16 @@ public class UsuarioBean extends BeanGenImpl implements BeanInterface {
             MyIdName = "id_tipousuario",
             MyMetaName = "meta_tipousuario"
     )
-    private TipousuarioBean obj_tipousuario = null;
+    private GroupBeanImpl obj_tipousuario = null;
 
-    @Expose(deserialize = false)
-    @MethodMetaInformation(
-            IsMetaForeignKey = true,
-            ReferencesTable = "tipousuario",
-            MyIdName = "id_tipousuario",
-            MyObjName = "obj_tipousuario"
-    )
-    private ArrayList<MetaBeanGenImpl> meta_tipousuario = null;
-
+//    @Expose(deserialize = false)
+//    @MethodMetaInformation(
+//            IsMetaForeignKey = true,
+//            ReferencesTable = "tipousuario",
+//            MyIdName = "id_tipousuario",
+//            MyObjName = "obj_tipousuario"
+//    )
+//    private ArrayList<MetaBeanGenImpl> meta_tipousuario = null;
     @Expose(serialize = false)
     @MethodMetaInformation(
             UltraShortName = "Estado",
@@ -86,19 +86,18 @@ public class UsuarioBean extends BeanGenImpl implements BeanInterface {
             MyIdName = "id_estado",
             MyMetaName = "meta_estado"
     )
-    private EstadoBean obj_estado = null;
+    private GroupBeanImpl obj_estado = null;
 
-    @Expose(deserialize = false)
-    @MethodMetaInformation(
-            IsMetaForeignKey = true,
-            ReferencesTable = "estado",
-            MyIdName = "id_estado",
-            MyObjName = "obj_estado"
-    )
-    private ArrayList<MetaBeanGenImpl> meta_estado = null;
-
+//    @Expose(deserialize = false)
+//    @MethodMetaInformation(
+//            IsMetaForeignKey = true,
+//            ReferencesTable = "estado",
+//            MyIdName = "id_estado",
+//            MyObjName = "obj_estado"
+//    )
+//    private ArrayList<MetaBeanGenImpl> meta_estado = null;
     @Expose
-    @MethodMetaInformation(ShortName = "Ciudad", IsForeignKeyDescriptor=true)
+    @MethodMetaInformation(ShortName = "Ciudad", IsForeignKeyDescriptor = true)
     private String ciudad = "";
 
     @Expose
@@ -133,28 +132,12 @@ public class UsuarioBean extends BeanGenImpl implements BeanInterface {
         this.id_tipousuario = id_tipousuario;
     }
 
-    public TipousuarioBean getObj_tipousuario() {
-        return obj_tipousuario;
-    }
-
-    public void setObj_tipousuario(TipousuarioBean obj_tipousuario) {
-        this.obj_tipousuario = obj_tipousuario;
-    }
-
     public Integer getId_estado() {
         return id_estado;
     }
 
     public void setId_estado(Integer id_estado) {
         this.id_estado = id_estado;
-    }
-
-    public EstadoBean getObj_estado() {
-        return obj_estado;
-    }
-
-    public void setObj_estado(EstadoBean obj_estado) {
-        this.obj_estado = obj_estado;
     }
 
     public String getCiudad() {
@@ -181,20 +164,20 @@ public class UsuarioBean extends BeanGenImpl implements BeanInterface {
         this.skin = skin;
     }
 
-    public ArrayList<MetaBeanGenImpl> getMeta_tipousuario() {
-        return meta_tipousuario;
+    public GroupBeanImpl getObj_tipousuario() {
+        return obj_tipousuario;
     }
 
-    public void setMeta_tipousuario(ArrayList<MetaBeanGenImpl> meta_tipousuario) {
-        this.meta_tipousuario = meta_tipousuario;
+    public void setObj_tipousuario(GroupBeanImpl obj_tipousuario) {
+        this.obj_tipousuario = obj_tipousuario;
     }
 
-    public ArrayList<MetaBeanGenImpl> getMeta_estado() {
-        return meta_estado;
+    public GroupBeanImpl getObj_estado() {
+        return obj_estado;
     }
 
-    public void setMeta_estado(ArrayList<MetaBeanGenImpl> meta_estado) {
-        this.meta_estado = meta_estado;
+    public void setObj_estado(GroupBeanImpl obj_estado) {
+        this.obj_estado = obj_estado;
     }
 
 }

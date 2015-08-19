@@ -1,5 +1,5 @@
-/*
- * Copyright (C) 2015 raznara
+/* 
+ * Copyright (C) 2015 rafa
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -15,23 +15,15 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-package net.daw.helper.annotations;
-
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-
-import net.daw.helper.statics.MetaEnum;
-
-/**
- *
- * @author raznara
- */
-@Retention(RetentionPolicy.RUNTIME)
-//@Target(ElementType.TYPE)
-public @interface SelectSourceMetaInformation {
-
-    public String SqlSelect() default "";
-
-    public String Description() default "";
-
+config = {
+    isAppInProductionMode: function () {
+        return false;
+    },
+    getAppName: function () {
+        var strPath = window.location.pathname;
+        return strPath.substr(1, strPath.substr(1, strPath.length).indexOf('/'));
+    },
+    getAppUrl: function () {
+        return location.protocol + '//' + location.hostname + ':' + location.port + '/' + this.getAppName() + '/json';
+    }
 }

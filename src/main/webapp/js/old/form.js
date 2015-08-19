@@ -29,7 +29,7 @@
     };
     $.fn._h1 = function (strText) {
         return this.append('<h1>' + strText + '</h1>');
-    };    
+    };
     $.fn.appendForm = function (id) {
         this.append(
                 '<form class="form-horizontal" role="form" action="#" id="' + id + '" name="formulario">\n\
@@ -207,4 +207,31 @@
 
 
 }(jQuery));
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

@@ -1,5 +1,5 @@
-/*
- * Copyright (C) 2015 raznara
+/* 
+ * Copyright (C) 2015 rafa
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -15,23 +15,20 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-package net.daw.helper.annotations;
 
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-
-import net.daw.helper.statics.MetaEnum;
-
-/**
- *
- * @author raznara
- */
-@Retention(RetentionPolicy.RUNTIME)
-//@Target(ElementType.TYPE)
-public @interface SelectSourceMetaInformation {
-
-    public String SqlSelect() default "";
-
-    public String Description() default "";
-
+string = {
+    clipString: function (strResult, charsToClipStart) {
+        charsToClipStart = broth.defaultizeParameter(charsToClipStart, 30);
+        if (typeof strResult === 'string') {
+            if (strResult.length > charsToClipStart)
+                return strResult.substr(0, charsToClipStart).trim() + " ...";
+            else
+                return strResult.trim();
+        } else {
+            return strResult;
+        }
+    },
+    replaceAll: function (str, search, rpl) {
+        return str.split(search).join(rpl);
+    }
 }

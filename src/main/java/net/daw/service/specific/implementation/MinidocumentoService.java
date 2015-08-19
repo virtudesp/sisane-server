@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015 raznara
+ * Copyright (C) July 2014 Rafael Aznar
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -15,23 +15,15 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-package net.daw.helper.annotations;
+package net.daw.service.specific.implementation;
 
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
+import net.daw.service.generic.implementation.TableServiceGenImpl;
+import javax.servlet.http.HttpServletRequest;
 
-import net.daw.helper.statics.MetaEnum;
+public class MinidocumentoService extends TableServiceGenImpl {
 
-/**
- *
- * @author raznara
- */
-@Retention(RetentionPolicy.RUNTIME)
-//@Target(ElementType.TYPE)
-public @interface SelectSourceMetaInformation {
-
-    public String SqlSelect() default "";
-
-    public String Description() default "";
+    public MinidocumentoService(HttpServletRequest request) {
+        super(request);
+    }
 
 }

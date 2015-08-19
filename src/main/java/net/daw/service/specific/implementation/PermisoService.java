@@ -57,15 +57,15 @@ public class PermisoService extends TableServiceGenImpl {
             oOperacionBean.setId(oOperacionDao.getOperationId(oOperacionBean));
             oOperacionDao.get(oOperacionBean, 1);
 
-            TipousuarioBean oTipoUsuarioBean = oUsuario.getObj_tipousuario();
-            int idTipousuario = oTipoUsuarioBean.getId();
-            int idTipooperacion = oOperacionBean.getId_tipooperacion();
+            //TipousuarioBean oTipoUsuarioBean = oUsuario.getObj_tipousuario();
+            //int idTipousuario = oTipoUsuarioBean.getId();
+            //int idTipooperacion = oOperacionBean.getId_tipooperacion();
 
-            PermisoBean oPermisoBean = new PermisoBean();
-            oPermisoBean.setId_tipooperacion(idTipooperacion);
-            oPermisoBean.setId_tipousuario(idTipousuario);
-            PermisoDao oPermisoDao = new PermisoDao(oConnection);
-            permiso = oPermisoDao.hasPermission(oPermisoBean);
+//            PermisoBean oPermisoBean = new PermisoBean();
+//            oPermisoBean.setId_tipooperacion(idTipooperacion);
+//            oPermisoBean.setId_tipousuario(idTipousuario);
+//            PermisoDao oPermisoDao = new PermisoDao(oConnection);
+//            permiso = oPermisoDao.hasPermission(oPermisoBean);
 
         } catch (Exception ex) {
             oConnection.rollback();
