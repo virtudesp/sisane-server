@@ -167,7 +167,7 @@
                                 <input readonly="true" class="form-control" id="' + fieldName + '" class="input-mini" name="' + fieldName + '" type="text" size="5" maxlength="5" />\n\
                             </div>\n\
                         </div>\n\
-                        <label class="col-sm-7" for="' + fieldName + '_desc" id="' + fieldName + '_desc"></label>\n\
+                        <div class="col-sm-7" for="' + fieldName + '_desc" id="' + fieldName + '_desc"></div>\n\
                     </div>\n'
                     );
         },

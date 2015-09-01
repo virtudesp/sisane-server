@@ -28,7 +28,7 @@ public class PreguntaBean extends BeanGenImpl implements BeanInterface {
     }
 
     public PreguntaBean(Integer id) {
-        super(id);
+        
     }
 
    @Expose

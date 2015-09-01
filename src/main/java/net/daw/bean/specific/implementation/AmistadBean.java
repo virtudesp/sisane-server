@@ -70,7 +70,7 @@ public class AmistadBean extends BeanGenImpl implements BeanInterface {
     }
 
     public AmistadBean(int id) {
-        super(id);
+        
     }
 
     public Integer getId_usuario_1() {

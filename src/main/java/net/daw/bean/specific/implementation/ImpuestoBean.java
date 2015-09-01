@@ -41,7 +41,7 @@ public class ImpuestoBean extends BeanGenImpl implements BeanInterface {
     }
 
     public ImpuestoBean(int id) {
-        super(id);
+        
     }
 
     public String getNombre() {

@@ -30,7 +30,7 @@ import net.daw.helper.statics.MetaEnum;
  * @author rafa
  */
 @SelectSourceMetaInformation(
-        SqlSelect = "select id_usuario, count(id) as numautores from documento  group by id_usuario", //id y 1=1 obligatorios
+        SqlSelect = "select id_usuario, count(id) as numautores from documento group by id_usuario", //id y 1=1 obligatorios
         Description = "Documento"
 )
 public class DocumentosautorBean extends BeanGenImpl implements BeanInterface {
@@ -67,12 +67,7 @@ public class DocumentosautorBean extends BeanGenImpl implements BeanInterface {
     )
     private Integer numautores = 0;
 
-    public DocumentosautorBean() {
-    }
-
-    public DocumentosautorBean(Integer id) {
-        super(id);
-    }
+  
 
     public Integer getId_usuario() {
         return id_usuario;

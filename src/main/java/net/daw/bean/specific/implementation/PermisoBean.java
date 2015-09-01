@@ -27,7 +27,7 @@ public class PermisoBean extends BeanGenImpl implements BeanInterface {
     }
 
     public PermisoBean(Integer id) {
-        super(id);
+        
     }
 
    

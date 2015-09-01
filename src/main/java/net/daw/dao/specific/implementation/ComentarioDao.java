@@ -142,67 +142,67 @@ public class ComentarioDao implements ViewDaoInterface<ComentarioBean>, TableDao
 
     @Override
     public ComentarioBean get(ComentarioBean oComentarioBean, Integer expand) throws Exception {
-        if (oComentarioBean.getId() > 0) {
-            try {
-                if (!oMysql.existsOne(strTableName, oComentarioBean.getId())) {
-                    oComentarioBean.setId(0);
-                } else {
-                    oComentarioBean.setContenido(oMysql.getOne(strTableName, "contenido", oComentarioBean.getId()));
-
-                    /* Claves ajenas id_propuesta y id_usuario */
-                    oComentarioBean.setId_propuesta(Integer.parseInt(oMysql.getOne(strTableName, "id_propuesta", oComentarioBean.getId())));
-                    oComentarioBean.setId_usuario(Integer.parseInt(oMysql.getOne(strTableName, "id_usuario", oComentarioBean.getId())));
-
-                    PropuestaBean oPropuesta = new PropuestaBean();
-                    oPropuesta.setId(Integer.parseInt(oMysql.getOne(strTableName, "id_propuesta", oComentarioBean.getId())));
-                    PropuestaDao oPropuestaDAO = new PropuestaDao("propuesta", "propuesta", oConnection);
-                    oPropuesta = oPropuestaDAO.get(oPropuesta, AppConfigurationHelper.getJsonDepth());
-                    oComentarioBean.setObj_propuesta(oPropuesta);
-
-                    UsuarioBean oUsuario = new UsuarioBean();
-                    oUsuario.setId(Integer.parseInt(oMysql.getOne(strTableName, "id_usuario", oComentarioBean.getId())));
-                    UsuarioDao oUsuarioDAO = new UsuarioDao(oConnection);
-                    oUsuario = oUsuarioDAO.get(oUsuario, AppConfigurationHelper.getJsonDepth());
-                    oComentarioBean.setObj_usuario(oUsuario);
-
-                    /* Fin de las claves ajenas id_propuesta y id_usuario */
-                }
-            } catch (Exception ex) {
-                ExceptionBooster.boost(new Exception(this.getClass().getName() + ":get ERROR: " + ex.getMessage()));
-            }
-        } else {
-            oComentarioBean.setId(0);
-        }
+//        if (oComentarioBean.getId() > 0) {
+//            try {
+//                if (!oMysql.existsOne(strTableName, oComentarioBean.getId())) {
+//                    oComentarioBean.setId(0);
+//                } else {
+//                    oComentarioBean.setContenido(oMysql.getOne(strTableName, "contenido", oComentarioBean.getId()));
+//
+//                    /* Claves ajenas id_propuesta y id_usuario */
+//                    oComentarioBean.setId_propuesta(Integer.parseInt(oMysql.getOne(strTableName, "id_propuesta", oComentarioBean.getId())));
+//                    oComentarioBean.setId_usuario(Integer.parseInt(oMysql.getOne(strTableName, "id_usuario", oComentarioBean.getId())));
+//
+//                    PropuestaBean oPropuesta = new PropuestaBean();
+//                    oPropuesta.setId(Integer.parseInt(oMysql.getOne(strTableName, "id_propuesta", oComentarioBean.getId())));
+//                    PropuestaDao oPropuestaDAO = new PropuestaDao("propuesta", "propuesta", oConnection);
+//                    oPropuesta = oPropuestaDAO.get(oPropuesta, AppConfigurationHelper.getJsonDepth());
+//                    oComentarioBean.setObj_propuesta(oPropuesta);
+//
+//                    UsuarioBean oUsuario = new UsuarioBean();
+//                    oUsuario.setId(Integer.parseInt(oMysql.getOne(strTableName, "id_usuario", oComentarioBean.getId())));
+//                    UsuarioDao oUsuarioDAO = new UsuarioDao(oConnection);
+//                    oUsuario = oUsuarioDAO.get(oUsuario, AppConfigurationHelper.getJsonDepth());
+//                    oComentarioBean.setObj_usuario(oUsuario);
+//
+//                    /* Fin de las claves ajenas id_propuesta y id_usuario */
+//                }
+//            } catch (Exception ex) {
+//                ExceptionBooster.boost(new Exception(this.getClass().getName() + ":get ERROR: " + ex.getMessage()));
+//            }
+//        } else {
+//            oComentarioBean.setId(0);
+//        }
         return oComentarioBean;
     }
 
     @Override
     public ComentarioBean set(ComentarioBean oComentarioBean) throws Exception {
-        try {
-            if (oComentarioBean.getId() == 0) {
-                oComentarioBean.setId(oMysql.insertOne(strTableName));
-            }
-            oMysql.updateOne(oComentarioBean.getId(), strTableName, "contenido", oComentarioBean.getContenido());
-
-            /* Aqui van las claves ajenas  */
-            oMysql.updateOne(oComentarioBean.getId(), strTableName, "id_propuesta", oComentarioBean.getId_propuesta().toString());
-            oMysql.updateOne(oComentarioBean.getId(), strTableName, "id_usuario", oComentarioBean.getId_usuario().toString());
-
-            /*  Fin de las claves ajenas en servidor */
-        } catch (Exception ex) {
-            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":set ERROR: " + ex.getMessage()));
-        }
+//        try {
+//            if (oComentarioBean.getId() == 0) {
+//                oComentarioBean.setId(oMysql.insertOne(strTableName));
+//            }
+//            oMysql.updateOne(oComentarioBean.getId(), strTableName, "contenido", oComentarioBean.getContenido());
+//
+//            /* Aqui van las claves ajenas  */
+//            oMysql.updateOne(oComentarioBean.getId(), strTableName, "id_propuesta", oComentarioBean.getId_propuesta().toString());
+//            oMysql.updateOne(oComentarioBean.getId(), strTableName, "id_usuario", oComentarioBean.getId_usuario().toString());
+//
+//            /*  Fin de las claves ajenas en servidor */
+//        } catch (Exception ex) {
+//            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":set ERROR: " + ex.getMessage()));
+//        }
         return oComentarioBean;
     }
 
     @Override
     public int remove(ComentarioBean oComentarioBean) throws Exception {
         int result = 0;
-        try {
-            result = oMysql.removeOne(oComentarioBean.getId(), strTableName);
-        } catch (Exception ex) {
-            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":remove ERROR: " + ex.getMessage()));
-        }
+//        try {
+//            result = oMysql.removeOne(oComentarioBean.getId(), strTableName);
+//        } catch (Exception ex) {
+//            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":remove ERROR: " + ex.getMessage()));
+//        }
         return result;
     }
 

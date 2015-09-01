@@ -29,18 +29,14 @@ import net.daw.helper.statics.MetaEnum;
  * @author rafa
  */
 @SelectSourceMetaInformation( 
-        SqlSelect = "select etiquetas, count(id) as numetiquetas from documento where publicado=0 and 1=1 group by etiquetas", //id y 1=1 obligatorios
+        SqlSelect = "select etiquetas, count(id) as numetiquetas from documento where publicado=0 group by etiquetas", //id y 1=1 obligatorios
         Description = "Documento"
 )
 public class MinidocumentoBean extends BeanGenImpl implements BeanInterface {
 
-    public MinidocumentoBean() {
-    }
 
-    public MinidocumentoBean(Integer id) {
-        super(id);
-    }
 
+    
     @Expose
     @MethodMetaInformation(
             UltraShortName = "Etiq.",

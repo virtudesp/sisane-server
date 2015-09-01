@@ -40,14 +40,6 @@ var broth = {
             return defaultValue;
         }
     },
-
-    
-    
-    
-    
-    
-
-    
     _p: function (strText) {
         return this.append('<p>' + strText + '</p>');
     },
@@ -87,23 +79,46 @@ var broth = {
                                 <input type="text" class="form-control" id="' + fieldName + '" name="' + fieldName + '" placeholder="' + fieldUltraShortName + '" />\n\
                             </div>\n\
                         </div>\n\
-                </div>\n'
-                );
+                </div>\n\n\
+\n\
+ <script type="text/javascript">\n\
+$("#' + fieldName + '_group").datetimepicker({\n\
+            pickTime: false,\n\
+            language: "es",\n\
+            showToday: true\n\
+        });\n\
+</script>\n\
+\n\
+');
     },
     _formForeign: function (fieldName, fieldShortName) {
+//        return(
+//                '<div class="form-group">\n\
+//                    <label class="col-sm-2 control-label" for="' + fieldName + '">' + fieldShortName + ':</label>\n\
+//                    <div class="control col-sm-3">\n\
+//                        <div class="input-group foreign" id="' + fieldName + '_group">\n\
+//                            <span class="input-group-addon" id="' + fieldName + '_button">\n\
+//                                <span class="glyphicon glyphicon-search"></span>\n\
+//                            </span>\n\
+//                            <input readonly="true" class="form-control" id="' + fieldName + '" class="input-mini" name="' + fieldName + '" type="text" size="5" maxlength="5" />\n\
+//                        </div>\n\
+//                    </div>\n\
+//                    <label class="col-sm-7" for="' + fieldName + '_desc" id="' + fieldName + '_desc"></label>\n\
+//                </div>\n'
+//                );
         return(
                 '<div class="form-group">\n\
-                    <label class="col-sm-2 control-label" for="' + fieldName + '">' + fieldShortName + ':</label>\n\
-                    <div class="control col-sm-3">\n\
-                        <div class="input-group foreign" id="' + fieldName + '_group">\n\
-                            <span class="input-group-addon" id="' + fieldName + '_button">\n\
-                                <span class="glyphicon glyphicon-search"></span>\n\
-                            </span>\n\
-                            <input readonly="true" class="form-control" id="' + fieldName + '" class="input-mini" name="' + fieldName + '" type="text" size="5" maxlength="5" />\n\
+                        <label class="col-sm-2 control-label" for="' + fieldName + '">' + fieldShortName + ':</label>\n\
+                        <div class="control col-sm-3">\n\
+                            <div class="input-group foreign" id="' + fieldName + '_group">\n\
+                                <span class="input-group-addon" id="' + fieldName + '_button">\n\
+                                    <span class="glyphicon glyphicon-search"></span>\n\
+                                </span>\n\
+                                <input readonly="true" class="form-control" id="' + fieldName + '" class="input-mini" name="' + fieldName + '" type="text" size="5" maxlength="5" />\n\
+                            </div>\n\
                         </div>\n\
-                    </div>\n\
-                    <label class="col-sm-7" for="' + fieldName + '_desc" id="' + fieldName + '_desc"></label>\n\
-                </div>\n'
+                        <div class="col-sm-7" for="' + fieldName + '_desc" id="' + fieldName + '_desc"></div>\n\
+                    </div>\n'
                 );
     },
     _formCheckBox: function (fieldName, fieldShortName) {
@@ -155,44 +170,7 @@ var broth = {
         var string_form = _.reduce(matrix_form, function (memo, control) {
             return memo + control;
         });
-
         return broth._form(strClass + 'Form', string_form);
-    },
-    getViewTemplate_func: function (strClass, jsonData) {
-        arr_meta_data = _.map(jsonData.meta, function (value) {
-            return  {meta: value, data: jsonData.bean[value.Name]};
-        });
-        arr_meta_data_table = _.map(arr_meta_data, function (value, key) {
-            return  '<tr><td><strong>' + value.meta.Name + '</strong></td><td>' + html.printPrincipal(value) + '</td></tr>';
-        });
-        return "<table class=\"table table table-bordered table-condensed\">"
-                + arr_meta_data_table.join('')
-                + '</table>';
-    },
-    getViewTemplate_nofunc: function (strClass, jsonMeta) {
-        var thisObject = this;
-        var viewTable = "";
-
-        //$(place).append(oView.getObjectTable(oDocumentoModel.getCachedPrettyFieldNames(), oDocumentoModel.getCachedOne(), oDocumentoModel.getCachedFieldNames()));
-        viewTable = "<table class=\"table table table-bordered table-condensed\">";
-        $.each(this.jsonMeta, function (index, value) {
-            if (!value.IsMetaForeignKey) {
-                //this.strPlace.append("Tabla..");
-                viewTable += '<tr><td><strong>' + value.Description + '</strong></td>';
-                if (value.IsObjForeignKey) {
-                    viewTable += '<td>' + thisObject.printForeignValues(thisObject.jsonData[value.MyMetaName], thisObject.jsonData[value.Name], value.ReferencesTable) + '</td>';
-                } else {
-                    viewTable += '<td>' + ns.strings.printValue(value, thisObject.jsonData[value.Name], true) + '</td>'; // printValue(valoresRegistro, nombreDeCampo, false) 
-                }
-            }
-        });
-        viewTable += '</table>';
-
-        viewTable += ('<p>');
-        viewTable += ('<a class="btn btn-primary" role="button" href="#/' + this.strClase + '/edit/' + this.objParams['id'] + '">Editar</a>   ');
-        viewTable += ('<a class="btn btn-danger" role="button" href="#/' + this.strClase + '/remove/' + this.objParams['id'] + '">Borrar</a>');
-        viewTable += ('</p>');
-        return viewTable;
     },
     getFormValidationCode: function (jsonMeta) {
         var matrix_form = _.map(jsonMeta, function (value, index) {
@@ -253,8 +231,6 @@ var broth = {
                 }
             }
         });
-
-
         return matrix_form;
     },
     getFormValues: function (strClass) {
@@ -310,32 +286,10 @@ var broth = {
     actionEditOkMessage: function (msg) {
         return 'Se ha modificado el registro con id=' + msg.message;
     },
-    loadFormValues: function (objParams) {
-        $('#id').val('0').attr("disabled", true);
-        if (objParams) { //soporte claves ajenas pte revision
-            var selector;
-            selector = objParams["systemfilter"];
-            if (selector) {
-                if (selector.split("_").length - 1 >= 2) {
-                    selector = selector.replace('id_', 'obj_');
-                    selector2 = selector.substring(0, selector.lastIndexOf('_'))
-                    selector3 = selector2.replace('obj_', '');
-                } else {
-                    selector = selector.replace('id_', 'obj_');
-                    selector2 = selector;
-                    selector3 = selector2.replace('obj_', '')
-                }
-                $('#' + selector + "_id").val(objParams["systemfiltervalue"]).attr("disabled", true);
-                $('#' + selector + "_button").attr("disabled", true).hide();
-                var oModelo = "o" + selector3.charAt(0).toUpperCase() + selector3.slice(1) + "Model";
-                $('#' + selector + '_desc').text(decodeURIComponent(window[oModelo].getMeAsAForeignKey(objParams["systemfiltervalue"])));
-            }
-        }
-    },
+   
     notifyException: function (errorStatus, errorMessage) {
         console.log("Error " + errorStatus + ": " + errorMessage)
         return "Error " + errorStatus + ": " + errorMessage;
-
     },
     resetValidationForm: function () {
         $(".feedback").remove();
@@ -371,8 +325,6 @@ var broth = {
 
 var ns = {
     strings: {
-        
-
     },
     arrays: {
         getArrayFromMultiSlicedArray: function (field, arrayToBeSliced) {
@@ -922,51 +874,8 @@ var ns = {
                             combo.append($("<option />").val(this).text(captions[index]));
                     });
                 }
-            },
-            doFillForm: function (meta, data) {
-                var thisObject = this;
-                $.each(meta, function (index, metaInfo) {
-                    if (metaInfo.IsObjForeignKey) {
-                        $('#' + metaInfo.MyObjIdName).val(decodeURIComponent(data[metaInfo.Name].id));
-                        $('#' + metaInfo.MyObjIdName + "_desc").text(decodeURIComponent(data[metaInfo.Name].id + "desc"));
-                    } else {
-
-                        switch (metaInfo.Type) {
-                            case 'Boolean':
-                                if (data[metaInfo.Name]) {
-                                    $('#' + metaInfo.Name).attr("checked", true);
-                                } else {
-                                    $('#' + metaInfo.Name).attr("checked", false);
-                                }
-                                break;
-                            default:
-                                ////$('#' + campos[index]).val(decodeURIComponent(datos[campos[index]]));
-                                $('#' + metaInfo.Name).val(decodeURIComponent(data[metaInfo.Name]));
-                        }
-                    }
-
-
-//                if (/obj_/.test(valor)) {
-//                    $('#' + campos[index] + "_id").val(decodeURIComponent(datos[campos[index]].id));
-//                    $('#' + campos[index] + "_desc").text(decodeURIComponent(util().getForeign(datos[campos[index]])));
-//                    //$('#' + campos[index] + "_desc").text(decodeURIComponent(thisObject.getForeign(datos[campos[index]])));
-//                } else {
-//                    switch (datos[campos[index]]) {
-//                        case true:
-//                            $('#' + campos[index]).attr("checked", "checked");
-//                            break;
-//                        case false:
-//                            $('#' + campos[index]).attr("checked", "");
-//                            break;
-//                        default:
-//                            //$('#' + campos[index]).val(decodeURIComponent(datos[campos[index]]));
-//                            $('#' + campos[index]).val(decodeURIComponent(thisObject.printValue(datos, valor, false)));
-//                    }
-//                    ;
-//                }
-//                ;
-                });
             }
+
         },
         listGroup: {
             getListGroup: function (params) {
@@ -1065,7 +974,7 @@ var ns = {
             }
         },
     }
-    
+
 };
 
 

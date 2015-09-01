@@ -39,7 +39,7 @@ public class TipoproductoBean extends BeanGenImpl implements BeanInterface {
     }
 
     public TipoproductoBean(Integer id) {
-        super(id);
+        
     }
 
     public String getDescripcion() {

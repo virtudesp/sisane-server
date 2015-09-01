@@ -162,53 +162,53 @@ public class TipoproductoDao implements ViewDaoInterface<TipoproductoBean>,Table
 
     @Override
     public TipoproductoBean get(TipoproductoBean oTipoproductoBean, Integer expand) throws Exception {
-        if (oTipoproductoBean.getId() > 0) {
-            try {
-                if (!oMysql.existsNewOne(strSqlSelectDataOrigin, oTipoproductoBean.getId())) {
-                    oTipoproductoBean.setId(0);
-                } else {
-                    expand--;
-                    if (expand > 0) {
-                        oTipoproductoBean.setDescripcion(oMysql.getNewOne(strSqlSelectDataOrigin, "descripcion", oTipoproductoBean.getId()));
-                        oTipoproductoBean.setId_impuesto(Integer.parseInt(oMysql.getOne(strSqlSelectDataOrigin, "id_impuesto", oTipoproductoBean.getId())));
-
-                        ImpuestoBean oImpuesto = new ImpuestoBean();
-                        oImpuesto.setId(Integer.parseInt(oMysql.getNewOne(strSqlSelectDataOrigin, "id_impuesto", oTipoproductoBean.getId())));
-                        ImpuestoDao oImpuestoDAO = new ImpuestoDao(oConnection);
-                        oImpuesto = oImpuestoDAO.get(oImpuesto, AppConfigurationHelper.getJsonDepth());
-                        oTipoproductoBean.setObj_impuesto(oImpuesto);
-                    }
-                }
-            } catch (Exception ex) {
-                ExceptionBooster.boost(new Exception(this.getClass().getName() + ":get ERROR: " + ex.getMessage()));
-            }
-        } else {
-            oTipoproductoBean.setId(0);
-        }
+//        if (oTipoproductoBean.getId() > 0) {
+//            try {
+//                if (!oMysql.existsNewOne(strSqlSelectDataOrigin, oTipoproductoBean.getId())) {
+//                    oTipoproductoBean.setId(0);
+//                } else {
+//                    expand--;
+//                    if (expand > 0) {
+//                        oTipoproductoBean.setDescripcion(oMysql.getNewOne(strSqlSelectDataOrigin, "descripcion", oTipoproductoBean.getId()));
+//                        oTipoproductoBean.setId_impuesto(Integer.parseInt(oMysql.getOne(strSqlSelectDataOrigin, "id_impuesto", oTipoproductoBean.getId())));
+//
+//                        ImpuestoBean oImpuesto = new ImpuestoBean();
+//                        oImpuesto.setId(Integer.parseInt(oMysql.getNewOne(strSqlSelectDataOrigin, "id_impuesto", oTipoproductoBean.getId())));
+//                        ImpuestoDao oImpuestoDAO = new ImpuestoDao(oConnection);
+//                        oImpuesto = oImpuestoDAO.get(oImpuesto, AppConfigurationHelper.getJsonDepth());
+//                        oTipoproductoBean.setObj_impuesto(oImpuesto);
+//                    }
+//                }
+//            } catch (Exception ex) {
+//                ExceptionBooster.boost(new Exception(this.getClass().getName() + ":get ERROR: " + ex.getMessage()));
+//            }
+//        } else {
+//            oTipoproductoBean.setId(0);
+//        }
         return oTipoproductoBean;
     }
 
     @Override
     public TipoproductoBean set(TipoproductoBean oTipoproductoBean) throws Exception {
-        try {
-            if (oTipoproductoBean.getId() == 0) {
-                oTipoproductoBean.setId(oMysql.insertOne(strTableOrigin));
-            }
-            oMysql.updateOne(oTipoproductoBean.getId(), strTableOrigin, "descripcion", oTipoproductoBean.getDescripcion());
-        } catch (Exception ex) {
-            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":set ERROR: " + ex.getMessage()));
-        }
+//        try {
+//            if (oTipoproductoBean.getId() == 0) {
+//                oTipoproductoBean.setId(oMysql.insertOne(strTableOrigin));
+//            }
+//            oMysql.updateOne(oTipoproductoBean.getId(), strTableOrigin, "descripcion", oTipoproductoBean.getDescripcion());
+//        } catch (Exception ex) {
+//            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":set ERROR: " + ex.getMessage()));
+//        }
         return oTipoproductoBean;
     }
 
     @Override
     public int remove(TipoproductoBean oTipoproductoBean) throws Exception {
         int result = 0;
-        try {
-            result = oMysql.removeOne(oTipoproductoBean.getId(), strTableOrigin);
-        } catch (Exception ex) {
-            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":remove ERROR: " + ex.getMessage()));
-        }
+//        try {
+//            result = oMysql.removeOne(oTipoproductoBean.getId(), strTableOrigin);
+//        } catch (Exception ex) {
+//            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":remove ERROR: " + ex.getMessage()));
+//        }
         return result;
     }
 

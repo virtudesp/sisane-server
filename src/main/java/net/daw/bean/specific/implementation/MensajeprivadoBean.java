@@ -47,7 +47,7 @@ public class MensajeprivadoBean extends BeanGenImpl implements BeanInterface {
         
     }
     public MensajeprivadoBean(int id){
-        super(id);
+        
     }
 
     public String getMensaje() {

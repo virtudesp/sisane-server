@@ -32,7 +32,7 @@ public class PublicacionBean extends BeanGenImpl implements BeanInterface {
     }
 
     public PublicacionBean(Integer id) {
-        super(id);
+        
     }
     
     @Expose

@@ -28,7 +28,7 @@ public class RespuestaBean extends BeanGenImpl implements BeanInterface {
     }
 
     public RespuestaBean(Integer id) {
-        super(id);
+        
     }
 
    

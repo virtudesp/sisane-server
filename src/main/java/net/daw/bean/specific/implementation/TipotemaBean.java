@@ -27,7 +27,7 @@ public class TipotemaBean extends BeanGenImpl implements BeanInterface {
     }
 
     public TipotemaBean(Integer id) {
-        super(id);
+        
     }
 
     @Expose

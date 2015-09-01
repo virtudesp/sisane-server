@@ -24,33 +24,6 @@ import net.daw.helper.statics.MetaEnum;
 
 public class BeanGenImpl implements BeanInterface {
 
-    @Expose
-        @MethodMetaInformation(
-            IsId = true,
-            UltraShortName = "Iden.",
-            ShortName = "Identif.",
-            Description = "Número Identificador",
-            Type = MetaEnum.FieldType.Integer,
-            DefaultValue = "0"
-    )
-    private Integer id;
-
-    public BeanGenImpl() {
-        this.id = 0;
-    }
-
-    public BeanGenImpl(Integer id) {
-        this.id = id;
-    }
-
-    @Override
-    public Integer getId() {
-        return id;
-    }
-
-    @Override
-    public void setId(Integer id) {
-        this.id = id;
-    }
+   
 
 }

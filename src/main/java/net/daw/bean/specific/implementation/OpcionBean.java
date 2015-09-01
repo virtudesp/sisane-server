@@ -38,7 +38,7 @@ public class OpcionBean extends BeanGenImpl implements BeanInterface {
     }
 
     public OpcionBean(Integer id) {
-        super(id);
+        
     }
 
     public String getValor() {

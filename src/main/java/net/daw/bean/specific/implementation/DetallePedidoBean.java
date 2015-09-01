@@ -53,7 +53,7 @@ public class DetallePedidoBean extends BeanGenImpl implements BeanInterface {
     }
 
     public DetallePedidoBean(Integer id) {
-        super(id);
+        
     }
 
     public Integer getCantidad() {

@@ -136,72 +136,72 @@ public class EntregaDaoSpcImpl implements ViewDaoInterface<EntregaBean>, TableDa
 
     @Override
     public EntregaBean get(EntregaBean oEntregaBean, Integer expand) throws Exception {
-        if (oEntregaBean.getId() > 0) {
-            try {
-                if (!oMysql.existsOne(strTableName, oEntregaBean.getId())) {
-                    oEntregaBean.setId(0);
-                } else {
-                    oEntregaBean.setNota(Integer.parseInt(oMysql.getOne(strTableName, "nota", oEntregaBean.getId())));
-
-                    String fecha = "";
-                    fecha = oMysql.getOne(strTableName, "fecha", oEntregaBean.getId());
-                    SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
-                    oEntregaBean.setFecha(date.parse(fecha));
-
-                    oEntregaBean.setId_documento(Integer.parseInt(oMysql.getOne(strTableName, "id_documento", oEntregaBean.getId())));
-
-                    DocumentoBean oDocumento = new DocumentoBean();
-                    oDocumento.setId(Integer.parseInt(oMysql.getOne(strTableName, "id_documento", oEntregaBean.getId())));
-                    DocumentoDao oDocumentoDAO = new DocumentoDao(oConnection);
-                    oDocumento = oDocumentoDAO.get(oDocumento, AppConfigurationHelper.getJsonDepth());
-                    oEntregaBean.setObj_documento(oDocumento);
-
-                    oEntregaBean.setId_documento(Integer.parseInt(oMysql.getOne(strTableName, "id_actividad", oEntregaBean.getId())));
-                    ActividadBean oActividad = new ActividadBean();
-                    oActividad.setId(Integer.parseInt(oMysql.getOne(strTableName, "id_actividad", oEntregaBean.getId())));
-                    ActividadDao oActividadDAO = new ActividadDao(oConnection);
-                    oActividad = oActividadDAO.get(oActividad, AppConfigurationHelper.getJsonDepth());
-                    oEntregaBean.setObj_actividad(oActividad);
-
-                }
-            } catch (Exception ex) {
-                ExceptionBooster.boost(new Exception(this.getClass().getName() + ":get ERROR: " + ex.getMessage()));
-            }
-        } else {
-            oEntregaBean.setId(0);
-        }
+//        if (oEntregaBean.getId() > 0) {
+//            try {
+//                if (!oMysql.existsOne(strTableName, oEntregaBean.getId())) {
+//                    oEntregaBean.setId(0);
+//                } else {
+//                    oEntregaBean.setNota(Integer.parseInt(oMysql.getOne(strTableName, "nota", oEntregaBean.getId())));
+//
+//                    String fecha = "";
+//                    fecha = oMysql.getOne(strTableName, "fecha", oEntregaBean.getId());
+//                    SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+//                    oEntregaBean.setFecha(date.parse(fecha));
+//
+//                    oEntregaBean.setId_documento(Integer.parseInt(oMysql.getOne(strTableName, "id_documento", oEntregaBean.getId())));
+//
+//                    DocumentoBean oDocumento = new DocumentoBean();
+//                    oDocumento.setId(Integer.parseInt(oMysql.getOne(strTableName, "id_documento", oEntregaBean.getId())));
+//                    DocumentoDao oDocumentoDAO = new DocumentoDao(oConnection);
+//                    oDocumento = oDocumentoDAO.get(oDocumento, AppConfigurationHelper.getJsonDepth());
+//                    oEntregaBean.setObj_documento(oDocumento);
+//
+//                    oEntregaBean.setId_documento(Integer.parseInt(oMysql.getOne(strTableName, "id_actividad", oEntregaBean.getId())));
+//                    ActividadBean oActividad = new ActividadBean();
+//                    oActividad.setId(Integer.parseInt(oMysql.getOne(strTableName, "id_actividad", oEntregaBean.getId())));
+//                    ActividadDao oActividadDAO = new ActividadDao(oConnection);
+//                    oActividad = oActividadDAO.get(oActividad, AppConfigurationHelper.getJsonDepth());
+//                    oEntregaBean.setObj_actividad(oActividad);
+//
+//                }
+//            } catch (Exception ex) {
+//                ExceptionBooster.boost(new Exception(this.getClass().getName() + ":get ERROR: " + ex.getMessage()));
+//            }
+//        } else {
+//            oEntregaBean.setId(0);
+//        }
         return oEntregaBean;
     }
 
     @Override
     public EntregaBean set(EntregaBean oEntregaBean) throws Exception {
-        try {
-            if (oEntregaBean.getId() == 0) {
-                oEntregaBean.setId(oMysql.insertOne(strTableName));
-            }
-
-            oMysql.updateOne(oEntregaBean.getId(), strTableName, "nota", oEntregaBean.getNota().toString());
-
-            SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
-            oMysql.updateOne(oEntregaBean.getId(), strTableName, "fecha", date.format(oEntregaBean.getFecha()));
-
-            oMysql.updateOne(oEntregaBean.getId(), strTableName, "id_documento", oEntregaBean.getId_documento().toString());
-            oMysql.updateOne(oEntregaBean.getId(), strTableName, "id_actividad", oEntregaBean.getId_actividad().toString());
-
-        } catch (Exception ex) {
-            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":set ERROR: " + ex.getMessage()));
-        }
+//        try {
+//            if (oEntregaBean.getId() == 0) {
+//                oEntregaBean.setId(oMysql.insertOne(strTableName));
+//            }
+//
+//            oMysql.updateOne(oEntregaBean.getId(), strTableName, "nota", oEntregaBean.getNota().toString());
+//
+//            SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+//            oMysql.updateOne(oEntregaBean.getId(), strTableName, "fecha", date.format(oEntregaBean.getFecha()));
+//
+//            oMysql.updateOne(oEntregaBean.getId(), strTableName, "id_documento", oEntregaBean.getId_documento().toString());
+//            oMysql.updateOne(oEntregaBean.getId(), strTableName, "id_actividad", oEntregaBean.getId_actividad().toString());
+//
+//        } catch (Exception ex) {
+//            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":set ERROR: " + ex.getMessage()));
+//        }
         return oEntregaBean;
     }
 
     @Override
     public int remove(EntregaBean oEntregaBean) throws Exception {
         int result = 0;
-        try {
-            result = oMysql.removeOne(oEntregaBean.getId(), strTableName);
-        } catch (Exception ex) {
-            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":remove ERROR: " + ex.getMessage()));
-        }
+//        try {
+//            result = oMysql.removeOne(oEntregaBean.getId(), strTableName);
+//        } catch (Exception ex) {
+//            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":remove ERROR: " + ex.getMessage()));
+//        }
         return result;
     }
 

@@ -27,7 +27,7 @@ public class TipooperacionBean extends BeanGenImpl implements BeanInterface {
     }
 
     public TipooperacionBean(Integer id) {
-        super(id);
+        
     }
 
 }

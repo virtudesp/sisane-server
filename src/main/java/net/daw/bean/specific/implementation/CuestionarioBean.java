@@ -36,7 +36,7 @@ public class CuestionarioBean extends BeanGenImpl implements BeanInterface {
     }
 
     public CuestionarioBean(Integer id) {
-        super(id);
+        
     }
     
     @Expose

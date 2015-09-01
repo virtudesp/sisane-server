@@ -30,7 +30,7 @@ public class TemaBean extends BeanGenImpl implements BeanInterface {
     }
 
     public TemaBean(Integer id) {
-        super(id);
+        
     }
 
     @Expose

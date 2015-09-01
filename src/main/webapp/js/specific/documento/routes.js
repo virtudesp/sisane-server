@@ -548,21 +548,11 @@ function fDocumentoRoutes() {
 //    });
     Path.map("#/documento/new").to(function () {
         $('#broth_panel_heading').empty().append(fillDocumentoPageHeader('New'));
-        ausiasFLOW.newModule_paramsObject = parameter.defaultizeUrlObjectParameters(parameter.getUrlObjectFromUrlString(this.params['url']));
+        ausiasFLOW.reset();
+        ausiasFLOW.newModule_paramsObject = parameter.getUrlObjectFromUrlString(this.params['url']);
         ausiasFLOW.newModule_frontOperation = 'new';
         ausiasFLOW.newModule_class = 'documento';
         ausiasFLOW.initialize(component_new().new, $('#broth_content'));
-        return false;
-    });
-    Path.map("#/documento/edit/:url").to(function () {
-        $('#broth_panel_heading').empty().append(fillDocumentoPageHeader('Edit'));
-        ausiasFLOW.editModule_paramsObject = parameter.defaultizeUrlObjectParameters(parameter.getUrlObjectFromUrlString(this.params['url']));
-        ausiasFLOW.editModule_frontOperation = 'new';
-        ausiasFLOW.editModule_class = 'documento';
-
-        ausiasFLOW.initialize(component_edit().edit, $('#broth_content'));
-
-        //editOperation(this.params['url']);
         return false;
     });
     Path.map("#/documento/new/:url").to(function () {
@@ -570,7 +560,8 @@ function fDocumentoRoutes() {
 //        var paramsObject;
 //        if (this.url) {
         $('#broth_panel_heading').empty().append(fillDocumentoPageHeader('New'));
-        ausiasFLOW.newModule_paramsObject = parameter.defaultizeUrlObjectParameters(parameter.getUrlObjectFromUrlString(this.params['url']));
+        ausiasFLOW.reset();
+        ausiasFLOW.newModule_paramsObject = parameter.getUrlObjectFromUrlString(this.params['url']);
         ausiasFLOW.newModule_frontOperation = 'new';
         ausiasFLOW.newModule_class = 'documento';
 //        } else {
@@ -580,13 +571,27 @@ function fDocumentoRoutes() {
 
         return false;
     });
+    Path.map("#/documento/edit/:url").to(function () {
+        $('#broth_panel_heading').empty().append(fillDocumentoPageHeader('Edit'));
+        ausiasFLOW.reset();
+        ausiasFLOW.editModule_paramsObject = parameter.getUrlObjectFromUrlString(this.params['url']);
+        ausiasFLOW.editModule_frontOperation = 'new';
+        ausiasFLOW.editModule_class = 'documento';
+
+        ausiasFLOW.initialize(component_edit().edit, $('#broth_content'));
+
+        //editOperation(this.params['url']);
+        return false;
+    });
+
     Path.map("#/documento/view/:id").to(function () {
         //viewOperation(this.params['url']);
         //ausiasFLOW.initialize(component_view().view, $('#broth_content'), this.params['url'], 'documento');
         //var ausiasFLOW.idview=11;
         $('#broth_panel_heading').empty().append(fillDocumentoPageHeader('View'));
         //ns.login.checkAndUpdateUserConnectionState();
-        ausiasFLOW.viewModule_paramsObject = parameter.defaultizeUrlObjectParameters(parameter.getUrlObjectFromUrlString(this.params['url'])); // paramsObject['id'];
+        ausiasFLOW.reset();
+        ausiasFLOW.viewModule_paramsObject = parameter.getUrlObjectFromUrlString(this.params['url']); // paramsObject['id'];
         ausiasFLOW.viewModule_frontOperation = 'view';
         ausiasFLOW.viewModule_class = 'documento';
         ausiasFLOW.initialize(component_view().view, $('#broth_content'));
@@ -597,9 +602,10 @@ function fDocumentoRoutes() {
         //ausiasFLOW.initialize(component_list().list, $('#broth_content'), this.params['url'], 'documento');
         $('#broth_panel_heading').empty().append(fillDocumentoPageHeader('Paginated List'));
         //ns.login.checkAndUpdateUserConnectionState();
-        ausiasFLOW.paginatedListModule_paramsObject = parameter.defaultizeUrlObjectParametersForPaginatedLists(parameter.getUrlObjectFromUrlString(this.params['url']));
-        ausiasFLOW.paginatedListModule_frontOperation = 'plist';
-        ausiasFLOW.paginatedListModule_class = 'documento';
+        ausiasFLOW.reset();
+        ausiasFLOW.pListModule_paramsObject = parameter.getUrlObjectFromUrlString(this.params['url']);
+        ausiasFLOW.pListModule_frontOperation = 'plist';
+        ausiasFLOW.pListModule_class = 'documento';
         ausiasFLOW.initialize(component_plist().list, $('#broth_content'));
         return false;
     });
@@ -608,6 +614,7 @@ function fDocumentoRoutes() {
         //ausiasFLOW.initialize(component_list().list, $('#broth_content'), this.params['url'], 'documento');
         $('#broth_panel_heading').empty().append(fillDocumentoPageHeader('List'));
         //ns.login.checkAndUpdateUserConnectionState();
+        ausiasFLOW.reset();
         ausiasFLOW.listModule_paramsObject = parameter.defaultizeUrlObjectParametersForLists(parameter.getUrlObjectFromUrlString(this.params['url']));
         ausiasFLOW.listModule_frontOperation = 'list';
         ausiasFLOW.listModule_class = 'documento';
@@ -619,6 +626,7 @@ function fDocumentoRoutes() {
         //ausiasFLOW.initialize(component_list().list, $('#broth_content'), this.params['url'], 'documento');
         $('#broth_panel_heading').empty().append(fillDocumentoPageHeader('List'));
         //ns.login.checkAndUpdateUserConnectionState();
+        ausiasFLOW.reset();
         ausiasFLOW.listModule_paramsObject = parameter.defaultizeUrlObjectParametersForLists(parameter.getUrlObjectFromUrlString(this.params['url']));
         ausiasFLOW.listModule_frontOperation = 'list';
         ausiasFLOW.listModule_class = 'documento';
@@ -627,21 +635,23 @@ function fDocumentoRoutes() {
     });
 
     //composed operation
-    Path.map("#/documento/abc").to(function () {
+
+
+    function abc(params) {
         //listOperation(this.params['url']);
         $('#broth_panel_heading').empty().append(fillDocumentoPageHeader('Composed operation'));
-        $('#broth_content').append('<div id="c1"></div><div id="c2"></div>')
+        $('#broth_content').empty().append('<div id="c1"></div><div id="c2"></div>')
         c = component_table_view();
 
         //ausiasFLOW.initialize(Block01.list, $('#c1'), this.params['url'], 'documento');
         //ausiasFLOW.frontOperation = 'abc';
-
+        ausiasFLOW.reset();
         //ns.login.checkAndUpdateUserConnectionState();
-        ausiasFLOW.paginatedListModule_paramsObject = parameter.defaultizeUrlObjectParametersForPaginatedLists(parameter.getUrlObjectFromUrlString(this.url));
-        ausiasFLOW.paginatedListModule_frontOperation = 'list';
-        ausiasFLOW.paginatedListModule_class = 'documento';
+        ausiasFLOW.pListModule_paramsObject = params;
+        ausiasFLOW.pListModule_frontOperation = 'abc';
+        ausiasFLOW.pListModule_class = 'documento';
 
-        ausiasFLOW.viewModule_paramsObject = parameter.defaultizeUrlObjectParameters(parameter.getUrlObjectFromUrlString(this.url)); // paramsObject['id'];
+        ausiasFLOW.viewModule_paramsObject = {'id': 1}; //parameter.getUrlObjectFromUrlString(this.url); // paramsObject['id'];
         ausiasFLOW.viewModule_frontOperation = 'view';
         ausiasFLOW.viewModule_class = 'documento';
 
@@ -658,5 +668,30 @@ function fDocumentoRoutes() {
 //            return false;
 //        })
         return false;
+    }
+
+    Path.map("#/documento/abc").to(function () {
+        abc({});
     });
+
+    Path.map("#/documento/abc/:url").to(function () {
+       abc(parameter.getUrlObjectFromUrlString(this.params['url']));
+    });
+
+
+
+    Path.map("#/documento/documentosautor").to(function () {
+        //listOperation(this.params['url']);
+        //ausiasFLOW.initialize(component_list().list, $('#broth_content'), this.params['url'], 'documento');
+        $('#broth_panel_heading').empty().append(fillDocumentoPageHeader('Documentos de cada autor'));
+        //ns.login.checkAndUpdateUserConnectionState();
+        ausiasFLOW.reset();
+        ausiasFLOW.listModule_paramsObject = parameter.getUrlObjectFromUrlString(this.params['url']);
+        ausiasFLOW.listModule_frontOperation = 'documentosautor';
+        ausiasFLOW.listModule_class = 'documentosautor';
+        ausiasFLOW.initialize(component_documentosautor().list, $('#broth_content'));
+        return false;
+    });
+
+
 }

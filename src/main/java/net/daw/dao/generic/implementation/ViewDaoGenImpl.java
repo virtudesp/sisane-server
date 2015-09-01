@@ -126,8 +126,12 @@ public class ViewDaoGenImpl<BEAN_CLASS> extends MetaDaoGenImpl<BEAN_CLASS> imple
                 //PTE!!!!!!!!!!!!!!!!!!!!!!!!!!!
                 ResultSet oResultSet = null;
                 Class<BEAN_CLASS> tipo = (Class<BEAN_CLASS>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
+                String strSqlWhere = SqlBuilder.buildSqlWhere(alFilter);
 
-                oResultSet = oMysql.getAllSql(strSqlSelectDataOrigin);
+                //add after 1=1 strSqlWhere
+                String strSQL = strSqlSelectDataOrigin.substring(0, strSqlSelectDataOrigin.indexOf("1=1") + 3) + " " + strSqlWhere + " " + strSqlSelectDataOrigin.substring(strSqlSelectDataOrigin.indexOf("1=1") + 3, strSqlSelectDataOrigin.length());
+
+                oResultSet = oMysql.getAllSql(strSQL);
                 while (oResultSet.next()) {
                     Object oBean = Class.forName(tipo.getName()).newInstance();
 
@@ -156,17 +160,16 @@ public class ViewDaoGenImpl<BEAN_CLASS> extends MetaDaoGenImpl<BEAN_CLASS> imple
                                             }
 
                                         }
+                                    } else {
+
                                     }
                                 }
                             }
-                            
-                            
-                            
-                            
-                            
+
                         }
 
                     }
+                    oBean = this.fillForeign((BEAN_CLASS) oBean, tipo);
                     vector.add((BEAN_CLASS) oBean);
                 }
             }
@@ -237,7 +240,11 @@ public class ViewDaoGenImpl<BEAN_CLASS> extends MetaDaoGenImpl<BEAN_CLASS> imple
 
                             Method metodo_getId_Ajena = tipo.getMethod("get" + strForeignIdName);
                             int intIdAjena = (Integer) metodo_getId_Ajena.invoke(oBean);
-                            oAjenaBean.setId(intIdAjena);
+
+                            //todas las ajenas llevan id
+                            Method metodo_setId_ajena = oAjenaBean.getClass().getMethod("setId", Integer.class);
+                            metodo_setId_ajena.invoke(oAjenaBean, intIdAjena); //oAjenaBean.setId(intIdAjena);
+
                             oAjenaBean = (BeanGenImpl) oAjenaDao.get(oAjenaBean, AppConfigurationHelper.getJsonDepth());
                             //Method method_setObj_Propia = tipo.getDeclaredMethod("setObj_" + strMethod, oAjenaBean.getClass());
                             //Method method_setObj_Propia = tipo.getDeclaredMethod("set" +  methodAnnotation.MyObjName(), oAjenaBean.getClass());

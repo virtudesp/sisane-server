@@ -30,7 +30,7 @@ public class TipopropuestaBean extends BeanGenImpl implements BeanInterface {
     }
 
     public TipopropuestaBean(int id) {
-        super(id);
+        
     }
 
     public String getDescripcion() {

@@ -34,7 +34,7 @@ public class EntregaBean extends BeanGenImpl implements BeanInterface {
     }
 
     public EntregaBean(Integer id) {
-        super(id);
+        
     }
 
     

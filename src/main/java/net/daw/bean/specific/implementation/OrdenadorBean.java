@@ -32,7 +32,7 @@ public class OrdenadorBean extends BeanGenImpl implements BeanInterface {
     }
 
     public OrdenadorBean(Integer id) {
-        super(id);
+        
     }
 
     public String getDescripcion() {

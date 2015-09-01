@@ -31,7 +31,7 @@ public class UsuarioProveedorBean extends BeanGenImpl implements BeanInterface {
     }
 
     public UsuarioProveedorBean(Integer id) {
-        super(id);
+        
     }
 
     @Expose(serialize = false)

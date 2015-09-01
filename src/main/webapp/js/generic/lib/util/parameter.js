@@ -62,15 +62,7 @@ var parameter = {
         }
         return objParams;
     },
-    defaultizeUrlObjectParametersForPaginatedLists: function (objParams) {
-        if (typeof objParams["page"] == 'undefined')
-            objParams["page"] = 1;
-        if (typeof objParams["rpp"] == 'undefined')
-            objParams["rpp"] = 10;
-        if (typeof objParams["vf"] == 'undefined')
-            objParams["vf"] = 10;
-        return objParams;
-    },
+
     defaultizeUrlObjectParametersForLists: function (objParams) {
         if (typeof objParams["vf"] == 'undefined')
             objParams["vf"] = 99;

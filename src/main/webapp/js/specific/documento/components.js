@@ -14,7 +14,14 @@ var component_new = (function () {
 var component_plist = (function () {
     var dom = ausiasDOM.dom;
     return {
-        list: paginatedListModule
+        list: pListModule
+    }
+})
+
+var component_eplist = (function () {
+    var dom = ausiasDOM.dom;
+    return {
+        list: epListModule
     }
 })
 
@@ -40,5 +47,10 @@ var component_table_view = (function () {
     }
 });
 
-
+var component_documentosautor = (function () {
+    var dom = ausiasDOM.dom;
+    return {
+        list: documentosautorList
+    }
+})
 

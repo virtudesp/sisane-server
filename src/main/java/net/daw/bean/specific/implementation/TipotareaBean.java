@@ -34,7 +34,7 @@ public class TipotareaBean extends BeanGenImpl implements BeanInterface {
     }
 
     public TipotareaBean(Integer id) {
-        super(id);
+        
     }
 
     public String getDescripcion() {

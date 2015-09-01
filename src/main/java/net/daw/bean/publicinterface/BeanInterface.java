@@ -19,8 +19,6 @@ package net.daw.bean.publicinterface;
 
 public interface BeanInterface {
 
-    public Integer getId();
 
-    public void setId(Integer id);
 
 }

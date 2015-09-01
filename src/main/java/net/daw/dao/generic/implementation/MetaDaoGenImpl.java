@@ -50,7 +50,7 @@ public abstract class MetaDaoGenImpl<BEAN_CLASS> implements MetaDaoInterface<BEA
                 SelectSourceMetaInformation annotationSelectSourceMetaInformation = classBEAN.getAnnotation(SelectSourceMetaInformation.class);
                 //SelectSourceMetaInformation annotationSelectSourceMetaInformation = (SelectSourceMetaInformation) annotation;
                 strTableOrigin = null;
-                strSqlSelectDataOrigin = annotationSelectSourceMetaInformation.SqlSelect(); //+ " where 1=1 ";
+                strSqlSelectDataOrigin = "select * from ( " + annotationSelectSourceMetaInformation.SqlSelect() + " ) as origin01 where 1=1";
             }
             if (strSqlSelectDataOrigin.equals(null)) {
                 ExceptionBooster.boost(new Exception(this.getClass().getName() + ":constructor ERROR: " + classBEAN.getName() + " Beans must be annotated by SelectSourceMetaInformation or TableSourceMetaInformation "));

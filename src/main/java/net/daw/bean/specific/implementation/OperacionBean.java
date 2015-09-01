@@ -28,7 +28,7 @@ public class OperacionBean extends BeanGenImpl implements BeanInterface {
     }
 
     public OperacionBean(Integer id) {
-        super(id);
+        
     }
 
     private String descripcion = "";

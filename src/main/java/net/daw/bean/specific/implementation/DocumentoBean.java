@@ -35,11 +35,23 @@ import net.daw.helper.statics.MetaEnum;
 public class DocumentoBean extends BeanGenImpl implements BeanInterface {
 
     public DocumentoBean() {
+        this.id = 0;
     }
 
     public DocumentoBean(Integer id) {
-        super(id);
+        this.id = id;
     }
+
+    @Expose
+    @MethodMetaInformation(
+            IsId = true,
+            UltraShortName = "Iden.",
+            ShortName = "Identif.",
+            Description = "Número Identificador",
+            Type = MetaEnum.FieldType.Integer,
+            DefaultValue = "0"
+    )
+    private Integer id;
 
     @Expose
     @MethodMetaInformation(
@@ -63,7 +75,6 @@ public class DocumentoBean extends BeanGenImpl implements BeanInterface {
             MinLength = 1,
             MaxLength = 999999999,
             DefaultValue = "Sin contenido"
-            
     )
     private String contenido = "";
 
@@ -112,7 +123,7 @@ public class DocumentoBean extends BeanGenImpl implements BeanInterface {
             UltraShortName = "Usuario",
             ShortName = "Usuario",
             Description = "Referencia al usuario propietario",
-            IsObjForeignKey = true,            
+            IsObjForeignKey = true,
             ReferencesTable = "usuario",
             MyIdName = "id_usuario",
             MyMetaName = "meta_usuario"
@@ -129,7 +140,6 @@ public class DocumentoBean extends BeanGenImpl implements BeanInterface {
 //            MyObjName = "obj_usuario"
 //    )
 //    private ArrayList<MetaBeanGenImpl> meta_usuario = null;
-
     @Expose(serialize = false)
     @MethodMetaInformation(
             UltraShortName = "Tipo",
@@ -162,7 +172,6 @@ public class DocumentoBean extends BeanGenImpl implements BeanInterface {
 //            MyObjName = "obj_tipodocumento"
 //    )
 //    private ArrayList<MetaBeanGenImpl> meta_tipodocumento = null;
-
     @Expose
     @MethodMetaInformation(
             UltraShortName = "Etiq.",
@@ -204,6 +213,14 @@ public class DocumentoBean extends BeanGenImpl implements BeanInterface {
             DefaultValue = "0"
     )
     private Boolean destacado = false;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public String getTitulo() {
         return titulo;
@@ -316,6 +333,4 @@ public class DocumentoBean extends BeanGenImpl implements BeanInterface {
         this.obj_tipodocumento = obj_tipodocumento;
     }
 
-  
-    
 }

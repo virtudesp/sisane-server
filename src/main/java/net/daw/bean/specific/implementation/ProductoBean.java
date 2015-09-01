@@ -93,7 +93,7 @@ public class ProductoBean extends BeanGenImpl implements BeanInterface {
     }
 
     public ProductoBean(Integer id) {
-        super(id);
+        
     }
 
     public String getCodigo() {

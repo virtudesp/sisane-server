@@ -39,7 +39,7 @@ public class PedidoBean extends BeanGenImpl implements BeanInterface {
     }
 
     public PedidoBean(int id) {
-        super(id);
+        
     }
 
     public Date getFecha() {

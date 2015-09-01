@@ -30,6 +30,25 @@ import net.daw.helper.statics.MetaEnum;
 )
 public class TipodocumentoBean extends BeanGenImpl implements BeanInterface {
 
+    public TipodocumentoBean() {
+        this.id = 0;
+    }
+
+    public TipodocumentoBean(Integer id) {
+        this.id = id;
+    }
+
+    @Expose
+    @MethodMetaInformation(
+            IsId = true,
+            UltraShortName = "Iden.",
+            ShortName = "Identif.",
+            Description = "Número Identificador",
+            Type = MetaEnum.FieldType.Integer,
+            DefaultValue = "0"
+    )
+    private Integer id;
+
     @Expose
     @MethodMetaInformation(
             UltraShortName = "Desc.",
@@ -66,6 +85,20 @@ public class TipodocumentoBean extends BeanGenImpl implements BeanInterface {
 
     public void setPrivado(Boolean privado) {
         this.privado = privado;
+    }
+
+    /**
+     * @return the id
+     */
+    public Integer getId() {
+        return id;
+    }
+
+    /**
+     * @param id the id to set
+     */
+    public void setId(Integer id) {
+        this.id = id;
     }
 
 }

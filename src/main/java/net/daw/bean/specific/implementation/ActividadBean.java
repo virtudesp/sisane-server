@@ -38,7 +38,7 @@ public class ActividadBean extends BeanGenImpl implements BeanInterface {
     }
 
     public ActividadBean(Integer id) {
-        super(id);
+     
     }
 
     @MethodMetaInformation(

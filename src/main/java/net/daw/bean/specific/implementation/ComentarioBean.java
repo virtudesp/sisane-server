@@ -112,7 +112,7 @@ public class ComentarioBean extends BeanGenImpl implements BeanInterface {
     }
 
     public ComentarioBean(Integer id) {
-        super(id);
+        
     }
 
 }

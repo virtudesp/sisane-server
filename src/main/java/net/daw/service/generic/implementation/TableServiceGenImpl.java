@@ -21,6 +21,8 @@ import net.daw.service.publicinterface.TableServiceInterface;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import java.lang.reflect.Constructor;
+import java.lang.reflect.Method;
+
 import java.sql.Connection;
 import java.util.HashMap;
 import java.util.Map;
@@ -49,12 +51,22 @@ public abstract class TableServiceGenImpl extends ViewServiceGenImpl implements 
             BeanGenImpl oGenericBean = (BeanGenImpl) Class.forName("net.daw.bean.specific.implementation." + ParameterCook.prepareCamelCaseObject(oRequest) + "Bean").newInstance();
             Constructor c = Class.forName("net.daw.dao.specific.implementation." + ParameterCook.prepareCamelCaseObject(oRequest) + "Dao").getConstructor(Connection.class);
             TableDaoGenImpl oGenericDao = (TableDaoGenImpl) c.newInstance(oConnection);
-            oGenericBean.setId(id);
+
+            
+            
+            Method metodo_setId= oGenericBean.getClass().getMethod("setId", Integer.class);            
+            metodo_setId.invoke(oGenericBean, id); //oGenericBean.setId(id);
+            
+            
+            
+            
             Map<String, String> data = new HashMap<>();
             if (oGenericBean != null) {
                 oGenericDao.remove(oGenericBean);
                 data.put("status", "200");
-                data.put("message", "se ha eliminado el registro con id=" + oGenericBean.getId());
+                //data.put("message", "se ha eliminado el registro con id=" + oGenericBean.getId());
+                Method metodo_getId= oGenericBean.getClass().getMethod("getId");
+                data.put("message", "se ha eliminado el registro con id=" + metodo_getId.invoke(oGenericBean));
             } else {
                 data.put("status", "error");
                 data.put("message", "error");
@@ -84,11 +96,12 @@ public abstract class TableServiceGenImpl extends ViewServiceGenImpl implements 
             TableDaoGenImpl oGenericDao = (TableDaoGenImpl) c.newInstance(oConnection);
             Gson gson = new GsonBuilder().setDateFormat("dd/MM/yyyy").excludeFieldsWithoutExposeAnnotation().create();
             oGenericBean = gson.fromJson(jason, oGenericBean.getClass());
-            Map<String, String> data = new HashMap<>();
+            Map<String, String> data = new HashMap<>();            
             if (oGenericBean != null) {
                 oGenericBean = (BeanGenImpl) (BeanInterface) oGenericDao.set(oGenericBean);
                 data.put("status", "200");
-                data.put("message", Integer.toString(oGenericBean.getId()));
+                Method metodo_getId= oGenericBean.getClass().getMethod("getId");
+                data.put("message", Integer.toString((int) metodo_getId.invoke(oGenericBean)));
             } else {
                 data.put("status", "error");
                 data.put("message", "error");

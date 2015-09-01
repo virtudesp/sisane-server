@@ -56,6 +56,17 @@ html = {
         var strForeign = arr_metadata.join(' ');
         return '<a href="#/' + value.meta.ReferencesTable + '/view/' + value.data.bean.id + '">' + value.data.bean.id + ": " + html.print(strForeign) + '</a>';
     },
+    printObject2: function (strClass, value) {
+        var arr_metadata = _.map(value.meta, function (oMeta) {
+            if (oMeta.IsForeignKeyDescriptor) {
+                return  oMeta.Name + ': ' + value.bean[oMeta.Name] + ';';
+            } else {
+                return "";
+            }
+        });
+        var strForeign = _.without(arr_metadata, '').join(' ');
+        return '<a href="#/' + strClass + '/view/' + value.bean.id + '">' + value.bean.id + ": " + html.print(strForeign) + '</a>';
+    },
     printValue: function (value) {
         switch (value.meta.Type) {
             case 'Boolean':
@@ -77,7 +88,7 @@ html = {
         }
     },
     getPageHeader: function (icon, title, subtitle) {
-        
+
 
         return dom._div('row', '',
                 dom._div('col-xs-9 text-left', '',

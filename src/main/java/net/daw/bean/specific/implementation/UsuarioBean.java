@@ -25,6 +25,7 @@ import net.daw.bean.group.GroupBeanImpl;
 import net.daw.bean.meta.MetaBeanGenImpl;
 import net.daw.helper.annotations.MethodMetaInformation;
 import net.daw.helper.annotations.TableSourceMetaInformation;
+import net.daw.helper.statics.MetaEnum;
 
 @TableSourceMetaInformation(
         TableName = "usuario",
@@ -32,6 +33,25 @@ import net.daw.helper.annotations.TableSourceMetaInformation;
 )
 public class UsuarioBean extends BeanGenImpl implements BeanInterface {
 
+        public UsuarioBean() {
+        this.id = 0;
+    }
+
+    public UsuarioBean(Integer id) {
+        this.id = id;
+    }
+
+    @Expose
+    @MethodMetaInformation(
+            IsId = true,
+            UltraShortName = "Iden.",
+            ShortName = "Identif.",
+            Description = "Número Identificador",
+            Type = MetaEnum.FieldType.Integer,
+            DefaultValue = "0"
+    )
+    private Integer id;
+    
     @Expose
     @MethodMetaInformation(ShortName = "Login", IsForeignKeyDescriptor = true)
     private String login = "";
@@ -178,6 +198,14 @@ public class UsuarioBean extends BeanGenImpl implements BeanInterface {
 
     public void setObj_estado(GroupBeanImpl obj_estado) {
         this.obj_estado = obj_estado;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
 }

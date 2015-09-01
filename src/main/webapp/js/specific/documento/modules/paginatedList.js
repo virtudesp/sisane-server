@@ -3,11 +3,11 @@ var documentoPaginatedList = function () {
 
 
 };
-documentoPaginatedList.prototype = new paginatedListModule();
+documentoPaginatedList.prototype = new pListModule();
 
-//documentoList.prototype = Object.create(paginatedListModule);
-//documentoList.prototype = paginatedListModule;
-//documentoList.call(paginatedListModule.prototype);
+//documentoList.prototype = Object.create(pListModule);
+//documentoList.prototype = pListModule;
+//documentoList.call(pListModule.prototype);
 //
 //
 //console.log('hola');
@@ -28,8 +28,8 @@ documentoPaginatedList.prototype.loadButtons = function (rowValues, strClass) {
 
 documentoPaginatedList.prototype.bind = function () {
     thisObject = this;
-    paginatedListModule.prototype.bind.call(this);
-    //paginatedListModule.call(this);
+    pListModule.prototype.bind.call(this);
+    //pListModule.call(this);
     $('.btn.btn-default.abc').unbind('click');
     $('.btn.btn-default.abc').click(function (event) {
         //console.log(ausiasFLOW.contador);      
@@ -43,7 +43,7 @@ documentoPaginatedList.prototype.bind = function () {
 //        } else {
 //            ausiasFLOW.id = 2;
 //        }
-        ausiasFLOW.renderPage();
+        ausiasFLOW.flowRender();
         return false;
     });
 }

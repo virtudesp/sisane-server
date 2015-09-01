@@ -41,7 +41,7 @@ public class EstadotareaBean extends BeanGenImpl implements BeanInterface {
     }
 
     public EstadotareaBean(Integer id) {
-        super(id);
+        
     }
 
     public String getDescripcion() {

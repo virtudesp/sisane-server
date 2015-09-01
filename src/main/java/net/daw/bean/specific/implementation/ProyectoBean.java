@@ -34,7 +34,7 @@ public class ProyectoBean extends BeanGenImpl implements BeanInterface {
     }
 
     public ProyectoBean(Integer id) {
-        super(id);
+        
     }
 
     public String getDescripcion() {

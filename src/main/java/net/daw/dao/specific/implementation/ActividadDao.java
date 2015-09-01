@@ -145,59 +145,59 @@ public class ActividadDao implements ViewDaoInterface<ActividadBean>, TableDaoIn
 
     @Override
     public ActividadBean get(ActividadBean oActividadBean, Integer expand) throws Exception {
-        if (oActividadBean.getId() > 0) {
-            try {
-                if (!oMysql.existsOne(strSqlDataSource, oActividadBean.getId())) {
-                    oActividadBean.setId(0);
-                } else {
-                    oActividadBean.setEnunciado(oMysql.getOne(strSqlDataSource, "enunciado", oActividadBean.getId()));
-
-                    String fecha = "";
-                    fecha = oMysql.getOne(strSqlDataSource, "fecha", oActividadBean.getId());
-                    SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
-                    oActividadBean.setFecha(date.parse(fecha));
-
-                    oActividadBean.setEvaluacion(Integer.valueOf(oMysql.getOne(strSqlDataSource, "evaluacion", oActividadBean.getId())));
-                    oActividadBean.setActivo((byte) Integer.parseInt(oMysql.getOne(strSqlDataSource, "activo", oActividadBean.getId())));
-
-                }
-            } catch (Exception ex) {
-                ExceptionBooster.boost(new Exception(this.getClass().getName() + ":get ERROR: " + ex.getMessage()));
-            }
-        } else {
-            oActividadBean.setId(0);
-        }
+//        if (oActividadBean.getId() > 0) {
+//            try {
+//                if (!oMysql.existsOne(strSqlDataSource, oActividadBean.getId())) {
+//                    oActividadBean.setId(0);
+//                } else {
+//                    oActividadBean.setEnunciado(oMysql.getOne(strSqlDataSource, "enunciado", oActividadBean.getId()));
+//
+//                    String fecha = "";
+//                    fecha = oMysql.getOne(strSqlDataSource, "fecha", oActividadBean.getId());
+//                    SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+//                    oActividadBean.setFecha(date.parse(fecha));
+//
+//                    oActividadBean.setEvaluacion(Integer.valueOf(oMysql.getOne(strSqlDataSource, "evaluacion", oActividadBean.getId())));
+//                    oActividadBean.setActivo((byte) Integer.parseInt(oMysql.getOne(strSqlDataSource, "activo", oActividadBean.getId())));
+//
+//                }
+//            } catch (Exception ex) {
+//                ExceptionBooster.boost(new Exception(this.getClass().getName() + ":get ERROR: " + ex.getMessage()));
+//            }
+//        } else {
+//            oActividadBean.setId(0);
+//        }
         return oActividadBean;
     }
 
     @Override
     public ActividadBean set(ActividadBean oActividadBean) throws Exception {
-        try {
-            if (oActividadBean.getId() == 0) {
-                oActividadBean.setId(oMysql.insertOne(strSqlDataSource));
-            }
-            oMysql.updateOne(oActividadBean.getId(), strSqlDataSource, "enunciado", oActividadBean.getEnunciado());
-
-            SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
-            oMysql.updateOne(oActividadBean.getId(), strSqlDataSource, "fecha", date.format(oActividadBean.getFecha()));
-
-            oMysql.updateOne(oActividadBean.getId(), strSqlDataSource, "evaluacion", oActividadBean.getEvaluacion().toString());
-
-            oMysql.updateOne(oActividadBean.getId(), strSqlDataSource, "activo", Integer.toString(oActividadBean.getActivo()));
-        } catch (Exception ex) {
-            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":set ERROR: " + ex.getMessage()));
-        }
+//        try {
+//            if (oActividadBean.getId() == 0) {
+//                oActividadBean.setId(oMysql.insertOne(strSqlDataSource));
+//            }
+//            oMysql.updateOne(oActividadBean.getId(), strSqlDataSource, "enunciado", oActividadBean.getEnunciado());
+//
+//            SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+//            oMysql.updateOne(oActividadBean.getId(), strSqlDataSource, "fecha", date.format(oActividadBean.getFecha()));
+//
+//            oMysql.updateOne(oActividadBean.getId(), strSqlDataSource, "evaluacion", oActividadBean.getEvaluacion().toString());
+//
+//            oMysql.updateOne(oActividadBean.getId(), strSqlDataSource, "activo", Integer.toString(oActividadBean.getActivo()));
+//        } catch (Exception ex) {
+//            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":set ERROR: " + ex.getMessage()));
+//        }
         return oActividadBean;
     }
 
     @Override
     public int remove(ActividadBean oActividadBean) throws Exception {
         int result = 0;
-        try {
-            result = oMysql.removeOne(oActividadBean.getId(), strSqlDataSource);
-        } catch (Exception ex) {
-            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":remove ERROR: " + ex.getMessage()));
-        }
+//        try {
+//            result = oMysql.removeOne(oActividadBean.getId(), strSqlDataSource);
+//        } catch (Exception ex) {
+//            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":remove ERROR: " + ex.getMessage()));
+//        }
         return result;
     }
 

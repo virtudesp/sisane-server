@@ -8,16 +8,16 @@
  */
 (function () {
     var ausiasFLOW = window.ausiasFLOW = {};
-    var components = [];
+    var componentsList = [];
     ausiasFLOW.initialize = function () {
         //comprobar al menos que haya dos argumentos
         var userModule = arguments[0];
         var placeSelector = arguments[1];
         //userModule.prototype = Object.create(ParentModule.prototype);
-        var m = new userModule;
-        m.id = components.length;
-        m.place = placeSelector;
-        components.push(m);
+        var oComponent = new userModule;
+        oComponent.id_module = componentsList.length;
+        oComponent.place = placeSelector;
+        componentsList.push(oComponent);
 //        return m;
 //    }
 
@@ -35,52 +35,109 @@
 
 
 //    ausiasFLOW.setup = function (m) { 
-        if ('initialize' in m) {
-            m.initialize();
+        if ('initialize' in oComponent) {
+            oComponent.initialize();
         }
-        if ('render' in m) {
-            m.place.empty().append(m.render());
+        if ('getData' in oComponent) {
+            oComponent.getData();
         }
-        if ('fill' in m) {
-            m.fill();
+        if ('render' in oComponent) {
+            oComponent.place.empty().append(oComponent.render());
         }
-        if ('bind' in m) {
-            m.bind();
+        if ('fill' in oComponent) {
+            oComponent.fill();
+        }
+        if ('bind' in oComponent) {
+            oComponent.bind();
         }
         //ofrecerse en menus
         //toolbar expose
         //menubar
         //icon
-        return m;
+        return oComponent;
     };
-
-    ausiasFLOW.renderComponent = function (p) {
-        if ('render' in components[p.id]) {
-            components[p.id].place.empty().append(components[p.id].render());
+    ausiasFLOW.reset = function () {
+        componentsList = [];
+    };
+    ausiasFLOW.renderComponent = function (oComponent, bindAll) {
+        if ('initialize' in componentsList[oComponent.id_module]) {
+            componentsList[oComponent.id_module].initialize();
         }
-        if ('bind' in components[p.id]) {
-            components[p.id].bind();
+        if ('getData' in componentsList[oComponent.id_module]) {
+            componentsList[oComponent.id_module].getData();
         }
+        if ('render' in componentsList[oComponent.id_module]) {
+            //componentsList[oComponent.id_module].place.empty().append(componentsList[oComponent.id_module].render());
+            var renderization = componentsList[oComponent.id_module].render();
+            if ($(componentsList[oComponent.id_module].place).html() != $('<div/>').html(renderization).html()) {
+                //console.log("  -- rendering:    " + entry.id_module);
+                componentsList[oComponent.id_module].place.empty().append(renderization);
+            }
+        }
+        if ('bind' in componentsList[oComponent.id_module]) {
+            componentsList[oComponent.id_module].bind();
+        }
+        if (bindAll && 'bindAll' in oComponent) {
+            oComponent.bindAll();
+        }
+//        if (bindAllCallback && 'bindAll' in componentsList[oComponent.id_module]) {
+//            componentsList[oComponent.id_module].bindAll(bindAllCallback);
+//        }
     };
     ausiasFLOW.getId = function (p) {
-        return p.id;
+        return p.id_module;
     }
-    ausiasFLOW.renderPage = function () {
-        components.forEach(function (entry) {
+    ausiasFLOW.flowRender = function (bindAll) { //render with reload ajax call
+        componentsList.forEach(function (oComponent) {
             //console.log("========================");
-            //console.log("num:    " + entry.id);
+            //console.log("num:    " + entry.id_module);
             //console.log("dom:    " + $(entry.place).html());
             //console.log("render: " + $('<div/>').html(entry.render()).html()); 
-            if ('render' in entry) {
-                var renderization = entry.render();
-                if ($(entry.place).html() != $('<div/>').html(renderization).html()) {
-                    //console.log("  -- rendering:    " + entry.id);
-                    entry.place.empty().append(renderization);
-                    if ('bind' in entry) {
-                        entry.bind();
+            if ('initialize' in oComponent) {
+                oComponent.initialize();
+
+            }
+            if ('getData' in oComponent) {
+                oComponent.getData();
+
+            }
+            if ('render' in oComponent) {
+                var renderization = oComponent.render();
+                if ($(oComponent.place).html() != $('<div/>').html(renderization).html()) {
+                    //console.log("  -- rendering:    " + entry.id_module);
+                    oComponent.place.empty().append(renderization);
+
+                }
+            }
+            if ('bind' in oComponent) {
+                oComponent.bind();
+            }
+            if (bindAll && 'bindAll' in oComponent) {
+                oComponent.bindAll();
+            }
+        });
+    };
+    ausiasFLOW.renderPage = function () {
+        componentsList.forEach(function (oComponent) {
+            //console.log("========================");
+            //console.log("num:    " + entry.id_module);
+            //console.log("dom:    " + $(entry.place).html());
+            //console.log("render: " + $('<div/>').html(entry.render()).html()); 
+            if ('render' in oComponent) {
+                var renderization = oComponent.render();
+                if ($(oComponent.place).html() != $('<div/>').html(renderization).html()) {
+                    //console.log("  -- rendering:    " + entry.id_module);
+                    oComponent.place.empty().append(renderization);
+                    if ('bind' in oComponent) {
+                        oComponent.bind();
                     }
                 }
             }
         });
     };
+    ausiasFLOW.bindCallback = function (oComponent, bindAllCallback) {
+        if ('bindCallback' in oComponent) {
+            oComponent.bindCallback(bindAllCallback);
+        }
+    }
 })();

@@ -18,8 +18,8 @@
 
 var listModule = function () {
     var strClass;
-    var jsonMeta;
-    var jsonPage;
+    var jsonData;
+
     var paramsObject;
     var orderParams;
     var filterParams;
@@ -63,28 +63,35 @@ listModule.prototype.loadPopups = function (meta, rowValues, strClase) {
 
     return botonera;
 };
+listModule.prototype.prepareParams = function () {
+    strClass = ausiasFLOW.listModule_class;
+    paramsObject = ausiasFLOW.listModule_paramsObject;
+    orderParams = this.printOrderParamsInUrl(ausiasFLOW.listModule_paramsObject);
+    filterParams = this.printFilterParamsInUrl(ausiasFLOW.listModule_paramsObject);
+    systemFilterParams = this.printSystemFilterParamsInUrl(ausiasFLOW.listModule_paramsObject);
+    strUrlFromParamsWithoutOrder = this.getUrlStringFromParamsObject(this.getUrlObjectFromParamsWithoutParamArray(ausiasFLOW.listModule_paramsObject, ["order", "ordervalue"]));
+}
 listModule.prototype.getHeaderPageTableFunc = function (jsonMeta, strClass, UrlFromParamsWithoutOrder, visibles, acciones) {
     thisObject = this;
     acciones = typeof (acciones) != 'undefined' ? acciones : true;
-
     arr_meta_data_tableHeader = _.map(jsonMeta, function (oMeta, key) {
         if (oMeta.IsId) {
             return '<th class="col-md-1">'
                     + oMeta.UltraShortName
                     + '<br />'
-                    + thisObject.loadThButtons(oMeta, ausiasFLOW.listModule_class, UrlFromParamsWithoutOrder)
+                    + thisObject.loadThButtons(oMeta, strClass, UrlFromParamsWithoutOrder)
                     + '</th>';
         } else {
             return  '<th>'
                     + oMeta.UltraShortName
                     + '<br />'
-                    + thisObject.loadThButtons(oMeta, ausiasFLOW.listModule_class, UrlFromParamsWithoutOrder)
+                    + thisObject.loadThButtons(oMeta, strClass, UrlFromParamsWithoutOrder)
                     + '</th>';
         }
     });
     //visibles
     if (visibles) {
-        arr_meta_data_tableHeader_visibles = arr_meta_data_tableHeader.slice(0, parseInt(visibles ));
+        arr_meta_data_tableHeader_visibles = arr_meta_data_tableHeader.slice(0, parseInt(visibles));
     } else {
         arr_meta_data_tableHeader_visibles = arr_meta_data_tableHeader;
     }
@@ -96,10 +103,10 @@ listModule.prototype.getHeaderPageTableFunc = function (jsonMeta, strClass, UrlF
     return '<tr>' + arr_meta_data_tableHeader_visibles_acciones.join('') + '</tr>';
 }
 listModule.prototype.getBodyPageTableFunc = function (meta, page, print_tdValue_function, tdButtons_function, trPopup_function, visibles) {
-    //thisObject.jsonPage: es un array de objetos. Cada objeto contiene una fila de la tabla de la petición
-    //thisObject.jsonMeta; es un array de objetos. Every object contains metadata from every object to print in every row
-    var matrix_meta_data = _.map(jsonPage, function (oRow, keyRow) {
-        return _.map(jsonMeta, function (oMeta, keyMeta) {
+//thisObject.jsonData.message.page.list: es un array de objetos. Cada objeto contiene una fila de la tabla de la petición
+//thisObject.jsonData.message.meta; es un array de objetos. Every object contains metadata from every object to print in every row
+    var matrix_meta_data = _.map(page, function (oRow, keyRow) {
+        return _.map(meta, function (oMeta, keyMeta) {
             return  {meta: oMeta, data: oRow[oMeta.Name]};
         });
     });
@@ -110,7 +117,7 @@ listModule.prototype.getBodyPageTableFunc = function (meta, page, print_tdValue_
             return  '<td>' + print_tdValue_function(value2) + '</td>';
         })
                 )
-                .slice(0, parseInt(visibles ))
+                .slice(0, parseInt(visibles))
                 .concat(['<td>' + tdButtons_function(value, strClass) + '</td>']);
     });
     //is an array (rpp) of arrays (rows) of strings
@@ -132,40 +139,37 @@ listModule.prototype.getBodyPageTableFunc = function (meta, page, print_tdValue_
 
 listModule.prototype.initialize = function () {
     var thisObject = this;
-
     //**** prepare params
     //paramsObject = ns.param.defaultizeUrlObjectParametersForLists(ns.param.getUrlObjectFromUrlString(this.url));
-    strClass = ausiasFLOW.listModule_class;
-    paramsObject = ausiasFLOW.listModule_paramsObject;
-    orderParams = this.printOrderParamsInUrl(ausiasFLOW.listModule_paramsObject);
-    filterParams = this.printFilterParamsInUrl(ausiasFLOW.listModule_paramsObject);
-    systemFilterParams = this.printSystemFilterParamsInUrl(ausiasFLOW.listModule_paramsObject);
-    strUrlFromParamsWithoutOrder = this.getUrlStringFromParamsObject(this.getUrlObjectFromParamsWithoutParamArray(ausiasFLOW.listModule_paramsObject, ["order", "ordervalue"]));
+    this.prepareParams();
     //****
+};
+listModule.prototype.getData = function () {
     if (paramsObject) {
-        $.when(this.getAllPromise(ausiasFLOW.listModule_class, filterParams, orderParams, systemFilterParams)).done(function (jsonData) {
-            if (jsonData.status == "200") {
-                jsonMeta = jsonData.message.meta;
-                jsonRegisters = jsonData.message.registers.data;
-                jsonPage = jsonData.message.page.list;
-                if (paramsObject.vf) {
-                    if (jsonMeta.length < paramsObject["vf"]) {
-                        paramsObject["vf"] = jsonMeta.length;
-                    }
+        $.when(this.getAllPromise(ausiasFLOW.listModule_class, filterParams, orderParams, systemFilterParams)).done(function (jsonDataReturned) {
+            if (jsonDataReturned) {
+                if (jsonDataReturned.status == "200") {
+
+
+                    jsonData = jsonDataReturned;
+
+
+//                    if (paramsObject.vf) {
+//                        if (jsonData.message.meta.length < paramsObject["vf"]) {
+//                            paramsObject["vf"] = jsonData.message.meta.length;
+//                        }
+//                    }
                 }
-            } else {
-                console.log('error: bad ajax request in listModule')
             }
         })
     }
 };
-
 listModule.prototype.render = function () {
     var paramsObject = ausiasFLOW.listModule_paramsObject;
-    if (jsonRegisters) {
+    if (jsonData.message.registers.data) {
         strTable = ns.html.table.getTable(
-                this.getHeaderPageTableFunc(jsonMeta, ausiasFLOW.listModule_class, strUrlFromParamsWithoutOrder, paramsObject.vf),
-                this.getBodyPageTableFunc(jsonMeta, jsonPage, html.printPrincipal, this.loadButtons, this.loadPopups, paramsObject.vf)
+                this.getHeaderPageTableFunc(jsonData.message.meta, ausiasFLOW.listModule_class, strUrlFromParamsWithoutOrder, 99),
+                this.getBodyPageTableFunc(jsonData.message.meta, jsonData.message.page.list, html.printPrincipal, this.loadButtons, this.loadPopups, 99)
                 );
         return '<div id="tablePlace">' + strTable + '</div>';
     }

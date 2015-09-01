@@ -21,6 +21,7 @@ import net.daw.service.publicinterface.ViewServiceInterface;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import java.lang.reflect.Constructor;
+import java.lang.reflect.Method;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -60,7 +61,11 @@ public abstract class ViewServiceGenImpl extends MetaServiceGenImpl implements V
                 BeanGenImpl oGenericBean = (BeanGenImpl) Class.forName("net.daw.bean.specific.implementation." + ParameterCook.prepareCamelCaseObject(oRequest) + "Bean").newInstance();
                 Constructor c = Class.forName("net.daw.dao.specific.implementation." + ParameterCook.prepareCamelCaseObject(oRequest) + "Dao").getConstructor(Connection.class);
                 TableDaoGenImpl oGenericDao = (TableDaoGenImpl) c.newInstance(oConnection);
-                oGenericBean.setId(id);
+
+                Method metodo_setId = oGenericBean.getClass().getMethod("setId", Integer.class);
+                metodo_setId.invoke(oGenericBean, id); //oGenericBean.setId(id);
+
+                //oGenericBean.setId(id);
                 oGenericBean = (BeanGenImpl) (BeanInterface) oGenericDao.get(oGenericBean, AppConfigurationHelper.getJsonDepth());
                 GsonBuilder gsonBuilder = new GsonBuilder();
                 gsonBuilder.setDateFormat("dd/MM/yyyy");
@@ -242,7 +247,6 @@ public abstract class ViewServiceGenImpl extends MetaServiceGenImpl implements V
     }
 
     //@Override
-
     public String getaggregateviewall() throws Exception {
         String data = null;
         try {

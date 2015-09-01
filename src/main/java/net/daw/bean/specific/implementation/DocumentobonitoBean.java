@@ -28,7 +28,7 @@ public class DocumentobonitoBean extends BeanGenImpl implements BeanInterface {
     }
 
     public DocumentobonitoBean(Integer id) {
-        super(id);
+        
     }
 
     @Expose

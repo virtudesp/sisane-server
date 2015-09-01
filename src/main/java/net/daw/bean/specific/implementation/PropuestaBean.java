@@ -32,7 +32,7 @@ public class PropuestaBean extends BeanGenImpl implements BeanInterface{
     }
 
     public PropuestaBean(Integer id) {
-        super(id);
+        
     }
     
     

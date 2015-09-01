@@ -29,3 +29,6 @@ baseModule.prototype.getSomePromise = function (strClass, rpp, page, filterParam
 baseModule.prototype.getAllPromise = function (strClass, filterParams, orderParams, systemfilterParams) {
     return ns.ajax.callSync(config.getAppUrl() + '?ob=' + strClass + '&op=getaggregateviewall' + filterParams + orderParams + systemfilterParams, 'GET', '');
 };
+//baseModule.prototype.getXxxPromise = function (strClass, operation) {
+//    return ns.ajax.callSync(config.getAppUrl() + '?ob=' + strClass + '&op=' + operation, 'GET', '');
+//};

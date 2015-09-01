@@ -136,63 +136,63 @@ public class DetallePedidoDao implements ViewDaoInterface<DetallePedidoBean>, Ta
 
     @Override
     public DetallePedidoBean get(DetallePedidoBean oDetallePedidoBean, Integer expand) throws Exception {
-        if (oDetallePedidoBean.getId() > 0) {
-            try {
-                if (!oMysql.existsOne(strTableName, oDetallePedidoBean.getId())) {
-                    oDetallePedidoBean.setId(0);
-                } else {
-                    expand--;
-                    if (expand > 0) {
-                        oDetallePedidoBean.setCantidad(Integer.parseInt(oMysql.getOne(strTableName, "cantidad", oDetallePedidoBean.getId())));
-                        oDetallePedidoBean.setId_pedido(Integer.parseInt(oMysql.getOne(strTableName, "id_pedido", oDetallePedidoBean.getId())));
-
-                        PedidoBean oPedido = new PedidoBean();
-                        oPedido.setId(Integer.parseInt(oMysql.getOne(strTableName, "id_pedido", oDetallePedidoBean.getId())));
-                        PedidoDao oPedidoDAO = new PedidoDao(oConnection);
-                        oPedido = oPedidoDAO.get(oPedido, AppConfigurationHelper.getJsonDepth());
-                        oDetallePedidoBean.setObj_pedido(oPedido);
-
-                        oDetallePedidoBean.setId_producto(Integer.parseInt(oMysql.getOne(strTableName, "id_producto", oDetallePedidoBean.getId())));
-
-                        ProductoBean oProducto = new ProductoBean();
-                        oProducto.setId(Integer.parseInt(oMysql.getOne(strTableName, "id_producto", oDetallePedidoBean.getId())));
-                        ProductoDao oProductoDAO = new ProductoDao(oConnection);
-                        oProducto = oProductoDAO.get(oProducto, AppConfigurationHelper.getJsonDepth());
-                        oDetallePedidoBean.setObj_producto(oProducto);
-                    }
-                }
-            } catch (Exception ex) {
-                ExceptionBooster.boost(new Exception(this.getClass().getName() + ":get ERROR: " + ex.getMessage()));
-            }
-        } else {
-            oDetallePedidoBean.setId(0);
-        }
+//        if (oDetallePedidoBean.getId() > 0) {
+//            try {
+//                if (!oMysql.existsOne(strTableName, oDetallePedidoBean.getId())) {
+//                    oDetallePedidoBean.setId(0);
+//                } else {
+//                    expand--;
+//                    if (expand > 0) {
+//                        oDetallePedidoBean.setCantidad(Integer.parseInt(oMysql.getOne(strTableName, "cantidad", oDetallePedidoBean.getId())));
+//                        oDetallePedidoBean.setId_pedido(Integer.parseInt(oMysql.getOne(strTableName, "id_pedido", oDetallePedidoBean.getId())));
+//
+//                        PedidoBean oPedido = new PedidoBean();
+//                        oPedido.setId(Integer.parseInt(oMysql.getOne(strTableName, "id_pedido", oDetallePedidoBean.getId())));
+//                        PedidoDao oPedidoDAO = new PedidoDao(oConnection);
+//                        oPedido = oPedidoDAO.get(oPedido, AppConfigurationHelper.getJsonDepth());
+//                        oDetallePedidoBean.setObj_pedido(oPedido);
+//
+//                        oDetallePedidoBean.setId_producto(Integer.parseInt(oMysql.getOne(strTableName, "id_producto", oDetallePedidoBean.getId())));
+//
+//                        ProductoBean oProducto = new ProductoBean();
+//                        oProducto.setId(Integer.parseInt(oMysql.getOne(strTableName, "id_producto", oDetallePedidoBean.getId())));
+//                        ProductoDao oProductoDAO = new ProductoDao(oConnection);
+//                        oProducto = oProductoDAO.get(oProducto, AppConfigurationHelper.getJsonDepth());
+//                        oDetallePedidoBean.setObj_producto(oProducto);
+//                    }
+//                }
+//            } catch (Exception ex) {
+//                ExceptionBooster.boost(new Exception(this.getClass().getName() + ":get ERROR: " + ex.getMessage()));
+//            }
+//        } else {
+//            oDetallePedidoBean.setId(0);
+//        }
         return oDetallePedidoBean;
     }
 
     @Override
     public DetallePedidoBean set(DetallePedidoBean oDetallePedidoBean) throws Exception {
-        try {
-            if (oDetallePedidoBean.getId() == 0) {
-                oDetallePedidoBean.setId(oMysql.insertOne(strTableName));
-            }
-            oMysql.updateOne(oDetallePedidoBean.getId(), strTableName, "cantidad", oDetallePedidoBean.getCantidad().toString());
-            oMysql.updateOne(oDetallePedidoBean.getId(), strTableName, "id_pedido", oDetallePedidoBean.getId_pedido().toString());
-            oMysql.updateOne(oDetallePedidoBean.getId(), strTableName, "id_producto", oDetallePedidoBean.getId_producto().toString());
-        } catch (Exception ex) {
-            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":set ERROR: " + ex.getMessage()));
-        }
+//        try {
+//            if (oDetallePedidoBean.getId() == 0) {
+//                oDetallePedidoBean.setId(oMysql.insertOne(strTableName));
+//            }
+//            oMysql.updateOne(oDetallePedidoBean.getId(), strTableName, "cantidad", oDetallePedidoBean.getCantidad().toString());
+//            oMysql.updateOne(oDetallePedidoBean.getId(), strTableName, "id_pedido", oDetallePedidoBean.getId_pedido().toString());
+//            oMysql.updateOne(oDetallePedidoBean.getId(), strTableName, "id_producto", oDetallePedidoBean.getId_producto().toString());
+//        } catch (Exception ex) {
+//            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":set ERROR: " + ex.getMessage()));
+//        }
         return oDetallePedidoBean;
     }
 
     @Override
     public int remove(DetallePedidoBean oDetallePedidoBean) throws Exception {
         int result = 0;
-        try {
-            result = oMysql.removeOne(oDetallePedidoBean.getId(), strTableName);
-        } catch (Exception ex) {
-            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":remove ERROR: " + ex.getMessage()));
-        }
+//        try {
+//            result = oMysql.removeOne(oDetallePedidoBean.getId(), strTableName);
+//        } catch (Exception ex) {
+//            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":remove ERROR: " + ex.getMessage()));
+//        }
         return result;
     }
 

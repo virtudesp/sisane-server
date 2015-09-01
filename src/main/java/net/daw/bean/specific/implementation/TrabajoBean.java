@@ -28,7 +28,7 @@ public class TrabajoBean extends BeanGenImpl implements BeanInterface {
     }
 
     public TrabajoBean(Integer id) {
-        super(id);
+        
     }
 
     @Expose

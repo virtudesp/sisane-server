@@ -28,7 +28,7 @@ public class PostBean extends BeanGenImpl implements BeanInterface {
     }
 
     public PostBean(Integer id) {
-        super(id);
+        
     }
 
     @Expose

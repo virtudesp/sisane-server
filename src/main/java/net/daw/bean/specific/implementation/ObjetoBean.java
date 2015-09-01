@@ -28,7 +28,7 @@ public class ObjetoBean extends BeanGenImpl implements BeanInterface {
     }
 
     public ObjetoBean(Integer id) {
-        super(id);
+        
     }
 
    

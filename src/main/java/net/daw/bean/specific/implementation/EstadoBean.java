@@ -34,6 +34,25 @@ import net.daw.helper.statics.MetaEnum;
 )
 public class EstadoBean extends BeanGenImpl implements BeanInterface {
 
+        public EstadoBean() {
+        this.id = 0;
+    }
+
+    public EstadoBean(Integer id) {
+        this.id = id;
+    }
+
+    @Expose
+    @MethodMetaInformation(
+            IsId = true,
+            UltraShortName = "Iden.",
+            ShortName = "Identif.",
+            Description = "Número Identificador",
+            Type = MetaEnum.FieldType.Integer,
+            DefaultValue = "0"
+    )
+    private Integer id;
+    
     @Expose
     @MethodMetaInformation(            
             UltraShortName = "Desc.",
@@ -45,12 +64,7 @@ public class EstadoBean extends BeanGenImpl implements BeanInterface {
             DefaultValue = "Sin estado")
     private String tipo;
 
-    public EstadoBean() {
-    }
 
-    public EstadoBean(Integer id) {
-        super(id);
-    }
 
     public String getTipo() {
         return tipo;
@@ -58,6 +72,14 @@ public class EstadoBean extends BeanGenImpl implements BeanInterface {
 
     public void setTipo(String tipo) {
         this.tipo = tipo;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
 }

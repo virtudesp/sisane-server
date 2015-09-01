@@ -53,7 +53,7 @@ public class ProveedorBean extends BeanGenImpl implements BeanInterface{
     }
 
     public ProveedorBean(Integer id) {
-        super(id);
+        
     }
 
     public String getNia() {
