@@ -3,11 +3,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>net.daw</groupId>
-    <artifactId>ausiasBroth2015</artifactId>
+    <artifactId>openAUSIAS</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>war</packaging>
 
-    <name>ausiasBroth2015</name>
+    <name>openAUSIAS</name>
 
 
     <properties>

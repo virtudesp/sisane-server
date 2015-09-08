@@ -1,19 +1,28 @@
 /*
- * Copyright (C) July 2014 Rafael Aznar
- *
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License
- * as published by the Free Software Foundation; either version 2
- * of the License, or (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+ * Copyright (c) 2015 by Rafael Angel Aznar Aparici (rafaaznar at gmail dot com)
+ * 
+ * openAUSIAS: The stunning micro-library that helps you to develop easily 
+ *             AJAX web applications by using Java and jQuery
+ * openAUSIAS is distributed under the MIT License (MIT)
+ * Sources at https://github.com/rafaelaznar/openAUSIAS
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ * 
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ * 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
  */
 package net.daw.service.generic.implementation;
 
@@ -24,7 +33,6 @@ import java.sql.Connection;
 import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
 import net.daw.bean.meta.MetaBeanGenImpl;
-import net.daw.connection.implementation.BoneConnectionPoolImpl;
 import net.daw.dao.generic.implementation.TableDaoGenImpl;
 import net.daw.helper.statics.ExceptionBooster;
 import net.daw.helper.statics.ParameterCook;
@@ -37,8 +45,9 @@ public abstract class MetaServiceGenImpl implements MetaServiceInterface {
     public MetaServiceGenImpl(HttpServletRequest request) {
         oRequest = request;
     }
- @Override
-    public String getmetainformation() throws Exception {        
+
+    @Override
+    public String getmetainformation() throws Exception {
         String data = null;
         ArrayList<MetaBeanGenImpl> alMeta = null;
         try {
@@ -53,51 +62,7 @@ public abstract class MetaServiceGenImpl implements MetaServiceInterface {
         } finally {
         }
         return data;
-        
-    }
-    @Override
-    public String getprettycolumns() throws Exception {
-        String data = null;
-        Connection oConnection = null;
-        ArrayList<String> alColumns = null;
-        try {
-            oConnection = new BoneConnectionPoolImpl().newConnection();
-            oConnection.setAutoCommit(false);
-            Constructor c = Class.forName("net.daw.dao.specific.implementation." + ParameterCook.prepareCamelCaseObject(oRequest) + "Dao").getConstructor(Connection.class);
-            TableDaoGenImpl oDao = (TableDaoGenImpl) c.newInstance(oConnection);
-            alColumns = oDao.getPrettyColumnsNames();
-            GsonBuilder gsonBuilder = new GsonBuilder();
-            Gson gson = gsonBuilder.create();
-            data = gson.toJson(alColumns);
-        } catch (Exception ex) {
-            oConnection.rollback();
-            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPrettyColumns ERROR: " + ex.getMessage()));
-        } finally {
-            oConnection.commit();
-        }
-        return data;
+
     }
 
-    @Override
-    public String getcolumns() throws Exception {
-        Connection oConnection = null;
-        String data = null;
-        try {
-            oConnection = new BoneConnectionPoolImpl().newConnection();
-            oConnection.setAutoCommit(false);
-            Constructor c = Class.forName("net.daw.dao.specific.implementation." + ParameterCook.prepareCamelCaseObject(oRequest) + "Dao").getConstructor(Connection.class);
-            TableDaoGenImpl oDao = (TableDaoGenImpl) c.newInstance(oConnection);
-            ArrayList<String> alColumns = null;
-            alColumns = oDao.getColumnsNames();
-            GsonBuilder gsonBuilder = new GsonBuilder();
-            Gson gson = gsonBuilder.create();
-            data = gson.toJson(alColumns);
-        } catch (Exception ex) {
-            oConnection.rollback();
-            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getColumns ERROR: " + ex.getMessage()));
-        } finally {
-            oConnection.commit();
-        }
-        return data;
-    }
 }

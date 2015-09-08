@@ -1,19 +1,28 @@
 /*
- * Copyright (C) July 2014 Rafael Aznar
- *
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License
- * as published by the Free Software Foundation; either version 2
- * of the License, or (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+ * Copyright (c) 2015 by Rafael Angel Aznar Aparici (rafaaznar at gmail dot com)
+ * 
+ * openAUSIAS: The stunning micro-library that helps you to develop easily 
+ *             AJAX web applications by using Java and jQuery
+ * openAUSIAS is distributed under the MIT License (MIT)
+ * Sources at https://github.com/rafaelaznar/openAUSIAS
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ * 
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ * 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
  */
 package net.daw.control;
 
@@ -46,7 +55,6 @@ public class json extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     private void sendResponse(HttpServletRequest request, HttpServletResponse response, String strStatus, String strMessage) throws ServletException, IOException {
-
         Map<String, String> data = new HashMap<>();
         data.put("status", strStatus);
         data.put("message", strMessage);
@@ -61,7 +69,7 @@ public class json extends HttpServlet {
     }
 
     private void writeLog(HttpServletRequest request, HttpServletResponse response, String strMessage) throws ServletException, IOException {
-        Logger.getLogger(JsonControl.class.getName()).log(Level.SEVERE, null, request.getRemoteHost() + ": " + request.getRemoteAddr() + ": " + strMessage);
+        Logger.getLogger(json.class.getName()).log(Level.SEVERE, null, request.getRemoteHost() + ": " + request.getRemoteAddr() + ": " + strMessage);
 
     }
 
@@ -86,20 +94,16 @@ public class json extends HttpServlet {
                     request.setAttribute("contenido", JsonMessage.get("500", "Applications server error. Please, contact your administrator."));
                     getServletContext().getRequestDispatcher("/jsp/messageAjax.jsp").forward(request, response);
                 }
-                Logger.getLogger(JsonControl.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(json.class.getName()).log(Level.SEVERE, null, ex);
                 return;
-            }
-
-            //----------------------------------------------------------------------  
+            } 
             if (EstadoHelper.getTipo_estado() == Tipo_estado.Debug) {
-                retardo(EstadoHelper.getDelay()); //debug delay
+                retardo(EstadoHelper.getDelay()); //optional debug delay
             }
-
             String ob = ParameterCook.prepareObject(request);
             String op = ParameterCook.prepareOperation(request);
             UsuarioBean oUserBean = (UsuarioBean) request.getSession().getAttribute("userBean");
             if (op.equals("status")) {
-
                 if (oUserBean == null) {
                     sendResponse(request, response, "403", "ERROR: You don't have permission to perform this operation");
                 } else {
@@ -115,9 +119,7 @@ public class json extends HttpServlet {
                             ConnectionInterface DataConnectionSource = null;
                             Connection oConnection = null;
                             try {
-
                                 DataConnectionSource = new BoneConnectionPoolImpl();
-
                                 oConnection = DataConnectionSource.newConnection();
                                 oUsuario.setLogin(login);
                                 oUsuario.setPassword(pass);
@@ -140,7 +142,6 @@ public class json extends HttpServlet {
                                     DataConnectionSource.disposeConnection();
                                 }
                             }
-
                         }
                     } else {
                         sendResponse(request, response, "403", "ERROR: You don't have permission to perform this operation");
@@ -170,17 +171,14 @@ public class json extends HttpServlet {
                     } catch (ClassNotFoundException | InstantiationException | IllegalAccessException ex) {
                         ExceptionBooster.boost(new Exception(this.getClass().getName() + ":processRequest ERROR: no such operation"));
                     }
-
                 }
             }
-
         } catch (ServletException | IOException | NoSuchMethodException | SecurityException | IllegalArgumentException | InvocationTargetException ex) {
             sendResponse(request, response, "500", "Applications server error. Please, contact your administrator.");
             writeLog(request, response, ex.toString());
         } finally {
         }
     }
-
 // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.

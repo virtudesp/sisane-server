@@ -24,43 +24,15 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package net.daw.connection.implementation;
+package net.daw.service.specific.implementation;
 
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
-import javax.sql.DataSource;
-import net.daw.connection.publicinterface.ConnectionInterface;
-import net.daw.helper.statics.ConnectionClassHelper;
+import net.daw.service.generic.implementation.TableServiceGenImpl;
+import javax.servlet.http.HttpServletRequest;
 
-public class DataSourceConnectionImpl implements ConnectionInterface {
+public class Documento_labels_x_ndocs_Service extends TableServiceGenImpl {
 
-    InitialContext initialContext;
-
-    @Override
-    public Connection newConnection() throws Exception {
-
-        try {
-            initialContext = new InitialContext();
-            DataSource dataSource = (DataSource) initialContext.lookup("java:comp/env/jdbc/" + ConnectionClassHelper.getDatabaseName());
-            Connection connection = dataSource.getConnection();
-            return connection;
-        } catch (NamingException | SQLException ex) {
-            throw new RuntimeException(ex);
-        }
+    public Documento_labels_x_ndocs_Service(HttpServletRequest request) {
+        super(request);
     }
 
-    @Override
-    public void disposeConnection() throws Exception {
-        try {
-            if (initialContext != null) {
-                initialContext.close();
-            }
-        } catch (NamingException ex) {
-            Logger.getLogger(DataSourceConnectionImpl.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
 }

@@ -28,80 +28,52 @@ package net.daw.bean.specific.implementation;
 
 import com.google.gson.annotations.Expose;
 import net.daw.bean.generic.implementation.BeanGenImpl;
-import net.daw.bean.group.GroupBeanImpl;
 import net.daw.bean.publicinterface.BeanInterface;
 import net.daw.helper.annotations.MethodMetaInformation;
 import net.daw.helper.annotations.SelectSourceMetaInformation;
 import net.daw.helper.statics.MetaEnum;
 
-/**
- *
- * @author rafa
- */
-@SelectSourceMetaInformation(
-        SqlSelect = "select id_usuario, count(id) as numautores from documento group by id_usuario", //id y 1=1 obligatorios
+@SelectSourceMetaInformation( 
+        SqlSelect = "select etiquetas, count(id) as numetiquetas from documento where publicado=0 group by etiquetas",
         Description = "Documento"
 )
-public class DocumentosautorBean extends BeanGenImpl implements BeanInterface {
-
-    @Expose(serialize = false)
+public class Documento_labels_x_ndocs_Bean extends BeanGenImpl implements BeanInterface {
+    
+    @Expose
     @MethodMetaInformation(
-            UltraShortName = "Usuario",
-            ShortName = "Usuario",
-            Description = "Identificador de Usuario",
-            IsIdForeignKey = true,
-            ReferencesTable = "usuario",
-            Type = MetaEnum.FieldType.Integer
+            UltraShortName = "Etiq.",
+            ShortName = "Etiquetas",
+            Description = "Etiquetas del documento",
+            Type = MetaEnum.FieldType.String,
+            MinLength = 0,
+            MaxLength = 255,
+            DefaultValue = ""
     )
-    private Integer id_usuario = 0; //importante inicializar a 0 las claves ajenas
-
-    @Expose(deserialize = false)
-    @MethodMetaInformation(
-            UltraShortName = "Usuario",
-            ShortName = "Usuario",
-            Description = "Referencia al usuario propietario",
-            IsObjForeignKey = true,
-            ReferencesTable = "usuario",
-            MyIdName = "id_usuario"
-            //MyMetaName = "meta_usuario"
-    )
-    private GroupBeanImpl obj_usuario = null;
+    private String etiquetas = "";
 
     @Expose
     @MethodMetaInformation(
-            UltraShortName = "Ndocs.",
-            ShortName = "Nº Docs.",
-            Description = "Número de documentos",
+            UltraShortName = "Netiq.",
+            ShortName = "Nº Etiqs.",
+            Description = "Número de etiquetas",
             Type = MetaEnum.FieldType.Integer
     )
-    private Integer numautores = 0;
+    private Integer numetiquetas = 0;
 
-  
-
-    public Integer getId_usuario() {
-        return id_usuario;
+    public String getEtiquetas() {
+        return etiquetas;
     }
 
-    public void setId_usuario(Integer id_usuario) {
-        this.id_usuario = id_usuario;
+    public void setEtiquetas(String etiquetas) {
+        this.etiquetas = etiquetas;
     }
 
-    public GroupBeanImpl getObj_usuario() {
-        return obj_usuario;
+    public Integer getNumetiquetas() {
+        return numetiquetas;
     }
 
-    public void setObj_usuario(GroupBeanImpl obj_usuario) {
-        this.obj_usuario = obj_usuario;
+    public void setNumetiquetas(Integer numetiquetas) {
+        this.numetiquetas = numetiquetas;
     }
-
-    public Integer getNumautores() {
-        return numautores;
-    }
-
-    public void setNumautores(Integer numautores) {
-        this.numautores = numautores;
-    }
-
-
 
 }

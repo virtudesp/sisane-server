@@ -19,10 +19,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 <html lang="en">
     <head>
         <meta charset="utf-8">
+        <meta content="All" lang="en" name="robots" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="description" content="">
-        <meta name="author" content="">
+        <meta name="author" content="Rafael Aznar">
 
         <title>ausiàsBROTH</title>
 
@@ -69,13 +70,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
                     </a>
                 </div>
                 <div id="navbar" class="navbar-collapse collapse" >
-                    <ul class="nav navbar-nav" id="appMenu">
-                        
-                        
-                        
+                    <ul class="nav navbar-nav" id="appMenu">                                                                        
                     </ul>
-
-
                     <ul class="nav navbar-nav navbar-right">
                         <!-- <li class="active"><a href="./">Fixed top <span class="sr-only">(current)</span></a></li> -->
                         <li class="dropdown broth_show_when_logged_in">
@@ -238,10 +234,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
             }
 
             $(document).ready(function () {
-                //$('#broth-navigation').load("navigation.html");
-                //$('#loginFormBroth').load("loginform.html");
-                //urlJson = ns.util.getRequestsUrl();
-
                 
                 $('.broth_show_when_logged_in').hide();
                 $('.broth_show_when_logged_out').show();

@@ -30,8 +30,9 @@ return (
                             <ul class="dropdown-menu" role="menu">\n\
                             <li class="dropdown-header">Json</li>\n\
                                 <li><a href="http://localhost:8081/ausiasBroth2015/json?ob=documentosautor&op=getall"><i class="fa fa-fw fa-file-text"></i> Documentos autor json</a></li>\n\
-                                <li><a href="http://localhost:8081/ausiasBroth2015/json?ob=minidocumento&op=getall"><i class="fa fa-fw fa-file-text"></i> Documentos autor json</a></li>\n\
-                                <li><a href="http://localhost:8081/ausiasBroth2015/json?ob=minidocumento&op=getall&filter=numetiquetas&filteroperator=equals&filtervalue=4"><i class="fa fa-fw fa-file-text"></i> Documentos autor json</a></li>\n\
+                                <li><a href="http://localhost:8081/ausiasBroth2015/json?ob=documento_labels_x_ndocs_&op=getall"><i class="fa fa-fw fa-file-text"></i> Documentos autor json</a></li>\n\
+                                <li><a href="http://localhost:8081/ausiasBroth2015/json?ob=documento_labels_x_ndocs_&op=getall&filter=numetiquetas&filteroperator=equals&filtervalue=4"><i class="fa fa-fw fa-file-text"></i> Documentos autor json</a></li>\n\\n\
+                                <li><a href="http://localhost:8081/ausiasBroth2015/json?ob=documentosautor&op=getaggregateviewsome"><i class="fa fa-fw fa-file-text"></i> Documentos autor json getaggregateviewsome</a></li>\n\
                                 <li class="divider"></li>\n\
                                 <li class="dropdown-header">Simple modules</li>\n\
                                 <li><a href="#/documento/plist/page=1&rpp=10"><i class="fa fa-fw fa-file-text"></i> Documento paginated list</a></li>\n\
@@ -42,6 +43,7 @@ return (
                                 <li class="dropdown-header">Complex modules</li>\n\
                                 <li><a href="#/documento/abc"><i class="fa fa-fw fa-file-text"></i> Documento abc</a></li>\n\
                                 <li><a href="#/documento/documentosautor"><i class="fa fa-fw fa-file-text"></i> Documentos x autor list</a></li>\n\
+                                <li><a href="#/documento_labels_authors_x_ndocs_/plist"><i class="fa fa-fw fa-file-text"></i> Documentos labels_authors_x_ndocs_</a></li>\n\\n\
                             </ul>\n\
                         </li>'
         );

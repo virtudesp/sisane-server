@@ -1,29 +1,34 @@
 /*
- * Copyright (C) 2015 rafa
- *
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License
- * as published by the Free Software Foundation; either version 2
- * of the License, or (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+ * Copyright (c) 2015 by Rafael Angel Aznar Aparici (rafaaznar at gmail dot com)
+ * 
+ * openAUSIAS: The stunning micro-library that helps you to develop easily 
+ *             AJAX web applications by using Java and jQuery
+ * openAUSIAS is distributed under the MIT License (MIT)
+ * Sources at https://github.com/rafaelaznar/openAUSIAS
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ * 
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ * 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
  */
 package net.daw.bean.meta;
 
 import com.google.gson.annotations.Expose;
 import net.daw.helper.statics.MetaEnum;
 
-/**
- *
- * @author rafa
- */
 public class MetaBeanGenImpl {
 
     @Expose
@@ -32,20 +37,14 @@ public class MetaBeanGenImpl {
     private String UltraShortName = "";
     @Expose
     private String ShortName = "";
-
-    
     @Expose
     private String Description = "";
-
     @Expose
     private boolean IsId = false;
     @Expose
     private boolean IsIdForeignKey = false;
     @Expose
     private boolean IsObjForeignKey = false;
-    @Expose
-    private boolean IsMetaForeignKey = false;
-
     @Expose
     private String MyObjName = "";
     @Expose
@@ -54,12 +53,6 @@ public class MetaBeanGenImpl {
     private String MyIdName = "";
     @Expose
     private String ReferencesTable = "";
-    
-    
-    
-//    private String ForeignKeyDescription1 = "";
-//    private String ForeignKeyDescription2 = "";
-//    private String ForeignKeyDescription3 = "";
     @Expose
     private boolean IsForeignKeyDescriptor = false;
 
@@ -69,7 +62,6 @@ public class MetaBeanGenImpl {
     private int MaxDecimal = 2;
     private int MaxInteger = 10;
     private String DefaultValue = "";
-    private boolean IsPathToObject = false;
 
     public String getUltraShortName() {
         return UltraShortName;
@@ -118,8 +110,6 @@ public class MetaBeanGenImpl {
     public void setIsObjForeignKey(boolean IsObjForeignKey) {
         this.IsObjForeignKey = IsObjForeignKey;
     }
-
- 
 
     public String getReferencesTable() {
         return ReferencesTable;
@@ -177,28 +167,12 @@ public class MetaBeanGenImpl {
         this.DefaultValue = DefaultValue;
     }
 
-    public boolean isIsPathToObject() {
-        return IsPathToObject;
-    }
-
-    public void setIsPathToObject(boolean IsPathToObject) {
-        this.IsPathToObject = IsPathToObject;
-    }
-
     public String getName() {
         return Name;
     }
 
     public void setName(String Name) {
         this.Name = Name;
-    }
-
-    public boolean isIsMetaForeignKey() {
-        return IsMetaForeignKey;
-    }
-
-    public void setIsMetaForeignKey(boolean IsMetaForeignKey) {
-        this.IsMetaForeignKey = IsMetaForeignKey;
     }
 
     public void setIsForeignKeyDescriptor(boolean ForeignKeyDescriptor) {

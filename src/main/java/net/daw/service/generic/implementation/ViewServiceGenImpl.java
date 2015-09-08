@@ -1,19 +1,28 @@
 /*
- * Copyright (C) July 2014 Rafael Aznar
- *
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License
- * as published by the Free Software Foundation; either version 2
- * of the License, or (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+ * Copyright (c) 2015 by Rafael Angel Aznar Aparici (rafaaznar at gmail dot com)
+ * 
+ * openAUSIAS: The stunning micro-library that helps you to develop easily 
+ *             AJAX web applications by using Java and jQuery
+ * openAUSIAS is distributed under the MIT License (MIT)
+ * Sources at https://github.com/rafaelaznar/openAUSIAS
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ * 
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ * 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
  */
 package net.daw.service.generic.implementation;
 
@@ -61,11 +70,8 @@ public abstract class ViewServiceGenImpl extends MetaServiceGenImpl implements V
                 BeanGenImpl oGenericBean = (BeanGenImpl) Class.forName("net.daw.bean.specific.implementation." + ParameterCook.prepareCamelCaseObject(oRequest) + "Bean").newInstance();
                 Constructor c = Class.forName("net.daw.dao.specific.implementation." + ParameterCook.prepareCamelCaseObject(oRequest) + "Dao").getConstructor(Connection.class);
                 TableDaoGenImpl oGenericDao = (TableDaoGenImpl) c.newInstance(oConnection);
-
                 Method metodo_setId = oGenericBean.getClass().getMethod("setId", Integer.class);
                 metodo_setId.invoke(oGenericBean, id); //oGenericBean.setId(id);
-
-                //oGenericBean.setId(id);
                 oGenericBean = (BeanGenImpl) (BeanInterface) oGenericDao.get(oGenericBean, AppConfigurationHelper.getJsonDepth());
                 GsonBuilder gsonBuilder = new GsonBuilder();
                 gsonBuilder.setDateFormat("dd/MM/yyyy");
@@ -87,10 +93,8 @@ public abstract class ViewServiceGenImpl extends MetaServiceGenImpl implements V
         }
     }
 
-    //@Override
+    @Override
     public String getall() throws Exception {
-//        int intRegsPerPag = ParameterCook.prepareRpp(oRequest);;
-//        int intPage = ParameterCook.preparePage(oRequest);
         ArrayList<FilterBeanHelper> alFilter = ParameterCook.prepareFilter(oRequest);
         HashMap<String, String> hmOrder = ParameterCook.prepareOrder(oRequest);
         String data = null;
@@ -210,6 +214,23 @@ public abstract class ViewServiceGenImpl extends MetaServiceGenImpl implements V
     }
 
     @Override
+    public String getaggregateviewone() throws Exception {
+        String data = null;
+        try {
+            String meta = this.getmetainformation();
+            String one = this.get();
+            data = "{"
+                    + "\"meta\":" + meta
+                    + ",\"bean\":" + one
+                    + "}";
+            return data;
+        } catch (Exception ex) {
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getAggregateViewOne ERROR: " + ex.getMessage()));
+        }
+        return data;
+    }
+
+    @Override
     public String getaggregateviewsome() throws Exception {
         String data = null;
         try {
@@ -230,23 +251,6 @@ public abstract class ViewServiceGenImpl extends MetaServiceGenImpl implements V
     }
 
     @Override
-    public String getaggregateviewone() throws Exception {
-        String data = null;
-        try {
-            String meta = this.getmetainformation();
-            String one = this.get();
-            data = "{"
-                    + "\"meta\":" + meta
-                    + ",\"bean\":" + one
-                    + "}";
-            return data;
-        } catch (Exception ex) {
-            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getAggregateViewOne ERROR: " + ex.getMessage()));
-        }
-        return data;
-    }
-
-    //@Override
     public String getaggregateviewall() throws Exception {
         String data = null;
         try {

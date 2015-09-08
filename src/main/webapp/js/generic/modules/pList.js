@@ -21,7 +21,7 @@ pListModule.prototype.refresh = function () {
     ausiasFLOW.renderPage();
     return false;
 };
-listModule.prototype.loadThButtons = function (meta, strClase, UrlFromParamsWithoutOrder) {
+pListModule.prototype.loadThButtons = function (meta, strClase, UrlFromParamsWithoutOrder) {
     tabla = '<a class="orderAsc" id="' + meta.Name + '" href="#/' + strClase + '/plist/' + UrlFromParamsWithoutOrder + '&order=' + meta.Name + '&ordervalue=asc"><i class="glyphicon glyphicon-arrow-up"></i></a>';
     tabla += '<a class="orderDesc" id="' + meta.Name + '" href="#/' + strClase + '/plist/' + UrlFromParamsWithoutOrder + '&order=' + meta.Name + '&ordervalue=desc"><i class="glyphicon glyphicon-arrow-down"></i></a>';
     return tabla;
@@ -104,44 +104,7 @@ listModule.prototype.loadThButtons = function (meta, strClase, UrlFromParamsWith
 ////    });
 ////    return tabla;
 //}
-pListModule.prototype.getBodyPageTableNoFunc = function (meta, page, print_tdValue_function, tdButtons_function, trPopup_function) {
-    var thisObject = this;
-    var tabla = "";
-    $.each(page, function (index, rowValues) {
-        tabla += '<tr>';
 
-        var numField = 0;
-        //var id;
-        var strClaveAjena;
-        $.each(meta, function (index, metaValue) {
-            //if ("id" == metaValue.Name) {
-            //    id = rowValues[metaValue.Name];
-            //}
-            numField++;
-            if (numField <= thisObject.objParams.vf) {
-                //tabla += '<td>' + thisObject.printValue(value, valor, true) + '</td>';
-                if (metaValue.IsObjForeignKey) {
-                    tabla += '<td data-html="true" data-content="' + trPopup_function(rowValues[metaValue.MyMetaName], rowValues[metaValue.Name], metaValue.ShortName) + '" data-container="body" data-toggle="popover" data-placement="right">' + thisObject.printForeignValues(rowValues[metaValue.MyMetaName], rowValues[metaValue.Name], metaValue.ReferencesTable) + '</td>';
-
-                } else {
-                    if ("id" == metaValue.Name) {
-                        tabla += '<td data-html="true" data-content="' + trPopup_function(meta, rowValues, thisObject.strClase) + '" data-container="body" data-toggle="popover" data-placement="right" title="">' + ns.strings.printValue(metaValue, rowValues[metaValue.Name], true) + '</td>';
-                    } else {
-                        if (!metaValue.IsMetaForeignKey) {
-                            tabla += '<td>' + ns.strings.printValue(metaValue, rowValues[metaValue.Name], true) + '</td>'; // printValue(valoresRegistro, nombreDeCampo, false) 
-                        }
-                    }
-                }
-                //tabla += '<td>' + print_tdValue_function(meta, rowValues[metaValue.Name]) + '</td>';
-            }
-        });
-        tabla += '<td>';
-        tabla += tdButtons_function(rowValues, thisObject.strClase);
-        tabla += '</td>';
-        tabla += '</tr>';
-    });
-    return tabla;
-}
 pListModule.prototype.getRegistersInfo = function (regs) {
     return "<p>Mostrando una consulta de " + regs + " registros.</p>";
 };
@@ -172,41 +135,6 @@ pListModule.prototype.getFilterInfo = function (objParams) {
 //
 //    return botonera;
 //};
-pListModule.prototype.getHeaderPageTableNoFunc = function (meta, clase, UrlFromParamsWithoutOrder, acciones) {
-    thisObject = this;
-    acciones = typeof (acciones) != 'undefined' ? acciones : true;
-    var numField = 0; //visible field counter
-    var tabla = "";
-    if (meta !== null) {
-        tabla += '<tr>';
-        $.each(meta, function (index, metaValue) {
-            numField++; //field counter
-            if (numField <= thisObject.objParams.vf) {
-                if (metaValue) {
-                    if (metaValue.IsId) {
-                        tabla += '<th class="col-md-1">' + metaValue.UltraShortName;
-                        tabla += '<br />';
-                        metaValue
-                        tabla += thisObject.thButtons(metaValue, thisObject.strClase, UrlFromParamsWithoutOrder);
-                        tabla += '</th>';
-                    } else {
-                        if (!metaValue.IsMetaForeignKey) {
-                            tabla += '<th>' + metaValue.UltraShortName;
-                            tabla += '<br />';
-                            tabla += thisObject.thButtons(metaValue, thisObject.strClase, UrlFromParamsWithoutOrder);
-                            tabla += '</th>';
-                        }
-                    }
-                }
-
-            }
-        });
-        if (acciones)
-            tabla += '<th class="col-md-2">Acciones </th>';
-        tabla += '</tr>';
-    }
-    return tabla;
-}
 
 //pListModule.prototype.loadThButtons = function (meta, strClase, UrlFromParamsWithoutOrder) {
 //    tabla = '<a class="orderAsc" id="' + meta.Name + '" href="#/' + strClase + '/plist/' + UrlFromParamsWithoutOrder + '&order=' + meta.Name + '&ordervalue=asc"><i class="glyphicon glyphicon-arrow-up"></i></a>';

@@ -34,17 +34,34 @@ import net.daw.helper.annotations.MethodMetaInformation;
 import net.daw.helper.annotations.SelectSourceMetaInformation;
 import net.daw.helper.statics.MetaEnum;
 
-/**
- *
- * @author rafa
- */
-@SelectSourceMetaInformation(
-        SqlSelect = "select id_usuario, count(id) as numautores from documento group by id_usuario", //id y 1=1 obligatorios
+@SelectSourceMetaInformation( 
+        SqlSelect = "select etiquetas, id_usuario, count(id) as numetiquetas from documento where publicado=0 group by etiquetas, id_usuario",
         Description = "Documento"
 )
-public class DocumentosautorBean extends BeanGenImpl implements BeanInterface {
+public class Documento_labels_authors_x_ndocs_Bean extends BeanGenImpl implements BeanInterface {
+    
+    @Expose
+    @MethodMetaInformation(
+            UltraShortName = "Etiq.",
+            ShortName = "Etiquetas",
+            Description = "Etiquetas del documento",
+            Type = MetaEnum.FieldType.String,
+            MinLength = 0,
+            MaxLength = 255,
+            DefaultValue = ""
+    )
+    private String etiquetas = "";
 
-    @Expose(serialize = false)
+    @Expose
+    @MethodMetaInformation(
+            UltraShortName = "Netiq.",
+            ShortName = "Nº Etiqs.",
+            Description = "Número de etiquetas",
+            Type = MetaEnum.FieldType.Integer
+    )
+    private Integer numetiquetas = 0;
+
+     @Expose(serialize = false)
     @MethodMetaInformation(
             UltraShortName = "Usuario",
             ShortName = "Usuario",
@@ -53,7 +70,7 @@ public class DocumentosautorBean extends BeanGenImpl implements BeanInterface {
             ReferencesTable = "usuario",
             Type = MetaEnum.FieldType.Integer
     )
-    private Integer id_usuario = 0; //importante inicializar a 0 las claves ajenas
+    private Integer id_usuario = 0; //important zero-initialize foreign keys
 
     @Expose(deserialize = false)
     @MethodMetaInformation(
@@ -63,20 +80,24 @@ public class DocumentosautorBean extends BeanGenImpl implements BeanInterface {
             IsObjForeignKey = true,
             ReferencesTable = "usuario",
             MyIdName = "id_usuario"
-            //MyMetaName = "meta_usuario"
     )
     private GroupBeanImpl obj_usuario = null;
+    
+    public String getEtiquetas() {
+        return etiquetas;
+    }
 
-    @Expose
-    @MethodMetaInformation(
-            UltraShortName = "Ndocs.",
-            ShortName = "Nº Docs.",
-            Description = "Número de documentos",
-            Type = MetaEnum.FieldType.Integer
-    )
-    private Integer numautores = 0;
+    public void setEtiquetas(String etiquetas) {
+        this.etiquetas = etiquetas;
+    }
 
-  
+    public Integer getNumetiquetas() {
+        return numetiquetas;
+    }
+
+    public void setNumetiquetas(Integer numetiquetas) {
+        this.numetiquetas = numetiquetas;
+    }
 
     public Integer getId_usuario() {
         return id_usuario;
@@ -93,15 +114,5 @@ public class DocumentosautorBean extends BeanGenImpl implements BeanInterface {
     public void setObj_usuario(GroupBeanImpl obj_usuario) {
         this.obj_usuario = obj_usuario;
     }
-
-    public Integer getNumautores() {
-        return numautores;
-    }
-
-    public void setNumautores(Integer numautores) {
-        this.numautores = numautores;
-    }
-
-
 
 }

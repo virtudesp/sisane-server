@@ -13,27 +13,6 @@ viewModule.prototype.getViewTemplate_func = function (strClass, jsonDataViewModu
             + arr_meta_data_table.join('')
             + '</table>';
 };
-viewModule.prototype.getViewTemplate_nofunc = function (strClass, jsonMeta) {
-    var thisObject = this;
-    var viewTable = "";
-    viewTable = "<table class=\"table table table-bordered table-condensed\">";
-    $.each(this.jsonMeta, function (index, value) {
-        if (!value.IsMetaForeignKey) {
-            viewTable += '<tr><td><strong>' + value.Description + '</strong></td>';
-            if (value.IsObjForeignKey) {
-                viewTable += '<td>' + thisObject.printForeignValues(thisObject.jsonDataViewModule[value.MyMetaName], thisObject.jsonDataViewModule[value.Name], value.ReferencesTable) + '</td>';
-            } else {
-                viewTable += '<td>' + ns.strings.printValue(value, thisObject.jsonDataViewModule[value.Name], true) + '</td>'; // printValue(valoresRegistro, nombreDeCampo, false) 
-            }
-        }
-    });
-    viewTable += '</table>';
-    viewTable += ('<p>');
-    viewTable += ('<a class="btn btn-primary" role="button" href="#/' + this.strClase + '/edit/' + this.objParams['id'] + '">Editar</a>   ');
-    viewTable += ('<a class="btn btn-danger" role="button" href="#/' + this.strClase + '/remove/' + this.objParams['id'] + '">Borrar</a>');
-    viewTable += ('</p>');
-    return viewTable;
-}
 viewModule.prototype.initialize = function () {
 }
 viewModule.prototype.getData = function () {

@@ -24,43 +24,16 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package net.daw.connection.implementation;
+package net.daw.dao.specific.implementation;
 
+import net.daw.dao.generic.implementation.TableDaoGenImpl;
 import java.sql.Connection;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
-import javax.sql.DataSource;
-import net.daw.connection.publicinterface.ConnectionInterface;
-import net.daw.helper.statics.ConnectionClassHelper;
+import net.daw.bean.specific.implementation.Documento_labels_authors_x_ndocs_Bean;
 
-public class DataSourceConnectionImpl implements ConnectionInterface {
+public class Documento_labels_authors_x_ndocs_Dao extends TableDaoGenImpl<Documento_labels_authors_x_ndocs_Bean> {
 
-    InitialContext initialContext;
-
-    @Override
-    public Connection newConnection() throws Exception {
-
-        try {
-            initialContext = new InitialContext();
-            DataSource dataSource = (DataSource) initialContext.lookup("java:comp/env/jdbc/" + ConnectionClassHelper.getDatabaseName());
-            Connection connection = dataSource.getConnection();
-            return connection;
-        } catch (NamingException | SQLException ex) {
-            throw new RuntimeException(ex);
-        }
+    public Documento_labels_authors_x_ndocs_Dao(Connection pooledConnection) throws Exception {
+        super(pooledConnection);
     }
 
-    @Override
-    public void disposeConnection() throws Exception {
-        try {
-            if (initialContext != null) {
-                initialContext.close();
-            }
-        } catch (NamingException ex) {
-            Logger.getLogger(DataSourceConnectionImpl.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
 }

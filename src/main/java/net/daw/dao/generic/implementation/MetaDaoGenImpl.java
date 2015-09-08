@@ -1,19 +1,28 @@
 /*
- * Copyright (C) July 2014 Rafael Aznar
- *
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License
- * as published by the Free Software Foundation; either version 2
- * of the License, or (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+ * Copyright (c) 2015 by Rafael Angel Aznar Aparici (rafaaznar at gmail dot com)
+ * 
+ * openAUSIAS: The stunning micro-library that helps you to develop easily 
+ *             AJAX web applications by using Java and jQuery
+ * openAUSIAS is distributed under the MIT License (MIT)
+ * Sources at https://github.com/rafaelaznar/openAUSIAS
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ * 
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ * 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
  */
 package net.daw.dao.generic.implementation;
 
@@ -49,8 +58,8 @@ public abstract class MetaDaoGenImpl<BEAN_CLASS> implements MetaDaoInterface<BEA
             if (classBEAN.isAnnotationPresent(SelectSourceMetaInformation.class)) {
                 SelectSourceMetaInformation annotationSelectSourceMetaInformation = classBEAN.getAnnotation(SelectSourceMetaInformation.class);
                 //SelectSourceMetaInformation annotationSelectSourceMetaInformation = (SelectSourceMetaInformation) annotation;
-                strTableOrigin = null;
-                strSqlSelectDataOrigin = "select * from ( " + annotationSelectSourceMetaInformation.SqlSelect() + " ) as origin01 where 1=1";
+                strTableOrigin = null; //never used for news, updates or deletions
+                strSqlSelectDataOrigin = "select * from ( " + annotationSelectSourceMetaInformation.SqlSelect() + " ) as origin01 where 1=1 ";
             }
             if (strSqlSelectDataOrigin.equals(null)) {
                 ExceptionBooster.boost(new Exception(this.getClass().getName() + ":constructor ERROR: " + classBEAN.getName() + " Beans must be annotated by SelectSourceMetaInformation or TableSourceMetaInformation "));
@@ -68,7 +77,6 @@ public abstract class MetaDaoGenImpl<BEAN_CLASS> implements MetaDaoInterface<BEA
         try {
             Class<BEAN_CLASS> classBEAN = (Class<BEAN_CLASS>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
             alVector = new ArrayList<>();
-            //getsuperclass para obtener el id
             Class<? super BEAN_CLASS> superClassBean = classBEAN.getSuperclass();
             for (Field field : superClassBean.getDeclaredFields()) {
                 Annotation[] fieldAnnotations = field.getDeclaredAnnotations();
@@ -83,32 +91,22 @@ public abstract class MetaDaoGenImpl<BEAN_CLASS> implements MetaDaoInterface<BEA
                             oMeta.setIsId(fieldAnnotation.IsId());
                             //oMeta.setIsIdForeignKey(fieldAnnotation.IsIdForeignKey());
                             oMeta.setIsObjForeignKey(fieldAnnotation.IsObjForeignKey());
-                            oMeta.setIsPathToObject(fieldAnnotation.IsPathToObject());
-                            oMeta.setIsMetaForeignKey(fieldAnnotation.IsMetaForeignKey());
-                            
-                            
+                            //oMeta.setIsPathToObject(fieldAnnotation.IsPathToObject());
+                            //oMeta.setIsMetaForeignKey(fieldAnnotation.IsMetaForeignKey());
+
                             oMeta.setMaxDecimal(fieldAnnotation.MaxDecimal());
                             oMeta.setMaxInteger(fieldAnnotation.MaxInteger());
                             oMeta.setMaxLength(fieldAnnotation.MaxLength());
                             oMeta.setMinLength(fieldAnnotation.MinLength());
-                            
-                            
-                            
+
                             oMeta.setMyIdName(fieldAnnotation.MyIdName());
-                            oMeta.setMyObjName(fieldAnnotation.MyObjName());
-                            oMeta.setMyMetaName(fieldAnnotation.MyMetaName());
-                            
+                            //oMeta.setMyObjName(fieldAnnotation.MyObjName());
+                            //oMeta.setMyMetaName(fieldAnnotation.MyMetaName());
+
                             oMeta.setReferencesTable(fieldAnnotation.ReferencesTable());
 
-//                            oMeta.setForeignKeyDescription1(fieldAnnotation.ForeignKeyDescription1());
-//                            oMeta.setForeignKeyDescription2(fieldAnnotation.ForeignKeyDescription2());
-//                            oMeta.setForeignKeyDescription3(fieldAnnotation.ForeignKeyDescription3());
-
-                            
                             oMeta.setIsForeignKeyDescriptor(fieldAnnotation.IsForeignKeyDescriptor());
-                            
-                            
-                            
+
                             oMeta.setShortName(fieldAnnotation.ShortName());
                             oMeta.setType(fieldAnnotation.Type());
                             oMeta.setUltraShortName(fieldAnnotation.UltraShortName());
@@ -117,7 +115,7 @@ public abstract class MetaDaoGenImpl<BEAN_CLASS> implements MetaDaoInterface<BEA
                     }
                 }
             }
-            //now fill the other fileds metainformation
+            //now fill the other fields metainformation
             for (Field field : classBEAN.getDeclaredFields()) {
                 Annotation[] fieldAnnotations = field.getDeclaredAnnotations();
                 for (Integer i = 0; i < fieldAnnotations.length; i++) {
@@ -131,32 +129,22 @@ public abstract class MetaDaoGenImpl<BEAN_CLASS> implements MetaDaoInterface<BEA
                             oMeta.setIsId(fieldAnnotation.IsId());
                             //oMeta.setIsIdForeignKey(fieldAnnotation.IsIdForeignKey());
                             oMeta.setIsObjForeignKey(fieldAnnotation.IsObjForeignKey());
-                            oMeta.setIsPathToObject(fieldAnnotation.IsPathToObject());
-                            oMeta.setIsMetaForeignKey(fieldAnnotation.IsMetaForeignKey());
-                            
-                            
-                            
+                            //oMeta.setIsPathToObject(fieldAnnotation.IsPathToObject());
+                            //oMeta.setIsMetaForeignKey(fieldAnnotation.IsMetaForeignKey());
+
                             oMeta.setMaxDecimal(fieldAnnotation.MaxDecimal());
                             oMeta.setMaxInteger(fieldAnnotation.MaxInteger());
                             oMeta.setMaxLength(fieldAnnotation.MaxLength());
                             oMeta.setMinLength(fieldAnnotation.MinLength());
-                            
+
                             oMeta.setMyIdName(fieldAnnotation.MyIdName());
-                            oMeta.setMyObjName(fieldAnnotation.MyObjName());
-                            oMeta.setMyMetaName(fieldAnnotation.MyMetaName());
-                            
+                            //oMeta.setMyObjName(fieldAnnotation.MyObjName());
+                            //oMeta.setMyMetaName(fieldAnnotation.MyMetaName());
+
                             oMeta.setReferencesTable(fieldAnnotation.ReferencesTable());
 
-//                            oMeta.setForeignKeyDescription1(fieldAnnotation.ForeignKeyDescription1());
-//                            oMeta.setForeignKeyDescription2(fieldAnnotation.ForeignKeyDescription2());
-//                            oMeta.setForeignKeyDescription3(fieldAnnotation.ForeignKeyDescription3());
-
-                            
-                            
                             oMeta.setIsForeignKeyDescriptor(fieldAnnotation.IsForeignKeyDescriptor());
-                            
-                            
-                            
+
                             oMeta.setShortName(fieldAnnotation.ShortName());
                             oMeta.setType(fieldAnnotation.Type());
                             oMeta.setUltraShortName(fieldAnnotation.UltraShortName());
@@ -172,26 +160,26 @@ public abstract class MetaDaoGenImpl<BEAN_CLASS> implements MetaDaoInterface<BEA
         return alVector;
     }
 
-    @Override
-    public ArrayList<String> getColumnsNames() throws Exception {
-        ArrayList<String> alColumns = null;
-        try {
-            alColumns = oMysql.getColumnsName(strTableOrigin);
-        } catch (Exception ex) {
-            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getColumnsNames ERROR: " + ex.getMessage()));
-        }
-        return alColumns;
-    }
-
-    @Override
-    public ArrayList<String> getPrettyColumnsNames() throws Exception {
-        ArrayList<String> alColumns = null;
-        try {
-            alColumns = oMysql.getPrettyColumns(strTableOrigin);
-        } catch (Exception ex) {
-            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPrettyColumnsNames ERROR: " + ex.getMessage()));
-        }
-        return alColumns;
-    }
+//    @Override
+//    public ArrayList<String> getColumnsNames() throws Exception {
+//        ArrayList<String> alColumns = null;
+//        try {
+//            alColumns = oMysql.getColumnsName(strTableOrigin);
+//        } catch (Exception ex) {
+//            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getColumnsNames ERROR: " + ex.getMessage()));
+//        }
+//        return alColumns;
+//    }
+//
+//    @Override
+//    public ArrayList<String> getPrettyColumnsNames() throws Exception {
+//        ArrayList<String> alColumns = null;
+//        try {
+//            alColumns = oMysql.getPrettyColumns(strTableOrigin);
+//        } catch (Exception ex) {
+//            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPrettyColumnsNames ERROR: " + ex.getMessage()));
+//        }
+//        return alColumns;
+//    }
 
 }

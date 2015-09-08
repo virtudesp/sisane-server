@@ -1,19 +1,28 @@
 /*
- * Copyright (C) July 2014 Rafael Aznar
- *
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License
- * as published by the Free Software Foundation; either version 2
- * of the License, or (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+ * Copyright (c) 2015 by Rafael Angel Aznar Aparici (rafaaznar at gmail dot com)
+ * 
+ * openAUSIAS: The stunning micro-library that helps you to develop easily 
+ *             AJAX web applications by using Java and jQuery
+ * openAUSIAS is distributed under the MIT License (MIT)
+ * Sources at https://github.com/rafaelaznar/openAUSIAS
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ * 
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ * 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
  */
 package net.daw.dao.generic.implementation;
 
@@ -30,17 +39,14 @@ import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Locale;
 import net.daw.bean.generic.implementation.BeanGenImpl;
 import net.daw.bean.group.GroupBeanImpl;
-import net.daw.bean.meta.MetaBeanGenImpl;
 import net.daw.helper.annotations.MethodMetaInformation;
-import net.daw.helper.annotations.SelectSourceMetaInformation;
-import net.daw.helper.annotations.TableSourceMetaInformation;
 import net.daw.helper.statics.AppConfigurationHelper;
 import net.daw.helper.statics.ExceptionBooster;
 import net.daw.helper.statics.FilterBeanHelper;
@@ -59,7 +65,7 @@ public class ViewDaoGenImpl<BEAN_CLASS> extends MetaDaoGenImpl<BEAN_CLASS> imple
         strSqlSelectDataOrigin += SqlBuilder.buildSqlWhere(alFilter);
         int pages = 0;
         try {
-            pages = oMysql.getNewPages(strSqlSelectDataOrigin, intRegsPerPag);
+            pages = oMysql.getPages(strSqlSelectDataOrigin, intRegsPerPag);
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPages ERROR: " + ex.getMessage()));
         }
@@ -71,29 +77,54 @@ public class ViewDaoGenImpl<BEAN_CLASS> extends MetaDaoGenImpl<BEAN_CLASS> imple
         strSqlSelectDataOrigin += SqlBuilder.buildSqlWhere(alFilter);
         int pages = 0;
         try {
-            pages = oMysql.getNewCount(strSqlSelectDataOrigin);
+            pages = oMysql.getCount(strSqlSelectDataOrigin);
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getCount ERROR: " + ex.getMessage()));
         }
         return pages;
     }
 
+//    @Override
+//    public ArrayList<BEAN_CLASS> getPage(int intRegsPerPag, int intPage, ArrayList<FilterBeanHelper> alFilter, HashMap<String, String> hmOrder) throws Exception {
+//        strSqlSelectDataOrigin += SqlBuilder.buildSqlWhere(alFilter);
+//        strSqlSelectDataOrigin += SqlBuilder.buildSqlOrder(hmOrder);
+//        Class<BEAN_CLASS> tipo = (Class<BEAN_CLASS>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
+//        Method metodo_setId = tipo.getMethod("setId", Integer.class);
+//        ArrayList<Integer> arrId;
+//        ArrayList<BEAN_CLASS> arrCliente = new ArrayList<>();
+//        try { //pte!!
+//            arrId = oMysql.getPage(strSqlSelectDataOrigin, intRegsPerPag, intPage);
+//            Iterator<Integer> iterador = arrId.listIterator();
+//            while (iterador.hasNext()) {
+//                Object oBean = Class.forName(tipo.getName()).newInstance();
+//                metodo_setId.invoke(oBean, iterador.next());
+//                arrCliente.add(this.get((BEAN_CLASS) oBean, AppConfigurationHelper.getJsonDepth()));
+//            }
+//        } catch (Exception ex) {
+//            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPage ERROR: " + ex.getMessage()));
+//        }
+//        return arrCliente;
+//
+//    }
     @Override
     public ArrayList<BEAN_CLASS> getPage(int intRegsPerPag, int intPage, ArrayList<FilterBeanHelper> alFilter, HashMap<String, String> hmOrder) throws Exception {
         strSqlSelectDataOrigin += SqlBuilder.buildSqlWhere(alFilter);
         strSqlSelectDataOrigin += SqlBuilder.buildSqlOrder(hmOrder);
         Class<BEAN_CLASS> tipo = (Class<BEAN_CLASS>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
-        Method metodo_setId = tipo.getMethod("setId", Integer.class);
-        ArrayList<Integer> arrId;
+        //Method metodo_setId = tipo.getMethod("setId", Integer.class);
+//        ArrayList<Integer> arrId;
         ArrayList<BEAN_CLASS> arrCliente = new ArrayList<>();
-        try {
-            arrId = oMysql.getNewPage(strSqlSelectDataOrigin, intRegsPerPag, intPage);
-            Iterator<Integer> iterador = arrId.listIterator();
-            while (iterador.hasNext()) {
-                Object oBean = Class.forName(tipo.getName()).newInstance();
-                metodo_setId.invoke(oBean, iterador.next());
-                arrCliente.add(this.get((BEAN_CLASS) oBean, AppConfigurationHelper.getJsonDepth()));
-            }
+        ResultSet oResultSet = null;
+        try { //pte!!
+            oResultSet = oMysql.getPage(strSqlSelectDataOrigin, intRegsPerPag, intPage);
+            arrCliente = fillBeanArray(oResultSet, tipo);
+
+//            Iterator<Integer> iterador = arrId.listIterator();
+//            while (iterador.hasNext()) {
+//                Object oBean = Class.forName(tipo.getName()).newInstance();
+//                metodo_setId.invoke(oBean, iterador.next());
+//                arrCliente.add(this.get((BEAN_CLASS) oBean, AppConfigurationHelper.getJsonDepth()));
+//            }
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPage ERROR: " + ex.getMessage()));
         }
@@ -101,87 +132,85 @@ public class ViewDaoGenImpl<BEAN_CLASS> extends MetaDaoGenImpl<BEAN_CLASS> imple
 
     }
 
-    // @Override
-    public ArrayList<BEAN_CLASS> getAll(ArrayList<FilterBeanHelper> alFilter, HashMap<String, String> hmOrder) throws Exception {
-
+    private ArrayList<BEAN_CLASS> fillBeanArray(ResultSet oResultSet, Class<BEAN_CLASS> tipo) throws Exception {
         ArrayList<BEAN_CLASS> vector = new ArrayList<>();
         try {
+            while (oResultSet.next()) {
+                BEAN_CLASS oBean = (BEAN_CLASS) Class.forName(tipo.getName()).newInstance();
+                for (Method method : tipo.getDeclaredMethods()) {
+                    if (isSetter(method)) {
+                        //System.out.println("* ---> " + method.getName());
+                        Field field = getFieldName(method);
+                        Annotation[] methodAnnotations = field.getDeclaredAnnotations();
+                        for (Integer i = 0; i < methodAnnotations.length; i++) {
+                            if (methodAnnotations[i].annotationType().equals(MethodMetaInformation.class)) {
+                                MethodMetaInformation methodAnnotation = (MethodMetaInformation) methodAnnotations[i];
+                                if (methodAnnotation.IsObjForeignKey() == false) {
 
-            Class<BEAN_CLASS> classBEAN = (Class<BEAN_CLASS>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
-            if (classBEAN.isAnnotationPresent(TableSourceMetaInformation.class)) {
-                strSqlSelectDataOrigin += SqlBuilder.buildSqlWhere(alFilter);
-                strSqlSelectDataOrigin += SqlBuilder.buildSqlOrder(hmOrder);
-                Class<BEAN_CLASS> tipo = (Class<BEAN_CLASS>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
-                Method metodo_setId = tipo.getMethod("setId", Integer.class);
-                ArrayList<Integer> arrId;
-                arrId = oMysql.getAll(strSqlSelectDataOrigin);
-                Iterator<Integer> iterador = arrId.listIterator();
-                while (iterador.hasNext()) {
-                    Object oBean = Class.forName(tipo.getName()).newInstance();
-                    metodo_setId.invoke(oBean, iterador.next());
-                    vector.add(this.get((BEAN_CLASS) oBean, AppConfigurationHelper.getJsonDepth()));
-                }
-            }
-            if (classBEAN.isAnnotationPresent(SelectSourceMetaInformation.class)) {
-                //PTE!!!!!!!!!!!!!!!!!!!!!!!!!!!
-                ResultSet oResultSet = null;
-                Class<BEAN_CLASS> tipo = (Class<BEAN_CLASS>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
-                String strSqlWhere = SqlBuilder.buildSqlWhere(alFilter);
-
-                //add after 1=1 strSqlWhere
-                String strSQL = strSqlSelectDataOrigin.substring(0, strSqlSelectDataOrigin.indexOf("1=1") + 3) + " " + strSqlWhere + " " + strSqlSelectDataOrigin.substring(strSqlSelectDataOrigin.indexOf("1=1") + 3, strSqlSelectDataOrigin.length());
-
-                oResultSet = oMysql.getAllSql(strSQL);
-                while (oResultSet.next()) {
-                    Object oBean = Class.forName(tipo.getName()).newInstance();
-
-                    for (Method method : tipo.getDeclaredMethods()) {
-
-                        if (isSetter(method)) {
-//                    System.out.println("* ---> " + method.getName());
-                            Field field = getFieldName(method);
-                            Annotation[] methodAnnotations = field.getDeclaredAnnotations();
-                            for (Integer i = 0; i < methodAnnotations.length; i++) {
-                                if (methodAnnotations[i].annotationType().equals(MethodMetaInformation.class)) {
-                                    MethodMetaInformation methodAnnotation = (MethodMetaInformation) methodAnnotations[i];
-                                    if (methodAnnotation.IsObjForeignKey() == false) {
-                                        if ((methodAnnotation.IsMetaForeignKey() == false) && (methodAnnotation.IsObjForeignKey() == false)) {
-                                            if (methodAnnotation.Type() == MetaEnum.FieldType.Integer) {
-                                                method.invoke(oBean, oResultSet.getInt(method.getName().substring(3).toLowerCase(Locale.ENGLISH)));
-                                            }
-                                            if (methodAnnotation.Type() == MetaEnum.FieldType.String) {
-                                                method.invoke(oBean, oResultSet.getString(method.getName().substring(3).toLowerCase(Locale.ENGLISH)));
-                                            }
-                                            if (methodAnnotation.Type() == MetaEnum.FieldType.Date) {
-                                                method.invoke(oBean, oResultSet.getDate(method.getName().substring(3).toLowerCase(Locale.ENGLISH)));
-                                            }
-                                            if (methodAnnotation.Type() == MetaEnum.FieldType.Boolean) {
-                                                method.invoke(oBean, oResultSet.getBoolean(method.getName().substring(3).toLowerCase(Locale.ENGLISH)));
-                                            }
-
-                                        }
-                                    } else {
-
+                                    //oBean = parseValue(oBean, method, methodAnnotation.Type().toString(), (String) oResultSet.getInt(method.getName().substring(3).toLowerCase(Locale.ENGLISH)));
+                                    if (methodAnnotation.Type() == MetaEnum.FieldType.Integer) {
+                                        method.invoke(oBean, oResultSet.getInt(method.getName().substring(3).toLowerCase(Locale.ENGLISH)));
                                     }
+                                    if (methodAnnotation.Type() == MetaEnum.FieldType.String) {
+                                        method.invoke(oBean, oResultSet.getString(method.getName().substring(3).toLowerCase(Locale.ENGLISH)));
+                                    }
+                                    if (methodAnnotation.Type() == MetaEnum.FieldType.Date) {
+                                        method.invoke(oBean, oResultSet.getDate(method.getName().substring(3).toLowerCase(Locale.ENGLISH)));
+                                    }
+                                    if (methodAnnotation.Type() == MetaEnum.FieldType.Boolean) {
+                                        method.invoke(oBean, oResultSet.getBoolean(method.getName().substring(3).toLowerCase(Locale.ENGLISH)));
+                                    }
+                                } else {
                                 }
                             }
-
                         }
-
                     }
-                    oBean = this.fillForeign((BEAN_CLASS) oBean, tipo);
-                    vector.add((BEAN_CLASS) oBean);
                 }
+                oBean = this.fillForeign((BEAN_CLASS) oBean, tipo, AppConfigurationHelper.getJsonDepth());
+                vector.add((BEAN_CLASS) oBean);
             }
+        } catch (SQLException | ClassNotFoundException ex) {
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":fillBeanArray ERROR: " + ex.getMessage()));
+        }
+        return vector;
+    }
+
+    @Override
+    public ArrayList<BEAN_CLASS> getAll(ArrayList<FilterBeanHelper> alFilter, HashMap<String, String> hmOrder) throws Exception {
+        ArrayList<BEAN_CLASS> vector = null;
+        try {
+            Class<BEAN_CLASS> classBEAN = (Class<BEAN_CLASS>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
+//            if (classBEAN.isAnnotationPresent(TableSourceMetaInformation.class)) {
+//                strSqlSelectDataOrigin += SqlBuilder.buildSqlWhere(alFilter);
+//                strSqlSelectDataOrigin += SqlBuilder.buildSqlOrder(hmOrder);
+//                Class<BEAN_CLASS> tipo = (Class<BEAN_CLASS>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
+//                Method metodo_setId = tipo.getMethod("setId", Integer.class);
+//                ArrayList<Integer> arrId;
+//                arrId = oMysql.getAllId(strSqlSelectDataOrigin);
+//                Iterator<Integer> iterador = arrId.listIterator();
+//                while (iterador.hasNext()) {
+//                    Object oBean = Class.forName(tipo.getName()).newInstance();
+//                    metodo_setId.invoke(oBean, iterador.next());
+//                    vector.add(this.get((BEAN_CLASS) oBean, AppConfigurationHelper.getJsonDepth()));
+//                }
+//            }
+//            if (classBEAN.isAnnotationPresent(SelectSourceMetaInformation.class)) {
+            ResultSet oResultSet = null;
+            Class<BEAN_CLASS> tipo = (Class<BEAN_CLASS>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
+            String strSqlWhere = SqlBuilder.buildSqlWhere(alFilter);
+            String strSQL = strSqlSelectDataOrigin.substring(0, strSqlSelectDataOrigin.indexOf("1=1") + 3) + " " + strSqlWhere + " " + strSqlSelectDataOrigin.substring(strSqlSelectDataOrigin.indexOf("1=1") + 3, strSqlSelectDataOrigin.length());
+            strSQL += SqlBuilder.buildSqlOrder(hmOrder);
+            oResultSet = oMysql.getAllSql(strSQL);
+            vector = fillBeanArray(oResultSet, tipo);
+            //}
 
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPage ERROR: " + ex.getMessage()));
         }
         return vector;
-
     }
 
-    private void parseValue(BEAN_CLASS oBean, Method method, String strTipoParamMetodoSet, String strValor) throws Exception {
+    private BEAN_CLASS parseValue(BEAN_CLASS oBean, Method method, String strTipoParamMetodoSet, String strValor) throws Exception {
         try {
             switch (strTipoParamMetodoSet) {
                 case "java.lang.Double":
@@ -205,21 +234,14 @@ public class ViewDaoGenImpl<BEAN_CLASS> extends MetaDaoGenImpl<BEAN_CLASS> imple
                     method.invoke(oBean, strValor);
                     break;
             }
+
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":parseValue ERROR: " + ex.getMessage()));
         }
+        return oBean;
     }
 
-    /**
-     * For every field in the class obtain project annotations and treat only
-     * foreign object fields to be filled.
-     *
-     * @param oBean
-     * @param tipo
-     * @return
-     * @throws Exception
-     */
-    private BEAN_CLASS fillForeign(BEAN_CLASS oBean, Class<BEAN_CLASS> tipo) throws Exception {
+    private BEAN_CLASS fillForeign(BEAN_CLASS oBean, Class<BEAN_CLASS> tipo, int expand) throws Exception {
         try {
             for (Field field : tipo.getDeclaredFields()) {
                 Annotation[] fieldAnnotations = field.getDeclaredAnnotations();
@@ -245,7 +267,7 @@ public class ViewDaoGenImpl<BEAN_CLASS> extends MetaDaoGenImpl<BEAN_CLASS> imple
                             Method metodo_setId_ajena = oAjenaBean.getClass().getMethod("setId", Integer.class);
                             metodo_setId_ajena.invoke(oAjenaBean, intIdAjena); //oAjenaBean.setId(intIdAjena);
 
-                            oAjenaBean = (BeanGenImpl) oAjenaDao.get(oAjenaBean, AppConfigurationHelper.getJsonDepth());
+                            oAjenaBean = (BeanGenImpl) oAjenaDao.get(oAjenaBean, expand - 1);
                             //Method method_setObj_Propia = tipo.getDeclaredMethod("setObj_" + strMethod, oAjenaBean.getClass());
                             //Method method_setObj_Propia = tipo.getDeclaredMethod("set" +  methodAnnotation.MyObjName(), oAjenaBean.getClass());
 
@@ -282,117 +304,26 @@ public class ViewDaoGenImpl<BEAN_CLASS> extends MetaDaoGenImpl<BEAN_CLASS> imple
         return oBean;
     }
 
-    private BEAN_CLASS getMetaForeign(BEAN_CLASS oBean, Class<BEAN_CLASS> tipo) throws Exception {
-        try {
-            for (Field field : tipo.getDeclaredFields()) {
-                Annotation[] fieldAnnotations = field.getDeclaredAnnotations();
-                for (Integer i = 0; i < fieldAnnotations.length; i++) {
-                    if (fieldAnnotations[i].annotationType().equals(MethodMetaInformation.class)) {
-                        MethodMetaInformation fieldAnnotation = (MethodMetaInformation) fieldAnnotations[i];
-                        if (fieldAnnotation.IsMetaForeignKey() == true) {
-                            ArrayList<MetaBeanGenImpl> oMetaBeanList = new ArrayList<>();
-
-                            String strTabla = fieldAnnotation.ReferencesTable().substring(0, 1).toUpperCase(Locale.ENGLISH) + fieldAnnotation.ReferencesTable().substring(1);
-
-                            Constructor DaoConstructor;
-                            DaoConstructor = Class.forName("net.daw.dao.specific.implementation." + strTabla + "Dao").getConstructor(Connection.class);
-                            MetaDaoGenImpl oAjenaMetaDao = (MetaDaoGenImpl) DaoConstructor.newInstance(oConnection);
-
-                            oMetaBeanList = oAjenaMetaDao.getmetainformation();
-
-                            Method method_setObj_Propia = getWriteMethod(field);
-                            method_setObj_Propia.invoke(oBean, oMetaBeanList);
-                        }
-                    }
-                }
-            }
-        } catch (Exception ex) {
-            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":fillForeign ERROR: " + ex.getMessage()));
-        }
-        return oBean;
-    }
-
-    private BEAN_CLASS fillMetaForeign(BEAN_CLASS oBean, Class<BEAN_CLASS> tipo) throws Exception {
-        try {
-            for (Field field : tipo.getDeclaredFields()) {
-                Annotation[] fieldAnnotations = field.getDeclaredAnnotations();
-                for (Integer i = 0; i < fieldAnnotations.length; i++) {
-                    if (fieldAnnotations[i].annotationType().equals(MethodMetaInformation.class)) {
-                        MethodMetaInformation fieldAnnotation = (MethodMetaInformation) fieldAnnotations[i];
-                        if (fieldAnnotation.IsMetaForeignKey() == true) {
-                            ArrayList<MetaBeanGenImpl> oMetaBeanList = new ArrayList<>();
-
-                            String strTabla = fieldAnnotation.ReferencesTable().substring(0, 1).toUpperCase(Locale.ENGLISH) + fieldAnnotation.ReferencesTable().substring(1);
-
-                            Constructor DaoConstructor;
-                            DaoConstructor = Class.forName("net.daw.dao.specific.implementation." + strTabla + "Dao").getConstructor(Connection.class);
-                            MetaDaoGenImpl oAjenaMetaDao = (MetaDaoGenImpl) DaoConstructor.newInstance(oConnection);
-
-                            oMetaBeanList = oAjenaMetaDao.getmetainformation();
-
-                            Method method_setObj_Propia = getWriteMethod(field);
-                            method_setObj_Propia.invoke(oBean, oMetaBeanList);
-                        }
-                    }
-                }
-            }
-        } catch (Exception ex) {
-            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":fillForeign ERROR: " + ex.getMessage()));
-        }
-        return oBean;
-    }
-
-//    private BEAN_CLASS fillForeign(BEAN_CLASS oBean, Class<BEAN_CLASS> tipo) throws Exception {
+//    private BEAN_CLASS getMetaForeign(BEAN_CLASS oBean, Class<BEAN_CLASS> tipo) throws Exception {
 //        try {
-//            for (Method method : tipo.getMethods()) {
-//                if (method.getName().length() >= 5) { //los campos como minimo han de tener dos caracteres + el get o el set = 5 caracteres
-//                    if (!method.getName().substring(3).equalsIgnoreCase("id")) {
-//                        if (method.getName().substring(0, 3).equalsIgnoreCase("set")) {
-//                            final Class<?> classTipoParamMetodoSet = method.getParameterTypes()[0];
-//                            if (method.getName().length() >= 5) {
-//                                if (method.getName().substring(3).length() >= 4) {
-//                                    if (method.getName().substring(3).toLowerCase(Locale.ENGLISH).substring(0, 4).equalsIgnoreCase("obj_")) {
-//                                        //prueba: method.getName().substring(method.getName().indexOf("_")+1,method.getName().lastIndexOf("_")))
-//                                        //ojo: en los pojos, los id_ deben preceder a los obj_ del mismo objeto siempre!
-//                                        //only two _ allowed in foreign keys
-//                                        String strAjena, strTabla = null;
+//            for (Field field : tipo.getDeclaredFields()) {
+//                Annotation[] fieldAnnotations = field.getDeclaredAnnotations();
+//                for (Integer i = 0; i < fieldAnnotations.length; i++) {
+//                    if (fieldAnnotations[i].annotationType().equals(MethodMetaInformation.class)) {
+//                        MethodMetaInformation fieldAnnotation = (MethodMetaInformation) fieldAnnotations[i];
+//                        if (fieldAnnotation.IsMetaForeignKey() == true) {
+//                            ArrayList<MetaBeanGenImpl> oMetaBeanList = new ArrayList<>();
 //
-//                                        if (!(method.getName().indexOf("_") == (method.getName().lastIndexOf("_")))) {
-//                                            strTabla = method.getName().substring(method.getName().indexOf("_") + 1, method.getName().lastIndexOf("_")).toLowerCase(Locale.ENGLISH);
-//                                            strAjena = method.getName().substring(3).toLowerCase(Locale.ENGLISH).substring(4);
-//                                        } else {
-//                                            strAjena = method.getName().substring(3).toLowerCase(Locale.ENGLISH).substring(4);
-//                                            strTabla = strAjena;
-//                                        }
-//                                        Method metodo_getId_Ajena = tipo.getMethod("getId_" + strAjena);
-//                                        strTabla = strTabla.substring(0, 1).toUpperCase(Locale.ENGLISH) + strTabla.substring(1);
-//                                //GenericDaoImplementation oAjenaDao = (GenericDaoImplementation) Class.forName("net.daw.dao." + strAjena + "Dao").newInstance();
+//                            String strTabla = fieldAnnotation.ReferencesTable().substring(0, 1).toUpperCase(Locale.ENGLISH) + fieldAnnotation.ReferencesTable().substring(1);
 //
-//                                        //rafa: aqui intentamos crear el DAO de la clave ajena generico-específico y si no espcífico
-//                                        //pte porque da error
-//                                        Constructor c;
+//                            Constructor DaoConstructor;
+//                            DaoConstructor = Class.forName("net.daw.dao.specific.implementation." + strTabla + "Dao").getConstructor(Connection.class);
+//                            MetaDaoGenImpl oAjenaMetaDao = (MetaDaoGenImpl) DaoConstructor.newInstance(oConnection);
 //
-//                                        try {
-//                                            c = Class.forName("net.daw.dao.specific.implementation." + strTabla + "Dao").getConstructor(Connection.class
-//                                            );
-//                                        } catch (ClassNotFoundException | NoSuchMethodException | SecurityException ex) {
-//                                            //aqui da el error--> pte d eestudiar
-//                                            c = Class.forName("net.daw.dao.specific.implementation." + strTabla + "Dao").getConstructor(Connection.class
-//                                            );
-//                                        }
-//                                        //------------------------------------
+//                            oMetaBeanList = oAjenaMetaDao.getmetainformation();
 //
-//                                        TableDaoGenImpl oAjenaDao = (TableDaoGenImpl) c.newInstance(oConnection);
-//
-//                                        BeanGenImpl oAjenaBean = (BeanGenImpl) Class.forName("net.daw.bean.specific.implementation." + strTabla + "Bean").newInstance();
-//                                        int intIdAjena = (Integer) metodo_getId_Ajena.invoke(oBean);
-//                                        oAjenaBean.setId(intIdAjena);
-//                                        oAjenaBean = (BeanGenImpl) oAjenaDao.get(oAjenaBean, AppConfigurationHelper.getJsonDepth());
-//                                        //String strDescription = oAjenaDao.getDescription((Integer) metodo_getId_Ajena.invoke(oBean));
-//                                        method.invoke(oBean, oAjenaBean);
-//                                    }
-//                                }
-//                            }
+//                            Method method_setObj_Propia = getWriteMethod(field);
+//                            method_setObj_Propia.invoke(oBean, oMetaBeanList);
 //                        }
 //                    }
 //                }
@@ -402,42 +333,32 @@ public class ViewDaoGenImpl<BEAN_CLASS> extends MetaDaoGenImpl<BEAN_CLASS> imple
 //        }
 //        return oBean;
 //    }
-//    private BEAN_CLASS fill(BEAN_CLASS oBean, Class<BEAN_CLASS> tipo, Method metodo_getId) throws Exception {
+//    private BEAN_CLASS fillMetaForeign(BEAN_CLASS oBean, Class<BEAN_CLASS> tipo) throws Exception {
 //        try {
-//            for (Method method : tipo.getDeclaredMethods()) {
+//            for (Field field : tipo.getDeclaredFields()) {
+//                Annotation[] fieldAnnotations = field.getDeclaredAnnotations();
+//                for (Integer i = 0; i < fieldAnnotations.length; i++) {
+//                    if (fieldAnnotations[i].annotationType().equals(MethodMetaInformation.class)) {
+//                        MethodMetaInformation fieldAnnotation = (MethodMetaInformation) fieldAnnotations[i];
+//                        if (fieldAnnotation.IsMetaForeignKey() == true) {
+//                            ArrayList<MetaBeanGenImpl> oMetaBeanList = new ArrayList<>();
 //
-//                if (!method.getName().substring(3).equalsIgnoreCase("id")) {
-//                    if (method.getName().substring(0, 3).equalsIgnoreCase("set")) {
-//                        final Class<?> classTipoParamMetodoSet = method.getParameterTypes()[0];
-//                        if (method.getName().length() >= 5) {
-//                            if (method.getName().substring(3).length() >= 4) {
-//                                if (!method.getName().substring(3).toLowerCase(Locale.ENGLISH).substring(0, 4).equalsIgnoreCase("obj_")) {
+//                            String strTabla = fieldAnnotation.ReferencesTable().substring(0, 1).toUpperCase(Locale.ENGLISH) + fieldAnnotation.ReferencesTable().substring(1);
 //
-//                                    //String kk = getFieldName(method);
-//                                    String strValor = oMysql.getNewOne(strSqlSelectDataOrigin, method.getName().substring(3).toLowerCase(Locale.ENGLISH), (Integer) metodo_getId.invoke(oBean));
-//                                    if (strValor != null) {
-//                                        parseValue(oBean, method, classTipoParamMetodoSet.getName(), strValor);
-//                                    }
-//                                }
-//                            } else {
-//                                String strValor = oMysql.getNewOne(strSqlSelectDataOrigin, method.getName().substring(3).toLowerCase(Locale.ENGLISH), (Integer) metodo_getId.invoke(oBean));
-//                                if (strValor != null) {
-//                                    parseValue(oBean, method, classTipoParamMetodoSet.getName(), strValor);
-//                                }
-//                            }
-//                        } else {
-//                            String strValor = oMysql.getNewOne(strSqlSelectDataOrigin, method.getName().substring(3).toLowerCase(Locale.ENGLISH), (Integer) metodo_getId.invoke(oBean));
-//                            if (strValor != null) {
-//                                parseValue(oBean, method, classTipoParamMetodoSet.getName(), strValor);
-//                            }
+//                            Constructor DaoConstructor;
+//                            DaoConstructor = Class.forName("net.daw.dao.specific.implementation." + strTabla + "Dao").getConstructor(Connection.class);
+//                            MetaDaoGenImpl oAjenaMetaDao = (MetaDaoGenImpl) DaoConstructor.newInstance(oConnection);
+//
+//                            oMetaBeanList = oAjenaMetaDao.getmetainformation();
+//
+//                            Method method_setObj_Propia = getWriteMethod(field);
+//                            method_setObj_Propia.invoke(oBean, oMetaBeanList);
 //                        }
-//
 //                    }
 //                }
 //            }
-//
 //        } catch (Exception ex) {
-//            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":fill ERROR: " + ex.getMessage()));
+//            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":fillForeign ERROR: " + ex.getMessage()));
 //        }
 //        return oBean;
 //    }
@@ -451,15 +372,15 @@ public class ViewDaoGenImpl<BEAN_CLASS> extends MetaDaoGenImpl<BEAN_CLASS> imple
                     for (Integer i = 0; i < methodAnnotations.length; i++) {
                         if (methodAnnotations[i].annotationType().equals(MethodMetaInformation.class)) {
                             MethodMetaInformation methodAnnotation = (MethodMetaInformation) methodAnnotations[i];
-                            if ((methodAnnotation.IsMetaForeignKey() == false) && (methodAnnotation.IsObjForeignKey() == false) && (methodAnnotation.IsId() == false)) {
+                            if ((methodAnnotation.IsObjForeignKey() == false) && (methodAnnotation.IsId() == false)) {
 
                                 //------!!!!!!!
-                                String strValor = oMysql.getNewOne(strSqlSelectDataOrigin, field.getName().toLowerCase(Locale.ENGLISH), (Integer) metodo_getId.invoke(oBean));
+                                String strValor = oMysql.getOne(strSqlSelectDataOrigin, field.getName().toLowerCase(Locale.ENGLISH), (Integer) metodo_getId.invoke(oBean));
 //                                System.out.println("            ---> metodo: " + methodAnnotation.ShortName());
 //                                System.out.println("            ---> valor: " + strValor);
                                 if (strValor != null) {
                                     final Class<?> classTipoParamMetodoSet = method.getParameterTypes()[0];
-                                    parseValue(oBean, method, classTipoParamMetodoSet.getName(), strValor);
+                                    oBean = parseValue(oBean, method, classTipoParamMetodoSet.getName(), strValor);
                                 }
                             }
                         }
@@ -507,7 +428,6 @@ public class ViewDaoGenImpl<BEAN_CLASS> extends MetaDaoGenImpl<BEAN_CLASS> imple
                         if (field.getName().equals(propDesc.getName())) {
                             return field;
                         }
-
                     }
                 }
             }
@@ -563,13 +483,12 @@ public class ViewDaoGenImpl<BEAN_CLASS> extends MetaDaoGenImpl<BEAN_CLASS> imple
             Method metodo_setId = tipo.getMethod("setId", Integer.class);
             if ((Integer) metodo_getId.invoke(oBean) > 0) {
                 try {
-                    if (!oMysql.existsNewOne(strSqlSelectDataOrigin, (Integer) metodo_getId.invoke(oBean))) {
+                    if (!oMysql.existsOne(strSqlSelectDataOrigin, (Integer) metodo_getId.invoke(oBean))) {
                         metodo_setId.invoke(oBean, 0);
                     } else {
                         oBean = fill(oBean, tipo, metodo_getId);
-                        expand--;
                         if (expand > 0) {
-                            oBean = fillForeign(oBean, tipo);
+                            oBean = fillForeign(oBean, tipo, expand);
                             //oBean = fillMetaForeign(oBean, tipo);
                         }
                     }

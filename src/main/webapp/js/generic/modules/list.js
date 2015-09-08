@@ -47,7 +47,7 @@ listModule.prototype.loadPopups = function (meta, rowValues, strClase) {
 
     botonera += "<p><b>(" + rowValues.id + ') ' + strClase + '</b></p>';
     $.each(meta, function (name, metavalue) {
-        if (!metavalue.IsMetaForeignKey && !metavalue.IsObjForeignKey) {
+        if (!metavalue.IsObjForeignKey) {
 
             botonera += '<i>' + metavalue.ShortName + '</i>: ' + ns.strings.printPlainValue(metavalue, rowValues[metavalue.Name], true) + "<br/>"
         }

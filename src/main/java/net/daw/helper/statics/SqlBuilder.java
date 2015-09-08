@@ -1,19 +1,28 @@
 /*
- * Copyright (C) 2015 rafa
- *
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License
- * as published by the Free Software Foundation; either version 2
- * of the License, or (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+ * Copyright (c) 2015 by Rafael Angel Aznar Aparici (rafaaznar at gmail dot com)
+ * 
+ * openAUSIAS: The stunning micro-library that helps you to develop easily 
+ *             AJAX web applications by using Java and jQuery
+ * openAUSIAS is distributed under the MIT License (MIT)
+ * Sources at https://github.com/rafaelaznar/openAUSIAS
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ * 
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ * 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
  */
 package net.daw.helper.statics;
 
@@ -22,10 +31,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-/**
- *
- * @author rafa
- */
 public class SqlBuilder {
 
     public static String buildSqlWhere(ArrayList<FilterBeanHelper> alFilter) {
@@ -34,30 +39,34 @@ public class SqlBuilder {
             Iterator iterator = alFilter.iterator();
             while (iterator.hasNext()) {
                 FilterBeanHelper oFilterBean = (FilterBeanHelper) iterator.next();
+                String strFilterFieldName = oFilterBean.getFilter();
+                if ("obj_".equals(strFilterFieldName.substring(0, 4))) {
+                    strFilterFieldName = "id_" + strFilterFieldName.substring(4);
+                }
                 switch (oFilterBean.getFilterOperator()) {
                     case "like":
-                        strSQLFilter += " AND " + oFilterBean.getFilter() + " LIKE '%" + oFilterBean.getFilterValue() + "%'";
+                        strSQLFilter += " AND " + strFilterFieldName + " LIKE '%" + oFilterBean.getFilterValue() + "%'";
                         break;
                     case "notlike":
-                        strSQLFilter += " AND " + oFilterBean.getFilter() + " NOT LIKE '%" + oFilterBean.getFilterValue() + "%'";
+                        strSQLFilter += " AND " + strFilterFieldName + " NOT LIKE '%" + oFilterBean.getFilterValue() + "%'";
                         break;
                     case "equals":
-                        strSQLFilter += " AND " + oFilterBean.getFilter() + " = '" + oFilterBean.getFilterValue() + "'";
+                        strSQLFilter += " AND " + strFilterFieldName + " = '" + oFilterBean.getFilterValue() + "'";
                         break;
                     case "notequalto":
-                        strSQLFilter += " AND " + oFilterBean.getFilter() + " <> '" + oFilterBean.getFilterValue() + "'";
+                        strSQLFilter += " AND " + strFilterFieldName + " <> '" + oFilterBean.getFilterValue() + "'";
                         break;
                     case "less":
-                        strSQLFilter += " AND " + oFilterBean.getFilter() + " < " + oFilterBean.getFilterValue() + "";
+                        strSQLFilter += " AND " + strFilterFieldName + " < " + oFilterBean.getFilterValue() + "";
                         break;
                     case "lessorequal":
-                        strSQLFilter += " AND " + oFilterBean.getFilter() + " <= " + oFilterBean.getFilterValue() + "";
+                        strSQLFilter += " AND " + strFilterFieldName + " <= " + oFilterBean.getFilterValue() + "";
                         break;
                     case "greater":
-                        strSQLFilter += " AND " + oFilterBean.getFilter() + " > " + oFilterBean.getFilterValue() + "";
+                        strSQLFilter += " AND " + strFilterFieldName + " > " + oFilterBean.getFilterValue() + "";
                         break;
                     case "greaterorequal":
-                        strSQLFilter += " AND " + oFilterBean.getFilter() + " >= " + oFilterBean.getFilterValue() + "";
+                        strSQLFilter += " AND " + strFilterFieldName + " >= " + oFilterBean.getFilterValue() + "";
                         break;
                 }
             }
@@ -69,8 +78,13 @@ public class SqlBuilder {
         String strSQLOrder = "";
         if (hmOrder != null) {
             strSQLOrder += " ORDER BY";
+            String strOrderFieldName;
             for (Map.Entry oPar : hmOrder.entrySet()) {
-                strSQLOrder += " " + oPar.getKey() + " " + oPar.getValue() + ",";
+                strOrderFieldName=(String) oPar.getKey();
+                if ("obj_".equals(strOrderFieldName.substring(0, 4))) {
+                    strOrderFieldName = "id_" + strOrderFieldName.substring(4);
+                }
+                strSQLOrder += " " + strOrderFieldName + " " + oPar.getValue() + ",";
             }
             strSQLOrder = strSQLOrder.substring(0, strSQLOrder.length() - 1);
         }
