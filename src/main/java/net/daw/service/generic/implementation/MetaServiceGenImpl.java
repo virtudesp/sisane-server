@@ -35,6 +35,7 @@ import javax.servlet.http.HttpServletRequest;
 import net.daw.bean.meta.MetaBeanGenImpl;
 import net.daw.dao.generic.implementation.TableDaoGenImpl;
 import net.daw.helper.statics.ExceptionBooster;
+import net.daw.helper.statics.JsonMessage;
 import net.daw.helper.statics.ParameterCook;
 import net.daw.service.publicinterface.MetaServiceInterface;
 
@@ -53,16 +54,11 @@ public abstract class MetaServiceGenImpl implements MetaServiceInterface {
         try {
             Constructor c = Class.forName("net.daw.dao.specific.implementation." + ParameterCook.prepareCamelCaseObject(oRequest) + "Dao").getConstructor(Connection.class);
             TableDaoGenImpl oDao = (TableDaoGenImpl) c.newInstance((Object) null);
-            alMeta = oDao.getmetainformation();
-            GsonBuilder gsonBuilder = new GsonBuilder();
-            Gson gson = gsonBuilder.create();
-            data = gson.toJson(alMeta);
+            data = JsonMessage.getJson("200", new GsonBuilder().create().toJson(oDao.getmetainformation()));
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getmetainformation ERROR: " + ex.getMessage()));
-        } finally {
         }
         return data;
-
     }
 
 }

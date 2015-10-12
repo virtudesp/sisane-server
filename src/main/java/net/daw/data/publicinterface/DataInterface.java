@@ -27,8 +27,6 @@
 package net.daw.data.publicinterface;
 
 import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
 
 public interface DataInterface {
 
@@ -38,17 +36,11 @@ public interface DataInterface {
 
     public String getOne(String strSqlSelectDataOrigin, String strCampo, int id) throws Exception;
 
-    public int setNull(int intId, String strTabla, String strCampo) throws Exception;
-
     public int insertOne(String strTabla) throws Exception;
 
     public int updateOne(int intId, String strTabla, String strCampo, String strValor) throws Exception;
 
     public int removeOne(int intId, String strTabla) throws Exception;
-
-    public void removeSomeId(String strTabla, ArrayList<Integer> Ids) throws SQLException;
-
-    public void removeSomeCondition(String strTabla, String campo, String valor) throws Exception;
 
     public ResultSet getPage(String strSqlSelectDataOrigin, int intRegsPerPage, int intPagina) throws Exception;
 

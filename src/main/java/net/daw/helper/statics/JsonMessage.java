@@ -39,4 +39,7 @@ public class JsonMessage {
         Gson gson = new Gson();
         return gson.toJson(data);
     }
+    public static String getJson(String strStatus, String strMessage) {
+        return "{\"status\":200,\"message\":" + strMessage + "}";
+    }
 }

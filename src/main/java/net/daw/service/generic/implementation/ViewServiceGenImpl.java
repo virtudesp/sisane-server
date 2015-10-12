@@ -76,7 +76,7 @@ public abstract class ViewServiceGenImpl extends MetaServiceGenImpl implements V
                 GsonBuilder gsonBuilder = new GsonBuilder();
                 gsonBuilder.setDateFormat("dd/MM/yyyy");
                 Gson gson = gsonBuilder.excludeFieldsWithoutExposeAnnotation().create();
-                data = gson.toJson(oGenericBean);
+                data = JsonMessage.getJson("200", gson.toJson(oGenericBean));
             } catch (Exception ex) {
                 ExceptionBooster.boost(new Exception(this.getClass().getName() + ":get ERROR: " + ex.getMessage()));
             } finally {
@@ -110,8 +110,7 @@ public abstract class ViewServiceGenImpl extends MetaServiceGenImpl implements V
             GsonBuilder gsonBuilder = new GsonBuilder();
             gsonBuilder.setDateFormat("dd/MM/yyyy");
             Gson gson = gsonBuilder.excludeFieldsWithoutExposeAnnotation().create();
-            data = gson.toJson(loGenericBean);
-            data = "{\"list\":" + data + "}";
+            data = JsonMessage.getJson("200", gson.toJson(loGenericBean));
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getAll ERROR: " + ex.getMessage()));
         } finally {
@@ -144,8 +143,7 @@ public abstract class ViewServiceGenImpl extends MetaServiceGenImpl implements V
             GsonBuilder gsonBuilder = new GsonBuilder();
             gsonBuilder.setDateFormat("dd/MM/yyyy");
             Gson gson = gsonBuilder.excludeFieldsWithoutExposeAnnotation().create();
-            data = gson.toJson(loGenericBean);
-            data = "{\"list\":" + data + "}";
+            data = JsonMessage.getJson("200", gson.toJson(loGenericBean));
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPage ERROR: " + ex.getMessage()));
         } finally {
@@ -171,8 +169,7 @@ public abstract class ViewServiceGenImpl extends MetaServiceGenImpl implements V
             oConnection = oDataConnectionSource.newConnection();
             Constructor c = Class.forName("net.daw.dao.specific.implementation." + ParameterCook.prepareCamelCaseObject(oRequest) + "Dao").getConstructor(Connection.class);
             TableDaoGenImpl oGenericDao = (TableDaoGenImpl) c.newInstance(oConnection);
-            int pages = oGenericDao.getPages(intRegsPerPag, alFilter);
-            data = "{\"data\":\"" + Integer.toString(pages) + "\"}";
+            data = JsonMessage.getJson("200", Integer.toString(oGenericDao.getPages(intRegsPerPag, alFilter)));
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPages ERROR: " + ex.getMessage()));
         } finally {
@@ -197,9 +194,7 @@ public abstract class ViewServiceGenImpl extends MetaServiceGenImpl implements V
             oConnection = oDataConnectionSource.newConnection();
             Constructor c = Class.forName("net.daw.dao.specific.implementation." + ParameterCook.prepareCamelCaseObject(oRequest) + "Dao").getConstructor(Connection.class);
             TableDaoGenImpl oGenericDao = (TableDaoGenImpl) c.newInstance(oConnection);
-            int registers = oGenericDao.getCount(alFilter);
-            data = "{\"data\":\"" + Integer.toString(registers) + "\"}";
-            return data;
+            data = JsonMessage.getJson("200", Integer.toString(oGenericDao.getCount(alFilter)));
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getCount ERROR: " + ex.getMessage()));
         } finally {
@@ -223,6 +218,7 @@ public abstract class ViewServiceGenImpl extends MetaServiceGenImpl implements V
                     + "\"meta\":" + meta
                     + ",\"bean\":" + one
                     + "}";
+            data = JsonMessage.getJson("200", data);
             return data;
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getAggregateViewOne ERROR: " + ex.getMessage()));
@@ -244,6 +240,7 @@ public abstract class ViewServiceGenImpl extends MetaServiceGenImpl implements V
                     + ",\"pages\":" + pages
                     + ",\"registers\":" + registers
                     + "}";
+            data = JsonMessage.getJson("200", data);
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getAggregateViewSome ERROR: " + ex.getMessage()));
         }
@@ -262,8 +259,9 @@ public abstract class ViewServiceGenImpl extends MetaServiceGenImpl implements V
                     + ",\"page\":" + all
                     + ",\"registers\":" + registers
                     + "}";
+            data = JsonMessage.getJson("200", data);
         } catch (Exception ex) {
-            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getAggregateViewSome ERROR: " + ex.getMessage()));
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getAggregateViewAll ERROR: " + ex.getMessage()));
         }
         return data;
     }

@@ -29,9 +29,7 @@ package net.daw.helper.statics;
 public class ExceptionBooster {
 
     public static void boost(Exception ex) {
-        ExceptionBooster.<RuntimeException>throwAsUnchecked(ex);
-
-        throw new AssertionError("Esta línea  nunca se ejecutará pero Java no lo sabe");
+        ExceptionBooster.<RuntimeException>throwAsUnchecked(ex);        
     }
 
     private static <T extends Exception> void throwAsUnchecked(Exception toThrow) throws T {

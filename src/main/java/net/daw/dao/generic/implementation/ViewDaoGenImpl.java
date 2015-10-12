@@ -146,7 +146,6 @@ public class ViewDaoGenImpl<BEAN_CLASS> extends MetaDaoGenImpl<BEAN_CLASS> imple
                             if (methodAnnotations[i].annotationType().equals(MethodMetaInformation.class)) {
                                 MethodMetaInformation methodAnnotation = (MethodMetaInformation) methodAnnotations[i];
                                 if (methodAnnotation.IsObjForeignKey() == false) {
-
                                     //oBean = parseValue(oBean, method, methodAnnotation.Type().toString(), (String) oResultSet.getInt(method.getName().substring(3).toLowerCase(Locale.ENGLISH)));
                                     if (methodAnnotation.Type() == MetaEnum.FieldType.Integer) {
                                         method.invoke(oBean, oResultSet.getInt(method.getName().substring(3).toLowerCase(Locale.ENGLISH)));

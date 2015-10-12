@@ -1,28 +1,48 @@
+/*
+ * Copyright (c) 2015 by Rafael Angel Aznar Aparici (rafaaznar at gmail dot com)
+ * 
+ * openAUSIAS: The stunning micro-library that helps you to develop easily 
+ *             AJAX web applications by using Java and jQuery
+ * openAUSIAS is distributed under the MIT License (MIT)
+ * Sources at https://github.com/rafaelaznar/openAUSIAS
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ * 
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ * 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
 var newModule = function () {
     var parametersObject;
     var jsonData;
     var strClass;
 }
 newModule.prototype = Object.create(baseModule.prototype);
+function setForeign(prop, objParams) {
+    promise.getOne(prop, objParams[prop]).done(function (jsonDataViewModuleReceived) {
+        $('#obj_' + prop + '_desc').html(html.printObject2(prop, jsonDataViewModuleReceived.message));
+    })
+}
 newModule.prototype.loadFormValues = function (objParams) {
-
     if (objParams) { //soporte claves ajenas pte revision
-        var selector;
-        selector = objParams["systemfilter"];
-        if (selector) {
-            if (selector.split("_").length - 1 >= 2) {
-                selector = selector.replace('id_', 'obj_');
-                selector2 = selector.substring(0, selector.lastIndexOf('_'))
-                selector3 = selector2.replace('obj_', '');
-            } else {
-                selector = selector.replace('id_', 'obj_');
-                selector2 = selector;
-                selector3 = selector2.replace('obj_', '')
+        for (var prop in objParams) {
+            if (objParams.hasOwnProperty(prop)) {
+                $('#obj_' + prop).val(objParams[prop]).attr("disabled", true);
+                $('#obj_' + prop + "_button").attr("disabled", true).hide();
+                setForeign(prop, objParams);
             }
-            $('#' + selector + "_id").val(objParams["systemfiltervalue"]).attr("disabled", true);
-            $('#' + selector + "_button").attr("disabled", true).hide();
-            var oModelo = "o" + selector3.charAt(0).toUpperCase() + selector3.slice(1) + "Model";
-            $('#' + selector + '_desc').text(decodeURIComponent(window[oModelo].getMeAsAForeignKey(objParams["systemfiltervalue"])));
         }
     }
 }
@@ -33,16 +53,16 @@ newModule.prototype.doEventsLoading = function () {
         //var oControl = oUsuarioControl;  //para probar dejar documento
         //vista('usuario').cargaModalBuscarClaveAjena('#modal01', "documento");
 
-        $("#documentoForm").append(ns.html.modal.getEmptyModal());
-        broth.loadForm('#modal01', ns.html.form.getFormHeader('Elección de usuario'), "", ns.html.form.getFormFooter(), true);
-        $('#documentoForm').append(ns.html.modal.getEmptyModal());
+        $("#documentoForm").append(modal.getEmptyModal());
+        modal.loadModal('#modal01', modal.getModalHeader('Elección de usuario'), "", modal.getModalFooter(), true);
+        $('#documentoForm').append(modal.getEmptyModal());
         ausiasFLOW.pListModule_paramsObject = [];
         ausiasFLOW.pListModule_paramsObject["vf"] = "4";
         ausiasFLOW.pListModule_class = 'documento';
         var module = ausiasFLOW.initialize(component_eplist().list, $('#modal-body'));
         ausiasFLOW.bindCallback(module, function (id) {
             $('#obj_usuario').val(id).change();
-            $.when(thisObject.getOnePromise("usuario", id)).done(function (jsonDataViewModuleReceived) {                
+            promise.getOne("usuario", id).done(function (jsonDataViewModuleReceived) {
                 $('#obj_usuario_desc').html(html.printObject2('usuario', jsonDataViewModuleReceived.message));
             })
             $('#modal01').modal('hide');
@@ -54,10 +74,10 @@ newModule.prototype.doEventsLoading = function () {
     $("#undefinedForm #obj_tipodocumento_button").click(function () {
         //var oControl = oTipodocumentoControl;
 
-        $("#undefinedForm").append(ns.html.modal.getEmptyModal());
-        broth.loadForm('#modal01', ns.html.form.getFormHeader('Elección de tipo de documento'), "", ns.html.form.getFormFooter(), true);
+        $("#undefinedForm").append(modal.getEmptyModal());
+        modal.loadModal('#modal01', modal.getModalHeader('Elección de tipo de documento'), "", modal.getModalFooter(), true);
 
-        $('#undefinedForm').append(ns.html.modal.getEmptyModal());
+        $('#undefinedForm').append(modal.getEmptyModal());
 
 //        oControl.list('#modal01 #modal-body', param().defaultizeUrlObjectParameters({}), true, oTipodocumentoModel, oTipodocumentoView);
 //        oControl.modalListEventsLoading('#modal01 #modal-body', param().defaultizeUrlObjectParameters({}), function (id) {
@@ -75,14 +95,19 @@ newModule.prototype.initialize = function () {
     strClass = ausiasFLOW.newModule_class;
 
 };
-newModule.prototype.getData = function () {
-    $.when(this.getMetaPromise(ausiasFLOW.newModule_class)).done(function (jsonDataReceived) {
+newModule.prototype.getPromise = function () {
+    return promise.getMeta(ausiasFLOW.newModule_class);
+}
+newModule.prototype.getData = function (jsonDataReceived) {
+    if (jsonDataReceived.status == "200") {
         jsonData = jsonDataReceived;
-    })
+    } else {
+        //informar error
+    }
 };
 newModule.prototype.render = function () {
     if (jsonData.status == "200") {
-        return broth.getFormTemplate(strClass, jsonData.message);
+        return form.getFormTemplate(strClass, jsonData.message);
     } else {
         return broth.notifyException(jsonData.status, jsonData.message);
     }
@@ -92,16 +117,28 @@ newModule.prototype.fill = function () {
     this.loadFormValues(parametersObject); //new operation can load forced foreigns & no foreigns
 }
 newModule.prototype.bind = function () {
-    loadValidationCallbacks(jsonData.message);
+    var thisObject = this;
+    validation.loadValidationCallbacks(jsonData.message);
     this.doEventsLoading();
     $('#submitForm').unbind('click');
-    $('#submitForm').click(function (notificationPlace) {
-        //oView.okValidation(function (e) { //disparar todas las validaciones
-        result = broth.setOne({json: JSON.stringify(oView.getFormValues())});
-        broth.doResultOperationNotifyToUser($('#broth_content'), result["status"], 'Se ha creado el registro con id=' + result["message"], result["message"], true);
+    $('#submitForm').click(function (e) {
+        promise.setOne(strClass, {json: JSON.stringify(form.getFormValues(strClass))}).done(function (result) {
+            if (result["status"] == "200") {
+                resultadoMessage = 'Se ha creado el registro con id=' + result["message"];
+            } else {
+                resultadoMessage = "ERROR: No se ha creado el registro";
+            }
+            var mensaje = "<h5>Código: " + result["status"] + "</h5><h5>" + resultadoMessage + "</h5>";
+            modal.loadModalNotify($('#broth_modal'), mensaje, function () {
+                window.location.href = "#/" + strClass + "/view/" + result["message"];
+                $('#broth_modal').empty();
+            }, function () {
+                $('#broth_content').empty();
+                $('#broth_modal').empty();
+            });
+        });
         e.preventDefault();
         return false;
-        //});
     });
 }
 //var newOperation = function (url) {

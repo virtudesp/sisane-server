@@ -1,3 +1,29 @@
+/*
+ * Copyright (c) 2015 by Rafael Angel Aznar Aparici (rafaaznar at gmail dot com)
+ * 
+ * openAUSIAS: The stunning micro-library that helps you to develop easily 
+ *             AJAX web applications by using Java and jQuery
+ * openAUSIAS is distributed under the MIT License (MIT)
+ * Sources at https://github.com/rafaelaznar/openAUSIAS
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ * 
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ * 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
 var pListModule = function () {
     var strClass;
     var jsonData;
@@ -106,11 +132,11 @@ pListModule.prototype.loadThButtons = function (meta, strClase, UrlFromParamsWit
 //}
 
 pListModule.prototype.getRegistersInfo = function (regs) {
-    return "<p>Mostrando una consulta de " + regs + " registros.</p>";
+    return html.dom('p', "Mostrando una consulta de " + regs + " registros.");
 };
 pListModule.prototype.getOrderInfo = function (objParams) {
     if (objParams['order']) {
-        strOrder = "<p><small>Contenido ordenado por " + objParams["order"] + " (" + objParams["ordervalue"] + ') <a href="#/' + strClass + '/plist/' + this.getUrlStringFromParamsObject(this.getUrlObjectFromParamsWithoutParamArray(objParams, ["order", "ordervalue"])) + '" id="linkQuitarOrden">(Quitar orden)</a></small></p>';
+        strOrder = "<p><small>Contenido ordenado por " + objParams["order"] + " (" + objParams["ordervalue"] + ') <a href="#/' + strClass + '/plist/' + parameter.getUrlStringFromParamsObject(parameter.getUrlObjectFromParamsWithoutParamArray(objParams, ["order", "ordervalue"])) + '" id="linkQuitarOrden">(Quitar orden)</a></small></p>';
     } else {
         strOrder = "<p>Contenido no ordenado</p>";
     }
@@ -119,7 +145,7 @@ pListModule.prototype.getOrderInfo = function (objParams) {
 };
 pListModule.prototype.getFilterInfo = function (objParams) {
     if (objParams['filter']) {
-        strFilter = "<p><small>Contenido filtrado (" + objParams ['filter'] + " " + objParams['filteroperator'] + " " + objParams['filtervalue'] + ') <a href="#/' + strClass + '/plist/' + this.getUrlStringFromParamsObject(this.getUrlObjectFromParamsWithoutParamArray(objParams, ["filter", "filteroperator", "filtervalue"])) + '" id="linkQuitarFiltro">(Quitar filtro)</small></a></p>';
+        strFilter = "<p><small>Contenido filtrado (" + objParams ['filter'] + " " + objParams['filteroperator'] + " " + objParams['filtervalue'] + ') <a href="#/' + strClass + '/plist/' + parameter.getUrlStringFromParamsObject(parameter.getUrlObjectFromParamsWithoutParamArray(objParams, ["filter", "filteroperator", "filtervalue"])) + '" id="linkQuitarFiltro">(Quitar filtro)</small></a></p>';
     } else {
         strFilter = "<p>Contenido no filtrado</p>";
     }
@@ -202,24 +228,10 @@ pListModule.prototype.getFilterInfo = function (objParams) {
 ////
 
 pListModule.prototype.informationTemplate = function (infor, paging, rpp) {
-
-
-
-    info = '<p>';
-    info += '<div class="row">';
-    info += '<div class="col-lg-3 col-md-3 col-sm-12">'
-    info += infor;
-    info += '</div>';
-    info += '<div class="col-lg-6  col-md-6 col-sm-8 text-center">'
-    //info += ns.html.panel.getPanel('panelPaginacion', 'Paginación',ns.html.buttonBars.getPageLinks(url, parseInt(this.objParams["page"]), parseInt(this.jsonPages), 2));
-    info += 'Paginación: <br/>' + paging;
-    info += '</div>'
-    info += '<div class="col-lg-3  col-md-3 col-sm-4 text-center">';
-    info += 'Registros por página: <br/>' + rpp;
-    info += '</div>'
-    info += '</div>';
-    info += '</p>';
-    return info;
+    var strInfo = html.dom('div', infor, 'class="col-lg-3 col-md-3 col-sm-12"');
+    var strPaging = html.dom('div', 'Paginación: <br/>' + paging, 'class="col-lg-6  col-md-6 col-sm-8 text-center"');
+    var strRpp = html.dom('div', 'Registros por página: <br/>' + rpp, 'class="col-lg-3  col-md-3 col-sm-4 text-center"');
+    return html.dom('p', html.dom('div', strInfo + strPaging + strRpp, 'class="row"'));
 }
 pListModule.prototype.visibleFieldsTemplate = function () {
     strVisibleFields = '<div class="row">';
@@ -236,42 +248,28 @@ pListModule.prototype.visibleFieldsTemplate = function () {
     return strVisibleFields;
 }
 pListModule.prototype.filterFormTemplate = function () {
-    strFilterForm = '<div class="row">';
-    strFilterForm += '<div class="col-md-12">';
-    strFilterForm += '<p>'
-    strFilterForm += '<form class="navbar-form navbar-right" role="form" action="Controller" method="post" id="empresaForm">'
-    strFilterForm += '<select id="selectFilter" class="form-control" name="filter" style="width: 160px">'
-    strFilterForm += '</select> '
-    strFilterForm += '<select id="selectFilteroperator" class="form-control" name="filteroperator" width="80" style="width: 200px">'
-    strFilterForm += '<option value="like">contiene</option>'
-    strFilterForm += '<option value="notlike">no contiene</option>'
-    strFilterForm += '<option value="equals">es igual a</option>'
-    strFilterForm += '<option value="notequalto">es distinto de</option>'
-    strFilterForm += '<option value="less">es menor que</option>'
-    strFilterForm += '<option value="lessorequal">es menor o igual que</option>'
-    strFilterForm += '<option value="greater">es mayor que</option>'
-    strFilterForm += '<option value="greaterorequal">es mayor o igual que</option>'
-    strFilterForm += '</select> '
-    strFilterForm += '<input id="inputFiltervalue" class="form-control" name="filtervalue" type="text" size="20" maxlength="50" value=""  width="100" style="width: 140px" placeholder="Valor"/> '
-    strFilterForm += '<input type="submit" class="btn" id="btnFiltrar" name="btnFiltrar" value="Filtrar " />'
-    strFilterForm += '</form>'
-    strFilterForm += '</p>'
-    strFilterForm += '</div>'
-    strFilterForm += '</div>'
-    return strFilterForm;
+    var selectFilter = html.dom('select', '', 'id="selectFilter" class="form-control" name="filter" style="width: 160px"');
+    var selectFilterOperatorOptions = "";
+    selectFilterOperatorOptions += html.dom('option', 'contiene', 'value="like"');
+    selectFilterOperatorOptions += html.dom('option', 'no contiene', 'value="notlike"');
+    selectFilterOperatorOptions += html.dom('option', 'es igual a', 'value="equals"');
+    selectFilterOperatorOptions += html.dom('option', 'es distinto de', 'value="notequalto"');
+    selectFilterOperatorOptions += html.dom('option', 'es menor que', 'value="less"');
+    selectFilterOperatorOptions += html.dom('option', 'es menor o igual que', 'value="lessorequal"');
+    selectFilterOperatorOptions += html.dom('option', 'es mayor que', 'value="greater"');
+    selectFilterOperatorOptions += html.dom('option', 'es mayor o igual que', 'value="greaterorequal"');
+    var selectFilterOperator = html.dom('select', selectFilterOperatorOptions, 'id="selectFilteroperator" class="form-control" name="filteroperator" width="80" style="width: 200px"');
+    var inputFiltervalue = html.dom('input', '', 'id="inputFiltervalue" class="form-control" name="filtervalue" type="text" size="20" maxlength="50" value=""  width="100" style="width: 140px" placeholder="Valor"');
+    var submit = html.dom('input', '', 'type="submit" class="btn" id="btnFiltrar" name="btnFiltrar" value="Filtrar"');
+    var strFormContent = selectFilter + selectFilterOperator + inputFiltervalue + submit;
+    var strForm = html.dom('form', strFormContent, 'class="navbar-form navbar-right" role="form" action="Controller" method="post" id="empresaForm"');
+    return html.dom('div', html.dom('div', html.dom('p', strForm), 'col-md-12'), 'row');
 }
 pListModule.prototype.filterFormClientTemplate = function () {
-    strFilterFormClient = '<div class="row">';
-    strFilterFormClient += '<div class="col-md-12">';
-    strFilterFormClient += '<p>'
-    strFilterFormClient += '<form class="navbar-form navbar-right" role="form" action="Controller" method="post" id="empresaForm">'
-    strFilterFormClient += '<input id="inputFiltervalueClient" class="form-control" name="filtervalue" type="text" size="20" maxlength="50" value=""  width="100" style="width: 140px" placeholder="Valor"/> '
-    strFilterFormClient += '<input type="submit" class="btn" id="btnFiltrarClient" name="btnFiltrarClient" value="Filtrar " />'
-    strFilterFormClient += '</form>'
-    strFilterFormClient += '</p>'
-    strFilterFormClient += '</div>'
-    strFilterFormClient += '</div>'
-    return strFilterFormClient;
+    var strFormContent = html.dom('input', '', 'id="inputFiltervalueClient" class="form-control" name="filtervalue" type="text" size="20" maxlength="50" value=""  width="100" style="width: 140px" placeholder="Valor"');
+    strFormContent += html.dom('input', '', 'type="submit" class="btn" id="btnFiltrarClient" name="btnFiltrarClient" value="Filtrar"');
+    var strForm = html.dom('form', strFormContent, 'class="navbar-form navbar-right" role="form" action="Controller" method="post" id="empresaForm"')
+    return html.dom('div', html.dom('div', html.dom('p', strForm), 'col-md-12'), 'row');
 }
 pListModule.prototype.newTemplate = function (strClass) {
     strNewButton = '<div class="row">';
@@ -301,42 +299,44 @@ pListModule.prototype.initialize = function () {
     //paramsObject = ns.param.defaultizeUrlObjectParametersForPaginatedLists(ns.param.getUrlObjectFromUrlString(this.url));
     strClass = ausiasFLOW.pListModule_class;
     paramsObject = this.defaultizeUrlObjectParametersForPaginatedLists(ausiasFLOW.pListModule_paramsObject);
-    orderParams = this.printOrderParamsInUrl(ausiasFLOW.pListModule_paramsObject);
-    filterParams = this.printFilterParamsInUrl(ausiasFLOW.pListModule_paramsObject);
-    systemFilterParams = this.printSystemFilterParamsInUrl(ausiasFLOW.pListModule_paramsObject);
-    strUrlFromParamsWithoutPage = this.getUrlStringFromParamsObject(this.getUrlObjectFromParamsWithoutParamArray(ausiasFLOW.pListModule_paramsObject, ["page"]));
-    strUrlFromParamsWithoutRpp = this.getUrlStringFromParamsObject(this.getUrlObjectFromParamsWithoutParamArray(ausiasFLOW.pListModule_paramsObject, ["rpp"]));
-    strUrlFromParamsWithoutOrder = this.getUrlStringFromParamsObject(this.getUrlObjectFromParamsWithoutParamArray(ausiasFLOW.pListModule_paramsObject, ["order", "ordervalue"]));
+    orderParams = parameter.printOrderParamsInUrl(ausiasFLOW.pListModule_paramsObject);
+    filterParams = parameter.printFilterParamsInUrl(ausiasFLOW.pListModule_paramsObject);
+    systemFilterParams = parameter.printSystemFilterParamsInUrl(ausiasFLOW.pListModule_paramsObject);
+    strUrlFromParamsWithoutPage = parameter.getUrlStringFromParamsObject(parameter.getUrlObjectFromParamsWithoutParamArray(ausiasFLOW.pListModule_paramsObject, ["page"]));
+    strUrlFromParamsWithoutRpp = parameter.getUrlStringFromParamsObject(parameter.getUrlObjectFromParamsWithoutParamArray(ausiasFLOW.pListModule_paramsObject, ["rpp"]));
+    strUrlFromParamsWithoutOrder = parameter.getUrlStringFromParamsObject(parameter.getUrlObjectFromParamsWithoutParamArray(ausiasFLOW.pListModule_paramsObject, ["order", "ordervalue"]));
     urlWithoutPage = '#/' + ausiasFLOW.pListModule_class + '/' + ausiasFLOW.pListModule_frontOperation + '/' + strUrlFromParamsWithoutPage;
     urlWithoutRpp = '#/' + ausiasFLOW.pListModule_class + '/' + ausiasFLOW.pListModule_frontOperation + '/' + strUrlFromParamsWithoutRpp;
     //****
 };
-pListModule.prototype.getData = function () {
+
+pListModule.prototype.getPromise = function () {
     if (strClass && paramsObject && paramsObject.rpp && paramsObject.page) {
-        $.when(this.getSomePromise(strClass, paramsObject.rpp, paramsObject.page, filterParams, orderParams, systemFilterParams)).done(function (jsonDataReturned) {
-            if (jsonDataReturned) {
-                if (jsonDataReturned.status == "200") {
+        return promise.getSome(strClass, paramsObject.rpp, paramsObject.page, filterParams, orderParams, systemFilterParams);
+    }
 
-                    jsonData = jsonDataReturned;
+}
 
-//                    jsonMeta = jsonData.message.meta;
-//                    jsonPage = jsonData.message.page.list;
-//                    jsonPages = jsonData.message.pages.data;
-//                    jsonRegisters = jsonData.message.registers.data;
-
-                    if (parseInt(paramsObject["page"]) > parseInt(jsonData.message.pages.data)) {
-                        paramsObject["page"] = parseInt(jsonData.message.pages.data);
-                    }
-                    if (paramsObject.vf) {
-                        if (jsonData.message.meta.length < paramsObject["vf"]) {
-                            paramsObject["vf"] = jsonData.message.meta.length;
-                        }
-                    }
+pListModule.prototype.getData = function (jsonDataReturned) {
+    if (jsonDataReturned) {
+        if (jsonDataReturned.status == "200") {
+            jsonData = jsonDataReturned;
+            if (parseInt(paramsObject["page"]) > parseInt(jsonData.message.pages.data)) {
+                paramsObject["page"] = parseInt(jsonData.message.pages.data);
+            }
+            if (paramsObject.vf) {
+                if (jsonData.message.meta.length < paramsObject["vf"]) {
+                    paramsObject["vf"] = jsonData.message.meta.length;
                 }
             }
-        })
+        } else {
+            //informar del error
+        }
+    } else {
+        //informar del error
     }
 }
+
 pListModule.prototype.render = function () {
     //var paramsObject = ausiasFLOW.pListModule_paramsObject;
     if (!strClass) {
@@ -354,9 +354,9 @@ pListModule.prototype.render = function () {
     }
 
     strGeneralInformation = this.informationTemplate(
-            this.getRegistersInfo(jsonData.message.registers.data) + this.getOrderInfo(paramsObject) + this.getFilterInfo(paramsObject),
-            ns.html.buttonBars.getPageLinks(urlWithoutPage, parseInt(paramsObject["page"]), parseInt(jsonData.message.pages.data), 2),
-            ns.html.buttonBars.getRppLinks(urlWithoutRpp, paramsObject['rpp'])
+            this.getRegistersInfo(jsonData.message.registers.message) + this.getOrderInfo(paramsObject) + this.getFilterInfo(paramsObject),
+            pagination.getPageLinks(urlWithoutPage, parseInt(paramsObject["page"]), parseInt(jsonData.message.pages.message), 2),
+            pagination.getRppLinks(urlWithoutRpp, paramsObject['rpp'])
             );
     strVisibleFields = this.visibleFieldsTemplate();
     strFilterForm = this.filterFormTemplate();
@@ -365,11 +365,11 @@ pListModule.prototype.render = function () {
 
     //console.log(this.loadButtons('2','1'))   //??
 
-    strTable = ns.html.table.getTable(
-            this.getHeaderPageTableFunc(jsonData.message.meta, ausiasFLOW.pListModule_class, strUrlFromParamsWithoutOrder, paramsObject.vf),
-            this.getBodyPageTableFunc(jsonData.message.meta, jsonData.message.page.list, html.printPrincipal, this.loadButtons, this.loadPopups, paramsObject.vf)
+    strTable = table.getTable(
+            this.getHeaderPageTableFunc(jsonData.message.meta.message, ausiasFLOW.pListModule_class, strUrlFromParamsWithoutOrder, paramsObject.vf),
+            this.getBodyPageTableFunc(jsonData.message.meta.message, jsonData.message.page.message, html.printPrincipal, this.loadButtons, this.loadPopups, paramsObject.vf)
             );
-    return ns.html.tab.getTab([
+    return tab.getTab([
         {'name': 'Consulta', 'content': strGeneralInformation},
         {'name': 'Campos visibles', 'content': strVisibleFields},
         {'name': 'Filtro de servidor', 'content': strFilterForm},
@@ -382,33 +382,33 @@ pListModule.prototype.bind = function () {
     thisObject = this;
     //visible fields
     $('#selectVisibleFields').empty()
-    ns.html.form.populateSelectBox($('#selectVisibleFields'), ns.util.getIntegerArray(1, jsonData.message.meta.length))
+    form.populateSelectBox($('#selectVisibleFields'), ns.util.getIntegerArray(1, jsonData.message.meta.message.length))
     $("#selectVisibleFields").val(paramsObject["vf"]);
     $('#selectVisibleFields').unbind('change');
     $("#selectVisibleFields").change(function () {
-        window.location.href = "#/" + ausiasFLOW.pListModule_class + "/plist/" + thisObject.getUrlStringFromParamsObject(thisObject.getUrlObjectFromParamsWithoutParamArray(paramsObject, ['vf'])) + "&vf=" + $("#selectVisibleFields option:selected").val();
+        window.location.href = "#/" + ausiasFLOW.pListModule_class + "/plist/" + parameter.getUrlStringFromParamsObject(parameter.getUrlObjectFromParamsWithoutParamArray(paramsObject, ['vf'])) + "&vf=" + $("#selectVisibleFields option:selected").val();
         return false;
     });
     //filter
-    ns.html.form.populateSelectBox($('#selectFilter'), ns.arrays.getArrayFromMultiSlicedArray('Name', jsonData.message.meta), ns.arrays.getArrayFromMultiSlicedArray('ShortName', jsonData.message.meta));
+    form.populateSelectBox($('#selectFilter'), array.getArrayFromMultiSlicedArray('Name', jsonData.message.meta.message), array.getArrayFromMultiSlicedArray('ShortName', jsonData.message.meta.message));
     $('#btnFiltrar').unbind('click');
     $("#btnFiltrar").click(function (event) {
         var filter = $("#selectFilter option:selected").val();
         var filteroperator = $("#selectFilteroperator option:selected").val();
         var filtervalue = $("#inputFiltervalue").val();
-        window.location.href = '#/' + ausiasFLOW.pListModule_class + '/plist/' + thisObject.getUrlStringFromParamsObject(thisObject.getUrlObjectFromParamsWithoutParamArray(paramsObject, ['filter', 'filteroperator', 'filtervalue'])) + "&filter=" + filter + "&filteroperator=" + filteroperator + "&filtervalue=" + filtervalue;
+        window.location.href = '#/' + ausiasFLOW.pListModule_class + '/plist/' + parameter.getUrlStringFromParamsObject(parameter.getUrlObjectFromParamsWithoutParamArray(paramsObject, ['filter', 'filteroperator', 'filtervalue'])) + "&filter=" + filter + "&filteroperator=" + filteroperator + "&filtervalue=" + filtervalue;
         return false;
     });
     //filter client
-    ns.html.form.populateSelectBox($('#selectFilterClient'), ns.arrays.getArrayFromMultiSlicedArray('Name', jsonData.message.meta), ns.arrays.getArrayFromMultiSlicedArray('ShortName', jsonData.message.meta));
+    form.populateSelectBox($('#selectFilterClient'), array.getArrayFromMultiSlicedArray('Name', jsonData.message.meta.message), array.getArrayFromMultiSlicedArray('ShortName', jsonData.message.meta.message));
     $('#btnFiltrarClient').unbind('click');
     $("#btnFiltrarClient").click(function (event) {
         var filtervalue = $("#inputFiltervalueClient").val();
         //pte  -> reconstruir this.jsonPage con /word/.test(str)
-        var arrayFiltered = ns.arrays.filterArray(filtervalue, jsonData.message.page.list);
-        //window.location.href = '#/' + thisObject.strClase + '/plist/' + this.getUrlStringFromParamsObject(this.getUrlObjectFromParamsWithoutParamArray(thisObject.objParams, ['filter', 'filteroperator', 'filtervalue'])) + "&filter=" + filter + "&filteroperator=" + filteroperator + "&filtervalue=" + filtervalue;
+        var arrayFiltered = array.filterArray(filtervalue, jsonData.message.page.message);
+        //window.location.href = '#/' + thisObject.strClase + '/plist/' + parameter.getUrlStringFromParamsObject(parameter.getUrlObjectFromParamsWithoutParamArray(thisObject.objParams, ['filter', 'filteroperator', 'filtervalue'])) + "&filter=" + filter + "&filteroperator=" + filteroperator + "&filtervalue=" + filtervalue;
 
-        var strUrlFromParamsWithoutPage = thisObject.getUrlStringFromParamsObject(thisObject.getUrlObjectFromParamsWithoutParamArray(paramsObject, ["order", "ordervalue"]));
+        var strUrlFromParamsWithoutPage = parameter.getUrlStringFromParamsObject(parameter.getUrlObjectFromParamsWithoutParamArray(paramsObject, ["order", "ordervalue"]));
 
 
 //        console.log(jsonData.message.meta)
@@ -421,11 +421,11 @@ pListModule.prototype.bind = function () {
 //
 
 
-        var strTable = ns.html.table.getTable(
-                thisObject.getHeaderPageTableFunc(jsonData.message.meta, strClass, strUrlFromParamsWithoutPage, paramsObject.vf),
-                thisObject.getBodyPageTableFunc(jsonData.message.meta, arrayFiltered, html.printPrincipal, thisObject.loadButtons, thisObject.loadPopups, paramsObject.vf)
+        var strTable = table.getTable(
+                thisObject.getHeaderPageTableFunc(jsonData.message.meta.message, strClass, strUrlFromParamsWithoutPage, paramsObject.vf),
+                thisObject.getBodyPageTableFunc(jsonData.message.meta.message, arrayFiltered, html.printPrincipal, thisObject.loadButtons, thisObject.loadPopups, paramsObject.vf)
                 );
-        $('#broth_content').empty().append(ns.html.tab.getTab([
+        $('#broth_content').empty().append(tab.getTab([
             {'name': 'Consulta', 'content': strGeneralInformation},
             {'name': 'Campos visibles', 'content': strVisibleFields},
             {'name': 'Filtro de servidor', 'content': strFilterForm},
@@ -449,7 +449,7 @@ pListModule.prototype.bindAll = function (place, objParams, callbackFunction, oM
     $('.pagination_link').unbind('click');
     $('.pagination_link').click(function (event) {
         //rpp = $( "#rpp option:selected").text();
-        paramsObject = thisObject.getUrlObjectFromParamsWithoutParamArray(paramsObject, ["page"]);
+        paramsObject = parameter.getUrlObjectFromParamsWithoutParamArray(paramsObject, ["page"]);
         paramsObject["page"] = parseInt($(this).attr('id'));
 
 
@@ -475,7 +475,7 @@ pListModule.prototype.bindAll = function (place, objParams, callbackFunction, oM
     //visible fields select population, setting & event
     $('#selectVisibleFields').unbind('change');
     $("#selectVisibleFields").change(function () {
-        paramsObject = thisObject.getUrlObjectFromParamsWithoutParamArray(paramsObject, ["vf"]);
+        paramsObject = parameter.getUrlObjectFromParamsWithoutParamArray(paramsObject, ["vf"]);
         paramsObject["vf"] = $("#selectVisibleFields option:selected").val();
         ausiasFLOW.pListModule_paramsObject = paramsObject;
         ausiasFLOW.renderComponent(thisObject, true);
@@ -483,7 +483,7 @@ pListModule.prototype.bindAll = function (place, objParams, callbackFunction, oM
     });
     $('.rpp_link').unbind('click');
     $('.rpp_link').on('click', function (event) {
-        paramsObject = thisObject.getUrlObjectFromParamsWithoutParamArray(paramsObject, ["rpp"]);
+        paramsObject = parameter.getUrlObjectFromParamsWithoutParamArray(paramsObject, ["rpp"]);
         paramsObject["rpp"] = parseInt($(this).attr('id'));
         ausiasFLOW.pListModule_paramsObject = paramsObject;
         ausiasFLOW.renderComponent(thisObject, true);
@@ -504,7 +504,7 @@ pListModule.prototype.bindAll = function (place, objParams, callbackFunction, oM
 //                filtervalue = $("#inputFiltervalue").val();
 //                window.location.href = 'jsp#/' + model('documento').getName() + '/list/' + param().getUrlStringFromParamsObject(param().getUrlObjectFromParamsWithoutParamArray(objParams, ['filter', 'filteroperator', 'filtervalue'])) + "&filter=" + filter + "&filteroperator=" + filteroperator + "&filtervalue=" + filtervalue;
 //                return false;
-        paramsObject = thisObject.getUrlObjectFromParamsWithoutParamArray(paramsObject, ["filter", "filteroperator", "filtervalue"]);
+        paramsObject = parameter.getUrlObjectFromParamsWithoutParamArray(paramsObject, ["filter", "filteroperator", "filtervalue"]);
         paramsObject["filter"] = $("#selectFilter option:selected").val();
         paramsObject["filteroperator"] = $("#selectFilteroperator option:selected").val();
         paramsObject["filtervalue"] = $("#inputFiltervalue").val();
@@ -515,7 +515,7 @@ pListModule.prototype.bindAll = function (place, objParams, callbackFunction, oM
 
     $('.orderAsc').unbind('click');
     $('.orderAsc').on('click', function (event) {
-        paramsObject = thisObject.getUrlObjectFromParamsWithoutParamArray(paramsObject, ["order", "ordervalue"]);
+        paramsObject = parameter.getUrlObjectFromParamsWithoutParamArray(paramsObject, ["order", "ordervalue"]);
         paramsObject["order"] = $(this).attr('id');
         paramsObject["ordervalue"] = "asc";
 
@@ -527,7 +527,7 @@ pListModule.prototype.bindAll = function (place, objParams, callbackFunction, oM
 
     $('.orderDesc').unbind('click');
     $('.orderDesc').on('click', function (event) {
-        paramsObject = thisObject.getUrlObjectFromParamsWithoutParamArray(paramsObject, ["order", "ordervalue"]);
+        paramsObject = parameter.getUrlObjectFromParamsWithoutParamArray(paramsObject, ["order", "ordervalue"]);
         paramsObject["order"] = $(this).attr('id');
         paramsObject["ordervalue"] = "desc";
 
@@ -539,7 +539,7 @@ pListModule.prototype.bindAll = function (place, objParams, callbackFunction, oM
     });
     $('#linkQuitarOrden').unbind('click');
     $('#linkQuitarOrden').click(function () {
-        paramsObject = thisObject.getUrlObjectFromParamsWithoutParamArray(paramsObject, ["order", "ordervalue"]);
+        paramsObject = parameter.getUrlObjectFromParamsWithoutParamArray(paramsObject, ["order", "ordervalue"]);
 
         ausiasFLOW.pListModule_paramsObject = paramsObject;
         ausiasFLOW.renderComponent(thisObject, true);
@@ -548,7 +548,7 @@ pListModule.prototype.bindAll = function (place, objParams, callbackFunction, oM
     });
     $('#linkQuitarFiltro').unbind('click');
     $('#linkQuitarFiltro').click(function () {
-        paramsObject = thisObject.getUrlObjectFromParamsWithoutParamArray(paramsObject, ["filter", "filteroperator", "filtervalue"]);
+        paramsObject = parameter.getUrlObjectFromParamsWithoutParamArray(paramsObject, ["filter", "filteroperator", "filtervalue"]);
         ausiasFLOW.pListModule_paramsObject = paramsObject;
         ausiasFLOW.renderComponent(thisObject, true);
         return false;

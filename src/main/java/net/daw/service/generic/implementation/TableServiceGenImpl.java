@@ -32,14 +32,13 @@ import com.google.gson.GsonBuilder;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.sql.Connection;
-import java.util.HashMap;
-import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import net.daw.bean.generic.implementation.BeanGenImpl;
 import net.daw.bean.publicinterface.BeanInterface;
 import net.daw.connection.implementation.BoneConnectionPoolImpl;
 import net.daw.dao.generic.implementation.TableDaoGenImpl;
 import net.daw.helper.statics.ExceptionBooster;
+import net.daw.helper.statics.JsonMessage;
 import net.daw.helper.statics.ParameterCook;
 
 public abstract class TableServiceGenImpl extends ViewServiceGenImpl implements TableServiceInterface {
@@ -60,19 +59,15 @@ public abstract class TableServiceGenImpl extends ViewServiceGenImpl implements 
             Constructor c = Class.forName("net.daw.dao.specific.implementation." + ParameterCook.prepareCamelCaseObject(oRequest) + "Dao").getConstructor(Connection.class);
             TableDaoGenImpl oGenericDao = (TableDaoGenImpl) c.newInstance(oConnection);
             Method metodo_setId = oGenericBean.getClass().getMethod("setId", Integer.class);
-            metodo_setId.invoke(oGenericBean, id); //oGenericBean.setId(id);                                               
-            Map<String, String> data = new HashMap<>();
+            metodo_setId.invoke(oGenericBean, id); //oGenericBean.setId(id);                                                          
             if (oGenericBean != null) {
                 oGenericDao.remove(oGenericBean);
-                data.put("status", "200");
                 Method metodo_getId = oGenericBean.getClass().getMethod("getId");
-                data.put("message", "se ha eliminado el registro con id=" + metodo_getId.invoke(oGenericBean));
+                Integer result_id = (int) metodo_getId.invoke(oGenericBean);
+                resultado = JsonMessage.getJson("200", (String) result_id.toString());
             } else {
-                data.put("status", "error");
-                data.put("message", "error");
+                resultado = JsonMessage.getJson("500", "Error al borrar el registro");
             }
-            Gson gson = new Gson();
-            resultado = gson.toJson(data);
             oConnection.commit();
         } catch (Exception ex) {
             oConnection.rollback();
@@ -96,17 +91,13 @@ public abstract class TableServiceGenImpl extends ViewServiceGenImpl implements 
             TableDaoGenImpl oGenericDao = (TableDaoGenImpl) c.newInstance(oConnection);
             Gson gson = new GsonBuilder().setDateFormat("dd/MM/yyyy").excludeFieldsWithoutExposeAnnotation().create();
             oGenericBean = gson.fromJson(jason, oGenericBean.getClass());
-            Map<String, String> data = new HashMap<>();
             if (oGenericBean != null) {
                 oGenericBean = (BeanGenImpl) (BeanInterface) oGenericDao.set(oGenericBean);
-                data.put("status", "200");
                 Method metodo_getId = oGenericBean.getClass().getMethod("getId");
-                data.put("message", Integer.toString((int) metodo_getId.invoke(oGenericBean)));
+                resultado = JsonMessage.getJson("200", Integer.toString((int) metodo_getId.invoke(oGenericBean)));
             } else {
-                data.put("status", "error");
-                data.put("message", "error");
+                resultado = JsonMessage.getJson("500", "Error al grabar el registro");
             }
-            resultado = gson.toJson(data);
             oConnection.commit();
         } catch (Exception ex) {
             oConnection.rollback();

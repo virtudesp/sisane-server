@@ -63,8 +63,8 @@ public class json extends HttpServlet {
         getServletContext().getRequestDispatcher("/jsp/messageAjax.jsp").forward(request, response);
     }
 
-    private void sendResponse2(HttpServletRequest request, HttpServletResponse response, String strStatus, String strMessage) throws ServletException, IOException {
-        request.setAttribute("contenido", "{\"status\":" + strStatus + ",\"message\":" + strMessage + "}");
+    private void sendResponse2(HttpServletRequest request, HttpServletResponse response, String strMessage) throws ServletException, IOException {
+        request.setAttribute("contenido", strMessage);
         getServletContext().getRequestDispatcher("/jsp/messageAjax.jsp").forward(request, response);
     }
 
@@ -96,7 +96,7 @@ public class json extends HttpServlet {
                 }
                 Logger.getLogger(json.class.getName()).log(Level.SEVERE, null, ex);
                 return;
-            } 
+            }
             if (EstadoHelper.getTipo_estado() == Tipo_estado.Debug) {
                 retardo(EstadoHelper.getDelay()); //optional debug delay
             }
@@ -153,7 +153,7 @@ public class json extends HttpServlet {
                         sendResponse(request, response, "200", oUserBean.getLogin());
                     }
                     if (op.equalsIgnoreCase("comprobar")) {
-                        sendResponse(request, response, "200",  oUserBean.getLogin());
+                        sendResponse(request, response, "200", oUserBean.getLogin());
                     }
                     if (op.equalsIgnoreCase("logout")) {
                         UsuarioBean oUsuario = (UsuarioBean) request.getSession().getAttribute("userBean");
@@ -167,7 +167,7 @@ public class json extends HttpServlet {
                         MetaServiceInterface oService = (MetaServiceInterface) Class.forName(strClassName).getDeclaredConstructor(HttpServletRequest.class).newInstance(request);
                         Method oMethodService = oService.getClass().getMethod(ParameterCook.prepareOperation(request));
                         String jsonResult = (String) oMethodService.invoke(oService);
-                        sendResponse2(request, response, "200", jsonResult);
+                        sendResponse2(request, response, jsonResult);
                     } catch (ClassNotFoundException | InstantiationException | IllegalAccessException ex) {
                         ExceptionBooster.boost(new Exception(this.getClass().getName() + ":processRequest ERROR: no such operation"));
                     }
@@ -180,6 +180,7 @@ public class json extends HttpServlet {
         }
     }
 // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+
     /**
      * Handles the HTTP <code>GET</code> method.
      *
