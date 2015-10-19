@@ -149,13 +149,13 @@ public class json extends HttpServlet {
                         return;
                     }
                 } else {
-                    if (op.equalsIgnoreCase("login")) {
+                    if (op.equals("login")) {
                         sendResponse(request, response, "200", oUserBean.getLogin());
                     }
-                    if (op.equalsIgnoreCase("comprobar")) {
+                    if (op.equals("comprobar")) {
                         sendResponse(request, response, "200", oUserBean.getLogin());
                     }
-                    if (op.equalsIgnoreCase("logout")) {
+                    if (op.equals("logout")) {
                         UsuarioBean oUsuario = (UsuarioBean) request.getSession().getAttribute("userBean");
                         sendResponse(request, response, "200", "Bye");
                         writeLog(request, response, oUsuario.getId() + ": Logout");

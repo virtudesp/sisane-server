@@ -47,7 +47,7 @@ public class ParameterCook {
         if (request.getParameter("ob") == null) {
             result = "usuario";
         } else {
-            result = request.getParameter("ob");
+            result = request.getParameter("ob").toLowerCase();
         }
         return result;
     }
@@ -87,7 +87,7 @@ public class ParameterCook {
         if (request.getParameter("op") == null) {
             result = "inicio";
         } else {
-            result = request.getParameter("op");
+            result = request.getParameter("op").toLowerCase();
         }
         return result;
     }
