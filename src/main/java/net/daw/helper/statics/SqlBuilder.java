@@ -40,8 +40,10 @@ public class SqlBuilder {
             while (iterator.hasNext()) {
                 FilterBeanHelper oFilterBean = (FilterBeanHelper) iterator.next();
                 String strFilterFieldName = oFilterBean.getFilter();
-                if ("obj_".equals(strFilterFieldName.substring(0, 4))) {
-                    strFilterFieldName = "id_" + strFilterFieldName.substring(4);
+                if (strFilterFieldName.length() >= 4) {
+                    if ("obj_".equals(strFilterFieldName.substring(0, 4))) {
+                        strFilterFieldName = "id_" + strFilterFieldName.substring(4);
+                    }
                 }
                 switch (oFilterBean.getFilterOperator()) {
                     case "like":
@@ -80,7 +82,7 @@ public class SqlBuilder {
             strSQLOrder += " ORDER BY";
             String strOrderFieldName;
             for (Map.Entry oPar : hmOrder.entrySet()) {
-                strOrderFieldName=(String) oPar.getKey();
+                strOrderFieldName = (String) oPar.getKey();
                 if ("obj_".equals(strOrderFieldName.substring(0, 4))) {
                     strOrderFieldName = "id_" + strOrderFieldName.substring(4);
                 }
