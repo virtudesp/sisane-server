@@ -33,6 +33,7 @@ package net.daw.helper.statics;
 public class AppInformationHelper {
 
     public static String getAppName() {
-        return "ausiàsYield";
+        return System.getProperty("program.name");
+        //return "openAUSIAS";
     }
 }
