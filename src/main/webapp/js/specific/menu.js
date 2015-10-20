@@ -40,7 +40,7 @@ appMenu = function () {
             dom.li('class="dropdown"',
                     dom.a('href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"',
                             dom.i('class="fa fa-icon-list-alt"', '') +
-                            'Entidades' +
+                            'Documento' +
                             dom.span('class="caret"', '')
                             ) +
                     dom.ul('class="dropdown-menu" role="menu"',
@@ -127,6 +127,34 @@ appMenu = function () {
                                             )
                                     )
                             )
+                    ) +
+            dom.li('class="dropdown"',
+                    dom.a('href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"',
+                            dom.i('class="fa fa-icon-list-alt"', '') +
+                            'Mantenimientos' +
+                            dom.span('class="caret"', '')
+                            ) +
+                    dom.ul('class="dropdown-menu" role="menu"',
+                            dom.li('',
+                                    dom.a('href="#/documento/plist"',
+                                            dom.i('class="fa fa-fw fa-file-text"', '') +
+                                            'Documentos'
+                                            )
+                                    ) +
+                            dom.li('',
+                                    dom.a('href="#/tipodocumento/plist"',
+                                            dom.i('class="fa fa-fw fa-tag"', '') +
+                                            'Tipos de documento'
+                                            )
+                                    ) +
+                            dom.li('',
+                                    dom.a('href="#/usuario/plist"',
+                                            dom.i('class="fa fa-fw fa-user"', '') +
+                                            'Usuarios'
+                                            )
+                                    )
+
+                            )
                     )
-            );
+            )
 }

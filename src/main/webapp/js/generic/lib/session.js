@@ -26,13 +26,45 @@
  */
 
 var session = {
+    loginForm: function () {
+        return (                
+                dom.div('id="broth_modal_login" class="modal fade bs-modal-sm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"',                
+                        dom.div('class="modal-dialog modal-sm"',
+                                dom.div('class="modal-content"',
+                                        dom.div('class="modal-header"',
+                                                dom.div('class="panel-title text-center"', 'Introduce login y password')
+                                                ) +
+                                        dom.div('class="modal-body"',
+                                                dom.div('class="row"',
+                                                        dom.div('class="col-md-12 col-lg-12"',
+                                                                dom.form('role="form"',
+                                                                        dom.fieldset('',
+                                                                                dom.div('class="form-group"',
+                                                                                        dom.input('class="form-control" id="broth_input_login" placeholder="Login" name="email" type="email" value="rafael" autofocus', '')
+                                                                                        ) +
+                                                                                dom.div('class="form-group"',
+                                                                                        dom.input('class="form-control" id="broth_input_password" placeholder="Password" name="password" type="password" value="rafael"', '')
+                                                                                        ) +
+                                                                                dom.a('href="index.html" id="broth_button_login" class="btn btn-lg btn-success btn-block"', 'Login')
+                                                                                )
+
+                                                                        )
+                                                                )
+                                                        )
+                                                ) +
+                                        dom.div('class="modal-footer" id="broth_login_modal_footer"', '')
+                                        )
+                                )
+                        )
+                )
+    },         
     updateConnectedState: function (loginName) {
         $('#broth_username_id').text(loginName);
         $('.broth_show_when_logged_in').show();
         $('.broth_show_when_logged_out').hide();
         //$("#broth_username_menu_id").css('display', 'block', 'important');
         session.unloadLoginForm();
-        fDocumentoRoutes();
+        loadRoutes();        
         Path.listen();
     },
     updateDisconnectedState: function () {
@@ -68,6 +100,8 @@ var session = {
         //$('#loginFormBroth').css('display', 'block');
         //$("#documentoForm").append(thisObject.getEmptyModal());
         $("#broth_login_modal_footer").html("");
+        
+        $('#brothModalLogin').append(session.loginForm());
         modal.load('#broth_modal_login', true);
         //$('#broth_modal_login').css('width', '20%');
 
@@ -93,6 +127,7 @@ var session = {
         //$("#login").unbind('click');
         //$('#loginFormBroth').css('display', 'none');
         $('#broth_modal_login').modal('hide');
+        //$('#broth_modal_login').empty();
     }
 
 

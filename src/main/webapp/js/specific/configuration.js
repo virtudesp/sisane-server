@@ -30,6 +30,7 @@ configuration = {
 
         Path.map("#/about").to(function () {
             $('#broth_panel_heading').empty().append(html.getPageHeader('<i class="fa fa-comments fa-5x"></i>', "openAusiàs", "the astonising framework"));
+            $('#broth_content').empty();
         });
         Path.root("#/home");
         Path.map("#/").to(function () {
@@ -37,9 +38,11 @@ configuration = {
         });
         Path.map("#").to(function () {
             $('#broth_panel_heading').empty().append(html.getPageHeader('<i class="fa fa-comments fa-5x"></i>', "openAusiàs", "the astonising framework"));
+            $('#broth_content').empty();
         });
         Path.map("#/home").to(function () {
             $('#broth_panel_heading').empty().append(html.getPageHeader('<i class="fa fa-comments fa-5x"></i>', "openAusiàs", "the astonising framework"));
+            $('#broth_content').empty();
         });
         Path.rescue(function () {
             $('#broth_panel_heading').empty().append(html.getPageHeader('<i class="fa fa-ambulance fa-5x"></i>', "404: la página no existe", "la dirección no es correcta"));

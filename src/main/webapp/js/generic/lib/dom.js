@@ -117,20 +117,17 @@ dom = {
     form: function (strAttributes, strText) {
         return html.dom2('form', strAttributes, strText);
     },
-    inputText: function (strAttributes, strText) {
+    input: function (strAttributes, strText) {
         return html.dom2('input', strAttributes, strText);
     },
     textarea: function (strAttributes, strText) {
         return html.dom2('textarea', strAttributes, strText);
     },
-    inputCheckbox: function (strAttributes, strText) {
-        return html.dom2('input', strAttributes, strText);
-    },
     button: function (strAttributes, strText) {
         return html.dom2('button', strAttributes, strText);
     },
-    submit: function (strAttributes, strText) {
-        return html.dom2('input', strAttributes, strText);
+    fieldset: function (strAttributes, strText) {
+        return html.dom2('fieldset', strAttributes, strText);
     }
 };
 

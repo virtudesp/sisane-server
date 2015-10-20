@@ -25,32 +25,28 @@
  * THE SOFTWARE.
  */
 
-var documentoView = function () {
-//    this.render = function () {
-//        console.log('vic')
-//    }
-    //viewModule.call(this, url, strClass);
-};
-//viewModule.call(documentoView.prototype);
+var component_usuario_new = (function () {
+    return {
+        new : newModule
+    }
+});
 
-documentoView.prototype = Object.create(viewModule.prototype);
-//documentoView.prototype.constructor = documentoView;
+var component_usuario_edit = (function () {
+    return {
+        edit: editModule
+    }
+});
+
+var component_usuario_view = (function () {
+    return {
+        view: viewModule
+    }
+})
+
+var component_usuario_plist = (function () {
+    return {
+        list: pListModule
+    }
+})
 
 
-
-
-
-
-//var documentoView = function (url, strClass) {
-//
-//
-//};
-//documentoView.prototype = Object.create(viewModule.prototype);
-//
-////documentoList.prototype = Object.create(listModule);
-////documentoList.prototype = listModule;
-////documentoList.call(listModule.prototype);
-////
-////
-//console.log('hola');
-////documentolist.prototype.constructor = documentolist;

@@ -83,8 +83,7 @@
                     </a>
                 </div>
                 <div id="navbar" class="navbar-collapse collapse" >
-                    <ul class="nav navbar-nav" id="appMenu">                                                                        
-                    </ul>
+                    <ul class="nav navbar-nav" id="appMenu"></ul>
                     <ul class="nav navbar-nav navbar-right">
                         <!-- <li class="active"><a href="./">Fixed top <span class="sr-only">(current)</span></a></li> -->
                         <li class="dropdown broth_show_when_logged_in">
@@ -101,10 +100,10 @@
                                 <li id="broth_logout"><a href="#"><i class="fa fa-fw fa-power-off"></i> Log Out</a></li>
                             </ul>
                         </li>
-                        <li class="broth_show_when_logged_out"  id="broth_login"><a href="#"><i class="fa fa-user"></i> Login</a></li>
+                        <li class="broth_show_when_logged_out"  id="broth_login">
+                            <a href="#"><i class="fa fa-user"></i> Login</a>
+                        </li>
                     </ul>
-
-
                 </div>
             </div>
         </nav>
@@ -130,60 +129,8 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <!-- Modals -->
-            <div id="broth_modal_01" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-lg">
-                    <div class="modal-content">
-                        <div class="modal-header" id="modal-header"></div>
-                        <div class="modal-body" id="modal-body"></div>
-                        <div class="modal-footer" id="modal-footer"></div>
-                    </div>
-                </div>
-            </div>
-            <div id="broth_modal_02" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-lg">
-                    <div class="modal-content">
-                        <div class="modal-header"></div>
-                        <div class="modal-body"></div>
-                        <div class="modal-footer"></div>
-                    </div>                
-                </div>
-            </div>
-            <div id="broth_modal_login" class="modal fade bs-modal-sm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-sm">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <div class="panel-title text-center">Introduce login y password</div>
-                        </div>
-                        <div class="modal-body">
-                            <div class="row">
-                                <div class="col-md-12 col-lg-12">
-                                    <form role="form">
-                                        <fieldset>
-                                            <div class="form-group">
-                                                <input class="form-control" id="broth_input_login" placeholder="Login" name="email" type="email" value="rafael" autofocus>
-                                            </div>
-                                            <div class="form-group">
-                                                <input class="form-control" id="broth_input_password" placeholder="Password" name="password" type="password" value="rafael">
-                                            </div>
-                                            <!--
-                                            <div class="checkbox">
-                                                <label>
-                                                    <input name="remember" type="checkbox" value="Remember Me">Remember Me
-                                                </label>
-                                            </div>
-                                            <!-- Change this to a button or input when using this as a form -->
-                                            <a href="index.html" id="broth_button_login" class="btn btn-lg btn-success btn-block">Login</a>
-                                        </fieldset>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="modal-footer" id="broth_login_modal_footer"></div>
-                    </div>                
-                </div>
-            </div>
+            </div>     
+            <div id="brothModalLogin"></div>
         </div>
         <!-- Vendor -->
         <script src="vendor/jquery/jquery-2.1.4.min.js" type="text/javascript"></script>
@@ -228,14 +175,24 @@
         <!-- Specific modules -->
         <script src="js/specific/menu.js" type="text/javascript"></script>
         <script src="js/specific/configuration.js" type="text/javascript"></script>
-        <script src="js/specific/documento/modules/documentoview.js" type="text/javascript"></script>
+        <!-- Documento -->        
         <script src="js/specific/documento/modules/documentopaginatedList.js" type="text/javascript"></script>
         <script src="js/specific/documento/modules/documentosautorList.js" type="text/javascript"></script>
-        <!-- Specific routes & components -->
         <script src="js/specific/documento/components.js" type="text/javascript"></script>
         <script src="js/specific/documento/routes.js" type="text/javascript"></script>
-
+        <!-- Tipodocumento -->
+        <script src="js/specific/tipodocumento/components.js" type="text/javascript"></script>
+        <script src="js/specific/tipodocumento/routes.js" type="text/javascript"></script>
+        <!-- Usuario -->
+        <script src="js/specific/usuario/components.js" type="text/javascript"></script>
+        <script src="js/specific/usuario/routes.js" type="text/javascript"></script>
+        <!-- --------------------------------------------------------------- -->
         <script type="text/javascript">
+            function loadRoutes() {
+                fTipodocumentoRoutes();
+                fUsuarioRoutes();
+                fDocumentoRoutes();
+            }
             $(document).ready(function () {
                 configuration.pathConfig();
                 $('.broth_show_when_logged_in').hide();

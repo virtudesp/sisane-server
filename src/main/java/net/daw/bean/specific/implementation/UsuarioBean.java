@@ -60,11 +60,16 @@ public class UsuarioBean extends BeanGenImpl implements BeanInterface {
     private Integer id;
     
     @Expose
-    @MethodMetaInformation(ShortName = "Login", IsForeignKeyDescriptor = true)
+    @MethodMetaInformation(
+            UltraShortName = "Login",
+            ShortName = "Login", 
+            IsForeignKeyDescriptor = true)
     private String login = "";
 
     @Expose
-    @MethodMetaInformation(ShortName = "Password")
+    @MethodMetaInformation(
+            UltraShortName = "Pass",
+            ShortName = "Password")
     private String password = "";
 
     @Expose(serialize = false)

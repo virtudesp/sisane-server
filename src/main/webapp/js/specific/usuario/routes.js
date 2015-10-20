@@ -26,11 +26,11 @@
  */
 
 
-function fTipodocumentoRoutes() {
+function fUsuarioRoutes() {
     var dataFromServer = $.Deferred();
     var icon = '<i class="fa fa-file-text-o fa-5x"></i>';
-    var fillDocumentoPageHeader = _.partial(html.getPageHeader, icon, 'Tipo de Documento', _);
-    var strClass = 'tipodocumento';
+    var fillDocumentoPageHeader = _.partial(html.getPageHeader, icon, 'Usuario', _);
+    var strClass = 'usuario';
     //--------------------------------------------------------------------------
     Path.map("#/" + strClass + "/new(/:url)").to(function () {
         $('#broth_panel_heading').empty().append(fillDocumentoPageHeader('New'));
@@ -38,7 +38,7 @@ function fTipodocumentoRoutes() {
         ausiasFLOW.newModule_paramsObject = parameter.getUrlObjectFromUrlString(this.params['url']);
         ausiasFLOW.newModule_frontOperation = 'new';
         ausiasFLOW.newModule_class = strClass;
-        ausiasFLOW.initialize(component_tipodocumento_new().new, $('#broth_content'));
+        ausiasFLOW.initialize(component_usuario_new().new, $('#broth_content'));
         return false;
     });
     //--------------------------------------------------------------------------    
@@ -48,7 +48,7 @@ function fTipodocumentoRoutes() {
         ausiasFLOW.editModule_paramsObject = parameter.getUrlObjectFromUrlString(this.params['url']);
         ausiasFLOW.editModule_frontOperation = 'new';
         ausiasFLOW.editModule_class = strClass;
-        ausiasFLOW.initialize(component_tipodocumento_edit().edit, $('#broth_content'));
+        ausiasFLOW.initialize(component_usuario_edit().edit, $('#broth_content'));
         return false;
     });
     //--------------------------------------------------------------------------
@@ -58,7 +58,7 @@ function fTipodocumentoRoutes() {
         ausiasFLOW.viewModule_paramsObject = parameter.getUrlObjectFromUrlString(this.params['url']); // paramsObject['id'];
         ausiasFLOW.viewModule_frontOperation = 'view';
         ausiasFLOW.viewModule_class = strClass;
-        ausiasFLOW.initialize(component_tipodocumento_view().view, $('#broth_content'));
+        ausiasFLOW.initialize(component_usuario_view().view, $('#broth_content'));
         return false;
     });
     //--------------------------------------------------------------------------
@@ -68,7 +68,7 @@ function fTipodocumentoRoutes() {
         ausiasFLOW.pListModule_paramsObject = parameter.getUrlObjectFromUrlString(this.params['url']);
         ausiasFLOW.pListModule_frontOperation = 'plist';
         ausiasFLOW.pListModule_class = strClass;
-        ausiasFLOW.initialize(component_tipodocumento_plist().list, $('#broth_content'));
+        ausiasFLOW.initialize(component_usuario_plist().list, $('#broth_content'));
         return false;
     });
     //--------------------------------------------------------------------------

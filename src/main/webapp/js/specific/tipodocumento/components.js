@@ -25,52 +25,28 @@
  * THE SOFTWARE.
  */
 
-var component_documento_edit = (function () {
-    return {
-        edit: editModule
-    }
-});
-
-var component_documento_new = (function () {
+var component_tipodocumento_new = (function () {
     return {
         new : newModule
     }
 });
 
-var component_documento_plist = (function () {
+var component_tipodocumento_edit = (function () {
     return {
-        list: pListModule
+        edit: editModule
     }
-})
+});
 
-var component_documento_eplist = (function () {
-    return {
-        list: epListModule
-    }
-})
-
-var component_documento_list = (function () {
-    return {
-        list: listModule
-    }
-})
-
-var component_documento_view = (function () {
+var component_tipodocumento_view = (function () {
     return {
         view: viewModule
     }
 })
 
-var component_documento_table_view = (function () {
+var component_tipodocumento_plist = (function () {
     return {
-        view: viewModule,
-        list: documentoPaginatedList
-    }
-});
-
-var component_documento_documentosautor = (function () {
-    return {
-        list: documentosautorList
+        list: pListModule
     }
 })
+
 
