@@ -136,9 +136,30 @@ form = {
 //');
     },
     formForeign: function (fieldName, fieldShortName) {
-
-
-
+        
+        
+        
+//        return dom.div('class="form-group"',
+//                dom.label('class="col-sm-2 control-label" for="' + fieldName + '"', fieldShortName + ':') +
+//                dom.div('class="control col-sm-3"',
+//                        dom.div('class="input-group foreign" id="' + fieldName + '_group"',
+//                                dom.span('class="input-group-addon" id="' + fieldName + '_button"', html.dom('span', 'class="glyphicon glyphicon-search"', '')) +
+//                                dom.input('readonly="true" class="form-control" id="' + fieldName + '" class="input-mini" name="' + fieldName + '" type="text" size="5" maxlength="5"', '')
+//                                )
+//                        ) +
+//                dom.label('class="col-sm-7" for="' + fieldName + '_desc" id="' + fieldName + '_desc"', '')
+//                );
+             
+//        return html.dom2('div', 'class="form-group"',
+//                html.dom2('label', 'class="col-sm-2 control-label" for="' + fieldName + '"', fieldShortName + ':') +
+//                html.dom2('div', 'class="control col-sm-3"',
+//                        html.dom2('div', 'class="input-group foreign" id="' + fieldName + '_group"',
+//                                html.dom2('span', 'class="input-group-addon" id="' + fieldName + '_button"', html.dom('span', 'class="glyphicon glyphicon-search"', '')) +
+//                                html.dom2('input', '', 'readonly="true" class="form-control" id="' + fieldName + '" class="input-mini" name="' + fieldName + '" type="text" size="5" maxlength="5"')
+//                                )
+//                        ) +
+//                html.dom2('label', 'class="col-sm-7" for="' + fieldName + '_desc" id="' + fieldName + '_desc"', '')
+//                );
 
 
 //        return(
@@ -200,7 +221,6 @@ form = {
 //                );
     },
     formCheckBox: function (fieldName, fieldShortName) {
-
         return  (
                 html.dom2('div', 'id="' + fieldName + '-group" class="form-group"',
                         html.dom2('label', 'class="col-sm-2 control-label"  for="' + fieldName + '"', fieldShortName + ":") +
