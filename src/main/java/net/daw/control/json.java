@@ -87,10 +87,10 @@ public class json extends HttpServlet {
                 Class.forName("com.mysql.jdbc.Driver");
             } catch (Exception ex) {
                 if (EstadoHelper.getTipo_estado() == Tipo_estado.Debug) {
-                    request.setAttribute("contenido", JsonMessage.get("500", "ERROR: " + ex.getMessage()));
+                    request.setAttribute("contenido", JsonMessage.getJsonMsg("500", "ERROR: " + ex.getMessage()));
                     getServletContext().getRequestDispatcher("/jsp/messageAjax.jsp").forward(request, response);
                 } else {
-                    request.setAttribute("contenido", JsonMessage.get("500", "Applications server error. Please, contact your administrator."));
+                    request.setAttribute("contenido", JsonMessage.getJsonMsg("500", "Applications server error. Please, contact your administrator."));
                     getServletContext().getRequestDispatcher("/jsp/messageAjax.jsp").forward(request, response);
                 }
                 writeLog(request, response, ex.toString());
@@ -112,10 +112,10 @@ public class json extends HttpServlet {
             }
         } catch (ServletException | IOException | NoSuchMethodException | SecurityException | IllegalArgumentException | InvocationTargetException ex) {
             if (EstadoHelper.getTipo_estado() == Tipo_estado.Debug) {
-                request.setAttribute("contenido", JsonMessage.get("500", "ERROR: " + ex.getMessage()));
+                request.setAttribute("contenido", JsonMessage.getJsonMsg("500", "ERROR: " + ex.getMessage()));
                 getServletContext().getRequestDispatcher("/jsp/messageAjax.jsp").forward(request, response);
             } else {
-                request.setAttribute("contenido", JsonMessage.get("500", "Applications server error. Please, contact your administrator."));
+                request.setAttribute("contenido", JsonMessage.getJsonMsg("500", "Applications server error. Please, contact your administrator."));
                 getServletContext().getRequestDispatcher("/jsp/messageAjax.jsp").forward(request, response);
             }
             writeLog(request, response, ex.toString());

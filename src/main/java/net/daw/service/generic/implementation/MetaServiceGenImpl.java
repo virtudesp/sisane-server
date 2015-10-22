@@ -26,8 +26,6 @@
  */
 package net.daw.service.generic.implementation;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import java.lang.reflect.Constructor;
 import java.sql.Connection;
 import java.util.ArrayList;
@@ -57,12 +55,11 @@ public abstract class MetaServiceGenImpl implements MetaServiceInterface {
         } else {
             return false;
         }
-
     }
 
     @Override
     public String getmetainformation() throws Exception {
-        if (this.checkpermission(this.getClass().getName())) {
+        if (this.checkpermission("getmetainformation")) {
             String data = null;
             ArrayList<MetaBeanGenImpl> alMeta = null;
             try {
@@ -74,7 +71,7 @@ public abstract class MetaServiceGenImpl implements MetaServiceInterface {
             }
             return data;
         } else {
-            return JsonMessage.get("401", "Unauthorized");
+            return JsonMessage.getJsonMsg("401", "Unauthorized");
         }
     }
 

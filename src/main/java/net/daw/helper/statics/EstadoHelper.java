@@ -43,15 +43,15 @@ public class EstadoHelper {
     }
 
     public static String getFecha() {
-        return "15/10/2014";
+        return "21/10/2015";
     }
 
     public static String getAnyo() {
-        return "2014";
+        return "2015";
     }
 
     public static String getCurso() {
-        return "2014-2015";
+        return "2015-2016";
     }
 
     public static String getAutor() {
@@ -63,7 +63,7 @@ public class EstadoHelper {
     }
 
     public static String getLicenciaLink() {
-        return "<a href=\"http://www.gnu.org/licenses/gpl-2.0.html\">GNU General Public License, version 2</a>";
+        return "<a href=\"https://opensource.org/licenses/MIT\">MIT License</a>";
     }
 
     public static int getDelay() {

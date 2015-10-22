@@ -52,7 +52,7 @@ public abstract class TableServiceGenImpl extends ViewServiceGenImpl implements 
 
     @Override
     public String remove() throws Exception {
-        if (this.checkpermission(this.getClass().getName())) {
+        if (this.checkpermission("remove")) {
             Integer id = ParameterCook.prepareId(oRequest);
             String resultado = null;
             Connection oConnection = null;
@@ -88,13 +88,13 @@ public abstract class TableServiceGenImpl extends ViewServiceGenImpl implements 
             }
             return resultado;
         } else {
-            return JsonMessage.get("401", "Unauthorized");
+            return JsonMessage.getJsonMsg("401", "Unauthorized");
         }
     }
 
     @Override
     public String set() throws Exception {
-        if (this.checkpermission(this.getClass().getName())) {
+        if (this.checkpermission("set")) {
             String jason = ParameterCook.prepareJson(oRequest);
             String resultado = null;
             Connection oConnection = null;
@@ -128,7 +128,7 @@ public abstract class TableServiceGenImpl extends ViewServiceGenImpl implements 
             }
             return resultado;
         } else {
-            return JsonMessage.get("401", "Unauthorized");
+            return JsonMessage.getJsonMsg("401", "Unauthorized");
         }
     }
 

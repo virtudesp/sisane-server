@@ -32,7 +32,7 @@ import java.util.Map;
 
 public class JsonMessage {
 
-    public static String get(String strStatus, String strMessage) {
+    public static String getJsonMsg(String strStatus, String strMessage) {
         Map<String, String> data = new HashMap<>();
         data.put("status", strStatus);
         data.put("message", strMessage);

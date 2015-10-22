@@ -55,8 +55,7 @@ public abstract class ViewServiceGenImpl extends MetaServiceGenImpl implements V
 
     @Override
     public String get() throws Exception {
-        if (this.checkpermission(this.getClass().getName())) {
-
+        if (this.checkpermission("get")) {
             int id = ParameterCook.prepareId(oRequest);
             String data = null;
             Connection oConnection = null;
@@ -85,13 +84,13 @@ public abstract class ViewServiceGenImpl extends MetaServiceGenImpl implements V
             return data;
 
         } else {
-            return JsonMessage.get("401", "Unauthorized");
+            return JsonMessage.getJsonMsg("401", "Unauthorized");
         }
     }
 
     @Override
     public String getall() throws Exception {
-        if (this.checkpermission(this.getClass().getName())) {
+        if (this.checkpermission("getall")) {
             ArrayList<FilterBeanHelper> alFilter = ParameterCook.prepareFilter(oRequest);
             HashMap<String, String> hmOrder = ParameterCook.prepareOrder(oRequest);
             String data = null;
@@ -117,13 +116,13 @@ public abstract class ViewServiceGenImpl extends MetaServiceGenImpl implements V
             }
             return data;
         } else {
-            return JsonMessage.get("401", "Unauthorized");
+            return JsonMessage.getJsonMsg("401", "Unauthorized");
         }
     }
 
     @Override
     public String getpage() throws Exception {
-        if (this.checkpermission(this.getClass().getName())) {
+        if (this.checkpermission("getpage")) {
             int intRegsPerPag = ParameterCook.prepareRpp(oRequest);;
             int intPage = ParameterCook.preparePage(oRequest);
             ArrayList<FilterBeanHelper> alFilter = ParameterCook.prepareFilter(oRequest);
@@ -151,13 +150,13 @@ public abstract class ViewServiceGenImpl extends MetaServiceGenImpl implements V
             }
             return data;
         } else {
-            return JsonMessage.get("401", "Unauthorized");
+            return JsonMessage.getJsonMsg("401", "Unauthorized");
         }
     }
 
     @Override
     public String getpages() throws Exception {
-        if (this.checkpermission(this.getClass().getName())) {
+        if (this.checkpermission("getpages")) {
             int intRegsPerPag = ParameterCook.prepareRpp(oRequest);
             ArrayList<FilterBeanHelper> alFilter = ParameterCook.prepareFilter(oRequest);
             String data = null;
@@ -181,13 +180,13 @@ public abstract class ViewServiceGenImpl extends MetaServiceGenImpl implements V
             }
             return data;
         } else {
-            return JsonMessage.get("401", "Unauthorized");
+            return JsonMessage.getJsonMsg("401", "Unauthorized");
         }
     }
 
     @Override
     public String getcount() throws Exception {
-        if (this.checkpermission(this.getClass().getName())) {
+        if (this.checkpermission("getcount")) {
 
             String data = null;
             ArrayList<FilterBeanHelper> alFilter = ParameterCook.prepareFilter(oRequest);
@@ -211,14 +210,14 @@ public abstract class ViewServiceGenImpl extends MetaServiceGenImpl implements V
             }
             return data;
         } else {
-            return JsonMessage.get("401", "Unauthorized");
+            return JsonMessage.getJsonMsg("401", "Unauthorized");
         }
     }
 
     @Override
     public String getaggregateviewone() throws Exception {
 
-        if (this.checkpermission(this.getClass().getName())) {
+        if (this.checkpermission("getaggregateviewone")) {
             String data = null;
             try {
                 String meta = this.getmetainformation();
@@ -234,13 +233,13 @@ public abstract class ViewServiceGenImpl extends MetaServiceGenImpl implements V
             }
             return data;
         } else {
-            return JsonMessage.get("401", "Unauthorized");
+            return JsonMessage.getJsonMsg("401", "Unauthorized");
         }
     }
 
     @Override
     public String getaggregateviewsome() throws Exception {
-        if (this.checkpermission(this.getClass().getName())) {
+        if (this.checkpermission("getaggregateviewsome")) {
             String data = null;
             try {
                 String meta = this.getmetainformation();
@@ -259,13 +258,13 @@ public abstract class ViewServiceGenImpl extends MetaServiceGenImpl implements V
             }
             return data;
         } else {
-            return JsonMessage.get("401", "Unauthorized");
+            return JsonMessage.getJsonMsg("401", "Unauthorized");
         }
     }
 
     @Override
     public String getaggregateviewall() throws Exception {
-        if (this.checkpermission(this.getClass().getName())) {
+        if (this.checkpermission("getaggregateviewall")) {
             String data = null;
             try {
                 String meta = this.getmetainformation();
@@ -282,7 +281,7 @@ public abstract class ViewServiceGenImpl extends MetaServiceGenImpl implements V
             }
             return data;
         } else {
-            return JsonMessage.get("401", "Unauthorized");
+            return JsonMessage.getJsonMsg("401", "Unauthorized");
         }
     }
 }
