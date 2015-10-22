@@ -26,13 +26,13 @@
  */
 promise = {
     getSession: function () {
-        return ajax.call(config.getAppUrl() + '?op=status', 'GET', '');
+        return ajax.call(config.getAppUrl() + '?ob=usuario&op=getsessionstatus', 'GET', '');
     },
     getLogin: function (username, password) {
-        return ajax.call(config.getAppUrl() + '?ob=user&op=login&login=' + username + '&password=' + password, 'GET', '');
+        return ajax.call(config.getAppUrl() + '?ob=usuario&op=login&login=' + username + '&password=' + password, 'GET', '');
     },
     getLogout: function () {
-        return ajax.call(config.getAppUrl() + '?ob=user&op=logout', 'GET', '');
+        return ajax.call(config.getAppUrl() + '?ob=usuario&op=logout', 'GET', '');
     },
     getOne: function (strClass, id) {
         return ajax.call(config.getAppUrl() + '?ob=' + strClass + '&op=getaggregateviewone&id=' + id, 'GET', '');

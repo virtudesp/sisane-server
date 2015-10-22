@@ -38,10 +38,10 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import net.daw.bean.generic.implementation.BeanGenImpl;
 import net.daw.bean.publicinterface.BeanInterface;
-import net.daw.connection.implementation.BoneConnectionPoolImpl;
 import net.daw.connection.publicinterface.ConnectionInterface;
 import net.daw.dao.generic.implementation.TableDaoGenImpl;
 import net.daw.helper.statics.AppConfigurationHelper;
+import static net.daw.helper.statics.AppConfigurationHelper.getSourceConnection;
 import net.daw.helper.statics.ExceptionBooster;
 import net.daw.helper.statics.FilterBeanHelper;
 import net.daw.helper.statics.JsonMessage;
@@ -53,19 +53,16 @@ public abstract class ViewServiceGenImpl extends MetaServiceGenImpl implements V
         super(request);
     }
 
-    protected Boolean canexecute_get() {
-        return true;
-    }
-
     @Override
     public String get() throws Exception {
-        if (this.canexecute_get()) {
+        if (this.checkpermission(this.getClass().getName())) {
+
             int id = ParameterCook.prepareId(oRequest);
             String data = null;
             Connection oConnection = null;
             ConnectionInterface oDataConnectionSource = null;
             try {
-                oDataConnectionSource = new BoneConnectionPoolImpl();
+                oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
                 BeanGenImpl oGenericBean = (BeanGenImpl) Class.forName("net.daw.bean.specific.implementation." + ParameterCook.prepareCamelCaseObject(oRequest) + "Bean").newInstance();
                 Constructor c = Class.forName("net.daw.dao.specific.implementation." + ParameterCook.prepareCamelCaseObject(oRequest) + "Dao").getConstructor(Connection.class);
@@ -73,9 +70,7 @@ public abstract class ViewServiceGenImpl extends MetaServiceGenImpl implements V
                 Method metodo_setId = oGenericBean.getClass().getMethod("setId", Integer.class);
                 metodo_setId.invoke(oGenericBean, id); //oGenericBean.setId(id);
                 oGenericBean = (BeanGenImpl) (BeanInterface) oGenericDao.get(oGenericBean, AppConfigurationHelper.getJsonDepth());
-                GsonBuilder gsonBuilder = new GsonBuilder();
-                gsonBuilder.setDateFormat("dd/MM/yyyy");
-                Gson gson = gsonBuilder.excludeFieldsWithoutExposeAnnotation().create();
+                Gson gson = AppConfigurationHelper.getGson();
                 data = JsonMessage.getJson("200", gson.toJson(oGenericBean));
             } catch (Exception ex) {
                 ExceptionBooster.boost(new Exception(this.getClass().getName() + ":get ERROR: " + ex.getMessage()));
@@ -88,181 +83,206 @@ public abstract class ViewServiceGenImpl extends MetaServiceGenImpl implements V
                 }
             }
             return data;
+
         } else {
-            return JsonMessage.get("500", "ERROR: Invalid permission: You aren't allowed to execute this command");
+            return JsonMessage.get("401", "Unauthorized");
         }
     }
 
     @Override
     public String getall() throws Exception {
-        ArrayList<FilterBeanHelper> alFilter = ParameterCook.prepareFilter(oRequest);
-        HashMap<String, String> hmOrder = ParameterCook.prepareOrder(oRequest);
-        String data = null;
-        Connection oConnection = null;
-        ConnectionInterface oDataConnectionSource = null;
-        try {
-            oDataConnectionSource = new BoneConnectionPoolImpl();
-            oConnection = oDataConnectionSource.newConnection();
-            BeanGenImpl oGenericBean = (BeanGenImpl) Class.forName("net.daw.bean.specific.implementation." + ParameterCook.prepareCamelCaseObject(oRequest) + "Bean").newInstance();
-            Constructor c = Class.forName("net.daw.dao.specific.implementation." + ParameterCook.prepareCamelCaseObject(oRequest) + "Dao").getConstructor(Connection.class);
-            TableDaoGenImpl oGenericDao = (TableDaoGenImpl) c.newInstance(oConnection);
-            List<BeanInterface> loGenericBean = oGenericDao.getAll(alFilter, hmOrder);
-            GsonBuilder gsonBuilder = new GsonBuilder();
-            gsonBuilder.setDateFormat("dd/MM/yyyy");
-            Gson gson = gsonBuilder.excludeFieldsWithoutExposeAnnotation().create();
-            data = JsonMessage.getJson("200", gson.toJson(loGenericBean));
-        } catch (Exception ex) {
-            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getAll ERROR: " + ex.getMessage()));
-        } finally {
-            if (oConnection != null) {
-                oConnection.close();
+        if (this.checkpermission(this.getClass().getName())) {
+            ArrayList<FilterBeanHelper> alFilter = ParameterCook.prepareFilter(oRequest);
+            HashMap<String, String> hmOrder = ParameterCook.prepareOrder(oRequest);
+            String data = null;
+            Connection oConnection = null;
+            ConnectionInterface oDataConnectionSource = null;
+            try {
+                oDataConnectionSource = getSourceConnection();
+                oConnection = oDataConnectionSource.newConnection();
+                BeanGenImpl oGenericBean = (BeanGenImpl) Class.forName("net.daw.bean.specific.implementation." + ParameterCook.prepareCamelCaseObject(oRequest) + "Bean").newInstance();
+                Constructor c = Class.forName("net.daw.dao.specific.implementation." + ParameterCook.prepareCamelCaseObject(oRequest) + "Dao").getConstructor(Connection.class);
+                TableDaoGenImpl oGenericDao = (TableDaoGenImpl) c.newInstance(oConnection);
+                List<BeanInterface> loGenericBean = oGenericDao.getAll(alFilter, hmOrder);            
+                data = JsonMessage.getJson("200", AppConfigurationHelper.getGson().toJson(loGenericBean));
+            } catch (Exception ex) {
+                ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getAll ERROR: " + ex.getMessage()));
+            } finally {
+                if (oConnection != null) {
+                    oConnection.close();
+                }
+                if (oDataConnectionSource != null) {
+                    oDataConnectionSource.disposeConnection();
+                }
             }
-            if (oDataConnectionSource != null) {
-                oDataConnectionSource.disposeConnection();
-            }
+            return data;
+        } else {
+            return JsonMessage.get("401", "Unauthorized");
         }
-        return data;
     }
 
     @Override
     public String getpage() throws Exception {
-        int intRegsPerPag = ParameterCook.prepareRpp(oRequest);;
-        int intPage = ParameterCook.preparePage(oRequest);
-        ArrayList<FilterBeanHelper> alFilter = ParameterCook.prepareFilter(oRequest);
-        HashMap<String, String> hmOrder = ParameterCook.prepareOrder(oRequest);
-        String data = null;
-        Connection oConnection = null;
-        ConnectionInterface oDataConnectionSource = null;
-        try {
-            oDataConnectionSource = new BoneConnectionPoolImpl();
-            oConnection = oDataConnectionSource.newConnection();
-            BeanGenImpl oGenericBean = (BeanGenImpl) Class.forName("net.daw.bean.specific.implementation." + ParameterCook.prepareCamelCaseObject(oRequest) + "Bean").newInstance();
-            Constructor c = Class.forName("net.daw.dao.specific.implementation." + ParameterCook.prepareCamelCaseObject(oRequest) + "Dao").getConstructor(Connection.class);
-            TableDaoGenImpl oGenericDao = (TableDaoGenImpl) c.newInstance(oConnection);
-            List<BeanInterface> loGenericBean = oGenericDao.getPage(intRegsPerPag, intPage, alFilter, hmOrder);
-            GsonBuilder gsonBuilder = new GsonBuilder();
-            gsonBuilder.setDateFormat("dd/MM/yyyy");
-            Gson gson = gsonBuilder.excludeFieldsWithoutExposeAnnotation().create();
-            data = JsonMessage.getJson("200", gson.toJson(loGenericBean));
-        } catch (Exception ex) {
-            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPage ERROR: " + ex.getMessage()));
-        } finally {
-            if (oConnection != null) {
-                oConnection.close();
+        if (this.checkpermission(this.getClass().getName())) {
+            int intRegsPerPag = ParameterCook.prepareRpp(oRequest);;
+            int intPage = ParameterCook.preparePage(oRequest);
+            ArrayList<FilterBeanHelper> alFilter = ParameterCook.prepareFilter(oRequest);
+            HashMap<String, String> hmOrder = ParameterCook.prepareOrder(oRequest);
+            String data = null;
+            Connection oConnection = null;
+            ConnectionInterface oDataConnectionSource = null;
+            try {
+                oDataConnectionSource = getSourceConnection();
+                oConnection = oDataConnectionSource.newConnection();
+                BeanGenImpl oGenericBean = (BeanGenImpl) Class.forName("net.daw.bean.specific.implementation." + ParameterCook.prepareCamelCaseObject(oRequest) + "Bean").newInstance();
+                Constructor c = Class.forName("net.daw.dao.specific.implementation." + ParameterCook.prepareCamelCaseObject(oRequest) + "Dao").getConstructor(Connection.class);
+                TableDaoGenImpl oGenericDao = (TableDaoGenImpl) c.newInstance(oConnection);
+                List<BeanInterface> loGenericBean = oGenericDao.getPage(intRegsPerPag, intPage, alFilter, hmOrder);
+                data = JsonMessage.getJson("200", AppConfigurationHelper.getGson().toJson(loGenericBean));
+            } catch (Exception ex) {
+                ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPage ERROR: " + ex.getMessage()));
+            } finally {
+                if (oConnection != null) {
+                    oConnection.close();
+                }
+                if (oDataConnectionSource != null) {
+                    oDataConnectionSource.disposeConnection();
+                }
             }
-            if (oDataConnectionSource != null) {
-                oDataConnectionSource.disposeConnection();
-            }
+            return data;
+        } else {
+            return JsonMessage.get("401", "Unauthorized");
         }
-        return data;
     }
 
     @Override
     public String getpages() throws Exception {
-        int intRegsPerPag = ParameterCook.prepareRpp(oRequest);
-        ArrayList<FilterBeanHelper> alFilter = ParameterCook.prepareFilter(oRequest);
-        String data = null;
-        Connection oConnection = null;
-        ConnectionInterface oDataConnectionSource = null;
-        try {
-            oDataConnectionSource = new BoneConnectionPoolImpl();
-            oConnection = oDataConnectionSource.newConnection();
-            Constructor c = Class.forName("net.daw.dao.specific.implementation." + ParameterCook.prepareCamelCaseObject(oRequest) + "Dao").getConstructor(Connection.class);
-            TableDaoGenImpl oGenericDao = (TableDaoGenImpl) c.newInstance(oConnection);
-            data = JsonMessage.getJson("200", Integer.toString(oGenericDao.getPages(intRegsPerPag, alFilter)));
-        } catch (Exception ex) {
-            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPages ERROR: " + ex.getMessage()));
-        } finally {
-            if (oConnection != null) {
-                oConnection.close();
+        if (this.checkpermission(this.getClass().getName())) {
+            int intRegsPerPag = ParameterCook.prepareRpp(oRequest);
+            ArrayList<FilterBeanHelper> alFilter = ParameterCook.prepareFilter(oRequest);
+            String data = null;
+            Connection oConnection = null;
+            ConnectionInterface oDataConnectionSource = null;
+            try {
+                oDataConnectionSource = getSourceConnection();
+                oConnection = oDataConnectionSource.newConnection();
+                Constructor c = Class.forName("net.daw.dao.specific.implementation." + ParameterCook.prepareCamelCaseObject(oRequest) + "Dao").getConstructor(Connection.class);
+                TableDaoGenImpl oGenericDao = (TableDaoGenImpl) c.newInstance(oConnection);
+                data = JsonMessage.getJson("200", Integer.toString(oGenericDao.getPages(intRegsPerPag, alFilter)));
+            } catch (Exception ex) {
+                ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPages ERROR: " + ex.getMessage()));
+            } finally {
+                if (oConnection != null) {
+                    oConnection.close();
+                }
+                if (oDataConnectionSource != null) {
+                    oDataConnectionSource.disposeConnection();
+                }
             }
-            if (oDataConnectionSource != null) {
-                oDataConnectionSource.disposeConnection();
-            }
+            return data;
+        } else {
+            return JsonMessage.get("401", "Unauthorized");
         }
-        return data;
     }
 
     @Override
     public String getcount() throws Exception {
-        String data = null;
-        ArrayList<FilterBeanHelper> alFilter = ParameterCook.prepareFilter(oRequest);
-        Connection oConnection = null;
-        ConnectionInterface oDataConnectionSource = null;
-        try {
-            oDataConnectionSource = new BoneConnectionPoolImpl();
-            oConnection = oDataConnectionSource.newConnection();
-            Constructor c = Class.forName("net.daw.dao.specific.implementation." + ParameterCook.prepareCamelCaseObject(oRequest) + "Dao").getConstructor(Connection.class);
-            TableDaoGenImpl oGenericDao = (TableDaoGenImpl) c.newInstance(oConnection);
-            data = JsonMessage.getJson("200", Integer.toString(oGenericDao.getCount(alFilter)));
-        } catch (Exception ex) {
-            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getCount ERROR: " + ex.getMessage()));
-        } finally {
-            if (oConnection != null) {
-                oConnection.close();
+        if (this.checkpermission(this.getClass().getName())) {
+
+            String data = null;
+            ArrayList<FilterBeanHelper> alFilter = ParameterCook.prepareFilter(oRequest);
+            Connection oConnection = null;
+            ConnectionInterface oDataConnectionSource = null;
+            try {
+                oDataConnectionSource = getSourceConnection();
+                oConnection = oDataConnectionSource.newConnection();
+                Constructor c = Class.forName("net.daw.dao.specific.implementation." + ParameterCook.prepareCamelCaseObject(oRequest) + "Dao").getConstructor(Connection.class);
+                TableDaoGenImpl oGenericDao = (TableDaoGenImpl) c.newInstance(oConnection);
+                data = JsonMessage.getJson("200", Integer.toString(oGenericDao.getCount(alFilter)));
+            } catch (Exception ex) {
+                ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getCount ERROR: " + ex.getMessage()));
+            } finally {
+                if (oConnection != null) {
+                    oConnection.close();
+                }
+                if (oDataConnectionSource != null) {
+                    oDataConnectionSource.disposeConnection();
+                }
             }
-            if (oDataConnectionSource != null) {
-                oDataConnectionSource.disposeConnection();
-            }
+            return data;
+        } else {
+            return JsonMessage.get("401", "Unauthorized");
         }
-        return data;
     }
 
     @Override
     public String getaggregateviewone() throws Exception {
-        String data = null;
-        try {
-            String meta = this.getmetainformation();
-            String one = this.get();
-            data = "{"
-                    + "\"meta\":" + meta
-                    + ",\"bean\":" + one
-                    + "}";
-            data = JsonMessage.getJson("200", data);
+
+        if (this.checkpermission(this.getClass().getName())) {
+            String data = null;
+            try {
+                String meta = this.getmetainformation();
+                String one = this.get();
+                data = "{"
+                        + "\"meta\":" + meta
+                        + ",\"bean\":" + one
+                        + "}";
+                data = JsonMessage.getJson("200", data);
+                return data;
+            } catch (Exception ex) {
+                ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getAggregateViewOne ERROR: " + ex.getMessage()));
+            }
             return data;
-        } catch (Exception ex) {
-            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getAggregateViewOne ERROR: " + ex.getMessage()));
+        } else {
+            return JsonMessage.get("401", "Unauthorized");
         }
-        return data;
     }
 
     @Override
     public String getaggregateviewsome() throws Exception {
-        String data = null;
-        try {
-            String meta = this.getmetainformation();
-            String page = this.getpage();
-            String pages = this.getpages();
-            String registers = this.getcount();
-            data = "{"
-                    + "\"meta\":" + meta
-                    + ",\"page\":" + page
-                    + ",\"pages\":" + pages
-                    + ",\"registers\":" + registers
-                    + "}";
-            data = JsonMessage.getJson("200", data);
-        } catch (Exception ex) {
-            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getAggregateViewSome ERROR: " + ex.getMessage()));
+        if (this.checkpermission(this.getClass().getName())) {
+            String data = null;
+            try {
+                String meta = this.getmetainformation();
+                String page = this.getpage();
+                String pages = this.getpages();
+                String registers = this.getcount();
+                data = "{"
+                        + "\"meta\":" + meta
+                        + ",\"page\":" + page
+                        + ",\"pages\":" + pages
+                        + ",\"registers\":" + registers
+                        + "}";
+                data = JsonMessage.getJson("200", data);
+            } catch (Exception ex) {
+                ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getAggregateViewSome ERROR: " + ex.getMessage()));
+            }
+            return data;
+        } else {
+            return JsonMessage.get("401", "Unauthorized");
         }
-        return data;
     }
 
     @Override
     public String getaggregateviewall() throws Exception {
-        String data = null;
-        try {
-            String meta = this.getmetainformation();
-            String all = this.getall();
-            String registers = this.getcount();
-            data = "{"
-                    + "\"meta\":" + meta
-                    + ",\"page\":" + all
-                    + ",\"registers\":" + registers
-                    + "}";
-            data = JsonMessage.getJson("200", data);
-        } catch (Exception ex) {
-            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getAggregateViewAll ERROR: " + ex.getMessage()));
+        if (this.checkpermission(this.getClass().getName())) {
+            String data = null;
+            try {
+                String meta = this.getmetainformation();
+                String all = this.getall();
+                String registers = this.getcount();
+                data = "{"
+                        + "\"meta\":" + meta
+                        + ",\"page\":" + all
+                        + ",\"registers\":" + registers
+                        + "}";
+                data = JsonMessage.getJson("200", data);
+            } catch (Exception ex) {
+                ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getAggregateViewAll ERROR: " + ex.getMessage()));
+            }
+            return data;
+        } else {
+            return JsonMessage.get("401", "Unauthorized");
         }
-        return data;
     }
 }

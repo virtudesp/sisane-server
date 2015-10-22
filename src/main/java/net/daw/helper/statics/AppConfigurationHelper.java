@@ -26,6 +26,11 @@
  */
 package net.daw.helper.statics;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import net.daw.connection.implementation.BoneConnectionPoolImpl;
+import net.daw.connection.publicinterface.ConnectionInterface;
+
 /**
  *
  * @author rafa
@@ -34,5 +39,17 @@ public class AppConfigurationHelper {
 
     public static int getJsonDepth() {
         return 2;
+    }
+
+    public static ConnectionInterface getSourceConnection() throws Exception {
+        ConnectionInterface oDataConnectionSource = new BoneConnectionPoolImpl();
+        return oDataConnectionSource;
+    }
+
+    public static Gson getGson() throws Exception {
+        GsonBuilder gsonBuilder = new GsonBuilder();
+        gsonBuilder.setDateFormat("dd/MM/yyyy");
+        Gson oGson = gsonBuilder.excludeFieldsWithoutExposeAnnotation().create();
+        return oGson;
     }
 }

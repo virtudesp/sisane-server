@@ -33,7 +33,9 @@ import java.sql.Connection;
 import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
 import net.daw.bean.meta.MetaBeanGenImpl;
+import net.daw.bean.specific.implementation.UsuarioBean;
 import net.daw.dao.generic.implementation.TableDaoGenImpl;
+import net.daw.helper.statics.AppConfigurationHelper;
 import net.daw.helper.statics.ExceptionBooster;
 import net.daw.helper.statics.JsonMessage;
 import net.daw.helper.statics.ParameterCook;
@@ -48,17 +50,32 @@ public abstract class MetaServiceGenImpl implements MetaServiceInterface {
     }
 
     @Override
-    public String getmetainformation() throws Exception {
-        String data = null;
-        ArrayList<MetaBeanGenImpl> alMeta = null;
-        try {
-            Constructor c = Class.forName("net.daw.dao.specific.implementation." + ParameterCook.prepareCamelCaseObject(oRequest) + "Dao").getConstructor(Connection.class);
-            TableDaoGenImpl oDao = (TableDaoGenImpl) c.newInstance((Object) null);
-            data = JsonMessage.getJson("200", new GsonBuilder().create().toJson(oDao.getmetainformation()));
-        } catch (Exception ex) {
-            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getmetainformation ERROR: " + ex.getMessage()));
+    public Boolean checkpermission(String strMethodName) throws Exception {
+        UsuarioBean oUserBean = (UsuarioBean) oRequest.getSession().getAttribute("userBean");
+        if (oUserBean != null) {
+            return true;
+        } else {
+            return false;
         }
-        return data;
+
+    }
+
+    @Override
+    public String getmetainformation() throws Exception {
+        if (this.checkpermission(this.getClass().getName())) {
+            String data = null;
+            ArrayList<MetaBeanGenImpl> alMeta = null;
+            try {
+                Constructor c = Class.forName("net.daw.dao.specific.implementation." + ParameterCook.prepareCamelCaseObject(oRequest) + "Dao").getConstructor(Connection.class);
+                TableDaoGenImpl oDao = (TableDaoGenImpl) c.newInstance((Object) null);
+                data = JsonMessage.getJson("200", AppConfigurationHelper.getGson().toJson(oDao.getmetainformation()));
+            } catch (Exception ex) {
+                ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getmetainformation ERROR: " + ex.getMessage()));
+            }
+            return data;
+        } else {
+            return JsonMessage.get("401", "Unauthorized");
+        }
     }
 
 }
