@@ -43,8 +43,8 @@ public class ConnectionClassHelper {
             return System.getenv("OPENSHIFT_APP_NAME");
 
         } else {
-            //return "openausias2015";
-            return "ausiasyield2014";
+            return "openausias2015";
+            //return "ausiasyield2014";
         }
     }
 
