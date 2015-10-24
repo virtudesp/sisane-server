@@ -81,102 +81,45 @@ public class json extends HttpServlet {
         }
     }
 
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, Exception {
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, Exception {
         try {
             try {
                 Class.forName("com.mysql.jdbc.Driver");
             } catch (Exception ex) {
                 if (EstadoHelper.getTipo_estado() == Tipo_estado.Debug) {
-                    request.setAttribute("contenido", JsonMessage.get("500", "ERROR: " + ex.getMessage()));
+                    request.setAttribute("contenido", JsonMessage.getJsonMsg("500", "ERROR: " + ex.getMessage()));
                     getServletContext().getRequestDispatcher("/jsp/messageAjax.jsp").forward(request, response);
                 } else {
-                    request.setAttribute("contenido", JsonMessage.get("500", "Applications server error. Please, contact your administrator."));
+                    request.setAttribute("contenido", JsonMessage.getJsonMsg("500", "Applications server error. Please, contact your administrator."));
                     getServletContext().getRequestDispatcher("/jsp/messageAjax.jsp").forward(request, response);
                 }
-                Logger.getLogger(json.class.getName()).log(Level.SEVERE, null, ex);
+                writeLog(request, response, ex.toString());
                 return;
             }
             if (EstadoHelper.getTipo_estado() == Tipo_estado.Debug) {
-                retardo(EstadoHelper.getDelay()); //optional debug delay
+                retardo(EstadoHelper.getDelay());    //optional debug delay
             }
             String ob = ParameterCook.prepareObject(request);
             String op = ParameterCook.prepareOperation(request);
-            UsuarioBean oUserBean = (UsuarioBean) request.getSession().getAttribute("userBean");
-            if (op.equals("status")) {
-                if (oUserBean == null) {
-                    sendResponse(request, response, "403", "ERROR: You don't have permission to perform this operation");
-                } else {
-                    sendResponse(request, response, "200", oUserBean.getLogin());
-                }
-            } else {
-                if (oUserBean == null) {
-                    if (op.equals("login")) {
-                        UsuarioBean oUsuario = new UsuarioBean();
-                        String login = request.getParameter("login");
-                        String pass = request.getParameter("password");
-                        if (!login.equals("") && !pass.equals("")) {
-                            ConnectionInterface DataConnectionSource = null;
-                            Connection oConnection = null;
-                            try {
-                                DataConnectionSource = new BoneConnectionPoolImpl();
-                                oConnection = DataConnectionSource.newConnection();
-                                oUsuario.setLogin(login);
-                                oUsuario.setPassword(pass);
-                                UsuarioDao oUsuarioDao = new UsuarioDao(oConnection);
-                                oUsuario = oUsuarioDao.getFromLogin(oUsuario);
-                                if (oUsuario.getId() != 0) {
-                                    //oUsuario = oUsuarioDao.type(oUsuario); //fill user level -> pending
-                                    request.getSession().setAttribute("userBean", oUsuario);
-                                    sendResponse(request, response, "200", oUsuario.getLogin());
-                                    writeLog(request, response, oUsuario.getId() + ": Successful Login");
-                                }
-                            } catch (Exception ex) {
-                                sendResponse(request, response, "403", "Error during user autentication");
-                                writeLog(request, response, "Error dring user autentication:" + ex);
-                            } finally {
-                                if (oConnection != null) {
-                                    oConnection.close();
-                                }
-                                if (DataConnectionSource != null) {
-                                    DataConnectionSource.disposeConnection();
-                                }
-                            }
-                        }
-                    } else {
-                        sendResponse(request, response, "403", "ERROR: You don't have permission to perform this operation");
-                        writeLog(request, response, "Trying to access without session");
-                        return;
-                    }
-                } else {
-                    if (op.equals("login")) {
-                        sendResponse(request, response, "200", oUserBean.getLogin());
-                    }
-                    if (op.equals("comprobar")) {
-                        sendResponse(request, response, "200", oUserBean.getLogin());
-                    }
-                    if (op.equals("logout")) {
-                        UsuarioBean oUsuario = (UsuarioBean) request.getSession().getAttribute("userBean");
-                        sendResponse(request, response, "200", "Bye");
-                        writeLog(request, response, oUsuario.getId() + ": Logout");
-                        request.getSession().invalidate();
-                        return;
-                    }
-                    try {
-                        String strClassName = "net.daw.service.specific.implementation." + ParameterCook.prepareCamelCaseObject(request) + "Service";
-                        MetaServiceInterface oService = (MetaServiceInterface) Class.forName(strClassName).getDeclaredConstructor(HttpServletRequest.class).newInstance(request);
-                        Method oMethodService = oService.getClass().getMethod(ParameterCook.prepareOperation(request));
-                        String jsonResult = (String) oMethodService.invoke(oService);
-                        sendResponse2(request, response, jsonResult);
-                    } catch (ClassNotFoundException | InstantiationException | IllegalAccessException ex) {
-                        ExceptionBooster.boost(new Exception(this.getClass().getName() + ":processRequest ERROR: no such operation"));
-                    }
-                }
+            try {
+                String strClassName = "net.daw.service.specific.implementation." + ParameterCook.prepareCamelCaseObject(request) + "Service";
+                MetaServiceInterface oService = (MetaServiceInterface) Class.forName(strClassName).getDeclaredConstructor(HttpServletRequest.class).newInstance(request);
+                Method oMethodService = oService.getClass().getMethod(ParameterCook.prepareOperation(request));
+                String jsonResult = (String) oMethodService.invoke(oService);
+                sendResponse2(request, response, jsonResult);
+            } catch (ClassNotFoundException | InstantiationException | IllegalAccessException ex) {
+                ExceptionBooster.boost(new Exception(this.getClass().getName() + ":processRequest ERROR: no such operation"));
             }
         } catch (ServletException | IOException | NoSuchMethodException | SecurityException | IllegalArgumentException | InvocationTargetException ex) {
-            sendResponse(request, response, "500", "Applications server error. Please, contact your administrator.");
+            if (EstadoHelper.getTipo_estado() == Tipo_estado.Debug) {
+                request.setAttribute("contenido", JsonMessage.getJsonMsg("500", "ERROR: " + ex.getMessage()));
+                getServletContext().getRequestDispatcher("/jsp/messageAjax.jsp").forward(request, response);
+            } else {
+                request.setAttribute("contenido", JsonMessage.getJsonMsg("500", "Applications server error. Please, contact your administrator."));
+                getServletContext().getRequestDispatcher("/jsp/messageAjax.jsp").forward(request, response);
+            }
             writeLog(request, response, ex.toString());
-        } finally {
+            return;
         }
     }
 // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -227,6 +170,6 @@ public class json extends HttpServlet {
      */
     @Override
     public String getServletInfo() {
-        return "Short description";
+        return "openAusiàs Servlet";
     }// </editor-fold>
 }

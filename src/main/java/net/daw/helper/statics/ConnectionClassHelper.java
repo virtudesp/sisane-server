@@ -43,9 +43,9 @@ public class ConnectionClassHelper {
             return System.getenv("OPENSHIFT_APP_NAME");
 
         } else {
-            //return "openausias2015";
+            //return "openausiasblog";
+            return "openausias2015";
             //return "ausiasyield2014";
-            return "openausiasblog";
         }
     }
 
@@ -96,4 +96,7 @@ public class ConnectionClassHelper {
             return "jdbc:mysql://" + ConnectionClassHelper.getDatabaseHost() + ":" + ConnectionClassHelper.getDatabasePort() + "/" + ConnectionClassHelper.getDatabaseName();
         }
     }
+    
+    
+    
 }

@@ -28,6 +28,8 @@ package net.daw.service.publicinterface;
 
 public interface MetaServiceInterface {
 
+    public Boolean checkpermission(String strMethodName) throws Exception;
+
     public String getmetainformation() throws Exception;
 
 }

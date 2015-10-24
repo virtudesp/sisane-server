@@ -83,8 +83,10 @@ public class SqlBuilder {
             String strOrderFieldName;
             for (Map.Entry oPar : hmOrder.entrySet()) {
                 strOrderFieldName = (String) oPar.getKey();
-                if ("obj_".equals(strOrderFieldName.substring(0, 4))) {
-                    strOrderFieldName = "id_" + strOrderFieldName.substring(4);
+                if (strOrderFieldName.length() >= 4) {
+                    if ("obj_".equals(strOrderFieldName.substring(0, 4))) {
+                        strOrderFieldName = "id_" + strOrderFieldName.substring(4);
+                    }
                 }
                 strSQLOrder += " " + strOrderFieldName + " " + oPar.getValue() + ",";
             }
