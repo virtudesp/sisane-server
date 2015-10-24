@@ -45,20 +45,36 @@ $.fn.serializeObject = function ()
 
 form = {
     form: function (id, content) {
+        return (
+                dom.form('class="form-horizontal" role="form" action="#" id="' + id + '" name="formulario"',
+                        dom.div('id="fields' + id + '"', content) +
+                        dom.div('class="form-group"',
+                                dom.div('class="col-sm-offset-2 col-sm-10"',
+                                        dom.div('id="messages"', '')
+                                        )
+                                ) +
+                        dom.div('class="form-group"',
+                                dom.div('class="col-sm-offset-2 col-sm-10"',
+                                        dom.button('class="btn btn-primary" id="submitForm"', 'Guardar')
+                                        )
+                                )
 
+                        )
+                );
 
-        var strGuardar = html.dom('button', 'Guardar', 'class="btn btn-primary" id="submitForm"');
-        var strDiv2 = html.dom('div', strGuardar, 'class="col-sm-offset-2 col-sm-10"');
-        var strFormGroupButtons = html.dom('div', strDiv2, 'class="form-group"');
-
-        var strMsg = html.dom('div', '', 'id="messages"');
-        var strDiv1 = html.dom('div', strMsg, 'class="col-sm-offset-2 col-sm-10"');
-        var strFormGroupMessages = html.dom('div', strDiv1, 'class="form-group"');
-
-        var strContent = html.dom('div', content, 'id="fields' + id + '"');
-
-        var strForm = html.dom('form', strContent + strFormGroupMessages + strFormGroupButtons, 'class="form-horizontal" role="form" action="#" id="' + id + '" name="formulario"');
-        return strForm;
+//
+//        var strGuardar = html.dom('button', 'Guardar', 'class="btn btn-primary" id="submitForm"');
+//        var strDiv2 = html.dom('div', strGuardar, 'class="col-sm-offset-2 col-sm-10"');
+//        var strFormGroupButtons = html.dom('div', strDiv2, 'class="form-group"');
+//
+//        var strMsg = html.dom('div', '', 'id="messages"');
+//        var strDiv1 = html.dom('div', strMsg, 'class="col-sm-offset-2 col-sm-10"');
+//        var strFormGroupMessages = html.dom('div', strDiv1, 'class="form-group"');
+//
+//        var strContent = html.dom('div', content, 'id="fields' + id + '"');
+//
+//        var strForm = html.dom('form', strContent + strFormGroupMessages + strFormGroupButtons, 'class="form-horizontal" role="form" action="#" id="' + id + '" name="formulario"');
+//        return strForm;
 
 
 //        return(
@@ -83,34 +99,19 @@ form = {
     formInputTypeDate: function (fieldName, fieldShortName, fieldUltraShortName, controlWidth) {
 
 
-//        return html.dom('div', 'id="' + fieldName + '-group" class="form-group"',
-//                html.dom('label', 'class="col-sm-2 control-label" for="' + fieldName + '"', fieldShortName + ':') +
-//                html.dom('div', 'class="control col-sm-' + controlWidth + '"',
-//                        html.dom('div', 'class="input-group date" id="' + fieldName + '_group"',
-//                                html.dom('span', 'class="input-group-addon"',
-//                                        html.dom('span', 'class="glyphicon glyphicon-calendar"', '')
-//                                        ) +
-//                                html.dom('input', 'type="text" class="form-control" id="' + fieldName + '" name="' + fieldName + '" placeholder="' + fieldUltraShortName + '"', '')
-//                                )
-//                        )
-//                )
-
-
-
-        var spanIcon = html.dom('span', '', 'class="glyphicon glyphicon-calendar"');
-        var spanGroup = html.dom('span', spanIcon, 'class="input-group-addon"');
-        var inputText = html.dom('input', '', 'type="text" class="form-control" id="' + fieldName + '" name="' + fieldName + '" placeholder="' + fieldUltraShortName + '"')
-        var inputGroup = html.dom('div', spanGroup + inputText, 'class="input-group date" id="' + fieldName + '_group"');
-        var controlDiv = html.dom('div', inputGroup, 'class="control col-sm-' + controlWidth + '"');
-        var label = html.dom('label', fieldShortName + ':', 'class="col-sm-2 control-label" for="' + fieldName + '"');
-        var divGroup = html.dom('div', label + controlDiv, 'id="' + fieldName + '-group" class="form-group"');
-        var inputTypeDate = divGroup + '<script type="text/javascript">$("#' + fieldName + '_group").datetimepicker({format:"DD/MM/YYYY",locale:"es"});</script>'
-
-
-
-
-
-        return inputTypeDate;
+        return(
+                dom.div('id="' + fieldName + '-group" class="form-group"',
+                        dom.label('class="col-sm-2 control-label" for="' + fieldName + '"', fieldShortName + ':') +
+                        dom.div('class="control col-sm-' + controlWidth + '"',
+                                dom.div('class="input-group date" id="' + fieldName + '_group"',
+                                        dom.span('class="input-group-addon"',
+                                                dom.span('class="glyphicon glyphicon-calendar"', '')
+                                                ) +
+                                        dom.input('type="text" class="form-control" id="' + fieldName + '" name="' + fieldName + '" placeholder="' + fieldUltraShortName + '"', '')
+                                        )
+                                )
+                        )
+                );
 
 
 //        return(
@@ -134,22 +135,48 @@ form = {
 //</script>\n\
 //\n\
 //');
+
+//        return html.dom('div', 'id="' + fieldName + '-group" class="form-group"',
+//                html.dom('label', 'class="col-sm-2 control-label" for="' + fieldName + '"', fieldShortName + ':') +
+//                html.dom('div', 'class="control col-sm-' + controlWidth + '"',
+//                        html.dom('div', 'class="input-group date" id="' + fieldName + '_group"',
+//                                html.dom('span', 'class="input-group-addon"',
+//                                        html.dom('span', 'class="glyphicon glyphicon-calendar"', '')
+//                                        ) +
+//                                html.dom('input', 'type="text" class="form-control" id="' + fieldName + '" name="' + fieldName + '" placeholder="' + fieldUltraShortName + '"', '')
+//                                )
+//                        )
+//                )
+
+//        var spanIcon = html.dom('span', '', 'class="glyphicon glyphicon-calendar"');
+//        var spanGroup = html.dom('span', spanIcon, 'class="input-group-addon"');
+//        var inputText = html.dom('input', '', 'type="text" class="form-control" id="' + fieldName + '" name="' + fieldName + '" placeholder="' + fieldUltraShortName + '"')
+//        var inputGroup = html.dom('div', spanGroup + inputText, 'class="input-group date" id="' + fieldName + '_group"');
+//        var controlDiv = html.dom('div', inputGroup, 'class="control col-sm-' + controlWidth + '"');
+//        var label = html.dom('label', fieldShortName + ':', 'class="col-sm-2 control-label" for="' + fieldName + '"');
+//        var divGroup = html.dom('div', label + controlDiv, 'id="' + fieldName + '-group" class="form-group"');
+//        var inputTypeDate = divGroup + '<script type="text/javascript">$("#' + fieldName + '_group").datetimepicker({format:"DD/MM/YYYY",locale:"es"});</script>'
+
     },
     formForeign: function (fieldName, fieldShortName) {
-        
-        
-        
-//        return dom.div('class="form-group"',
-//                dom.label('class="col-sm-2 control-label" for="' + fieldName + '"', fieldShortName + ':') +
-//                dom.div('class="control col-sm-3"',
-//                        dom.div('class="input-group foreign" id="' + fieldName + '_group"',
-//                                dom.span('class="input-group-addon" id="' + fieldName + '_button"', html.dom('span', 'class="glyphicon glyphicon-search"', '')) +
-//                                dom.input('readonly="true" class="form-control" id="' + fieldName + '" class="input-mini" name="' + fieldName + '" type="text" size="5" maxlength="5"', '')
-//                                )
-//                        ) +
-//                dom.label('class="col-sm-7" for="' + fieldName + '_desc" id="' + fieldName + '_desc"', '')
-//                );
-             
+
+
+
+        return(
+                dom.div('class="form-group"',
+                        dom.label('class="col-sm-2 control-label" for="' + fieldName + '"', fieldShortName + ':') +
+                        dom.div('class="control col-sm-3"',
+                                dom.div('class="input-group foreign" id="' + fieldName + '_group"',
+                                        dom.span('class="input-group-addon" id="' + fieldName + '_button"',
+                                                dom.span('class="glyphicon glyphicon-search"', '')
+                                                ) +
+                                        dom.input('readonly="true" class="form-control" id="' + fieldName + '" class="input-mini" name="' + fieldName + '" type="text" size="5" maxlength="5"', '')
+                                        )
+                                ) +
+                        dom.label('class="col-sm-7" for="' + fieldName + '_desc" id="' + fieldName + '_desc"', '')
+                        )
+                );
+
 //        return html.dom2('div', 'class="form-group"',
 //                html.dom2('label', 'class="col-sm-2 control-label" for="' + fieldName + '"', fieldShortName + ':') +
 //                html.dom2('div', 'class="control col-sm-3"',
@@ -195,15 +222,15 @@ form = {
 
 
 
-        var strSpanIcon = html.dom('span', '', 'class="glyphicon glyphicon-search"');
-        var strSpanGroup = html.dom('span', strSpanIcon, 'class="input-group-addon" id="' + fieldName + '_button"');
-        var strInput = html.dom('input', '', 'readonly="true" class="form-control" id="' + fieldName + '" class="input-mini" name="' + fieldName + '" type="text" size="5" maxlength="5"');
-        var strDivForeign = html.dom('div', strSpanGroup + strInput, 'class="input-group foreign" id="' + fieldName + '_group"');
-        var strDivCol = html.dom('div', strDivForeign, 'class="control col-sm-3"');
-        var strLabel = html.dom('label', fieldShortName + ':', 'class="col-sm-2 control-label" for="' + fieldName + '"');
-        var strDivDesc = html.dom('div', '', 'class="col-sm-7" for="' + fieldName + '_desc" id="' + fieldName + '_desc"')
-        var strFormGroup = html.dom('div', strLabel + strDivCol + strDivDesc, 'class="form-group"')
-        return strFormGroup;
+//        var strSpanIcon = html.dom('span', '', 'class="glyphicon glyphicon-search"');
+//        var strSpanGroup = html.dom('span', strSpanIcon, 'class="input-group-addon" id="' + fieldName + '_button"');
+//        var strInput = html.dom('input', '', 'readonly="true" class="form-control" id="' + fieldName + '" class="input-mini" name="' + fieldName + '" type="text" size="5" maxlength="5"');
+//        var strDivForeign = html.dom('div', strSpanGroup + strInput, 'class="input-group foreign" id="' + fieldName + '_group"');
+//        var strDivCol = html.dom('div', strDivForeign, 'class="control col-sm-3"');
+//        var strLabel = html.dom('label', fieldShortName + ':', 'class="col-sm-2 control-label" for="' + fieldName + '"');
+//        var strDivDesc = html.dom('div', '', 'class="col-sm-7" for="' + fieldName + '_desc" id="' + fieldName + '_desc"')
+//        var strFormGroup = html.dom('div', strLabel + strDivCol + strDivDesc, 'class="form-group"')
+//        return strFormGroup;
 
 //        return(
 //                '<div class="form-group">\n\
@@ -221,14 +248,26 @@ form = {
 //                );
     },
     formCheckBox: function (fieldName, fieldShortName) {
-        return  (
-                html.dom2('div', 'id="' + fieldName + '-group" class="form-group"',
-                        html.dom2('label', 'class="col-sm-2 control-label"  for="' + fieldName + '"', fieldShortName + ":") +
-                        html.dom2('div', 'class="control col-sm-1"',
-                                html.dom2('input', 'type="checkbox" id="' + fieldName + '" name="' + fieldName + '" value="true"', '')
+
+        return(
+                dom.div('id="' + fieldName + '-group" class="form-group"',
+                        dom.label('class="col-sm-2 control-label"  for="' + fieldName + '"', fieldShortName + ":") +
+                        dom.div('class="control col-sm-1"',
+                                dom.input('type="checkbox" id="' + fieldName + '" name="' + fieldName + '" value="true"', '')
                                 )
                         )
                 );
+
+
+
+//        return  (
+//                html.dom2('div', 'id="' + fieldName + '-group" class="form-group"',
+//                        html.dom2('label', 'class="col-sm-2 control-label"  for="' + fieldName + '"', fieldShortName + ":") +
+//                        html.dom2('div', 'class="control col-sm-1"',
+//                                html.dom2('input', 'type="checkbox" id="' + fieldName + '" name="' + fieldName + '" value="true"', '')
+//                                )
+//                        )
+//                );
 
 
 
@@ -249,11 +288,22 @@ form = {
 //        return this;
     },
     formInputTypeInteger: function (fieldName, fieldShortName, controlWidth) {
-        var strLabel = html.dom('label', fieldShortName + ":", 'class="col-sm-2 control-label"  for="' + fieldName + '"');
-        var strInput = html.dom('input', '', 'type="text" id="' + fieldName + '" class="form-control" name="' + fieldName + '" size="15" placeholder="' + fieldName + '"');
-        var strDiv = html.dom('div', strInput, 'class="control col-sm-' + controlWidth + '"');
-        var strInputInteger = html.dom('div', strLabel + strDiv, 'id="' + fieldName + '-group" class="form-group  has-success has-feedback"');
-        return strInputInteger;
+
+        return(
+                dom.div('id="' + fieldName + '-group" class="form-group  has-success has-feedback"',
+                        dom.label('class="col-sm-2 control-label"  for="' + fieldName + '"', fieldShortName + ":") +
+                        dom.div('class="control col-sm-' + controlWidth + '"',
+                                dom.input('type="text" id="' + fieldName + '" class="form-control" name="' + fieldName + '" size="15" placeholder="' + fieldName + '"', '')
+                                )
+                        )
+                );
+
+
+//        var strLabel = html.dom('label', fieldShortName + ":", 'class="col-sm-2 control-label"  for="' + fieldName + '"');
+//        var strInput = html.dom('input', '', 'type="text" id="' + fieldName + '" class="form-control" name="' + fieldName + '" size="15" placeholder="' + fieldName + '"');
+//        var strDiv = html.dom('div', strInput, 'class="control col-sm-' + controlWidth + '"');
+//        var strInputInteger = html.dom('div', strLabel + strDiv, 'id="' + fieldName + '-group" class="form-group  has-success has-feedback"');
+//        return strInputInteger;
 
 
 
@@ -265,11 +315,25 @@ form = {
 //                + "</div>\n");
     },
     formInputTypeText: function (fieldName, fieldShortName, controlWidth) {
-        var strLabel = html.dom('label', fieldShortName + ":", 'class="col-sm-2 control-label"  for="' + fieldName + '"');
-        var strInput = html.dom('input', '', 'type="text" id="' + fieldName + '" class="form-control" name="' + fieldName + '" size="15" placeholder="' + fieldName + '"');
-        var strdivInput = html.dom('div', strInput, 'class="control col-sm-' + controlWidth + '"');
-        var strLabelInput = html.dom('div', strLabel + strdivInput, 'id="' + fieldName + '-group" class="form-group has-feedback"');
-        return strLabelInput;
+        return(
+                dom.div('id="' + fieldName + '-group" class="form-group has-feedback"',
+                        dom.label('class="col-sm-2 control-label"  for="' + fieldName + '"', fieldShortName + ":") +
+                        dom.div('class="control col-sm-' + controlWidth + '"',
+                                dom.input('type="text" id="' + fieldName + '" class="form-control" name="' + fieldName + '" size="15" placeholder="' + fieldName + '"', '')
+                                )
+                        )
+                );
+
+
+//        var strLabel = html.dom('label', fieldShortName + ":", 'class="col-sm-2 control-label"  for="' + fieldName + '"');
+//        var strInput = html.dom('input', '', 'type="text" id="' + fieldName + '" class="form-control" name="' + fieldName + '" size="15" placeholder="' + fieldName + '"');
+//        var strdivInput = html.dom('div', strInput, 'class="control col-sm-' + controlWidth + '"');
+//        var strLabelInput = html.dom('div', strLabel + strdivInput, 'id="' + fieldName + '-group" class="form-group has-feedback"');
+//        return strLabelInput;
+
+
+
+
 //        return("<div id=\"" + fieldName + "-group\" class=\"form-group has-feedback\">"
 //                + "<label class=\"col-sm-2 control-label\"  for=\"" + fieldName + "\">" + fieldShortName + ":</label>"
 //                + "<div class=\"control col-sm-" + controlWidth + "\">    "
