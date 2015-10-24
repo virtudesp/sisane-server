@@ -117,6 +117,9 @@ dom = {
     form: function (strAttributes, strText) {
         return html.dom2('form', strAttributes, strText);
     },
+    label: function (strAttributes, strText) {
+        return html.dom2('label', strAttributes, strText);
+    },
     input: function (strAttributes, strText) {
         return html.dom2('input', strAttributes, strText);
     },

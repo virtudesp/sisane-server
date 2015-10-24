@@ -55,12 +55,17 @@ public class MetaBeanGenImpl {
     private String ReferencesTable = "";
     @Expose
     private boolean IsForeignKeyDescriptor = false;
-
+    @Expose
     private MetaEnum.FieldType Type = MetaEnum.FieldType.String;
+    @Expose
     private int MaxLength = 255;
+    @Expose
     private int MinLength = 0;
+    @Expose
     private int MaxDecimal = 2;
+    @Expose
     private int MaxInteger = 10;
+    @Expose
     private String DefaultValue = "";
 
     public String getUltraShortName() {
