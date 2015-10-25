@@ -47,48 +47,6 @@ newModule.prototype.loadFormValues = function (objParams) {
     }
 }
 newModule.prototype.doEventsLoading = function () {
-    var thisObject = this;
-    $('#documentoForm #obj_usuario_button').unbind('click');
-    $("#documentoForm #obj_usuario_button").click(function () {
-        //var oControl = oUsuarioControl;  //para probar dejar documento
-        //vista('usuario').cargaModalBuscarClaveAjena('#modal01', "documento");
-
-        $("#documentoForm").append(modal.getEmptyModal());
-        modal.loadModal('#modal01', modal.getModalHeader('Elección de usuario'), "", modal.getModalFooter(), true);
-        $('#documentoForm').append(modal.getEmptyModal());
-        ausiasFLOW.pListModule_paramsObject = [];
-        ausiasFLOW.pListModule_paramsObject["vf"] = "4";
-        ausiasFLOW.pListModule_class = 'documento';
-        var module = ausiasFLOW.initialize(component_eplist().list, $('#modal-body'));
-        ausiasFLOW.bindCallback(module, function (id) {
-            $('#obj_usuario').val(id).change();
-            promise.getOne("usuario", id).done(function (jsonDataViewModuleReceived) {
-                $('#obj_usuario_desc').html(html.printObject2('usuario', jsonDataViewModuleReceived.message));
-            })
-            $('#modal01').modal('hide');
-        });
-        return false;
-    });
-
-    $('#undefinedForm #obj_tipodocumento_button').unbind('click');
-    $("#undefinedForm #obj_tipodocumento_button").click(function () {
-        //var oControl = oTipodocumentoControl;
-
-        $("#undefinedForm").append(modal.getEmptyModal());
-        modal.loadModal('#modal01', modal.getModalHeader('Elección de tipo de documento'), "", modal.getModalFooter(), true);
-
-        $('#undefinedForm').append(modal.getEmptyModal());
-
-//        oControl.list('#modal01 #modal-body', param().defaultizeUrlObjectParameters({}), true, oTipodocumentoModel, oTipodocumentoView);
-//        oControl.modalListEventsLoading('#modal01 #modal-body', param().defaultizeUrlObjectParameters({}), function (id) {
-//            $('#obj_tipodocumento_id').val(id).change();
-//            $('#obj_tipodocumento_desc').text(decodeURIComponent(oTipodocumentoModel.getMeAsAForeignKey(id)));
-//            $('#modal01').modal('hide');
-//
-//        },oTipodocumentoModel, oTipodocumentoView);
-        return false;
-    });
-
 };
 newModule.prototype.initialize = function () {
     parametersObject = ausiasFLOW.newModule_paramsObject;
@@ -109,7 +67,7 @@ newModule.prototype.render = function () {
     if (jsonData.status == "200") {
         return form.getFormTemplate(strClass, jsonData.message);
     } else {
-        return broth.notifyException(jsonData.status, jsonData.message);
+        return util.notifyException(jsonData.status, jsonData.message);
     }
 }
 newModule.prototype.fill = function () {
@@ -141,31 +99,3 @@ newModule.prototype.bind = function () {
         return false;
     });
 }
-//var newOperation = function (url) {
-//    ns.login.checkAndUpdateUserConnectionState();
-//    var paramsObject;
-//    if (url) {
-//        paramsObject = ns.param.defaultizeUrlObjectParameters(ns.param.getUrlObjectFromUrlString(url));
-//    } else {
-//        paramsObject = ns.param.defaultizeUrlObjectParameters({});
-//    }
-//    $('#broth_panel_heading').empty().append(fillDocumentoPageHeader('Nuevo'));
-//    $.when(broth.getMetaPromise(strClass)).done(function (jsonData) {
-//        if (jsonData.status == "200") {
-//            $('#broth_content').empty().html(broth.getFormTemplate(strClass, jsonData.message));
-//            loadValidationCallbacks(jsonData.message);
-//            broth.loadFormValues(); //new operation can load forced foreigns
-//            $('#submitForm').unbind('click');
-//            $('#submitForm').click(function (notificationPlace) {
-//                //oView.okValidation(function (e) { //disparar todas las validaciones
-//                result = broth.setOne({json: JSON.stringify(oView.getFormValues())});
-//                broth.doResultOperationNotifyToUser($('#broth_content'), result["status"], 'Se ha creado el registro con id=' + result["message"], result["message"], true);
-//                e.preventDefault();
-//                return false;
-//                //});
-//            });
-//        } else {
-//            $('#broth_content').empty().html(broth.notifyException(jsonData.status, jsonData.message));
-//        }
-//    })
-//}

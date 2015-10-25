@@ -28,10 +28,11 @@
 ajax = {
     call: function (url, type, data) {
         return $.ajax({
-            type: type,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            method: type,
             url: url,
             data: data,
-            //async: false,
             timeout: 30000
         });
     }

@@ -27,7 +27,6 @@
 var pListModule = function () {
     var strClass;
     var jsonData;
-
     var jsonMeta;
     var jsonPage;
     var jsonPages;
@@ -48,239 +47,113 @@ pListModule.prototype.refresh = function () {
     return false;
 };
 pListModule.prototype.loadThButtons = function (meta, strClase, UrlFromParamsWithoutOrder) {
-    tabla = '<a class="orderAsc" id="' + meta.Name + '" href="#/' + strClase + '/plist/' + UrlFromParamsWithoutOrder + '&order=' + meta.Name + '&ordervalue=asc"><i class="glyphicon glyphicon-arrow-up"></i></a>';
-    tabla += '<a class="orderDesc" id="' + meta.Name + '" href="#/' + strClase + '/plist/' + UrlFromParamsWithoutOrder + '&order=' + meta.Name + '&ordervalue=desc"><i class="glyphicon glyphicon-arrow-down"></i></a>';
-    return tabla;
+    return button.getTableHeaderButtons(meta.Name, strClase, 'plist', UrlFromParamsWithoutOrder);
 }
-//pListModule.prototype.getBodyPageTableFunc = function (meta, page, print_tdValue_function, tdButtons_function, trPopup_function, visibles) {
-//
-//    //thisObject.jsonPage: es un array de objetos. Cada objeto contiene una fila de la tabla de la petición
-//    //thisObject.jsonMeta; es un array de objetos. Every object contains metadata from every object to print in every row
-//
-//    var matrix_meta_data = _.map(jsonPage, function (oRow, keyRow) {
-//        return _.map(jsonMeta, function (oMeta, keyMeta) {
-//            return  {meta: oMeta, data: oRow[oMeta.Name]};
-//        });
-//    });
-//    //is an array (rpp) of arrays (rows) of objects
-//    //every object contains the data and its metadata
-//
-//    var arr_meta_data_table_buttons = _.map(matrix_meta_data, function (value, key) {
-//        return (_.map(matrix_meta_data[key], function (value2, key2) {
-//            return  '<td>' + print_tdValue_function(value2) + '</td>';
-//        })
-//                )
-//                .slice(0, parseInt(visibles - 1))
-//                .concat(['<td>' + tdButtons_function(value, strClass) + '</td>']);
-//    });
-//    //is an array (rpp) of arrays (rows) of strings
-//    //every string contains the data of the table cell
-//    //there's an additional row to contain the buttons for the operations
-//
-//    var arr_meta_data_table_buttons_reduced = _.map(arr_meta_data_table_buttons, function (value, key) {
-//        return _.reduce(value, function (memo, num) {
-//            return memo + num;
-//        });
-//    });
-//    //is an array (rpp) of strings 
-//    //where every string is a 
-//
-//    var str_meta_data_table_buttons_reduced_reduced = _.reduce(arr_meta_data_table_buttons_reduced, function (memo, num) {
-//        return memo + '<tr>' + num + '</tr>';
-//    });
-//    //is a string that conteins the table body
-//
-//    return str_meta_data_table_buttons_reduced_reduced;
-//
-////    var tabla = "";
-////    $.each(page, function (index, rowValues) {
-////        tabla += '<tr>';
-////
-////
-////
-////        var numField = 0;
-////        //var id;
-////        var strClaveAjena;
-////        $.each(meta, function (index, metaValue) {
-////            //if ("id" == metaValue.Name) {
-////            //    id = rowValues[metaValue.Name];
-////            //}
-////            numField++;
-////            if (numField <= thisObject.objParams.vf) {
-////                //tabla += '<td>' + thisObject.printValue(value, valor, true) + '</td>';
-////                if (metaValue.IsObjForeignKey) {
-////                    tabla += '<td data-html="true" data-content="' + trPopup_function(rowValues[metaValue.MyMetaName], rowValues[metaValue.Name], metaValue.ShortName) + '" data-container="body" data-toggle="popover" data-placement="right">' + thisObject.printForeignValues(rowValues[metaValue.MyMetaName], rowValues[metaValue.Name], metaValue.ReferencesTable) + '</td>';
-////
-////                } else {
-////                    if ("id" == metaValue.Name) {
-////                        tabla += '<td data-html="true" data-content="' + trPopup_function(meta, rowValues, thisObject.strClase) + '" data-container="body" data-toggle="popover" data-placement="right" title="">' + ns.strings.printValue(metaValue, rowValues[metaValue.Name], true) + '</td>';
-////                    } else {
-////                        if (!metaValue.IsMetaForeignKey) {
-////                            tabla += '<td>' + ns.strings.printValue(metaValue, rowValues[metaValue.Name], true) + '</td>'; // printValue(valoresRegistro, nombreDeCampo, false) 
-////                        }
-////                    }
-////                }
-////                //tabla += '<td>' + print_tdValue_function(meta, rowValues[metaValue.Name]) + '</td>';
-////            }
-////        });
-////        tabla += '<td>';
-////        tabla += tdButtons_function(rowValues, thisObject.strClase);
-////        tabla += '</td>';
-////        tabla += '</tr>';
-////    });
-////    return tabla;
-//}
-
 pListModule.prototype.getRegistersInfo = function (regs) {
-    return html.dom('p', "Mostrando una consulta de " + regs + " registros.");
+    return dom.p('', "Mostrando una consulta de " + regs + " registros.");
 };
 pListModule.prototype.getOrderInfo = function (objParams) {
     if (objParams['order']) {
         strOrder = "<p><small>Contenido ordenado por " + objParams["order"] + " (" + objParams["ordervalue"] + ') <a href="#/' + strClass + '/plist/' + parameter.getUrlStringFromParamsObject(parameter.getUrlObjectFromParamsWithoutParamArray(objParams, ["order", "ordervalue"])) + '" id="linkQuitarOrden">(Quitar orden)</a></small></p>';
     } else {
-        strOrder = "<p>Contenido no ordenado</p>";
+        strOrder = dom.p('', 'Contenido no ordenado');
     }
     ;
     return strOrder;
 };
 pListModule.prototype.getFilterInfo = function (objParams) {
     if (objParams['filter']) {
-        strFilter = "<p><small>Contenido filtrado (" + objParams ['filter'] + " " + objParams['filteroperator'] + " " + objParams['filtervalue'] + ') <a href="#/' + strClass + '/plist/' + parameter.getUrlStringFromParamsObject(parameter.getUrlObjectFromParamsWithoutParamArray(objParams, ["filter", "filteroperator", "filtervalue"])) + '" id="linkQuitarFiltro">(Quitar filtro)</small></a></p>';
+        strFilter =
+                dom.p('',
+                        dom.small('',
+                                'Contenido filtrado (' + objParams ['filter'] + ' ' + objParams['filteroperator'] + ' ' + objParams['filtervalue'] + ') ' +
+                                dom.a('href="#/' + strClass + '/plist/' + parameter.getUrlStringFromParamsObject(parameter.getUrlObjectFromParamsWithoutParamArray(objParams, ["filter", "filteroperator", "filtervalue"])) + '" id="linkQuitarFiltro"', '(Quitar filtro)')
+                                )
+                        );
+        //strFilter = "<p><small>Contenido filtrado (" + objParams ['filter'] + " " + objParams['filteroperator'] + " " + objParams['filtervalue'] + ') <a href="#/' + strClass + '/plist/' + parameter.getUrlStringFromParamsObject(parameter.getUrlObjectFromParamsWithoutParamArray(objParams, ["filter", "filteroperator", "filtervalue"])) + '" id="linkQuitarFiltro">(Quitar filtro)</a></small></p>';
     } else {
-        strFilter = "<p>Contenido no filtrado</p>";
+        strFilter = dom.p('', 'Contenido no filtrado');
     }
     return strFilter;
 };
-//pListModule.prototype.loadButtons = function (rowValues, strClass) {
-//    var botonera = "";
-//    botonera += '<div class="btn-toolbar" role="toolbar"><div class="btn-group btn-group-xs">';
-//    botonera += '<a class="btn btn-default view" id="' + rowValues[0].data + '"  href="#/' + strClass + '/view/' + rowValues[0].data + '"><i class="glyphicon glyphicon-eye-open"></i></a>';
-//    botonera += '<a class="btn btn-default edit" id="' + rowValues[0].data + '"  href="#/' + strClass + '/edit/' + rowValues[0].data + '"><i class="glyphicon glyphicon-pencil"></i></a>';
-//    botonera += '<a class="btn btn-default remove" id="' + rowValues[0].data + '"  href="#/' + strClass + '/remove/' + rowValues[0].data + '"><i class="glyphicon glyphicon-remove"></i></a>';
-//    botonera += '</div></div>';
-//
-//    return botonera;
-//};
-
-//pListModule.prototype.loadThButtons = function (meta, strClase, UrlFromParamsWithoutOrder) {
-//    tabla = '<a class="orderAsc" id="' + meta.Name + '" href="#/' + strClase + '/plist/' + UrlFromParamsWithoutOrder + '&order=' + meta.Name + '&ordervalue=asc"><i class="glyphicon glyphicon-arrow-up"></i></a>';
-//    tabla += '<a class="orderDesc" id="' + meta.Name + '" href="#/' + strClase + '/plist/' + UrlFromParamsWithoutOrder + '&order=' + meta.Name + '&ordervalue=desc"><i class="glyphicon glyphicon-arrow-down"></i></a>';
-//    return tabla;
-//}
-//pListModule.prototype.loadPopups = function (meta, rowValues, strClase) {
-//    var botonera = "";
-//
-//    botonera += "<p><b>(" + rowValues.id + ') ' + strClase + '</b></p>';
-//    $.each(meta, function (name, metavalue) {
-//        if (!metavalue.IsMetaForeignKey && !metavalue.IsObjForeignKey) {
-//
-//            botonera += '<i>' + metavalue.ShortName + '</i>: ' + ns.strings.printPlainValue(metavalue, rowValues[metavalue.Name], true) + "<br/>"
-//        }
-//        if (metavalue.IsObjForeignKey) {
-//
-//        }
-////        if (typeof value === 'string') {
-////            botonera += '<i>' + name + '</i>: ' + ns.strings.escapeHtml(value) + "<br/>";
-////        } else {
-////            botonera += '<i>' + name + '</i>: ' + value + "<br/>";
-////        }
-//    })
-//
-//    return botonera;
-//};
-
-//pListModule.prototype.getHeaderPageTableFunc = function (jsonMeta, strClass, UrlFromParamsWithoutOrder, visibles, acciones) {
-//    thisObject = this;
-//    acciones = typeof (acciones) != 'undefined' ? acciones : true;
-//
-////    arr_meta_data = _.map(thisObject.jsonMeta, function (value) {
-////        return  {meta: value, data: thisObject.jsonPage[value.Name]};
-////    });
-//
-//    arr_meta_data_tableHeader = _.map(jsonMeta, function (oMeta, key) {
-//        if (oMeta.IsId) {
-//            return '<th class="col-md-1">'
-//                    + oMeta.UltraShortName
-//                    + '<br />'
-//                    + thisObject.loadThButtons(oMeta, ausiasFLOW.pListModule_class, UrlFromParamsWithoutOrder)
-//                    + '</th>';
-//        } else {
-//            return  '<th>'
-//                    + oMeta.UltraShortName
-//                    + '<br />'
-//                    + thisObject.loadThButtons(oMeta, ausiasFLOW.pListModule_class, UrlFromParamsWithoutOrder)
-//                    + '</th>';
-//        }
-//    });
-//    //visibles
-//    if (visibles) {
-//        arr_meta_data_tableHeader_visibles = arr_meta_data_tableHeader.slice(0, parseInt(visibles - 1));
-//    } else {
-//        arr_meta_data_tableHeader_visibles = arr_meta_data_tableHeader;
-//    }
-//    if (acciones) {
-//        arr_meta_data_tableHeader_visibles_acciones = arr_meta_data_tableHeader_visibles.concat(['<th class="col-md-2">Acciones </th>']);
-//    } else {
-//        arr_meta_data_tableHeader_visibles_acciones = arr_meta_data_tableHeader_visibles;
-//    }
-//    return '<tr>' + arr_meta_data_tableHeader_visibles_acciones.join('') + '</tr>';
-//}
-////
-
 pListModule.prototype.informationTemplate = function (infor, paging, rpp) {
-    var strInfo = html.dom('div', infor, 'class="col-lg-3 col-md-3 col-sm-12"');
-    var strPaging = html.dom('div', 'Paginación: <br/>' + paging, 'class="col-lg-6  col-md-6 col-sm-8 text-center"');
-    var strRpp = html.dom('div', 'Registros por página: <br/>' + rpp, 'class="col-lg-3  col-md-3 col-sm-4 text-center"');
-    return html.dom('p', html.dom('div', strInfo + strPaging + strRpp, 'class="row"'));
+    return(
+            dom.p('',
+                    dom.div('class="row"',
+                            dom.div('class="col-lg-3 col-md-3 col-sm-12"', infor) +
+                            dom.div('class="col-lg-6  col-md-6 col-sm-8 text-center"', 'Paginación: <br/>' + paging) +
+                            dom.div('class="col-lg-3  col-md-3 col-sm-4 text-center"', 'Registros por página: <br/>' + rpp)
+                            )
+                    )
+            );
 }
 pListModule.prototype.visibleFieldsTemplate = function () {
-    strVisibleFields = '<div class="row">';
-    strVisibleFields += '<div class="col-md-12 text-center">'
-    strVisibleFields += '<p>'
-    strVisibleFields += '<p>Campos visibles:</p>'
-    strVisibleFields += '<form class="navbar-form" role="form" action="Controller" method="post" id="visibleFieldsForm">'
-    strVisibleFields += '<select id="selectVisibleFields" class="form-control" name="filter" width="80" style="width: 70px">'
-    strVisibleFields += '</select>'
-    strVisibleFields += '</form>'
-    strVisibleFields += '</p>'
-    strVisibleFields += '</div>'
-    strVisibleFields += '</div>';
-    return strVisibleFields;
+
+    return(
+            dom.div('class="row"',
+                    dom.div('class="col-md-12 text-center"',
+                            dom.p('',
+                                    dom.p('', 'Campos visibles:') +
+                                    dom.form('class="navbar-form" role="form" action="Controller" method="post" id="visibleFieldsForm"',
+                                            dom.select('id="selectVisibleFields" class="form-control" name="filter" width="80" style="width: 70px"')
+                                            )
+                                    )
+                            )
+                    )
+            );
 }
 pListModule.prototype.filterFormTemplate = function () {
-    var selectFilter = html.dom('select', '', 'id="selectFilter" class="form-control" name="filter" style="width: 160px"');
-    var selectFilterOperatorOptions = "";
-    selectFilterOperatorOptions += html.dom('option', 'contiene', 'value="like"');
-    selectFilterOperatorOptions += html.dom('option', 'no contiene', 'value="notlike"');
-    selectFilterOperatorOptions += html.dom('option', 'es igual a', 'value="equals"');
-    selectFilterOperatorOptions += html.dom('option', 'es distinto de', 'value="notequalto"');
-    selectFilterOperatorOptions += html.dom('option', 'es menor que', 'value="less"');
-    selectFilterOperatorOptions += html.dom('option', 'es menor o igual que', 'value="lessorequal"');
-    selectFilterOperatorOptions += html.dom('option', 'es mayor que', 'value="greater"');
-    selectFilterOperatorOptions += html.dom('option', 'es mayor o igual que', 'value="greaterorequal"');
-    var selectFilterOperator = html.dom('select', selectFilterOperatorOptions, 'id="selectFilteroperator" class="form-control" name="filteroperator" width="80" style="width: 200px"');
-    var inputFiltervalue = html.dom('input', '', 'id="inputFiltervalue" class="form-control" name="filtervalue" type="text" size="20" maxlength="50" value=""  width="100" style="width: 140px" placeholder="Valor"');
-    var submit = html.dom('input', '', 'type="submit" class="btn" id="btnFiltrar" name="btnFiltrar" value="Filtrar"');
-    var strFormContent = selectFilter + selectFilterOperator + inputFiltervalue + submit;
-    var strForm = html.dom('form', strFormContent, 'class="navbar-form navbar-right" role="form" action="Controller" method="post" id="empresaForm"');
-    return html.dom('div', html.dom('div', html.dom('p', strForm), 'col-md-12'), 'row');
+    return(
+            dom.div('class="row"',
+                    dom.div('class="col-md-12"',
+                            dom.p('',
+                                    dom.form('class="navbar-form navbar-right" role="form" action="Controller" method="post" id="empresaForm"',
+                                            dom.select('id="selectFilter" class="form-control" name="filter" style="width: 160px"', '') +
+                                            dom.select('id="selectFilteroperator" class="form-control" name="filteroperator" width="80" style="width: 200px"',
+                                                    dom.option('value="like"', 'contiene') +
+                                                    dom.option('value="notlike"', 'no contiene') +
+                                                    dom.option('value="equals"', 'es igual a') +
+                                                    dom.option('value="notequalto"', 'es distinto de') +
+                                                    dom.option('value="less"', 'es menor que') +
+                                                    dom.option('value="lessorequal"', 'es menor o igual que') +
+                                                    dom.option('value="greater"', 'es mayor que') +
+                                                    dom.option('value="greaterorequal"', 'es mayor o igual que')
+                                                    ) +
+                                            dom.input('id="inputFiltervalue" class="form-control" name="filtervalue" type="text" size="20" maxlength="50" value=""  width="100" style="width: 140px" placeholder="Valor"') +
+                                            dom.input('type="submit" class="btn" id="btnFiltrar" name="btnFiltrar" value="Filtrar"')
+                                            )
+                                    )
+                            )
+                    )
+            );
 }
 pListModule.prototype.filterFormClientTemplate = function () {
-    var strFormContent = html.dom('input', '', 'id="inputFiltervalueClient" class="form-control" name="filtervalue" type="text" size="20" maxlength="50" value=""  width="100" style="width: 140px" placeholder="Valor"');
-    strFormContent += html.dom('input', '', 'type="submit" class="btn" id="btnFiltrarClient" name="btnFiltrarClient" value="Filtrar"');
-    var strForm = html.dom('form', strFormContent, 'class="navbar-form navbar-right" role="form" action="Controller" method="post" id="empresaForm"')
-    return html.dom('div', html.dom('div', html.dom('p', strForm), 'col-md-12'), 'row');
+    return (
+            dom.div('class="row"',
+                    dom.div('class="col-md-12"',
+                            dom.p('',
+                                    dom.form('class="navbar-form navbar-right" role="form" action="Controller" method="post" id="empresaForm"',
+                                            dom.input('id="inputFiltervalueClient" class="form-control" name="filtervalue" type="text" size="20" maxlength="50" value=""  width="100" style="width: 140px" placeholder="Valor"') +
+                                            dom.input('type="submit" class="btn" id="btnFiltrarClient" name="btnFiltrarClient" value="Filtrar"')
+                                            )
+                                    )
+                            )
+                    )
+            );
 }
 pListModule.prototype.newTemplate = function (strClass) {
-    strNewButton = '<div class="row">';
-    strNewButton += '<div class="col-md-12 text-center">';
-    strNewButton += '<p>'
-    strNewButton += '<br/>'
-    strNewButton += '<a class="btn btn-primary" href="#/' + strClass + '/new">Crear un nuevo ' + strClass + '</a>'
-    strNewButton += '</p>'
-    strNewButton += '</div>'
-    strNewButton += '</div>'
-    return strNewButton;
+    return(
+            dom.div('class="row"',
+                    dom.div('class="col-md-12 text-center"',
+                            dom.p('',
+                                    dom.br() +
+                                    dom.a('class="btn btn-primary" href="#/' + strClass + '/new"',
+                                            'Crear un nuevo ' + strClass
+                                            )
+                                    )
+                            )
+                    )
+            );
 }
 pListModule.prototype.defaultizeUrlObjectParametersForPaginatedLists = function (objParams) {
     if (typeof objParams["page"] == 'undefined')
@@ -292,11 +165,6 @@ pListModule.prototype.defaultizeUrlObjectParametersForPaginatedLists = function 
     return objParams;
 }
 pListModule.prototype.initialize = function () {
-    //var thisObject = this;
-
-    //**** prepare params
-
-    //paramsObject = ns.param.defaultizeUrlObjectParametersForPaginatedLists(ns.param.getUrlObjectFromUrlString(this.url));
     strClass = ausiasFLOW.pListModule_class;
     paramsObject = this.defaultizeUrlObjectParametersForPaginatedLists(ausiasFLOW.pListModule_paramsObject);
     orderParams = parameter.printOrderParamsInUrl(ausiasFLOW.pListModule_paramsObject);
@@ -307,16 +175,13 @@ pListModule.prototype.initialize = function () {
     strUrlFromParamsWithoutOrder = parameter.getUrlStringFromParamsObject(parameter.getUrlObjectFromParamsWithoutParamArray(ausiasFLOW.pListModule_paramsObject, ["order", "ordervalue"]));
     urlWithoutPage = '#/' + ausiasFLOW.pListModule_class + '/' + ausiasFLOW.pListModule_frontOperation + '/' + strUrlFromParamsWithoutPage;
     urlWithoutRpp = '#/' + ausiasFLOW.pListModule_class + '/' + ausiasFLOW.pListModule_frontOperation + '/' + strUrlFromParamsWithoutRpp;
-    //****
 };
-
 pListModule.prototype.getPromise = function () {
     if (strClass && paramsObject && paramsObject.rpp && paramsObject.page) {
         return promise.getSome(strClass, paramsObject.rpp, paramsObject.page, filterParams, orderParams, systemFilterParams);
     }
 
-}
-
+};
 pListModule.prototype.getData = function (jsonDataReturned) {
     if (jsonDataReturned) {
         if (jsonDataReturned.status == "200") {
@@ -335,8 +200,7 @@ pListModule.prototype.getData = function (jsonDataReturned) {
     } else {
         //informar del error
     }
-}
-
+};
 pListModule.prototype.render = function () {
     //var paramsObject = ausiasFLOW.pListModule_paramsObject;
     if (!strClass) {
@@ -362,7 +226,6 @@ pListModule.prototype.render = function () {
     strFilterForm = this.filterFormTemplate();
     strFilterFormClient = this.filterFormClientTemplate();
     strNewButton = this.newTemplate(ausiasFLOW.pListModule_class);
-
     //console.log(this.loadButtons('2','1'))   //??
 
     strTable = table.getTable(
@@ -376,7 +239,6 @@ pListModule.prototype.render = function () {
         {'name': 'Filtro de cliente', 'content': strFilterFormClient},
         {'name': 'Nuevo registro', 'content': strNewButton}
     ]) + '<div id="tablePlace">' + strTable + '</div>';
-
 };
 pListModule.prototype.bind = function () {
     thisObject = this;
@@ -410,17 +272,6 @@ pListModule.prototype.bind = function () {
 
         var strUrlFromParamsWithoutPage = parameter.getUrlStringFromParamsObject(parameter.getUrlObjectFromParamsWithoutParamArray(paramsObject, ["order", "ordervalue"]));
 
-
-//        console.log(jsonData.message.meta)
-//        console.log(strClass)
-//        console.log(strUrlFromParamsWithoutPage)
-//        console.log(paramsObject.vf)
-//        console.log(arrayFiltered)
-//        console.log(thisObject.getHeaderPageTableFunc(jsonData.message.meta, strClass, strUrlFromParamsWithoutPage, paramsObject.vf));
-//        console.log(thisObject.getBodyPageTableFunc(jsonData.message.meta, arrayFiltered, html.printPrincipal, thisObject.loadButtons, paramsObject.vf));
-//
-
-
         var strTable = table.getTable(
                 thisObject.getHeaderPageTableFunc(jsonData.message.meta.message, strClass, strUrlFromParamsWithoutPage, paramsObject.vf),
                 thisObject.getBodyPageTableFunc(jsonData.message.meta.message, arrayFiltered, html.printPrincipal, thisObject.loadButtons, thisObject.loadPopups, paramsObject.vf)
@@ -432,125 +283,7 @@ pListModule.prototype.bind = function () {
             {'name': 'Filtro de cliente', 'content': strFilterFormClient},
             {'name': 'Nuevo registro', 'content': strNewButton}
         ]) + '<div id="tablePlace">' + strTable + '</div>');
-
         return false;
     });
-    //.........
     $("[data-toggle='popover']").popover({trigger: "hover"});
 };
-
-
-
-
-
-
-pListModule.prototype.bindAll = function (place, objParams, callbackFunction, oModel, oView) {
-    var thisObject = this;
-    $('.pagination_link').unbind('click');
-    $('.pagination_link').click(function (event) {
-        //rpp = $( "#rpp option:selected").text();
-        paramsObject = parameter.getUrlObjectFromParamsWithoutParamArray(paramsObject, ["page"]);
-        paramsObject["page"] = parseInt($(this).attr('id'));
-
-
-
-
-        //$('#broth_panel_heading').empty().append(fillDocumentoPageHeader('Paginated List'));
-        //ns.login.checkAndUpdateUserConnectionState();
-        //ausiasFLOW.reset();
-        //ausiasFLOW.pListModule_paramsObject = parameter.getUrlObjectFromUrlString(this.params['url']);
-
-        ausiasFLOW.pListModule_paramsObject = paramsObject;
-
-        ausiasFLOW.renderComponent(thisObject, true);
-
-
-
-
-
-        //thisObject.list(place, objParams, callbackFunction, oModel, oView);
-        //thisObject.modalListEventsLoading(place, objParams, callbackFunction, oModel, oView);
-        return false;
-    });
-    //visible fields select population, setting & event
-    $('#selectVisibleFields').unbind('change');
-    $("#selectVisibleFields").change(function () {
-        paramsObject = parameter.getUrlObjectFromParamsWithoutParamArray(paramsObject, ["vf"]);
-        paramsObject["vf"] = $("#selectVisibleFields option:selected").val();
-        ausiasFLOW.pListModule_paramsObject = paramsObject;
-        ausiasFLOW.renderComponent(thisObject, true);
-        return false;
-    });
-    $('.rpp_link').unbind('click');
-    $('.rpp_link').on('click', function (event) {
-        paramsObject = parameter.getUrlObjectFromParamsWithoutParamArray(paramsObject, ["rpp"]);
-        paramsObject["rpp"] = parseInt($(this).attr('id'));
-        ausiasFLOW.pListModule_paramsObject = paramsObject;
-        ausiasFLOW.renderComponent(thisObject, true);
-        return false;
-    });
-    //list events
-    if (callbackFunction) {
-        $('.btn.btn-default.selector_button').unbind('click');
-        $('.btn.btn-default.selector_button').click(function (event) {
-            callbackFunction(parseInt($(this).attr('id')))
-        });
-    }
-    ;
-    $('#btnFiltrar').unbind('click');
-    $("#btnFiltrar").click(function (event) {
-//                filter = $("#selectFilter option:selected").val();
-//                filteroperator = $("#selectFilteroperator option:selected").val();
-//                filtervalue = $("#inputFiltervalue").val();
-//                window.location.href = 'jsp#/' + model('documento').getName() + '/list/' + param().getUrlStringFromParamsObject(param().getUrlObjectFromParamsWithoutParamArray(objParams, ['filter', 'filteroperator', 'filtervalue'])) + "&filter=" + filter + "&filteroperator=" + filteroperator + "&filtervalue=" + filtervalue;
-//                return false;
-        paramsObject = parameter.getUrlObjectFromParamsWithoutParamArray(paramsObject, ["filter", "filteroperator", "filtervalue"]);
-        paramsObject["filter"] = $("#selectFilter option:selected").val();
-        paramsObject["filteroperator"] = $("#selectFilteroperator option:selected").val();
-        paramsObject["filtervalue"] = $("#inputFiltervalue").val();
-        ausiasFLOW.pListModule_paramsObject = paramsObject;
-        ausiasFLOW.renderComponent(thisObject, true);
-        return false;
-    });
-
-    $('.orderAsc').unbind('click');
-    $('.orderAsc').on('click', function (event) {
-        paramsObject = parameter.getUrlObjectFromParamsWithoutParamArray(paramsObject, ["order", "ordervalue"]);
-        paramsObject["order"] = $(this).attr('id');
-        paramsObject["ordervalue"] = "asc";
-
-        ausiasFLOW.pListModule_paramsObject = paramsObject;
-        ausiasFLOW.renderComponent(thisObject, true);
-
-        return false;
-    });
-
-    $('.orderDesc').unbind('click');
-    $('.orderDesc').on('click', function (event) {
-        paramsObject = parameter.getUrlObjectFromParamsWithoutParamArray(paramsObject, ["order", "ordervalue"]);
-        paramsObject["order"] = $(this).attr('id');
-        paramsObject["ordervalue"] = "desc";
-
-        ausiasFLOW.pListModule_paramsObject = paramsObject;
-        ausiasFLOW.renderComponent(thisObject, true);
-
-        return false;
-        //thisObject.inicia(pag, order, ordervalue, rpp, filter, filteroperator, filtervalue, callback, systemfilter, systemfilteroperator, systemfiltervalue);
-    });
-    $('#linkQuitarOrden').unbind('click');
-    $('#linkQuitarOrden').click(function () {
-        paramsObject = parameter.getUrlObjectFromParamsWithoutParamArray(paramsObject, ["order", "ordervalue"]);
-
-        ausiasFLOW.pListModule_paramsObject = paramsObject;
-        ausiasFLOW.renderComponent(thisObject, true);
-
-        return false;
-    });
-    $('#linkQuitarFiltro').unbind('click');
-    $('#linkQuitarFiltro').click(function () {
-        paramsObject = parameter.getUrlObjectFromParamsWithoutParamArray(paramsObject, ["filter", "filteroperator", "filtervalue"]);
-        ausiasFLOW.pListModule_paramsObject = paramsObject;
-        ausiasFLOW.renderComponent(thisObject, true);
-        return false;
-    });
-}

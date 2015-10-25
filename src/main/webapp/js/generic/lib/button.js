@@ -25,19 +25,20 @@
  * THE SOFTWARE.
  */
 button = {
-    getIcon: function (strIcon) {
-        return html.dom('i', '', 'class="glyphicon ' + strIcon + '"');
-    },
-    getTableHeaderButtons: function (strClase, strOperation, UrlFromParamsWithoutOrder) {
-        var strUp = html.dom('a', button.getIcon('glyphicon-arrow-up', 'class="orderAsc" id="' + strOperation + '" href="#/' + strClase + '/list/' + UrlFromParamsWithoutOrder + '&order=' + strOperation + '&ordervalue=asc"'));
-        var strDown = html.dom('a', button.getIcon('glyphicon-arrow-down', 'class="orderDesc" id="' + strOperation + '" href="#/' + strClase + '/list/' + UrlFromParamsWithoutOrder + '&order=' + strOperation + '&ordervalue=desc"'));
-        return strUp + strDown;
-        //'<a class="orderAsc" id="' + meta.Name + '" href="#/' + strClase + '/list/' + UrlFromParamsWithoutOrder + '&order=' + meta.Name + '&ordervalue=asc"><i class="glyphicon glyphicon-arrow-up"></i></a>';
+    getTableHeaderButtons: function (strId, strOb, strOp, UrlFromParamsWithoutOrder) { //meta.Name es strId
+        return(
+                dom.a('class="orderAsc" id="' + strId + '" href="#/' + strOb + '/' + strOp + '/' + UrlFromParamsWithoutOrder + '&order=' + strId + '&ordervalue=asc"',
+                        html.getIcon('glyphicon-arrow-up')
+                        ) +
+                dom.a('class="orderDesc" id="' + strId + '" href="#/' + strOb + '/' + strOp + '/' + UrlFromParamsWithoutOrder + '&order=' + strId + '&ordervalue=desc"',
+                        html.getIcon('glyphicon-arrow-down')
+                        )
+                );
     },
     getTableToobarButton: function (strClass, strOperation, strId, strIcon) {
-        return html.dom('a', button.getIcon(strIcon), 'class="btn btn-default ' + strOperation + '" id="' + strId + '" href="#/' + strClass + '/' + strOperation + '/' + strId + '"')
+        return dom.a('class="btn btn-default ' + strOperation + '" id="' + strId + '" href="#/' + strClass + '/' + strOperation + '/' + strId + '"', html.getIcon(strIcon))
     },
     getToolbarBar: function (strContent) {
-        return html.dom('div', html.dom('div', strContent, 'class="btn-group btn-group-xs"'), 'class="btn-toolbar" role="toolbar"');
+        return dom.div('class="btn-toolbar" role="toolbar"', dom.div('class="btn-group btn-group-xs"', strContent));
     }
 }
