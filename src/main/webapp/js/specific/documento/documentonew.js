@@ -37,8 +37,8 @@ documentoNew.prototype.doEventsLoading = function () {
         $('#documentoForm').append(modal.getEmptyModal());
         ausiasFLOW.pListModule_paramsObject = [];
         ausiasFLOW.pListModule_paramsObject["vf"] = "4";
-        ausiasFLOW.pListModule_class = 'documento';
-        var module = ausiasFLOW.initialize(component_documento_ebplist().list, $('#modal-body'),
+        ausiasFLOW.pListModule_class = 'usuario';
+        var module = ausiasFLOW.initialize(ebpListModule, $('#modal-body'),
                 function (id) {
                     $('#obj_usuario').val(id).change();
                     promise.getOne("usuario", id).done(function (jsonDataViewModuleReceived) {
@@ -56,8 +56,8 @@ documentoNew.prototype.doEventsLoading = function () {
         $('#documentoForm').append(modal.getEmptyModal());
         ausiasFLOW.pListModule_paramsObject = [];
         ausiasFLOW.pListModule_paramsObject["vf"] = "4";
-        ausiasFLOW.pListModule_class = 'documento';
-        var module = ausiasFLOW.initialize(component_documento_ebplist().list, $('#modal-body'),
+        ausiasFLOW.pListModule_class = 'tipodocumento';
+        var module = ausiasFLOW.initialize(ebpListModule, $('#modal-body'),
                 function (id) {
                     $('#obj_tipodocumento').val(id).change();
                     promise.getOne("tipodocumento", id).done(function (jsonDataViewModuleReceived) {

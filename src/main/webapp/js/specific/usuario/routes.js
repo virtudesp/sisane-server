@@ -27,7 +27,6 @@
 
 
 function fUsuarioRoutes() {
-    var dataFromServer = $.Deferred();
     var icon = '<i class="fa fa-file-text-o fa-5x"></i>';
     var fillDocumentoPageHeader = _.partial(html.getPageHeader, icon, 'Usuario', _);
     var strClass = 'usuario';
@@ -38,7 +37,7 @@ function fUsuarioRoutes() {
         ausiasFLOW.newModule_paramsObject = parameter.getUrlObjectFromUrlString(this.params['url']);
         ausiasFLOW.newModule_frontOperation = 'new';
         ausiasFLOW.newModule_class = strClass;
-        ausiasFLOW.initialize(component_usuario_new().new, $('#broth_content'));
+        ausiasFLOW.initialize(newModule, $('#broth_content'));
         return false;
     });
     //--------------------------------------------------------------------------    
@@ -48,7 +47,7 @@ function fUsuarioRoutes() {
         ausiasFLOW.editModule_paramsObject = parameter.getUrlObjectFromUrlString(this.params['url']);
         ausiasFLOW.editModule_frontOperation = 'new';
         ausiasFLOW.editModule_class = strClass;
-        ausiasFLOW.initialize(component_usuario_edit().edit, $('#broth_content'));
+        ausiasFLOW.initialize(editModule, $('#broth_content'));
         return false;
     });
     //--------------------------------------------------------------------------
@@ -58,7 +57,7 @@ function fUsuarioRoutes() {
         ausiasFLOW.viewModule_paramsObject = parameter.getUrlObjectFromUrlString(this.params['url']); // paramsObject['id'];
         ausiasFLOW.viewModule_frontOperation = 'view';
         ausiasFLOW.viewModule_class = strClass;
-        ausiasFLOW.initialize(component_usuario_view().view, $('#broth_content'));
+        ausiasFLOW.initialize(viewModule, $('#broth_content'));
         return false;
     });
     //--------------------------------------------------------------------------
@@ -68,7 +67,7 @@ function fUsuarioRoutes() {
         ausiasFLOW.pListModule_paramsObject = parameter.getUrlObjectFromUrlString(this.params['url']);
         ausiasFLOW.pListModule_frontOperation = 'plist';
         ausiasFLOW.pListModule_class = strClass;
-        ausiasFLOW.initialize(component_usuario_plist().list, $('#broth_content'));
+        ausiasFLOW.initialize(pListModule, $('#broth_content'));
         return false;
     });
     //--------------------------------------------------------------------------

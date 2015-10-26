@@ -29,7 +29,7 @@ var newModule = function () {
     var jsonData;
     var strClass;
 }
-newModule.prototype = Object.create(baseModule.prototype);
+newModule.prototype = new baseModule();
 function setForeign(prop, objParams) {
     promise.getOne(prop, objParams[prop]).done(function (jsonDataViewModuleReceived) {
         $('#obj_' + prop + '_desc').html(html.printObject2(prop, jsonDataViewModuleReceived.message));
