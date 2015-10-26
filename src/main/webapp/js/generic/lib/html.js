@@ -1,21 +1,21 @@
 /*
  * Copyright (c) 2015 by Rafael Angel Aznar Aparici (rafaaznar at gmail dot com)
- * 
- * openAUSIAS: The stunning micro-library that helps you to develop easily 
+ *
+ * openAUSIAS: The stunning micro-library that helps you to develop easily
  *             AJAX web applications by using Java and jQuery
  * openAUSIAS is distributed under the MIT License (MIT)
  * Sources at https://github.com/rafaelaznar/openAUSIAS
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -49,11 +49,8 @@ html = {
         } else {
             return str;
         }
-
     },
-    htmlEncode: function (value) {
-//create a in-memory div, set it's inner text(which jQuery automatically encodes)
-//then grab the encoded contents back out.  The div never exists on the page.
+    htmlEncode: function (value) { //creates a ghost div for jQuery to normalize the html content
         return $('<div/>').text(value).html();
     },
     htmlDecode: function (value) {
@@ -88,9 +85,9 @@ html = {
         switch (value.meta.Type) {
             case 'Boolean':
                 if (value.data == true) {
-                    return '<i class="glyphicon glyphicon-ok"></i>';
+                    return html.getIcon('glyphicon-ok');
                 } else {
-                    return '<i class="glyphicon glyphicon-remove"></i>';
+                    return html.getIcon('glyphicon-remove');
                 }
                 break;
             default:
@@ -104,6 +101,9 @@ html = {
             return   html.printValue(value);
         }
     },
+    getIcon: function (strIcon) {
+        return dom.i('class="glyphicon ' + strIcon + '"');
+    },
     dom: function (strLabel, strText, strAttr) {
         if (!strAttr)
             strAttr = '';
@@ -116,37 +116,59 @@ html = {
             strAttr = '';
         else
             strAttr = ' ' + strAttr;
-        return '<' + strLabel + strAttr + '>' + strText + '</' + strLabel + '>\n';
+        if (!strText)
+            return '<' + strLabel + strAttr + ' />';
+        else
+            return '<' + strLabel + strAttr + '>' + strText + '</' + strLabel + '>';
+
     },
     getPageHeader: function (icon, title, subtitle) {
-        var subtitleHTML = html.dom('h1', html.dom('small', subtitle, 'id="broth_subtitle"'));
-        var titleHTML = html.dom('h1', title, 'id="broth_title"');
-        var iconHTML = html.dom('div', icon, 'class="col-xs-3 text-right" id="broth_operationicon"');
-        var titlesHTML = html.dom('div', titleHTML + subtitleHTML, 'class="col-xs-9 text-left"');
-        return html.dom('div', titlesHTML + iconHTML, 'class="row"');
+        return(
+                dom.div('class="row"',
+                        dom.div('class="col-xs-9 text-left"',
+                                dom.h1('id="broth_title"', title) +
+                                dom.h1('', dom.small('id="broth_subtitle"', subtitle))
+                                ) +
+                        dom.div('class="col-xs-3 text-right" id="broth_operationicon"', icon)
+                        )
+                );
     },
-    
     getSpinner: function () {
-        return '<img src="images/ajax-loading.gif" alt="cargando..." />';
+        return dom.img('src="images/ajax-loading.gif" alt="cargando..."', '');
     },
-    
-//    getPageHeader: function (icon, title, subtitle) {
-//        var subtitleHTML = dom._h1(dom._small(subtitle, '', "broth_subtitle"));
-//        var titleHTML = dom._h1(title, '', "broth_title");
-//        var iconHTML = dom._div(icon, "col-xs-3 text-right", "broth_operationicon");
-//        var titlesHTML = dom._div(titleHTML + subtitleHTML, 'col-xs-9 text-left');
-//        return dom._div(titlesHTML + iconHTML, 'row');
-////        return(
-////                '<div class="row">\n\
-////                    <div class="col-xs-9 text-left">\n\
-////                        <h1 id="broth_title">' + title + '</h1>\n\
-////                        <h1><small id="broth_subtitle">' + subtitle + '</small></h1>\n\
-////                    </div>\n\
-////                    <div class="col-xs-3 text-right" id="broth_operationicon">\n\
-////                        ' + icon + '\n\
-////                    </div>\n\
-////                </div>'
-////                );
-//    }
-
+    getPanel: function (id, title, content) {
+        return (
+                '<div class="panel panel-default">\n\
+                            <div class="panel-heading">' + title + '</div>\n\
+                            <div class="panel-body">\n\
+                                <div class="text-center">\n\
+                                    <div id="' + id + '">\n\
+                            ' + content + '\n\
+                                    </div>\n\
+                                </div>\n\
+                            </div>\n\
+                        </div>'
+                );
+    },
+    linkBack: function () {
+        history.back();
+        return false;
+    },
+    createGhostDiv: function (id, data) {
+        var divContainer = $('<div>').attr({
+            id: id
+        });
+        $('body').append(divContainer);
+        $('#' + id).append(data);
+    },
+    creoleParse: function (content, lugar) {
+        var div = document.createElement('div');
+        div.innerHTML = "";
+        creole.parse(div, content);
+        lugar.empty().html(div);
+        var codigo = lugar.html();
+        codigo = codigo.replace("<table>", '<table class="table table-bordered"><tbody>');
+        codigo = codigo.replace("</table>", '</tbody></table>');
+        lugar.empty().append(codigo);
+    }
 }

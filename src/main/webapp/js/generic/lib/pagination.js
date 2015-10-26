@@ -69,11 +69,6 @@ pagination = {
         else
             botonera += '<li>';
         botonera += '<a class="rpp_link" id="100" href="' + UrlFromParamsWithoutRpp + '&rpp=100">100</a></li>';
-//    if (objParams['rpp'] == 50)
-//        botonera += '<li class="active">';
-//    else
-//        botonera += '<li>';
-//    botonera += '<a class="rpp_link" id="50" href="jsp#/' + this.clase + '/list/' + UrlFromParamsWithoutRpp + '&rpp=50">50</a></li>';
         botonera += '</ul>';
         return botonera;
     }

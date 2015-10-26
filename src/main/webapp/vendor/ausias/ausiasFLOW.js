@@ -9,32 +9,19 @@
 (function () {
     var ausiasFLOW = window.ausiasFLOW = {};
     var componentsList = [];
+    ausiasFLOW.reset = function () {
+        componentsList = [];
+    };
     ausiasFLOW.initialize = function () {
         //comprobar al menos que haya dos argumentos
         var userModule = arguments[0];
         var placeSelector = arguments[1];
-        //userModule.prototype = Object.create(ParentModule.prototype);
+        var bindAllCallbackFunction = arguments[2];
         var oComponent = new userModule;
         oComponent.id_module = componentsList.length;
         oComponent.place = placeSelector;
+        oComponent.callbackFunction = bindAllCallbackFunction;
         componentsList.push(oComponent);
-//        return m;
-//    }
-
-
-//        if (arguments.length > 2) {
-//            var args = [];
-//            for (var i = 2; i < arguments.length; i++) {
-//                args.push("arguments[" + i + "]");
-//            }
-//            var command = "new userModule(" + args.join(",") + ")";
-//            var m = eval(command);
-//        } else {
-//            var m = new userModule;
-//        }
-
-
-//    ausiasFLOW.setup = function (m) { 
         if ('initialize' in oComponent) {
             oComponent.initialize();
         }
@@ -53,6 +40,12 @@
                 if ('bind' in oComponent) {
                     oComponent.bind();
                 }
+                if ('bindAll' in oComponent) {
+                    oComponent.bindAll();
+                }
+                if (bindAllCallbackFunction && 'bindCallback' in oComponent) {
+                    oComponent.bindCallback(bindAllCallbackFunction);
+                }
             }).fail(function () {
                 //informar error
             })
@@ -69,20 +62,16 @@
             if ('bind' in oComponent) {
                 oComponent.bind();
             }
+            if ('bindAll' in oComponent) {
+                oComponent.bindAll();
+            }
+            if (bindAllCallbackFunction && 'bindCallback' in oComponent) {
+                oComponent.bindCallback(bindAllCallbackFunction);
+            }
         }
-
-
-
-        //ofrecerse en menus
-        //toolbar expose
-        //menubar
-        //icon
         return oComponent;
     };
-    ausiasFLOW.reset = function () {
-        componentsList = [];
-    };
-    ausiasFLOW.renderComponent = function (oComponent, bindAll) {
+    ausiasFLOW.renderComponent = function (oComponent) {
         if ('initialize' in componentsList[oComponent.id_module]) {
             componentsList[oComponent.id_module].initialize();
         }
@@ -103,8 +92,11 @@
                 if ('bind' in componentsList[oComponent.id_module]) {
                     componentsList[oComponent.id_module].bind();
                 }
-                if (bindAll && 'bindAll' in oComponent) {
+                if ('bindAll' in oComponent) {
                     oComponent.bindAll();
+                }
+                if (componentsList[oComponent.id_module].callbackFunction && 'bindCallback' in oComponent) {
+                    oComponent.bindCallback(componentsList[oComponent.id_module].callbackFunction);
                 }
             }).fail(function () {
                 //informar error
@@ -124,32 +116,18 @@
             if ('bind' in componentsList[oComponent.id_module]) {
                 componentsList[oComponent.id_module].bind();
             }
-            if (bindAll && 'bindAll' in oComponent) {
+            if ('bindAll' in oComponent) {
                 oComponent.bindAll();
             }
+            if (componentsList[oComponent.id_module].callbackFunction && 'bindCallback' in oComponent) {
+                oComponent.bindCallback(componentsList[oComponent.id_module].callbackFunction);
+            }
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     };
     ausiasFLOW.getId = function (p) {
         return p.id_module;
     }
-    ausiasFLOW.flowRender = function (bindAll) { //render with reload ajax call
+    ausiasFLOW.flowRender = function () { //render with reload ajax call
         componentsList.forEach(function (oComponent) {
             //console.log("========================");
             //console.log("num:    " + entry.id_module);
@@ -157,9 +135,7 @@
             //console.log("render: " + $('<div/>').html(entry.render()).html()); 
             if ('initialize' in oComponent) {
                 oComponent.initialize();
-
             }
-
             if ('getPromise' in oComponent) {
                 var promise = oComponent.getPromise();
                 promise.done(function (json) {
@@ -171,14 +147,16 @@
                         if ($(oComponent.place).html() != $('<div/>').html(renderization).html()) {
                             //console.log("  -- rendering:    " + entry.id_module);
                             oComponent.place.empty().append(renderization);
-
                         }
                     }
                     if ('bind' in oComponent) {
                         oComponent.bind();
                     }
-                    if (bindAll && 'bindAll' in oComponent) {
+                    if ('bindAll' in oComponent) {
                         oComponent.bindAll();
+                    }
+                    if (oComponent.callbackFunction && 'bindCallback' in oComponent) {
+                        oComponent.bindCallback(oComponent.callbackFunction);
                     }
                 }).fail(function () {
                     //informar error
@@ -192,22 +170,18 @@
                     if ($(oComponent.place).html() != $('<div/>').html(renderization).html()) {
                         //console.log("  -- rendering:    " + entry.id_module);
                         oComponent.place.empty().append(renderization);
-
                     }
                 }
                 if ('bind' in oComponent) {
                     oComponent.bind();
                 }
-                if (bindAll && 'bindAll' in oComponent) {
+                if ('bindAll' in oComponent) {
                     oComponent.bindAll();
                 }
+                if (oComponent.callbackFunction && 'bindCallback' in oComponent) {
+                    oComponent.bindCallback(oComponent.callbackFunction);
+                }
             }
-
-
-
-
-
-
         });
     };
     ausiasFLOW.renderPage = function () {

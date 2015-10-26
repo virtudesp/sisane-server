@@ -28,7 +28,7 @@
 
 function fDocumentoRoutes() {
     var dataFromServer = $.Deferred();
-    var icon = '<i class="fa fa-file-text-o fa-5x"></i>';
+    var icon = '<i cla  ss="fa fa-file-text-o fa-5x"></i>';
     var fillDocumentoPageHeader = _.partial(html.getPageHeader, icon, 'Documento', _);
     var strClass = 'documento';
     //--------------------------------------------------------------------------

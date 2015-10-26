@@ -120,6 +120,12 @@ dom = {
     label: function (strAttributes, strText) {
         return html.dom2('label', strAttributes, strText);
     },
+    select: function (strAttributes, strText) {
+        return html.dom2('select', strAttributes, strText);
+    },
+    option: function (strAttributes, strText) {
+        return html.dom2('option', strAttributes, strText);
+    },
     input: function (strAttributes, strText) {
         return html.dom2('input', strAttributes, strText);
     },

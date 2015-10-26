@@ -47,6 +47,13 @@ var array = {
             })
         })
         return resultArray;
+    },
+    getIntegerArray: function (min, max) {
+        var iArray = [];
+        for (var counter = min; counter <= max; counter++) {
+            iArray.push(counter);
+        }
+        return iArray;
     }
 }
 

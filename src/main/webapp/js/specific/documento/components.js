@@ -33,7 +33,7 @@ var component_documento_edit = (function () {
 
 var component_documento_new = (function () {
     return {
-        new : newModule
+        new : documentoNew
     }
 });
 
@@ -43,9 +43,9 @@ var component_documento_plist = (function () {
     }
 })
 
-var component_documento_eplist = (function () {
+var component_documento_ebplist = (function () {
     return {
-        list: epListModule
+        list: ebpListModule
     }
 })
 

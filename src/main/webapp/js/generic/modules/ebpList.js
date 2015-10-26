@@ -24,22 +24,23 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-
-
-
-panel = {
-    getPanel: function (id, title, content) {
-        return (
-                '<div class="panel panel-default">\n\
-                            <div class="panel-heading">' + title + '</div>\n\
-                            <div class="panel-body">\n\
-                                <div class="text-center">\n\
-                                    <div id="' + id + '">\n\
-                            ' + content + '\n\
-                                    </div>\n\
-                                </div>\n\
-                            </div>\n\
-                        </div>'
-                );
-    }
+var ebpListModule = function () {
 }
+ebpListModule.prototype = Object.create(bpListModule.prototype);
+ebpListModule.prototype.loadThButtons = function (meta, strClase, UrlFromParamsWithoutOrder) {
+    return button.getTableHeaderButtons(meta.Name, strClase, 'ebpList', UrlFromParamsWithoutOrder);
+}
+ebpListModule.prototype.loadButtons = function (rowValues, strClass) {
+    var botonera = "";
+    botonera += '<div class="btn-toolbar" role="toolbar"><div class="btn-group btn-group-xs">';
+    botonera += '<a class="btn btn-default selector_button" id="' + rowValues[0].data + '"  href="#"><i class="glyphicon glyphicon-ok"></i></a>';
+    botonera += '</div></div>';
+    return botonera;
+};
+ebpListModule.prototype.bindCallback = function (callbackFunction) {
+    $('.btn.btn-default.selector_button').unbind('click');
+    $('.btn.btn-default.selector_button').click(function (event) {
+        callbackFunction(parseInt($(this).attr('id')))
+        return false;
+    });
+};

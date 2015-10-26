@@ -37,7 +37,7 @@ var listModule = function () {
 }
 listModule.prototype = Object.create(baseModule.prototype);
 listModule.prototype.loadThButtons = function (meta, strClase, UrlFromParamsWithoutOrder) {
-    return button.getTableHeaderButtons(strClase, meta.Name, UrlFromParamsWithoutOrder);
+    return button.getTableHeaderButtons(meta.Name, strClase, 'list', UrlFromParamsWithoutOrder);
 }
 listModule.prototype.loadButtons = function (rowValues, strClass) {
     var botonera = "";
@@ -47,16 +47,14 @@ listModule.prototype.loadButtons = function (rowValues, strClass) {
     return button.getToolbarBar(botonera);
 };
 listModule.prototype.loadPopups = function (meta, rowValues, strClase) {
+    //pendent!!!!!!!
     var botonera = "";
-
     botonera += "<p><b>(" + rowValues.id + ') ' + strClase + '</b></p>';
     $.each(meta, function (name, metavalue) {
         if (!metavalue.IsObjForeignKey) {
-
             botonera += '<i>' + metavalue.ShortName + '</i>: ' + ns.strings.printPlainValue(metavalue, rowValues[metavalue.Name], true) + "<br/>"
         }
         if (metavalue.IsObjForeignKey) {
-
         }
 //        if (typeof value === 'string') {
 //            botonera += '<i>' + name + '</i>: ' + ns.strings.escapeHtml(value) + "<br/>";
@@ -64,7 +62,6 @@ listModule.prototype.loadPopups = function (meta, rowValues, strClase) {
 //            botonera += '<i>' + name + '</i>: ' + value + "<br/>";
 //        }
     })
-
     return botonera;
 };
 listModule.prototype.prepareParams = function () {
@@ -107,8 +104,8 @@ listModule.prototype.getHeaderPageTableFunc = function (jsonMeta, strClass, UrlF
     return '<tr>' + arr_meta_data_tableHeader_visibles_acciones.join('') + '</tr>';
 }
 listModule.prototype.getBodyPageTableFunc = function (meta, page, print_tdValue_function, tdButtons_function, trPopup_function, visibles) {
-//thisObject.jsonData.message.page.list: es un array de objetos. Cada objeto contiene una fila de la tabla de la petición
-//thisObject.jsonData.message.meta; es un array de objetos. Every object contains metadata from every object to print in every row
+    //thisObject.jsonData.message.page.list: es un array de objetos. Cada objeto contiene una fila de la tabla de la petición
+    //thisObject.jsonData.message.meta; es un array de objetos. Every object contains metadata from every object to print in every row
     var matrix_meta_data = _.map(page, function (oRow, keyRow) {
         return _.map(meta, function (oMeta, keyMeta) {
             return  {meta: oMeta, data: oRow[oMeta.Name]};
@@ -142,11 +139,8 @@ listModule.prototype.getBodyPageTableFunc = function (meta, page, print_tdValue_
 }
 
 listModule.prototype.initialize = function () {
-    var thisObject = this;
-    //**** prepare params
-    //paramsObject = ns.param.defaultizeUrlObjectParametersForLists(ns.param.getUrlObjectFromUrlString(this.url));
-    this.prepareParams();
-    //****
+    var thisObject = this;    
+    this.prepareParams();    
 };
 listModule.prototype.getPromise = function () {
     if (paramsObject) {

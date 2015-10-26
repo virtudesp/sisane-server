@@ -63,7 +63,6 @@ modal = {
         $(place).append(modal.getEmptyModal());
         modal.loadModal('#modal01', modal.getModalHeader('Respuesta del servidor'), message, modal.getModalFooter(), true);
         $('#modal01').css({'right': '20px', 'left': '20px', 'width': 'auto', 'margin': '10px', 'display': 'block'});
-        $('#modal01').on('hidden.bs.modal', afterNotifyFunction);
-        
+        $('#modal01').on('hidden.bs.modal', afterNotifyFunction);        
     }
 }

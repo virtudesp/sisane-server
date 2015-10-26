@@ -25,8 +25,6 @@
  * THE SOFTWARE.
  */
 var editModule = function () {
-    //baseOperation.call(this, url, strClass);
-    //ns.login.checkAndUpdateUserConnectionState();
     var jsonData;
     var strClass;
     var parametersObject;
@@ -77,13 +75,12 @@ editModule.prototype.getData = function (jsonDataReceived) {
     } else {
         //informar error
     }
-
 }
 editModule.prototype.render = function () {
     if (jsonData.status == "200") {
         return form.getFormTemplate(strClass, jsonData.message.meta.message);
     } else {
-        return broth.notifyException(jsonData.status, jsonData.message);
+        return util.notifyException(jsonData.status, jsonData.message);
     }
 }
 editModule.prototype.fill = function () {
@@ -96,7 +93,6 @@ editModule.prototype.bind = function () {
     var thisObject = this;
     if (jsonData.status == "200") {
         validation.loadValidationCallbacks(jsonData.message.meta.message);
-        //bindForeigns mediante meta
         $('#id').attr("disabled", true);
         $('#submitForm').unbind('click');
         $('#submitForm').click(function (e) {
@@ -116,14 +112,8 @@ editModule.prototype.bind = function () {
                     $('#broth_modal').empty();
                 });
             });
-
-
-
-            //var result = broth.setOne(strClass, {json: JSON.stringify(form.getFormValues(strClass))});
-            //modal.loadModalNotify($('#broth_content'), result["status"], broth.actionEditOkMessage(result["message"]), result["message"], true);
             e.preventDefault();
             return false;
-            //});
         });
     }
 

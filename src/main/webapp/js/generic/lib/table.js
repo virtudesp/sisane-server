@@ -33,49 +33,5 @@ table = {
             <thead id="tableHeaders">' + headers + '</thead>\
             <tbody id="tableBody">' + body + '</tbody>\
             </table>';
-    },
-    
-    
-    
-//    getTableRow: function (row) {
-//        return '<tr>' + header + '</tr>';
-//    },
-//    getTableHeaderCell: function (header) {
-//        return '<th>' + header + '</th>';
-//    },
-//    getTableBodyCell: function (header) {
-//        return '<td>' + header + '</td>';
-//    },
-//    printValue: function (meta, valor, recortar) {
-//        var thisObject = this;
-//        var strResult = "";
-//        if (meta.IsObjForeignKey) {
-//            strResult = "obj";
-////        if (value[valor].id > 0) {
-////            strResult = '<a href="jsp#/' + valor.substring(4) + '/view/' + value[valor].id + '">' + value[valor].id + ":" + util().getForeign(value[valor]) + '</a>';
-////        } else {
-////            strResult = '???';
-////        }
-//        } else {
-//            switch (meta.type) {
-//                case "Boolean":
-//                    if (valor[meta.Name] == true) {
-//                        strResult = '<i class="glyphicon glyphicon-ok"></i>';
-//                    } else {
-//                        strResult = '<i class="glyphicon glyphicon-remove"></i>';
-//                    }
-//                    break;
-//                default:
-//                    strResult = decodeURIComponent(valor[meta.Name]);
-//                    //if (typeof fieldContent == "string") {
-//                    if (recortar)
-//                        if (strResult.length > 50) //don't show too long fields
-//                            strResult = strResult.substr(0, 20) + " ...";
-//                    //}
-//            }
-//            ;
-//        }
-//        ;
-//        return strResult;
-//    }
+    }
 }

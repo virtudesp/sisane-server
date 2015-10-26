@@ -48,10 +48,10 @@ var baseOperation = function () {
 //baseOperation.prototype.printTemplate = function () {
 //    this.strPlace.appendForm('<h1>Application error: no template</h1>');
 //}
-baseOperation.prototype.notifyException = function (errorStatus, errorMessage) {
-    this.strPlace.html("Error " + errorStatus + ": " + errorMessage);
-    console.log("Error " + errorStatus + ": " + errorMessage)
-}
+//baseOperation.prototype.notifyException = function (errorStatus, errorMessage) {
+//    this.strPlace.html("Error " + errorStatus + ": " + errorMessage);
+//    console.log("Error " + errorStatus + ": " + errorMessage)
+//}
 
 
 //getData = function (oPromise) {
