@@ -26,7 +26,7 @@
  */
 var ebpListModule = function () {
 }
-ebpListModule.prototype = Object.create(bpListModule.prototype);
+ebpListModule.prototype = new bpListModule();
 ebpListModule.prototype.loadThButtons = function (meta, strClase, UrlFromParamsWithoutOrder) {
     return button.getTableHeaderButtons(meta.Name, strClase, 'ebpList', UrlFromParamsWithoutOrder);
 }
