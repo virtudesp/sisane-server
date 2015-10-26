@@ -33,7 +33,7 @@ viewModule.prototype.getViewTemplate_func = function (strClass, jsonDataViewModu
         return  {meta: value, data: jsonDataViewModule.bean.message[value.Name]};
     });
     arr_meta_data_table = _.map(arr_meta_data, function (value, key) {
-        return  '<tr><td><strong>' + value.meta.Name + '</strong></td><td>' + html.printPrincipal(value) + '</td></tr>';
+        return  '<tr><td><strong>' + value.meta.ShortName + '</strong></td><td>' + html.printPrincipal(value) + '</td></tr>';
     });
     return "<table class=\"table table table-bordered table-condensed\">"
             + arr_meta_data_table.join('')

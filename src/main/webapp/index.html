@@ -176,24 +176,12 @@
         <!-- Specific modules -->
         <script src="js/specific/menu.js" type="text/javascript"></script>
         <script src="js/specific/configuration.js" type="text/javascript"></script>
-        <!-- Documento -->        
-        <script src="js/specific/documento/modules/documentonew.js" type="text/javascript"></script>
-        <script src="js/specific/documento/modules/documentopaginatedList.js" type="text/javascript"></script>
-        <script src="js/specific/documento/modules/documentosautorList.js" type="text/javascript"></script>
-        <script src="js/specific/documento/components.js" type="text/javascript"></script>
-        <script src="js/specific/documento/routes.js" type="text/javascript"></script>
-        <!-- Tipodocumento -->
-        <script src="js/specific/tipodocumento/components.js" type="text/javascript"></script>
-        <script src="js/specific/tipodocumento/routes.js" type="text/javascript"></script>
-        <!-- Usuario -->
-        <script src="js/specific/usuario/components.js" type="text/javascript"></script>
+        <!-- Usuario -->        
         <script src="js/specific/usuario/routes.js" type="text/javascript"></script>
         <!-- --------------------------------------------------------------- -->
         <script type="text/javascript">
-            function loadRoutes() {
-                fTipodocumentoRoutes();
-                fUsuarioRoutes();
-                fDocumentoRoutes();
+            function loadRoutes() {                
+                fUsuarioRoutes();              
             }
             $(document).ready(function () {
                 configuration.pathConfig();

@@ -70,7 +70,9 @@ public class EstadoBean extends BeanGenImpl implements BeanInterface {
             Type = MetaEnum.FieldType.String,
             MinLength = 0,
             MaxLength = 255,
-            DefaultValue = "Sin estado")
+            DefaultValue = "Sin estado",
+            IsForeignKeyDescriptor = true
+    )
     private String tipo;
 
 

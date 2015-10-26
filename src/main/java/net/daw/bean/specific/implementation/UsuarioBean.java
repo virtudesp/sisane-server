@@ -63,19 +63,26 @@ public class UsuarioBean extends BeanGenImpl implements BeanInterface {
     @MethodMetaInformation(
             UltraShortName = "Login",
             ShortName = "Login", 
-            IsForeignKeyDescriptor = true)
+            Description = "Nombre de usuario",
+            Type = MetaEnum.FieldType.String,
+            IsForeignKeyDescriptor = true
+            )
     private String login = "";
 
     @Expose
     @MethodMetaInformation(
             UltraShortName = "Pass",
-            ShortName = "Password")
+            ShortName = "Password",
+            Description = "Frase de paso",
+            Type = MetaEnum.FieldType.String
+    )
     private String password = "";
 
     @Expose(serialize = false)
     @MethodMetaInformation(
             UltraShortName = "Tipo",
             ShortName = "Tipo de usuario",
+            Description = "Identificador de Tipo de Usuario",
             IsIdForeignKey = true,
             ReferencesTable = "tipousuario",
             Type = MetaEnum.FieldType.Integer
@@ -84,54 +91,42 @@ public class UsuarioBean extends BeanGenImpl implements BeanInterface {
 
     @Expose(deserialize = false)
     @MethodMetaInformation(
+            
             UltraShortName = "Tipo",
             ShortName = "Tipo de usuario",
+            Description = "Tipo del usuario",
             IsObjForeignKey = true,
             ReferencesTable = "tipousuario",
             MyIdName = "id_tipousuario"
-            //MyMetaName = "meta_tipousuario"
     )
     private GroupBeanImpl obj_tipousuario = null;
 
-//    @Expose(deserialize = false)
-//    @MethodMetaInformation(
-//            IsMetaForeignKey = true,
-//            ReferencesTable = "tipousuario",
-//            MyIdName = "id_tipousuario",
-//            MyObjName = "obj_tipousuario"
-//    )
-//    private ArrayList<MetaBeanGenImpl> meta_tipousuario = null;
     @Expose(serialize = false)
     @MethodMetaInformation(
             UltraShortName = "Estado",
             ShortName = "Estado de usuario",
+            Description = "Identificador de Estado de Usuario",
             IsIdForeignKey = true,
             ReferencesTable = "estado",
             Type = MetaEnum.FieldType.Integer
     )
     private Integer id_estado = 0; //importante inicializar a 0 las claves ajenas
-
+     
     @Expose(deserialize = false)
     @MethodMetaInformation(
             UltraShortName = "Estado",
             ShortName = "Estado de usuario",
+            Description = "Estado del usuario",
             IsObjForeignKey = true,
             ReferencesTable = "estado",
             MyIdName = "id_estado"
-            //MyMetaName = "meta_estado"
     )
     private GroupBeanImpl obj_estado = null;
 
-//    @Expose(deserialize = false)
-//    @MethodMetaInformation(
-//            IsMetaForeignKey = true,
-//            ReferencesTable = "estado",
-//            MyIdName = "id_estado",
-//            MyObjName = "obj_estado"
-//    )
-//    private ArrayList<MetaBeanGenImpl> meta_estado = null;
     @Expose
-    @MethodMetaInformation(ShortName = "Ciudad", IsForeignKeyDescriptor = true)
+    @MethodMetaInformation(
+            ShortName = "Ciudad", 
+            IsForeignKeyDescriptor = true)
     private String ciudad = "";
 
     @Expose
