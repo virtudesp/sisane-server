@@ -29,7 +29,7 @@
 
 var bpListModule = function () {
 }
-bpListModule.prototype = Object.create(pListModule.prototype);
+bpListModule.prototype = new pListModule();
 bpListModule.prototype.loadThButtons = function (meta, strClase, UrlFromParamsWithoutOrder) {
     return button.getTableHeaderButtons(meta.Name, strClase, 'bpList', UrlFromParamsWithoutOrder);
 }

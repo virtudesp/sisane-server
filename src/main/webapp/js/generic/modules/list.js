@@ -35,7 +35,7 @@ var listModule = function () {
     var systemFilterParams;
     var strUrlFromParamsWithoutOrder;
 }
-listModule.prototype = Object.create(baseModule.prototype);
+listModule.prototype = new baseModule();
 listModule.prototype.loadThButtons = function (meta, strClase, UrlFromParamsWithoutOrder) {
     return button.getTableHeaderButtons(meta.Name, strClase, 'list', UrlFromParamsWithoutOrder);
 }

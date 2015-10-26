@@ -41,7 +41,7 @@ var pListModule = function () {
     var urlWithoutPage;
     var urlWithoutRpp;
 }
-pListModule.prototype = Object.create(listModule.prototype);
+pListModule.prototype = new listModule();
 pListModule.prototype.refresh = function () {
     ausiasFLOW.renderPage();
     return false;

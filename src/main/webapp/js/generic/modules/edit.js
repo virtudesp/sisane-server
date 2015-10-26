@@ -29,7 +29,7 @@ var editModule = function () {
     var strClass;
     var parametersObject;
 }
-editModule.prototype = Object.create(baseModule.prototype);
+editModule.prototype = new baseModule();
 editModule.prototype.loadFormValues = function (objParams) {
 };
 editModule.prototype.fillForm = function (meta, data) {
