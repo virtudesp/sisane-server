@@ -40,7 +40,7 @@ import net.daw.helper.statics.MetaEnum;
 )
 public class UsuarioBean extends BeanGenImpl implements BeanInterface {
 
-        public UsuarioBean() {
+    public UsuarioBean() {
         this.id = 0;
     }
 
@@ -58,15 +58,15 @@ public class UsuarioBean extends BeanGenImpl implements BeanInterface {
             DefaultValue = "0"
     )
     private Integer id;
-    
+
     @Expose
     @MethodMetaInformation(
             UltraShortName = "Login",
-            ShortName = "Login", 
+            ShortName = "Login",
             Description = "Nombre de usuario",
             Type = MetaEnum.FieldType.String,
             IsForeignKeyDescriptor = true
-            )
+    )
     private String login = "";
 
     @Expose
@@ -91,7 +91,6 @@ public class UsuarioBean extends BeanGenImpl implements BeanInterface {
 
     @Expose(deserialize = false)
     @MethodMetaInformation(
-            
             UltraShortName = "Tipo",
             ShortName = "Tipo de usuario",
             Description = "Tipo del usuario",
@@ -111,7 +110,7 @@ public class UsuarioBean extends BeanGenImpl implements BeanInterface {
             Type = MetaEnum.FieldType.Integer
     )
     private Integer id_estado = 0; //importante inicializar a 0 las claves ajenas
-     
+
     @Expose(deserialize = false)
     @MethodMetaInformation(
             UltraShortName = "Estado",
@@ -125,16 +124,26 @@ public class UsuarioBean extends BeanGenImpl implements BeanInterface {
 
     @Expose
     @MethodMetaInformation(
-            ShortName = "Ciudad", 
+            UltraShortName = "Ciudad",
+            ShortName = "Ciudad",
+            Description = "Ciudad del usuario",
             IsForeignKeyDescriptor = true)
     private String ciudad = "";
 
     @Expose
-    @MethodMetaInformation(ShortName = "Firma")
+    @MethodMetaInformation(
+            UltraShortName = "Firma",
+            ShortName = "Firma",
+            Description = "Firma del usuario"
+    )
     private String firma = "";
 
     @Expose
-    @MethodMetaInformation(ShortName = "Skin")
+    @MethodMetaInformation(
+            UltraShortName = "Skin",
+            ShortName = "Skin",
+            Description = "Skin elegido por el usuario para la aplicación"
+    )
     private String skin = "";
 
     public String getLogin() {
