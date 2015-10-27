@@ -45,7 +45,7 @@ listModule.prototype.loadButtons = function (rowValues, strOb) {
     var botonera = "";
     botonera += button.getTableToobarButton(strOb, 'view', rowValues[0].data, 'glyphicon-eye-open');
     botonera += button.getTableToobarButton(strOb, 'edit', rowValues[0].data, 'glyphicon-pencil');
-    botonera += button.getTableToobarButton(strOb, 'delete', rowValues[0].data, 'glyphicon-remove');
+    botonera += button.getTableToobarButton(strOb, 'remove', rowValues[0].data, 'glyphicon-remove');
     return button.getToolbarBar(botonera);
 };
 listModule.prototype.loadPopups = function (meta, rowValues, strClase) {
