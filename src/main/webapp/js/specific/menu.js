@@ -152,6 +152,18 @@ appMenu = function () {
                                             dom.i('class="fa fa-fw fa-user"', '') +
                                             'Usuarios'
                                             )
+                                    ) +
+                            dom.li('',
+                                    dom.a('href="#/estado/plist"',
+                                            dom.i('class="fa fa-fw fa-smile-o"', '') +
+                                            'Estados de usuario'
+                                            )
+                                    ) +
+                            dom.li('',
+                                    dom.a('href="#/tipousuario/plist"',
+                                            dom.i('class="fa fa-fw fa-male"', '') +
+                                            'Tipos de usuario'
+                                            )
                                     )
 
                             )

@@ -24,15 +24,36 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-
-var documentosautorList = function () {
+var removeModule = function () {
     var jsonData;
+    var strClass;
+    var parametersObject;
 }
-documentosautorList.prototype = new listModule();
-documentosautorList.prototype.loadButtons = function (rowValues, strClass) {
-    var botonera = "";
-    botonera += '<div class="btn-toolbar" role="toolbar"><div class="btn-group btn-group-xs">';
-    botonera += '<a class="btn btn-default view" id="' + rowValues[0].data + '"  href="#/autordocumento/plist/page=1&rpp=10&systemfilter' + rowValues[0].data + '"><i class="glyphicon glyphicon-eye-open"></i></a>';
-    botonera += '</div></div>';
-    return botonera;
-};
+removeModule.prototype = new viewModule();
+
+removeModule.prototype.fill = function () {
+    $('#broth_content').append(
+            dom.div('id="result"','¿Seguro que desea borrar el registro?')+
+            dom.a('class="btn btn-danger" id="btnBorrarSi" href="#"','Sí, borrar')
+            );
+    $('#btnBorrarSi').unbind('click');
+    $('#btnBorrarSi').click(function (event) {
+        promise.removeOne(strClass, parametersObject['id']).done(function (result) {
+            if (result["status"] == "200") {
+                resultadoMessage = 'Se ha eliminado el registro con id=' + result["message"];
+            } else {
+                resultadoMessage = "ERROR: No se ha eliminado el registro";
+            }
+            var mensaje = "<h5>Código: " + result["status"] + "</h5><h5>" + resultadoMessage + "</h5>";
+            modal.loadModalNotify($('#broth_modal'), mensaje, function () {
+                //window.location.href = "#/" + strClass + "/plist/";
+                $('#broth_content').empty();
+                $('#broth_modal').empty();
+            }, function () {
+                $('#broth_content').empty();
+                $('#broth_modal').empty();
+            });
+        });
+        return false;
+    });
+}

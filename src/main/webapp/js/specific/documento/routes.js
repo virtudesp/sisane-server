@@ -27,102 +27,91 @@
 
 
 function fDocumentoRoutes() {
-    var icon = '<i cla  ss="fa fa-file-text-o fa-5x"></i>';
+    var icon = '<i class="fa fa-file-text-o fa-5x"></i>';
     var fillDocumentoPageHeader = _.partial(html.getPageHeader, icon, 'Documento', _);
     var strClass = 'documento';
+    var header=$('#broth_panel_heading');
+    var content = $('#broth_content');
+    //--------------------------------------------------------------------------
+    Path.map("#/" + strClass + "/remove/:id").to(function () {
+        header.empty().append(fillDocumentoPageHeader('Remove'));
+        var strParam = parameter.getUrlObjectFromUrlString(this.params['url']);
+        ausiasFLOW.reset();
+        ausiasFLOW.initialize(removeModule, content, strClass, 'remove', strParam);
+        return false;
+    });
     //--------------------------------------------------------------------------
     Path.map("#/" + strClass + "/new(/:url)").to(function () {
-        $('#broth_panel_heading').empty().append(fillDocumentoPageHeader('New'));
+        header.empty().append(fillDocumentoPageHeader('New'));
+        var strParam = parameter.getUrlObjectFromUrlString(this.params['url']);
         ausiasFLOW.reset();
-        ausiasFLOW.newModule_paramsObject = parameter.getUrlObjectFromUrlString(this.params['url']);
-        ausiasFLOW.newModule_frontOperation = 'new';
-        ausiasFLOW.newModule_class = strClass;
-        ausiasFLOW.initialize(documentoNew, $('#broth_content'));
+        ausiasFLOW.initialize(documentoNew, content, strClass, 'new', strParam);
         return false;
     });
     //--------------------------------------------------------------------------    
     Path.map("#/" + strClass + "/edit/:url").to(function () {
-        $('#broth_panel_heading').empty().append(fillDocumentoPageHeader('Edit'));
+        header.empty().append(fillDocumentoPageHeader('Edit'));
+        var strParam = parameter.getUrlObjectFromUrlString(this.params['url']);
         ausiasFLOW.reset();
-        ausiasFLOW.editModule_paramsObject = parameter.getUrlObjectFromUrlString(this.params['url']);
-        ausiasFLOW.editModule_frontOperation = 'new';
-        ausiasFLOW.editModule_class = strClass;
-        ausiasFLOW.initialize(editModule, $('#broth_content'));
+        ausiasFLOW.initialize(editModule, content, strClass, 'edit', strParam);
         return false;
     });
     //--------------------------------------------------------------------------
     Path.map("#/" + strClass + "/view/:id").to(function () {
-        $('#broth_panel_heading').empty().append(fillDocumentoPageHeader('View'));
+        header.empty().append(fillDocumentoPageHeader('View'));
+        var strParam = parameter.getUrlObjectFromUrlString(this.params['url']);
         ausiasFLOW.reset();
-        ausiasFLOW.viewModule_paramsObject = parameter.getUrlObjectFromUrlString(this.params['url']); // paramsObject['id'];
-        ausiasFLOW.viewModule_frontOperation = 'view';
-        ausiasFLOW.viewModule_class = strClass;
-        ausiasFLOW.initialize(viewModule, $('#broth_content'));
+        ausiasFLOW.initialize(viewModule, content, strClass, 'view', strParam);
         return false;
     });
     //--------------------------------------------------------------------------    
     Path.map("#/" + strClass + "/list(/:url)").to(function () {
-        $('#broth_panel_heading').empty().append(fillDocumentoPageHeader('List'));
+        header.empty().append(fillDocumentoPageHeader('List'));
+        var strParam = parameter.defaultizeUrlObjectParametersForLists(parameter.getUrlObjectFromUrlString(this.params['url']));
         ausiasFLOW.reset();
-        ausiasFLOW.listModule_paramsObject = parameter.defaultizeUrlObjectParametersForLists(parameter.getUrlObjectFromUrlString(this.params['url']));
-        ausiasFLOW.listModule_frontOperation = 'list';
-        ausiasFLOW.listModule_class = strClass;
-        ausiasFLOW.initialize(listModule, $('#broth_content'));
+        ausiasFLOW.initialize(listModule, content, strClass, 'list', strParam);
         return false;
     });
     //--------------------------------------------------------------------------
     Path.map("#/" + strClass + "/plist(/:url)").to(function () {
-        $('#broth_panel_heading').empty().append(fillDocumentoPageHeader('Paginated List'));
+        header.empty().append(fillDocumentoPageHeader('Paginated List'));
+        var strParam = parameter.getUrlObjectFromUrlString(this.params['url']);
         ausiasFLOW.reset();
-        ausiasFLOW.pListModule_paramsObject = parameter.getUrlObjectFromUrlString(this.params['url']);
-        ausiasFLOW.pListModule_frontOperation = 'plist';
-        ausiasFLOW.pListModule_class = strClass;
-        ausiasFLOW.initialize(pListModule, $('#broth_content'));
+        ausiasFLOW.initialize(pListModule, content, strClass, 'plist', strParam);
         return false;
     });
     //--------------------------------------------------------------------------
     Path.map("#/" + strClass + "/plist_labels_authors_x_ndocs(/:url)").to(function () {
-        $('#broth_panel_heading').empty().append(fillDocumentoPageHeader('Paginated List'));
+        header.empty().append(fillDocumentoPageHeader('Paginated List'));
+        var strParam = parameter.getUrlObjectFromUrlString(this.params['url']);
         ausiasFLOW.reset();
-        ausiasFLOW.pListModule_paramsObject = parameter.getUrlObjectFromUrlString(this.params['url']);
-        ausiasFLOW.pListModule_frontOperation = 'plist';
-        ausiasFLOW.pListModule_class = strClass;
-        ausiasFLOW.initialize(pListModule, $('#broth_content'));
+        ausiasFLOW.initialize(pListModule, content, strClass, 'plist_labels_authors_x_ndocs', strParam);
         return false;
     });
     //--------------------------------------------------------------------------
-    function abc(params) {
-        if (params) {
-            params.vf = 4;
-        }
-        else {
-            params = {'vf': 4};
-        }
-        $('#broth_panel_heading').empty().append(fillDocumentoPageHeader('Composed operation'));
-        $('#broth_content').empty().append('<div class="col-md-8" id="c1"></div><div class="col-md-4" id="c2"></div>')
-      
-        ausiasFLOW.reset();
-        ausiasFLOW.pListModule_paramsObject = params;
-        ausiasFLOW.pListModule_frontOperation = 'abc';
-        ausiasFLOW.pListModule_class = strClass;
-        ausiasFLOW.viewModule_paramsObject = {'id': 1}; //parameter.getUrlObjectFromUrlString(this.url); // paramsObject['id'];
-        ausiasFLOW.viewModule_frontOperation = 'view';
-        ausiasFLOW.viewModule_class = strClass;
-        ausiasFLOW.initialize(documentoPaginatedList, $('#c1'));
-        ausiasFLOW.initialize(viewModule, $('#c2'));
-        return false;
-    }
     Path.map("#/" + strClass + "/abc(/:url)").to(function () {
-        abc(parameter.getUrlObjectFromUrlString(this.params['url']));
+        var strParam = parameter.getUrlObjectFromUrlString(this.params['url']);
+        if (strParam) {
+            strParam.vf = 4;
+            if (!strParam.id) {
+                strParam.id = 1;
+            }
+        } else {
+            strParam = {'vf': 4, 'id': 1};
+        }
+        header.empty().append(fillDocumentoPageHeader('Composed operation'));
+        content.empty().append('<div class="col-md-8" id="c1"></div><div class="col-md-4" id="c2"></div>')
+        ausiasFLOW.reset();
+        ausiasFLOW.initialize(documentoPaginatedList, $('#c1'), strClass, 'abc', strParam);
+        ausiasFLOW.initialize(viewModule, $('#c2'), strClass, 'view', strParam);
+        return false;
     });
     //--------------------------------------------------------------------------
     Path.map("#/" + strClass + "/documentosautor").to(function () {
-        $('#broth_panel_heading').empty().append(fillDocumentoPageHeader('Documentos de cada autor'));
+        header.empty().append(fillDocumentoPageHeader('Documentos de cada autor'));
+        var strParam = parameter.getUrlObjectFromUrlString(this.params['url']);
         ausiasFLOW.reset();
-        ausiasFLOW.listModule_paramsObject = parameter.getUrlObjectFromUrlString(this.params['url']);
-        ausiasFLOW.listModule_frontOperation = 'documentosautor';
-        ausiasFLOW.listModule_class = 'documentosautor';
-        ausiasFLOW.initialize(documentosautorList, $('#broth_content'));
+        ausiasFLOW.initialize(documentosautorList, content, 'documentosautor', 'list', strParam);
         return false;
     });
 

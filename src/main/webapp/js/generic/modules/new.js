@@ -48,13 +48,12 @@ newModule.prototype.loadFormValues = function (objParams) {
 }
 newModule.prototype.doEventsLoading = function () {
 };
-newModule.prototype.initialize = function () {
-    parametersObject = ausiasFLOW.newModule_paramsObject;
-    strClass = ausiasFLOW.newModule_class;
-
+newModule.prototype.initialize = function (oComponent) {
+    parametersObject = oComponent.strParams;
+    strClass = oComponent.strOb;
 };
 newModule.prototype.getPromise = function () {
-    return promise.getMeta(ausiasFLOW.newModule_class);
+    return promise.getMeta(strClass);
 }
 newModule.prototype.getData = function (jsonDataReceived) {
     if (jsonDataReceived.status == "200") {

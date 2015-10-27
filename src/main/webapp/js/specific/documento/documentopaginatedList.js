@@ -45,7 +45,10 @@ documentoPaginatedList.prototype.bind = function () {
     pListModule.prototype.bind.call(this);
     $('.btn.btn-default.abc').unbind('click');
     $('.btn.btn-default.abc').click(function (event) {
-        ausiasFLOW.viewModule_paramsObject['id'] = parseInt($(this).attr('id'));
+        
+        ausiasFLOW.getComponent('view').strParams['id'] = parseInt($(this).attr('id'));
+        
+        //ausiasFLOW.viewModule_paramsObject['id'] = parseInt($(this).attr('id'));
         ausiasFLOW.flowRender();
         return false;
     });

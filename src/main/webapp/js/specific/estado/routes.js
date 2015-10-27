@@ -26,10 +26,10 @@
  */
 
 
-function fTipodocumentoRoutes() {
+function fEstadoRoutes() {
     var icon = '<i class="fa fa-file-text-o fa-5x"></i>';
-    var fillDocumentoPageHeader = _.partial(html.getPageHeader, icon, 'Tipo de Documento', _);
-    var strClass = 'tipodocumento';
+    var fillDocumentoPageHeader = _.partial(html.getPageHeader, icon, 'Estado de usuario', _);
+    var strClass = 'estado';
     var place = $('#broth_content');
     //--------------------------------------------------------------------------
     Path.map("#/" + strClass + "/new(/:url)").to(function () {

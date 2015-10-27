@@ -24,7 +24,9 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-var viewModule = function () {
+var viewModule = function () {    
+    var strClass;
+    var parametersObject;
     var jsonDataViewModule;
 }
 viewModule.prototype = new baseModule();
@@ -39,11 +41,13 @@ viewModule.prototype.getViewTemplate_func = function (strClass, jsonDataViewModu
             + arr_meta_data_table.join('')
             + '</table>';
 };
-viewModule.prototype.initialize = function () {
+viewModule.prototype.initialize = function (oComponent) {
+    strClass = oComponent.strOb;
+    parametersObject = oComponent.strParams;
 }
 viewModule.prototype.getPromise = function () {
-    if (ausiasFLOW.viewModule_paramsObject['id'] && ausiasFLOW.viewModule_class) {
-        return promise.getOne(ausiasFLOW.viewModule_class, ausiasFLOW.viewModule_paramsObject['id']);
+    if (parametersObject['id'] && strClass) {
+        return promise.getOne(strClass, parametersObject['id']);
     }
 }
 viewModule.prototype.getData = function (jsonDataViewModuleReceived) {
@@ -58,14 +62,14 @@ viewModule.prototype.getData = function (jsonDataViewModuleReceived) {
     }
 }
 viewModule.prototype.render = function () {
-    if (!ausiasFLOW.viewModule_class) {
+    if (!strClass) {
         return 'ERROR: No class defined';
     }
-    if (!ausiasFLOW.viewModule_paramsObject['id']) {
+    if (!parametersObject['id']) {
         return 'ERROR: No id defined';
     }
     if (!jsonDataViewModule.message) {
         return 'ERROR: Server communication interrupted';
     }
-    return this.getViewTemplate_func(ausiasFLOW.viewModule_class, jsonDataViewModule.message);
+    return this.getViewTemplate_func(strClass, jsonDataViewModule.message);
 }
