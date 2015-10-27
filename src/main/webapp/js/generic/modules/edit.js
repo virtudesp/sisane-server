@@ -32,7 +32,29 @@ var editModule = function () {
 editModule.prototype = new baseModule();
 editModule.prototype.loadFormValues = function (objParams) {
 };
-
+editModule.prototype.fillForm = function (meta, data) {
+    arr_meta_data = _.map(meta, function (value) {
+        return  {meta: value, data: data[value.Name]};
+    });
+    $.each(arr_meta_data, function (index, v) {
+        if (v.meta.IsObjForeignKey) {
+            $('#' + v.meta.Name).val(v.data.bean.id);
+            $('#' + v.meta.Name + "_desc").html(html.printPrincipal(v));
+        } else {
+            switch (v.meta.Type) {
+                case 'Boolean':
+                    if (data[v.meta.Name]) {
+                        $('#' + v.meta.Name).attr("checked", true);
+                    } else {
+                        $('#' + v.meta.Name).attr("checked", false);
+                    }
+                    break;
+                default:
+                    $('#' + v.meta.Name).val(decodeURIComponent(v.data));
+            }
+        }
+    });
+};
 editModule.prototype.defaultizeUrlObjectParameters = function (objParams) {
     if (typeof objParams["id"] === 'undefined') {
         objParams["id"] = 1;
