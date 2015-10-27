@@ -11,19 +11,30 @@
     var componentsList = [];
     ausiasFLOW.reset = function () {
         componentsList = [];
+        return ausiasFLOW;
     };
     ausiasFLOW.initialize = function () {
-        //comprobar al menos que haya dos argumentos
         var userModule = arguments[0];
         var placeSelector = arguments[1];
-        var bindAllCallbackFunction = arguments[2];
+        var strOb = arguments[2];
+        var strOp = arguments[3];
+        var strParams = arguments[4];
+        var bindAllCallbackFunction = arguments[5];
         var oComponent = new userModule;
         oComponent.id_module = componentsList.length;
         oComponent.place = placeSelector;
+
+        oComponent.strOb = strOb;
+        oComponent.strOp = strOp;
+        oComponent.strParams = strParams;
+
         oComponent.callbackFunction = bindAllCallbackFunction;
+
+
+
         componentsList.push(oComponent);
         if ('initialize' in oComponent) {
-            oComponent.initialize();
+            oComponent.initialize(oComponent);
         }
         if ('getPromise' in oComponent) {
             var promise = oComponent.getPromise();
@@ -73,7 +84,7 @@
     };
     ausiasFLOW.renderComponent = function (oComponent) {
         if ('initialize' in componentsList[oComponent.id_module]) {
-            componentsList[oComponent.id_module].initialize();
+            componentsList[oComponent.id_module].initialize(oComponent);
         }
         if ('getPromise' in componentsList[oComponent.id_module]) {
             var promise = componentsList[oComponent.id_module].getPromise();
@@ -134,7 +145,7 @@
             //console.log("dom:    " + $(entry.place).html());
             //console.log("render: " + $('<div/>').html(entry.render()).html()); 
             if ('initialize' in oComponent) {
-                oComponent.initialize();
+                oComponent.initialize(oComponent);
             }
             if ('getPromise' in oComponent) {
                 var promise = oComponent.getPromise();
@@ -183,6 +194,15 @@
                 }
             }
         });
+    };
+    ausiasFLOW.getComponent = function (name) {
+        var dev = null;
+        componentsList.forEach(function (oComponent) {
+            if (oComponent.strOp == name) {
+                dev = oComponent;
+            }
+        });
+        return dev;
     };
     ausiasFLOW.renderPage = function () {
         componentsList.forEach(function (oComponent) {
