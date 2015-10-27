@@ -61,10 +61,9 @@ editModule.prototype.defaultizeUrlObjectParameters = function (objParams) {
     }
     return objParams;
 };
-editModule.prototype.initialize = function () {
-    strClass = ausiasFLOW.editModule_class;
-    parametersObject = this.defaultizeUrlObjectParameters(ausiasFLOW.editModule_paramsObject);
-
+editModule.prototype.initialize = function (oComponent) {
+    strClass = oComponent.strOb;
+    parametersObject = this.defaultizeUrlObjectParameters(oComponent.strParams);
 };
 editModule.prototype.getPromise = function () {
     return promise.getOne(strClass, parametersObject['id']);

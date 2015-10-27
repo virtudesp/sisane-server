@@ -26,10 +26,12 @@
  */
 
 var listModule = function () {
-    var strClass;
+    var strOb;
+    var strOp;
+    var paramsObject;
+
     var jsonData;
 
-    var paramsObject;
     var orderParams;
     var filterParams;
     var systemFilterParams;
@@ -39,11 +41,11 @@ listModule.prototype = new baseModule();
 listModule.prototype.loadThButtons = function (meta, strClase, UrlFromParamsWithoutOrder) {
     return button.getTableHeaderButtons(meta.Name, strClase, 'list', UrlFromParamsWithoutOrder);
 }
-listModule.prototype.loadButtons = function (rowValues, strClass) {
+listModule.prototype.loadButtons = function (rowValues, strOb) {
     var botonera = "";
-    botonera += button.getTableToobarButton(strClass, 'view', rowValues[0].data, 'glyphicon-eye-open');
-    botonera += button.getTableToobarButton(strClass, 'edit', rowValues[0].data, 'glyphicon-pencil');
-    botonera += button.getTableToobarButton(strClass, 'delete', rowValues[0].data, 'glyphicon-remove');
+    botonera += button.getTableToobarButton(strOb, 'view', rowValues[0].data, 'glyphicon-eye-open');
+    botonera += button.getTableToobarButton(strOb, 'edit', rowValues[0].data, 'glyphicon-pencil');
+    botonera += button.getTableToobarButton(strOb, 'delete', rowValues[0].data, 'glyphicon-remove');
     return button.getToolbarBar(botonera);
 };
 listModule.prototype.loadPopups = function (meta, rowValues, strClase) {
@@ -64,15 +66,7 @@ listModule.prototype.loadPopups = function (meta, rowValues, strClase) {
     })
     return botonera;
 };
-listModule.prototype.prepareParams = function () {
-    strClass = ausiasFLOW.listModule_class;
-    paramsObject = ausiasFLOW.listModule_paramsObject;
-    orderParams = parameter.printOrderParamsInUrl(ausiasFLOW.listModule_paramsObject);
-    filterParams = parameter.printFilterParamsInUrl(ausiasFLOW.listModule_paramsObject);
-    systemFilterParams = parameter.printSystemFilterParamsInUrl(ausiasFLOW.listModule_paramsObject);
-    strUrlFromParamsWithoutOrder = parameter.getUrlStringFromParamsObject(parameter.getUrlObjectFromParamsWithoutParamArray(ausiasFLOW.listModule_paramsObject, ["order", "ordervalue"]));
-}
-listModule.prototype.getHeaderPageTableFunc = function (jsonMeta, strClass, UrlFromParamsWithoutOrder, visibles, acciones) {
+listModule.prototype.getHeaderPageTableFunc = function (jsonMeta, strOb, UrlFromParamsWithoutOrder, visibles, acciones) {
     thisObject = this;
     acciones = typeof (acciones) != 'undefined' ? acciones : true;
     arr_meta_data_tableHeader = _.map(jsonMeta, function (oMeta, key) {
@@ -80,13 +74,13 @@ listModule.prototype.getHeaderPageTableFunc = function (jsonMeta, strClass, UrlF
             return '<th class="col-md-1">'
                     + oMeta.UltraShortName
                     + '<br />'
-                    + thisObject.loadThButtons(oMeta, strClass, UrlFromParamsWithoutOrder)
+                    + thisObject.loadThButtons(oMeta, strOb, UrlFromParamsWithoutOrder)
                     + '</th>';
         } else {
             return  '<th>'
                     + oMeta.UltraShortName
                     + '<br />'
-                    + thisObject.loadThButtons(oMeta, strClass, UrlFromParamsWithoutOrder)
+                    + thisObject.loadThButtons(oMeta, strOb, UrlFromParamsWithoutOrder)
                     + '</th>';
         }
     });
@@ -119,7 +113,7 @@ listModule.prototype.getBodyPageTableFunc = function (meta, page, print_tdValue_
         })
                 )
                 .slice(0, parseInt(visibles))
-                .concat(['<td>' + tdButtons_function(value, strClass) + '</td>']);
+                .concat(['<td>' + tdButtons_function(value, strOb) + '</td>']);
     });
     //is an array (rpp) of arrays (rows) of strings
     //every string contains the data of the table cell
@@ -137,14 +131,21 @@ listModule.prototype.getBodyPageTableFunc = function (meta, page, print_tdValue_
     //is a string that contains the table body
     return str_meta_data_table_buttons_reduced_reduced;
 }
-
-listModule.prototype.initialize = function () {
-    var thisObject = this;    
-    this.prepareParams();    
+listModule.prototype.prepareParams = function (oComponent) {
+    strOb = oComponent.strOb;
+    strOp = oComponent.strOp;
+    paramsObject = oComponent.strParams;
+    orderParams = parameter.printOrderParamsInUrl(paramsObject);
+    filterParams = parameter.printFilterParamsInUrl(paramsObject);
+    systemFilterParams = parameter.printSystemFilterParamsInUrl(paramsObject);
+    strUrlFromParamsWithoutOrder = parameter.getUrlStringFromParamsObject(parameter.getUrlObjectFromParamsWithoutParamArray(paramsObject, ["order", "ordervalue"]));
+}
+listModule.prototype.initialize = function (oComponent) {
+    this.prepareParams(oComponent);
 };
 listModule.prototype.getPromise = function () {
     if (paramsObject) {
-        return promise.getAll(ausiasFLOW.listModule_class, filterParams, orderParams, systemFilterParams);
+        return promise.getAll(strOb, filterParams, orderParams, systemFilterParams);
     }
 }
 listModule.prototype.getData = function (jsonDataReturned) {
@@ -160,11 +161,10 @@ listModule.prototype.getData = function (jsonDataReturned) {
 
 };
 listModule.prototype.render = function () {
-    var paramsObject = ausiasFLOW.listModule_paramsObject;
     if (jsonData.status == 200) {
         var visibles = 6;
         var strTable = table.getTable(
-                this.getHeaderPageTableFunc(jsonData.message.meta.message, ausiasFLOW.listModule_class, strUrlFromParamsWithoutOrder, visibles),
+                this.getHeaderPageTableFunc(jsonData.message.meta.message, strOb, strUrlFromParamsWithoutOrder, visibles),
                 this.getBodyPageTableFunc(jsonData.message.meta.message, jsonData.message.page.message, html.printPrincipal, this.loadButtons, this.loadPopups, visibles)
                 );
         return '<div id="tablePlace">' + strTable + '</div>';

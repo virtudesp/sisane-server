@@ -25,13 +25,16 @@
  * THE SOFTWARE.
  */
 var pListModule = function () {
-    var strClass;
+    var strOb;
+    var strOp
+    var paramsObject;
+
     var jsonData;
     var jsonMeta;
     var jsonPage;
     var jsonPages;
     var jsonRegisters = undefined;
-    var paramsObject;
+
     var orderParams;
     var filterParams;
     var systemFilterParams;
@@ -54,7 +57,7 @@ pListModule.prototype.getRegistersInfo = function (regs) {
 };
 pListModule.prototype.getOrderInfo = function (objParams) {
     if (objParams['order']) {
-        strOrder = "<p><small>Contenido ordenado por " + objParams["order"] + " (" + objParams["ordervalue"] + ') <a href="#/' + strClass + '/plist/' + parameter.getUrlStringFromParamsObject(parameter.getUrlObjectFromParamsWithoutParamArray(objParams, ["order", "ordervalue"])) + '" id="linkQuitarOrden">(Quitar orden)</a></small></p>';
+        strOrder = "<p><small>Contenido ordenado por " + objParams["order"] + " (" + objParams["ordervalue"] + ') <a href="#/' + strOb + '/plist/' + parameter.getUrlStringFromParamsObject(parameter.getUrlObjectFromParamsWithoutParamArray(objParams, ["order", "ordervalue"])) + '" id="linkQuitarOrden">(Quitar orden)</a></small></p>';
     } else {
         strOrder = dom.p('', 'Contenido no ordenado');
     }
@@ -67,10 +70,10 @@ pListModule.prototype.getFilterInfo = function (objParams) {
                 dom.p('',
                         dom.small('',
                                 'Contenido filtrado (' + objParams ['filter'] + ' ' + objParams['filteroperator'] + ' ' + objParams['filtervalue'] + ') ' +
-                                dom.a('href="#/' + strClass + '/plist/' + parameter.getUrlStringFromParamsObject(parameter.getUrlObjectFromParamsWithoutParamArray(objParams, ["filter", "filteroperator", "filtervalue"])) + '" id="linkQuitarFiltro"', '(Quitar filtro)')
+                                dom.a('href="#/' + strOb + '/plist/' + parameter.getUrlStringFromParamsObject(parameter.getUrlObjectFromParamsWithoutParamArray(objParams, ["filter", "filteroperator", "filtervalue"])) + '" id="linkQuitarFiltro"', '(Quitar filtro)')
                                 )
                         );
-        //strFilter = "<p><small>Contenido filtrado (" + objParams ['filter'] + " " + objParams['filteroperator'] + " " + objParams['filtervalue'] + ') <a href="#/' + strClass + '/plist/' + parameter.getUrlStringFromParamsObject(parameter.getUrlObjectFromParamsWithoutParamArray(objParams, ["filter", "filteroperator", "filtervalue"])) + '" id="linkQuitarFiltro">(Quitar filtro)</a></small></p>';
+        //strFilter = "<p><small>Contenido filtrado (" + objParams ['filter'] + " " + objParams['filteroperator'] + " " + objParams['filtervalue'] + ') <a href="#/' + strOb + '/plist/' + parameter.getUrlStringFromParamsObject(parameter.getUrlObjectFromParamsWithoutParamArray(objParams, ["filter", "filteroperator", "filtervalue"])) + '" id="linkQuitarFiltro">(Quitar filtro)</a></small></p>';
     } else {
         strFilter = dom.p('', 'Contenido no filtrado');
     }
@@ -141,14 +144,14 @@ pListModule.prototype.filterFormClientTemplate = function () {
                     )
             );
 }
-pListModule.prototype.newTemplate = function (strClass) {
+pListModule.prototype.newTemplate = function (strOb) {
     return(
             dom.div('class="row"',
                     dom.div('class="col-md-12 text-center"',
                             dom.p('',
                                     dom.br() +
-                                    dom.a('class="btn btn-primary" href="#/' + strClass + '/new"',
-                                            'Crear un nuevo ' + strClass
+                                    dom.a('class="btn btn-primary" href="#/' + strOb + '/new"',
+                                            'Crear un nuevo ' + strOb
                                             )
                                     )
                             )
@@ -164,21 +167,25 @@ pListModule.prototype.defaultizeUrlObjectParametersForPaginatedLists = function 
         objParams["vf"] = 10;
     return objParams;
 }
-pListModule.prototype.initialize = function () {
-    strClass = ausiasFLOW.pListModule_class;
-    paramsObject = this.defaultizeUrlObjectParametersForPaginatedLists(ausiasFLOW.pListModule_paramsObject);
-    orderParams = parameter.printOrderParamsInUrl(ausiasFLOW.pListModule_paramsObject);
-    filterParams = parameter.printFilterParamsInUrl(ausiasFLOW.pListModule_paramsObject);
-    systemFilterParams = parameter.printSystemFilterParamsInUrl(ausiasFLOW.pListModule_paramsObject);
-    strUrlFromParamsWithoutPage = parameter.getUrlStringFromParamsObject(parameter.getUrlObjectFromParamsWithoutParamArray(ausiasFLOW.pListModule_paramsObject, ["page"]));
-    strUrlFromParamsWithoutRpp = parameter.getUrlStringFromParamsObject(parameter.getUrlObjectFromParamsWithoutParamArray(ausiasFLOW.pListModule_paramsObject, ["rpp"]));
-    strUrlFromParamsWithoutOrder = parameter.getUrlStringFromParamsObject(parameter.getUrlObjectFromParamsWithoutParamArray(ausiasFLOW.pListModule_paramsObject, ["order", "ordervalue"]));
-    urlWithoutPage = '#/' + ausiasFLOW.pListModule_class + '/' + ausiasFLOW.pListModule_frontOperation + '/' + strUrlFromParamsWithoutPage;
-    urlWithoutRpp = '#/' + ausiasFLOW.pListModule_class + '/' + ausiasFLOW.pListModule_frontOperation + '/' + strUrlFromParamsWithoutRpp;
+pListModule.prototype.prepareParams = function (oComponent) {
+    strOb = oComponent.strOb;
+    strOp = oComponent.strOp;
+    paramsObject = this.defaultizeUrlObjectParametersForPaginatedLists(oComponent.strParams);
+    orderParams = parameter.printOrderParamsInUrl(paramsObject);
+    filterParams = parameter.printFilterParamsInUrl(paramsObject);
+    systemFilterParams = parameter.printSystemFilterParamsInUrl(paramsObject);
+    strUrlFromParamsWithoutPage = parameter.getUrlStringFromParamsObject(parameter.getUrlObjectFromParamsWithoutParamArray(paramsObject, ["page"]));
+    strUrlFromParamsWithoutRpp = parameter.getUrlStringFromParamsObject(parameter.getUrlObjectFromParamsWithoutParamArray(paramsObject, ["rpp"]));
+    strUrlFromParamsWithoutOrder = parameter.getUrlStringFromParamsObject(parameter.getUrlObjectFromParamsWithoutParamArray(paramsObject, ["order", "ordervalue"]));
+    urlWithoutPage = '#/' + strOb + '/' + strOp + '/' + strUrlFromParamsWithoutPage;
+    urlWithoutRpp = '#/' + strOb + '/' + strOp + '/' + strUrlFromParamsWithoutRpp;
+}
+pListModule.prototype.initialize = function (oComponent) {
+    this.prepareParams(oComponent);
 };
 pListModule.prototype.getPromise = function () {
-    if (strClass && paramsObject && paramsObject.rpp && paramsObject.page) {
-        return promise.getSome(strClass, paramsObject.rpp, paramsObject.page, filterParams, orderParams, systemFilterParams);
+    if (strOb && paramsObject && paramsObject.rpp && paramsObject.page) {
+        return promise.getSome(strOb, paramsObject.rpp, paramsObject.page, filterParams, orderParams, systemFilterParams);
     }
 
 };
@@ -202,8 +209,7 @@ pListModule.prototype.getData = function (jsonDataReturned) {
     }
 };
 pListModule.prototype.render = function () {
-    //var paramsObject = ausiasFLOW.pListModule_paramsObject;
-    if (!strClass) {
+    if (!strOb) {
         return "error: No class defined in paginatedList module";
     }
     if (!paramsObject) {
@@ -225,11 +231,11 @@ pListModule.prototype.render = function () {
     strVisibleFields = this.visibleFieldsTemplate();
     strFilterForm = this.filterFormTemplate();
     strFilterFormClient = this.filterFormClientTemplate();
-    strNewButton = this.newTemplate(ausiasFLOW.pListModule_class);
+    strNewButton = this.newTemplate(strOb);
     //console.log(this.loadButtons('2','1'))   //??
 
     strTable = table.getTable(
-            this.getHeaderPageTableFunc(jsonData.message.meta.message, ausiasFLOW.pListModule_class, strUrlFromParamsWithoutOrder, paramsObject.vf),
+            this.getHeaderPageTableFunc(jsonData.message.meta.message, strOb, strUrlFromParamsWithoutOrder, paramsObject.vf),
             this.getBodyPageTableFunc(jsonData.message.meta.message, jsonData.message.page.message, html.printPrincipal, this.loadButtons, this.loadPopups, paramsObject.vf)
             );
     return tab.getTab([
@@ -248,7 +254,7 @@ pListModule.prototype.bind = function () {
     $("#selectVisibleFields").val(paramsObject["vf"]);
     $('#selectVisibleFields').unbind('change');
     $("#selectVisibleFields").change(function () {
-        window.location.href = "#/" + ausiasFLOW.pListModule_class + "/plist/" + parameter.getUrlStringFromParamsObject(parameter.getUrlObjectFromParamsWithoutParamArray(paramsObject, ['vf'])) + "&vf=" + $("#selectVisibleFields option:selected").val();
+        window.location.href = "#/" + strOb + "/plist/" + parameter.getUrlStringFromParamsObject(parameter.getUrlObjectFromParamsWithoutParamArray(paramsObject, ['vf'])) + "&vf=" + $("#selectVisibleFields option:selected").val();
         return false;
     });
     //filter
@@ -258,7 +264,7 @@ pListModule.prototype.bind = function () {
         var filter = $("#selectFilter option:selected").val();
         var filteroperator = $("#selectFilteroperator option:selected").val();
         var filtervalue = $("#inputFiltervalue").val();
-        window.location.href = '#/' + ausiasFLOW.pListModule_class + '/plist/' + parameter.getUrlStringFromParamsObject(parameter.getUrlObjectFromParamsWithoutParamArray(paramsObject, ['filter', 'filteroperator', 'filtervalue'])) + "&filter=" + filter + "&filteroperator=" + filteroperator + "&filtervalue=" + filtervalue;
+        window.location.href = '#/' + strOb + '/plist/' + parameter.getUrlStringFromParamsObject(parameter.getUrlObjectFromParamsWithoutParamArray(paramsObject, ['filter', 'filteroperator', 'filtervalue'])) + "&filter=" + filter + "&filteroperator=" + filteroperator + "&filtervalue=" + filtervalue;
         return false;
     });
     //filter client
@@ -273,7 +279,7 @@ pListModule.prototype.bind = function () {
         var strUrlFromParamsWithoutPage = parameter.getUrlStringFromParamsObject(parameter.getUrlObjectFromParamsWithoutParamArray(paramsObject, ["order", "ordervalue"]));
 
         var strTable = table.getTable(
-                thisObject.getHeaderPageTableFunc(jsonData.message.meta.message, strClass, strUrlFromParamsWithoutPage, paramsObject.vf),
+                thisObject.getHeaderPageTableFunc(jsonData.message.meta.message, strOb, strUrlFromParamsWithoutPage, paramsObject.vf),
                 thisObject.getBodyPageTableFunc(jsonData.message.meta.message, arrayFiltered, html.printPrincipal, thisObject.loadButtons, thisObject.loadPopups, paramsObject.vf)
                 );
         $('#broth_content').empty().append(tab.getTab([

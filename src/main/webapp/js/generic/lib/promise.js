@@ -47,7 +47,7 @@ promise = {
         return ajax.call(config.getAppUrl() + '?ob=' + strClass + '&op=getaggregateviewall' + filterParams + orderParams + systemfilterParams, 'GET', '');
     },
     getPromise: function (strClass, operation, params) {
-        return ajax.call(config.getAppUrl() + '?ob=' + strClass + '&op=' + operation & params, 'GET', '');
+        return ajax.call(config.getAppUrl() + '?ob=' + strClass + '&op=' + operation + params, 'GET', '');
     },
     setOne: function (strClass, jsonfile) {
         return ajax.call(config.getAppUrl() + '?ob=' + strClass + '&op=set', 'GET', jsonfile);

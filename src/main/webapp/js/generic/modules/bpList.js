@@ -39,7 +39,11 @@ bpListModule.prototype.bindAll = function (place, objParams, callbackFunction, o
     $('.pagination_link').click(function (event) {
         paramsObject = parameter.getUrlObjectFromParamsWithoutParamArray(paramsObject, ["page"]);
         paramsObject["page"] = parseInt($(this).attr('id'));
-        ausiasFLOW.pListModule_paramsObject = paramsObject;
+        
+        //ausiasFLOW.getComponent('view').strParams['id']
+        
+        //ausiasFLOW.pListModule_paramsObject = paramsObject;
+        thisObject.strParams=paramsObject;
         ausiasFLOW.renderComponent(thisObject, true);
         return false;
     });
@@ -47,7 +51,9 @@ bpListModule.prototype.bindAll = function (place, objParams, callbackFunction, o
     $("#selectVisibleFields").change(function () {
         paramsObject = parameter.getUrlObjectFromParamsWithoutParamArray(paramsObject, ["vf"]);
         paramsObject["vf"] = $("#selectVisibleFields option:selected").val();
-        ausiasFLOW.pListModule_paramsObject = paramsObject;
+        
+        thisObject.strParams=paramsObject;
+        //ausiasFLOW.pListModule_paramsObject = paramsObject;
         ausiasFLOW.renderComponent(thisObject, true);
         return false;
     });
@@ -55,7 +61,9 @@ bpListModule.prototype.bindAll = function (place, objParams, callbackFunction, o
     $('.rpp_link').on('click', function (event) {
         paramsObject = parameter.getUrlObjectFromParamsWithoutParamArray(paramsObject, ["rpp"]);
         paramsObject["rpp"] = parseInt($(this).attr('id'));
-        ausiasFLOW.pListModule_paramsObject = paramsObject;
+        
+        thisObject.strParams=paramsObject;
+        //ausiasFLOW.pListModule_paramsObject = paramsObject;
         ausiasFLOW.renderComponent(thisObject, true);
         return false;
     });
@@ -72,7 +80,9 @@ bpListModule.prototype.bindAll = function (place, objParams, callbackFunction, o
         paramsObject["filter"] = $("#selectFilter option:selected").val();
         paramsObject["filteroperator"] = $("#selectFilteroperator option:selected").val();
         paramsObject["filtervalue"] = $("#inputFiltervalue").val();
-        ausiasFLOW.pListModule_paramsObject = paramsObject;
+        
+        thisObject.strParams=paramsObject;
+        //ausiasFLOW.pListModule_paramsObject = paramsObject;
         ausiasFLOW.renderComponent(thisObject, true);
         return false;
     });
@@ -81,7 +91,9 @@ bpListModule.prototype.bindAll = function (place, objParams, callbackFunction, o
         paramsObject = parameter.getUrlObjectFromParamsWithoutParamArray(paramsObject, ["order", "ordervalue"]);
         paramsObject["order"] = $(this).attr('id');
         paramsObject["ordervalue"] = "asc";
-        ausiasFLOW.pListModule_paramsObject = paramsObject;
+        
+        thisObject.strParams=paramsObject;
+        //ausiasFLOW.pListModule_paramsObject = paramsObject;
         ausiasFLOW.renderComponent(thisObject, true);
         return false;
     });
@@ -90,21 +102,27 @@ bpListModule.prototype.bindAll = function (place, objParams, callbackFunction, o
         paramsObject = parameter.getUrlObjectFromParamsWithoutParamArray(paramsObject, ["order", "ordervalue"]);
         paramsObject["order"] = $(this).attr('id');
         paramsObject["ordervalue"] = "desc";
-        ausiasFLOW.pListModule_paramsObject = paramsObject;
+        
+        thisObject.strParams=paramsObject;
+        //ausiasFLOW.pListModule_paramsObject = paramsObject;
         ausiasFLOW.renderComponent(thisObject, true);
         return false;
     });
     $('#linkQuitarOrden').unbind('click');
     $('#linkQuitarOrden').click(function () {
         paramsObject = parameter.getUrlObjectFromParamsWithoutParamArray(paramsObject, ["order", "ordervalue"]);
-        ausiasFLOW.pListModule_paramsObject = paramsObject;
+        
+        thisObject.strParams=paramsObject;
+        //ausiasFLOW.pListModule_paramsObject = paramsObject;
         ausiasFLOW.renderComponent(thisObject, true);
         return false;
     });
     $('#linkQuitarFiltro').unbind('click');
     $('#linkQuitarFiltro').click(function () {
         paramsObject = parameter.getUrlObjectFromParamsWithoutParamArray(paramsObject, ["filter", "filteroperator", "filtervalue"]);
-        ausiasFLOW.pListModule_paramsObject = paramsObject;
+        
+        thisObject.strParams=paramsObject;
+        //ausiasFLOW.pListModule_paramsObject = paramsObject;
         ausiasFLOW.renderComponent(thisObject, true);
         return false;
     });
