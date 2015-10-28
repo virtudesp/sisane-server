@@ -26,8 +26,8 @@
  */
 
 modal = {
-    getEmptyModal: function () {
-        var modal = '<div id="modal01" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">';
+    getEmptyModal: function (name) {
+        var modal = '<div id="' + name + '" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">';
         modal += '<div class="modal-dialog modal-lg">';
         modal += '<div class="modal-content">';
         modal += '<div class="modal-header" id="modal-header"></div>';
@@ -60,9 +60,9 @@ modal = {
         return pie = '<button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Cerrar</button>';
     },
     loadModalNotify: function (place, message, afterNotifyFunction) {
-        $(place).append(modal.getEmptyModal());
+        $(place).append(modal.getEmptyModal('modal01'));
         modal.loadModal('#modal01', modal.getModalHeader('Respuesta del servidor'), message, modal.getModalFooter(), true);
         $('#modal01').css({'right': '20px', 'left': '20px', 'width': 'auto', 'margin': '10px', 'display': 'block'});
-        $('#modal01').on('hidden.bs.modal', afterNotifyFunction);        
+        $('#modal01').on('hidden.bs.modal', afterNotifyFunction);
     }
 }
