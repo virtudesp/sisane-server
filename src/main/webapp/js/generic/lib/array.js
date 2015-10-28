@@ -54,6 +54,19 @@ var array = {
             iArray.push(counter);
         }
         return iArray;
+    },
+    identificarArray: function (arr) {
+        var newObj = {};
+        for (var property in arr) {
+            if (arr.hasOwnProperty(property)) {
+                if (property.match("^obj_")) {
+                    newObj[string.identificar(property)] = arr[property];
+                } else {
+                    newObj[property] = arr[property];
+                }
+            }
+        }
+        return newObj;
     }
 }
 
