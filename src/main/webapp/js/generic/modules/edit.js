@@ -104,7 +104,7 @@ editModule.prototype.bind = function () {
                 if (result["status"] == "200") {
                     resultadoMessage = 'Se ha modificado el registro con id=' + result["message"];
                 } else {
-                    resultadoMessage = "ERROR: No se ha creado el registro";
+                    resultadoMessage = "ERROR: No se ha modificado el registro";
                 }
                 var mensaje = "<h5>Código: " + result["status"] + "</h5><h5>" + resultadoMessage + "</h5>";
                 modal.loadModalNotify($('#broth_modal'), mensaje, function () {
