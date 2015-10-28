@@ -99,7 +99,8 @@ editModule.prototype.bind = function () {
         $('#submitForm').unbind('click');
         $('#submitForm').click(function (e) {
             //oView.okValidation(function (e) {
-            promise.setOne(strClass, {json: JSON.stringify(form.getFormValues(strClass))}).done(function (result) {
+            strValues = array.identificarArray(form.getFormValues(strClass));            
+            promise.setOne(strClass, {json: JSON.stringify(strValues)}).done(function (result) {
                 if (result["status"] == "200") {
                     resultadoMessage = 'Se ha modificado el registro con id=' + result["message"];
                 } else {

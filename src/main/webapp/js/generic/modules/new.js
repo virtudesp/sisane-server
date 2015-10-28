@@ -74,12 +74,13 @@ newModule.prototype.fill = function () {
     this.loadFormValues(parametersObject); //new operation can load forced foreigns & no foreigns
 }
 newModule.prototype.bind = function () {
-    var thisObject = this;
     validation.loadValidationCallbacks(jsonData.message);
     this.doEventsLoading();
     $('#submitForm').unbind('click');
     $('#submitForm').click(function (e) {
-        promise.setOne(strClass, {json: JSON.stringify(form.getFormValues(strClass))}).done(function (result) {
+        // okValidation(function (e) { ...
+        var strValues = array.identificarArray(form.getFormValues(strClass)); 
+        promise.setOne(strClass, {json: JSON.stringify(strValues)}).done(function (result) {
             if (result["status"] == "200") {
                 resultadoMessage = 'Se ha creado el registro con id=' + result["message"];
             } else {
