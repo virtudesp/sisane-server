@@ -3,11 +3,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>net.daw</groupId>
-    <artifactId>openausias</artifactId>
+    <artifactId>openausiasBLOG</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>war</packaging>
 
-    <name>openausias</name>
+    <name>openausiasBLOG</name>
 
 
     <properties>
