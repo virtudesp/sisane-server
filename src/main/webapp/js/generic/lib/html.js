@@ -59,12 +59,10 @@ html = {
     print: function (value) {
         return string.clipString(html.escapeHtml(decodeURIComponent(value)));
     },
-    getId: function (value) {        
-        return _.map(value, function (oItem) {
-            if (oItem.meta.IsId) {
-                return oItem.data;
-            }
-        });        
+    getId: function (value) {
+        return _.filter(value, function (oItem) {
+            return oItem.meta.IsId;               
+            })[0].data;        
     },
     printObject: function (value) {
         var arr_metadata = _.map(value.data.meta, function (oMeta) {
