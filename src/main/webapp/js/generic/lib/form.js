@@ -204,7 +204,7 @@ form = {
     getForeign: function (obMain, obForeign) {
         $('#' + obMain + 'Form #obj_' + obForeign + '_button').unbind('click');
         $('#' + obMain + 'Form #obj_' + obForeign + '_button').click(function () {
-            $('#' + obMain + 'Form').append(modal.getEmptyModal());
+            $('#' + obMain + 'Form').append(modal.getEmptyModal('modal01'));
             modal.loadModal('#modal01', modal.getModalHeader('Elección de ' + obForeign), "", modal.getModalFooter(), true);
             ausiasFLOW.initialize(ebpListModule, $('#modal-body'), obForeign , 'plist', {"vf": 4}, function (id) {
                 $('#obj_' + obForeign).val(id);
