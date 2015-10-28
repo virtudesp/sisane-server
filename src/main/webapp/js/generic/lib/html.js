@@ -59,6 +59,13 @@ html = {
     print: function (value) {
         return string.clipString(html.escapeHtml(decodeURIComponent(value)));
     },
+    getId: function (value) {        
+        return _.map(value, function (oItem) {
+            if (oItem.meta.IsId) {
+                return oItem.data;
+            }
+        });        
+    },
     printObject: function (value) {
         var arr_metadata = _.map(value.data.meta, function (oMeta) {
             if (oMeta.IsForeignKeyDescriptor) {

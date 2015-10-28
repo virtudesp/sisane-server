@@ -53,7 +53,7 @@ function fDocumentoRoutes() {
         header.empty().append(fillDocumentoPageHeader('Edit'));
         var strParam = parameter.getUrlObjectFromUrlString(this.params['url']);
         ausiasFLOW.reset();
-        ausiasFLOW.initialize(editModule, content, strClass, 'edit', strParam);
+        ausiasFLOW.initialize(documentoEdit, content, strClass, 'edit', strParam);
         return false;
     });
     //--------------------------------------------------------------------------

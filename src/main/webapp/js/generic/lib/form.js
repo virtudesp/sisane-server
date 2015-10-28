@@ -200,5 +200,21 @@ form = {
             return 9;
         }
         ;
+    },
+    getForeign: function (obMain, obForeign) {
+        $('#' + obMain + 'Form #obj_' + obForeign + '_button').unbind('click');
+        $('#' + obMain + 'Form #obj_' + obForeign + '_button').click(function () {
+            $('#' + obMain + 'Form').append(modal.getEmptyModal());
+            modal.loadModal('#modal01', modal.getModalHeader('Elección de ' + obForeign), "", modal.getModalFooter(), true);
+            ausiasFLOW.initialize(ebpListModule, $('#modal-body'), obForeign , 'plist', {"vf": 4}, function (id) {
+                $('#obj_' + obForeign).val(id);
+                promise.getOne(obForeign, id).done(function (json) {
+                    $('#obj_' + obForeign + '_desc').html(html.printObject2(obForeign, json.message));
+                });
+                $('#modal01').modal('hide');
+            });
+            return false;
+        });
+
     }
 };

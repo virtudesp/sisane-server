@@ -1,8 +1,8 @@
-/*
+/* 
  * Copyright (c) 2015 by Rafael Angel Aznar Aparici (rafaaznar at gmail dot com)
  * 
  * openAUSIAS: The stunning micro-library that helps you to develop easily 
- *             AJAX web applications by using Java and jQuery
+ * AJAX web applications by using Java and jQuery
  * openAUSIAS is distributed under the MIT License (MIT)
  * Sources at https://github.com/rafaelaznar/openAUSIAS
  * 
@@ -23,24 +23,13 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
+ * 
  */
-var ebpListModule = function () {
-}
-ebpListModule.prototype = new bpListModule();
-ebpListModule.prototype.loadThButtons = function (meta, strClase, UrlFromParamsWithoutOrder) {
-    return button.getTableHeaderButtons(meta.Name, strClase, 'ebpList', UrlFromParamsWithoutOrder);
-}
-ebpListModule.prototype.loadButtons = function (rowValues, strClass) {
-    var botonera = "";
-    botonera += '<div class="btn-toolbar" role="toolbar"><div class="btn-group btn-group-xs">';
-    botonera += '<a class="btn btn-default selector_button" id="' + html.getId(rowValues) + '"  href="#"><i class="glyphicon glyphicon-ok"></i></a>';
-    botonera += '</div></div>';
-    return botonera;
+
+var documentoEdit = function () {
 };
-ebpListModule.prototype.bindCallback = function (callbackFunction) {
-    $('.btn.btn-default.selector_button').unbind('click');
-    $('.btn.btn-default.selector_button').click(function (event) {
-        callbackFunction(parseInt($(this).attr('id')))
-        return false;
-    });
+documentoEdit.prototype = new editModule();
+documentoEdit.prototype.doEventsLoading = function () {
+    form.getForeign('documento','usuario');
+    form.getForeign('documento','tipodocumento');       
 };

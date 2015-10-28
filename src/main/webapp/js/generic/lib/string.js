@@ -26,6 +26,9 @@
  */
 
 string = {
+    identificar: function(value){
+        return value.replace("obj_", "id_");
+    },
     defaultizeValue: function (strValue, defaultValue) {
         if (typeof strValue !== 'undefined') {
             return strValue;
