@@ -32,7 +32,7 @@ var newModule = function () {
 newModule.prototype = new baseModule();
 function setForeign(prop, objParams) {
     promise.getOne(prop, objParams[prop]).done(function (jsonDataViewModuleReceived) {
-        $('#obj_' + prop + '_desc').html(html.printObject2(prop, jsonDataViewModuleReceived.message));
+        $('#obj_' + prop + '_desc').html(html.printObject2(prop, jsonDataViewModuleReceived.message.meta.message, jsonDataViewModuleReceived.message.bean.message));
     })
 }
 newModule.prototype.loadFormValues = function (objParams) {
@@ -79,7 +79,7 @@ newModule.prototype.bind = function () {
     $('#submitForm').unbind('click');
     $('#submitForm').click(function (e) {
         // okValidation(function (e) { ...
-        var strValues = array.identificarArray(form.getFormValues(strClass)); 
+        var strValues = array.identificarArray(form.getFormValues(strClass));
         promise.setOne(strClass, {json: JSON.stringify(strValues)}).done(function (result) {
             if (result["status"] == "200") {
                 resultadoMessage = 'Se ha creado el registro con id=' + result["message"];

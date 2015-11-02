@@ -1,8 +1,8 @@
-/*
+/* 
  * Copyright (c) 2015 by Rafael Angel Aznar Aparici (rafaaznar at gmail dot com)
  * 
  * openAUSIAS: The stunning micro-library that helps you to develop easily 
- *             AJAX web applications by using Java and jQuery
+ * AJAX web applications by using Java and jQuery
  * openAUSIAS is distributed under the MIT License (MIT)
  * Sources at https://github.com/rafaelaznar/openAUSIAS
  * 
@@ -23,31 +23,13 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
+ * 
  */
 
-string = {
-    identificar: function(value){
-        return value.replace("obj_", "id_");
-    },
-    defaultizeValue: function (strValue, defaultValue) {
-        if (typeof strValue !== 'undefined') {
-            return strValue;
-        } else {
-            return defaultValue;
-        }
-    },
-    clipString: function (strResult, charsToClipStart) {
-        charsToClipStart = string.defaultizeValue(charsToClipStart, 40);
-        if (typeof strResult === 'string') {
-            if (strResult.length > charsToClipStart)
-                return strResult.substr(0, charsToClipStart).trim() + " ...";
-            else
-                return strResult.trim();
-        } else {
-            return strResult;
-        }
-    },
-    replaceAll: function (str, search, rpl) {
-        return str.split(search).join(rpl);
-    }
-}
+var usuarioEdit = function () {
+};
+usuarioEdit.prototype = new editModule();
+usuarioEdit.prototype.doEventsLoading = function () {
+    form.getForeign('usuario','estado');
+    form.getForeign('usuario','tipousuario');       
+};

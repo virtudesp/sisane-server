@@ -39,7 +39,7 @@ editModule.prototype.fillForm = function (meta, data) {
     $.each(arr_meta_data, function (index, v) {
         if (v.meta.IsObjForeignKey) {
             $('#' + v.meta.Name).val(v.data.bean.id);
-            $('#' + v.meta.Name + "_desc").html(html.printPrincipal(v));
+            $('#' + v.meta.Name + "_desc").html(html.printPrincipal( v));
         } else {
             switch (v.meta.Type) {
                 case 'Boolean':
@@ -99,7 +99,7 @@ editModule.prototype.bind = function () {
         $('#submitForm').unbind('click');
         $('#submitForm').click(function (e) {
             //oView.okValidation(function (e) {
-            strValues = array.identificarArray(form.getFormValues(strClass));            
+            strValues = array.identificarArray(form.getFormValues(strClass));
             promise.setOne(strClass, {json: JSON.stringify(strValues)}).done(function (result) {
                 if (result["status"] == "200") {
                     resultadoMessage = 'Se ha modificado el registro con id=' + result["message"];

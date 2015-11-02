@@ -30,43 +30,6 @@ var documentoNew = function () {
 };
 documentoNew.prototype = new newModule();
 documentoNew.prototype.doEventsLoading = function () {
-
-
-
-
-
-
-
-
-
-
-
-    $('#documentoForm #obj_usuario_button').unbind('click');
-    $("#documentoForm #obj_usuario_button").click(function () {
-        $("#documentoForm").append(modal.getEmptyModal());
-        modal.loadModal('#modal01', modal.getModalHeader('Elección de usuario'), "", modal.getModalFooter(), true);
-        ausiasFLOW.initialize(ebpListModule, $('#modal-body'), 'usuario', 'plist', {"vf": 4}, function (id) {
-            $('#obj_usuario').val(id);
-            promise.getOne("usuario", id).done(function (json) {
-                $('#obj_usuario_desc').html(html.printObject2('usuario', json.message));
-            });
-            $('#modal01').modal('hide');
-        });
-        return false;
-    });
-
-
-    $('#documentoForm #obj_tipodocumento_button').unbind('click');
-    $("#documentoForm #obj_tipodocumento_button").click(function () {
-        $("#documentoForm").append(modal.getEmptyModal());
-        modal.loadModal('#modal01', modal.getModalHeader('Elección de tipo de documento'), "", modal.getModalFooter(), true);
-        ausiasFLOW.initialize(ebpListModule, $('#modal-body'), 'tipodocumento', 'plist', {"vf": 4}, function (id) {
-            $('#obj_tipodocumento').val(id).change();
-            promise.getOne("tipodocumento", id).done(function (jsonDataViewModuleReceived) {
-                $('#obj_tipodocumento_desc').html(html.printObject2('tipodocumento', jsonDataViewModuleReceived.message));
-            })
-            $('#modal01').modal('hide');
-        });
-        return false;
-    });
+    form.getForeign('documento','usuario');
+    form.getForeign('documento','tipodocumento');       
 };

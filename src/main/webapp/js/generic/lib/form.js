@@ -209,7 +209,7 @@ form = {
             ausiasFLOW.initialize(ebpListModule, $('#modal-body'), obForeign , 'plist', {"vf": 4}, function (id) {
                 $('#obj_' + obForeign).val(id);
                 promise.getOne(obForeign, id).done(function (json) {
-                    $('#obj_' + obForeign + '_desc').html(html.printObject2(obForeign, json.message));
+                    $('#obj_' + obForeign + '_desc').html(html.printObject2(obForeign, json.message.meta.message,json.message.bean.message));
                 });
                 $('#modal01').modal('hide');
             });

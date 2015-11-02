@@ -36,78 +36,36 @@ appMenu = function () {
                             dom.i('class="fa fa-icon-smile"', '') +
                             'About'
                             )
+                    ) +           
+            dom.li('class="dropdown"',
+                    dom.a('href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"',
+                            dom.i('class="fa fa-icon-list-alt"', '') +
+                            'Principal' +
+                            dom.span('class="caret"', '')
+                            ) +
+                    dom.ul('class="dropdown-menu" role="menu"',
+                            dom.li('',
+                                    dom.a('href="#/documento/plist"',
+                                            dom.i('class="fa fa-fw fa-file-text"', '') +
+                                            'Documentos'
+                                            )
+                                    ) +
+                            dom.li('',
+                                    dom.a('href="#/usuario/plist"',
+                                            dom.i('class="fa fa-fw fa-user"', '') +
+                                            'Usuarios'
+                                            )
+                                    )
+                            )
                     ) +
             dom.li('class="dropdown"',
                     dom.a('href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"',
                             dom.i('class="fa fa-icon-list-alt"', '') +
-                            'Documento' +
+                            'Consultas' +
                             dom.span('class="caret"', '')
                             ) +
                     dom.ul('class="dropdown-menu" role="menu"',
-                            dom.li('class="dropdown-header"', 'Json') +
-                            dom.li('',
-                                    dom.a('href="http://localhost:8081/ausiasBroth2015/json?ob=documentosautor&op=getall"',
-                                            dom.i('class="fa fa-fw fa-file-text"', '') +
-                                            'Documentos autor json 1'
-                                            )
-                                    ) +
-                            dom.li('',
-                                    dom.a('href="http://localhost:8081/ausiasBroth2015/json?ob=documento_labels_x_ndocs_&op=getall"',
-                                            dom.i('class="fa fa-fw fa-file-text"', '') +
-                                            'Documentos autor json 2'
-                                            )
-                                    ) +
-                            dom.li('',
-                                    dom.a('href="http://localhost:8081/ausiasBroth2015/json?ob=documento_labels_x_ndocs_&op=getall&filter=numetiquetas&filteroperator=equals&filtervalue=4"',
-                                            dom.i('class="fa fa-fw fa-file-text"', '') +
-                                            'Documentos autor json 3'
-                                            )
-                                    ) +
-                            dom.li('',
-                                    dom.a('href="http://localhost:8081/ausiasBroth2015/json?ob=documentosautor&op=getaggregateviewsome"',
-                                            dom.i('class="fa fa-fw fa-file-text"', '') +
-                                            'Documentos autor json getaggregateviewsome'
-                                            )
-                                    ) +
-                            dom.li('class="divider"', '') +
-                            dom.li('class="dropdown-header"', 'Simple modules') +
-                            dom.li('',
-                                    dom.a('href="#/documento/plist/page=1&rpp=10"',
-                                            dom.i('class="fa fa-fw fa-file-text"', '') +
-                                            'Documento paginated list'
-                                            )
-                                    ) +
-                            dom.li('',
-                                    dom.a('href="#/documento/list"',
-                                            dom.i('class="fa fa-fw fa-file-text"', '') +
-                                            'Documento list'
-                                            )
-                                    ) +
-                            dom.li('',
-                                    dom.a('href="#/documento/new"',
-                                            dom.i('class="fa fa-fw fa-file-text"', '') +
-                                            'New documento'
-                                            )
-                                    ) +
-                            dom.li('',
-                                    dom.a('href="#/documento/new/usuario=2&tipodocumento=3"',
-                                            dom.i('class="fa fa-fw fa-file-text"', '') +
-                                            'New documento con ajenas'
-                                            )
-                                    ) +
-                            dom.li('',
-                                    dom.a('href="#/documento/edit/1"',
-                                            dom.i('class="fa fa-fw fa-power-off"', '') +
-                                            'edit Documento 1'
-                                            )
-                                    ) +
-                            dom.li('',
-                                    dom.a('href="#/documento/view/1"',
-                                            dom.i('class="fa fa-fw fa-power-off"', '') +
-                                            'view Documento 1'
-                                            )
-                                    ) +
-                            dom.li('class="dropdown-header"', 'Complex modules') +
+                            dom.li('class="dropdown-header"', 'Documento') +
                             dom.li('',
                                     dom.a('href="#/documento/abc"',
                                             dom.i('class="fa fa-fw fa-power-off"', '') +
@@ -119,40 +77,26 @@ appMenu = function () {
                                             dom.i('class="fa fa-fw fa-file-text"', '') +
                                             'Documentos x autor list'
                                             )
-                                    ) +
-                            dom.li('',
-                                    dom.a('href="#/documento/plist_labels_authors_x_ndocs"',
-                                            dom.i('class="fa fa-fw fa-file-text"', '') +
-                                            'Documentos labels_authors_x_ndocs'
-                                            )
                                     )
                             )
+
                     ) +
             dom.li('class="dropdown"',
                     dom.a('href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"',
                             dom.i('class="fa fa-icon-list-alt"', '') +
-                            'Mantenimientos' +
+                            'Configuración' +
                             dom.span('class="caret"', '')
                             ) +
                     dom.ul('class="dropdown-menu" role="menu"',
-                            dom.li('',
-                                    dom.a('href="#/documento/plist"',
-                                            dom.i('class="fa fa-fw fa-file-text"', '') +
-                                            'Documentos'
-                                            )
-                                    ) +
+                            dom.li('class="dropdown-header"', 'Relacionados con el documento') +
                             dom.li('',
                                     dom.a('href="#/tipodocumento/plist"',
                                             dom.i('class="fa fa-fw fa-tag"', '') +
                                             'Tipos de documento'
                                             )
                                     ) +
-                            dom.li('',
-                                    dom.a('href="#/usuario/plist"',
-                                            dom.i('class="fa fa-fw fa-user"', '') +
-                                            'Usuarios'
-                                            )
-                                    ) +
+                            dom.li('class="divider"', '') +
+                            dom.li('class="dropdown-header"', 'Relacionados con el usuario') +
                             dom.li('',
                                     dom.a('href="#/estado/plist"',
                                             dom.i('class="fa fa-fw fa-smile-o"', '') +

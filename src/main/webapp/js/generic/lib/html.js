@@ -61,8 +61,8 @@ html = {
     },
     getId: function (value) {
         return _.filter(value, function (oItem) {
-            return oItem.meta.IsId;               
-            })[0].data;        
+            return oItem.meta.IsId;
+        })[0].data;
     },
     printObject: function (value) {
         var arr_metadata = _.map(value.data.meta, function (oMeta) {
@@ -75,16 +75,16 @@ html = {
         var strForeign = arr_metadata.join(' ');
         return '<a href="#/' + value.meta.ReferencesTable + '/view/' + value.data.bean.id + '">' + value.data.bean.id + ": " + html.print(strForeign) + '</a>';
     },
-    printObject2: function (strClass, value) {
-        var arr_metadata = _.map(value.meta.message, function (oMeta) {
+    printObject2: function (strClass, metaValue, beanValue) {
+        var arr_metadata = _.map(metaValue, function (oMeta) {
             if (oMeta.IsForeignKeyDescriptor) {
-                return  oMeta.Name + ': ' + value.bean.message[oMeta.Name] + ';';
+                return  oMeta.Name + ': ' + beanValue[oMeta.Name] + ';';
             } else {
                 return "";
             }
         });
         var strForeign = _.without(arr_metadata, '').join(' ');
-        return '<a href="#/' + strClass + '/view/' + value.bean.message.id + '">' + value.bean.message.id + ": " + html.print(strForeign) + '</a>';
+        return '<a href="#/' + strClass + '/view/' + beanValue.id + '"><strong>' + beanValue.id + "</strong> (" + html.print(strForeign) + ')</a>';
     },
     printValue: function (value) {
         switch (value.meta.Type) {
@@ -100,10 +100,14 @@ html = {
         }
     },
     printPrincipal: function (value) {
-        if (value.meta.IsObjForeignKey) {
-            return  html.printObject(value);
+        if (value.meta) {
+            if (value.meta.IsObjForeignKey) {
+                return  html.printObject2(value.meta.ReferencesTable, value.data.meta, value.data.bean);
+            } else {
+                return   html.printValue(value);
+            }
         } else {
-            return   html.printValue(value);
+            return html.print(value);
         }
     },
     getIcon: function (strIcon) {

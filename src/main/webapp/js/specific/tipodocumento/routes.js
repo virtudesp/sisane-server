@@ -30,43 +30,48 @@ function fTipodocumentoRoutes() {
     var icon = '<i class="fa fa-file-text-o fa-5x"></i>';
     var fillDocumentoPageHeader = _.partial(html.getPageHeader, icon, 'Tipo de Documento', _);
     var strClass = 'tipodocumento';
-    var place = $('#broth_content');
+    var header = $('#broth_panel_heading');
+    var content = $('#broth_content');
+    //--------------------------------------------------------------------------
+    Path.map("#/" + strClass + "/remove/:id").to(function () {
+        header.empty().append(fillDocumentoPageHeader('Remove'));
+        var strParam = parameter.getUrlObjectFromUrlString(this.params['url']);
+        ausiasFLOW.reset();
+        ausiasFLOW.initialize(removeModule, content, strClass, 'remove', strParam);
+        return false;
+    });
     //--------------------------------------------------------------------------
     Path.map("#/" + strClass + "/new(/:url)").to(function () {
-        $('#broth_panel_heading').empty().append(fillDocumentoPageHeader('New'));
+        header.empty().append(fillDocumentoPageHeader('New'));
         var strParam = parameter.getUrlObjectFromUrlString(this.params['url']);
         ausiasFLOW.reset();
-        ausiasFLOW.initialize(documentoNew, place, strClass, 'new', strParam);
+        ausiasFLOW.initialize(newModule, content, strClass, 'new', strParam);
         return false;
-    })
+    });
     //--------------------------------------------------------------------------    
-    Path.map("#/" + strClass + "/view/:id").to(function () {
-        $('#broth_panel_heading').empty().append(fillDocumentoPageHeader('View'));
+    Path.map("#/" + strClass + "/edit/:url").to(function () {
+        header.empty().append(fillDocumentoPageHeader('Edit'));
         var strParam = parameter.getUrlObjectFromUrlString(this.params['url']);
         ausiasFLOW.reset();
-        ausiasFLOW.initialize(viewModule, place, strClass, 'view', strParam);
+        ausiasFLOW.initialize(editModule, content, strClass, 'edit', strParam);
         return false;
     });
     //--------------------------------------------------------------------------
     Path.map("#/" + strClass + "/view/:id").to(function () {
-        $('#broth_panel_heading').empty().append(fillDocumentoPageHeader('View'));
+        header.empty().append(fillDocumentoPageHeader('View'));
+        var strParam = parameter.getUrlObjectFromUrlString(this.params['url']);
         ausiasFLOW.reset();
-        ausiasFLOW.viewModule_paramsObject = parameter.getUrlObjectFromUrlString(this.params['url']); // paramsObject['id'];
-        ausiasFLOW.viewModule_frontOperation = 'view';
-        ausiasFLOW.viewModule_class = strClass;
-        ausiasFLOW.initialize(viewModule, $('#broth_content'));
+        ausiasFLOW.initialize(viewModule, content, strClass, 'view', strParam);
         return false;
     });
     //--------------------------------------------------------------------------
     Path.map("#/" + strClass + "/plist(/:url)").to(function () {
-        $('#broth_panel_heading').empty().append(fillDocumentoPageHeader('Paginated List'));
+        header.empty().append(fillDocumentoPageHeader('Paginated List'));
         var strParam = parameter.getUrlObjectFromUrlString(this.params['url']);
         ausiasFLOW.reset();
-        ausiasFLOW.initialize(pListModule, place, strClass, 'plist', strParam);
+        ausiasFLOW.initialize(pListModule, content, strClass, 'plist', strParam);
         return false;
     });
-    //--------------------------------------------------------------------------
-
-
+    //--------------------------------------------------------------------------  
 
 }

@@ -97,7 +97,7 @@ listModule.prototype.getHeaderPageTableFunc = function (jsonMeta, strOb, UrlFrom
     }
     return '<tr>' + arr_meta_data_tableHeader_visibles_acciones.join('') + '</tr>';
 }
-listModule.prototype.getBodyPageTableFunc = function (meta, page, print_tdValue_function, tdButtons_function, trPopup_function, visibles) {
+listModule.prototype.getBodyPageTableFunc = function (meta, page, printPrincipal, tdButtons_function, trPopup_function, visibles) {
     //thisObject.jsonData.message.page.list: es un array de objetos. Cada objeto contiene una fila de la tabla de la petición
     //thisObject.jsonData.message.meta; es un array de objetos. Every object contains metadata from every object to print in every row
     var matrix_meta_data = _.map(page, function (oRow, keyRow) {
@@ -109,7 +109,7 @@ listModule.prototype.getBodyPageTableFunc = function (meta, page, print_tdValue_
     //every object contains the data and its metadata
     var arr_meta_data_table_buttons = _.map(matrix_meta_data, function (value, key) {
         return (_.map(matrix_meta_data[key], function (value2, key2) {
-            return  '<td>' + print_tdValue_function(value2) + '</td>';
+            return  '<td>' + printPrincipal(value2) + '</td>';
         })
                 )
                 .slice(0, parseInt(visibles))
