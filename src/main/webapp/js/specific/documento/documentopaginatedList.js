@@ -50,7 +50,7 @@ documentoPaginatedList.prototype.bind = function () {
         
         //ausiasFLOW.viewModule_paramsObject['id'] = parseInt($(this).attr('id'));
         //ausiasFLOW.flowRender();
-        ausiasFLOW.getDataAndRender(ausiasFLOW.getComponentByModuleName('view'));
+        ausiasFLOW.dataRenderFillAndBind(ausiasFLOW.getComponentByModuleName('view'));
         return false;
     });
 }

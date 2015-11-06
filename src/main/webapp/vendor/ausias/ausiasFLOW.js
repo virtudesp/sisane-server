@@ -35,7 +35,7 @@
             oComponent.bindCallback(oComponent.callbackFunction);
         }
     };
-    ausiasFLOW.getDataAndRender = function (oComponent) {
+    ausiasFLOW.dataRenderFillAndBind = function (oComponent) {
         var json;
         var that = this;
         if ('initialize' in oComponent) {
@@ -79,15 +79,15 @@
         //add the new component @ the end of the list
         componentsList.push(oComponent);
         //begin the process of ordered method calling 
-        this.getDataAndRender(oComponent);
+        this.dataRenderFillAndBind(oComponent);
         return oComponent;
     };
-    ausiasFLOW.flowRender = function () { //render with reload ajax call
+    ausiasFLOW.dataRenderAll = function () { //render with reload ajax call
         componentsList.forEach(function (oComponent) {
-            this.getDataAndRender(oComponent);
+            this.dataRenderFillAndBind(oComponent);
         });
     };
-    ausiasFLOW.noNewDataFlowRender = function () { 
+    ausiasFLOW.renderAll = function () { 
         componentsList.forEach(function (oComponent) {
             this.renderFillAndBind(oComponent);
         });
