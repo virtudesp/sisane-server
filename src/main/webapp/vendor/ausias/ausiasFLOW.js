@@ -82,14 +82,16 @@
         this.getDataAndRender(oComponent);
         return oComponent;
     };
-    ausiasFLOW.getId = function (p) {
-        return p.id_module;
-    };
     ausiasFLOW.flowRender = function () { //render with reload ajax call
         componentsList.forEach(function (oComponent) {
             this.getDataAndRender(oComponent);
         });
     };
+    ausiasFLOW.noNewDataFlowRender = function () { 
+        componentsList.forEach(function (oComponent) {
+            this.renderFillAndBind(oComponent);
+        });
+    };    
     ausiasFLOW.getComponentByModuleName = function (name) {
         //return the module named 'name'
         var dev = null;
