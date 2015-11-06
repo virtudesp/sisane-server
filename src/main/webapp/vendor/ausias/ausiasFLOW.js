@@ -82,12 +82,12 @@
         this.dataRenderFillAndBind(oComponent);
         return oComponent;
     };
-    ausiasFLOW.dataRenderAll = function () { //render with reload ajax call
+    ausiasFLOW.dataRenderFillAndBindAll = function () { //render with reload ajax call
         componentsList.forEach(function (oComponent) {
             this.dataRenderFillAndBind(oComponent);
         });
     };
-    ausiasFLOW.renderAll = function () { 
+    ausiasFLOW.renderFillAndBindAll = function () { 
         componentsList.forEach(function (oComponent) {
             this.renderFillAndBind(oComponent);
         });
