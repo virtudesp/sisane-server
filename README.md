@@ -1,6 +1,8 @@
 # ausiasYield 2015
   * ausiasYield is a project to learn and develop openAusiàs
+
 ## openAusiàs
+
   * openAusiàs is a project whose aim is to build a software that provides you a template to easy build small and medium AJAX projects with the following tecnologies:
     * Server: J2EE servlets, MySQL, Gson, Maven
     * Client: Javascript, JQuery
