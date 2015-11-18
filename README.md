@@ -1,4 +1,5 @@
-# ausiasYield 2015
+# openAUSIAS
+
   * ausiasYield is a project to learn and develop openAusiàs
 
 ## openAusias
