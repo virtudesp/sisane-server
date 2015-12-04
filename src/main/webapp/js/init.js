@@ -72,8 +72,8 @@ init = {
         $('.broth_show_when_logged_out').hide();
         //$("#broth_username_menu_id").css('display', 'block', 'important');
         init.unloadLoginForm();
-        configuration.loadRoutes();
-        Path.listen();
+        //configuration.loadRoutes();
+        //Path.listen();
     },
     updateDisconnectedState: function () {
         $('#broth_username_id').text("Login");
