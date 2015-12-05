@@ -40,14 +40,8 @@ moduloUsuario.controller('UsuarioViewController', ['$scope', '$routeParams','ser
 //        $scope.objeto = {id: "34", nombre: "rafa", ape1: "aznar", ape2: "aparici", email: "rafa@gmail.com"};
 
         var respuesta = serverService.getDataFromPromise(serverService.promise_getOne('usuario', $scope.id)).then(function (data) {
-            var pojo=data.message.bean.message;
-            $scope.objeto = {
-            id: pojo.id,
-            nombre: pojo.login,
-            ape1: pojo.firma,
-            ape2: "aparici",
-            email: "rafa@gmail.com"
-        };
+            $scope.meta=data.message.meta.message;
+            $scope.bean=data.message.bean.message;                       
         });
 
         

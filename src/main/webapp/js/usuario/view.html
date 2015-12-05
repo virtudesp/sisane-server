@@ -38,11 +38,15 @@ THE SOFTWARE.
                 </tr>
             </thead>
             <tbody>
-                <tr><td>id</td><td>{{objeto.id}}</td></tr>
-                <tr><td>nombre</td><td>{{objeto.nombre}}</td>
-                <tr><td>primer apellido</td><td>{{objeto.ape1}}</td>
-                <tr><td>segundo apellido</td><td>{{objeto.ape2}}</td>
-                <tr><td>email</td><td>{{objeto.email}}</td>                
+                <tr ng-repeat="m in meta">
+                    <td>{{m.ShortName}}</td>
+                    <td ng-show="!m.IsObjForeignKey">{{bean[m.Name]}}</td>   
+                    <td ng-show="m.IsObjForeignKey">
+                        <span ng-repeat="b in bean[m.Name].meta">
+                            <span ng-show="!b.IsObjForeignKey">{{bean[m.Name].bean[b.Name]}} -</span>                        
+                        </span>
+                    </td> 
+                </tr>                 
             </tbody>
         </table>  
         <div class="text-right" > 

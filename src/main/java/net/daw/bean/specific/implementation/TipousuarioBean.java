@@ -41,6 +41,16 @@ public class TipousuarioBean extends BeanGenImpl implements BeanInterface {
 
     @Expose
     @MethodMetaInformation(
+            IsId = true,
+            UltraShortName = "Iden.",
+            ShortName = "Identif.",
+            Description = "Número Identificador",
+            Type = MetaEnum.FieldType.Integer,
+            DefaultValue = "0"
+    )
+    private Integer id;
+    @Expose
+    @MethodMetaInformation(
             UltraShortName = "Desc.",
             ShortName = "Descripción",
             Description = "Descripción del tipo de usuario",
@@ -60,16 +70,13 @@ public class TipousuarioBean extends BeanGenImpl implements BeanInterface {
         this.id = id;
     }
 
-    @Expose
-    @MethodMetaInformation(
-            IsId = true,
-            UltraShortName = "Iden.",
-            ShortName = "Identif.",
-            Description = "Número Identificador",
-            Type = MetaEnum.FieldType.Integer,
-            DefaultValue = "0"
-    )
-    private Integer id;
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public String getDescripcion() {
         return descripcion;
@@ -79,11 +86,4 @@ public class TipousuarioBean extends BeanGenImpl implements BeanInterface {
         this.descripcion = descripcion;
     }
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
 }
