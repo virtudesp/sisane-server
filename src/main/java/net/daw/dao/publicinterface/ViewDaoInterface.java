@@ -36,9 +36,9 @@ public interface ViewDaoInterface<GenericBeanImplementation> {
 
     public int getCount(ArrayList<FilterBeanHelper> alFilter) throws Exception;
 
-    public ArrayList<GenericBeanImplementation> getPage(int intRegsPerPag, int intPage, ArrayList<FilterBeanHelper> alFilter, HashMap<String, String> hmOrder) throws Exception;
+    public ArrayList<GenericBeanImplementation> getPage(int intRegsPerPag, int intPage, ArrayList<FilterBeanHelper> alFilter, HashMap<String, String> hmOrder, Integer expand) throws Exception;
 
-    public ArrayList<GenericBeanImplementation> getAll(ArrayList<FilterBeanHelper> alFilter, HashMap<String, String> hmOrder) throws Exception;
+    public ArrayList<GenericBeanImplementation> getAll(ArrayList<FilterBeanHelper> alFilter, HashMap<String, String> hmOrder, Integer expand) throws Exception;
 
-    public GenericBeanImplementation get(GenericBeanImplementation oBean, Integer expand) throws Exception;
+   
 }

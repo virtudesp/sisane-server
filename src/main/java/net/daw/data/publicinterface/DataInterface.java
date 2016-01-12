@@ -41,12 +41,14 @@ public interface DataInterface {
     public int updateOne(int intId, String strTabla, String strCampo, String strValor) throws Exception;
 
     public int removeOne(int intId, String strTabla) throws Exception;
-
-    public ResultSet getPage(String strSqlSelectDataOrigin, int intRegsPerPage, int intPagina) throws Exception;
-
+   
     public int getPages(String strSqlSelectDataOrigin, int intRegsPerPage) throws Exception;
 
     public int getCount(String strSqlSelectDataOrigin) throws Exception;
 
     public ResultSet getAllSql(String strSqlSelectDataOrigin) throws Exception;
+    
+    public int executeUpdateSQL(String strSQL) throws Exception;
+    
+    public int executeInsertSQL(String strSQL) throws Exception;
 }

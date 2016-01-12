@@ -27,13 +27,26 @@
  */
 'use strict';
 
-var moduloUsuario = angular.module('myApp.usuarioControllers', []);
-moduloUsuario.controller('controlUsuarioView', function ($scope, $routeParams, serverService) {
-    $scope.back = function () {
-        window.history.back();
-    };
-    $scope.id = $routeParams.id;
-    $scope.objeto = serverService.get('cliente', $scope.id).then(function (datos4) {
-        $scope.objeto = datos4;
-    });
-});
+
+
+
+
+moduloDocumento.controller('DocumentoViewController', ['$scope', '$routeParams', 'serverService','$location',
+    function ($scope, $routeParams, serverService,$location) {
+        $scope.title = "Vista de documento";
+        $scope.icon = "fa-file-text-o";
+        $scope.ob = 'documento';
+        $scope.id = $routeParams.id;
+        serverService.getDataFromPromise(serverService.promise_getOne($scope.ob, $scope.id)).then(function (data) {
+            $scope.bean = data.message;
+        });
+        $scope.close = function () {
+            $location.path('/home');
+        };
+        $scope.plist = function () {
+            $location.path('/documento/plist');
+        };
+        $scope.back = function () {
+            window.history.back();
+        };
+    }]);

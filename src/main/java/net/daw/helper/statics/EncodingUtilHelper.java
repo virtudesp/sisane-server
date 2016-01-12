@@ -24,7 +24,6 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-
 /**
  * Utility class for JavaScript compatible UTF-8 encoding and decoding.
  *
@@ -90,6 +89,10 @@ public class EncodingUtilHelper {
         }
 
         return result;
+    }
+
+    public static String quotate(String s) {
+        return "\"" + s + "\"";
     }
 
     /**

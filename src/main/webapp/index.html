@@ -52,11 +52,14 @@
                         <span class="icon-bar"></span>
                     </button>
                     <a class='navbar-brand'  href=''>
-                        <i class="fa fa-comments fa-1x"></i> ausiàsYield2015
+                        <i class="fa fa-comments fa-1x"></i> openAusiàs (Ted Mosby Edition)
                     </a>
                 </div>
                 <div id="navbar" class="navbar-collapse collapse" >
-                    <ul class="nav navbar-nav" id="appMenu"></ul>
+
+
+                    <ul class="nav navbar-nav" id="appMenu" ng-include="'js/system/menu.html'"></ul>
+
                     <ul class="nav navbar-nav navbar-right">
                         <!-- <li class="active"><a href="./">Fixed top <span class="sr-only">(current)</span></a></li> -->
                         <li class="dropdown broth_show_when_logged_in">
@@ -86,21 +89,8 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="panel panel-default">
-                            <div class="panel-heading" id="broth_panel_heading" style="font-family:Oswald , serif;">
-                            </div>
-                            <div class="panel-body" >
-                                <h1>Contenido</h1>
-                                <a href="http://localhost:8081/openAUSIASng/#/usuario/view/1">Ir a la madre del cordero</a>
-                                <div ng-view></div>
-                                <div id="broth_modal"></div>
-                            </div>
-                            <a href="#"  style="font-family: Questrial, serif;">
-                                <div class="panel-footer">
-                                    <span class="pull-left"></span>
-                                    <span class="pull-right"> Powered by ausiàsBROTH <i class="fa fa-github-alt"></i></span>
-                                    <div class="clearfix"></div>
-                                </div>
-                            </a>
+                            <div ng-view></div>     
+                            <div id="broth_modal"></div>
                         </div>
                     </div>
                 </div>
@@ -109,14 +99,16 @@
         </div>
 
 
-        
-        
-        
-        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
-        
-        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-route.js"></script>
-        
-        
+
+        <script src="vendor/angular/angular.min.js" type="text/javascript"></script>
+        <script src="vendor/angular/angular-sanitize.min.js" type="text/javascript"></script>
+        <script src="vendor/angular/angular-route.min.js" type="text/javascript"></script>
+        <script src="vendor/jquery/jquery-2.1.4.min.js" type="text/javascript"></script>
+        <script src="vendor/UIBootstrap/ui-bootstrap-tpls-1.0.0.min.js" type="text/javascript"></script>
+
+        <script src="vendor/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+
+        <script src="vendor/moment/moment-with-locales.min.js" type="text/javascript"></script>
         <!--
         <script src="lib/angular/angular.js"></script>
         <script src="lib/angular/angular-route.js"></script>
@@ -132,27 +124,37 @@
         <script src="js/filters.js"></script>
         <script src="js/directives.js"></script>
         -->
-        
-        
+
+
         <script src="js/app.js" type="text/javascript"></script>
         <script src="js/services.js" type="text/javascript"></script>
-        
-        
-        
+        <script src="js/filters.js" type="text/javascript"></script>
+        <!-- ------------------------------- -->  
+        <script src="js/system/home.js" type="text/javascript"></script>
+        <!-- ------------------------------- -->  
+        <script src="js/tipodocumento/view.js" type="text/javascript"></script>
+        <script src="js/tipodocumento/selection.js" type="text/javascript"></script>
+        <!-- ------------------------------- -->  
+        <script src="js/documento/plist.js" type="text/javascript"></script>
+        <script src="js/documento/view.js" type="text/javascript"></script>
+        <script src="js/documento/remove.js" type="text/javascript"></script>
+        <script src="js/documento/edit.js" type="text/javascript"></script>
+        <script src="js/documento/new.js" type="text/javascript"></script>
+        <!-- ------------------------------- -->
+
+
         <script src="js/usuario/view.js" type="text/javascript"></script>
-        
-        
-        
-        
-        <script src="vendor/jquery/jquery-2.1.4.min.js" type="text/javascript"></script>
+        <script src="js/usuario/plist.js" type="text/javascript"></script>
+        <script src="js/usuario/edit.js" type="text/javascript"></script>
+
+        <!-- ------------------------------- -->  
+        <script src="js/tipousuario/selection.js" type="text/javascript"></script>
         <!-- Vendor 
         
         <script src="vendor/underscore/underscore-min.js" type="text/javascript"></script>
         -->
-        <script src="vendor/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
 
-        <script src="vendor/moment/moment-with-locales.min.js" type="text/javascript"></script>
-        <script src="vendor/bootstrap-datetimepicker/bootstrap-datetimepicker.min.js" type="text/javascript"></script>
+
         <!-- dont change order -->
         <script src="js/configuration.js" type="text/javascript"></script>
         <script src="js/init.js" type="text/javascript"></script>
@@ -172,7 +174,7 @@
         <script src="js/generic/modules/ebpList.js" type="text/javascript"></script>
         <script src="js/generic/modules/remove.js" type="text/javascript"></script>
         <!-- Specific modules -->
-        <script src="js/menu.js" type="text/javascript"></script>
+
         <!-- Documento        
         <script src="js/specific/documento/documentonew.js" type="text/javascript"></script>
         <script src="js/specific/documento/documentoedit.js" type="text/javascript"></script>
@@ -190,24 +192,24 @@
         <!-- Estado 
         <script src="js/specific/estado/routes.js" type="text/javascript"></script>
         <!-- --------------------------------------------------------------- 
--->
+        -->
         <script type="text/javascript">
-            $(document).ready(function () {
-                configuration.resetCSS();
-                //configuration.pathConfig();
-                $('.broth_show_when_logged_in').hide();
-                $('.broth_show_when_logged_out').show();
-                $("#appMenu").empty().append(appMenu());
-                $("#broth_login").click(function () {
-                    init.loadLoginForm();
-                    return false;
-                })
-                $("#broth_logout").click(function () {
-                    init.logout();
-                    return false;
-                });
-                init.checkAndUpdateUserConnectionState();
-            });
+                        $(document).ready(function () {
+                            configuration.resetCSS();
+                            //configuration.pathConfig();
+                            $('.broth_show_when_logged_in').hide();
+                            $('.broth_show_when_logged_out').show();
+                            //$("#appMenu").empty().append(appMenu());
+                            $("#broth_login").click(function () {
+                                init.loadLoginForm();
+                                return false;
+                            })
+                            $("#broth_logout").click(function () {
+                                init.logout();
+                                return false;
+                            });
+                            init.checkAndUpdateUserConnectionState();
+                        });
         </script>
     </body>
 </html>

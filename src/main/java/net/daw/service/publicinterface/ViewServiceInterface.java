@@ -28,8 +28,8 @@ package net.daw.service.publicinterface;
 
 public interface ViewServiceInterface {
 
-    public String get() throws Exception;
-    
+
+
     public String getall() throws Exception;
 
     public String getpage() throws Exception;
@@ -38,10 +38,7 @@ public interface ViewServiceInterface {
 
     public String getcount() throws Exception;
 
-    public String getaggregateviewone() throws Exception;
-
     public String getaggregateviewsome() throws Exception;
-    
-    public String getaggregateviewall() throws Exception;
 
+ 
 }

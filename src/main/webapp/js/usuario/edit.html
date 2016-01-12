@@ -25,44 +25,76 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
 -->
-<form class="form-horizontal" action="#" id="formulario" name="formulario">
-    <h2>Cliente</h2>
-    <div class="control-group">
-        <label class="control-label" for="inputId">Id:</label>
-        <div class="controls">
-            <input type="text" id="id" ng-model="objeto.id" name="id" placeholder="id" />
-        </div>
-    </div>
-    <div class="control-group">
-        <label class="control-label"  for="inputNombre">Nombre:</label>
-        <div class="controls">
-            <input type="text" id="nombre" ng-model="objeto.nombre" name="nombre" size="15" placeholder="nombre" />
-        </div>
-    </div>
-    <div class="control-group">
-        <label class="control-label" for="inputApe1" >Primer apellido:</label>
-        <div class="controls">
-            <input type="text" id="ape1" ng-model="objeto.ape1" name="ape1" placeholder="primer apellido" size="15" />
-        </div>
-    </div>
-    <div class="control-group">
-        <label class="control-label"  for="inputApe2">Segundo apellido:</label>
-        <div class="controls">
-            <input type="text" id="ape2" ng-model="objeto.ape2" name="ape2" placeholder="segundo apellido" size="15" />
-        </div>
-    </div>
-    <div class="control-group">
-        <label class="control-label"  for="inputEmail">Email:</label>
-        <div class="controls">
-            <input type="text" id="email" ng-model="objeto.email" name="email" placeholder="email" size="15" />
-        </div>
-    </div>
-    <div class="control-group">
-        <div class="controls">
-            <a class="btn" ng-click="save()">Guardar</a>
-            <a class="btn" ng-click="back()">Volver</a>
-        </div>
-    </div>
-<div><span class="alert alert-success">{{result.status}} {{result.message}}</span></div>
-</form>
+<div class="panel-heading" style="font-family:Oswald , serif;"  ng-include="'js/system/header.html'"></div>
 
+<div class="panel-body">
+    <form name="outerForm" class="form-horizontal" ng-show="result == null">
+
+        <div id="id-group" class="form-group">
+            <label class="col-sm-2 control-label" for="id">Identificador:</label>
+            <div class="control col-sm-3">
+                <input ng-model="obj.id" type="text" id="id" class="form-control" name="id" size="15" placeholder="id" disabled="disabled">
+            </div>
+        </div>
+
+
+        <div id="login-group" class="form-group">
+            <label class="col-sm-2 control-label" for="login">Login:</label>
+            <div class="control col-sm-8">
+                <input ng-model="obj.login" type="text" id="login" class="form-control" name="login" size="15" placeholder="login">
+            </div>
+        </div>
+
+
+        <div id="password-group" class="form-group">
+            <label class="col-sm-2 control-label" for="contenido">Password:</label>
+            <div class="control col-sm-9">
+                <input ng-model="obj.password" type="text" id="password" class="form-control" name="password" size="15" placeholder="password">
+            </div>
+        </div>
+       
+ 
+        <div class="form-group">
+            <label class="col-sm-2 control-label" for="obj_tipousuario">Tipo de usuario:</label>
+            <div class="control col-sm-3">
+                <div class="input-group foreign" id="obj_tipousuario_group">
+                    <span class="input-group-addon" id="obj_tipousuario_button">
+                        <span class="glyphicon glyphicon-search" ng-click="chooseOne('tipousuario')">
+                        </span>
+                    </span>
+                    <input ng-model="obj.obj_tipousuario.id" readonly="true" aria-describedby="basic-addon2" class="form-control" id="obj_tipousuario" name="obj_tipousuario" type="text" size="5" maxlength="5">
+                    <span class="input-group-addon">
+                        <a href="#/tipousuario/view/{{obj.obj_tipousuario.id}}">
+                            <span>{{obj.obj_tipousuario.descripcion}}</span>     
+                        </a>       
+                    </span>
+                </div>
+            </div>            
+        </div>
+
+
+
+
+
+
+        <div class="control-group text-right">
+            <div class="controls">
+                <a class="btn btn-primary" ng-click="save()">Guardar</a>
+                <a class="btn btn-default" ng-click="plist()">Ir al listado de usuarios</a>
+                <a class="btn btn-default" ng-click="close()">Cerrar</a>
+            </div>
+        </div>
+    </form>
+    <div ng-show="result != null">    
+        <div class="alert alert-success" ng-show="result.status == 200">
+            <h2>Se ha modificado el usuario</h2>
+            <a ng-href="#/usuario/view/{{id}}">Ver el usuario modificado</a>
+        </div>
+        <div class="alert alert-danger" ng-show="result.status != 200">
+            <h2>Error al modificar el usuario: no se ha modificado el usuario</h2>
+            <h3>Código: {{result.status}}</h3>
+            <h3>Mensaje: {{result.message}}</h3>             
+        </div>
+    </div>
+</div>
+<div class="panel-footer" style="font-family: Questrial, serif;" ng-include="'js/system/footer.html'"></div>

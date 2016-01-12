@@ -38,7 +38,7 @@ import net.daw.connection.publicinterface.ConnectionInterface;
 public class AppConfigurationHelper {
 
     public static int getJsonDepth() {
-        return 2;
+        return 1;
     }
 
     public static ConnectionInterface getSourceConnection() throws Exception {

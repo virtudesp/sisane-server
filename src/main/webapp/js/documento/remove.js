@@ -28,26 +28,26 @@
 
 'use strict';
 
-/* Controllers */
-
-var moduloCliente = angular.module('myApp.clienteControllers', []);
-
-
-
-
-moduloCliente.controller('controlClienteRemove', function ($scope, $routeParams, serverService) {
-    $scope.result = "";
-    $scope.back = function () {
-        window.history.back();
-    };
-    $scope.id = $routeParams.id;
-    $scope.objeto = serverService.get('cliente', $scope.id).then(function (datos4) {
-        $scope.objeto = datos4;
-    });
-
-    $scope.remove = function () {
-        $scope.result = serverService.remove('cliente', $scope.id).then(function (datos5) {
-            $scope.result = datos5;
+moduloDocumento.controller('DocumentoRemoveController', ['$scope', '$routeParams', 'serverService',
+    function ($scope, $routeParams, serverService) {
+        $scope.result = "";
+        $scope.back = function () {
+            window.history.back();
+        };
+        $scope.ob = 'documento';
+        $scope.id = $routeParams.id;
+        $scope.title = "Borrado de un documento";
+        $scope.icon = "fa-file-text-o";
+        serverService.getDataFromPromise(serverService.promise_getOne($scope.ob, $scope.id)).then(function (data) {            
+            $scope.bean = data.message;
         });
-    };
-});
+
+
+
+        $scope.remove = function () {
+            serverService.getDataFromPromise(serverService.promise_removeOne($scope.ob, $scope.id)).then(function (data) {
+                $scope.result = data;
+            });
+        }
+        ;
+    }]);

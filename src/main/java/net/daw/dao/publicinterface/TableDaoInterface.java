@@ -27,9 +27,11 @@
 package net.daw.dao.publicinterface;
 
 public interface TableDaoInterface<GenericBeanImplementation> {
+    
+     public GenericBeanImplementation get(GenericBeanImplementation oBean, Integer expand) throws Exception;
 
-    public GenericBeanImplementation set(GenericBeanImplementation oBean) throws Exception;
+    public Integer set(GenericBeanImplementation oBean) throws Exception;
 
-    public int remove(GenericBeanImplementation oBean) throws Exception;   
+    public Integer remove(Integer id) throws Exception;   
 
 }

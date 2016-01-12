@@ -39,36 +39,6 @@ configuration = {
     getAppUrl: function () {
         return location.protocol + '//' + location.hostname + ':' + location.port + '/' + this.getAppName() + '/json';
     },
-//    pathConfig: function () {
-//        var that = this;
-//        Path.map("#/about").to(function () {
-//            $('#broth_panel_heading').empty().append(init.getPageHeader('<i class="fa fa-comments fa-5x"></i>', "openAusiàs", "the astonising framework"));
-//            $('#broth_content').empty();
-//        });
-//        Path.root("#/home");
-//        Path.map("#/").to(function () {
-//            $('#broth_panel_heading').empty().append(init.getPageHeader('<i class="fa fa-comments fa-5x"></i>', "openAusiàs", "the astonising framework"));
-//        });
-//        Path.map("#").to(function () {
-//            $('#broth_panel_heading').empty().append(init.getPageHeader('<i class="fa fa-comments fa-5x"></i>', "openAusiàs", "the astonising framework"));
-//            $('#broth_content').empty();
-//        });
-//        Path.map("#/home").to(function () {
-//            $('#broth_panel_heading').empty().append(init.getPageHeader('<i class="fa fa-comments fa-5x"></i>', "openAusiàs", "the astonising framework"));
-//            $('#broth_content').empty();
-//        });
-//        Path.rescue(function () {
-//            $('#broth_panel_heading').empty().append(init.getPageHeader('<i class="fa fa-ambulance fa-5x"></i>', "404: la página no existe", "la dirección no es correcta"));
-//            $('#broth_content').empty().append('<a href="' + configuration.getAppClientUrl() + '"/#/home">Ir a la página principal</a>');
-//        });
-//    },
-//    loadRoutes: function () {
-//        fUsuarioRoutes();
-//        fTipodocumentoRoutes();
-//        fDocumentoRoutes();
-//        fEstadoRoutes();
-//        fTipousuarioRoutes();
-//    },
     resetCSS: function () {
         $('link[rel="stylesheet"]').each(function () {
             this.remove();
@@ -79,6 +49,8 @@ configuration = {
         $('<link href="http://fonts.googleapis.com/css?family=Oswald" rel="stylesheet" type="text/css"/>').appendTo("head");
         $('<link href="http://fonts.googleapis.com/css?family=Questrial" rel="stylesheet" type="text/css"/>').appendTo("head");
         $('<link href="css/main/main.css" rel="stylesheet" type="text/css"/>').appendTo("head");
+        $('<link href="css/main/main.css" rel="stylesheet" type="text/css"/>').appendTo("head");
+        
     }
 }
 

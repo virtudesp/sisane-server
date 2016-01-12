@@ -1,9 +1,33 @@
-'use strict';
-/* Services */
-// Demonstrate how to register services
-// In this case it is a simple value service.
+/*
+ * Copyright (c) 2015 by Rafael Angel Aznar Aparici (rafaaznar at gmail dot com)
+ * 
+ * openAUSIAS: The stunning micro-library that helps you to develop easily 
+ *             AJAX web applications by using Java and jQuery
+ * openAUSIAS is distributed under the MIT License (MIT)
+ * Sources at https://github.com/rafaelaznar/openAUSIAS
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ * 
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ * 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
 
-angular.module('services', [])
+'use strict';
+
+angular.module('Services', [])
         .factory('serverService', function ($http) {
             function getFilter(filter, filteroperator, filtervalue) {
                 var filterParams;
@@ -31,7 +55,12 @@ angular.module('services', [])
                     return strPath.substr(1, strPath.substr(1, strPath.length).indexOf('/'));
                 },
                 promise_getOne: function (strClass, id) {
-                    return $http.get(configuration.getAppUrl() + '?ob=' + strClass + '&op=getaggregateviewone&id=' + id, 'GET', '');
+                    return $http.get(configuration.getAppUrl() + '?ob=' + strClass + '&op=get&id=' + id, 'GET', '');
+//                                   return $http({
+//                        url: configuration.getAppUrl() + '?ob=' + strClass + '&op=getaggregateviewone&id=' + id,
+//                        method: "GET"
+//
+//                    });
                 },
                 promise_getMeta: function (strClass) {
                     return $http.get(configuration.getAppUrl() + '?ob=' + strClass + '&op=getmetainformation', 'GET', '');
@@ -49,7 +78,8 @@ angular.module('services', [])
                     return $http.get(configuration.getAppUrl() + '?ob=' + strClass + '&op=' + operation + params, 'GET', '');
                 },
                 promise_setOne: function (strClass, jsonfile) {
-                    return $http.get(configuration.getAppUrl() + '?ob=' + strClass + '&op=set', 'GET', jsonfile);
+                    $http.defaults.headers.put['Content-Type'] = 'application/json;charset=utf-8';
+                    return $http.get(configuration.getAppUrl() + '?ob=' + strClass + '&op=set', {params: jsonfile});
                 },
                 getDataFromPromise: function (promise) {
                     return promise.then(function (result) {
@@ -94,18 +124,27 @@ angular.module('services', [])
                 },
                 save: function (objeto, datos) {
                     $http.defaults.headers.put['Content-Type'] = 'application/json;charset=utf-8';
-//                    $http({
-//                        url: '/' + appName + '/' + objeto + '/save.json',
-//                        method: "GET",
-//                        params: datos
-//                    });
+//
 
-                    return $http.get('/' + appName + '/' + objeto + '/save.json', {
-                        params: {'json': datos}
-                        //,headers: {'Content-Type': 'application/json;charset=utf-8'}
-                    }).then(function (result) {
-                        return result.data;
+
+                    $http({
+                        url: configuration.getAppUrl() + '?ob=' + strClass + '&op=set',
+                        method: "GET",
+                        params: jsonfile
                     });
+                },
+                array_identificarArray: function (arr) {
+                    var newObj = {};
+                    for (var property in arr) {
+                        if (arr.hasOwnProperty(property)) {
+                            if (property.match("^obj_")) {
+                                newObj[property.replace("obj_", "id_")] = arr[property].id;
+                            } else {
+                                newObj[property] = arr[property];
+                            }
+                        }
+                    }
+                    return newObj;
                 },
                 getPaginationBar: function (objeto, accion, page_number, total_pages, neighborhood, nrpp) {
                     page_number = parseInt(page_number);
@@ -168,21 +207,52 @@ angular.module('services', [])
                     // http://localhost:8081/AjaxStockUniDaoSpring/index.jsp#/cliente/4/nrpp
                     vector += "</ul></div>";
                     return vector;
+                },
+                parameter_printOrderParamsInUrl: function (objParams) {
+                    if (objParams)
+                        if (objParams.order) {
+                            return '&order=' + objParams.order + '&ordervalue=' + objParams.ordervalue;
+                        } else {
+                            return '';
+                        }
+                    else
+                        return '';
+                },
+                parameter_printFilterParamsInUrl: function (objParams) {
+                    if (objParams)
+                        if (objParams.filter) {
+                            return "&filter=" + objParams.filter + "&filteroperator=" + objParams.filteroperator + "&filtervalue=" + objParams.filtervalue;
+                        } else {
+                            return '';
+                        }
+                    else
+                        return '';
+                },
+                parameter_printSystemFilterParamsInUrl: function (objParams) {
+                    if (objParams)
+                        if (objParams.systemfilter) {
+                            return "&systemfilter=" + objParams.systemfilter + "&systemfilteroperator=" + objParams.systemfilteroperator + "&systemfiltervalue=" + objParams.systemfiltervalue;
+                        } else {
+                            return '';
+                        }
+                    else
+                        return '';
                 }
+
+
 
             };
         })
         .factory('sharedSpaceService', function ($http) {
-            var object = {id: 0};
-            var link = {value: ""};
-            var dirty = {value: false};
-
+            var obj = {};
+            var link = "";
+            var fase = 0;
             return {
                 getObject: function () {
-                    return object;
+                    return obj;
                 },
                 setObject: function (value) {
-                    object = value;
+                    obj = value;
                 },
                 getReturnLink: function () {
                     return link;
@@ -190,12 +260,13 @@ angular.module('services', [])
                 setReturnLink: function (value) {
                     link = value;
                 },
-                getIsDirty: function () {
-                    return dirty;
+                getFase: function () {
+                    return fase;
                 },
-                setIsDirty: function (value) {
-                    dirty = value;
+                setFase: function (value) {
+                    fase = value;
                 }
+
             };
         })
         .value('version', '0.1');

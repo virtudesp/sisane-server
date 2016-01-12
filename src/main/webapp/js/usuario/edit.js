@@ -27,22 +27,79 @@
  */
 
 'use strict';
+moduloUsuario.controller('UsuarioEditController', ['$scope', '$routeParams', '$location', 'serverService', 'sharedSpaceService',
+    function ($scope, $routeParams, $location, serverService, sharedSpaceService) {
+        $scope.obj = null;
+        $scope.id = $routeParams.id;
+        $scope.ob = 'usuario';
+        $scope.result = null;
+        $scope.title = "Edición de usuario";
+        $scope.icon = "fa-user";
+        if (sharedSpaceService.getFase() == 0) {
+            serverService.getDataFromPromise(serverService.promise_getOne($scope.ob, $scope.id)).then(function (data) {
+                $scope.obj = data.message;
+            });
+        } else {
+            $scope.obj = sharedSpaceService.getObject();
+            sharedSpaceService.setFase(0);
+        }
+        
+        
+        $scope.chooseOne = function (foreignObjectName) {
+            sharedSpaceService.setObject($scope.obj);
+            sharedSpaceService.setReturnLink('/' + $scope.ob + '/edit/' + $scope.id);
+            sharedSpaceService.setFase(1);
+            $location.path('/' + foreignObjectName + '/selection/1/10');
+        }
+        
+        
+        
+        $scope.save = function () {
+            console.log("save");
+            console.log({json: JSON.stringify(serverService.array_identificarArray($scope.obj))});
+            //strValues = serverService.array_identificarArray(thisObject.form_getFormValues(strClass));
+            serverService.getDataFromPromise(serverService.promise_setOne($scope.ob, {json: JSON.stringify(serverService.array_identificarArray($scope.obj))})).then(function (data) {
+                $scope.result = data;
+            });
+        };
 
-var moduloCliente = angular.module('myApp.clienteControllers', []);
-moduloCliente.controller('controlClienteEdit', function ($scope, $routeParams, serverService) {
-    $scope.back = function () {
-        window.history.back();
-    };
-    $scope.id = $routeParams.id;
-    $scope.objeto = serverService.get('cliente', $scope.id).then(function (datos4) {
-        $scope.objeto = datos4;
-    });
 
-    $scope.save = function () {
-        $scope.result = serverService.save('cliente', $scope.objeto).then(function (datos5) {
-            $scope.result = datos5;
+
+
+        $scope.$watch('obj.obj_tipousuario.id', function () {
+            if ($scope.obj) {
+                serverService.getDataFromPromise(serverService.promise_getOne('tipousuario', $scope.obj.obj_tipousuario.id)).then(function (data2) {
+                    $scope.obj.obj_tipousuario = data2.message;
+                });
+            }
         });
-    };
+        
+        
+        
+        
+        
+//        $scope.$watch('obj.obj_usuario.id', function () {
+//            if ($scope.obj) {
+//                serverService.getDataFromPromise(serverService.promise_getOne('usuario', $scope.obj.obj_usuario.id)).then(function (data2) {
+//                    $scope.obj.obj_usuario = data2.message;
+//                });
+//            }
+//        });
 
 
-});
+
+
+
+        $scope.back = function () {
+            window.history.back();
+        };
+        $scope.close = function () {
+            $location.path('/home');
+        };
+        $scope.plist = function () {
+            $location.path('/' + $scope.ob + '/plist');
+        };
+
+
+        
+    }]);

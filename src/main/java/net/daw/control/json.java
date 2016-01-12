@@ -30,7 +30,6 @@ import com.google.gson.Gson;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.sql.Connection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
@@ -39,16 +38,12 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import net.daw.bean.specific.implementation.UsuarioBean;
-import net.daw.connection.implementation.BoneConnectionPoolImpl;
-import net.daw.connection.publicinterface.ConnectionInterface;
-import net.daw.dao.specific.implementation.UsuarioDao;
 import net.daw.helper.statics.EstadoHelper;
 import net.daw.helper.statics.EstadoHelper.Tipo_estado;
 import net.daw.helper.statics.ExceptionBooster;
 import net.daw.helper.statics.JsonMessage;
 import net.daw.helper.statics.ParameterCook;
-import net.daw.service.publicinterface.MetaServiceInterface;
+import net.daw.service.publicinterface.TableServiceInterface;
 
 public class json extends HttpServlet {
 
@@ -102,8 +97,8 @@ public class json extends HttpServlet {
             String ob = ParameterCook.prepareObject(request);
             String op = ParameterCook.prepareOperation(request);
             try {
-                String strClassName = "net.daw.service.specific.implementation." + ParameterCook.prepareCamelCaseObject(request) + "Service";
-                MetaServiceInterface oService = (MetaServiceInterface) Class.forName(strClassName).getDeclaredConstructor(HttpServletRequest.class).newInstance(request);
+                String strClassName = "net.daw.service.implementation." + ParameterCook.prepareCamelCaseObject(request) + "Service";
+                TableServiceInterface oService = (TableServiceInterface) Class.forName(strClassName).getDeclaredConstructor(HttpServletRequest.class).newInstance(request);
                 Method oMethodService = oService.getClass().getMethod(ParameterCook.prepareOperation(request));
                 String jsonResult = (String) oMethodService.invoke(oService);
                 sendResponse2(request, response, jsonResult);

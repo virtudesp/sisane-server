@@ -555,6 +555,10 @@ baseModule.prototype.pagination_getPageLinks = function (url, page_number, total
     vector += "</ul>";
     return vector;
 };
+
+
+
+
 baseModule.prototype.pagination_getRppLinks = function (UrlFromParamsWithoutRpp, rpp) {
     var botonera = '<ul class="pagination">';
     if (rpp == 10)
