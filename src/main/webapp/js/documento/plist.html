@@ -120,7 +120,17 @@ THE SOFTWARE.
 
                                 <select id="selectFilter" class="form-control" name="filter" style="width: 160px" ng-model="filter">
                                     <option style="display:none">selecciona un campo</option>
-                                    <option ng-repeat="m in meta" value="{{m.Name}}">{{m.ShortName}}</option>                                                                           
+                                    <option value="titulo">Título</option>
+                                    <option value="contenido">Contenido</option>
+                                    <option value="alta">Alta</option>
+                                    <option value="cambio">Último cambio</option>
+                                    <option value="hits">Visitas</option>
+                                    <option value="id_usuario">Usuario</option>                                    
+                                    <option value="id_tipodocumento">Tipo</option>
+                                    <option value="etiquetas">Etiquetas</option>
+                                    <option value="publicado">¿Publicado?</option>
+                                    <option value="portada">¿Portada?</option>
+                                    <option value="destacado">¿Destacado?</option>                                                   
                                 </select>
                                 <select id="selectFilteroperator" class="form-control" name="filteroperator" width="80" style="width: 200px" ng-model="filteroperator">
                                     <option style="display:none">selecciona una operacion</option>
