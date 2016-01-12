@@ -6,16 +6,10 @@
   * Because software development trends naturaly to be complex openAusias wants to be easy and keep simple all the process. openAusias is used to teach web application development to vocational students and to qualify them to join the workforce maket of developers in a tiny period of time. openAusias was designed to avoid spaghetti code and complexity as far as possible, and brings an aid in structurate code development.
 
 Server side provides a layered J2EE environment to easy server web development. 
-  * Layers:
-    * a control server
-    * service layer
-    * data access objects layer
-    * specific database layer
 
-Front End
-  * It has been written using Angular and Bootstrap
+Front End has been written using Angular and Bootstrap.
 
-
+The project has low amount of generic code, that makes it perfect to be simple.
 
 ## License
 
