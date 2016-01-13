@@ -27,8 +27,8 @@
  */
 
 'use strict';
-moduloDocumento.controller('DocumentoEditController', ['$scope', '$routeParams', '$location', 'serverService', 'sharedSpaceService',
-    function ($scope, $routeParams, $location, serverService, sharedSpaceService) {
+moduloDocumento.controller('DocumentoEditController', ['$scope', '$routeParams', '$location', 'serverService', 'sharedSpaceService', '$filter',
+    function ($scope, $routeParams, $location, serverService, sharedSpaceService, $filter) {
         $scope.obj = null;
         $scope.id = $routeParams.id;
         $scope.ob = 'documento';
@@ -38,6 +38,9 @@ moduloDocumento.controller('DocumentoEditController', ['$scope', '$routeParams',
         if (sharedSpaceService.getFase() == 0) {
             serverService.getDataFromPromise(serverService.promise_getOne($scope.ob, $scope.id)).then(function (data) {
                 $scope.obj = data.message;
+                //date conversion
+                $scope.obj.alta = serverService.date_toDate($scope.obj.alta);
+                $scope.obj.cambio = serverService.date_toDate($scope.obj.cambio);
             });
         } else {
             $scope.obj = sharedSpaceService.getObject();
@@ -50,9 +53,11 @@ moduloDocumento.controller('DocumentoEditController', ['$scope', '$routeParams',
             $location.path('/' + foreignObjectName + '/selection/1/10');
         }
         $scope.save = function () {
-            console.log("save");
-            console.log({json: JSON.stringify(serverService.array_identificarArray($scope.obj))});
-            //strValues = serverService.array_identificarArray(thisObject.form_getFormValues(strClass));
+            var dateAltaAsString = $filter('date')($scope.obj.alta, "dd/MM/yyyy");
+            var dateCambioAsString = $filter('date')($scope.obj.cambio, "dd/MM/yyyy");
+            $scope.obj.alta = dateAltaAsString;
+            $scope.obj.cambio = dateCambioAsString;
+            //console.log({json: JSON.stringify(serverService.array_identificarArray($scope.obj))});            
             serverService.getDataFromPromise(serverService.promise_setOne($scope.ob, {json: JSON.stringify(serverService.array_identificarArray($scope.obj))})).then(function (data) {
                 $scope.result = data;
             });
@@ -82,9 +87,7 @@ moduloDocumento.controller('DocumentoEditController', ['$scope', '$routeParams',
         };
 
 
-        //$("#alta_group").datetimepicker({format: "DD/MM/YYYY", locale: "es"});
-        //$("#cambio_group").datetimepicker({format: "DD/MM/YYYY", locale: "es"});
-
+        //datepicker
         $scope.open1 = function () {
             $scope.popup1.opened = true;
         };
