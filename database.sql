@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost:3306
--- Tiempo de generación: 04-11-2015 a las 01:39:45
+-- Tiempo de generación: 14-01-2016 a las 03:02:23
 -- Versión del servidor: 5.6.26
 -- Versión de PHP: 5.5.29
 
@@ -19,64 +19,6 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `ausiasyield2015`
 --
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `categoriaarticulo`
---
-
-CREATE TABLE IF NOT EXISTS `categoriaarticulo` (
-  `id` int(11) NOT NULL COMMENT 'id',
-  `nombre` varchar(255) DEFAULT NULL COMMENT 'nombre',
-  `descripcion` varchar(255) DEFAULT NULL COMMENT 'descripcion'
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
-
---
--- Volcado de datos para la tabla `categoriaarticulo`
---
-
-INSERT INTO `categoriaarticulo` (`id`, `nombre`, `descripcion`) VALUES
-(1, 'Automóviles', 'En esta categoría podrás encontrar todo el contenido sobre automóviles.'),
-(2, 'Deportes', 'En esta categoría podrás encontrar todo el contenido sobre deportes.'),
-(3, 'Gastronomía', 'En esta categoría podrás encontrar todo el contenido sobre gastronomía.'),
-(4, 'Naturaleza', 'En esta categoría podrás encontrar todo el contenido sobre naturaleza.'),
-(5, 'Ciencia', 'En esta categoría podrás encontrar todo el contenido sobre ciencias.'),
-(6, 'Política', 'En esta categoría podrás encontrar todo el contenido sobre política.'),
-(7, 'Libros', 'En esta categoría podrás encontrar todo el contenido sobre libros.'),
-(8, 'Cine', 'En esta categoría podrás encontrar todo el contenido sobre cine.'),
-(9, 'Videojuegos', 'En esta categoría podrás encontrar todo el contenido sobre videojuegos.'),
-(10, 'Tecnología', 'En esta categoría podrás encontrar todo el contenido sobre tecnología.'),
-(11, 'Historia', 'En esta categoría podrás encontrar todo el contenido sobre historia.'),
-(12, 'Arte', 'En esta categoría podrás encontrar todo el contenido sobre arte.'),
-(13, 'Meteorología', 'En esta categoría podrás encontrar todo el contenido sobre meteorología.'),
-(14, 'Turismo', 'En esta categoría podrás encontrar todo el contenido sobre zonas turísticas.'),
-(15, 'Humor', 'En esta categoría podrás encontrar todo el contenido sobre humor.'),
-(16, 'Cultura', 'En esta categoría podrás encontrar todo el contenido sobre cultura.');
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `comentario`
---
-
-CREATE TABLE IF NOT EXISTS `comentario` (
-  `id` int(11) NOT NULL COMMENT 'id',
-  `contenido` text COMMENT 'contenido',
-  `nombreautor` varchar(255) DEFAULT NULL COMMENT 'nombre autor',
-  `id_documento` int(11) DEFAULT NULL COMMENT 'id documento'
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
-
---
--- Volcado de datos para la tabla `comentario`
---
-
-INSERT INTO `comentario` (`id`, `contenido`, `nombreautor`, `id_documento`) VALUES
-(1, 'No me hace mucha gracia que te hagas amigo de mi hermana.', 'Nando Laorden', NULL),
-(2, 'Crea tablas pa la estantería del vino', 'Iván García', NULL),
-(3, 'Allahu Akbar', 'Santiago Ferrandis', NULL),
-(4, 'Normalizao', 'Fernando Cantos', NULL),
-(5, '¿Y la europea?', 'Mariano Rajoy', NULL);
 
 -- --------------------------------------------------------
 
@@ -97,14 +39,14 @@ CREATE TABLE IF NOT EXISTS `documento` (
   `portada` tinyint(1) DEFAULT NULL COMMENT 'Portada',
   `destacado` tinyint(1) DEFAULT NULL COMMENT 'Destacado',
   `id_tipodocumento` int(6) DEFAULT NULL COMMENT 'Tipo'
-) ENGINE=InnoDB AUTO_INCREMENT=91 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=111 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Volcado de datos para la tabla `documento`
 --
 
 INSERT INTO `documento` (`id`, `titulo`, `contenido`, `alta`, `cambio`, `hits`, `id_usuario`, `etiquetas`, `publicado`, `portada`, `destacado`, `id_tipodocumento`) VALUES
-(1, 'drdrdrtttwaaaa', '%3D%20Entrega%20de%20premios%20%3DsffsdfIntroducci%C3%B3n%20*%20ksjdlk%20*%20klk%C3%B1%20*%20k%C3%B1lk%C3%B1l//gdfg//dfgdfwdfgdfdfgdfgdfgdfgdfgdfgggggggggggggg%20dgdfgdfgdg%20dfgdfgdfgdfgddfgdgdfdd', '2014-10-26', '2014-10-26', 1, 0, 'das1a', 1, 1, 1, 0),
+(1, 'drdrdrtttwaaaa', '%3D%20Entrega%20de%20premios%20%3DsffsdfIntroducci%C3%B3n%20*%20ksjdlk%20*%20klk%C3%B1%20*%20k%C3%B1lk%C3%B1l//gdfg//dfgdfwdfgdfdfgdfgdfgdfgdfgdfgggggggggggggg%20dgdfgdfgdg%20dfgdfgdfgdfgddfgdgdfdd', '2068-04-01', '2067-12-07', 1, 0, 'das1a', 1, 1, 1, 0),
 (2, 'doc%20de%20rafa1aaa', '%3DMi%20documento%2001%3D%0D%0A%0D%0A%20...', '2014-09-21', '2014-09-21', 411, 4, 'pepe', 1, 1, 0, 2),
 (3, 'wwww1111', 'ggtttqqqd%20asdasdas%20das', '2014-09-28', '2014-09-28', 22, 5, 'pepe', 1, 1, 0, 3),
 (4, 'sss', 'www', '2014-09-11', '2014-09-11', 0, 3, 'pepe', 1, 1, 0, 2),
@@ -172,22 +114,28 @@ INSERT INTO `documento` (`id`, `titulo`, `contenido`, `alta`, `cambio`, `hits`, 
 (85, 'qqqqqqqqqqq', 'rrr', '2015-10-11', '2015-10-11', 3, 0, 'r', 0, 0, 0, 0),
 (86, 'r', 'r', '2015-10-11', '2015-10-11', 1, 0, 'r', 0, 0, 0, 0),
 (87, 'r', 'r', '2015-10-11', '2015-10-11', 3, 0, 'r', 1, 0, 0, 0),
-(88, 'Pregunta uno', 'Cuestionario prueba', '2015-11-03', '2015-11-03', 0, 7, 'who, is, the, best', 0, 1, 0, 12),
-(89, 'Pregunta 2', 'Esto es una pregunta?', '2015-11-03', '2015-11-03', NULL, 6, 'pregunta, tocapelotas', 0, 1, 0, 12),
-(90, 'hola adios', 'estas o no?', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `documentocategoriaarticulo`
---
-
-CREATE TABLE IF NOT EXISTS `documentocategoriaarticulo` (
-  `id` int(11) NOT NULL COMMENT 'id',
-  `id_documento` int(11) DEFAULT NULL COMMENT 'id documento',
-  `id_categoriaarticulo` int(11) DEFAULT NULL COMMENT 'id categoriaarticulo',
-  `descripcion` varchar(255) DEFAULT NULL COMMENT 'descripcion'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+(89, 'a', 'a', '2015-12-17', '2015-12-17', 1, 1, '11', 0, 0, 0, 2),
+(90, 'a', 'a', '2015-12-17', '2015-12-17', 1, 1, '11', 0, 0, 0, 2),
+(91, 'a', 'a', '2015-12-17', '2015-12-17', 1, 1, '11', 0, 0, 0, 2),
+(92, 'a', 'a', '2015-12-17', '2015-12-17', 1, 1, '11', 0, 0, 0, 2),
+(93, 'a', 'a', '2015-12-17', '2015-12-17', 1, 1, '11', 0, 0, 0, 2),
+(94, 'a', 'a', '2015-12-17', '2015-12-17', 1, 1, '11', 0, 0, 0, 2),
+(95, 'a', 'a', '2015-12-17', '2015-12-17', 1, 1, '11', 0, 0, 0, 2),
+(96, 'a', 'a', '2015-12-17', '2015-12-17', 1, 1, '11', 0, 0, 0, 2),
+(97, 'registro%20nuevo%20de%20rafa', 'contenido%20del%20registro%20nuevo%20de%20rafa%20para%20prueba%20de%20selenium', '2015-12-18', '2015-12-18', 1, 1, 'prueba', 1, 1, 1, 3),
+(98, 'registro%20nuevo%20de%20rafa', 'contenido%20del%20registro%20nuevo%20de%20rafa%20para%20prueba%20de%20selenium', '2015-12-18', '2015-12-18', 1, 1, 'prueba', 1, 1, 1, 3),
+(99, 'registro%20nuevo%20de%20rafa', 'contenido%20del%20registro%20nuevo%20de%20rafa%20para%20prueba%20de%20selenium', '2015-12-18', '2015-12-18', 1, 1, 'prueba', 1, 1, 1, 3),
+(100, '', 'gfdgdfg', '2015-12-21', '2015-12-21', 0, 0, '', 0, 0, 0, 0),
+(101, '', 'gfdgdfg', '2015-12-21', '2015-12-21', 0, 0, '', 0, 0, 0, 0),
+(102, '', 'gfdgdfg', '2015-12-21', '2015-12-21', 0, 0, '', 0, 0, 0, 0),
+(103, '', 'gfdgdfg', '2015-12-21', '2015-12-21', 0, 0, '', 0, 0, 0, 0),
+(104, '', 'gfdgdfg', '2015-12-21', '2015-12-21', 0, 0, '', 0, 0, 0, 0),
+(105, '', 'gfdgdfg', '2015-12-21', '2015-12-21', 0, 0, '', 0, 0, 0, 0),
+(106, '', 'gfdgdfg', '2015-12-21', '2015-12-21', 0, 0, '', 0, 0, 0, 0),
+(107, '', 'gfdgdfg', '2015-12-21', '2015-12-21', 0, 0, '', 0, 0, 0, 0),
+(108, 'pruebarafa', 'pruebarafa', '2015-12-21', '2015-12-21', 1, 1, 'pruebarafa', 1, 1, 1, 3),
+(109, 'pruebarafa', 'pruebarafa', '2015-12-21', '2015-12-21', 1, 1, 'pruebarafa', 0, 0, 0, 3),
+(110, 'pruebarafa', 'pruebarafa', '2015-12-21', '2015-12-21', 1, 1, 'pruebarafa', 0, 0, 0, 3);
 
 -- --------------------------------------------------------
 
@@ -229,158 +177,6 @@ INSERT INTO `estado` (`id`, `tipo`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `opcion`
---
-
-CREATE TABLE IF NOT EXISTS `opcion` (
-  `id` int(11) NOT NULL,
-  `id_pregunta` int(11) DEFAULT NULL,
-  `descripcion` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=utf8;
-
---
--- Volcado de datos para la tabla `opcion`
---
-
-INSERT INTO `opcion` (`id`, `id_pregunta`, `descripcion`) VALUES
-(7, 1, 'Rafa'),
-(8, 1, 'Alf'),
-(9, 1, 'Naranjito'),
-(11, 1, 'Chuck'),
-(12, 1, 'Pepe'),
-(13, 3, 'Si'),
-(14, 3, 'No'),
-(15, 3, 'Quizás'),
-(16, 3, 'Jamás'),
-(17, 3, 'No se'),
-(18, 4, 'hola'),
-(19, 4, 'adios'),
-(20, 1, 'opcion1'),
-(21, 1, 'opcion2'),
-(22, 3, 'opcion1'),
-(23, 3, 'opcion2'),
-(24, 4, 'opcion1'),
-(25, 4, 'opcion2'),
-(26, 5, 'opcion1'),
-(27, 5, 'opcion2'),
-(28, 6, 'opcion1'),
-(29, 6, 'opcion2'),
-(30, 7, 'opcion1'),
-(31, 7, 'opcion2'),
-(32, 8, 'opcion1'),
-(33, 8, 'opcion2'),
-(34, 9, 'opcion1'),
-(35, 9, 'opcion2'),
-(36, 10, 'opcion1'),
-(37, 10, 'opcion2'),
-(38, 11, 'opcion1'),
-(39, 11, 'opcion2'),
-(40, 13, 'opcion1'),
-(41, 13, 'opcion2'),
-(42, 14, 'opcion1'),
-(43, 14, 'opcion2'),
-(44, 15, 'opcion1'),
-(45, 15, 'opcion2');
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `post`
---
-
-CREATE TABLE IF NOT EXISTS `post` (
-  `id` int(11) NOT NULL COMMENT 'Num.',
-  `id_usuario` int(11) DEFAULT NULL COMMENT 'Usuario',
-  `id_documento` int(11) DEFAULT NULL COMMENT 'Documento',
-  `fecha` datetime DEFAULT NULL COMMENT 'Publicacion',
-  `mensaje` text COLLATE utf8_unicode_ci
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- Volcado de datos para la tabla `post`
---
-
-INSERT INTO `post` (`id`, `id_usuario`, `id_documento`, `fecha`, `mensaje`) VALUES
-(1, 3, 1, '2015-11-02 09:07:59', NULL),
-(2, 5, 2, '2015-10-04 07:46:22', NULL),
-(3, 8, 58, '2015-09-29 05:11:35', NULL),
-(4, 2, 26, '2015-09-27 16:14:13', NULL),
-(5, 6, 8, '2015-09-04 00:00:00', NULL),
-(6, 27, 58, '2015-09-16 18:32:45', NULL),
-(7, 8, 28, '2015-09-15 06:39:18', NULL),
-(8, 17, 27, '2015-09-14 08:14:59', NULL),
-(9, 19, 73, '2015-11-28 11:14:40', NULL),
-(10, 1, 29, '2015-11-01 08:17:28', NULL),
-(11, 14, 28, NULL, NULL),
-(12, 20, 48, '2015-11-17 09:18:20', NULL),
-(13, 26, 77, '2015-09-08 07:17:00', NULL),
-(14, 29, 57, '2015-09-29 07:15:38', NULL),
-(15, 13, 5, '2015-11-23 13:15:15', NULL);
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `pregunta`
---
-
-CREATE TABLE IF NOT EXISTS `pregunta` (
-  `id` int(11) NOT NULL,
-  `id_documento` int(11) DEFAULT NULL,
-  `descripcion` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
-
---
--- Volcado de datos para la tabla `pregunta`
---
-
-INSERT INTO `pregunta` (`id`, `id_documento`, `descripcion`) VALUES
-(1, 88, NULL),
-(3, 89, NULL),
-(4, 90, NULL),
-(5, 1, NULL),
-(6, 2, NULL),
-(7, 3, NULL),
-(8, 4, NULL),
-(9, 5, NULL),
-(10, 6, NULL),
-(11, 7, NULL),
-(12, 8, NULL),
-(13, 9, NULL),
-(14, 10, NULL),
-(15, 19, NULL),
-(16, 88, NULL);
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `respuesta`
---
-
-CREATE TABLE IF NOT EXISTS `respuesta` (
-  `id` int(11) NOT NULL,
-  `id_opcion` int(11) DEFAULT NULL,
-  `id_usuario` int(11) DEFAULT NULL,
-  `fechaHoraAlta` datetime DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
-
---
--- Volcado de datos para la tabla `respuesta`
---
-
-INSERT INTO `respuesta` (`id`, `id_opcion`, `id_usuario`, `fechaHoraAlta`) VALUES
-(1, 8, 1, '2015-11-03 10:42:00'),
-(2, 15, 1, '2015-11-03 00:00:00'),
-(3, 19, 30, NULL),
-(4, 20, 10, NULL),
-(5, 21, 10, NULL),
-(6, 22, 11, NULL),
-(7, 23, 11, NULL),
-(8, 24, 12, NULL),
-(9, 25, 13, NULL);
-
--- --------------------------------------------------------
-
---
 -- Estructura de tabla para la tabla `tipodocumento`
 --
 
@@ -388,7 +184,7 @@ CREATE TABLE IF NOT EXISTS `tipodocumento` (
   `id` int(6) NOT NULL,
   `descripcion` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
   `privado` tinyint(4) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Volcado de datos para la tabla `tipodocumento`
@@ -398,15 +194,14 @@ INSERT INTO `tipodocumento` (`id`, `descripcion`, `privado`) VALUES
 (1, 'oferta de trabajo', 1),
 (2, 'currículum', 1),
 (3, 'actividad', 1),
-(4, 'experiencia', 1),
+(4, 'experencia', 1),
 (5, 'formación', 1),
 (6, 'valía', 1),
 (7, 'inscripción', 1),
 (8, 'solicitud', 1),
 (9, 'bolsa de trabajo', 1),
 (10, 'idiomas', 1),
-(11, 'wer', 1),
-(12, 'cuestionario', 1);
+(11, 'wer', 1);
 
 -- --------------------------------------------------------
 
@@ -486,57 +281,15 @@ INSERT INTO `usuario` (`id`, `login`, `password`, `id_tipousuario`, `id_estado`,
 --
 
 --
--- Indices de la tabla `categoriaarticulo`
---
-ALTER TABLE `categoriaarticulo`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indices de la tabla `comentario`
---
-ALTER TABLE `comentario`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Indices de la tabla `documento`
 --
 ALTER TABLE `documento`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indices de la tabla `documentocategoriaarticulo`
---
-ALTER TABLE `documentocategoriaarticulo`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Indices de la tabla `estado`
 --
 ALTER TABLE `estado`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indices de la tabla `opcion`
---
-ALTER TABLE `opcion`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indices de la tabla `post`
---
-ALTER TABLE `post`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indices de la tabla `pregunta`
---
-ALTER TABLE `pregunta`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indices de la tabla `respuesta`
---
-ALTER TABLE `respuesta`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -562,55 +315,20 @@ ALTER TABLE `usuario`
 --
 
 --
--- AUTO_INCREMENT de la tabla `categoriaarticulo`
---
-ALTER TABLE `categoriaarticulo`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id',AUTO_INCREMENT=17;
---
--- AUTO_INCREMENT de la tabla `comentario`
---
-ALTER TABLE `comentario`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id',AUTO_INCREMENT=6;
---
 -- AUTO_INCREMENT de la tabla `documento`
 --
 ALTER TABLE `documento`
-  MODIFY `id` int(6) NOT NULL AUTO_INCREMENT COMMENT 'Num.',AUTO_INCREMENT=91;
---
--- AUTO_INCREMENT de la tabla `documentocategoriaarticulo`
---
-ALTER TABLE `documentocategoriaarticulo`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id';
+  MODIFY `id` int(6) NOT NULL AUTO_INCREMENT COMMENT 'Num.',AUTO_INCREMENT=111;
 --
 -- AUTO_INCREMENT de la tabla `estado`
 --
 ALTER TABLE `estado`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Identificador',AUTO_INCREMENT=21;
 --
--- AUTO_INCREMENT de la tabla `opcion`
---
-ALTER TABLE `opcion`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=46;
---
--- AUTO_INCREMENT de la tabla `post`
---
-ALTER TABLE `post`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Num.',AUTO_INCREMENT=16;
---
--- AUTO_INCREMENT de la tabla `pregunta`
---
-ALTER TABLE `pregunta`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=17;
---
--- AUTO_INCREMENT de la tabla `respuesta`
---
-ALTER TABLE `respuesta`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=10;
---
 -- AUTO_INCREMENT de la tabla `tipodocumento`
 --
 ALTER TABLE `tipodocumento`
-  MODIFY `id` int(6) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=14;
+  MODIFY `id` int(6) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=12;
 --
 -- AUTO_INCREMENT de la tabla `tipousuario`
 --
@@ -621,8 +339,6 @@ ALTER TABLE `tipousuario`
 --
 ALTER TABLE `usuario`
   MODIFY `id` int(6) NOT NULL AUTO_INCREMENT COMMENT 'Identificador',AUTO_INCREMENT=31;
-
-
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
