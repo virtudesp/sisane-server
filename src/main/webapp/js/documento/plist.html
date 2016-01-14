@@ -99,20 +99,22 @@ THE SOFTWARE.
                             <div class="col-md-12 text-center">
                                 <p></p>
                                 <p>Campos visibles:</p>
-                                <span ng-repeat="m in meta">
-                                    <label>{{m.UltraShortName}}<input type="checkbox" ng-model="strict"></label>
-
-                                </span>
-
-
-
+                                <input type="checkbox" ng-model="visibles.id" ng-checked="visibles.id">Ident.
+                                <input type="checkbox" ng-model="visibles.titulo" ng-checked="visibles.titulo" >Título
+                                <input type="checkbox" ng-model="visibles.contenido" ng-checked="visibles.contenido">Contenido
+                                <input type="checkbox" ng-model="visibles.alta" ng-checked="visibles.alta">Alta
+                                <input type="checkbox" ng-model="visibles.cambio" ng-checked="visibles.cambio">Último cambio
+                                <input type="checkbox" ng-model="visibles.hits" ng-checked="visibles.hits">Visitas
+                                <input type="checkbox" ng-model="visibles.id_usuario" ng-checked="visibles.id_usuario">Usuario
+                                <input type="checkbox" ng-model="visibles.id_tipodocumento" ng-checked="visibles.id_tipodocumento">Tipo
+                                <input type="checkbox" ng-model="visibles.etiquetas" ng-checked="visibles.etiquetas">Etiquetas
+                                <input type="checkbox" ng-model="visibles.publicado" ng-checked="visibles.publicado">Publicado
+                                <input type="checkbox" ng-model="visibles.portada" ng-checked="visibles.portada">Portada
+                                <input type="checkbox" ng-model="visibles.destacado" ng-checked="visibles.destacado">Destacado                                                                                                                              
                                 <p></p>
                             </div>
                         </div>
                     </div>
-
-
-
                     <div role="tabpanel" id="pane2" class="tab-pane fade">
                         <div class="row">
                             <div class="col-md-12">
@@ -120,6 +122,7 @@ THE SOFTWARE.
 
                                 <select id="selectFilter" class="form-control" name="filter" style="width: 160px" ng-model="filter">
                                     <option style="display:none">selecciona un campo</option>
+                                    <option value="id">Identificador</option>
                                     <option value="titulo">Título</option>
                                     <option value="contenido">Contenido</option>
                                     <option value="alta">Alta</option>
@@ -179,35 +182,83 @@ THE SOFTWARE.
         <table class="table table-responsive table-bordered table-hover table-striped table-condensed dataTable no-footer">
             <thead>             
                 <tr>                                                   
-                    <th class="text-right">Identificador</th>
-                    <th>Título</th>
-                    <th>Contenido</th>
-                    <th>Alta</th>
-                    <th>Último cambio</th>
-                    <th class="text-right">Visitas</th>
-                    <th>Usuario</th>
-                    <th>Tipo</th>
-                    <th>Etiquetas</th>
-                    <th class="text-center">¿Publicado?</th>
-                    <th class="text-center">¿Portada?</th>
-                    <th class="text-center">¿Destacado?</th>
+                    <th ng-show="visibles.id" class="text-right">
+                        Identificador
+                        <a ng-show="visibles.id" href="#/{{ob}}/plist/{{numpage}}/{{rpp}}?order=id&ordervalue=asc{{paramsWithoutOrder}}"><i class="glyphicon glyphicon-arrow-up"></i></a>
+                        <a ng-show="visibles.id" href="#/{{ob}}/plist/{{numpage}}/{{rpp}}?order=id&ordervalue=desc{{paramsWithoutOrder}}"><i class="glyphicon glyphicon-arrow-down"></i></a>
+                    </th>
+                    <th ng-show="visibles.titulo">
+                        Título
+                        <a ng-show="visibles.titulo" href="#/{{ob}}/plist/{{numpage}}/{{rpp}}?order=id&ordervalue=asc{{paramsWithoutOrder}}"><i class="glyphicon glyphicon-arrow-up"></i></a>
+                        <a ng-show="visibles.titulo" href="#/{{ob}}/plist/{{numpage}}/{{rpp}}?order=id&ordervalue=desc{{paramsWithoutOrder}}"><i class="glyphicon glyphicon-arrow-down"></i></a>
+                    </th>
+                    <th ng-show="visibles.contenido">
+                        Contenido
+                        <a ng-show="visibles.contenido" href="#/{{ob}}/plist/{{numpage}}/{{rpp}}?order=id&ordervalue=asc{{paramsWithoutOrder}}"><i class="glyphicon glyphicon-arrow-up"></i></a>
+                        <a ng-show="visibles.contenido" href="#/{{ob}}/plist/{{numpage}}/{{rpp}}?order=id&ordervalue=desc{{paramsWithoutOrder}}"><i class="glyphicon glyphicon-arrow-down"></i></a>
+                    </th>
+                    <th ng-show="visibles.alta">
+                        Alta
+                        <a ng-show="visibles.alta" href="#/{{ob}}/plist/{{numpage}}/{{rpp}}?order=id&ordervalue=asc{{paramsWithoutOrder}}"><i class="glyphicon glyphicon-arrow-up"></i></a>
+                        <a ng-show="visibles.alta" href="#/{{ob}}/plist/{{numpage}}/{{rpp}}?order=id&ordervalue=desc{{paramsWithoutOrder}}"><i class="glyphicon glyphicon-arrow-down"></i></a>
+                    </th>
+                    <th ng-show="visibles.cambio">
+                        Último cambio
+                        <a ng-show="visibles.cambio" href="#/{{ob}}/plist/{{numpage}}/{{rpp}}?order=id&ordervalue=asc{{paramsWithoutOrder}}"><i class="glyphicon glyphicon-arrow-up"></i></a>
+                        <a ng-show="visibles.cambio" href="#/{{ob}}/plist/{{numpage}}/{{rpp}}?order=id&ordervalue=desc{{paramsWithoutOrder}}"><i class="glyphicon glyphicon-arrow-down"></i></a>
+                    </th>
+                    <th ng-show="visibles.hits"class="text-right">
+                        Visitas
+                        <a ng-show="visibles.hits" href="#/{{ob}}/plist/{{numpage}}/{{rpp}}?order=id&ordervalue=asc{{paramsWithoutOrder}}"><i class="glyphicon glyphicon-arrow-up"></i></a>
+                        <a ng-show="visibles.hits" href="#/{{ob}}/plist/{{numpage}}/{{rpp}}?order=id&ordervalue=desc{{paramsWithoutOrder}}"><i class="glyphicon glyphicon-arrow-down"></i></a>
+                    </th>
+                    <th ng-show="visibles.id_usuario">
+                        Usuario
+                        <a ng-show="visibles.id_usuario" href="#/{{ob}}/plist/{{numpage}}/{{rpp}}?order=id&ordervalue=asc{{paramsWithoutOrder}}"><i class="glyphicon glyphicon-arrow-up"></i></a>
+                        <a ng-show="visibles.id_usuario" href="#/{{ob}}/plist/{{numpage}}/{{rpp}}?order=id&ordervalue=desc{{paramsWithoutOrder}}"><i class="glyphicon glyphicon-arrow-down"></i></a>
+                    </th>
+                    <th ng-show="visibles.id_tipodocumento">
+                        Tipo
+                        <a ng-show="visibles.id_tipodocumento" href="#/{{ob}}/plist/{{numpage}}/{{rpp}}?order=id&ordervalue=asc{{paramsWithoutOrder}}"><i class="glyphicon glyphicon-arrow-up"></i></a>
+                        <a ng-show="visibles.id_tipodocumento" href="#/{{ob}}/plist/{{numpage}}/{{rpp}}?order=id&ordervalue=desc{{paramsWithoutOrder}}"><i class="glyphicon glyphicon-arrow-down"></i></a>
+                    </th>
+                    <th ng-show="visibles.etiquetas">
+                        Etiquetas
+                        <a ng-show="visibles.etiquetas" href="#/{{ob}}/plist/{{numpage}}/{{rpp}}?order=id&ordervalue=asc{{paramsWithoutOrder}}"><i class="glyphicon glyphicon-arrow-up"></i></a>
+                        <a ng-show="visibles.etiquetas" href="#/{{ob}}/plist/{{numpage}}/{{rpp}}?order=id&ordervalue=desc{{paramsWithoutOrder}}"><i class="glyphicon glyphicon-arrow-down"></i></a>
+                    </th>
+                    <th ng-show="visibles.publicado"class="text-center">
+                        ¿Publicado?
+                        <a ng-show="visibles.publicado" href="#/{{ob}}/plist/{{numpage}}/{{rpp}}?order=id&ordervalue=asc{{paramsWithoutOrder}}"><i class="glyphicon glyphicon-arrow-up"></i></a>
+                        <a ng-show="visibles.publicado" href="#/{{ob}}/plist/{{numpage}}/{{rpp}}?order=id&ordervalue=desc{{paramsWithoutOrder}}"><i class="glyphicon glyphicon-arrow-down"></i></a>
+                    </th>
+                    <th ng-show="visibles.portada"class="text-center">
+                        ¿Portada?
+                        <a ng-show="visibles.portada" href="#/{{ob}}/plist/{{numpage}}/{{rpp}}?order=id&ordervalue=asc{{paramsWithoutOrder}}"><i class="glyphicon glyphicon-arrow-up"></i></a>
+                        <a ng-show="visibles.portada" href="#/{{ob}}/plist/{{numpage}}/{{rpp}}?order=id&ordervalue=desc{{paramsWithoutOrder}}"><i class="glyphicon glyphicon-arrow-down"></i></a>
+                    </th>
+                    <th ng-show="visibles.destacado"class="text-center">
+                        ¿Destacado?
+                        <a ng-show="visibles.destacado" href="#/{{ob}}/plist/{{numpage}}/{{rpp}}?order=id&ordervalue=asc{{paramsWithoutOrder}}"><i class="glyphicon glyphicon-arrow-up"></i></a>
+                        <a ng-show="visibles.destacado" href="#/{{ob}}/plist/{{numpage}}/{{rpp}}?order=id&ordervalue=desc{{paramsWithoutOrder}}"><i class="glyphicon glyphicon-arrow-down"></i></a>
+                    </th>
                     <th>Acciones</th>
                 </tr>
             </thead>
             <tbody>
                 <tr ng-repeat="obj in page">
-                    <td  class="text-right">{{obj.id}}</td>
-                    <td>{{obj.titulo}}</td>
-                    <td>{{obj.contenido| clipString}}</td>
-                    <td>{{obj.alta}}</td>
-                    <td>{{obj.cambio}}</td>
-                    <td class="text-right">{{obj.hits}}</td>
-                    <td><a href="#/usuario/view/{{obj.obj_usuario.id}}">{{obj.obj_usuario.login}}</a></td>
-                    <td><a href="#/tipodocumento/view/{{obj.obj_tipodocumento.id}}">{{obj.obj_tipodocumento.descripcion}}</a></td>
-                    <td>{{obj.etiquetas}}</td>
-                    <td class="text-center" ng-bind-html="obj.publicado | booleanizate"></td>
-                    <td class="text-center" ng-bind-html="obj.portada | booleanizate"></td>
-                    <td class="text-center" ng-bind-html="obj.destacado | booleanizate"></td>
+                    <td ng-show="visibles.id"  class="text-right">{{obj.id}}</td>
+                    <td ng-show="visibles.titulo">{{obj.titulo}}</td>
+                    <td ng-show="visibles.contenido">{{obj.contenido| clipString}}</td>
+                    <td ng-show="visibles.alta">{{obj.alta}}</td>
+                    <td ng-show="visibles.cambio">{{obj.cambio}}</td>
+                    <td ng-show="visibles.hits" class="text-right">{{obj.hits}}</td>
+                    <td ng-show="visibles.id_usuario"><a href="#/usuario/view/{{obj.obj_usuario.id}}">{{obj.obj_usuario.login}}</a></td>
+                    <td ng-show="visibles.id_tipodocumento"><a href="#/tipodocumento/view/{{obj.obj_tipodocumento.id}}">{{obj.obj_tipodocumento.descripcion}}</a></td>
+                    <td ng-show="visibles.etiquetas">{{obj.etiquetas}}</td>
+                    <td ng-show="visibles.publicado" class="text-center" ng-bind-html="obj.publicado | booleanizate"></td>
+                    <td ng-show="visibles.portada" class="text-center" ng-bind-html="obj.portada | booleanizate"></td>
+                    <td ng-show="visibles.destacado" class="text-center" ng-bind-html="obj.destacado | booleanizate"></td>
                     <td>
                         <div class="btn-group" role="group">
                             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
