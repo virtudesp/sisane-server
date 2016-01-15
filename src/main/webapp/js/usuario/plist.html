@@ -120,31 +120,32 @@ THE SOFTWARE.
                         <div class="row">
                             <div class="col-md-12">
                                 <p></p>
-                                <select id="selectFilter" class="form-control" name="filter" style="width: 160px" ng-model="filter">
-                                    <option style="display:none">selecciona un campo</option>                                    
-                                    <option value="id">Identificador</option>
-                                    <option value="login">Login</option>
-                                    <option value="password">Password</option>
-                                    <option value="id_tipousuario">Tipo</option>
-                                    <option value="id_estado">Estado</option>
-                                    <option value="ciudad">Ciudad</option>
-                                    <option value="firma">Firma</option>
-                                    <option value="skin">Skin</option>
-                                </select>
-                                <select id="selectFilteroperator" class="form-control" name="filteroperator" width="80" style="width: 200px" ng-model="filteroperator">
-                                    <option style="display:none">selecciona una operacion</option>
-                                    <option value="like" ng-selected="true">contiene</option>
-                                    <option value="notlike">no contiene</option>
-                                    <option value="equals">es igual a</option>
-                                    <option value="notequalto">es distinto de</option>
-                                    <option value="less">es menor que</option>
-                                    <option value="lessorequal">es menor o igual que</option>
-                                    <option value="greater">es mayor que</option>
-                                    <option value="greaterorequal">es mayor o igual que</option>
-                                </select>
-                                <input id="inputFiltervalue" class="form-control" name="filtervalue" type="text" size="20" maxlength="50" value="" width="100" style="width: 140px" placeholder="Valor" ng-model="filtervalue">
-                                <input type="button" class="btn" id="btnFiltrar" name="btnFiltrar" value="Filtrar" ng-click="dofilter()" />
-
+                                <form class="navbar-form navbar-right" role="form" action="Controller" method="post" id="filterForm">
+                                    <select id="selectFilter" class="form-control" name="filter" style="width: 160px" ng-model="filter">
+                                        <option style="display:none">selecciona un campo</option>                                    
+                                        <option value="id">Identificador</option>
+                                        <option value="login">Login</option>
+                                        <option value="password">Password</option>
+                                        <option value="id_tipousuario">Tipo</option>
+                                        <option value="id_estado">Estado</option>
+                                        <option value="ciudad">Ciudad</option>
+                                        <option value="firma">Firma</option>
+                                        <option value="skin">Skin</option>
+                                    </select>
+                                    <select id="selectFilteroperator" class="form-control" name="filteroperator" width="80" style="width: 200px" ng-model="filteroperator">
+                                        <option style="display:none">selecciona una operacion</option>
+                                        <option value="like" ng-selected="true">contiene</option>
+                                        <option value="notlike">no contiene</option>
+                                        <option value="equals">es igual a</option>
+                                        <option value="notequalto">es distinto de</option>
+                                        <option value="less">es menor que</option>
+                                        <option value="lessorequal">es menor o igual que</option>
+                                        <option value="greater">es mayor que</option>
+                                        <option value="greaterorequal">es mayor o igual que</option>
+                                    </select>
+                                    <input id="inputFiltervalue" class="form-control" name="filtervalue" type="text" size="20" maxlength="50" value="" width="100" style="width: 140px" placeholder="Valor" ng-model="filtervalue">
+                                    <input type="button" class="btn" id="btnFiltrar" name="btnFiltrar" value="Filtrar" ng-click="dofilter()" />
+                                </form>
                                 <p></p>
                             </div>
                         </div>
@@ -154,8 +155,7 @@ THE SOFTWARE.
                             <div class="col-md-12">
                                 <p></p>
                                 <form class="navbar-form navbar-right" role="form" action="Controller" method="post" id="empresaForm">
-                                    <input id="inputFiltervalueClient" class="form-control" name="filtervalue" type="text" size="20" maxlength="50" value="" width="100" style="width: 140px" placeholder="Valor" ng-model="searchText">
-                                    <input type="submit" class="btn" id="btnFiltrarClient" name="btnFiltrarClient" value="Filtrar">
+                                    <input id="inputFiltervalueClient" class="form-control" name="filtervalue" type="text" size="20" maxlength="50" value="" width="100" style="width: 140px" placeholder="Valor" ng-model="searchText">                                    
                                 </form>
                                 <p></p>
                             </div>
@@ -178,54 +178,54 @@ THE SOFTWARE.
         <table class="table table-responsive table-bordered table-hover table-striped table-condensed dataTable no-footer">
             <thead>             
                 <tr>                                                   
-                    <th ng-show="visibles.id" class="text-right">
-                        Ident.
+                    <th ng-show="visibles.id" class="text-center">
+                        Ident.<br/>
                         <a ng-show="visibles.id" href="#/{{ob}}/plist/{{numpage}}/{{rpp}}?order=id&ordervalue=asc{{paramsWithoutOrder}}"><i class="glyphicon glyphicon-arrow-up"></i></a>
                         <a ng-show="visibles.id" href="#/{{ob}}/plist/{{numpage}}/{{rpp}}?order=id&ordervalue=desc{{paramsWithoutOrder}}"><i class="glyphicon glyphicon-arrow-down"></i></a>
                     </th>
-                    <th ng-show="visibles.login">
-                        Login
+                    <th ng-show="visibles.login" class="text-center">
+                        Login<br/>
                         <a ng-show="visibles.login" href="#/{{ob}}/plist/{{numpage}}/{{rpp}}?order=login&ordervalue=asc{{paramsWithoutOrder}}"><i class="glyphicon glyphicon-arrow-up"></i></a>
                         <a ng-show="visibles.login" href="#/{{ob}}/plist/{{numpage}}/{{rpp}}?order=login&ordervalue=desc{{paramsWithoutOrder}}"><i class="glyphicon glyphicon-arrow-down"></i></a>
                     </th>
-                    <th ng-show="visibles.password">
-                        Password
+                    <th ng-show="visibles.password" class="text-center">
+                        Password<br/>
                         <a ng-show="visibles.password" href="#/{{ob}}/plist/{{numpage}}/{{rpp}}?order=password&ordervalue=asc{{paramsWithoutOrder}}"><i class="glyphicon glyphicon-arrow-up"></i></a>
                         <a ng-show="visibles.password" href="#/{{ob}}/plist/{{numpage}}/{{rpp}}?order=password&ordervalue=desc{{paramsWithoutOrder}}"><i class="glyphicon glyphicon-arrow-down"></i></a>
 
                     </th>
-                    <th  ng-show="visibles.id_estado">
-                        Estado
+                    <th  ng-show="visibles.id_estado" class="text-center">
+                        Estado<br/>
                         <a ng-show="visibles.id_estado"  href="#/{{ob}}/plist/{{numpage}}/{{rpp}}?order=id_estado&ordervalue=asc{{paramsWithoutOrder}}"><i class="glyphicon glyphicon-arrow-up"></i></a>
                         <a ng-show="visibles.id_estado"  href="#/{{ob}}/plist/{{numpage}}/{{rpp}}?order=id_estado&ordervalue=desc{{paramsWithoutOrder}}"><i class="glyphicon glyphicon-arrow-down"></i></a>
                     </th>
-                    <th ng-show="visibles.id_tipousuario">
-                        Tipo
+                    <th ng-show="visibles.id_tipousuario" class="text-center">
+                        Tipo<br/>
                         <a ng-show="visibles.id_tipousuario"  href="#/{{ob}}/plist/{{numpage}}/{{rpp}}?order=id_tipousuario&ordervalue=asc{{paramsWithoutOrder}}"><i class="glyphicon glyphicon-arrow-up"></i></a>
                         <a ng-show="visibles.id_tipousuario"  href="#/{{ob}}/plist/{{numpage}}/{{rpp}}?order=id_tipousuario&ordervalue=desc{{paramsWithoutOrder}}"><i class="glyphicon glyphicon-arrow-down"></i></a>
                     </th>
-                    <th ng-show="visibles.ciudad">
-                        Ciudad
+                    <th ng-show="visibles.ciudad" class="text-center">
+                        Ciudad<br/>
                         <a ng-show="visibles.ciudad"  href="#/{{ob}}/plist/{{numpage}}/{{rpp}}?order=ciudad&ordervalue=asc{{paramsWithoutOrder}}"><i class="glyphicon glyphicon-arrow-up"></i></a>
                         <a ng-show="visibles.ciudad"  href="#/{{ob}}/plist/{{numpage}}/{{rpp}}?order=ciudad&ordervalue=desc{{paramsWithoutOrder}}"><i class="glyphicon glyphicon-arrow-down"></i></a>
                     </th>
-                    <th ng-show="visibles.firma">
-                        Firma
+                    <th ng-show="visibles.firma" class="text-center">
+                        Firma<br/>
                         <a ng-show="visibles.firma"  href="#/{{ob}}/plist/{{numpage}}/{{rpp}}?order=firma&ordervalue=asc{{paramsWithoutOrder}}"><i class="glyphicon glyphicon-arrow-up"></i></a>
                         <a ng-show="visibles.firma"  href="#/{{ob}}/plist/{{numpage}}/{{rpp}}?order=firma&ordervalue=desc{{paramsWithoutOrder}}"><i class="glyphicon glyphicon-arrow-down"></i></a>
                     </th>
-                    <th ng-show="visibles.skin">
-                        Skin
+                    <th ng-show="visibles.skin" class="text-center">
+                        Skin<br/>
                         <a ng-show="visibles.skin"  href="#/{{ob}}/plist/{{numpage}}/{{rpp}}?order=skin&ordervalue=asc{{paramsWithoutOrder}}"><i class="glyphicon glyphicon-arrow-up"></i></a>
                         <a ng-show="visibles.skin"  href="#/{{ob}}/plist/{{numpage}}/{{rpp}}?order=skin&ordervalue=desc{{paramsWithoutOrder}}"><i class="glyphicon glyphicon-arrow-down"></i></a>
                     </th>
-                    <th>
+                    <th  class="text-center">
                         Acciones
                     </th>
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="obj in page">
+                <tr ng-repeat="obj in page| filter:searchText">
                     <td ng-show="visibles.id" class="text-right">{{obj.id}}</td>
                     <td ng-show="visibles.login">{{obj.login}}</td>
                     <td ng-show="visibles.password">{{obj.password}}</td>                                                       
