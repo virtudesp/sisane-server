@@ -26,63 +26,64 @@
  * 
  */
 
-
 'use strict';
-moduloDocumento.controller('DocumentoNewController', ['$scope', '$routeParams', '$location', 'serverService', 'sharedSpaceService',
-    function ($scope, $routeParams, $location, serverService, sharedSpaceService) {
+moduloDocumento.controller('DocumentoNewController', ['$scope', '$routeParams', '$location', 'serverService', 'sharedSpaceService', '$filter',
+    function ($scope, $routeParams, $location, serverService, sharedSpaceService, $filter) {
+        $scope.obj = null;
         $scope.id = $routeParams.id;
         $scope.ob = 'documento';
         $scope.result = null;
-        $scope.title = "Crear un nuevo documento";
+        $scope.title = "Edición de documento";
         $scope.icon = "fa-file-text-o";
+        $scope.obj = {};
+        $scope.obj.obj_tipodocumento = {"id": 0};
+        $scope.obj.obj_usuario = {"id": 0};
         if (sharedSpaceService.getFase() == 0) {
-            $scope.obj = {
-                id: 0,
-                titulo: "drdrdrtttwaaaa",
-                contenido: "",
-                alta: "a",
-                cambio: "",
-                hits: 0,
-                id_tipodocumento: 0,
-                obj_tipodocumento: {
-                    id: 0
-                },
-                id_usuario: 0,
-                obj_usuario: {
-                    id: 0
-                },
-                etiquetas: "",
-                portada: false,
-                publicado: false,
-                destacado: false
-            };
+            if ($routeParams.tipodocumento && $routeParams.tipodocumento > 0) {
+                $scope.obj.obj_tipodocumento.id = $routeParams.tipodocumento;
+            }
+            if ($routeParams.usuario && $routeParams.usuario > 0) {
+                $scope.obj.obj_usuario.id = $routeParams.usuario;
+            }
+//            serverService.getDataFromPromise(serverService.promise_getOne($scope.ob, $scope.id)).then(function (data) {
+//                $scope.obj = data.message;
+//                //date conversion
+//                $scope.obj.alta = serverService.date_toDate($scope.obj.alta);
+//                $scope.obj.cambio = serverService.date_toDate($scope.obj.cambio);
+//            });
         } else {
             $scope.obj = sharedSpaceService.getObject();
             sharedSpaceService.setFase(0);
         }
         $scope.chooseOne = function (foreignObjectName) {
             sharedSpaceService.setObject($scope.obj);
-            sharedSpaceService.setReturnLink('/' + $scope.ob + '/new');
+            sharedSpaceService.setReturnLink('/' + $scope.ob + '/edit/' + $scope.id);
             sharedSpaceService.setFase(1);
             $location.path('/' + foreignObjectName + '/selection/1/10');
         }
         $scope.save = function () {
-            console.log("save");
-            console.log({json: JSON.stringify(serverService.array_identificarArray($scope.obj))});
-            //strValues = serverService.array_identificarArray(thisObject.form_getFormValues(strClass));
+            var dateAltaAsString = $filter('date')($scope.obj.alta, "dd/MM/yyyy");
+            var dateCambioAsString = $filter('date')($scope.obj.cambio, "dd/MM/yyyy");
+            $scope.obj.alta = dateAltaAsString;
+            $scope.obj.cambio = dateCambioAsString;
+            //console.log({json: JSON.stringify(serverService.array_identificarArray($scope.obj))});            
             serverService.getDataFromPromise(serverService.promise_setOne($scope.ob, {json: JSON.stringify(serverService.array_identificarArray($scope.obj))})).then(function (data) {
                 $scope.result = data;
             });
         };
         $scope.$watch('obj.obj_tipodocumento.id', function () {
-            serverService.getDataFromPromise(serverService.promise_getOne('tipodocumento', $scope.obj.obj_tipodocumento.id)).then(function (data2) {
-                $scope.obj.obj_tipodocumento = data2.message;
-            });
+            if ($scope.obj) {
+                serverService.getDataFromPromise(serverService.promise_getOne('tipodocumento', $scope.obj.obj_tipodocumento.id)).then(function (data2) {
+                    $scope.obj.obj_tipodocumento = data2.message;
+                });
+            }
         });
         $scope.$watch('obj.obj_usuario.id', function () {
-            serverService.getDataFromPromise(serverService.promise_getOne('usuario', $scope.obj.obj_usuario.id)).then(function (data2) {
-                $scope.obj.obj_usuario = data2.message;
-            });
+            if ($scope.obj) {
+                serverService.getDataFromPromise(serverService.promise_getOne('usuario', $scope.obj.obj_usuario.id)).then(function (data2) {
+                    $scope.obj.obj_usuario = data2.message;
+                });
+            }
         });
         $scope.back = function () {
             window.history.back();
@@ -94,7 +95,25 @@ moduloDocumento.controller('DocumentoNewController', ['$scope', '$routeParams', 
             $location.path('/documento/plist');
         };
 
-        $("#alta_group").datetimepicker({format: "DD/MM/YYYY", locale: "es"});
-        $("#cambio_group").datetimepicker({format: "DD/MM/YYYY", locale: "es"});
 
+        //datepicker
+        $scope.open1 = function () {
+            $scope.popup1.opened = true;
+        };
+        $scope.popup1 = {
+            opened: false
+        };
+        $scope.disabled = function (date, mode) {
+            return mode === 'day' && (date.getDay() === 0 || date.getDay() === 6);
+        };
+        $scope.dateOptions = {
+            formatYear: 'yyyy',
+            startingDay: 1
+        };
+        $scope.open2 = function () {
+            $scope.popup2.opened = true;
+        };
+        $scope.popup2 = {
+            opened: false
+        };
     }]);
