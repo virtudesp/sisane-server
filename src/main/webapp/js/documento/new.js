@@ -45,12 +45,6 @@ moduloDocumento.controller('DocumentoNewController', ['$scope', '$routeParams', 
             if ($routeParams.usuario && $routeParams.usuario > 0) {
                 $scope.obj.obj_usuario.id = $routeParams.usuario;
             }
-//            serverService.getDataFromPromise(serverService.promise_getOne($scope.ob, $scope.id)).then(function (data) {
-//                $scope.obj = data.message;
-//                //date conversion
-//                $scope.obj.alta = serverService.date_toDate($scope.obj.alta);
-//                $scope.obj.cambio = serverService.date_toDate($scope.obj.cambio);
-//            });
         } else {
             $scope.obj = sharedSpaceService.getObject();
             sharedSpaceService.setFase(0);

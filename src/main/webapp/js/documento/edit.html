@@ -51,8 +51,22 @@ THE SOFTWARE.
         <div id="contenido-group" class="form-group">
             <label class="col-sm-2 control-label" for="contenido">Contenido:</label>
             <div class="control col-sm-9">
-                <input ng-model="obj.contenido" type="text" id="contenido" class="form-control" name="contenido" size="15" placeholder="contenido">
+                <input ng-model="obj.contenido" type="text" id="contenido" 
+                       class="form-control" name="contenido" size="15" 
+                       placeholder="contenido">
+                <!-- <input ng-model="obj.contenido" type="text" id="contenido" 
+                       class="form-control" name="contenido" size="15" 
+                       placeholder="contenido" 
+                       required minlength="5" maxlength="19">
+                -->
             </div>
+            <!--
+            <div ng-messages="outerForm.contenido.$error">
+                <div ng-message="required">You did not enter a field</div>
+                <div ng-message="minlength">The value entered is too short</div>
+                <div ng-message="maxlength">The value entered is too long</div>
+            </div>
+            -->
         </div>
 
         <div id="alta-group" class="form-group">
