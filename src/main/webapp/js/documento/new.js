@@ -32,6 +32,7 @@ moduloDocumento.controller('DocumentoNewController', ['$scope', '$routeParams', 
         $scope.obj = null;
         $scope.id = $routeParams.id;
         $scope.ob = 'documento';
+        $scope.op = 'new';
         $scope.result = null;
         $scope.title = "Edición de documento";
         $scope.icon = "fa-file-text-o";
@@ -51,7 +52,7 @@ moduloDocumento.controller('DocumentoNewController', ['$scope', '$routeParams', 
         }
         $scope.chooseOne = function (foreignObjectName) {
             sharedSpaceService.setObject($scope.obj);
-            sharedSpaceService.setReturnLink('/' + $scope.ob + '/edit/' + $scope.id);
+            sharedSpaceService.setReturnLink('/' + $scope.ob + '/' + $scope.op);
             sharedSpaceService.setFase(1);
             $location.path('/' + foreignObjectName + '/selection/1/10');
         }
