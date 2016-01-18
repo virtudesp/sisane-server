@@ -33,6 +33,7 @@ import java.sql.SQLException;
 import net.daw.bean.publicinterface.GenericBean;
 import net.daw.dao.implementation.EstadoDao;
 import net.daw.dao.implementation.TipousuarioDao;
+import net.daw.helper.statics.EncodingUtilHelper;
 
 public class UsuarioBean implements GenericBean{
 
@@ -148,11 +149,11 @@ public class UsuarioBean implements GenericBean{
     public String toJson(Boolean expand) {
         String strJson = "{";
         strJson += "id:" + id + ",";
-        strJson += "login:" + login + ",";
-        strJson += "password:" + password + ",";
-        strJson += "ciudad:" + ciudad + ",";
-        strJson += "firma:" + firma + ",";
-        strJson += "skin:" + skin + ",";
+        strJson += "login:" + EncodingUtilHelper.quotate(login) + ",";
+        strJson += "password:" + EncodingUtilHelper.quotate(password) + ",";
+        strJson += "ciudad:" + EncodingUtilHelper.quotate(ciudad) + ",";
+        strJson += "firma:" + EncodingUtilHelper.quotate(firma) + ",";
+        strJson += "skin:" + EncodingUtilHelper.quotate(skin) + ",";
         if (expand) {
             strJson += "obj_estado:" + obj_estado.toJson(false) + ",";
             strJson += "obj_tipousuario:" + obj_tipousuario.toJson(false) + ",";
@@ -198,11 +199,11 @@ public class UsuarioBean implements GenericBean{
     public String toPairs() {
         String strPairs = "";
         strPairs += "id=" + id + ",";
-        strPairs += "login=" + login + ",";
-        strPairs += "password=" + password + ",";
-        strPairs += "ciudad=" + ciudad + ",";
-        strPairs += "firma=" + firma + ",";
-        strPairs += "skin=" + skin + ",";
+        strPairs += "login=" + EncodingUtilHelper.quotate(login) + ",";
+        strPairs += "password=" + EncodingUtilHelper.quotate(password) + ",";
+        strPairs += "ciudad=" + EncodingUtilHelper.quotate(ciudad) + ",";
+        strPairs += "firma=" + EncodingUtilHelper.quotate(firma) + ",";
+        strPairs += "skin=" + EncodingUtilHelper.quotate(skin) + ",";
         strPairs += "id_estado=" + id_estado + ",";
         strPairs += "id_tipousuario=" + id_tipousuario;
 
