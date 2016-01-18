@@ -99,21 +99,22 @@ angular.module('Directives', [])
 //                }
 //            };
 //        });
-        .directive('saludo', function () {
-            return {
-                restrict: 'E',
-                template: 'Hola {{ who.nombre }}!!! --- Hola',
-                scope: {
-                    who: "=a"
-                }
-            }
-        })
 
-        .directive('miDirectiva', function () {
-            return {
-                template: '<br />hola:<br /> Hola mundo!!!!!!!!<br />'
-            };
-        })
+
+
+
+
+//        .directive('saludo', function () {
+//            return {
+//                restrict: 'E',
+//                template: 'Hola {{ who.nombre }}!!! --- Hola',
+//                scope: {
+//                    who: "=a"
+//                }
+//            }
+//        })
+
+
 
 //        .directive('lowerThan', [
 //            function () {

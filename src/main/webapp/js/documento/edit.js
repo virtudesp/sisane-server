@@ -108,10 +108,10 @@ moduloDocumento.controller('DocumentoEditController', ['$scope', '$routeParams',
         $scope.popup2 = {
             opened: false
         };
-        
-        $scope.juan = {
- nombre : 'Juan',
- apellido : 'Perez',
- edad : 32
- }
+
+//        $scope.persona = {
+//            nombre: 'Pepe',
+//            apellido: 'Rojo',
+//            edad: 11
+//        }
     }]);
