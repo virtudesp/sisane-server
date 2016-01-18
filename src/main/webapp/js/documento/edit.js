@@ -108,4 +108,6 @@ moduloDocumento.controller('DocumentoEditController', ['$scope', '$routeParams',
         $scope.popup2 = {
             opened: false
         };
+        
+        $scope.onlyNumbers = /^\d+$/;
     }]);
