@@ -50,8 +50,8 @@ openAusias.config(['$routeProvider', function ($routeProvider) {
         $routeProvider.when('/home', {templateUrl: 'js/system/home.html', controller: 'HomeController'});
         //------------
         $routeProvider.when('/documento/view/:id', {templateUrl: 'js/documento/view.html', controller: 'DocumentoViewController'});
-        $routeProvider.when('/documento/new', {templateUrl: 'js/documento/edit.html', controller: 'DocumentoNewController'});
-        $routeProvider.when('/documento/edit/:id', {templateUrl: 'js/documento/edit.html', controller: 'DocumentoEditController'});
+        $routeProvider.when('/documento/new', {templateUrl: 'js/documento/newedit.html', controller: 'DocumentoNewController'});
+        $routeProvider.when('/documento/edit/:id', {templateUrl: 'js/documento/newedit.html', controller: 'DocumentoEditController'});
         $routeProvider.when('/documento/remove/:id', {templateUrl: 'js/documento/remove.html', controller: 'DocumentoRemoveController'});
         $routeProvider.when('/documento/plist/:page?/:rpp?', {templateUrl: 'js/documento/plist.html', controller: 'DocumentoPListController'});
 
