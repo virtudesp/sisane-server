@@ -109,5 +109,9 @@ moduloDocumento.controller('DocumentoEditController', ['$scope', '$routeParams',
             opened: false
         };
         
-        $scope.onlyNumbers = /^\d+$/;
+        $scope.juan = {
+ nombre : 'Juan',
+ apellido : 'Perez',
+ edad : 32
+ }
     }]);

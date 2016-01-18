@@ -119,7 +119,7 @@ THE SOFTWARE.
 
 
         <div id="hits-group" class="form-group"
-             ng-class="{'has-error': (outerForm.hits.$error.required || outerForm.hits.$error.rpattern) && !outerForm.hits.$pristine}">
+             ng-class="{'has-error': (outerForm.hits.$error.required || outerForm.hits.$error.pattern || outerForm.hits.$error.lowerThan) && !outerForm.hits.$pristine}">
             <label class="col-sm-2 control-label" for="hits">Hits:</label>
             <div class="control col-sm-3">
                 <input 
@@ -130,11 +130,20 @@ THE SOFTWARE.
                     name="hits" 
                     size="15" 
                     placeholder="hits"
-                    rpattern="/^\d+$/"
+                    ng-pattern="/^\d+$/"
+                    lowerThan="40"
                     required>
+                <span class="help-block" ng-show="!outerForm.hits.$pristine && outerForm.hits.$error.required">El campo contenido es obligatorio</span>
+                <span class="help-block" ng-show="!outerForm.hits.$pristine && outerForm.hits.$error.pattern">El campo contenido debe ser un número entero</span>
+                <span class="help-block" ng-show="!outerForm.hits.$pristine && outerForm.hits.$error.lowerThan">El campo contenido debe ser menor que 40</span>
+
+
             </div>
         </div>
-
+        
+        <div miDirectiva></div>
+        
+        <saludo a="juan">
 
         <div class="form-group">
             <label class="col-sm-2 control-label" for="obj_usuario">Usuario:</label>
