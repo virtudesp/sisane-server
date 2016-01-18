@@ -74,7 +74,23 @@ THE SOFTWARE.
 
 
 
-
+        <div class="form-group">
+            <label class="col-sm-2 control-label" for="obj_estado">Estado del usuario:</label>
+            <div class="control col-sm-3">
+                <div class="input-group foreign" id="obj_estado_group">
+                    <span class="input-group-addon" id="obj_estado_button">
+                        <span class="glyphicon glyphicon-search" ng-click="chooseOne('estado')">
+                        </span>
+                    </span>
+                    <input ng-model="obj.obj_estado.id" readonly="true" aria-describedby="basic-addon2" class="form-control" id="obj_estado" name="obj_estado" type="text" size="5" maxlength="5">
+                    <span class="input-group-addon">
+                        <a href="#/estado/view/{{obj.obj_estado.id}}">
+                            <span>{{obj.obj_estado.descripcion}}</span>     
+                        </a>       
+                    </span>
+                </div>
+            </div>            
+        </div>
 
 
         <div class="control-group text-right">

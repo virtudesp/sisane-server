@@ -39,13 +39,14 @@ var openAusias = angular.module('myApp', [
     'usuarioControllers',
     'tipodocumentoControllers',
     'tipousuarioControllers',
+    'estadoControllers',
     'ui.bootstrap',
-    'ngSanitize' //http://stackoverflow.com/questions/9381926/insert-html-into-view-using-angularjs
+    'ngSanitize'
 ]);
 
 openAusias.config(['$routeProvider', function ($routeProvider) {
 
-        $routeProvider.when('/', {templateUrl: '/home'});
+        $routeProvider.when('/', {templateUrl: 'js/system/home.html', controller: 'HomeController'});
         //------------
         $routeProvider.when('/home', {templateUrl: 'js/system/home.html', controller: 'HomeController'});
         //------------
@@ -54,25 +55,22 @@ openAusias.config(['$routeProvider', function ($routeProvider) {
         $routeProvider.when('/documento/edit/:id', {templateUrl: 'js/documento/newedit.html', controller: 'DocumentoEditController'});
         $routeProvider.when('/documento/remove/:id', {templateUrl: 'js/documento/remove.html', controller: 'DocumentoRemoveController'});
         $routeProvider.when('/documento/plist/:page?/:rpp?', {templateUrl: 'js/documento/plist.html', controller: 'DocumentoPListController'});
-
         //------------
         $routeProvider.when('/usuario/view/:id', {templateUrl: 'js/usuario/view.html', controller: 'UsuarioViewController'});
-        $routeProvider.when('/usuario/new/:id', {templateUrl: 'js/usuario/new.html', controller: 'UsuarioNewController'});
-        $routeProvider.when('/usuario/edit/:id', {templateUrl: 'js/usuario/edit.html', controller: 'UsuarioEditController'});
+        $routeProvider.when('/usuario/new/:id?', {templateUrl: 'js/usuario/newedit.html', controller: 'UsuarioNewController'});
+        $routeProvider.when('/usuario/edit/:id', {templateUrl: 'js/usuario/newedit.html', controller: 'UsuarioEditController'});
         $routeProvider.when('/usuario/remove/:id', {templateUrl: 'js/usuario/remove.html', controller: 'UsuarioRemoveController'});
         $routeProvider.when('/usuario/plist/:page?/:rpp?', {templateUrl: 'js/usuario/plist.html', controller: 'UsuarioPListController'});
         //------------
         $routeProvider.when('/tipodocumento/view/:id', {templateUrl: 'js/tipodocumento/view.html', controller: 'TipodocumentoViewController'});
         $routeProvider.when('/tipodocumento/selection/:page/:rpp', {templateUrl: 'js/tipodocumento/selection.html', controller: 'TipodocumentoSelectionController'});
-
-
-
+        //------------
         $routeProvider.when('/tipousuario/selection/:page/:rpp', {templateUrl: 'js/tipousuario/selection.html', controller: 'TipousuarioSelectionController'});
+        //------------
+        $routeProvider.when('/estado/selection/:page/:rpp', {templateUrl: 'js/estado/selection.html', controller: 'EstadoSelectionController'});        
         //------------
         $routeProvider.otherwise({redirectTo: '/'});
 
-        //claves ajenas: usar un módulo compartido para apuntarse la url de llamada: http://stackoverflow.com/questions/12008908/how-can-i-pass-variables-between-controllers-in-angularjs
-        //ejemplo claves ajenas con objeto promesa: http://stackoverflow.com/questions/14530251/angular-js-model-relationships
 
     }]);
 
@@ -81,4 +79,5 @@ var moduloUsuario = angular.module('usuarioControllers', []);
 var moduloDocumento = angular.module('documentoControllers', []);
 var moduloTipodocumento = angular.module('tipodocumentoControllers', []);
 var moduloTipousuario = angular.module('tipousuarioControllers', []);
+var moduloEstado = angular.module('estadoControllers', []);
 
