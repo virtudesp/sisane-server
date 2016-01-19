@@ -184,11 +184,11 @@ public class UsuarioBean implements GenericBean{
     public String getValues() {
         String strColumns = "";
         strColumns += id + ",";
-        strColumns += login + ",";
-        strColumns += password + ",";
-        strColumns += ciudad + ",";
-        strColumns += firma + ",";
-        strColumns += skin + ",";
+        strColumns += EncodingUtilHelper.quotate(login) + ",";
+        strColumns += EncodingUtilHelper.quotate(password) + ",";
+        strColumns += EncodingUtilHelper.quotate(ciudad) + ",";
+        strColumns += EncodingUtilHelper.quotate(firma) + ",";
+        strColumns += EncodingUtilHelper.quotate(skin) + ",";
         strColumns += id_estado + ",";
         strColumns += id_tipousuario;
 

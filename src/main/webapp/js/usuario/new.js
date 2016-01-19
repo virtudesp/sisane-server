@@ -27,27 +27,27 @@
  */
 
 'use strict';
-moduloDocumento.controller('DocumentoNewController', ['$scope', '$routeParams', '$location', 'serverService', 'sharedSpaceService', '$filter',
+moduloUsuario.controller('UsuarioNewController', ['$scope', '$routeParams', '$location', 'serverService', 'sharedSpaceService', '$filter',
     function ($scope, $routeParams, $location, serverService, sharedSpaceService, $filter) {
-   
-        $scope.ob = 'documento';
-        $scope.op = 'new';
-                
-        $scope.title = "Edición de documento";
-        $scope.icon = "fa-file-text-o";
+  
         
+        $scope.ob = 'usuario';
+        $scope.op = 'new';
         $scope.result = null;
         
+        $scope.title = "Edición de usuario";
+        $scope.icon = "fa-file-text-o";
+        
         $scope.obj = {};
-        $scope.obj.obj_tipodocumento = {"id": 0};
-        $scope.obj.obj_usuario = {"id": 0};
+        $scope.obj.obj_tipousuario = {"id": 0};
+        $scope.obj.obj_estado = {"id": 0};
         
         if (sharedSpaceService.getFase() == 0) {
-            if ($routeParams.tipodocumento && $routeParams.tipodocumento > 0) {
-                $scope.obj.obj_tipodocumento.id = $routeParams.tipodocumento;
+            if ($routeParams.tipousuario && $routeParams.tipousuario > 0) {
+                $scope.obj.obj_tipousuario.id = $routeParams.tipousuario;
             }
-            if ($routeParams.usuario && $routeParams.usuario > 0) {
-                $scope.obj.obj_usuario.id = $routeParams.usuario;
+            if ($routeParams.estado && $routeParams.estado > 0) {
+                $scope.obj.obj_estado.id = $routeParams.estado;
             }
         } else {
             $scope.obj = sharedSpaceService.getObject();
@@ -61,32 +61,25 @@ moduloDocumento.controller('DocumentoNewController', ['$scope', '$routeParams', 
             $location.path('/' + foreignObjectName + '/selection/1/10');
         }
         
-        $scope.save = function () {
-            var dateAltaAsString = $filter('date')($scope.obj.alta, "dd/MM/yyyy");
-            var dateCambioAsString = $filter('date')($scope.obj.cambio, "dd/MM/yyyy");
-            $scope.obj.alta = dateAltaAsString;
-            $scope.obj.cambio = dateCambioAsString;
-            //console.log({json: JSON.stringify(serverService.array_identificarArray($scope.obj))});            
+        $scope.save = function () {    
             serverService.getDataFromPromise(serverService.promise_setOne($scope.ob, {json: JSON.stringify(serverService.array_identificarArray($scope.obj))})).then(function (data) {
                 $scope.result = data;
             });
         };
-        
-        $scope.$watch('obj.obj_tipodocumento.id', function () {
+        $scope.$watch('obj.obj_tipousuario.id', function () {
             if ($scope.obj) {
-                serverService.getDataFromPromise(serverService.promise_getOne('tipodocumento', $scope.obj.obj_tipodocumento.id)).then(function (data2) {
-                    $scope.obj.obj_tipodocumento = data2.message;
+                serverService.getDataFromPromise(serverService.promise_getOne('tipousuario', $scope.obj.obj_tipousuario.id)).then(function (data2) {
+                    $scope.obj.obj_tipousuario = data2.message;
                 });
             }
         });
-        $scope.$watch('obj.obj_usuario.id', function () {
+        $scope.$watch('obj.obj_estado.id', function () {
             if ($scope.obj) {
-                serverService.getDataFromPromise(serverService.promise_getOne('usuario', $scope.obj.obj_usuario.id)).then(function (data2) {
+                serverService.getDataFromPromise(serverService.promise_getOne('estado', $scope.obj.obj_estado.id)).then(function (data2) {
                     $scope.obj.obj_usuario = data2.message;
                 });
             }
         });
-        
         $scope.back = function () {
             window.history.back();
         };
@@ -94,28 +87,10 @@ moduloDocumento.controller('DocumentoNewController', ['$scope', '$routeParams', 
             $location.path('/home');
         };
         $scope.plist = function () {
-            $location.path('/documento/plist');
+            $location.path('/usuario/plist');
         };
 
 
-        //datepicker
-        $scope.open1 = function () {
-            $scope.popup1.opened = true;
-        };
-        $scope.popup1 = {
-            opened: false
-        };
-        $scope.disabled = function (date, mode) {
-            return mode === 'day' && (date.getDay() === 0 || date.getDay() === 6);
-        };
-        $scope.dateOptions = {
-            formatYear: 'yyyy',
-            startingDay: 1
-        };
-        $scope.open2 = function () {
-            $scope.popup2.opened = true;
-        };
-        $scope.popup2 = {
-            opened: false
-        };
+       
     }]);
+
