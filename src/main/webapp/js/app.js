@@ -49,6 +49,7 @@ openAusias.config(['$routeProvider', function ($routeProvider) {
         $routeProvider.when('/', {templateUrl: 'js/system/home.html', controller: 'HomeController'});
         //------------
         $routeProvider.when('/home', {templateUrl: 'js/system/home.html', controller: 'HomeController'});
+        $routeProvider.when('/license', {templateUrl: 'js/system/license.html', controller: 'LicenseController'});
         //------------
         $routeProvider.when('/documento/view/:id', {templateUrl: 'js/documento/view.html', controller: 'DocumentoViewController'});
         $routeProvider.when('/documento/new', {templateUrl: 'js/documento/newedit.html', controller: 'DocumentoNewController'});
