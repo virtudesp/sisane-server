@@ -208,14 +208,14 @@ public class DocumentoBean implements GenericBean {
     public String getValues() {
         String strColumns = "";
         strColumns += id + ",";
-        strColumns += titulo + ",";
-        strColumns += contenido + ",";
-        strColumns += alta + ",";
-        strColumns += cambio + ",";
+        strColumns += EncodingUtilHelper.quotate(titulo) + ",";
+        strColumns += EncodingUtilHelper.quotate(contenido) + ",";
+        strColumns += EncodingUtilHelper.stringifyAndQuotate(alta) + ",";
+        strColumns += EncodingUtilHelper.stringifyAndQuotate(cambio) + ",";
         strColumns += hits + ",";
         strColumns += id_usuario + ",";
         strColumns += id_tipodocumento + ",";
-        strColumns += etiquetas + ",";
+        strColumns += EncodingUtilHelper.quotate(etiquetas) + ",";
         strColumns += publicado + ",";
         strColumns += portada + ",";
         strColumns += destacado;

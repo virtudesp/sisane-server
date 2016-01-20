@@ -61,7 +61,7 @@ THE SOFTWARE.
 
 
         <div id="contenido-group" class="form-group" 
-             ng-class="{'has-error': outerForm.contenido.$error.required && !outerForm.contenido.$pristine}">
+             ng-class="{'has-error': (outerForm.contenido.$error.required  || outerForm.contenido.$error.minlength) && !outerForm.contenido.$pristine}">
             <label class ="col-sm-2 control-label" for="contenido">Contenido:</label>
             <div class="control col-sm-9">
                 <!-- <input ng-model="obj.contenido" type="text" id="contenido"
@@ -71,7 +71,9 @@ THE SOFTWARE.
                 <input ng-model="obj.contenido" 
                        type="text" 
                        id="contenido"
-                       class="form-control" name="contenido" size="15"
+                       class="form-control" 
+                       name="contenido" 
+                       size="15"
                        placeholder="contenido"
                        minlength="10"
                        maxlength="20"
@@ -140,8 +142,8 @@ THE SOFTWARE.
 
             </div>
         </div>
-        
-   
+
+
         <!--
         <saludo a="persona">
         -->
@@ -227,13 +229,27 @@ THE SOFTWARE.
     </form>
     <div ng-show="result != null">
         <div class="alert alert-success" ng-show="result.status == 200">
-            <h2>Se ha modificado el registro</h2>
-            <a ng-href="#/documento/view/{{id}}">Ver el registro modificado</a>
+            <div ng-show="op == 'edit'">
+                <h2>Se ha modificado el registro</h2>
+                <a ng-href="#/documento/view/{{id}}">Ver el registro modificado</a>
+            </div>
+            <div ng-show="op == 'new'">
+                <h2>Se ha creado el registro</h2>
+                <a ng-href="#/documento/view/{{result.message}}">Ver el registro creado</a>
+            </div>                        
         </div>
         <div class="alert alert-danger" ng-show="result.status != 200">
-            <h2>Error al modificar el documento: no se ha modificado el documento</h2>
-            <h3>Código: {{result.status}}</h3>
-            <h3>Mensaje: {{result.message}}</h3>
+            <div ng-show="op == 'edit'">
+                <h2>Error al modificar el documento: no se ha modificado el documento</h2>
+                <h3>Código: {{result.status}}</h3>
+                <h3>Mensaje: {{result.message}}</h3>                
+            </div>
+            <div ng-show="op == 'new'">
+                <h2>Error al crear el documento: no se ha creado el documento</h2>
+                <h3>Código: {{result.status}}</h3>
+                <h3>Mensaje: {{result.message}}</h3>                
+            </div>
+            
         </div>
     </div>
 </div>

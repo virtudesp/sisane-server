@@ -33,7 +33,7 @@ moduloDocumento.controller('DocumentoNewController', ['$scope', '$routeParams', 
         $scope.ob = 'documento';
         $scope.op = 'new';
                 
-        $scope.title = "Edición de documento";
+        $scope.title = "Creación de un nuevo documento";
         $scope.icon = "fa-file-text-o";
         
         $scope.result = null;
