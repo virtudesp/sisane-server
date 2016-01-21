@@ -264,7 +264,7 @@ THE SOFTWARE.
                     <td ng-show="visibles.alta">{{obj.alta}}</td>
                     <td ng-show="visibles.cambio">{{obj.cambio}}</td>
                     <td ng-show="visibles.hits" class="text-right">{{obj.hits}}</td>
-                    <td ng-show="visibles.id_usuario"><a href="#/usuario/view/{{obj.obj_usuario.id}}">{{obj.obj_usuario.login}}</a></td>
+                    <td ng-show="visibles.id_usuario"><linkusuario source="obj.obj_usuario"></linkusuario></td>
                     <td ng-show="visibles.id_tipodocumento"><a href="#/tipodocumento/view/{{obj.obj_tipodocumento.id}}">{{obj.obj_tipodocumento.descripcion}}</a></td>
                     <td ng-show="visibles.etiquetas">{{obj.etiquetas}}</td>
                     <td ng-show="visibles.publicado" class="text-center" ng-bind-html="obj.publicado | booleanizate"></td>
