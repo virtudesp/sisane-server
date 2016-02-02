@@ -100,6 +100,9 @@ THE SOFTWARE.
                                 <p></p>
                                 <p>Campos visibles:</p>
                                 <input type="checkbox" ng-model="visibles.id" ng-checked="visibles.id">Ident.
+                                <input type="checkbox" ng-model="visibles.nombre" ng-checked="visibles.nombre" >Nombre
+                                <input type="checkbox" ng-model="visibles.apellidos" ng-checked="visibles.apellidos" >Apellidos
+                                <input type="checkbox" ng-model="visibles.email" ng-checked="visibles.email" >Email
                                 <input type="checkbox" ng-model="visibles.login" ng-checked="visibles.login" >Login
                                 <input type="checkbox" ng-model="visibles.password" ng-checked="visibles.password">Password
                                 <input type="checkbox" ng-model="visibles.id_tipousuario" ng-checked="visibles.id_tipousuario">Tipo de usuario
@@ -183,6 +186,21 @@ THE SOFTWARE.
                         <a ng-show="visibles.id" href="#/{{ob}}/plist/{{numpage}}/{{rpp}}?order=id&ordervalue=asc{{paramsWithoutOrder}}"><i class="glyphicon glyphicon-arrow-up"></i></a>
                         <a ng-show="visibles.id" href="#/{{ob}}/plist/{{numpage}}/{{rpp}}?order=id&ordervalue=desc{{paramsWithoutOrder}}"><i class="glyphicon glyphicon-arrow-down"></i></a>
                     </th>
+                    <th ng-show="visibles.nombre" class="text-center">
+                        Nombre<br/>
+                        <a ng-show="visibles.nombre" href="#/{{ob}}/plist/{{numpage}}/{{rpp}}?order=nombre&ordervalue=asc{{paramsWithoutOrder}}"><i class="glyphicon glyphicon-arrow-up"></i></a>
+                        <a ng-show="visibles.nombre" href="#/{{ob}}/plist/{{numpage}}/{{rpp}}?order=nombre&ordervalue=desc{{paramsWithoutOrder}}"><i class="glyphicon glyphicon-arrow-down"></i></a>
+                    </th>
+                    <th ng-show="visibles.apellidos" class="text-center">
+                        Apellidos<br/>
+                        <a ng-show="visibles.apellidos" href="#/{{ob}}/plist/{{numpage}}/{{rpp}}?order=apellidos&ordervalue=asc{{paramsWithoutOrder}}"><i class="glyphicon glyphicon-arrow-up"></i></a>
+                        <a ng-show="visibles.apellidos" href="#/{{ob}}/plist/{{numpage}}/{{rpp}}?order=apellidos&ordervalue=desc{{paramsWithoutOrder}}"><i class="glyphicon glyphicon-arrow-down"></i></a>
+                    </th>
+                    <th ng-show="visibles.email" class="text-center">
+                        Email<br/>
+                        <a ng-show="visibles.email" href="#/{{ob}}/plist/{{numpage}}/{{rpp}}?order=email&ordervalue=asc{{paramsWithoutOrder}}"><i class="glyphicon glyphicon-arrow-up"></i></a>
+                        <a ng-show="visibles.email" href="#/{{ob}}/plist/{{numpage}}/{{rpp}}?order=email&ordervalue=desc{{paramsWithoutOrder}}"><i class="glyphicon glyphicon-arrow-down"></i></a>
+                    </th>
                     <th ng-show="visibles.login" class="text-center">
                         Login<br/>
                         <a ng-show="visibles.login" href="#/{{ob}}/plist/{{numpage}}/{{rpp}}?order=login&ordervalue=asc{{paramsWithoutOrder}}"><i class="glyphicon glyphicon-arrow-up"></i></a>
@@ -227,6 +245,9 @@ THE SOFTWARE.
             <tbody>
                 <tr ng-repeat="obj in page| filter:searchText">
                     <td ng-show="visibles.id" class="text-right">{{obj.id}}</td>
+                    <td ng-show="visibles.nombre">{{obj.nombre}}</td>
+                    <td ng-show="visibles.apellidos">{{obj.apellidos}}</td>
+                    <td ng-show="visibles.email">{{obj.email}}</td>
                     <td ng-show="visibles.login">{{obj.login}}</td>
                     <td ng-show="visibles.password">{{obj.password}}</td>                                                       
                     <td ng-show="visibles.id_estado"><a href="#/estado/view/{{obj.obj_estado.id}}">{{obj.obj_estado.tipo}}</a></td>

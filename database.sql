@@ -2,28 +2,22 @@
 -- version 4.4.13.1
 -- http://www.phpmyadmin.net
 --
--- Servidor: localhost:3306
--- Tiempo de generación: 14-01-2016 a las 03:02:23
--- Versión del servidor: 5.6.26
--- Versión de PHP: 5.5.29
+-- Host: localhost:3306
+-- Generation Time: Feb 01, 2016 at 12:20 PM
+-- Server version: 5.6.27
+-- PHP Version: 5.5.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
 
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
-
 --
--- Base de datos: `ausiasyield2015`
+-- Database: `openausiasted`
 --
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `documento`
+-- Table structure for table `documento`
 --
 
 CREATE TABLE IF NOT EXISTS `documento` (
@@ -42,7 +36,7 @@ CREATE TABLE IF NOT EXISTS `documento` (
 ) ENGINE=InnoDB AUTO_INCREMENT=111 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Volcado de datos para la tabla `documento`
+-- Dumping data for table `documento`
 --
 
 INSERT INTO `documento` (`id`, `titulo`, `contenido`, `alta`, `cambio`, `hits`, `id_usuario`, `etiquetas`, `publicado`, `portada`, `destacado`, `id_tipodocumento`) VALUES
@@ -140,7 +134,7 @@ INSERT INTO `documento` (`id`, `titulo`, `contenido`, `alta`, `cambio`, `hits`, 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `estado`
+-- Table structure for table `estado`
 --
 
 CREATE TABLE IF NOT EXISTS `estado` (
@@ -149,7 +143,7 @@ CREATE TABLE IF NOT EXISTS `estado` (
 ) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Volcado de datos para la tabla `estado`
+-- Dumping data for table `estado`
 --
 
 INSERT INTO `estado` (`id`, `tipo`) VALUES
@@ -177,7 +171,7 @@ INSERT INTO `estado` (`id`, `tipo`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `tipodocumento`
+-- Table structure for table `tipodocumento`
 --
 
 CREATE TABLE IF NOT EXISTS `tipodocumento` (
@@ -187,7 +181,7 @@ CREATE TABLE IF NOT EXISTS `tipodocumento` (
 ) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Volcado de datos para la tabla `tipodocumento`
+-- Dumping data for table `tipodocumento`
 --
 
 INSERT INTO `tipodocumento` (`id`, `descripcion`, `privado`) VALUES
@@ -206,7 +200,7 @@ INSERT INTO `tipodocumento` (`id`, `descripcion`, `privado`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `tipousuario`
+-- Table structure for table `tipousuario`
 --
 
 CREATE TABLE IF NOT EXISTS `tipousuario` (
@@ -215,7 +209,7 @@ CREATE TABLE IF NOT EXISTS `tipousuario` (
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Volcado de datos para la tabla `tipousuario`
+-- Dumping data for table `tipousuario`
 --
 
 INSERT INTO `tipousuario` (`id`, `descripcion`) VALUES
@@ -226,11 +220,14 @@ INSERT INTO `tipousuario` (`id`, `descripcion`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `usuario`
+-- Table structure for table `usuario`
 --
 
 CREATE TABLE IF NOT EXISTS `usuario` (
   `id` int(6) NOT NULL COMMENT 'Identificador',
+  `nombre` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Nombre',
+  `apellidos` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Apellidos',
+  `email` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Correo electrónico',
   `login` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Nombre de usuario',
   `password` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Contraseña',
   `id_tipousuario` int(11) DEFAULT NULL COMMENT 'Tipo de usuario',
@@ -241,104 +238,101 @@ CREATE TABLE IF NOT EXISTS `usuario` (
 ) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Volcado de datos para la tabla `usuario`
+-- Dumping data for table `usuario`
 --
 
-INSERT INTO `usuario` (`id`, `login`, `password`, `id_tipousuario`, `id_estado`, `ciudad`, `firma`, `skin`) VALUES
-(1, 'pepe', 'pepe', 2, 1, 'Valencia', 'is my life and do what I want', 'main'),
-(2, 'juan', 'juan', 3, 3, 'Madrid', 'http://criticalandia.com críticas de entretenimiento, listas, opiniones...', 'main'),
-(3, 'maria', 'maria', 3, 6, 'Barcelona', 'If you love something, set it free. Unless it''''s a tiger.', 'main'),
-(4, 'antonia', 'antonia', 3, 7, 'Sevilla', '"El único límite a nuestros logros de mañana está en nuestras dudas de hoy."', 'main'),
-(5, 'edu', 'edu', 3, 13, 'Zaragoza', 'Plataforma: ORGULLLO CADISTA no.58', 'main'),
-(6, 'jose', 'jose', 3, 19, 'Teruel', 'Ironía: Figura literaria mediante la cual se da a entender lo contrario de lo que se dice.', 'main'),
-(7, 'silvia', 'silvia', 3, 6, 'Huesca', 'Paso de firmas', 'main'),
-(8, 'pedro', 'pedro', 3, 8, 'Alicante', 'Camisetas y calzado www.pedidoshicks.com', 'main'),
-(9, 'raquel', 'raquel', 3, 15, 'Castellón', 'PEÑA COLCHONERA Socio número 629', 'main'),
-(10, 'daniel', 'daniel', 3, 12, 'Almería', '"Obsesionado es tan sólo la palabra que usan los perezosos para describir a los dedicados"', 'main'),
-(11, 'rafael', 'rafael', 1, 17, 'A Coruña', 'Ista ye a mia tierra, a mia fabla', 'main'),
-(12, 'juan', 'juan', 3, 14, 'Barcelona', 'No todos los catalanes somos independentistas', 'main'),
-(13, 'elena', 'elena', 3, 19, 'Bilbao', 'Buenas tardes', 'main'),
-(14, 'luis', 'luis', 3, 4, 'Lugo', 'Preparado para cualquier combate', 'main'),
-(15, 'alba', 'alba', 3, 5, 'Cuenca', 'Si tienes un Ibiza o un Cordoba, este es tu club: www.clubseatcordoba.com', 'main'),
-(16, 'amparo', 'amparo', 3, 7, 'Ciudad Real', 'No hay dos sin tres', 'main'),
-(17, 'ambrosio', 'ambrosio', 3, 8, 'Guadalajara', 'Tesis+Antítesis=Síntesis. Problema+Acción = Solución.', 'main'),
-(18, 'luisa', 'luisa', 3, 1, 'Huelva', 'Y yo me iré. y se quedará mi huerto con su verde árbol, y con su pozo blanco. Y yo me iré.. Y se quedarán los pájaros cantando', 'main'),
-(19, 'leon', 'leon', 3, 3, 'Granada', 'La Infanta no sabía nada y punto.', 'main'),
-(20, 'rosa', 'rosa', 3, 2, 'Cádiz', 'Viva España', 'main'),
-(21, 'capcom', 'capcom', 3, 17, 'Jerez', 'La gente cree que soy una mala persona, pero no es cierto, yo tengo el corazón de un niño...en un frasco con formol encima de mi escritorio.', 'main'),
-(22, 'teleco', 'teleco', 3, 18, 'Vallecas', 'Foreros de la Comunidad de Madrid Nº25', 'main'),
-(23, 'mercadona', 'mercadona', 3, 13, 'Jaén', 'Y veréis el resurgir poderoso del guerrero, sin miedo a leyes ni a nostalgias.', 'main'),
-(24, 'vistaprint', 'vistaprint', 3, 15, 'Valencia', 'Codeados.com Diseño y Desarrollo web, Imagen Corporativa, SEO, Marketing Digital', 'main'),
-(25, 'google', 'google', 3, 16, 'California', 'Viva google +', 'main'),
-(26, 'konami', 'konami', 3, 6, 'Tokio', 'Viva Castolo, Minanda y Ximelez', 'main'),
-(27, 'orange', 'orange', 3, 7, 'París', 'Viva movistar', 'main'),
-(28, 'samsung', 'samsung', 3, 8, 'Cuenca', 'Viva el iPhone 6', 'main'),
-(29, 'gigabyte', 'gigabyte', 3, 10, 'Oviedo', 'Viva gigabyte', 'main'),
-(30, 'microsoft', 'microsoft', 3, 10, 'Albacete', 'La xbox ONE es la MEJOR CONSOLA', 'main');
+INSERT INTO `usuario` (`id`, `nombre`, `apellidos`, `email`, `login`, `password`, `id_tipousuario`, `id_estado`, `ciudad`, `firma`, `skin`) VALUES
+(1, 'José', 'García Sanchez', NULL, 'pepe', 'pepe', 2, 1, 'Valencia', 'is my life and do what I want', 'main'),
+(2, 'Juan', 'MArtínez Gómez', NULL, 'juan', 'juan', 3, 3, 'Madrid', 'http://criticalandia.com críticas de entretenimiento, listas, opiniones...', 'main'),
+(3, 'Maria', 'Moreno Flores', NULL, 'maria', 'maria', 3, 6, 'Barcelona', 'If you love something, set it free. Unless it''''s a tiger.', 'main'),
+(4, 'Antonia', 'Rodolfo Gómez', NULL, 'antonia', 'antonia', 3, 7, 'Sevilla', '"El único límite a nuestros logros de mañana está en nuestras dudas de hoy."', 'main'),
+(5, 'Eduardo', 'Alonso López', NULL, 'edu', 'edu', 3, 13, 'Zaragoza', 'Plataforma: ORGULLLO CADISTA no.58', 'main'),
+(6, 'José', 'Escriche Muñoz', NULL, 'jose', 'jose', 3, 19, 'Teruel', 'Ironía: Figura literaria mediante la cual se da a entender lo contrario de lo que se dice.', 'main'),
+(7, NULL, NULL, NULL, 'silvia', 'silvia', 3, 6, 'Huesca', 'Paso de firmas', 'main'),
+(8, NULL, NULL, NULL, 'pedro', 'pedro', 3, 8, 'Alicante', 'Camisetas y calzado www.pedidoshicks.com', 'main'),
+(9, NULL, NULL, NULL, 'raquel', 'raquel', 3, 15, 'Castellón', 'PEÑA COLCHONERA Socio número 629', 'main'),
+(10, NULL, NULL, NULL, 'daniel', 'daniel', 3, 12, 'Almería', '"Obsesionado es tan sólo la palabra que usan los perezosos para describir a los dedicados"', 'main'),
+(11, NULL, NULL, NULL, 'rafael', 'rafael', 1, 17, 'A Coruña', 'Ista ye a mia tierra, a mia fabla', 'main'),
+(12, NULL, NULL, NULL, 'juan', 'juan', 3, 14, 'Barcelona', 'No todos los catalanes somos independentistas', 'main'),
+(13, NULL, NULL, NULL, 'elena', 'elena', 3, 19, 'Bilbao', 'Buenas tardes', 'main'),
+(14, NULL, NULL, NULL, 'luis', 'luis', 3, 4, 'Lugo', 'Preparado para cualquier combate', 'main'),
+(15, NULL, NULL, NULL, 'alba', 'alba', 3, 5, 'Cuenca', 'Si tienes un Ibiza o un Cordoba, este es tu club: www.clubseatcordoba.com', 'main'),
+(16, NULL, NULL, NULL, 'amparo', 'amparo', 3, 7, 'Ciudad Real', 'No hay dos sin tres', 'main'),
+(17, NULL, NULL, NULL, 'ambrosio', 'ambrosio', 3, 8, 'Guadalajara', 'Tesis+Antítesis=Síntesis. Problema+Acción = Solución.', 'main'),
+(18, NULL, NULL, NULL, 'luisa', 'luisa', 3, 1, 'Huelva', 'Y yo me iré. y se quedará mi huerto con su verde árbol, y con su pozo blanco. Y yo me iré.. Y se quedarán los pájaros cantando', 'main'),
+(19, NULL, NULL, NULL, 'leon', 'leon', 3, 3, 'Granada', 'La Infanta no sabía nada y punto.', 'main'),
+(20, NULL, NULL, NULL, 'rosa', 'rosa', 3, 2, 'Cádiz', 'Viva España', 'main'),
+(21, NULL, NULL, NULL, 'capcom', 'capcom', 3, 17, 'Jerez', 'La gente cree que soy una mala persona, pero no es cierto, yo tengo el corazón de un niño...en un frasco con formol encima de mi escritorio.', 'main'),
+(22, NULL, NULL, NULL, 'teleco', 'teleco', 3, 18, 'Vallecas', 'Foreros de la Comunidad de Madrid Nº25', 'main'),
+(23, NULL, NULL, NULL, 'mercadona', 'mercadona', 3, 13, 'Jaén', 'Y veréis el resurgir poderoso del guerrero, sin miedo a leyes ni a nostalgias.', 'main'),
+(24, NULL, NULL, NULL, 'vistaprint', 'vistaprint', 3, 15, 'Valencia', 'Codeados.com Diseño y Desarrollo web, Imagen Corporativa, SEO, Marketing Digital', 'main'),
+(25, NULL, NULL, NULL, 'google', 'google', 3, 16, 'California', 'Viva google +', 'main'),
+(26, NULL, NULL, NULL, 'konami', 'konami', 3, 6, 'Tokio', 'Viva Castolo, Minanda y Ximelez', 'main'),
+(27, NULL, NULL, NULL, 'orange', 'orange', 3, 7, 'París', 'Viva movistar', 'main'),
+(28, NULL, NULL, NULL, 'samsung', 'samsung', 3, 8, 'Cuenca', 'Viva el iPhone 6', 'main'),
+(29, NULL, NULL, NULL, 'gigabyte', 'gigabyte', 3, 10, 'Oviedo', 'Viva gigabyte', 'main'),
+(30, NULL, NULL, NULL, 'microsoft', 'microsoft', 3, 10, 'Albacete', 'La xbox ONE es la MEJOR CONSOLA', 'main');
 
 --
--- Índices para tablas volcadas
+-- Indexes for dumped tables
 --
 
 --
--- Indices de la tabla `documento`
+-- Indexes for table `documento`
 --
 ALTER TABLE `documento`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indices de la tabla `estado`
+-- Indexes for table `estado`
 --
 ALTER TABLE `estado`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indices de la tabla `tipodocumento`
+-- Indexes for table `tipodocumento`
 --
 ALTER TABLE `tipodocumento`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indices de la tabla `tipousuario`
+-- Indexes for table `tipousuario`
 --
 ALTER TABLE `tipousuario`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indices de la tabla `usuario`
+-- Indexes for table `usuario`
 --
 ALTER TABLE `usuario`
   ADD PRIMARY KEY (`id`);
 
 --
--- AUTO_INCREMENT de las tablas volcadas
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT de la tabla `documento`
+-- AUTO_INCREMENT for table `documento`
 --
 ALTER TABLE `documento`
   MODIFY `id` int(6) NOT NULL AUTO_INCREMENT COMMENT 'Num.',AUTO_INCREMENT=111;
 --
--- AUTO_INCREMENT de la tabla `estado`
+-- AUTO_INCREMENT for table `estado`
 --
 ALTER TABLE `estado`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Identificador',AUTO_INCREMENT=21;
 --
--- AUTO_INCREMENT de la tabla `tipodocumento`
+-- AUTO_INCREMENT for table `tipodocumento`
 --
 ALTER TABLE `tipodocumento`
   MODIFY `id` int(6) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=12;
 --
--- AUTO_INCREMENT de la tabla `tipousuario`
+-- AUTO_INCREMENT for table `tipousuario`
 --
 ALTER TABLE `tipousuario`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Identificador',AUTO_INCREMENT=4;
 --
--- AUTO_INCREMENT de la tabla `usuario`
+-- AUTO_INCREMENT for table `usuario`
 --
 ALTER TABLE `usuario`
   MODIFY `id` int(6) NOT NULL AUTO_INCREMENT COMMENT 'Identificador',AUTO_INCREMENT=31;
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

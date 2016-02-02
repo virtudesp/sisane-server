@@ -40,20 +40,16 @@ public class ConnectionClassHelper {
 
     public static String getDatabaseName() {
         if (ConnectionClassHelper.getOpenShift()) {
-            return System.getenv("OPENSHIFT_APP_NAME");
-
+            return System.getenv("OPENSHIFT_GEAR_NAME");
         } else {
-            return "ausiasyield2015";
-            //return "openausiasblog";
-            //return "openausias2015";
-            //return "ausiasyield2014";
+            return "openausiasted";
         }
     }
 
     public static String getDatabaseLogin() {
         if (ConnectionClassHelper.getOpenShift()) {
-            //return System.getenv("OPENSHIFT_MYSQL_DB_USERNAME");
-            return "el username esta en la web de openshift";
+            return System.getenv("OPENSHIFT_MYSQL_DB_USERNAME");
+            //"el username esta en la web de openshift";
         } else {
             return "root";
         }
@@ -61,8 +57,8 @@ public class ConnectionClassHelper {
 
     public static String getDatabasePassword() {
         if (ConnectionClassHelper.getOpenShift()) {
-            //return System.getenv("OPENSHIFT_MYSQL_DB_PASSWORD");
-            return "la contraseña esta en la web de openshift";
+            return System.getenv("OPENSHIFT_MYSQL_DB_PASSWORD");
+            //"la contraseña esta en la web de openshift";
         } else {
             return "bitnami";
         }
@@ -70,9 +66,8 @@ public class ConnectionClassHelper {
 
     public static String getDatabasePort() {
         if (ConnectionClassHelper.getOpenShift()) {
-            //return System.getenv("OPENSHIFT_MYSQL_DB_PORT");
-            //return System.getenv("OPENSHIFT_DIY_PORT");
-            return "3306";
+            return System.getenv("OPENSHIFT_MYSQL_DB_PORT");
+            //se obtiene en el phpmyadmin
         } else {
             return "3306";
         }
@@ -80,24 +75,15 @@ public class ConnectionClassHelper {
 
     public static String getDatabaseHost() {
         if (ConnectionClassHelper.getOpenShift()) {
-            //return System.getenv("OPENSHIFT_MYSQL_DB_IP");
-            //return System.getenv("OPENSHIFT_DIY_IP");
-            return "la ip aparece en la ventana de entrada al phpMyadmin";
-
+            return System.getenv("OPENSHIFT_MYSQL_DB_HOST");
+            //"la ip aparece en la ventana de entrada al phpMyadmin";
         } else {
             return "127.0.0.1";
         }
     }
 
     public static String getConnectionChain() {
-        if (ConnectionClassHelper.getOpenShift()) {
-            //return "jdbc:" + System.getenv("OPENSHIFT_MYSQL_DB_URL") + ConnectionClassHelper.getDatabaseName();
-            return "jdbc:mysql://" + ConnectionClassHelper.getDatabaseHost() + ":" + ConnectionClassHelper.getDatabasePort() + "/" + ConnectionClassHelper.getDatabaseName();
-        } else {
-            return "jdbc:mysql://" + ConnectionClassHelper.getDatabaseHost() + ":" + ConnectionClassHelper.getDatabasePort() + "/" + ConnectionClassHelper.getDatabaseName();
-        }
+        return "jdbc:mysql://" + ConnectionClassHelper.getDatabaseHost() + ":" + ConnectionClassHelper.getDatabasePort() + "/" + ConnectionClassHelper.getDatabaseName();
     }
-    
-    
-    
+
 }

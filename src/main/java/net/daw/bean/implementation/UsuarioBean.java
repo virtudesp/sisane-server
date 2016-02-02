@@ -35,12 +35,18 @@ import net.daw.dao.implementation.EstadoDao;
 import net.daw.dao.implementation.TipousuarioDao;
 import net.daw.helper.statics.EncodingUtilHelper;
 
-public class UsuarioBean implements GenericBean{
+public class UsuarioBean implements GenericBean {
 
     @Expose
     private Integer id;
     @Expose
     private String login = "";
+    @Expose
+    private String nombre = "";
+    @Expose
+    private String apellidos = "";
+    @Expose
+    private String email = "";
     @Expose
     private String password = "";
     @Expose(serialize = false)
@@ -146,10 +152,37 @@ public class UsuarioBean implements GenericBean{
         this.skin = skin;
     }
 
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getApellidos() {
+        return apellidos;
+    }
+
+    public void setApellidos(String apellidos) {
+        this.apellidos = apellidos;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public String toJson(Boolean expand) {
         String strJson = "{";
         strJson += "id:" + id + ",";
         strJson += "login:" + EncodingUtilHelper.quotate(login) + ",";
+        strJson += "nombre:" + EncodingUtilHelper.quotate(nombre) + ",";
+        strJson += "apellidos:" + EncodingUtilHelper.quotate(apellidos) + ",";
+        strJson += "email:" + EncodingUtilHelper.quotate(email) + ",";
         strJson += "password:" + EncodingUtilHelper.quotate(password) + ",";
         strJson += "ciudad:" + EncodingUtilHelper.quotate(ciudad) + ",";
         strJson += "firma:" + EncodingUtilHelper.quotate(firma) + ",";
@@ -169,6 +202,9 @@ public class UsuarioBean implements GenericBean{
     public String getColumns() {
         String strColumns = "";
         strColumns += "id,";
+        strColumns += "nombre,";
+        strColumns += "apellidos,";
+        strColumns += "email,";
         strColumns += "login,";
         strColumns += "password,";
         strColumns += "ciudad,";
@@ -184,6 +220,9 @@ public class UsuarioBean implements GenericBean{
     public String getValues() {
         String strColumns = "";
         strColumns += id + ",";
+        strColumns += EncodingUtilHelper.quotate(nombre) + ",";
+        strColumns += EncodingUtilHelper.quotate(apellidos) + ",";
+        strColumns += EncodingUtilHelper.quotate(email) + ",";
         strColumns += EncodingUtilHelper.quotate(login) + ",";
         strColumns += EncodingUtilHelper.quotate(password) + ",";
         strColumns += EncodingUtilHelper.quotate(ciudad) + ",";
@@ -199,6 +238,9 @@ public class UsuarioBean implements GenericBean{
     public String toPairs() {
         String strPairs = "";
         strPairs += "id=" + id + ",";
+        strPairs += "login=" + EncodingUtilHelper.quotate(nombre) + ",";
+        strPairs += "login=" + EncodingUtilHelper.quotate(apellidos) + ",";
+        strPairs += "login=" + EncodingUtilHelper.quotate(email) + ",";
         strPairs += "login=" + EncodingUtilHelper.quotate(login) + ",";
         strPairs += "password=" + EncodingUtilHelper.quotate(password) + ",";
         strPairs += "ciudad=" + EncodingUtilHelper.quotate(ciudad) + ",";
@@ -213,6 +255,9 @@ public class UsuarioBean implements GenericBean{
     @Override
     public UsuarioBean fill(ResultSet oResultSet, Connection pooledConnection, Integer expand) throws SQLException, Exception {
         this.setId(oResultSet.getInt("id"));
+        this.setNombre(oResultSet.getString("nombre"));
+        this.setApellidos(oResultSet.getString("apellidos"));
+        this.setEmail(oResultSet.getString("email"));
         this.setLogin(oResultSet.getString("login"));
         this.setPassword(oResultSet.getString("password"));
         this.setCiudad(oResultSet.getString("ciudad"));

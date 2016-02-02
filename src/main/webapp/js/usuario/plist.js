@@ -34,6 +34,9 @@ moduloUsuario.controller('UsuarioPListController', ['$scope', '$routeParams', 's
         
         $scope.visibles={};
         $scope.visibles.id = true;
+        $scope.visibles.nombre = true;
+        $scope.visibles.apellidos = true;
+        $scope.visibles.email = true;
         $scope.visibles.login = true;
         $scope.visibles.password = true;
         $scope.visibles.id_estado = true;
