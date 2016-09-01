@@ -48,6 +48,8 @@ openAusias.config(['$routeProvider', function ($routeProvider) {
 
         $routeProvider.when('/', {templateUrl: 'js/system/home.html', controller: 'HomeController'});
         //------------
+        $routeProvider.when('/login', {templateUrl: 'js/system/login.html', controller: 'LoginController'});
+        $routeProvider.when('/logout', {templateUrl: 'js/system/logout.html', controller: 'LogoutController'});
         $routeProvider.when('/home', {templateUrl: 'js/system/home.html', controller: 'HomeController'});
         $routeProvider.when('/license', {templateUrl: 'js/system/license.html', controller: 'LicenseController'});
         //------------
@@ -70,12 +72,41 @@ openAusias.config(['$routeProvider', function ($routeProvider) {
         $routeProvider.when('/tipousuario/selection/:page?/:rpp?', {templateUrl: 'js/tipousuario/selection.html', controller: 'TipousuarioSelectionController'});
         $routeProvider.when('/tipousuario/view/:id', {templateUrl: 'js/tipousuario/view.html', controller: 'TipousuarioViewController'});
         //------------
-        $routeProvider.when('/estado/selection/:page?/:rpp?', {templateUrl: 'js/estado/selection.html', controller: 'EstadoSelectionController'});        
+        $routeProvider.when('/estado/selection/:page?/:rpp?', {templateUrl: 'js/estado/selection.html', controller: 'EstadoSelectionController'});
         //------------
         $routeProvider.otherwise({redirectTo: '/'});
 
 
     }]);
+
+openAusias.run(function ($rootScope, $location, serverService, sessionService) {
+    $rootScope.$on("$routeChangeStart", function (event, next, current) {
+        //$rootScope.authenticated = false;
+        sessionService.setSessionInactive();
+        sessionService.setUsername('');
+
+        serverService.getDataFromPromise(serverService.getSessionPromise()).then(function (data) {
+            if (data['status'] == 200) {
+                sessionService.setSessionActive();
+                sessionService.setUsername(data.message);
+            } else {
+                sessionService.setSessionInactive();
+                sessionService.setUsername('');
+                var nextUrl = next.$$route.originalPath;
+                if (nextUrl == '/home' || nextUrl == '/login' || nextUrl == '/license') {
+
+                } else {
+                    $location.path("/login");
+                }
+            }
+            ;
+        });
+
+
+
+    });
+});
+
 
 var moduloSistema = angular.module('systemControllers', []);
 var moduloUsuario = angular.module('usuarioControllers', []);

@@ -50,40 +50,58 @@ angular.module('Services', [])
             }
             ;
             return {
+                isAppInProductionMode: function () {
+                    return false;
+                },
+                getAppClientUrl: function () {
+                    return location.protocol + '//' + location.hostname + ':' + location.port + '/' + this.getAppName();
+                },
+                getAppUrl: function () {
+                    return location.protocol + '//' + location.hostname + ':' + location.port + '/' + this.getAppName() + '/json';
+                },
                 date_toDate: function (input) {
                     var parts = input.split('/');
-                    return new Date(parts[2],parts[1]-1,parts[0]); 
+                    return new Date(parts[2], parts[1] - 1, parts[0]);
                 },
                 getAppName: function () {
                     var strPath = window.location.pathname;
                     return strPath.substr(1, strPath.substr(1, strPath.length).indexOf('/'));
                 },
                 promise_getOne: function (strClass, id) {
-                    return $http.get(configuration.getAppUrl() + '?ob=' + strClass + '&op=get&id=' + id, 'GET', '');
+                    return $http.get(this.getAppUrl() + '?ob=' + strClass + '&op=get&id=' + id, 'GET', '');
 //                                   return $http({
-//                        url: configuration.getAppUrl() + '?ob=' + strClass + '&op=getaggregateviewone&id=' + id,
+//                        url: this.getAppUrl() + '?ob=' + strClass + '&op=getaggregateviewone&id=' + id,
 //                        method: "GET"
 //
 //                    });
                 },
                 promise_getMeta: function (strClass) {
-                    return $http.get(configuration.getAppUrl() + '?ob=' + strClass + '&op=getmetainformation', 'GET', '');
+                    return $http.get(this.getAppUrl() + '?ob=' + strClass + '&op=getmetainformation', 'GET', '');
                 },
                 promise_getSome: function (strClass, rpp, page, filterParams, orderParams, systemfilterParams) {
-                    return $http.get(configuration.getAppUrl() + '?ob=' + strClass + '&op=getaggregateviewsome' + '&rpp=' + rpp + '&page=' + page + filterParams + orderParams + systemfilterParams, 'GET', '');
+                    return $http.get(this.getAppUrl() + '?ob=' + strClass + '&op=getaggregateviewsome' + '&rpp=' + rpp + '&page=' + page + filterParams + orderParams + systemfilterParams, 'GET', '');
                 },
                 promise_getAll: function (strClass, filterParams, orderParams, systemfilterParams) {
-                    return $http.get(configuration.getAppUrl() + '?ob=' + strClass + '&op=getaggregateviewall' + filterParams + orderParams + systemfilterParams, 'GET', '');
+                    return $http.get(this.getAppUrl() + '?ob=' + strClass + '&op=getaggregateviewall' + filterParams + orderParams + systemfilterParams, 'GET', '');
                 },
                 promise_removeOne: function (strClass, id) {
-                    return $http.get(configuration.getAppUrl() + '?ob=' + strClass + '&op=remove&id=' + id, 'GET', '');
+                    return $http.get(this.getAppUrl() + '?ob=' + strClass + '&op=remove&id=' + id, 'GET', '');
                 },
                 promise_getPromise: function (strClass, operation, params) {
-                    return $http.get(configuration.getAppUrl() + '?ob=' + strClass + '&op=' + operation + params, 'GET', '');
+                    return $http.get(this.getAppUrl() + '?ob=' + strClass + '&op=' + operation + params, 'GET', '');
+                },
+                getLoginPromise: function (username, password) {
+                    return $http.get(this.getAppUrl() + '?ob=usuario&op=login&login=' + username + '&password=' + password, 'GET', '');
+                },
+                getLogoutPromise: function () {
+                    return $http.get(this.getAppUrl() + '?ob=usuario&op=logout', 'GET', '');
+                },
+                getSessionPromise: function () {
+                    return $http.get(this.getAppUrl() + '?ob=usuario&op=getsessionstatus', 'GET', '');
                 },
                 promise_setOne: function (strClass, jsonfile) {
                     $http.defaults.headers.put['Content-Type'] = 'application/json;charset=utf-8';
-                    return $http.get(configuration.getAppUrl() + '?ob=' + strClass + '&op=set', {params: jsonfile});
+                    return $http.get(this.getAppUrl() + '?ob=' + strClass + '&op=set', {params: jsonfile});
                 },
                 getDataFromPromise: function (promise) {
                     return promise.then(function (result) {
@@ -132,7 +150,7 @@ angular.module('Services', [])
 
 
                     $http({
-                        url: configuration.getAppUrl() + '?ob=' + strClass + '&op=set',
+                        url: this.getAppUrl() + '?ob=' + strClass + '&op=set',
                         method: "GET",
                         params: jsonfile
                     });
@@ -269,6 +287,28 @@ angular.module('Services', [])
                 },
                 setFase: function (value) {
                     fase = value;
+                }
+
+            };
+        })
+        .factory('sessionService', function ($http) {
+            var isSessionActive = false;
+            var username = "";
+            return {
+                getUsername: function () {
+                    return username;
+                },
+                setUsername: function (value) {
+                    username = value;
+                },
+                isSessionActive: function () {
+                    return isSessionActive;
+                },
+                setSessionInactive: function () {
+                    isSessionActive = false;
+                },
+                setSessionActive: function () {
+                    isSessionActive = true;
                 }
 
             };
