@@ -30,14 +30,14 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.HashMap;
-import net.daw.bean.implementation.View01Bean;
+import net.daw.bean.implementation.View03Bean;
 import net.daw.dao.publicinterface.ViewDaoInterface;
 import net.daw.data.implementation.MysqlDataSpImpl;
 import net.daw.helper.statics.ExceptionBooster;
 import net.daw.helper.statics.FilterBeanHelper;
 import net.daw.helper.statics.SqlBuilder;
 
-public class View03Dao implements ViewDaoInterface<View01Bean> {
+public class View03Dao implements ViewDaoInterface<View03Bean> {
 
     
     private String strSQL = "select id_usuario, count(id) as numautores from documento group by id_usuario";
@@ -78,16 +78,16 @@ public class View03Dao implements ViewDaoInterface<View01Bean> {
     }
 
     @Override
-    public ArrayList<View01Bean> getPage(int intRegsPerPag, int intPage, ArrayList<FilterBeanHelper> hmFilter, HashMap<String, String> hmOrder, Integer expand) throws Exception {
+    public ArrayList<View03Bean> getPage(int intRegsPerPag, int intPage, ArrayList<FilterBeanHelper> hmFilter, HashMap<String, String> hmOrder, Integer expand) throws Exception {
         strSQL += SqlBuilder.buildSqlWhere(hmFilter);
         strSQL += SqlBuilder.buildSqlOrder(hmOrder);
         strSQL += SqlBuilder.buildSqlLimit(oMysql.getCount(strSQL), intRegsPerPag, intPage);
-        ArrayList<View01Bean> oBeanList = new ArrayList<>();
+        ArrayList<View03Bean> oBeanList = new ArrayList<>();
         try {
             ResultSet oResultSet = oMysql.getAllSql(strSQL);
             if (oResultSet != null) {
                 while (oResultSet.next()) {
-                    View01Bean oBean = new View01Bean();
+                    View03Bean oBean = new View03Bean();
                     oBeanList.add(oBean.fill(oResultSet, oConnection, expand));
                 }
             }
@@ -98,14 +98,14 @@ public class View03Dao implements ViewDaoInterface<View01Bean> {
     }
 
     @Override
-    public ArrayList<View01Bean> getAll(ArrayList<FilterBeanHelper> alFilter, HashMap<String, String> hmOrder, Integer expand) throws Exception {
+    public ArrayList<View03Bean> getAll(ArrayList<FilterBeanHelper> alFilter, HashMap<String, String> hmOrder, Integer expand) throws Exception {
         strSQL += SqlBuilder.buildSqlOrder(hmOrder);
-        ArrayList<View01Bean> arrDocumento = new ArrayList<>();
+        ArrayList<View03Bean> arrDocumento = new ArrayList<>();
         try {
             ResultSet oResultSet = oMysql.getAllSql(strSQL);
             if (oResultSet != null) {
                 while (oResultSet.next()) {
-                    View01Bean oBean = new View01Bean();
+                    View03Bean oBean = new View03Bean();
                     arrDocumento.add(oBean.fill(oResultSet, oConnection, expand));
                 }
             }

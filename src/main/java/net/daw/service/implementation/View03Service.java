@@ -39,7 +39,7 @@ import java.util.HashMap;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import net.daw.bean.implementation.UsuarioBean;
-import net.daw.bean.implementation.View01Bean;
+import net.daw.bean.implementation.View03Bean;
 import net.daw.connection.publicinterface.ConnectionInterface;
 import net.daw.dao.implementation.View03Dao;
 
@@ -108,7 +108,7 @@ public class View03Service implements ViewServiceInterface {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
                 View03Dao oDao = new View03Dao(oConnection);
-                ArrayList<View01Bean> arrBeans = oDao.getAll(alFilter, hmOrder, AppConfigurationHelper.getJsonDepth());
+                ArrayList<View03Bean> arrBeans = oDao.getAll(alFilter, hmOrder, AppConfigurationHelper.getJsonDepth());
                 data = JsonMessage.getJson("200", AppConfigurationHelper.getGson().toJson(arrBeans));
             } catch (Exception ex) {
                 ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getAll ERROR: " + ex.getMessage()));
@@ -140,7 +140,7 @@ public class View03Service implements ViewServiceInterface {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
                 View03Dao oDao = new View03Dao(oConnection);
-                List<View01Bean> arrBeans = oDao.getPage(intRegsPerPag, intPage, alFilter, hmOrder, AppConfigurationHelper.getJsonDepth());
+                List<View03Bean> arrBeans = oDao.getPage(intRegsPerPag, intPage, alFilter, hmOrder, AppConfigurationHelper.getJsonDepth());
                 data = JsonMessage.getJson("200", AppConfigurationHelper.getGson().toJson(arrBeans));
             } catch (Exception ex) {
                 ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPage ERROR: " + ex.getMessage()));

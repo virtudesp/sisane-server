@@ -101,7 +101,7 @@ public class json extends HttpServlet {
             if ("".equals(op) && "".equals(ob)) {
                 try {
                     request.setAttribute("title", "zylka server by rafael aznar");
-                    request.setAttribute("message", "the server is up and running in " + request.getLocalName() + ":" + request.getLocalPort());
+                    request.setAttribute("message", "the server is up and running on " + request.getLocalName() + ":" + request.getLocalPort());
                     getServletContext().getRequestDispatcher("/jsp/message.jsp").forward(request, response);
                 } catch (ServletException | IOException ex) {
                     ExceptionBooster.boost(new Exception(this.getClass().getName() + ":processRequest ERROR: no such operation"));

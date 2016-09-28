@@ -36,7 +36,7 @@ import java.util.HashMap;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import net.daw.bean.implementation.UsuarioBean;
-import net.daw.bean.implementation.View01Bean;
+import net.daw.bean.implementation.View02Bean;
 import net.daw.connection.publicinterface.ConnectionInterface;
 import net.daw.dao.implementation.View02Dao;
 
@@ -58,11 +58,7 @@ public class View02Service implements ViewServiceInterface {
 
     private Boolean checkpermission(String strMethodName) throws Exception {
         UsuarioBean oUserBean = (UsuarioBean) oRequest.getSession().getAttribute("userBean");
-        if (oUserBean != null) {
-            return true;
-        } else {
-            return false;
-        }
+        return oUserBean != null;
     }
 
     @Override
@@ -106,7 +102,7 @@ public class View02Service implements ViewServiceInterface {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
                 View02Dao oDao = new View02Dao(oConnection);
-                ArrayList<View01Bean> arrBeans = oDao.getAll(alFilter, hmOrder, AppConfigurationHelper.getJsonDepth());
+                ArrayList<View02Bean> arrBeans = oDao.getAll(alFilter, hmOrder, AppConfigurationHelper.getJsonDepth());
                 data = JsonMessage.getJson("200", AppConfigurationHelper.getGson().toJson(arrBeans));
             } catch (Exception ex) {
                 ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getAll ERROR: " + ex.getMessage()));
@@ -138,7 +134,7 @@ public class View02Service implements ViewServiceInterface {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
                 View02Dao oDao = new View02Dao(oConnection);
-                List<View01Bean> arrBeans = oDao.getPage(intRegsPerPag, intPage, alFilter, hmOrder, AppConfigurationHelper.getJsonDepth());
+                List<View02Bean> arrBeans = oDao.getPage(intRegsPerPag, intPage, alFilter, hmOrder, AppConfigurationHelper.getJsonDepth());
                 data = JsonMessage.getJson("200", AppConfigurationHelper.getGson().toJson(arrBeans));
             } catch (Exception ex) {
                 ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPage ERROR: " + ex.getMessage()));
