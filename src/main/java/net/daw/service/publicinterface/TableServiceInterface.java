@@ -30,8 +30,6 @@ public interface TableServiceInterface {
 
     public String get() throws Exception;
 
-   
-
     public String remove() throws Exception;
 
     public String set() throws Exception;

@@ -45,7 +45,7 @@ public class ParameterCook {
     public static String prepareObject(HttpServletRequest request) {
         String result = null;
         if (request.getParameter("ob") == null) {
-            result = "usuario";
+            result = "";
         } else {
             result = request.getParameter("ob").toLowerCase();
         }
@@ -85,7 +85,7 @@ public class ParameterCook {
     public static String prepareOperation(HttpServletRequest request) {
         String result = null;
         if (request.getParameter("op") == null) {
-            result = "inicio";
+            result = "";
         } else {
             result = request.getParameter("op").toLowerCase();
         }

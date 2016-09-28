@@ -96,14 +96,24 @@ public class json extends HttpServlet {
             }
             String ob = ParameterCook.prepareObject(request);
             String op = ParameterCook.prepareOperation(request);
-            try {
-                String strClassName = "net.daw.service.implementation." + ParameterCook.prepareCamelCaseObject(request) + "Service";
-                TableServiceInterface oService = (TableServiceInterface) Class.forName(strClassName).getDeclaredConstructor(HttpServletRequest.class).newInstance(request);
-                Method oMethodService = oService.getClass().getMethod(ParameterCook.prepareOperation(request));
-                String jsonResult = (String) oMethodService.invoke(oService);
-                sendResponse2(request, response, jsonResult);
-            } catch (ClassNotFoundException | InstantiationException | IllegalAccessException ex) {
-                ExceptionBooster.boost(new Exception(this.getClass().getName() + ":processRequest ERROR: no such operation"));
+            if ("".equals(op) && "".equals(ob)) {
+                try {
+                    request.setAttribute("title", "zylka server by rafael aznar");
+                    request.setAttribute("message", "the server is up");
+                    getServletContext().getRequestDispatcher("/jsp/message.jsp").forward(request, response);
+                } catch (ServletException | IOException ex) {
+                    ExceptionBooster.boost(new Exception(this.getClass().getName() + ":processRequest ERROR: no such operation"));
+                }                
+            } else {
+                try {
+                    String strClassName = "net.daw.service.implementation." + ParameterCook.prepareCamelCaseObject(request) + "Service";
+                    TableServiceInterface oService = (TableServiceInterface) Class.forName(strClassName).getDeclaredConstructor(HttpServletRequest.class).newInstance(request);
+                    Method oMethodService = oService.getClass().getMethod(ParameterCook.prepareOperation(request));
+                    String jsonResult = (String) oMethodService.invoke(oService);
+                    sendResponse2(request, response, jsonResult);
+                } catch (ClassNotFoundException | InstantiationException | IllegalAccessException ex) {
+                    ExceptionBooster.boost(new Exception(this.getClass().getName() + ":processRequest ERROR: no such operation"));
+                }
             }
         } catch (ServletException | IOException | NoSuchMethodException | SecurityException | IllegalArgumentException | InvocationTargetException ex) {
             if (EstadoHelper.getTipo_estado() == Tipo_estado.Debug) {
