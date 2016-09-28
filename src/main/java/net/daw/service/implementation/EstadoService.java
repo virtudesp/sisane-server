@@ -1,10 +1,3 @@
- 
-
-
-  
-
-
-
 /*
  * Copyright (c) 2015 by Rafael Angel Aznar Aparici (rafaaznar at gmail dot com)
  * 
@@ -31,19 +24,18 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package net.daw.service.view.implementation;
+package net.daw.service.implementation;
 
+import com.google.gson.Gson;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
-import net.daw.bean.table.implementation.UsuarioBean;
-import net.daw.bean.view.implementation.Documento_labels_authors_x_ndocs_Bean;
+import net.daw.bean.implementation.EstadoBean;
+import net.daw.bean.implementation.UsuarioBean;
 import net.daw.connection.publicinterface.ConnectionInterface;
-import net.daw.dao.view.implementation.Documento_labels_authors_x_ndocs_Dao;
-import net.daw.dao.view.implementation.Documento_labels_x_ndocs_Dao;
-import net.daw.dao.view.implementation.DocumentosautorDao;
+import net.daw.dao.implementation.EstadoDao;
 
 import net.daw.helper.statics.AppConfigurationHelper;
 import static net.daw.helper.statics.AppConfigurationHelper.getSourceConnection;
@@ -51,23 +43,21 @@ import net.daw.helper.statics.ExceptionBooster;
 import net.daw.helper.statics.FilterBeanHelper;
 import net.daw.helper.statics.JsonMessage;
 import net.daw.helper.statics.ParameterCook;
+
+import net.daw.service.publicinterface.TableServiceInterface;
 import net.daw.service.publicinterface.ViewServiceInterface;
 
-public class DocumentosautorService implements ViewServiceInterface {
+public class EstadoService implements TableServiceInterface, ViewServiceInterface {
 
     protected HttpServletRequest oRequest = null;
 
-    public DocumentosautorService(HttpServletRequest request) {
+    public EstadoService(HttpServletRequest request) {
         oRequest = request;
     }
 
     private Boolean checkpermission(String strMethodName) throws Exception {
         UsuarioBean oUserBean = (UsuarioBean) oRequest.getSession().getAttribute("userBean");
-        if (oUserBean != null) {
-            return true;
-        } else {
-            return false;
-        }
+        return oUserBean != null;
     }
 
     @Override
@@ -80,8 +70,8 @@ public class DocumentosautorService implements ViewServiceInterface {
             try {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
-                DocumentosautorDao oDao = new DocumentosautorDao(oConnection);
-                data = JsonMessage.getJson("200", Integer.toString(oDao.getCount(alFilter)));
+                EstadoDao oEstadoDao = new EstadoDao(oConnection);
+                data = JsonMessage.getJson("200", Integer.toString(oEstadoDao.getCount(alFilter)));
             } catch (Exception ex) {
                 ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getCount ERROR: " + ex.getMessage()));
             } finally {
@@ -99,6 +89,38 @@ public class DocumentosautorService implements ViewServiceInterface {
     }
 
     @Override
+    public String get() throws Exception {
+        if (this.checkpermission("get")) {
+            int id = ParameterCook.prepareId(oRequest);
+            String data = null;
+            Connection oConnection = null;
+            ConnectionInterface oDataConnectionSource = null;
+            try {
+                oDataConnectionSource = getSourceConnection();
+                oConnection = oDataConnectionSource.newConnection();
+                EstadoDao oEstadoDao = new EstadoDao(oConnection);
+                EstadoBean oEstadoBean = new EstadoBean(id);
+                oEstadoBean = oEstadoDao.get(oEstadoBean, AppConfigurationHelper.getJsonDepth());
+                Gson gson = AppConfigurationHelper.getGson();
+                data = JsonMessage.getJson("200", AppConfigurationHelper.getGson().toJson(oEstadoBean));
+            } catch (Exception ex) {
+                ExceptionBooster.boost(new Exception(this.getClass().getName() + ":get ERROR: " + ex.getMessage()));
+            } finally {
+                if (oConnection != null) {
+                    oConnection.close();
+                }
+                if (oDataConnectionSource != null) {
+                    oDataConnectionSource.disposeConnection();
+                }
+            }
+            return data;
+
+        } else {
+            return JsonMessage.getJsonMsg("401", "Unauthorized");
+        }
+    }
+
+    @Override
     public String getall() throws Exception {
         if (this.checkpermission("getall")) {
             ArrayList<FilterBeanHelper> alFilter = ParameterCook.prepareFilter(oRequest);
@@ -110,8 +132,8 @@ public class DocumentosautorService implements ViewServiceInterface {
             try {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
-                DocumentosautorDao oDao = new DocumentosautorDao(oConnection);
-                ArrayList<Documento_labels_authors_x_ndocs_Bean> arrBeans = oDao.getAll(alFilter, hmOrder, AppConfigurationHelper.getJsonDepth());
+                EstadoDao oEstadoDao = new EstadoDao(oConnection);
+                ArrayList<EstadoBean> arrBeans = oEstadoDao.getAll(alFilter, hmOrder, 1);
                 data = JsonMessage.getJson("200", AppConfigurationHelper.getGson().toJson(arrBeans));
             } catch (Exception ex) {
                 ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getAll ERROR: " + ex.getMessage()));
@@ -123,6 +145,7 @@ public class DocumentosautorService implements ViewServiceInterface {
                     oDataConnectionSource.disposeConnection();
                 }
             }
+
             return data;
         } else {
             return JsonMessage.getJsonMsg("401", "Unauthorized");
@@ -132,7 +155,7 @@ public class DocumentosautorService implements ViewServiceInterface {
     @Override
     public String getpage() throws Exception {
         if (this.checkpermission("getpage")) {
-            int intRegsPerPag = ParameterCook.prepareRpp(oRequest);;
+            int intRegsPerPag = ParameterCook.prepareRpp(oRequest);
             int intPage = ParameterCook.preparePage(oRequest);
             ArrayList<FilterBeanHelper> alFilter = ParameterCook.prepareFilter(oRequest);
             HashMap<String, String> hmOrder = ParameterCook.prepareOrder(oRequest);
@@ -142,8 +165,8 @@ public class DocumentosautorService implements ViewServiceInterface {
             try {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
-                DocumentosautorDao oDao = new DocumentosautorDao(oConnection);
-                List<Documento_labels_authors_x_ndocs_Bean> arrBeans = oDao.getPage(intRegsPerPag, intPage, alFilter, hmOrder, AppConfigurationHelper.getJsonDepth());
+                EstadoDao oEstadoDao = new EstadoDao(oConnection);
+                List<EstadoBean> arrBeans = oEstadoDao.getPage(intRegsPerPag, intPage, alFilter, hmOrder, AppConfigurationHelper.getJsonDepth());
                 data = JsonMessage.getJson("200", AppConfigurationHelper.getGson().toJson(arrBeans));
             } catch (Exception ex) {
                 ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPage ERROR: " + ex.getMessage()));
@@ -172,8 +195,8 @@ public class DocumentosautorService implements ViewServiceInterface {
             try {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
-                DocumentosautorDao oDao = new DocumentosautorDao(oConnection);
-                data = JsonMessage.getJson("200", Integer.toString(oDao.getPages(intRegsPerPag, alFilter)));
+                EstadoDao oEstadoDao = new EstadoDao(oConnection);
+                data = JsonMessage.getJson("200", Integer.toString(oEstadoDao.getPages(intRegsPerPag, alFilter)));
             } catch (Exception ex) {
                 ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPages ERROR: " + ex.getMessage()));
             } finally {
@@ -208,6 +231,83 @@ public class DocumentosautorService implements ViewServiceInterface {
                 ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getAggregateViewSome ERROR: " + ex.getMessage()));
             }
             return data;
+        } else {
+            return JsonMessage.getJsonMsg("401", "Unauthorized");
+        }
+    }
+
+    @Override
+    public String remove() throws Exception {
+        if (this.checkpermission("remove")) {
+            Integer id = ParameterCook.prepareId(oRequest);
+            String resultado = null;
+            Connection oConnection = null;
+            ConnectionInterface oDataConnectionSource = null;
+            try {
+                oDataConnectionSource = getSourceConnection();
+                oConnection = oDataConnectionSource.newConnection();
+                oConnection.setAutoCommit(false);
+                EstadoDao oEstadoDao = new EstadoDao(oConnection);
+                resultado = JsonMessage.getJson("200", (String) oEstadoDao.remove(id).toString());
+                oConnection.commit();
+            } catch (Exception ex) {
+                if (oConnection != null) {
+                    oConnection.rollback();
+                }
+                ExceptionBooster.boost(new Exception(this.getClass().getName() + ":remove ERROR: " + ex.getMessage()));
+            } finally {
+                if (oConnection != null) {
+                    oConnection.close();
+                }
+                if (oDataConnectionSource != null) {
+                    oDataConnectionSource.disposeConnection();
+                }
+            }
+            return resultado;
+        } else {
+            return JsonMessage.getJsonMsg("401", "Unauthorized");
+        }
+    }
+
+    @Override
+    public String set() throws Exception {
+        if (this.checkpermission("set")) {
+            String jason = ParameterCook.prepareJson(oRequest);
+            String resultado = null;
+            Connection oConnection = null;
+            ConnectionInterface oDataConnectionSource = null;
+            try {
+                oDataConnectionSource = getSourceConnection();
+                oConnection = oDataConnectionSource.newConnection();
+                oConnection.setAutoCommit(false);
+                EstadoDao oEstadoDao = new EstadoDao(oConnection);
+                EstadoBean oEstadoBean = new EstadoBean();
+                oEstadoBean = AppConfigurationHelper.getGson().fromJson(jason, oEstadoBean.getClass());
+                if (oEstadoBean != null) {
+                    Integer iResult = oEstadoDao.set(oEstadoBean);
+                    if (iResult >= 1) {
+                        resultado = JsonMessage.getJson("200", iResult.toString());
+                    } else {
+                        resultado = JsonMessage.getJson("500", "Error during registry set");
+                    }
+                } else {
+                    resultado = JsonMessage.getJson("500", "Error during registry set");
+                }
+                oConnection.commit();
+            } catch (Exception ex) {
+                if (oConnection != null) {
+                    oConnection.rollback();
+                }
+                ExceptionBooster.boost(new Exception(this.getClass().getName() + ":set ERROR: " + ex.getMessage()));
+            } finally {
+                if (oConnection != null) {
+                    oConnection.close();
+                }
+                if (oDataConnectionSource != null) {
+                    oDataConnectionSource.disposeConnection();
+                }
+            }
+            return resultado;
         } else {
             return JsonMessage.getJsonMsg("401", "Unauthorized");
         }

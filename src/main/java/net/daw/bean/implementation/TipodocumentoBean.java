@@ -24,35 +24,45 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package net.daw.bean.table.implementation;
+package net.daw.bean.implementation;
 
-import net.daw.bean.publicinterface.GenericBean;
 import com.google.gson.annotations.Expose;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import net.daw.bean.publicinterface.GenericBean;
 
-public class EstadoBean implements GenericBean {
+public class TipodocumentoBean implements GenericBean{
 
     @Expose
     private Integer id;
     @Expose
-    private String tipo;
+    private String descripcion = "";
+    @Expose
+    private Boolean privado = false;
 
-    public EstadoBean() {
+    public TipodocumentoBean() {
         this.id = 0;
     }
 
-    public EstadoBean(Integer id) {
+    public TipodocumentoBean(Integer id) {
         this.id = id;
     }
 
-    public String getTipo() {
-        return tipo;
+    public String getDescripcion() {
+        return descripcion;
     }
 
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public Boolean getPrivado() {
+        return privado;
+    }
+
+    public void setPrivado(Boolean privado) {
+        this.privado = privado;
     }
 
     public Integer getId() {
@@ -66,7 +76,8 @@ public class EstadoBean implements GenericBean {
     public String toJson(Boolean expand) {
         String strJson = "{";
         strJson += "id:" + id + ",";
-        strJson += "tipo:" + tipo + ",";
+        strJson += "descripcion:" + descripcion + ",";
+        strJson += "privado:" + privado + ",";
         strJson += "}";
         return strJson;
     }
@@ -75,7 +86,9 @@ public class EstadoBean implements GenericBean {
     public String getColumns() {
         String strColumns = "";
         strColumns += "id,";
-        strColumns += "tipo";
+        strColumns += "descripcion,";
+        strColumns += "privado";
+
         return strColumns;
     }
 
@@ -83,7 +96,9 @@ public class EstadoBean implements GenericBean {
     public String getValues() {
         String strColumns = "";
         strColumns += id + ",";
-        strColumns += tipo;
+        strColumns += descripcion + ",";
+        strColumns += privado;
+
         return strColumns;
     }
 
@@ -91,14 +106,17 @@ public class EstadoBean implements GenericBean {
     public String toPairs() {
         String strPairs = "";
         strPairs += "id=" + id + ",";
-        strPairs += "tipo=" + tipo;
+        strPairs += "descripcion=" + descripcion + ",";
+        strPairs += "privado=" + privado;
+
         return strPairs;
     }
 
     @Override
-    public EstadoBean fill(ResultSet oResultSet, Connection pooledConnection, Integer expand) throws SQLException, Exception {
+    public TipodocumentoBean fill(ResultSet oResultSet, Connection pooledConnection, Integer expand) throws SQLException, Exception {
         this.setId(oResultSet.getInt("id"));
-        this.setTipo(oResultSet.getString("tipo"));
+        this.setDescripcion(oResultSet.getString("descripcion"));
+        this.setPrivado(oResultSet.getBoolean("privado"));
         return this;
 
     }

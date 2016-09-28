@@ -24,27 +24,27 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package net.daw.dao.view.implementation;
+package net.daw.dao.implementation;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.HashMap;
-import net.daw.bean.view.implementation.Documento_labels_authors_x_ndocs_Bean;
+import net.daw.bean.implementation.Documento_labels_authors_x_ndocs_Bean;
 import net.daw.dao.publicinterface.ViewDaoInterface;
 import net.daw.data.implementation.MysqlDataSpImpl;
 import net.daw.helper.statics.ExceptionBooster;
 import net.daw.helper.statics.FilterBeanHelper;
 import net.daw.helper.statics.SqlBuilder;
 
-public class Documento_labels_x_ndocs_Dao implements ViewDaoInterface<Documento_labels_authors_x_ndocs_Bean> {
+public class Documento_labels_authors_x_ndocs_Dao implements ViewDaoInterface<Documento_labels_authors_x_ndocs_Bean> {
 
     
-    private String strSQL = "select etiquetas, count(id) as numetiquetas from documento where publicado=0 group by etiquetas";
+    private String strSQL = "select etiquetas, id_usuario, count(id) as numetiquetas from documento where publicado=0 group by etiquetas, id_usuario";
     private MysqlDataSpImpl oMysql = null;
     private Connection oConnection = null;
 
-    public Documento_labels_x_ndocs_Dao(Connection oPooledConnection) throws Exception {
+    public Documento_labels_authors_x_ndocs_Dao(Connection oPooledConnection) throws Exception {
         try {
             oConnection = oPooledConnection;
             oMysql = new MysqlDataSpImpl(oConnection);

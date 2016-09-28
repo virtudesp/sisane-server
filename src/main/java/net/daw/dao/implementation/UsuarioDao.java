@@ -24,28 +24,29 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package net.daw.dao.table.implementation;
+package net.daw.dao.implementation;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.HashMap;
-import net.daw.bean.table.implementation.TipodocumentoBean;
+import net.daw.bean.implementation.UsuarioBean;
 import net.daw.dao.publicinterface.TableDaoInterface;
 import net.daw.dao.publicinterface.ViewDaoInterface;
 import net.daw.data.implementation.MysqlDataSpImpl;
+import net.daw.helper.statics.AppConfigurationHelper;
 import net.daw.helper.statics.ExceptionBooster;
 import net.daw.helper.statics.FilterBeanHelper;
 import net.daw.helper.statics.SqlBuilder;
 
-public class TipodocumentoDao implements ViewDaoInterface<TipodocumentoBean>, TableDaoInterface<TipodocumentoBean> {
+public class UsuarioDao implements ViewDaoInterface<UsuarioBean>, TableDaoInterface<UsuarioBean> {
 
-    private String strTable = "tipodocumento";
-    private String strSQL = "select * from tipodocumento where 1=1 ";
+    private String strTable = "usuario";
+    private String strSQL = "select * from usuario where 1=1 ";
     private MysqlDataSpImpl oMysql = null;
     private Connection oConnection = null;
 
-    public TipodocumentoDao(Connection oPooledConnection) throws Exception {
+    public UsuarioDao(Connection oPooledConnection) throws Exception {
         try {
             oConnection = oPooledConnection;
             oMysql = new MysqlDataSpImpl(oConnection);
@@ -79,75 +80,75 @@ public class TipodocumentoDao implements ViewDaoInterface<TipodocumentoBean>, Ta
     }
 
     @Override
-    public ArrayList<TipodocumentoBean> getPage(int intRegsPerPag, int intPage, ArrayList<FilterBeanHelper> hmFilter, HashMap<String, String> hmOrder, Integer expand) throws Exception {
+    public ArrayList<UsuarioBean> getPage(int intRegsPerPag, int intPage, ArrayList<FilterBeanHelper> hmFilter, HashMap<String, String> hmOrder, Integer expand) throws Exception {
         strSQL += SqlBuilder.buildSqlWhere(hmFilter);
         strSQL += SqlBuilder.buildSqlOrder(hmOrder);
         strSQL += SqlBuilder.buildSqlLimit(oMysql.getCount(strSQL), intRegsPerPag, intPage);
-        ArrayList<TipodocumentoBean> arrTipodocumento = new ArrayList<>();
+        ArrayList<UsuarioBean> arrUsuario = new ArrayList<>();
         try {
             ResultSet oResultSet = oMysql.getAllSql(strSQL);
             if (oResultSet != null) {
                 while (oResultSet.next()) {
-                    TipodocumentoBean oTipodocumentoBean = new TipodocumentoBean();
-                    arrTipodocumento.add(oTipodocumentoBean.fill(oResultSet, oConnection, expand));
+                    UsuarioBean oUsuarioBean = new UsuarioBean();
+                    arrUsuario.add(oUsuarioBean.fill(oResultSet, oConnection, expand));
                 }
             }
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPage ERROR: " + ex.getMessage()));
         }
-        return arrTipodocumento;
+        return arrUsuario;
     }
 
     @Override
-    public ArrayList<TipodocumentoBean> getAll(ArrayList<FilterBeanHelper> alFilter, HashMap<String, String> hmOrder, Integer expand) throws Exception {
+    public ArrayList<UsuarioBean> getAll(ArrayList<FilterBeanHelper> alFilter, HashMap<String, String> hmOrder, Integer expand) throws Exception {
         strSQL += SqlBuilder.buildSqlOrder(hmOrder);
-        ArrayList<TipodocumentoBean> arrTipodocumento = new ArrayList<>();
+        ArrayList<UsuarioBean> arrUsuario = new ArrayList<>();
         try {
             ResultSet oResultSet = oMysql.getAllSql(strSQL);
             if (oResultSet != null) {
                 while (oResultSet.next()) {
-                    TipodocumentoBean oTipodocumentoBean = new TipodocumentoBean();
-                    arrTipodocumento.add(oTipodocumentoBean.fill(oResultSet, oConnection, expand));
+                    UsuarioBean oUsuarioBean = new UsuarioBean();
+                    arrUsuario.add(oUsuarioBean.fill(oResultSet, oConnection, expand));
                 }
             }
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPage ERROR: " + ex.getMessage()));
         }
-        return arrTipodocumento;
+        return arrUsuario;
     }
 
     @Override
-    public TipodocumentoBean get(TipodocumentoBean oTipodocumentoBean, Integer expand) throws Exception {
-        if (oTipodocumentoBean.getId() > 0) {
+    public UsuarioBean get(UsuarioBean oUsuarioBean, Integer expand) throws Exception {
+        if (oUsuarioBean.getId() > 0) {
             try {
-                ResultSet oResultSet = oMysql.getAllSql(strSQL + " And id= " + oTipodocumentoBean.getId() + " ");
+                ResultSet oResultSet = oMysql.getAllSql(strSQL + " And id= " + oUsuarioBean.getId() + " ");
                 if (oResultSet != null) {
                     while (oResultSet.next()) {
-                        oTipodocumentoBean = oTipodocumentoBean.fill(oResultSet, oConnection, expand);
+                        oUsuarioBean = oUsuarioBean.fill(oResultSet, oConnection, expand);
                     }
                 }
             } catch (Exception ex) {
                 ExceptionBooster.boost(new Exception(this.getClass().getName() + ":get ERROR: " + ex.getMessage()));
             }
         } else {
-            oTipodocumentoBean.setId(0);
+            oUsuarioBean.setId(0);
         }
-        return oTipodocumentoBean;
+        return oUsuarioBean;
     }
 
     @Override
-    public Integer set(TipodocumentoBean oTipodocumentoBean) throws Exception {
+    public Integer set(UsuarioBean oUsuarioBean) throws Exception {
           Integer iResult = null;
         try {
-            if (oTipodocumentoBean.getId() == 0) {
+            if (oUsuarioBean.getId() == 0) {
                 strSQL = "INSERT INTO " + strTable + " ";
-                strSQL += "(" + oTipodocumentoBean.getColumns() + ")";
-                strSQL += "VALUES(" + oTipodocumentoBean.getValues() + ")";
+                strSQL += "(" + oUsuarioBean.getColumns() + ") ";
+                strSQL += "VALUES (" + oUsuarioBean.getValues() + ")";
                 iResult = oMysql.executeInsertSQL(strSQL);
             } else {
                 strSQL = "UPDATE " + strTable + " ";
-                strSQL += " SET " + oTipodocumentoBean.toPairs();
-                strSQL += " WHERE id=" + oTipodocumentoBean.getId();
+                strSQL += " SET " + oUsuarioBean.toPairs();
+                strSQL += " WHERE id=" + oUsuarioBean.getId();
                 iResult = oMysql.executeUpdateSQL(strSQL);
             }
 
@@ -166,6 +167,27 @@ public class TipodocumentoDao implements ViewDaoInterface<TipodocumentoBean>, Ta
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":remove ERROR: " + ex.getMessage()));
         }
         return result;
+    }
+
+public UsuarioBean getFromLogin(UsuarioBean oUsuario) throws Exception {
+        try {
+            String strId = oMysql.getId("usuario", "login", oUsuario.getLogin());
+            if (strId == null) {
+                oUsuario.setId(0);
+            } else {
+                Integer intId = Integer.parseInt(strId);
+                oUsuario.setId(intId);
+                String pass = oUsuario.getPassword();
+                oUsuario.setPassword(oMysql.getOne(strSQL, "password", oUsuario.getId()));
+                if (!pass.equals(oUsuario.getPassword())) {
+                    oUsuario.setId(0);
+                }
+                oUsuario = this.get(oUsuario, AppConfigurationHelper.getJsonDepth());
+            }
+            return oUsuario;
+        } catch (Exception e) {
+            throw new Exception("UsuarioDao.getFromLogin: Error: " + e.getMessage());
+        }
     }
 
 }

@@ -24,15 +24,15 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package net.daw.bean.table.implementation;
+package net.daw.bean.implementation;
 
 import com.google.gson.annotations.Expose;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import net.daw.bean.publicinterface.GenericBean;
-import net.daw.dao.table.implementation.EstadoDao;
-import net.daw.dao.table.implementation.TipousuarioDao;
+import net.daw.dao.implementation.EstadoDao;
+import net.daw.dao.implementation.TipousuarioDao;
 import net.daw.helper.statics.EncodingUtilHelper;
 
 public class UsuarioBean implements GenericBean {

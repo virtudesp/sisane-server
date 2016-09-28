@@ -1,7 +1,3 @@
-  
-
-
-
 /*
  * Copyright (c) 2015 by Rafael Angel Aznar Aparici (rafaaznar at gmail dot com)
  * 
@@ -28,18 +24,17 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package net.daw.service.view.implementation;
+package net.daw.service.implementation;
 
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
-import net.daw.bean.table.implementation.UsuarioBean;
-import net.daw.bean.view.implementation.Documento_labels_authors_x_ndocs_Bean;
+import net.daw.bean.implementation.UsuarioBean;
+import net.daw.bean.implementation.Documento_labels_authors_x_ndocs_Bean;
 import net.daw.connection.publicinterface.ConnectionInterface;
-import net.daw.dao.view.implementation.Documento_labels_authors_x_ndocs_Dao;
-import net.daw.dao.view.implementation.Documento_labels_x_ndocs_Dao;
+import net.daw.dao.implementation.Documento_labels_authors_x_ndocs_Dao;
 
 import net.daw.helper.statics.AppConfigurationHelper;
 import static net.daw.helper.statics.AppConfigurationHelper.getSourceConnection;
@@ -49,11 +44,11 @@ import net.daw.helper.statics.JsonMessage;
 import net.daw.helper.statics.ParameterCook;
 import net.daw.service.publicinterface.ViewServiceInterface;
 
-public class Documento_labels_x_ndocs_Service implements ViewServiceInterface {
+public class Documento_labels_authors_x_ndocs_Service implements ViewServiceInterface {
 
     protected HttpServletRequest oRequest = null;
 
-    public Documento_labels_x_ndocs_Service(HttpServletRequest request) {
+    public Documento_labels_authors_x_ndocs_Service(HttpServletRequest request) {
         oRequest = request;
     }
 
@@ -76,7 +71,7 @@ public class Documento_labels_x_ndocs_Service implements ViewServiceInterface {
             try {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
-                Documento_labels_x_ndocs_Dao oDao = new Documento_labels_x_ndocs_Dao(oConnection);
+                Documento_labels_authors_x_ndocs_Dao oDao = new Documento_labels_authors_x_ndocs_Dao(oConnection);
                 data = JsonMessage.getJson("200", Integer.toString(oDao.getCount(alFilter)));
             } catch (Exception ex) {
                 ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getCount ERROR: " + ex.getMessage()));
@@ -106,7 +101,7 @@ public class Documento_labels_x_ndocs_Service implements ViewServiceInterface {
             try {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
-                Documento_labels_x_ndocs_Dao oDao = new Documento_labels_x_ndocs_Dao(oConnection);
+                Documento_labels_authors_x_ndocs_Dao oDao = new Documento_labels_authors_x_ndocs_Dao(oConnection);
                 ArrayList<Documento_labels_authors_x_ndocs_Bean> arrBeans = oDao.getAll(alFilter, hmOrder, AppConfigurationHelper.getJsonDepth());
                 data = JsonMessage.getJson("200", AppConfigurationHelper.getGson().toJson(arrBeans));
             } catch (Exception ex) {
@@ -138,7 +133,7 @@ public class Documento_labels_x_ndocs_Service implements ViewServiceInterface {
             try {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
-                Documento_labels_x_ndocs_Dao oDao = new Documento_labels_x_ndocs_Dao(oConnection);
+                Documento_labels_authors_x_ndocs_Dao oDao = new Documento_labels_authors_x_ndocs_Dao(oConnection);
                 List<Documento_labels_authors_x_ndocs_Bean> arrBeans = oDao.getPage(intRegsPerPag, intPage, alFilter, hmOrder, AppConfigurationHelper.getJsonDepth());
                 data = JsonMessage.getJson("200", AppConfigurationHelper.getGson().toJson(arrBeans));
             } catch (Exception ex) {
@@ -168,7 +163,7 @@ public class Documento_labels_x_ndocs_Service implements ViewServiceInterface {
             try {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
-                Documento_labels_x_ndocs_Dao oDao = new Documento_labels_x_ndocs_Dao(oConnection);
+                Documento_labels_authors_x_ndocs_Dao oDao = new Documento_labels_authors_x_ndocs_Dao(oConnection);
                 data = JsonMessage.getJson("200", Integer.toString(oDao.getPages(intRegsPerPag, alFilter)));
             } catch (Exception ex) {
                 ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPages ERROR: " + ex.getMessage()));

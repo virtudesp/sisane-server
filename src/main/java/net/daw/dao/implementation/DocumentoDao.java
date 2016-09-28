@@ -24,13 +24,13 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package net.daw.dao.table.implementation;
+package net.daw.dao.implementation;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.HashMap;
-import net.daw.bean.table.implementation.EstadoBean;
+import net.daw.bean.implementation.DocumentoBean;
 import net.daw.dao.publicinterface.TableDaoInterface;
 import net.daw.dao.publicinterface.ViewDaoInterface;
 import net.daw.data.implementation.MysqlDataSpImpl;
@@ -38,14 +38,14 @@ import net.daw.helper.statics.ExceptionBooster;
 import net.daw.helper.statics.FilterBeanHelper;
 import net.daw.helper.statics.SqlBuilder;
 
-public class EstadoDao implements ViewDaoInterface<EstadoBean>, TableDaoInterface<EstadoBean> {
+public class DocumentoDao implements ViewDaoInterface<DocumentoBean>, TableDaoInterface<DocumentoBean> {
 
-    private String strTable = "estado";
-    private String strSQL = "select * from estado where 1=1 ";
+    private String strTable = "documento";
+    private String strSQL = "select * from documento where 1=1 ";
     private MysqlDataSpImpl oMysql = null;
     private Connection oConnection = null;
 
-    public EstadoDao(Connection oPooledConnection) throws Exception {
+    public DocumentoDao(Connection oPooledConnection) throws Exception {
         try {
             oConnection = oPooledConnection;
             oMysql = new MysqlDataSpImpl(oConnection);
@@ -79,75 +79,75 @@ public class EstadoDao implements ViewDaoInterface<EstadoBean>, TableDaoInterfac
     }
 
     @Override
-    public ArrayList<EstadoBean> getPage(int intRegsPerPag, int intPage, ArrayList<FilterBeanHelper> hmFilter, HashMap<String, String> hmOrder, Integer expand) throws Exception {
+    public ArrayList<DocumentoBean> getPage(int intRegsPerPag, int intPage, ArrayList<FilterBeanHelper> hmFilter, HashMap<String, String> hmOrder, Integer expand) throws Exception {
         strSQL += SqlBuilder.buildSqlWhere(hmFilter);
         strSQL += SqlBuilder.buildSqlOrder(hmOrder);
         strSQL += SqlBuilder.buildSqlLimit(oMysql.getCount(strSQL), intRegsPerPag, intPage);
-        ArrayList<EstadoBean> arrEstado = new ArrayList<>();
+        ArrayList<DocumentoBean> arrDocumento = new ArrayList<>();
         try {
             ResultSet oResultSet = oMysql.getAllSql(strSQL);
             if (oResultSet != null) {
                 while (oResultSet.next()) {
-                    EstadoBean oEstadoBean = new EstadoBean();
-                    arrEstado.add(oEstadoBean.fill(oResultSet, oConnection, expand));
+                    DocumentoBean oDocumentoBean = new DocumentoBean();
+                    arrDocumento.add(oDocumentoBean.fill(oResultSet, oConnection, expand));
                 }
             }
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPage ERROR: " + ex.getMessage()));
         }
-        return arrEstado;
+        return arrDocumento;
     }
 
     @Override
-    public ArrayList<EstadoBean> getAll(ArrayList<FilterBeanHelper> alFilter, HashMap<String, String> hmOrder, Integer expand) throws Exception {
+    public ArrayList<DocumentoBean> getAll(ArrayList<FilterBeanHelper> alFilter, HashMap<String, String> hmOrder, Integer expand) throws Exception {
         strSQL += SqlBuilder.buildSqlOrder(hmOrder);
-        ArrayList<EstadoBean> arrEstado = new ArrayList<>();
+        ArrayList<DocumentoBean> arrDocumento = new ArrayList<>();
         try {
             ResultSet oResultSet = oMysql.getAllSql(strSQL);
             if (oResultSet != null) {
                 while (oResultSet.next()) {
-                    EstadoBean oEstadoBean = new EstadoBean();
-                    arrEstado.add(oEstadoBean.fill(oResultSet, oConnection,expand));
+                    DocumentoBean oDocumentoBean = new DocumentoBean();
+                    arrDocumento.add(oDocumentoBean.fill(oResultSet, oConnection, expand));
                 }
             }
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPage ERROR: " + ex.getMessage()));
         }
-        return arrEstado;
+        return arrDocumento;
     }
 
     @Override
-    public EstadoBean get(EstadoBean oEstadoBean, Integer expand) throws Exception {
-        if (oEstadoBean.getId() > 0) {
+    public DocumentoBean get(DocumentoBean oDocumentoBean, Integer expand) throws Exception {
+        if (oDocumentoBean.getId() > 0) {
             try {
-                ResultSet oResultSet = oMysql.getAllSql(strSQL + " And id= " + oEstadoBean.getId() + " ");
+                ResultSet oResultSet = oMysql.getAllSql(strSQL + " And id= " + oDocumentoBean.getId() + " ");
                 if (oResultSet != null) {
                     while (oResultSet.next()) {
-                        oEstadoBean = oEstadoBean.fill(oResultSet, oConnection,expand);
+                        oDocumentoBean = oDocumentoBean.fill(oResultSet, oConnection, expand);
                     }
                 }
             } catch (Exception ex) {
                 ExceptionBooster.boost(new Exception(this.getClass().getName() + ":get ERROR: " + ex.getMessage()));
             }
         } else {
-            oEstadoBean.setId(0);
+            oDocumentoBean.setId(0);
         }
-        return oEstadoBean;
+        return oDocumentoBean;
     }
 
     @Override
-    public Integer set(EstadoBean oEstadoBean) throws Exception {
-          Integer iResult = null;
+    public Integer set(DocumentoBean oDocumentoBean) throws Exception {
+        Integer iResult = null;
         try {
-            if (oEstadoBean.getId() == 0) {
+            if (oDocumentoBean.getId() == 0) {
                 strSQL = "INSERT INTO " + strTable + " ";
-                strSQL += "(" + oEstadoBean.getColumns() + ")";
-                strSQL += "VALUES(" + oEstadoBean.getValues() + ")";
+                strSQL += "(" + oDocumentoBean.getColumns() + ")";
+                strSQL += "VALUES(" + oDocumentoBean.getValues() + ")";
                 iResult = oMysql.executeInsertSQL(strSQL);
             } else {
                 strSQL = "UPDATE " + strTable + " ";
-                strSQL += " SET " + oEstadoBean.toPairs();
-                strSQL += " WHERE id=" + oEstadoBean.getId();
+                strSQL += " SET " + oDocumentoBean.toPairs();
+                strSQL += " WHERE id=" + oDocumentoBean.getId();
                 iResult = oMysql.executeUpdateSQL(strSQL);
             }
 

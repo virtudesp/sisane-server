@@ -24,7 +24,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package net.daw.bean.table.implementation;
+package net.daw.bean.implementation;
 
 import com.google.gson.annotations.Expose;
 import java.sql.Connection;
@@ -32,20 +32,26 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import net.daw.bean.publicinterface.GenericBean;
 
-public class TipodocumentoBean implements GenericBean{
+public class TipousuarioBean implements GenericBean{
 
     @Expose
     private Integer id;
     @Expose
     private String descripcion = "";
-    @Expose
-    private Boolean privado = false;
 
-    public TipodocumentoBean() {
+    public TipousuarioBean() {
         this.id = 0;
     }
 
-    public TipodocumentoBean(Integer id) {
+    public TipousuarioBean(Integer id) {
+        this.id = id;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -57,37 +63,18 @@ public class TipodocumentoBean implements GenericBean{
         this.descripcion = descripcion;
     }
 
-    public Boolean getPrivado() {
-        return privado;
-    }
-
-    public void setPrivado(Boolean privado) {
-        this.privado = privado;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
     public String toJson(Boolean expand) {
         String strJson = "{";
         strJson += "id:" + id + ",";
         strJson += "descripcion:" + descripcion + ",";
-        strJson += "privado:" + privado + ",";
         strJson += "}";
         return strJson;
     }
 
-    @Override
     public String getColumns() {
         String strColumns = "";
         strColumns += "id,";
-        strColumns += "descripcion,";
-        strColumns += "privado";
+        strColumns += "descripcion";
 
         return strColumns;
     }
@@ -96,8 +83,7 @@ public class TipodocumentoBean implements GenericBean{
     public String getValues() {
         String strColumns = "";
         strColumns += id + ",";
-        strColumns += descripcion + ",";
-        strColumns += privado;
+        strColumns += descripcion;
 
         return strColumns;
     }
@@ -106,17 +92,15 @@ public class TipodocumentoBean implements GenericBean{
     public String toPairs() {
         String strPairs = "";
         strPairs += "id=" + id + ",";
-        strPairs += "descripcion=" + descripcion + ",";
-        strPairs += "privado=" + privado;
+        strPairs += "descripcion=" + descripcion;
 
         return strPairs;
     }
 
     @Override
-    public TipodocumentoBean fill(ResultSet oResultSet, Connection pooledConnection, Integer expand) throws SQLException, Exception {
+    public TipousuarioBean fill(ResultSet oResultSet, Connection pooledConnection, Integer expand) throws SQLException, Exception {
         this.setId(oResultSet.getInt("id"));
         this.setDescripcion(oResultSet.getString("descripcion"));
-        this.setPrivado(oResultSet.getBoolean("privado"));
         return this;
 
     }

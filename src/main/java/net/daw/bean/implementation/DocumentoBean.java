@@ -24,7 +24,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package net.daw.bean.table.implementation;
+package net.daw.bean.implementation;
 
 import net.daw.bean.publicinterface.GenericBean;
 import com.google.gson.annotations.Expose;
@@ -33,8 +33,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import net.daw.dao.table.implementation.TipodocumentoDao;
-import net.daw.dao.table.implementation.UsuarioDao;
+import net.daw.dao.implementation.TipodocumentoDao;
+import net.daw.dao.implementation.UsuarioDao;
 import net.daw.helper.statics.EncodingUtilHelper;
 
 public class DocumentoBean implements GenericBean {

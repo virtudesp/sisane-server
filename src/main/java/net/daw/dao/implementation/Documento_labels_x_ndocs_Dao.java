@@ -24,28 +24,27 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package net.daw.dao.table.implementation;
+package net.daw.dao.implementation;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.HashMap;
-import net.daw.bean.table.implementation.DocumentoBean;
-import net.daw.dao.publicinterface.TableDaoInterface;
+import net.daw.bean.implementation.Documento_labels_authors_x_ndocs_Bean;
 import net.daw.dao.publicinterface.ViewDaoInterface;
 import net.daw.data.implementation.MysqlDataSpImpl;
 import net.daw.helper.statics.ExceptionBooster;
 import net.daw.helper.statics.FilterBeanHelper;
 import net.daw.helper.statics.SqlBuilder;
 
-public class DocumentoDao implements ViewDaoInterface<DocumentoBean>, TableDaoInterface<DocumentoBean> {
+public class Documento_labels_x_ndocs_Dao implements ViewDaoInterface<Documento_labels_authors_x_ndocs_Bean> {
 
-    private String strTable = "documento";
-    private String strSQL = "select * from documento where 1=1 ";
+    
+    private String strSQL = "select etiquetas, count(id) as numetiquetas from documento where publicado=0 group by etiquetas";
     private MysqlDataSpImpl oMysql = null;
     private Connection oConnection = null;
 
-    public DocumentoDao(Connection oPooledConnection) throws Exception {
+    public Documento_labels_x_ndocs_Dao(Connection oPooledConnection) throws Exception {
         try {
             oConnection = oPooledConnection;
             oMysql = new MysqlDataSpImpl(oConnection);
@@ -79,93 +78,41 @@ public class DocumentoDao implements ViewDaoInterface<DocumentoBean>, TableDaoIn
     }
 
     @Override
-    public ArrayList<DocumentoBean> getPage(int intRegsPerPag, int intPage, ArrayList<FilterBeanHelper> hmFilter, HashMap<String, String> hmOrder, Integer expand) throws Exception {
+    public ArrayList<Documento_labels_authors_x_ndocs_Bean> getPage(int intRegsPerPag, int intPage, ArrayList<FilterBeanHelper> hmFilter, HashMap<String, String> hmOrder, Integer expand) throws Exception {
         strSQL += SqlBuilder.buildSqlWhere(hmFilter);
         strSQL += SqlBuilder.buildSqlOrder(hmOrder);
         strSQL += SqlBuilder.buildSqlLimit(oMysql.getCount(strSQL), intRegsPerPag, intPage);
-        ArrayList<DocumentoBean> arrDocumento = new ArrayList<>();
+        ArrayList<Documento_labels_authors_x_ndocs_Bean> oBeanList = new ArrayList<>();
         try {
             ResultSet oResultSet = oMysql.getAllSql(strSQL);
             if (oResultSet != null) {
                 while (oResultSet.next()) {
-                    DocumentoBean oDocumentoBean = new DocumentoBean();
-                    arrDocumento.add(oDocumentoBean.fill(oResultSet, oConnection, expand));
+                    Documento_labels_authors_x_ndocs_Bean oBean = new Documento_labels_authors_x_ndocs_Bean();
+                    oBeanList.add(oBean.fill(oResultSet, oConnection, expand));
                 }
             }
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPage ERROR: " + ex.getMessage()));
         }
-        return arrDocumento;
+        return oBeanList;
     }
 
     @Override
-    public ArrayList<DocumentoBean> getAll(ArrayList<FilterBeanHelper> alFilter, HashMap<String, String> hmOrder, Integer expand) throws Exception {
+    public ArrayList<Documento_labels_authors_x_ndocs_Bean> getAll(ArrayList<FilterBeanHelper> alFilter, HashMap<String, String> hmOrder, Integer expand) throws Exception {
         strSQL += SqlBuilder.buildSqlOrder(hmOrder);
-        ArrayList<DocumentoBean> arrDocumento = new ArrayList<>();
+        ArrayList<Documento_labels_authors_x_ndocs_Bean> arrDocumento = new ArrayList<>();
         try {
             ResultSet oResultSet = oMysql.getAllSql(strSQL);
             if (oResultSet != null) {
                 while (oResultSet.next()) {
-                    DocumentoBean oDocumentoBean = new DocumentoBean();
-                    arrDocumento.add(oDocumentoBean.fill(oResultSet, oConnection, expand));
+                    Documento_labels_authors_x_ndocs_Bean oBean = new Documento_labels_authors_x_ndocs_Bean();
+                    arrDocumento.add(oBean.fill(oResultSet, oConnection, expand));
                 }
             }
         } catch (Exception ex) {
             ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPage ERROR: " + ex.getMessage()));
         }
         return arrDocumento;
-    }
-
-    @Override
-    public DocumentoBean get(DocumentoBean oDocumentoBean, Integer expand) throws Exception {
-        if (oDocumentoBean.getId() > 0) {
-            try {
-                ResultSet oResultSet = oMysql.getAllSql(strSQL + " And id= " + oDocumentoBean.getId() + " ");
-                if (oResultSet != null) {
-                    while (oResultSet.next()) {
-                        oDocumentoBean = oDocumentoBean.fill(oResultSet, oConnection, expand);
-                    }
-                }
-            } catch (Exception ex) {
-                ExceptionBooster.boost(new Exception(this.getClass().getName() + ":get ERROR: " + ex.getMessage()));
-            }
-        } else {
-            oDocumentoBean.setId(0);
-        }
-        return oDocumentoBean;
-    }
-
-    @Override
-    public Integer set(DocumentoBean oDocumentoBean) throws Exception {
-        Integer iResult = null;
-        try {
-            if (oDocumentoBean.getId() == 0) {
-                strSQL = "INSERT INTO " + strTable + " ";
-                strSQL += "(" + oDocumentoBean.getColumns() + ")";
-                strSQL += "VALUES(" + oDocumentoBean.getValues() + ")";
-                iResult = oMysql.executeInsertSQL(strSQL);
-            } else {
-                strSQL = "UPDATE " + strTable + " ";
-                strSQL += " SET " + oDocumentoBean.toPairs();
-                strSQL += " WHERE id=" + oDocumentoBean.getId();
-                iResult = oMysql.executeUpdateSQL(strSQL);
-            }
-
-        } catch (Exception ex) {
-            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":set ERROR: " + ex.getMessage()));
-        }
-        return iResult;
-    }
-
-    @Override
-    public Integer remove(Integer id) throws Exception {
-        int result = 0;
-        try {
-            result = oMysql.removeOne(id, strTable);
-        } catch (Exception ex) {
-            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":remove ERROR: " + ex.getMessage()));
-        }
-        return result;
     }
 
 }

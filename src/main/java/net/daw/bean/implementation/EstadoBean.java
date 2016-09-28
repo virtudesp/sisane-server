@@ -24,69 +24,83 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package net.daw.bean.view.implementation;
+package net.daw.bean.implementation;
 
+import net.daw.bean.publicinterface.GenericBean;
 import com.google.gson.annotations.Expose;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import net.daw.bean.publicinterface.GenericBean;
 
-public class Documento_labels_x_ndocs_Bean implements GenericBean {
-
-    @Expose
-    private String etiquetas = "";
+public class EstadoBean implements GenericBean {
 
     @Expose
-    private Integer numetiquetas = 0;
+    private Integer id;
+    @Expose
+    private String tipo;
 
-    public String getEtiquetas() {
-        return etiquetas;
+    public EstadoBean() {
+        this.id = 0;
     }
 
-    public void setEtiquetas(String etiquetas) {
-        this.etiquetas = etiquetas;
+    public EstadoBean(Integer id) {
+        this.id = id;
     }
 
-    public Integer getNumetiquetas() {
-        return numetiquetas;
+    public String getTipo() {
+        return tipo;
     }
 
-    public void setNumetiquetas(Integer numetiquetas) {
-        this.numetiquetas = numetiquetas;
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
     }
 
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String toJson(Boolean expand) {
+        String strJson = "{";
+        strJson += "id:" + id + ",";
+        strJson += "tipo:" + tipo + ",";
+        strJson += "}";
+        return strJson;
+    }
+
+    @Override
     public String getColumns() {
         String strColumns = "";
-        strColumns += "etiquetas,";
-        strColumns += "numetiquetas";
-
+        strColumns += "id,";
+        strColumns += "tipo";
         return strColumns;
     }
 
     @Override
     public String getValues() {
         String strColumns = "";
-        strColumns += etiquetas + ",";
-        strColumns += numetiquetas;
-
+        strColumns += id + ",";
+        strColumns += tipo;
         return strColumns;
     }
 
     @Override
     public String toPairs() {
         String strPairs = "";
-        strPairs += "etiquetas=" + etiquetas + ",";
-        strPairs += "numetiquetas=" + numetiquetas;
+        strPairs += "id=" + id + ",";
+        strPairs += "tipo=" + tipo;
         return strPairs;
     }
 
     @Override
-    public Documento_labels_x_ndocs_Bean fill(ResultSet oResultSet, Connection pooledConnection, Integer expand) throws SQLException, Exception {
-        this.setEtiquetas(oResultSet.getString("etiquetas"));
-        this.setNumetiquetas(oResultSet.getInt("numetiquetas"));
-
+    public EstadoBean fill(ResultSet oResultSet, Connection pooledConnection, Integer expand) throws SQLException, Exception {
+        this.setId(oResultSet.getInt("id"));
+        this.setTipo(oResultSet.getString("tipo"));
         return this;
+
     }
 
 }

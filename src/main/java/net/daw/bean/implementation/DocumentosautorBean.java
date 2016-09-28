@@ -24,85 +24,85 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package net.daw.bean.table.implementation;
+package net.daw.bean.implementation;
 
 import com.google.gson.annotations.Expose;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import net.daw.bean.publicinterface.GenericBean;
+import net.daw.bean.implementation.UsuarioBean;
+import net.daw.dao.implementation.UsuarioDao;
 
-public class TipousuarioBean implements GenericBean{
+public class DocumentosautorBean implements GenericBean {
 
+    @Expose(serialize = false)
+    private Integer id_usuario = 0;
+    @Expose(deserialize = false)
+    private UsuarioBean obj_usuario = null;
     @Expose
-    private Integer id;
-    @Expose
-    private String descripcion = "";
+    private Integer numautores = 0;
 
-    public TipousuarioBean() {
-        this.id = 0;
+    public Integer getId_usuario() {
+        return id_usuario;
     }
 
-    public TipousuarioBean(Integer id) {
-        this.id = id;
+    public void setId_usuario(Integer id_usuario) {
+        this.id_usuario = id_usuario;
     }
 
-    public Integer getId() {
-        return id;
+    public UsuarioBean getObj_usuario() {
+        return obj_usuario;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setObj_usuario(UsuarioBean obj_usuario) {
+        this.obj_usuario = obj_usuario;
     }
 
-    public String getDescripcion() {
-        return descripcion;
+    public Integer getNumautores() {
+        return numautores;
     }
 
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
-    }
-
-    public String toJson(Boolean expand) {
-        String strJson = "{";
-        strJson += "id:" + id + ",";
-        strJson += "descripcion:" + descripcion + ",";
-        strJson += "}";
-        return strJson;
+    public void setNumautores(Integer numautores) {
+        this.numautores = numautores;
     }
 
     public String getColumns() {
         String strColumns = "";
-        strColumns += "id,";
-        strColumns += "descripcion";
-
+        strColumns += "id_usuario,";
+        strColumns += "numautores";
         return strColumns;
     }
 
     @Override
     public String getValues() {
         String strColumns = "";
-        strColumns += id + ",";
-        strColumns += descripcion;
-
+        strColumns += id_usuario + ",";
+        strColumns += numautores;
         return strColumns;
     }
 
     @Override
     public String toPairs() {
         String strPairs = "";
-        strPairs += "id=" + id + ",";
-        strPairs += "descripcion=" + descripcion;
-
+        strPairs += "id_usuario=" + id_usuario + ",";
+        strPairs += "numautores=" + numautores;
         return strPairs;
     }
 
     @Override
-    public TipousuarioBean fill(ResultSet oResultSet, Connection pooledConnection, Integer expand) throws SQLException, Exception {
-        this.setId(oResultSet.getInt("id"));
-        this.setDescripcion(oResultSet.getString("descripcion"));
+    public DocumentosautorBean fill(ResultSet oResultSet, Connection pooledConnection, Integer expand) throws SQLException, Exception {
+        if (expand > 0) {
+            UsuarioBean oUsuarioBean = new UsuarioBean();
+            UsuarioDao oUsuarioDao = new UsuarioDao(pooledConnection);
+            oUsuarioBean.setId(oResultSet.getInt("id_usuario"));
+            oUsuarioBean = oUsuarioDao.get(oUsuarioBean, expand - 1);
+            this.setObj_usuario(oUsuarioBean);
+        } else {
+            this.setId_usuario(oResultSet.getInt("id_usuario"));
+        }
+        this.setNumautores(oResultSet.getInt("numautores"));
         return this;
-
     }
 
 }

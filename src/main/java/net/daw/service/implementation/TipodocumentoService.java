@@ -24,7 +24,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package net.daw.service.table.implementation;
+package net.daw.service.implementation;
 
 import com.google.gson.Gson;
 import java.sql.Connection;
@@ -32,10 +32,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
-import net.daw.bean.table.implementation.TipousuarioBean;
-import net.daw.bean.table.implementation.UsuarioBean;
+import net.daw.bean.implementation.TipodocumentoBean;
+import net.daw.bean.implementation.UsuarioBean;
 import net.daw.connection.publicinterface.ConnectionInterface;
-import net.daw.dao.table.implementation.TipousuarioDao;
+import net.daw.dao.implementation.TipodocumentoDao;
 
 import net.daw.helper.statics.AppConfigurationHelper;
 import static net.daw.helper.statics.AppConfigurationHelper.getSourceConnection;
@@ -47,11 +47,11 @@ import net.daw.helper.statics.ParameterCook;
 import net.daw.service.publicinterface.TableServiceInterface;
 import net.daw.service.publicinterface.ViewServiceInterface;
 
-public class TipousuarioService implements TableServiceInterface, ViewServiceInterface {
+public class TipodocumentoService implements TableServiceInterface, ViewServiceInterface {
 
     protected HttpServletRequest oRequest = null;
 
-    public TipousuarioService(HttpServletRequest request) {
+    public TipodocumentoService(HttpServletRequest request) {
         oRequest = request;
     }
 
@@ -74,8 +74,8 @@ public class TipousuarioService implements TableServiceInterface, ViewServiceInt
             try {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
-                TipousuarioDao oTipousuarioDao = new TipousuarioDao(oConnection);
-                data = JsonMessage.getJson("200", Integer.toString(oTipousuarioDao.getCount(alFilter)));
+                TipodocumentoDao oTipodocumentoDao = new TipodocumentoDao(oConnection);
+                data = JsonMessage.getJson("200", Integer.toString(oTipodocumentoDao.getCount(alFilter)));
             } catch (Exception ex) {
                 ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getCount ERROR: " + ex.getMessage()));
             } finally {
@@ -102,11 +102,11 @@ public class TipousuarioService implements TableServiceInterface, ViewServiceInt
             try {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
-                TipousuarioDao oTipousuarioDao = new TipousuarioDao(oConnection);
-                TipousuarioBean oTipousuarioBean = new TipousuarioBean(id);
-                oTipousuarioBean = oTipousuarioDao.get(oTipousuarioBean, AppConfigurationHelper.getJsonDepth());
+                TipodocumentoDao oTipodocumentoDao = new TipodocumentoDao(oConnection);
+                TipodocumentoBean oTipodocumentoBean = new TipodocumentoBean(id);
+                oTipodocumentoBean = oTipodocumentoDao.get(oTipodocumentoBean, AppConfigurationHelper.getJsonDepth());
                 Gson gson = AppConfigurationHelper.getGson();
-                data = JsonMessage.getJson("200", AppConfigurationHelper.getGson().toJson(oTipousuarioBean));
+                data = JsonMessage.getJson("200", AppConfigurationHelper.getGson().toJson(oTipodocumentoBean));
             } catch (Exception ex) {
                 ExceptionBooster.boost(new Exception(this.getClass().getName() + ":get ERROR: " + ex.getMessage()));
             } finally {
@@ -136,8 +136,8 @@ public class TipousuarioService implements TableServiceInterface, ViewServiceInt
             try {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
-                TipousuarioDao oTipousuarioDao = new TipousuarioDao(oConnection);
-                ArrayList<TipousuarioBean> arrBeans = oTipousuarioDao.getAll(alFilter, hmOrder, 1);
+                TipodocumentoDao oTipodocumentoDao = new TipodocumentoDao(oConnection);
+                ArrayList<TipodocumentoBean> arrBeans = oTipodocumentoDao.getAll(alFilter, hmOrder, 1);
                 data = JsonMessage.getJson("200", AppConfigurationHelper.getGson().toJson(arrBeans));
             } catch (Exception ex) {
                 ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getAll ERROR: " + ex.getMessage()));
@@ -170,8 +170,8 @@ public class TipousuarioService implements TableServiceInterface, ViewServiceInt
             try {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
-                TipousuarioDao oTipousuarioDao = new TipousuarioDao(oConnection);
-                List<TipousuarioBean> arrBeans = oTipousuarioDao.getPage(intRegsPerPag, intPage, alFilter, hmOrder, AppConfigurationHelper.getJsonDepth());
+                TipodocumentoDao oTipodocumentoDao = new TipodocumentoDao(oConnection);
+                List<TipodocumentoBean> arrBeans = oTipodocumentoDao.getPage(intRegsPerPag, intPage, alFilter, hmOrder, AppConfigurationHelper.getJsonDepth());
                 data = JsonMessage.getJson("200", AppConfigurationHelper.getGson().toJson(arrBeans));
             } catch (Exception ex) {
                 ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPage ERROR: " + ex.getMessage()));
@@ -200,8 +200,8 @@ public class TipousuarioService implements TableServiceInterface, ViewServiceInt
             try {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
-                TipousuarioDao oTipousuarioDao = new TipousuarioDao(oConnection);
-                data = JsonMessage.getJson("200", Integer.toString(oTipousuarioDao.getPages(intRegsPerPag, alFilter)));
+                TipodocumentoDao oTipodocumentoDao = new TipodocumentoDao(oConnection);
+                data = JsonMessage.getJson("200", Integer.toString(oTipodocumentoDao.getPages(intRegsPerPag, alFilter)));
             } catch (Exception ex) {
                 ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPages ERROR: " + ex.getMessage()));
             } finally {
@@ -252,8 +252,8 @@ public class TipousuarioService implements TableServiceInterface, ViewServiceInt
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
                 oConnection.setAutoCommit(false);
-                TipousuarioDao oTipousuarioDao = new TipousuarioDao(oConnection);
-                resultado = JsonMessage.getJson("200", (String) oTipousuarioDao.remove(id).toString());
+                TipodocumentoDao oTipodocumentoDao = new TipodocumentoDao(oConnection);
+                resultado = JsonMessage.getJson("200", (String) oTipodocumentoDao.remove(id).toString());
                 oConnection.commit();
             } catch (Exception ex) {
                 oConnection.rollback();
@@ -283,11 +283,11 @@ public class TipousuarioService implements TableServiceInterface, ViewServiceInt
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
                 oConnection.setAutoCommit(false);
-                TipousuarioDao oTipousuarioDao = new TipousuarioDao(oConnection);
-                TipousuarioBean oTipousuarioBean = new TipousuarioBean();
-                oTipousuarioBean = AppConfigurationHelper.getGson().fromJson(jason, oTipousuarioBean.getClass());
-                if (oTipousuarioBean != null) {
-                    Integer iResult = oTipousuarioDao.set(oTipousuarioBean);
+                TipodocumentoDao oTipodocumentoDao = new TipodocumentoDao(oConnection);
+                TipodocumentoBean oTipodocumentoBean = new TipodocumentoBean();
+                oTipodocumentoBean = AppConfigurationHelper.getGson().fromJson(jason, oTipodocumentoBean.getClass());
+                if (oTipodocumentoBean != null) {
+                    Integer iResult = oTipodocumentoDao.set(oTipodocumentoBean);
                     if (iResult >= 1) {
                         resultado = JsonMessage.getJson("200", iResult.toString());
                     } else {
