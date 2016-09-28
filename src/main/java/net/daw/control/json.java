@@ -44,6 +44,7 @@ import net.daw.helper.statics.ExceptionBooster;
 import net.daw.helper.statics.JsonMessage;
 import net.daw.helper.statics.ParameterCook;
 import net.daw.service.publicinterface.TableServiceInterface;
+import net.daw.service.publicinterface.ViewServiceInterface;
 
 public class json extends HttpServlet {
 
@@ -65,6 +66,7 @@ public class json extends HttpServlet {
 
     private void writeLog(HttpServletRequest request, HttpServletResponse response, String strMessage) throws ServletException, IOException {
         Logger.getLogger(json.class.getName()).log(Level.SEVERE, null, request.getRemoteHost() + ": " + request.getRemoteAddr() + ": " + strMessage);
+        System.out.println(request.getRemoteHost() + ": " + request.getRemoteAddr() + ": " + strMessage);
 
     }
 
@@ -107,7 +109,7 @@ public class json extends HttpServlet {
             } else {
                 try {
                     String strClassName = "net.daw.service.implementation." + ParameterCook.prepareCamelCaseObject(request) + "Service";
-                    TableServiceInterface oService = (TableServiceInterface) Class.forName(strClassName).getDeclaredConstructor(HttpServletRequest.class).newInstance(request);
+                    ViewServiceInterface oService = (ViewServiceInterface) Class.forName(strClassName).getDeclaredConstructor(HttpServletRequest.class).newInstance(request);
                     Method oMethodService = oService.getClass().getMethod(ParameterCook.prepareOperation(request));
                     String jsonResult = (String) oMethodService.invoke(oService);
                     sendResponse2(request, response, jsonResult);
@@ -145,6 +147,7 @@ public class json extends HttpServlet {
 
         } catch (Exception ex) {
             //Logger.getLogger(JsonControl.class.getName()).log(Level.SEVERE, null, ex);
+            writeLog(request, response, ex.toString());
         }
 
     }
@@ -165,6 +168,7 @@ public class json extends HttpServlet {
 
         } catch (Exception ex) {
             //Logger.getLogger(JsonControl.class.getName()).log(Level.SEVERE, null, ex);
+            writeLog(request, response, ex.toString());
         }
     }
 

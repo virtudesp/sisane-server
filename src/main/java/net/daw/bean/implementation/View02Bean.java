@@ -31,19 +31,14 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import net.daw.bean.publicinterface.GenericBean;
-import net.daw.bean.implementation.UsuarioBean;
-import net.daw.dao.implementation.UsuarioDao;
 
-public class Documento_labels_authors_x_ndocs_Bean implements GenericBean {
+public class View02Bean implements GenericBean {
 
     @Expose
     private String etiquetas = "";
+
     @Expose
     private Integer numetiquetas = 0;
-    @Expose(serialize = false)
-    private Integer id_usuario = 0; //important zero-initialize foreign keys
-    @Expose(deserialize = false)
-    private UsuarioBean obj_usuario = null;
 
     public String getEtiquetas() {
         return etiquetas;
@@ -61,27 +56,11 @@ public class Documento_labels_authors_x_ndocs_Bean implements GenericBean {
         this.numetiquetas = numetiquetas;
     }
 
-    public Integer getId_usuario() {
-        return id_usuario;
-    }
-
-    public void setId_usuario(Integer id_usuario) {
-        this.id_usuario = id_usuario;
-    }
-
-    public UsuarioBean getObj_usuario() {
-        return obj_usuario;
-    }
-
-    public void setObj_usuario(UsuarioBean obj_usuario) {
-        this.obj_usuario = obj_usuario;
-    }
-
     public String getColumns() {
         String strColumns = "";
         strColumns += "etiquetas,";
-        strColumns += "numetiquetas,";
-        strColumns += "id_usuario";
+        strColumns += "numetiquetas";
+
         return strColumns;
     }
 
@@ -89,8 +68,8 @@ public class Documento_labels_authors_x_ndocs_Bean implements GenericBean {
     public String getValues() {
         String strColumns = "";
         strColumns += etiquetas + ",";
-        strColumns += numetiquetas + ",";
-        strColumns += id_usuario;
+        strColumns += numetiquetas;
+
         return strColumns;
     }
 
@@ -98,24 +77,16 @@ public class Documento_labels_authors_x_ndocs_Bean implements GenericBean {
     public String toPairs() {
         String strPairs = "";
         strPairs += "etiquetas=" + etiquetas + ",";
-        strPairs += "numetiquetas=" + numetiquetas + ",";
-        strPairs += "id_usuario=" + id_usuario;
+        strPairs += "numetiquetas=" + numetiquetas;
         return strPairs;
     }
 
     @Override
-    public Documento_labels_authors_x_ndocs_Bean fill(ResultSet oResultSet, Connection pooledConnection, Integer expand) throws SQLException, Exception {
+    public View02Bean fill(ResultSet oResultSet, Connection pooledConnection, Integer expand) throws SQLException, Exception {
         this.setEtiquetas(oResultSet.getString("etiquetas"));
         this.setNumetiquetas(oResultSet.getInt("numetiquetas"));
-        if (expand > 0) {
-            UsuarioBean oUsuarioBean = new UsuarioBean();
-            UsuarioDao oUsuarioDao = new UsuarioDao(pooledConnection);
-            oUsuarioBean.setId(oResultSet.getInt("id_usuario"));
-            oUsuarioBean = oUsuarioDao.get(oUsuarioBean, expand - 1);
-            this.setObj_usuario(oUsuarioBean);
-        } else {
-            this.setId_usuario(oResultSet.getInt("id_usuario"));
-        }
+
         return this;
     }
+
 }

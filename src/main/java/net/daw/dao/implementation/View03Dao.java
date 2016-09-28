@@ -30,21 +30,21 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.HashMap;
-import net.daw.bean.implementation.Documento_labels_authors_x_ndocs_Bean;
+import net.daw.bean.implementation.View01Bean;
 import net.daw.dao.publicinterface.ViewDaoInterface;
 import net.daw.data.implementation.MysqlDataSpImpl;
 import net.daw.helper.statics.ExceptionBooster;
 import net.daw.helper.statics.FilterBeanHelper;
 import net.daw.helper.statics.SqlBuilder;
 
-public class Documento_labels_authors_x_ndocs_Dao implements ViewDaoInterface<Documento_labels_authors_x_ndocs_Bean> {
+public class View03Dao implements ViewDaoInterface<View01Bean> {
 
     
-    private String strSQL = "select etiquetas, id_usuario, count(id) as numetiquetas from documento where publicado=0 group by etiquetas, id_usuario";
+    private String strSQL = "select id_usuario, count(id) as numautores from documento group by id_usuario";
     private MysqlDataSpImpl oMysql = null;
     private Connection oConnection = null;
 
-    public Documento_labels_authors_x_ndocs_Dao(Connection oPooledConnection) throws Exception {
+    public View03Dao(Connection oPooledConnection) throws Exception {
         try {
             oConnection = oPooledConnection;
             oMysql = new MysqlDataSpImpl(oConnection);
@@ -78,16 +78,16 @@ public class Documento_labels_authors_x_ndocs_Dao implements ViewDaoInterface<Do
     }
 
     @Override
-    public ArrayList<Documento_labels_authors_x_ndocs_Bean> getPage(int intRegsPerPag, int intPage, ArrayList<FilterBeanHelper> hmFilter, HashMap<String, String> hmOrder, Integer expand) throws Exception {
+    public ArrayList<View01Bean> getPage(int intRegsPerPag, int intPage, ArrayList<FilterBeanHelper> hmFilter, HashMap<String, String> hmOrder, Integer expand) throws Exception {
         strSQL += SqlBuilder.buildSqlWhere(hmFilter);
         strSQL += SqlBuilder.buildSqlOrder(hmOrder);
         strSQL += SqlBuilder.buildSqlLimit(oMysql.getCount(strSQL), intRegsPerPag, intPage);
-        ArrayList<Documento_labels_authors_x_ndocs_Bean> oBeanList = new ArrayList<>();
+        ArrayList<View01Bean> oBeanList = new ArrayList<>();
         try {
             ResultSet oResultSet = oMysql.getAllSql(strSQL);
             if (oResultSet != null) {
                 while (oResultSet.next()) {
-                    Documento_labels_authors_x_ndocs_Bean oBean = new Documento_labels_authors_x_ndocs_Bean();
+                    View01Bean oBean = new View01Bean();
                     oBeanList.add(oBean.fill(oResultSet, oConnection, expand));
                 }
             }
@@ -98,19 +98,19 @@ public class Documento_labels_authors_x_ndocs_Dao implements ViewDaoInterface<Do
     }
 
     @Override
-    public ArrayList<Documento_labels_authors_x_ndocs_Bean> getAll(ArrayList<FilterBeanHelper> alFilter, HashMap<String, String> hmOrder, Integer expand) throws Exception {
+    public ArrayList<View01Bean> getAll(ArrayList<FilterBeanHelper> alFilter, HashMap<String, String> hmOrder, Integer expand) throws Exception {
         strSQL += SqlBuilder.buildSqlOrder(hmOrder);
-        ArrayList<Documento_labels_authors_x_ndocs_Bean> arrDocumento = new ArrayList<>();
+        ArrayList<View01Bean> arrDocumento = new ArrayList<>();
         try {
             ResultSet oResultSet = oMysql.getAllSql(strSQL);
             if (oResultSet != null) {
                 while (oResultSet.next()) {
-                    Documento_labels_authors_x_ndocs_Bean oBean = new Documento_labels_authors_x_ndocs_Bean();
+                    View01Bean oBean = new View01Bean();
                     arrDocumento.add(oBean.fill(oResultSet, oConnection, expand));
                 }
             }
         } catch (Exception ex) {
-            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPage ERROR: " + ex.getMessage()));
+            throw new Error(this.getClass().getName() + ":getAll ERROR: " + ex.getMessage(), ex);                       
         }
         return arrDocumento;
     }

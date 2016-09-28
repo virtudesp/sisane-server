@@ -31,61 +31,77 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import net.daw.bean.publicinterface.GenericBean;
+import net.daw.bean.implementation.UsuarioBean;
+import net.daw.dao.implementation.UsuarioDao;
 
-public class Documento_labels_x_ndocs_Bean implements GenericBean {
+public class View03Bean implements GenericBean {
 
+    @Expose(serialize = false)
+    private Integer id_usuario = 0;
+    @Expose(deserialize = false)
+    private UsuarioBean obj_usuario = null;
     @Expose
-    private String etiquetas = "";
+    private Integer numautores = 0;
 
-    @Expose
-    private Integer numetiquetas = 0;
-
-    public String getEtiquetas() {
-        return etiquetas;
+    public Integer getId_usuario() {
+        return id_usuario;
     }
 
-    public void setEtiquetas(String etiquetas) {
-        this.etiquetas = etiquetas;
+    public void setId_usuario(Integer id_usuario) {
+        this.id_usuario = id_usuario;
     }
 
-    public Integer getNumetiquetas() {
-        return numetiquetas;
+    public UsuarioBean getObj_usuario() {
+        return obj_usuario;
     }
 
-    public void setNumetiquetas(Integer numetiquetas) {
-        this.numetiquetas = numetiquetas;
+    public void setObj_usuario(UsuarioBean obj_usuario) {
+        this.obj_usuario = obj_usuario;
+    }
+
+    public Integer getNumautores() {
+        return numautores;
+    }
+
+    public void setNumautores(Integer numautores) {
+        this.numautores = numautores;
     }
 
     public String getColumns() {
         String strColumns = "";
-        strColumns += "etiquetas,";
-        strColumns += "numetiquetas";
-
+        strColumns += "id_usuario,";
+        strColumns += "numautores";
         return strColumns;
     }
 
     @Override
     public String getValues() {
         String strColumns = "";
-        strColumns += etiquetas + ",";
-        strColumns += numetiquetas;
-
+        strColumns += id_usuario + ",";
+        strColumns += numautores;
         return strColumns;
     }
 
     @Override
     public String toPairs() {
         String strPairs = "";
-        strPairs += "etiquetas=" + etiquetas + ",";
-        strPairs += "numetiquetas=" + numetiquetas;
+        strPairs += "id_usuario=" + id_usuario + ",";
+        strPairs += "numautores=" + numautores;
         return strPairs;
     }
 
     @Override
-    public Documento_labels_x_ndocs_Bean fill(ResultSet oResultSet, Connection pooledConnection, Integer expand) throws SQLException, Exception {
-        this.setEtiquetas(oResultSet.getString("etiquetas"));
-        this.setNumetiquetas(oResultSet.getInt("numetiquetas"));
-
+    public View03Bean fill(ResultSet oResultSet, Connection pooledConnection, Integer expand) throws SQLException, Exception {
+        if (expand > 0) {
+            UsuarioBean oUsuarioBean = new UsuarioBean();
+            UsuarioDao oUsuarioDao = new UsuarioDao(pooledConnection);
+            oUsuarioBean.setId(oResultSet.getInt("id_usuario"));
+            oUsuarioBean = oUsuarioDao.get(oUsuarioBean, expand - 1);
+            this.setObj_usuario(oUsuarioBean);
+        } else {
+            this.setId_usuario(oResultSet.getInt("id_usuario"));
+        }
+        this.setNumautores(oResultSet.getInt("numautores"));
         return this;
     }
 

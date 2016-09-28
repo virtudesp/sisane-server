@@ -39,11 +39,9 @@ import java.util.HashMap;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import net.daw.bean.implementation.UsuarioBean;
-import net.daw.bean.implementation.Documento_labels_authors_x_ndocs_Bean;
+import net.daw.bean.implementation.View01Bean;
 import net.daw.connection.publicinterface.ConnectionInterface;
-import net.daw.dao.implementation.Documento_labels_authors_x_ndocs_Dao;
-import net.daw.dao.implementation.Documento_labels_x_ndocs_Dao;
-import net.daw.dao.implementation.DocumentosautorDao;
+import net.daw.dao.implementation.View03Dao;
 
 import net.daw.helper.statics.AppConfigurationHelper;
 import static net.daw.helper.statics.AppConfigurationHelper.getSourceConnection;
@@ -53,11 +51,11 @@ import net.daw.helper.statics.JsonMessage;
 import net.daw.helper.statics.ParameterCook;
 import net.daw.service.publicinterface.ViewServiceInterface;
 
-public class DocumentosautorService implements ViewServiceInterface {
+public class View03Service implements ViewServiceInterface {
 
     protected HttpServletRequest oRequest = null;
 
-    public DocumentosautorService(HttpServletRequest request) {
+    public View03Service(HttpServletRequest request) {
         oRequest = request;
     }
 
@@ -80,7 +78,7 @@ public class DocumentosautorService implements ViewServiceInterface {
             try {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
-                DocumentosautorDao oDao = new DocumentosautorDao(oConnection);
+                View03Dao oDao = new View03Dao(oConnection);
                 data = JsonMessage.getJson("200", Integer.toString(oDao.getCount(alFilter)));
             } catch (Exception ex) {
                 ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getCount ERROR: " + ex.getMessage()));
@@ -105,13 +103,12 @@ public class DocumentosautorService implements ViewServiceInterface {
             HashMap<String, String> hmOrder = ParameterCook.prepareOrder(oRequest);
             String data = null;
             Connection oConnection = null;
-            ConnectionInterface oDataConnectionSource = null;
-
+            ConnectionInterface oDataConnectionSource = null;   
             try {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
-                DocumentosautorDao oDao = new DocumentosautorDao(oConnection);
-                ArrayList<Documento_labels_authors_x_ndocs_Bean> arrBeans = oDao.getAll(alFilter, hmOrder, AppConfigurationHelper.getJsonDepth());
+                View03Dao oDao = new View03Dao(oConnection);
+                ArrayList<View01Bean> arrBeans = oDao.getAll(alFilter, hmOrder, AppConfigurationHelper.getJsonDepth());
                 data = JsonMessage.getJson("200", AppConfigurationHelper.getGson().toJson(arrBeans));
             } catch (Exception ex) {
                 ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getAll ERROR: " + ex.getMessage()));
@@ -142,8 +139,8 @@ public class DocumentosautorService implements ViewServiceInterface {
             try {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
-                DocumentosautorDao oDao = new DocumentosautorDao(oConnection);
-                List<Documento_labels_authors_x_ndocs_Bean> arrBeans = oDao.getPage(intRegsPerPag, intPage, alFilter, hmOrder, AppConfigurationHelper.getJsonDepth());
+                View03Dao oDao = new View03Dao(oConnection);
+                List<View01Bean> arrBeans = oDao.getPage(intRegsPerPag, intPage, alFilter, hmOrder, AppConfigurationHelper.getJsonDepth());
                 data = JsonMessage.getJson("200", AppConfigurationHelper.getGson().toJson(arrBeans));
             } catch (Exception ex) {
                 ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPage ERROR: " + ex.getMessage()));
@@ -172,7 +169,7 @@ public class DocumentosautorService implements ViewServiceInterface {
             try {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
-                DocumentosautorDao oDao = new DocumentosautorDao(oConnection);
+                View03Dao oDao = new View03Dao(oConnection);
                 data = JsonMessage.getJson("200", Integer.toString(oDao.getPages(intRegsPerPag, alFilter)));
             } catch (Exception ex) {
                 ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPages ERROR: " + ex.getMessage()));
