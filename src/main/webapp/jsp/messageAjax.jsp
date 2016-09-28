@@ -30,6 +30,4 @@
     Created on : Sep 28, 2016, 9:05:39 AM
     Author     : rafa
 
---%>
-<%@page contentType="application/json" pageEncoding="UTF-8"%>
-<%out.print(request.getAttribute("contenido"));%>
+--%><%@page contentType="application/json" pageEncoding="UTF-8"%><%out.print(request.getAttribute("contenido"));%>
