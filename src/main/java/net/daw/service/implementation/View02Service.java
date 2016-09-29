@@ -1,14 +1,12 @@
-  
-
-
-
 /*
- * Copyright (c) 2015 by Rafael Angel Aznar Aparici (rafaaznar at gmail dot com)
+ * Copyright (c) 2016 by Rafael Angel Aznar Aparici (rafaaznar at gmail dot com)
  * 
- * openAUSIAS: The stunning micro-library that helps you to develop easily 
- *             AJAX web applications by using Java and jQuery
- * openAUSIAS is distributed under the MIT License (MIT)
- * Sources at https://github.com/rafaelaznar/openAUSIAS
+ * zylka server: Helps you to develop easily AJAX web applications 
+ *               by copying and modifying this Java Server.
+ *
+ * Sources at https://github.com/rafaelaznar/zylka
+ * 
+ * zylka server is distributed under the MIT License (MIT)
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -28,6 +26,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+
 package net.daw.service.implementation;
 
 import java.sql.Connection;
@@ -39,7 +38,6 @@ import net.daw.bean.implementation.UsuarioBean;
 import net.daw.bean.implementation.View02Bean;
 import net.daw.connection.publicinterface.ConnectionInterface;
 import net.daw.dao.implementation.View02Dao;
-
 import net.daw.helper.statics.AppConfigurationHelper;
 import static net.daw.helper.statics.AppConfigurationHelper.getSourceConnection;
 import net.daw.helper.statics.ExceptionBooster;
@@ -105,7 +103,7 @@ public class View02Service implements ViewServiceInterface {
                 ArrayList<View02Bean> arrBeans = oDao.getAll(alFilter, hmOrder, AppConfigurationHelper.getJsonDepth());
                 data = JsonMessage.getJson("200", AppConfigurationHelper.getGson().toJson(arrBeans));
             } catch (Exception ex) {
-                ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getAll ERROR: " + ex.getMessage()));
+                throw new Exception(this.getClass().getName() + ":getAll ERROR: ");
             } finally {
                 if (oConnection != null) {
                     oConnection.close();

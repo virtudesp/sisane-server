@@ -1,10 +1,12 @@
 /*
- * Copyright (c) 2015 by Rafael Angel Aznar Aparici (rafaaznar at gmail dot com)
+ * Copyright (c) 2016 by Rafael Angel Aznar Aparici (rafaaznar at gmail dot com)
  * 
- * openAUSIAS: The stunning micro-library that helps you to develop easily 
- *             AJAX web applications by using Java and jQuery
- * openAUSIAS is distributed under the MIT License (MIT)
- * Sources at https://github.com/rafaelaznar/openAUSIAS
+ * zylka server: Helps you to develop easily AJAX web applications 
+ *               by copying and modifying this Java Server.
+ *
+ * Sources at https://github.com/rafaelaznar/zylka
+ * 
+ * zylka server is distributed under the MIT License (MIT)
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -26,12 +28,9 @@
  */
 package net.daw.control;
 
-import com.google.gson.Gson;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -40,34 +39,32 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import net.daw.helper.statics.EstadoHelper;
 import net.daw.helper.statics.EstadoHelper.Tipo_estado;
-import net.daw.helper.statics.ExceptionBooster;
 import net.daw.helper.statics.JsonMessage;
+import net.daw.helper.statics.Log4j;
 import net.daw.helper.statics.ParameterCook;
-import net.daw.service.publicinterface.TableServiceInterface;
 import net.daw.service.publicinterface.ViewServiceInterface;
 
 public class json extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
 
-    private void sendResponse(HttpServletRequest request, HttpServletResponse response, String strStatus, String strMessage) throws ServletException, IOException {
-        Map<String, String> data = new HashMap<>();
-        data.put("status", strStatus);
-        data.put("message", strMessage);
-        Gson gson = new Gson();
-        request.setAttribute("contenido", gson.toJson(data));
-        getServletContext().getRequestDispatcher("/jsp/messageAjax.jsp").forward(request, response);
-    }
-
-    private void sendResponse2(HttpServletRequest request, HttpServletResponse response, String strMessage) throws ServletException, IOException {
+//    private void sendResponseJson1(HttpServletRequest request, HttpServletResponse response, String strStatus, String strMessage) throws ServletException, IOException {
+//        Map<String, String> data = new HashMap<>();
+//        data.put("status", strStatus);
+//        data.put("message", strMessage);
+//        Gson gson = new Gson();
+//        request.setAttribute("contenido", gson.toJson(data));
+//        getServletContext().getRequestDispatcher("/jsp/messageAjax.jsp").forward(request, response);
+//    }
+    private void sendResponseJson(HttpServletRequest request, HttpServletResponse response, String strMessage) throws ServletException, IOException {
         request.setAttribute("contenido", strMessage);
         getServletContext().getRequestDispatcher("/jsp/messageAjax.jsp").forward(request, response);
     }
 
-    private void writeLog(HttpServletRequest request, HttpServletResponse response, String strMessage) throws ServletException, IOException {
-        Logger.getLogger(json.class.getName()).log(Level.SEVERE, null, request.getRemoteHost() + ": " + request.getRemoteAddr() + ": " + strMessage);
-        System.out.println(request.getRemoteHost() + ": " + request.getRemoteAddr() + ": " + strMessage);
-
+    private void sendResponseHtml(HttpServletRequest request, HttpServletResponse response, String strTitle, String strMessage) throws ServletException, IOException {
+        request.setAttribute("title", strTitle);
+        request.setAttribute("message", strMessage);
+        getServletContext().getRequestDispatcher("/jsp/message.jsp").forward(request, response);
     }
 
     private void retardo(Integer iLast) {
@@ -78,7 +75,10 @@ public class json extends HttpServlet {
         }
     }
 
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, Exception {
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, Exception {        
+        Log4j.infoLog("--------> incio PETICIÓN ");
+        Log4j.infoLog(request.getRemoteHost() + ": " + request.getRemoteAddr());
+        Log4j.infoLog("URL: " + request.getRequestURL().append('?').append(request.getQueryString()) + ": method: " + request.getMethod() + "");
         try {
             try {
                 Class.forName("com.mysql.jdbc.Driver");
@@ -90,7 +90,7 @@ public class json extends HttpServlet {
                     request.setAttribute("contenido", JsonMessage.getJsonMsg("500", "Applications server error. Please, contact your administrator."));
                     getServletContext().getRequestDispatcher("/jsp/messageAjax.jsp").forward(request, response);
                 }
-                writeLog(request, response, ex.toString());
+                Log4j.severeLog(ex.toString());
                 return;
             }
             if (EstadoHelper.getTipo_estado() == Tipo_estado.Debug) {
@@ -99,33 +99,25 @@ public class json extends HttpServlet {
             String ob = ParameterCook.prepareObject(request);
             String op = ParameterCook.prepareOperation(request);
             if ("".equals(op) && "".equals(ob)) {
-                try {
-                    request.setAttribute("title", "zylka server by rafael aznar");
-                    request.setAttribute("message", "the server is up and running on " + request.getLocalName() + ":" + request.getLocalPort());
-                    getServletContext().getRequestDispatcher("/jsp/message.jsp").forward(request, response);
-                } catch (ServletException | IOException ex) {
-                    ExceptionBooster.boost(new Exception(this.getClass().getName() + ":processRequest ERROR: no such operation"));
-                }                
+                sendResponseHtml(request, response, "zylka server by rafael aznar", "the server is up and running on " + request.getLocalName() + ":" + request.getLocalPort());
             } else {
                 try {
                     String strClassName = "net.daw.service.implementation." + ParameterCook.prepareCamelCaseObject(request) + "Service";
                     ViewServiceInterface oService = (ViewServiceInterface) Class.forName(strClassName).getDeclaredConstructor(HttpServletRequest.class).newInstance(request);
                     Method oMethodService = oService.getClass().getMethod(ParameterCook.prepareOperation(request));
                     String jsonResult = (String) oMethodService.invoke(oService);
-                    sendResponse2(request, response, jsonResult);
+                    sendResponseJson(request, response, jsonResult);
                 } catch (ClassNotFoundException | InstantiationException | IllegalAccessException ex) {
-                    ExceptionBooster.boost(new Exception(this.getClass().getName() + ":processRequest ERROR: no such operation"));
+                    throw new Exception(this.getClass().getName() + ":processRequest ERROR: no such operation");
                 }
             }
         } catch (ServletException | IOException | NoSuchMethodException | SecurityException | IllegalArgumentException | InvocationTargetException ex) {
             if (EstadoHelper.getTipo_estado() == Tipo_estado.Debug) {
-                request.setAttribute("contenido", JsonMessage.getJsonMsg("500", "ERROR: " + ex.getMessage()));
-                getServletContext().getRequestDispatcher("/jsp/messageAjax.jsp").forward(request, response);
+                sendResponseJson(request, response, JsonMessage.getJsonMsg("500", "ERROR: " + ex.getMessage()));
             } else {
-                request.setAttribute("contenido", JsonMessage.getJsonMsg("500", "Applications server error. Please, contact your administrator."));
-                getServletContext().getRequestDispatcher("/jsp/messageAjax.jsp").forward(request, response);
+                sendResponseJson(request, response, JsonMessage.getJsonMsg("500", "Applications server error. Please, contact your administrator."));
             }
-            writeLog(request, response, ex.toString());
+            Log4j.severeLog(ex.toString());
             return;
         }
     }
@@ -144,10 +136,8 @@ public class json extends HttpServlet {
             throws ServletException, IOException {
         try {
             processRequest(request, response);
-
         } catch (Exception ex) {
-            //Logger.getLogger(JsonControl.class.getName()).log(Level.SEVERE, null, ex);
-            writeLog(request, response, ex.toString());
+
         }
 
     }
@@ -165,10 +155,8 @@ public class json extends HttpServlet {
             throws ServletException, IOException {
         try {
             processRequest(request, response);
-
         } catch (Exception ex) {
-            //Logger.getLogger(JsonControl.class.getName()).log(Level.SEVERE, null, ex);
-            writeLog(request, response, ex.toString());
+
         }
     }
 

@@ -1,10 +1,12 @@
 /*
- * Copyright (c) 2015 by Rafael Angel Aznar Aparici (rafaaznar at gmail dot com)
+ * Copyright (c) 2016 by Rafael Angel Aznar Aparici (rafaaznar at gmail dot com)
  * 
- * openAUSIAS: The stunning micro-library that helps you to develop easily 
- *             AJAX web applications by using Java and jQuery
- * openAUSIAS is distributed under the MIT License (MIT)
- * Sources at https://github.com/rafaelaznar/openAUSIAS
+ * zylka server: Helps you to develop easily AJAX web applications 
+ *               by copying and modifying this Java Server.
+ *
+ * Sources at https://github.com/rafaelaznar/zylka
+ * 
+ * zylka server is distributed under the MIT License (MIT)
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,6 +26,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+
 package net.daw.dao.implementation;
 
 import java.sql.Connection;
@@ -50,7 +53,7 @@ public class TipousuarioDao implements ViewDaoInterface<TipousuarioBean>, TableD
             oConnection = oPooledConnection;
             oMysql = new MysqlDataSpImpl(oConnection);
         } catch (Exception ex) {
-            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":constructor ERROR: " + ex.getMessage()));
+            throw new Exception(this.getClass().getName() + ":constructor ERROR: " + ex.getMessage());
         }
     }
 
@@ -61,7 +64,7 @@ public class TipousuarioDao implements ViewDaoInterface<TipousuarioBean>, TableD
         try {
             pages = oMysql.getPages(strSQL, intRegsPerPag);
         } catch (Exception ex) {
-            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPages ERROR: " + ex.getMessage()));
+            throw new Exception(this.getClass().getName() + ":getPages ERROR: " + ex.getMessage());
         }
         return pages;
     }
@@ -73,7 +76,7 @@ public class TipousuarioDao implements ViewDaoInterface<TipousuarioBean>, TableD
         try {
             pages = oMysql.getCount(strSQL);
         } catch (Exception ex) {
-            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getCount ERROR: " + ex.getMessage()));
+            throw new Exception(this.getClass().getName() + ":getCount ERROR: " + ex.getMessage());
         }
         return pages;
     }
@@ -93,7 +96,7 @@ public class TipousuarioDao implements ViewDaoInterface<TipousuarioBean>, TableD
                 }
             }
         } catch (Exception ex) {
-            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPage ERROR: " + ex.getMessage()));
+            throw new Exception(this.getClass().getName() + ":getPage ERROR: " + ex.getMessage());
         }
         return arrTipousuario;
     }
@@ -111,7 +114,7 @@ public class TipousuarioDao implements ViewDaoInterface<TipousuarioBean>, TableD
                 }
             }
         } catch (Exception ex) {
-            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPage ERROR: " + ex.getMessage()));
+            throw new Exception(this.getClass().getName() + ":getAll ERROR: " + ex.getMessage());
         }
         return arrTipousuario;
     }
@@ -127,7 +130,7 @@ public class TipousuarioDao implements ViewDaoInterface<TipousuarioBean>, TableD
                     }
                 }
             } catch (Exception ex) {
-                ExceptionBooster.boost(new Exception(this.getClass().getName() + ":get ERROR: " + ex.getMessage()));
+                throw new Exception(this.getClass().getName() + ":get ERROR: " + ex.getMessage());
             }
         } else {
             oTipousuarioBean.setId(0);
@@ -152,7 +155,7 @@ public class TipousuarioDao implements ViewDaoInterface<TipousuarioBean>, TableD
             }
 
         } catch (Exception ex) {
-            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":set ERROR: " + ex.getMessage()));
+            throw new Exception(this.getClass().getName() + ":set ERROR: " + ex.getMessage());
         }
         return iResult;
     }
@@ -163,7 +166,7 @@ public class TipousuarioDao implements ViewDaoInterface<TipousuarioBean>, TableD
         try {
             result = oMysql.removeOne(id, strTable);
         } catch (Exception ex) {
-            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":remove ERROR: " + ex.getMessage()));
+            throw new Exception(this.getClass().getName() + ":remove ERROR: " + ex.getMessage());
         }
         return result;
     }

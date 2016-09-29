@@ -8,6 +8,15 @@
         <filter-name>CORSFilter</filter-name>
         <url-pattern>/json</url-pattern>
     </filter-mapping>
+    <servlet> 
+        <servlet-name>log4j-init</servlet-name>
+        <servlet-class>net.daw.control.Log4jInit</servlet-class> 
+        <init-param>
+            <param-name>log4j-zylka</param-name>
+            <param-value>WEB-INF/log4j.properties</param-value>
+        </init-param>
+        <load-on-startup>1</load-on-startup>
+    </servlet> 
     <servlet>
         <servlet-name>ControlJson</servlet-name>
         <servlet-class>net.daw.control.JsonControl</servlet-class>

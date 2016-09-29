@@ -1,10 +1,12 @@
 /*
- * Copyright (c) 2015 by Rafael Angel Aznar Aparici (rafaaznar at gmail dot com)
+ * Copyright (c) 2016 by Rafael Angel Aznar Aparici (rafaaznar at gmail dot com)
  * 
- * openAUSIAS: The stunning micro-library that helps you to develop easily 
- *             AJAX web applications by using Java and jQuery
- * openAUSIAS is distributed under the MIT License (MIT)
- * Sources at https://github.com/rafaelaznar/openAUSIAS
+ * zylka server: Helps you to develop easily AJAX web applications 
+ *               by copying and modifying this Java Server.
+ *
+ * Sources at https://github.com/rafaelaznar/zylka
+ * 
+ * zylka server is distributed under the MIT License (MIT)
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -39,7 +41,6 @@ import net.daw.helper.statics.SqlBuilder;
 
 public class View03Dao implements ViewDaoInterface<View03Bean> {
 
-    
     private String strSQL = "select id_usuario, count(id) as numautores from documento group by id_usuario";
     private MysqlDataSpImpl oMysql = null;
     private Connection oConnection = null;
@@ -49,7 +50,7 @@ public class View03Dao implements ViewDaoInterface<View03Bean> {
             oConnection = oPooledConnection;
             oMysql = new MysqlDataSpImpl(oConnection);
         } catch (Exception ex) {
-            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":constructor ERROR: " + ex.getMessage()));
+            throw new Exception(this.getClass().getName() + ":constructor ERROR: " + ex.getMessage());
         }
     }
 
@@ -60,7 +61,7 @@ public class View03Dao implements ViewDaoInterface<View03Bean> {
         try {
             pages = oMysql.getPages(strSQL, intRegsPerPag);
         } catch (Exception ex) {
-            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPages ERROR: " + ex.getMessage()));
+            throw new Exception(this.getClass().getName() + ":getPages ERROR: " + ex.getMessage());
         }
         return pages;
     }
@@ -72,7 +73,7 @@ public class View03Dao implements ViewDaoInterface<View03Bean> {
         try {
             pages = oMysql.getCount(strSQL);
         } catch (Exception ex) {
-            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getCount ERROR: " + ex.getMessage()));
+            throw new Exception(this.getClass().getName() + ":getCount ERROR: " + ex.getMessage());
         }
         return pages;
     }
@@ -92,7 +93,7 @@ public class View03Dao implements ViewDaoInterface<View03Bean> {
                 }
             }
         } catch (Exception ex) {
-            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPage ERROR: " + ex.getMessage()));
+            throw new Exception(this.getClass().getName() + ":getPage ERROR: " + ex.getMessage());
         }
         return oBeanList;
     }
@@ -110,7 +111,7 @@ public class View03Dao implements ViewDaoInterface<View03Bean> {
                 }
             }
         } catch (Exception ex) {
-            throw new Error(this.getClass().getName() + ":getAll ERROR: " + ex.getMessage(), ex);                       
+            throw new Exception(this.getClass().getName() + ":getAll ERROR: " + ex.getMessage());
         }
         return arrDocumento;
     }
