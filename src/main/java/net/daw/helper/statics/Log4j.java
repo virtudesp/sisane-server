@@ -38,17 +38,17 @@ import net.daw.control.json;
 public class Log4j {
 
     public static void infoLog(String strMessage) {
-        Logger log = Logger.getLogger("zylka server");
+        Logger log = Logger.getLogger("zylka");
         log.log(Level.INFO, strMessage);
     }
 
     public static void severeLog(String strMessage) {
-        Logger log = Logger.getLogger("zylka server");
+        Logger log = Logger.getLogger("zylka");
         log.log(Level.SEVERE, strMessage);
     }
 
     public static void warningLog(String strMessage) {
-        Logger log = Logger.getLogger("zylka server");
+        Logger log = Logger.getLogger("zylka");
         log.log(Level.WARNING, strMessage);
     }
 }
