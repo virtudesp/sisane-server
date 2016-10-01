@@ -28,7 +28,7 @@
 package net.daw.helper.statics;
 
 import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.apache.log4j.Logger;
 import net.daw.control.json;
 
 /**
@@ -39,16 +39,17 @@ public class Log4j {
 
     public static void infoLog(String strMessage) {
         Logger log = Logger.getLogger("zylka");
-        log.log(Level.INFO, strMessage);
+        log.info(strMessage);
     }
 
-    public static void severeLog(String strMessage) {
+    public static void errorLog(String strMessage, Exception e) {
         Logger log = Logger.getLogger("zylka");
-        log.log(Level.SEVERE, strMessage);
+        log.error(strMessage, e);
     }
 
-    public static void warningLog(String strMessage) {
+    public static void errorLog(String strMessage) {
         Logger log = Logger.getLogger("zylka");
-        log.log(Level.WARNING, strMessage);
+        log.error(strMessage);
     }
+
 }

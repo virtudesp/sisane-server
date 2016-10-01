@@ -26,7 +26,6 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-
 package net.daw.dao.implementation;
 
 import java.sql.Connection;
@@ -38,6 +37,7 @@ import net.daw.dao.publicinterface.TableDaoInterface;
 import net.daw.dao.publicinterface.ViewDaoInterface;
 import net.daw.data.implementation.MysqlDataSpImpl;
 import net.daw.helper.statics.FilterBeanHelper;
+import net.daw.helper.statics.Log4j;
 import net.daw.helper.statics.SqlBuilder;
 
 public class EstadoDao implements ViewDaoInterface<EstadoBean>, TableDaoInterface<EstadoBean> {
@@ -52,7 +52,8 @@ public class EstadoDao implements ViewDaoInterface<EstadoBean>, TableDaoInterfac
             oConnection = oPooledConnection;
             oMysql = new MysqlDataSpImpl(oConnection);
         } catch (Exception ex) {
-            throw new Exception(this.getClass().getName() + ":constructor ERROR: " + ex.getMessage());
+            Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
+            throw new Exception();
         }
     }
 
@@ -63,7 +64,8 @@ public class EstadoDao implements ViewDaoInterface<EstadoBean>, TableDaoInterfac
         try {
             pages = oMysql.getPages(strSQL, intRegsPerPag);
         } catch (Exception ex) {
-            throw new Exception(this.getClass().getName() + ":getPages ERROR: " + ex.getMessage());
+            Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
+            throw new Exception();
         }
         return pages;
     }
@@ -75,7 +77,8 @@ public class EstadoDao implements ViewDaoInterface<EstadoBean>, TableDaoInterfac
         try {
             pages = oMysql.getCount(strSQL);
         } catch (Exception ex) {
-            throw new Exception(this.getClass().getName() + ":getCount ERROR: " + ex.getMessage());
+            Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
+            throw new Exception();
         }
         return pages;
     }
@@ -95,7 +98,8 @@ public class EstadoDao implements ViewDaoInterface<EstadoBean>, TableDaoInterfac
                 }
             }
         } catch (Exception ex) {
-            throw new Exception(this.getClass().getName() + ":getPage ERROR: " + ex.getMessage());
+            Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
+            throw new Exception();
         }
         return arrEstado;
     }
@@ -113,7 +117,8 @@ public class EstadoDao implements ViewDaoInterface<EstadoBean>, TableDaoInterfac
                 }
             }
         } catch (Exception ex) {
-            throw new Exception(this.getClass().getName() + ":getAll ERROR: " + ex.getMessage());
+            Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
+            throw new Exception();
         }
         return arrEstado;
     }
@@ -129,7 +134,8 @@ public class EstadoDao implements ViewDaoInterface<EstadoBean>, TableDaoInterfac
                     }
                 }
             } catch (Exception ex) {
-                throw new Exception(this.getClass().getName() + ":get ERROR: " + ex.getMessage());
+                Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
+                throw new Exception();
             }
         } else {
             oEstadoBean.setId(0);
@@ -154,7 +160,8 @@ public class EstadoDao implements ViewDaoInterface<EstadoBean>, TableDaoInterfac
             }
 
         } catch (Exception ex) {
-            throw new Exception(this.getClass().getName() + ":set ERROR: " + ex.getMessage());
+            Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
+            throw new Exception();
         }
         return iResult;
     }
@@ -165,7 +172,8 @@ public class EstadoDao implements ViewDaoInterface<EstadoBean>, TableDaoInterfac
         try {
             result = oMysql.removeOne(id, strTable);
         } catch (Exception ex) {
-            throw new Exception(this.getClass().getName() + ":remove ERROR: " + ex.getMessage());
+            Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
+            throw new Exception();
         }
         return result;
     }

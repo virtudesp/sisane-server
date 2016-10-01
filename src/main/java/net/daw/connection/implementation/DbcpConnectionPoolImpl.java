@@ -32,6 +32,7 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import net.daw.connection.publicinterface.ConnectionInterface;
+import net.daw.helper.statics.Log4j;
 import org.apache.commons.dbcp.BasicDataSource;
 
 public class DbcpConnectionPoolImpl implements ConnectionInterface {
@@ -61,7 +62,8 @@ public class DbcpConnectionPoolImpl implements ConnectionInterface {
                 basicDataSource.close();
             }
         } catch (SQLException ex) {
-            Logger.getLogger(DbcpConnectionPoolImpl.class.getName()).log(Level.SEVERE, null, ex);
+                        Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
+            throw new Exception();
         }
     }
 }

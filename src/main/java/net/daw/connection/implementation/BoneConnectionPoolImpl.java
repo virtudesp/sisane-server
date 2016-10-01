@@ -33,6 +33,7 @@ import java.sql.SQLException;
 import net.daw.connection.publicinterface.ConnectionInterface;
 import net.daw.helper.statics.ConnectionClassHelper;
 import net.daw.helper.statics.ExceptionBooster;
+import net.daw.helper.statics.Log4j;
 
 public class BoneConnectionPoolImpl implements ConnectionInterface {
 
@@ -52,27 +53,28 @@ public class BoneConnectionPoolImpl implements ConnectionInterface {
             connectionPool = new BoneCP(config); // setup the connection pool
         } catch (SQLException ex) {
             ExceptionBooster.boost(new Exception(
-                    this.getClass().getName() + ":newConnection ERROR al crear la clase BoneCP: " + ex.getMessage() 
-//                            + " // " 
-//                            + ConnectionClassHelper.getConnectionChain() 
-//                            + " // " 
-//                            + ConnectionClassHelper.getOpenShift() 
-//                            + " // " 
-//                            + ConnectionClassHelper.getDatabaseName()
-//                            + " // " 
-//                            + ConnectionClassHelper.getDatabaseLogin()
-//                            + " // " 
-//                            + ConnectionClassHelper.getDatabasePassword() 
-//                            + " // " 
-//                            + ConnectionClassHelper.getDatabasePort()
-//                            + " // " 
-//                            + ConnectionClassHelper.getDatabaseHost()
+                    this.getClass().getName() + ":newConnection ERROR al crear la clase BoneCP: " + ex.getMessage()
+            //                            + " // " 
+            //                            + ConnectionClassHelper.getConnectionChain() 
+            //                            + " // " 
+            //                            + ConnectionClassHelper.getOpenShift() 
+            //                            + " // " 
+            //                            + ConnectionClassHelper.getDatabaseName()
+            //                            + " // " 
+            //                            + ConnectionClassHelper.getDatabaseLogin()
+            //                            + " // " 
+            //                            + ConnectionClassHelper.getDatabasePassword() 
+            //                            + " // " 
+            //                            + ConnectionClassHelper.getDatabasePort()
+            //                            + " // " 
+            //                            + ConnectionClassHelper.getDatabaseHost()
             ));
         }
         try {
             c = connectionPool.getConnection();
         } catch (SQLException ex) {
-            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":newConnection ERROR al conectarse: " + ex.getMessage()));
+            Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
+            throw new Exception();
         }
         return c;
 

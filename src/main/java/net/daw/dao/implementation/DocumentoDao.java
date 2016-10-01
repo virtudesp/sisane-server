@@ -26,7 +26,6 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-
 package net.daw.dao.implementation;
 
 import java.sql.Connection;
@@ -53,8 +52,8 @@ public class DocumentoDao implements ViewDaoInterface<DocumentoBean>, TableDaoIn
             oConnection = oPooledConnection;
             oMysql = new MysqlDataSpImpl(oConnection);
         } catch (Exception ex) {
-            Log4j.severeLog(this.getClass().getName() + ":constructor ERROR: " + ex.getMessage());
-            throw new Exception(this.getClass().getName() + ":constructor ERROR: " + ex.getMessage());
+            Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
+            throw new Exception();
         }
     }
 
@@ -65,8 +64,8 @@ public class DocumentoDao implements ViewDaoInterface<DocumentoBean>, TableDaoIn
         try {
             pages = oMysql.getPages(strSQL, intRegsPerPag);
         } catch (Exception ex) {
-            Log4j.severeLog(this.getClass().getName() + ":getPages ERROR: " + ex.getMessage());
-            throw new Exception(this.getClass().getName() + ":getPages ERROR: " + ex.getMessage());
+            Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
+            throw new Exception();
         }
         return pages;
     }
@@ -78,8 +77,8 @@ public class DocumentoDao implements ViewDaoInterface<DocumentoBean>, TableDaoIn
         try {
             pages = oMysql.getCount(strSQL);
         } catch (Exception ex) {
-            Log4j.severeLog(this.getClass().getName() + ":getCount ERROR: " + ex.getMessage());
-            throw new Exception(this.getClass().getName() + ":getCount ERROR: " + ex.getMessage());
+            Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
+            throw new Exception();
         }
         return pages;
     }
@@ -99,8 +98,8 @@ public class DocumentoDao implements ViewDaoInterface<DocumentoBean>, TableDaoIn
                 }
             }
         } catch (Exception ex) {
-            Log4j.severeLog(this.getClass().getName() + ":getPage ERROR: " + ex.getMessage());
-            throw new Exception(this.getClass().getName() + ":getPage ERROR: " + ex.getMessage());
+            Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
+            throw new Exception();
         }
         return arrDocumento;
     }
@@ -114,12 +113,12 @@ public class DocumentoDao implements ViewDaoInterface<DocumentoBean>, TableDaoIn
             if (oResultSet != null) {
                 while (oResultSet.next()) {
                     DocumentoBean oDocumentoBean = new DocumentoBean();
-                    arrDocumento.add(oDocumentoBean.fill(oResultSet, oConnection, expand));
+                    arrDocumento.add(oDocumentoBean.fill(oResultSet, oConnection, expand));                    
                 }
             }
         } catch (Exception ex) {
-            Log4j.severeLog(this.getClass().getName() + ":getAll ERROR: " + ex.getMessage());
-            throw new Exception(this.getClass().getName() + ":getAll ERROR: " + ex.getMessage());
+            Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
+            throw new Exception();
         }
         return arrDocumento;
     }
@@ -135,8 +134,8 @@ public class DocumentoDao implements ViewDaoInterface<DocumentoBean>, TableDaoIn
                     }
                 }
             } catch (Exception ex) {
-                Log4j.severeLog(this.getClass().getName() + ":get ERROR: " + ex.getMessage());
-                throw new Exception(this.getClass().getName() + ":get ERROR: " + ex.getMessage());
+                Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
+                throw new Exception();
             }
         } else {
             oDocumentoBean.setId(0);
@@ -161,8 +160,8 @@ public class DocumentoDao implements ViewDaoInterface<DocumentoBean>, TableDaoIn
             }
 
         } catch (Exception ex) {
-            Log4j.severeLog(this.getClass().getName() + ":set ERROR: " + ex.getMessage());
-            throw new Exception(this.getClass().getName() + ":set ERROR: " + ex.getMessage());
+            Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
+            throw new Exception();
         }
         return iResult;
     }
@@ -173,8 +172,8 @@ public class DocumentoDao implements ViewDaoInterface<DocumentoBean>, TableDaoIn
         try {
             result = oMysql.removeOne(id, strTable);
         } catch (Exception ex) {
-            Log4j.severeLog(this.getClass().getName() + ":remove ERROR: " + ex.getMessage());
-            throw new Exception(this.getClass().getName() + ":remove ERROR: " + ex.getMessage());
+            Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
+            throw new Exception();
         }
         return result;
     }

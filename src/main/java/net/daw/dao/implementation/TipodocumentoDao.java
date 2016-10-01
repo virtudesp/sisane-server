@@ -26,7 +26,6 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-
 package net.daw.dao.implementation;
 
 import java.sql.Connection;
@@ -37,8 +36,8 @@ import net.daw.bean.implementation.TipodocumentoBean;
 import net.daw.dao.publicinterface.TableDaoInterface;
 import net.daw.dao.publicinterface.ViewDaoInterface;
 import net.daw.data.implementation.MysqlDataSpImpl;
-import net.daw.helper.statics.ExceptionBooster;
 import net.daw.helper.statics.FilterBeanHelper;
+import net.daw.helper.statics.Log4j;
 import net.daw.helper.statics.SqlBuilder;
 
 public class TipodocumentoDao implements ViewDaoInterface<TipodocumentoBean>, TableDaoInterface<TipodocumentoBean> {
@@ -53,7 +52,8 @@ public class TipodocumentoDao implements ViewDaoInterface<TipodocumentoBean>, Ta
             oConnection = oPooledConnection;
             oMysql = new MysqlDataSpImpl(oConnection);
         } catch (Exception ex) {
-            throw new Exception(this.getClass().getName() + ":constructor ERROR: " + ex.getMessage());
+            Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
+            throw new Exception();
         }
     }
 
@@ -64,7 +64,8 @@ public class TipodocumentoDao implements ViewDaoInterface<TipodocumentoBean>, Ta
         try {
             pages = oMysql.getPages(strSQL, intRegsPerPag);
         } catch (Exception ex) {
-            throw new Exception(this.getClass().getName() + ":getPages ERROR: " + ex.getMessage());
+            Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
+            throw new Exception();
         }
         return pages;
     }
@@ -76,7 +77,8 @@ public class TipodocumentoDao implements ViewDaoInterface<TipodocumentoBean>, Ta
         try {
             pages = oMysql.getCount(strSQL);
         } catch (Exception ex) {
-            throw new Exception(this.getClass().getName() + ":getCount ERROR: " + ex.getMessage());
+            Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
+            throw new Exception();
         }
         return pages;
     }
@@ -96,7 +98,8 @@ public class TipodocumentoDao implements ViewDaoInterface<TipodocumentoBean>, Ta
                 }
             }
         } catch (Exception ex) {
-            throw new Exception(this.getClass().getName() + ":getPage ERROR: " + ex.getMessage());
+            Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
+            throw new Exception();
         }
         return arrTipodocumento;
     }
@@ -114,7 +117,8 @@ public class TipodocumentoDao implements ViewDaoInterface<TipodocumentoBean>, Ta
                 }
             }
         } catch (Exception ex) {
-            throw new Exception(this.getClass().getName() + ":getAll ERROR: " + ex.getMessage());
+            Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
+            throw new Exception();
         }
         return arrTipodocumento;
     }
@@ -130,7 +134,8 @@ public class TipodocumentoDao implements ViewDaoInterface<TipodocumentoBean>, Ta
                     }
                 }
             } catch (Exception ex) {
-                throw new Exception(this.getClass().getName() + ":get ERROR: " + ex.getMessage());
+                Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
+                throw new Exception();
             }
         } else {
             oTipodocumentoBean.setId(0);
@@ -140,7 +145,7 @@ public class TipodocumentoDao implements ViewDaoInterface<TipodocumentoBean>, Ta
 
     @Override
     public Integer set(TipodocumentoBean oTipodocumentoBean) throws Exception {
-          Integer iResult = null;
+        Integer iResult = null;
         try {
             if (oTipodocumentoBean.getId() == 0) {
                 strSQL = "INSERT INTO " + strTable + " ";
@@ -155,7 +160,8 @@ public class TipodocumentoDao implements ViewDaoInterface<TipodocumentoBean>, Ta
             }
 
         } catch (Exception ex) {
-            throw new Exception(this.getClass().getName() + ":set ERROR: " + ex.getMessage());
+            Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
+            throw new Exception();
         }
         return iResult;
     }
@@ -166,7 +172,8 @@ public class TipodocumentoDao implements ViewDaoInterface<TipodocumentoBean>, Ta
         try {
             result = oMysql.removeOne(id, strTable);
         } catch (Exception ex) {
-            throw new Exception(this.getClass().getName() + ":remove ERROR: " + ex.getMessage());
+            Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
+            throw new Exception();
         }
         return result;
     }

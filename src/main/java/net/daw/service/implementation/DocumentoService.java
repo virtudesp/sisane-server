@@ -31,7 +31,6 @@ import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import net.daw.bean.implementation.DocumentoBean;
 import net.daw.bean.implementation.UsuarioBean;
@@ -41,9 +40,9 @@ import net.daw.dao.implementation.DocumentoDao;
 
 import net.daw.helper.statics.AppConfigurationHelper;
 import static net.daw.helper.statics.AppConfigurationHelper.getSourceConnection;
-import net.daw.helper.statics.ExceptionBooster;
 import net.daw.helper.statics.FilterBeanHelper;
 import net.daw.helper.statics.JsonMessage;
+import net.daw.helper.statics.Log4j;
 import net.daw.helper.statics.ParameterCook;
 import net.daw.service.publicinterface.TableServiceInterface;
 import net.daw.service.publicinterface.ViewServiceInterface;
@@ -78,7 +77,8 @@ public class DocumentoService implements TableServiceInterface, ViewServiceInter
                 DocumentoDao oDocumentoDao = new DocumentoDao(oConnection);
                 data = JsonMessage.getJson("200", Integer.toString(oDocumentoDao.getCount(alFilter)));
             } catch (Exception ex) {
-                ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getCount ERROR: " + ex.getMessage()));
+                Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
+                throw new Exception();
             } finally {
                 if (oConnection != null) {
                     oConnection.close();
@@ -109,7 +109,8 @@ public class DocumentoService implements TableServiceInterface, ViewServiceInter
                 Gson gson = AppConfigurationHelper.getGson();
                 data = JsonMessage.getJson("200", AppConfigurationHelper.getGson().toJson(oDocumentoBean));
             } catch (Exception ex) {
-                ExceptionBooster.boost(new Exception(this.getClass().getName() + ":get ERROR: " + ex.getMessage()));
+                Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
+                throw new Exception();
             } finally {
                 if (oConnection != null) {
                     oConnection.close();
@@ -141,7 +142,8 @@ public class DocumentoService implements TableServiceInterface, ViewServiceInter
                 ArrayList<DocumentoBean> arrBeans = oDocumentoDao.getAll(alFilter, hmOrder, AppConfigurationHelper.getJsonDepth());
                 data = JsonMessage.getJson("200", AppConfigurationHelper.getGson().toJson(arrBeans));
             } catch (Exception ex) {
-                ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getAll ERROR: " + ex.getMessage()));
+                Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
+                throw new Exception();
             } finally {
                 if (oConnection != null) {
                     oConnection.close();
@@ -173,7 +175,8 @@ public class DocumentoService implements TableServiceInterface, ViewServiceInter
                 List<DocumentoBean> arrBeans = oDocumentoDao.getPage(intRegsPerPag, intPage, alFilter, hmOrder, AppConfigurationHelper.getJsonDepth());
                 data = JsonMessage.getJson("200", AppConfigurationHelper.getGson().toJson(arrBeans));
             } catch (Exception ex) {
-                ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPage ERROR: " + ex.getMessage()));
+                Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
+                throw new Exception();
             } finally {
                 if (oConnection != null) {
                     oConnection.close();
@@ -202,7 +205,8 @@ public class DocumentoService implements TableServiceInterface, ViewServiceInter
                 DocumentoDao oDocumentoDao = new DocumentoDao(oConnection);
                 data = JsonMessage.getJson("200", Integer.toString(oDocumentoDao.getPages(intRegsPerPag, alFilter)));
             } catch (Exception ex) {
-                ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPages ERROR: " + ex.getMessage()));
+                Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
+                throw new Exception();
             } finally {
                 if (oConnection != null) {
                     oConnection.close();
@@ -232,7 +236,8 @@ public class DocumentoService implements TableServiceInterface, ViewServiceInter
                         + "}";
                 data = JsonMessage.getJson("200", data);
             } catch (Exception ex) {
-                ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getAggregateViewSome ERROR: " + ex.getMessage()));
+                Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
+                throw new Exception();
             }
             return data;
         } else {
@@ -256,7 +261,8 @@ public class DocumentoService implements TableServiceInterface, ViewServiceInter
                 oConnection.commit();
             } catch (Exception ex) {
                 oConnection.rollback();
-                ExceptionBooster.boost(new Exception(this.getClass().getName() + ":remove ERROR: " + ex.getMessage()));
+                Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
+                throw new Exception();
             } finally {
                 if (oConnection != null) {
                     oConnection.close();
@@ -298,7 +304,8 @@ public class DocumentoService implements TableServiceInterface, ViewServiceInter
                 oConnection.commit();
             } catch (Exception ex) {
                 oConnection.rollback();
-                ExceptionBooster.boost(new Exception(this.getClass().getName() + ":set ERROR: " + ex.getMessage()));
+                Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
+                throw new Exception();
             } finally {
                 if (oConnection != null) {
                     oConnection.close();
@@ -322,8 +329,9 @@ public class DocumentoService implements TableServiceInterface, ViewServiceInter
             oDocumentoBean = new DocumentoBean(id);
             DocumentoDao oDocumentoDao = new DocumentoDao(oConnection);
             oDocumentoBean = oDocumentoDao.get(oDocumentoBean, AppConfigurationHelper.getJsonDepth());
-        } catch (Exception e) {
-            throw new ServletException(this.getClass().getName() + ":GetContenido: Error: " + e.getMessage());
+        } catch (Exception ex) {
+            Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
+            throw new Exception();
         }
         oConnection.close();
         return "{\"data\":\"" + oDocumentoBean.getContenido() + "\"}";

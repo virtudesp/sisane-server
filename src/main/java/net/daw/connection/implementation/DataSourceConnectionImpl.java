@@ -35,6 +35,7 @@ import javax.naming.NamingException;
 import javax.sql.DataSource;
 import net.daw.connection.publicinterface.ConnectionInterface;
 import net.daw.helper.statics.ConnectionClassHelper;
+import net.daw.helper.statics.Log4j;
 
 public class DataSourceConnectionImpl implements ConnectionInterface {
 
@@ -60,7 +61,8 @@ public class DataSourceConnectionImpl implements ConnectionInterface {
                 initialContext.close();
             }
         } catch (NamingException ex) {
-            Logger.getLogger(DataSourceConnectionImpl.class.getName()).log(Level.SEVERE, null, ex);
+            Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
+            throw new Exception();
         }
     }
 }

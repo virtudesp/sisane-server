@@ -36,6 +36,7 @@ import net.daw.bean.implementation.View02Bean;
 import net.daw.dao.publicinterface.ViewDaoInterface;
 import net.daw.data.implementation.MysqlDataSpImpl;
 import net.daw.helper.statics.FilterBeanHelper;
+import net.daw.helper.statics.Log4j;
 import net.daw.helper.statics.SqlBuilder;
 
 public class View02Dao implements ViewDaoInterface<View02Bean> {
@@ -49,7 +50,8 @@ public class View02Dao implements ViewDaoInterface<View02Bean> {
             oConnection = oPooledConnection;
             oMysql = new MysqlDataSpImpl(oConnection);
         } catch (Exception ex) {
-            throw new Exception(this.getClass().getName() + ":constructor ERROR: " + ex.getMessage());
+            Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
+            throw new Exception();
         }
     }
 
@@ -60,7 +62,8 @@ public class View02Dao implements ViewDaoInterface<View02Bean> {
         try {
             pages = oMysql.getPages(strSQL, intRegsPerPag);
         } catch (Exception ex) {
-            throw new Exception(this.getClass().getName() + ":getPages ERROR: " + ex.getMessage());
+            Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
+            throw new Exception();
         }
         return pages;
     }
@@ -72,7 +75,8 @@ public class View02Dao implements ViewDaoInterface<View02Bean> {
         try {
             pages = oMysql.getCount(strSQL);
         } catch (Exception ex) {
-            throw new Exception(this.getClass().getName() + ":getCount ERROR: " + ex.getMessage());
+            Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
+            throw new Exception();
         }
         return pages;
     }
@@ -92,7 +96,8 @@ public class View02Dao implements ViewDaoInterface<View02Bean> {
                 }
             }
         } catch (Exception ex) {
-            throw new Exception(this.getClass().getName() + ":getPage ERROR: " + ex.getMessage());
+            Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
+            throw new Exception();
         }
         return oBeanList;
     }
@@ -110,8 +115,8 @@ public class View02Dao implements ViewDaoInterface<View02Bean> {
                 }
             }
         } catch (Exception ex) {
-            
-            throw new Exception(this.getClass().getName() + ":getAll ERROR: " + ex.getMessage());
+            Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
+            throw new Exception();
         }
         return arrDocumento;
     }

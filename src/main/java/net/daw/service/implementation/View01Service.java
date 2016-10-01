@@ -41,6 +41,7 @@ import static net.daw.helper.statics.AppConfigurationHelper.getSourceConnection;
 import net.daw.helper.statics.ExceptionBooster;
 import net.daw.helper.statics.FilterBeanHelper;
 import net.daw.helper.statics.JsonMessage;
+import net.daw.helper.statics.Log4j;
 import net.daw.helper.statics.ParameterCook;
 import net.daw.service.publicinterface.ViewServiceInterface;
 
@@ -74,7 +75,8 @@ public class View01Service implements ViewServiceInterface {
                 View01Dao oDao = new View01Dao(oConnection);
                 data = JsonMessage.getJson("200", Integer.toString(oDao.getCount(alFilter)));
             } catch (Exception ex) {
-                ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getCount ERROR: " + ex.getMessage()));
+                Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
+                throw new Exception();
             } finally {
                 if (oConnection != null) {
                     oConnection.close();
@@ -105,7 +107,8 @@ public class View01Service implements ViewServiceInterface {
                 ArrayList<View01Bean> arrBeans = oDao.getAll(alFilter, hmOrder, AppConfigurationHelper.getJsonDepth());
                 data = JsonMessage.getJson("200", AppConfigurationHelper.getGson().toJson(arrBeans));
             } catch (Exception ex) {
-                ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getAll ERROR: " + ex.getMessage()));
+                Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
+                throw new Exception();
             } finally {
                 if (oConnection != null) {
                     oConnection.close();
@@ -137,7 +140,8 @@ public class View01Service implements ViewServiceInterface {
                 List<View01Bean> arrBeans = oDao.getPage(intRegsPerPag, intPage, alFilter, hmOrder, AppConfigurationHelper.getJsonDepth());
                 data = JsonMessage.getJson("200", AppConfigurationHelper.getGson().toJson(arrBeans));
             } catch (Exception ex) {
-                ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPage ERROR: " + ex.getMessage()));
+                Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
+                throw new Exception();
             } finally {
                 if (oConnection != null) {
                     oConnection.close();
@@ -166,7 +170,8 @@ public class View01Service implements ViewServiceInterface {
                 View01Dao oDao = new View01Dao(oConnection);
                 data = JsonMessage.getJson("200", Integer.toString(oDao.getPages(intRegsPerPag, alFilter)));
             } catch (Exception ex) {
-                ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPages ERROR: " + ex.getMessage()));
+                Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
+                throw new Exception();
             } finally {
                 if (oConnection != null) {
                     oConnection.close();
@@ -196,7 +201,8 @@ public class View01Service implements ViewServiceInterface {
                         + "}";
                 data = JsonMessage.getJson("200", data);
             } catch (Exception ex) {
-                ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getAggregateViewSome ERROR: " + ex.getMessage()));
+                Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
+                throw new Exception();
             }
             return data;
         } else {

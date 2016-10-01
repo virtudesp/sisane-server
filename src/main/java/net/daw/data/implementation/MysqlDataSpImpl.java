@@ -33,6 +33,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import net.daw.helper.statics.ExceptionBooster;
+import net.daw.helper.statics.Log4j;
 
 public class MysqlDataSpImpl implements DataInterface {
 
@@ -51,10 +52,12 @@ public class MysqlDataSpImpl implements DataInterface {
             oPreparedStatement = connection.prepareStatement(strSQL, Statement.RETURN_GENERATED_KEYS);
             iResult = oPreparedStatement.executeUpdate();
             if (iResult == -1) {
-                ExceptionBooster.boost(new Exception(this.getClass().getName() + ":executeUpdateSQL ERROR inserting register"));
+                            Log4j.errorLog(this.getClass().getName() + ":" + "executeUpdateSQL error");
+                throw new SQLException();
             }
         } catch (SQLException ex) {
-            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":executeUpdateSQL ERROR inserting register: " + ex.getMessage()));
+            Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
+            throw new Exception();
         } finally {
             if (oResultSet != null) {
                 oResultSet.close();
@@ -79,10 +82,12 @@ public class MysqlDataSpImpl implements DataInterface {
                 oResultSet.next();
                 id = oResultSet.getInt(1);
             } else {
-                ExceptionBooster.boost(new Exception(this.getClass().getName() + ":executeInsertSQL ERROR inserting register"));
+                Log4j.errorLog(this.getClass().getName() + ":" + "executeInsertSQL error");
+                throw new SQLException();
             }
         } catch (SQLException ex) {
-            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":executeInsertSQL ERROR inserting register: " + ex.getMessage()));
+            Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
+            throw new Exception();
         } finally {
             if (oResultSet != null) {
                 oResultSet.close();
@@ -108,10 +113,12 @@ public class MysqlDataSpImpl implements DataInterface {
                 oResultSet.next();
                 id = oResultSet.getInt(1);
             } else {
-                ExceptionBooster.boost(new Exception(this.getClass().getName() + ":insertOne ERROR inserting register"));
+                Log4j.errorLog(this.getClass().getName() + ":" + "insertOne error");
+                throw new SQLException();
             }
         } catch (SQLException ex) {
-            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":insertOne ERROR inserting register: " + ex.getMessage()));
+            Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
+            throw new Exception();
         } finally {
             if (oResultSet != null) {
                 oResultSet.close();
@@ -133,7 +140,8 @@ public class MysqlDataSpImpl implements DataInterface {
             oPreparedStatement.setInt(1, intId);
             intResult = oPreparedStatement.executeUpdate();
         } catch (SQLException ex) {
-            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":updateOne ERROR updating register: " + ex.getMessage()));
+            Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
+            throw new Exception();
         } finally {
             if (oPreparedStatement != null) {
                 oPreparedStatement.close();
@@ -152,7 +160,8 @@ public class MysqlDataSpImpl implements DataInterface {
             oPreparedStatement.setInt(1, intId);
             intResult = oPreparedStatement.executeUpdate();
         } catch (SQLException ex) {
-            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":removeOne ERROR removing register: " + ex.getMessage()));
+            Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
+            throw new Exception();
         } finally {
             if (oPreparedStatement != null) {
                 oPreparedStatement.close();
@@ -173,10 +182,12 @@ public class MysqlDataSpImpl implements DataInterface {
             if (oResultSet.next()) {
                 strResult = oResultSet.getString("id");
             } else {
-                ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getId ERROR: ID not exists"));
+                Log4j.errorLog(this.getClass().getName() + ":" + "getId error");
+                throw new SQLException();
             }
         } catch (SQLException ex) {
-            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getId ERROR: Can't process query: " + ex.getMessage()));
+            Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
+            throw new Exception();
         } finally {
             if (oResultSet != null) {
                 oResultSet.close();
@@ -201,10 +212,12 @@ public class MysqlDataSpImpl implements DataInterface {
             if (oResultSet.next()) {
                 strResult = oResultSet.getString(strCampo);
             } else {
-                ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getOne ERROR: ID not exists: " + id));
+                Log4j.errorLog(this.getClass().getName() + ":" + "getOne error");
+                throw new SQLException();
             }
         } catch (Exception ex) {
-            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getOne ERROR: Can't process query: " + ex.getMessage()));
+            Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
+            throw new Exception();
         } finally {
             if (oResultSet != null) {
                 oResultSet.close();
@@ -230,7 +243,8 @@ public class MysqlDataSpImpl implements DataInterface {
                 intResult = oResultSet.getInt("COUNT(*)");
             }
         } catch (SQLException ex) {
-            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getCountSQL ERROR:  Can't process query: " + ex.getMessage()));
+            Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
+            throw new Exception();
         } finally {
             if (oResultSet != null) {
                 oResultSet.close();
@@ -252,7 +266,8 @@ public class MysqlDataSpImpl implements DataInterface {
             intResult = (intCount - 1) / intRegsPerPage;
             intResult++;
         } catch (SQLException ex) {
-            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPagesSQL ERROR:  Can't process query: " + ex.getMessage()));
+            Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
+            throw new Exception();
         } finally {
 
             if (oStatement != null) {
@@ -270,7 +285,8 @@ public class MysqlDataSpImpl implements DataInterface {
             oStatement = (Statement) connection.createStatement();
             oResultSet = oStatement.executeQuery(strSqlSelectDataOrigin);
         } catch (Exception ex) {
-            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getAllSQL ERROR:  Can't process query: " + ex.getMessage()));
+            Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
+            throw new Exception();
         } finally {
         }
         return oResultSet;
@@ -289,7 +305,8 @@ public class MysqlDataSpImpl implements DataInterface {
                 intResult = oResultSet.getInt("COUNT(*)");
             }
         } catch (SQLException ex) {
-            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getCountSQL ERROR:  Can't process query: " + ex.getMessage()));
+            Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
+            throw new Exception();
         } finally {
             if (oResultSet != null) {
                 oResultSet.close();

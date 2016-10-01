@@ -42,6 +42,7 @@ import static net.daw.helper.statics.AppConfigurationHelper.getSourceConnection;
 import net.daw.helper.statics.ExceptionBooster;
 import net.daw.helper.statics.FilterBeanHelper;
 import net.daw.helper.statics.JsonMessage;
+import net.daw.helper.statics.Log4j;
 import net.daw.helper.statics.ParameterCook;
 
 import net.daw.service.publicinterface.TableServiceInterface;
@@ -77,7 +78,8 @@ public class TipousuarioService implements TableServiceInterface, ViewServiceInt
                 TipousuarioDao oTipousuarioDao = new TipousuarioDao(oConnection);
                 data = JsonMessage.getJson("200", Integer.toString(oTipousuarioDao.getCount(alFilter)));
             } catch (Exception ex) {
-                ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getCount ERROR: " + ex.getMessage()));
+                Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
+                throw new Exception();
             } finally {
                 if (oConnection != null) {
                     oConnection.close();
@@ -108,7 +110,8 @@ public class TipousuarioService implements TableServiceInterface, ViewServiceInt
                 Gson gson = AppConfigurationHelper.getGson();
                 data = JsonMessage.getJson("200", AppConfigurationHelper.getGson().toJson(oTipousuarioBean));
             } catch (Exception ex) {
-                ExceptionBooster.boost(new Exception(this.getClass().getName() + ":get ERROR: " + ex.getMessage()));
+                Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
+                throw new Exception();
             } finally {
                 if (oConnection != null) {
                     oConnection.close();
@@ -140,7 +143,8 @@ public class TipousuarioService implements TableServiceInterface, ViewServiceInt
                 ArrayList<TipousuarioBean> arrBeans = oTipousuarioDao.getAll(alFilter, hmOrder, 1);
                 data = JsonMessage.getJson("200", AppConfigurationHelper.getGson().toJson(arrBeans));
             } catch (Exception ex) {
-                ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getAll ERROR: " + ex.getMessage()));
+                Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
+                throw new Exception();
             } finally {
                 if (oConnection != null) {
                     oConnection.close();
@@ -174,7 +178,8 @@ public class TipousuarioService implements TableServiceInterface, ViewServiceInt
                 List<TipousuarioBean> arrBeans = oTipousuarioDao.getPage(intRegsPerPag, intPage, alFilter, hmOrder, AppConfigurationHelper.getJsonDepth());
                 data = JsonMessage.getJson("200", AppConfigurationHelper.getGson().toJson(arrBeans));
             } catch (Exception ex) {
-                ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPage ERROR: " + ex.getMessage()));
+                Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
+                throw new Exception();
             } finally {
                 if (oConnection != null) {
                     oConnection.close();
@@ -203,7 +208,8 @@ public class TipousuarioService implements TableServiceInterface, ViewServiceInt
                 TipousuarioDao oTipousuarioDao = new TipousuarioDao(oConnection);
                 data = JsonMessage.getJson("200", Integer.toString(oTipousuarioDao.getPages(intRegsPerPag, alFilter)));
             } catch (Exception ex) {
-                ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPages ERROR: " + ex.getMessage()));
+                Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
+                throw new Exception();
             } finally {
                 if (oConnection != null) {
                     oConnection.close();
@@ -233,7 +239,8 @@ public class TipousuarioService implements TableServiceInterface, ViewServiceInt
                         + "}";
                 data = JsonMessage.getJson("200", data);
             } catch (Exception ex) {
-                ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getAggregateViewSome ERROR: " + ex.getMessage()));
+                Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
+                throw new Exception();
             }
             return data;
         } else {
@@ -257,7 +264,8 @@ public class TipousuarioService implements TableServiceInterface, ViewServiceInt
                 oConnection.commit();
             } catch (Exception ex) {
                 oConnection.rollback();
-                ExceptionBooster.boost(new Exception(this.getClass().getName() + ":remove ERROR: " + ex.getMessage()));
+                Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
+                throw new Exception();
             } finally {
                 if (oConnection != null) {
                     oConnection.close();
@@ -299,7 +307,8 @@ public class TipousuarioService implements TableServiceInterface, ViewServiceInt
                 oConnection.commit();
             } catch (Exception ex) {
                 oConnection.rollback();
-                ExceptionBooster.boost(new Exception(this.getClass().getName() + ":set ERROR: " + ex.getMessage()));
+                Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
+                throw new Exception();
             } finally {
                 if (oConnection != null) {
                     oConnection.close();

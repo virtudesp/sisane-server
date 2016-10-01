@@ -48,7 +48,7 @@ public class json extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
 
-//    private void sendResponseJson1(HttpServletRequest request, HttpServletResponse response, String strStatus, String strMessage) throws ServletException, IOException {
+//    private void sendResponseJson2(HttpServletRequest request, HttpServletResponse response, String strStatus, String strMessage) throws ServletException, IOException {
 //        Map<String, String> data = new HashMap<>();
 //        data.put("status", strStatus);
 //        data.put("message", strMessage);
@@ -56,6 +56,7 @@ public class json extends HttpServlet {
 //        request.setAttribute("contenido", gson.toJson(data));
 //        getServletContext().getRequestDispatcher("/jsp/messageAjax.jsp").forward(request, response);
 //    }
+    
     private void sendResponseJson(HttpServletRequest request, HttpServletResponse response, String strMessage) throws ServletException, IOException {
         request.setAttribute("contenido", strMessage);
         getServletContext().getRequestDispatcher("/jsp/messageAjax.jsp").forward(request, response);
@@ -75,22 +76,14 @@ public class json extends HttpServlet {
         }
     }
 
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, Exception {        
-        Log4j.infoLog("--------> incio PETICIÓN ");
-        Log4j.infoLog(request.getRemoteHost() + ": " + request.getRemoteAddr());
-        Log4j.infoLog("URL: " + request.getRequestURL().append('?').append(request.getQueryString()) + ": method: " + request.getMethod() + "");
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, Exception {
+        Log4j.infoLog(this.getClass().getName() + ": " + request.getMethod() + " request: " + request.getRequestURL().append('?').append(request.getQueryString()));
         try {
             try {
                 Class.forName("com.mysql.jdbc.Driver");
             } catch (Exception ex) {
-                if (EstadoHelper.getTipo_estado() == Tipo_estado.Debug) {
-                    request.setAttribute("contenido", JsonMessage.getJsonMsg("500", "ERROR: " + ex.getMessage()));
-                    getServletContext().getRequestDispatcher("/jsp/messageAjax.jsp").forward(request, response);
-                } else {
-                    request.setAttribute("contenido", JsonMessage.getJsonMsg("500", "Applications server error. Please, contact your administrator."));
-                    getServletContext().getRequestDispatcher("/jsp/messageAjax.jsp").forward(request, response);
-                }
-                Log4j.severeLog(ex.toString());
+                sendResponseJson(request, response, JsonMessage.getJsonMsg("500", "Zylka server error. Please, contact your administrator."));
+                Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
                 return;
             }
             if (EstadoHelper.getTipo_estado() == Tipo_estado.Debug) {
@@ -108,17 +101,13 @@ public class json extends HttpServlet {
                     String jsonResult = (String) oMethodService.invoke(oService);
                     sendResponseJson(request, response, jsonResult);
                 } catch (ClassNotFoundException | InstantiationException | IllegalAccessException ex) {
-                    throw new Exception(this.getClass().getName() + ":processRequest ERROR: no such operation");
+                    sendResponseJson(request, response, JsonMessage.getJsonMsg("500", "Zylka server error. Please, contact your administrator."));
+                    Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
                 }
             }
         } catch (ServletException | IOException | NoSuchMethodException | SecurityException | IllegalArgumentException | InvocationTargetException ex) {
-            if (EstadoHelper.getTipo_estado() == Tipo_estado.Debug) {
-                sendResponseJson(request, response, JsonMessage.getJsonMsg("500", "ERROR: " + ex.getMessage()));
-            } else {
-                sendResponseJson(request, response, JsonMessage.getJsonMsg("500", "Applications server error. Please, contact your administrator."));
-            }
-            Log4j.severeLog(ex.toString());
-            return;
+            sendResponseJson(request, response, JsonMessage.getJsonMsg("500", "Zylka server error. Please, contact your administrator."));
+            Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
         }
     }
 // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

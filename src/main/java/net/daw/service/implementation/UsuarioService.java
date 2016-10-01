@@ -43,6 +43,7 @@ import net.daw.helper.statics.EncodingUtilHelper;
 import net.daw.helper.statics.ExceptionBooster;
 import net.daw.helper.statics.FilterBeanHelper;
 import net.daw.helper.statics.JsonMessage;
+import net.daw.helper.statics.Log4j;
 import net.daw.helper.statics.ParameterCook;
 
 import net.daw.service.publicinterface.TableServiceInterface;
@@ -121,7 +122,8 @@ public class UsuarioService implements TableServiceInterface, ViewServiceInterfa
                 UsuarioDao oUsuarioDao = new UsuarioDao(oConnection);
                 data = JsonMessage.getJson("200", Integer.toString(oUsuarioDao.getCount(alFilter)));
             } catch (Exception ex) {
-                ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getCount ERROR: " + ex.getMessage()));
+                Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
+                throw new Exception();
             } finally {
                 if (oConnection != null) {
                     oConnection.close();
@@ -152,7 +154,8 @@ public class UsuarioService implements TableServiceInterface, ViewServiceInterfa
                 Gson gson = AppConfigurationHelper.getGson();
                 data = JsonMessage.getJson("200", AppConfigurationHelper.getGson().toJson(oUsuarioBean));
             } catch (Exception ex) {
-                ExceptionBooster.boost(new Exception(this.getClass().getName() + ":get ERROR: " + ex.getMessage()));
+                Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
+                throw new Exception();
             } finally {
                 if (oConnection != null) {
                     oConnection.close();
@@ -184,7 +187,8 @@ public class UsuarioService implements TableServiceInterface, ViewServiceInterfa
                 ArrayList<UsuarioBean> arrBeans = oUsuarioDao.getAll(alFilter, hmOrder, 1);
                 data = JsonMessage.getJson("200", AppConfigurationHelper.getGson().toJson(arrBeans));
             } catch (Exception ex) {
-                ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getAll ERROR: " + ex.getMessage()));
+                Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
+                throw new Exception();
             } finally {
                 if (oConnection != null) {
                     oConnection.close();
@@ -218,7 +222,8 @@ public class UsuarioService implements TableServiceInterface, ViewServiceInterfa
                 List<UsuarioBean> arrBeans = oUsuarioDao.getPage(intRegsPerPag, intPage, alFilter, hmOrder, AppConfigurationHelper.getJsonDepth());
                 data = JsonMessage.getJson("200", AppConfigurationHelper.getGson().toJson(arrBeans));
             } catch (Exception ex) {
-                ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPage ERROR: " + ex.getMessage()));
+                Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
+                throw new Exception();
             } finally {
                 if (oConnection != null) {
                     oConnection.close();
@@ -247,7 +252,8 @@ public class UsuarioService implements TableServiceInterface, ViewServiceInterfa
                 UsuarioDao oUsuarioDao = new UsuarioDao(oConnection);
                 data = JsonMessage.getJson("200", Integer.toString(oUsuarioDao.getPages(intRegsPerPag, alFilter)));
             } catch (Exception ex) {
-                ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPages ERROR: " + ex.getMessage()));
+                Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
+                throw new Exception();
             } finally {
                 if (oConnection != null) {
                     oConnection.close();
@@ -277,7 +283,8 @@ public class UsuarioService implements TableServiceInterface, ViewServiceInterfa
                         + "}";
                 data = JsonMessage.getJson("200", data);
             } catch (Exception ex) {
-                ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getAggregateViewSome ERROR: " + ex.getMessage()));
+                Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
+                throw new Exception();
             }
             return data;
         } else {
@@ -301,7 +308,8 @@ public class UsuarioService implements TableServiceInterface, ViewServiceInterfa
                 oConnection.commit();
             } catch (Exception ex) {
                 oConnection.rollback();
-                ExceptionBooster.boost(new Exception(this.getClass().getName() + ":remove ERROR: " + ex.getMessage()));
+                Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
+                throw new Exception();
             } finally {
                 if (oConnection != null) {
                     oConnection.close();
@@ -343,7 +351,8 @@ public class UsuarioService implements TableServiceInterface, ViewServiceInterfa
                 oConnection.commit();
             } catch (Exception ex) {
                 oConnection.rollback();
-                ExceptionBooster.boost(new Exception(this.getClass().getName() + ":set ERROR: " + ex.getMessage()));
+                Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
+                throw new Exception();
             } finally {
                 if (oConnection != null) {
                     oConnection.close();
@@ -384,7 +393,8 @@ public class UsuarioService implements TableServiceInterface, ViewServiceInterfa
                         strAnswer = "User or password incorrect";
                     }
                 } catch (Exception ex) {
-                    ExceptionBooster.boost(new Exception(this.getClass().getName() + ":login ERROR " + ex.toString()));
+                    Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
+                    throw new Exception();
                 } finally {
                     if (oConnection != null) {
                         oConnection.close();

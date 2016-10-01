@@ -31,6 +31,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import net.daw.connection.publicinterface.ConnectionInterface;
 import net.daw.helper.statics.ConnectionClassHelper;
+import net.daw.helper.statics.Log4j;
 
 public class DriverManagerConnectionImpl implements ConnectionInterface {
 
@@ -41,7 +42,8 @@ public class DriverManagerConnectionImpl implements ConnectionInterface {
             Connection connection = DriverManager.getConnection("jdbc:mysql://" + ConnectionClassHelper.getDatabaseHost() + ":" + ConnectionClassHelper.getDatabasePort() + "/" + ConnectionClassHelper.getDatabaseName(), ConnectionClassHelper.getDatabaseLogin(), ConnectionClassHelper.getDatabasePassword());
             return connection;
         } catch (ClassNotFoundException | SQLException ex) {
-            throw new RuntimeException(ex);
+            Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
+            throw new Exception();
         }
     }
 

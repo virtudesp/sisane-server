@@ -224,17 +224,17 @@ public class DocumentoBean implements GenericBean {
 
     @Override
     public String toPairs() {
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");        
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         String strPairs = "";
         //strPairs += "id=" + id + ",";
         strPairs += "titulo=" + EncodingUtilHelper.quotate(titulo) + ",";
-        strPairs += "contenido=" +  EncodingUtilHelper.quotate(contenido) + ",";
+        strPairs += "contenido=" + EncodingUtilHelper.quotate(contenido) + ",";
         strPairs += "alta=" + EncodingUtilHelper.quotate(format.format(alta)) + ",";
         strPairs += "cambio=" + EncodingUtilHelper.quotate(format.format(cambio)) + ",";
         strPairs += "hits=" + hits + ",";
         strPairs += "id_usuario=" + id_usuario + ",";
         strPairs += "id_tipodocumento=" + id_tipodocumento + ",";
-        strPairs += "etiquetas=" +  EncodingUtilHelper.quotate(etiquetas) + ",";
+        strPairs += "etiquetas=" + EncodingUtilHelper.quotate(etiquetas) + ",";
         strPairs += "publicado=" + publicado + ",";
         strPairs += "portada=" + portada + ",";
         strPairs += "destacado=" + destacado;

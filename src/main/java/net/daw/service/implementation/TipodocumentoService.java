@@ -42,6 +42,7 @@ import static net.daw.helper.statics.AppConfigurationHelper.getSourceConnection;
 import net.daw.helper.statics.ExceptionBooster;
 import net.daw.helper.statics.FilterBeanHelper;
 import net.daw.helper.statics.JsonMessage;
+import net.daw.helper.statics.Log4j;
 import net.daw.helper.statics.ParameterCook;
 
 import net.daw.service.publicinterface.TableServiceInterface;
@@ -77,7 +78,8 @@ public class TipodocumentoService implements TableServiceInterface, ViewServiceI
                 TipodocumentoDao oTipodocumentoDao = new TipodocumentoDao(oConnection);
                 data = JsonMessage.getJson("200", Integer.toString(oTipodocumentoDao.getCount(alFilter)));
             } catch (Exception ex) {
-                ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getCount ERROR: " + ex.getMessage()));
+                Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
+                throw new Exception();
             } finally {
                 if (oConnection != null) {
                     oConnection.close();
@@ -108,7 +110,8 @@ public class TipodocumentoService implements TableServiceInterface, ViewServiceI
                 Gson gson = AppConfigurationHelper.getGson();
                 data = JsonMessage.getJson("200", AppConfigurationHelper.getGson().toJson(oTipodocumentoBean));
             } catch (Exception ex) {
-                ExceptionBooster.boost(new Exception(this.getClass().getName() + ":get ERROR: " + ex.getMessage()));
+                Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
+                throw new Exception();
             } finally {
                 if (oConnection != null) {
                     oConnection.close();
@@ -140,7 +143,8 @@ public class TipodocumentoService implements TableServiceInterface, ViewServiceI
                 ArrayList<TipodocumentoBean> arrBeans = oTipodocumentoDao.getAll(alFilter, hmOrder, 1);
                 data = JsonMessage.getJson("200", AppConfigurationHelper.getGson().toJson(arrBeans));
             } catch (Exception ex) {
-                ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getAll ERROR: " + ex.getMessage()));
+                Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
+                throw new Exception();
             } finally {
                 if (oConnection != null) {
                     oConnection.close();
@@ -174,7 +178,8 @@ public class TipodocumentoService implements TableServiceInterface, ViewServiceI
                 List<TipodocumentoBean> arrBeans = oTipodocumentoDao.getPage(intRegsPerPag, intPage, alFilter, hmOrder, AppConfigurationHelper.getJsonDepth());
                 data = JsonMessage.getJson("200", AppConfigurationHelper.getGson().toJson(arrBeans));
             } catch (Exception ex) {
-                ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPage ERROR: " + ex.getMessage()));
+                Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
+                throw new Exception();
             } finally {
                 if (oConnection != null) {
                     oConnection.close();
@@ -203,7 +208,8 @@ public class TipodocumentoService implements TableServiceInterface, ViewServiceI
                 TipodocumentoDao oTipodocumentoDao = new TipodocumentoDao(oConnection);
                 data = JsonMessage.getJson("200", Integer.toString(oTipodocumentoDao.getPages(intRegsPerPag, alFilter)));
             } catch (Exception ex) {
-                ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getPages ERROR: " + ex.getMessage()));
+                Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
+                throw new Exception();
             } finally {
                 if (oConnection != null) {
                     oConnection.close();
@@ -233,7 +239,8 @@ public class TipodocumentoService implements TableServiceInterface, ViewServiceI
                         + "}";
                 data = JsonMessage.getJson("200", data);
             } catch (Exception ex) {
-                ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getAggregateViewSome ERROR: " + ex.getMessage()));
+                Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
+                throw new Exception();
             }
             return data;
         } else {
@@ -257,7 +264,8 @@ public class TipodocumentoService implements TableServiceInterface, ViewServiceI
                 oConnection.commit();
             } catch (Exception ex) {
                 oConnection.rollback();
-                ExceptionBooster.boost(new Exception(this.getClass().getName() + ":remove ERROR: " + ex.getMessage()));
+                Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
+                throw new Exception();
             } finally {
                 if (oConnection != null) {
                     oConnection.close();
@@ -299,7 +307,8 @@ public class TipodocumentoService implements TableServiceInterface, ViewServiceI
                 oConnection.commit();
             } catch (Exception ex) {
                 oConnection.rollback();
-                ExceptionBooster.boost(new Exception(this.getClass().getName() + ":set ERROR: " + ex.getMessage()));
+                Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
+                throw new Exception();
             } finally {
                 if (oConnection != null) {
                     oConnection.close();
