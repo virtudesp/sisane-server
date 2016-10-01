@@ -1,12 +1,12 @@
 /*
  * Copyright (c) 2016 by Rafael Angel Aznar Aparici (rafaaznar at gmail dot com)
  * 
- * zylka server: Helps you to develop easily AJAX web applications 
+ * zylkanexy server: Helps you to develop easily AJAX web applications 
  *               by copying and modifying this Java Server.
  *
- * Sources at https://github.com/rafaelaznar/zylka
+ * Sources at https://github.com/rafaelaznar/zylkanexy
  * 
- * zylka server is distributed under the MIT License (MIT)
+ * zylkanexy server is distributed under the MIT License (MIT)
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal

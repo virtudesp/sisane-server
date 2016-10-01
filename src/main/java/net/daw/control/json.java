@@ -1,12 +1,12 @@
 /*
  * Copyright (c) 2016 by Rafael Angel Aznar Aparici (rafaaznar at gmail dot com)
  * 
- * zylka server: Helps you to develop easily AJAX web applications 
+ * zylkanexy server: Helps you to develop easily AJAX web applications 
  *               by copying and modifying this Java Server.
  *
- * Sources at https://github.com/rafaelaznar/zylka
+ * Sources at https://github.com/rafaelaznar/zylkanexy
  * 
- * zylka server is distributed under the MIT License (MIT)
+ * zylkanexy server is distributed under the MIT License (MIT)
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -82,7 +82,7 @@ public class json extends HttpServlet {
             try {
                 Class.forName("com.mysql.jdbc.Driver");
             } catch (Exception ex) {
-                sendResponseJson(request, response, JsonMessage.getJsonMsg("500", "Zylka server error. Please, contact your administrator."));
+                sendResponseJson(request, response, JsonMessage.getJsonMsg("500", "zylkanexy server error. Please, contact your administrator."));
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
                 return;
             }
@@ -92,7 +92,7 @@ public class json extends HttpServlet {
             String ob = ParameterCook.prepareObject(request);
             String op = ParameterCook.prepareOperation(request);
             if ("".equals(op) && "".equals(ob)) {
-                sendResponseHtml(request, response, "zylka server by rafael aznar", "the server is up and running on " + request.getLocalName() + ":" + request.getLocalPort());
+                sendResponseHtml(request, response, "zylkanexy server by rafael aznar", "the server is up and running on " + request.getLocalName() + ":" + request.getLocalPort());
             } else {
                 try {
                     String strClassName = "net.daw.service.implementation." + ParameterCook.prepareCamelCaseObject(request) + "Service";
@@ -101,12 +101,12 @@ public class json extends HttpServlet {
                     String jsonResult = (String) oMethodService.invoke(oService);
                     sendResponseJson(request, response, jsonResult);
                 } catch (ClassNotFoundException | InstantiationException | IllegalAccessException ex) {
-                    sendResponseJson(request, response, JsonMessage.getJsonMsg("500", "Zylka server error. Please, contact your administrator."));
+                    sendResponseJson(request, response, JsonMessage.getJsonMsg("500", "zylkanexy server error. Please, contact your administrator."));
                     Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
                 }
             }
         } catch (ServletException | IOException | NoSuchMethodException | SecurityException | IllegalArgumentException | InvocationTargetException ex) {
-            sendResponseJson(request, response, JsonMessage.getJsonMsg("500", "Zylka server error. Please, contact your administrator."));
+            sendResponseJson(request, response, JsonMessage.getJsonMsg("500", "zylkanexy server error. Please, contact your administrator."));
             Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
         }
     }

@@ -38,17 +38,17 @@ import net.daw.control.json;
 public class Log4j {
 
     public static void infoLog(String strMessage) {
-        Logger log = Logger.getLogger("zylka");
+        Logger log = Logger.getLogger("zylkanexy");
         log.info(strMessage);
     }
 
     public static void errorLog(String strMessage, Exception e) {
-        Logger log = Logger.getLogger("zylka");
+        Logger log = Logger.getLogger("zylkanexy");
         log.error(strMessage, e);
     }
 
     public static void errorLog(String strMessage) {
-        Logger log = Logger.getLogger("zylka");
+        Logger log = Logger.getLogger("zylkanexy");
         log.error(strMessage);
     }
 

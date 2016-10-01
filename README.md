@@ -1,8 +1,8 @@
-# Zylka server
+# Zylkanexy server
 
-  * Zylka server provides a template to easy build small and medium AJAX projects with the following technologies:
+  * Zylkanexy server provides a template to easy build small and medium AJAX projects with the following technologies:
     * J2EE servlets, MySQL, Gson, Maven, CORS, Bonecp, Layered architecture: service-dao
-  * Because software development trends naturaly to be complex openAusias wants to be easy and keep simple all the process. Zylka server is used to teach web application development to vocational students and to qualify them to join the workforce maket of developers in a tiny period of time. openAusias was designed to avoid spaghetti code and complexity as far as possible, and brings an aid in structurate code development.
+  * Because software development trends naturaly to be complex openAusias wants to be easy and keep simple all the process. Zylkanexy server is used to teach web application development to vocational students and to qualify them to join the workforce maket of developers in a tiny period of time. openAusias was designed to avoid spaghetti code and complexity as far as possible, and brings an aid in structurate code development.
   * Provides a layered J2EE environment to easy server web development. 
   * The project has low amount of generic code, that makes it perfect to be simple.
   * Instructions:
