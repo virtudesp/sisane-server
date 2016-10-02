@@ -1,11 +1,13 @@
 <%-- 
 /*
- * Copyright (c) 2015 by Rafael Angel Aznar Aparici (rafaaznar at gmail dot com)
+ * Copyright (c) 2016 by Rafael Angel Aznar Aparici (rafaaznar at gmail dot com)
  * 
- * openAUSIAS: The stunning micro-library that helps you to develop easily 
- *             AJAX web applications by using Java and jQuery
- * openAUSIAS is distributed under the MIT License (MIT)
- * Sources at https://github.com/rafaelaznar/openAUSIAS
+ * zylkanexy server: Helps you to develop easily AJAX web applications 
+ *                   by copying and modifying this Java Server.
+ *
+ * Sources at https://github.com/rafaelaznar/zylkanexy
+ * 
+ * zylkanexy server is distributed under the MIT License (MIT)
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,10 +27,6 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-
-    Document   : message
-    Created on : Sep 28, 2016, 9:04:21 AM
-    Author     : rafael aznar
 --%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>

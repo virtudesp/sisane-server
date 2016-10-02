@@ -1,10 +1,12 @@
 /*
- * Copyright (c) 2015 by Rafael Angel Aznar Aparici (rafaaznar at gmail dot com)
+ * Copyright (c) 2016 by Rafael Angel Aznar Aparici (rafaaznar at gmail dot com)
  * 
- * openAUSIAS: The stunning micro-library that helps you to develop easily 
- *             AJAX web applications by using Java and jQuery
- * openAUSIAS is distributed under the MIT License (MIT)
- * Sources at https://github.com/rafaelaznar/openAUSIAS
+ * zylkanexy server: Helps you to develop easily AJAX web applications 
+ *                   by copying and modifying this Java Server.
+ *
+ * Sources at https://github.com/rafaelaznar/zylkanexy
+ * 
+ * zylkanexy server is distributed under the MIT License (MIT)
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -28,8 +30,6 @@ package net.daw.connection.implementation;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
