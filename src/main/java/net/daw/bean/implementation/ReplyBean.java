@@ -1,12 +1,10 @@
 /*
- * Copyright (c) 2016 by Rafael Angel Aznar Aparici (rafaaznar at gmail dot com)
+ * Copyright (c) 2015 by Rafael Angel Aznar Aparici (rafaaznar at gmail dot com)
  * 
- * zylkanexy server: Helps you to develop easily AJAX web applications 
- *                   by copying and modifying this Java Server.
- *
- * Sources at https://github.com/rafaelaznar/zylkanexy
- * 
- * zylkanexy server is distributed under the MIT License (MIT)
+ * openAUSIAS: The stunning micro-library that helps you to develop easily 
+ *             AJAX web applications by using Java and jQuery
+ * openAUSIAS is distributed under the MIT License (MIT)
+ * Sources at https://github.com/rafaelaznar/
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,16 +23,48 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
+ * 
  */
-package net.daw.service.publicinterface;
+package net.daw.bean.implementation;
 
-import net.daw.bean.implementation.ReplyBean;
+/**
+ *
+ * @author rafa
+ */
+public class ReplyBean {
+    private Integer code;
+    private String message;
+    private String json; 
 
-public interface TableServiceInterface {
+    public ReplyBean(Integer code, String message, String json) {
+        this.code = code;
+        this.message = message;
+        this.json = json;
+    }
 
-    public ReplyBean get() throws Exception;
+    
+    
+    public Integer getCode() {
+        return code;
+    }
 
-    public ReplyBean remove() throws Exception;
+    public void setCode(Integer code) {
+        this.code = code;
+    }
 
-    public ReplyBean set() throws Exception;
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public String getJson() {
+        return json;
+    }
+
+    public void setJson(String json) {
+        this.json = json;
+    }
 }

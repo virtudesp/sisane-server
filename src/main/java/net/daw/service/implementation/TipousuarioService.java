@@ -34,6 +34,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
+import net.daw.bean.implementation.ReplyBean;
 import net.daw.bean.implementation.TipousuarioBean;
 import net.daw.bean.implementation.UsuarioBean;
 import net.daw.connection.publicinterface.ConnectionInterface;
@@ -41,7 +42,6 @@ import net.daw.dao.implementation.TipousuarioDao;
 
 import net.daw.helper.statics.AppConfigurationHelper;
 import static net.daw.helper.statics.AppConfigurationHelper.getSourceConnection;
-import net.daw.helper.statics.ExceptionBooster;
 import net.daw.helper.statics.FilterBeanHelper;
 import net.daw.helper.statics.JsonMessage;
 import net.daw.helper.statics.Log4j;
@@ -68,7 +68,7 @@ public class TipousuarioService implements TableServiceInterface, ViewServiceInt
     }
 
     @Override
-    public String getcount() throws Exception {
+    public ReplyBean getcount() throws Exception {
         if (this.checkpermission("getcount")) {
             String data = null;
             ArrayList<FilterBeanHelper> alFilter = ParameterCook.prepareFilter(oRequest);
@@ -90,14 +90,14 @@ public class TipousuarioService implements TableServiceInterface, ViewServiceInt
                     oDataConnectionSource.disposeConnection();
                 }
             }
-            return data;
+            return new ReplyBean(200, "OK", JsonMessage.getJsonMsg("200", data));
         } else {
-            return JsonMessage.getJsonMsg("401", "Unauthorized");
+            return new ReplyBean(401, "Unauthorized", JsonMessage.getJsonMsg("401", "Unauthorized"));
         }
     }
 
     @Override
-    public String get() throws Exception {
+    public ReplyBean get() throws Exception {
         if (this.checkpermission("get")) {
             int id = ParameterCook.prepareId(oRequest);
             String data = null;
@@ -122,15 +122,14 @@ public class TipousuarioService implements TableServiceInterface, ViewServiceInt
                     oDataConnectionSource.disposeConnection();
                 }
             }
-            return data;
-
+            return new ReplyBean(200, "OK", JsonMessage.getJsonMsg("200", data));
         } else {
-            return JsonMessage.getJsonMsg("401", "Unauthorized");
+            return new ReplyBean(401, "Unauthorized", JsonMessage.getJsonMsg("401", "Unauthorized"));
         }
     }
 
     @Override
-    public String getall() throws Exception {
+    public ReplyBean getall() throws Exception {
         if (this.checkpermission("getall")) {
             ArrayList<FilterBeanHelper> alFilter = ParameterCook.prepareFilter(oRequest);
             HashMap<String, String> hmOrder = ParameterCook.prepareOrder(oRequest);
@@ -155,16 +154,15 @@ public class TipousuarioService implements TableServiceInterface, ViewServiceInt
                     oDataConnectionSource.disposeConnection();
                 }
             }
-
-            return data;
+            return new ReplyBean(200, "OK", JsonMessage.getJsonMsg("200", data));
         } else {
-            return JsonMessage.getJsonMsg("401", "Unauthorized");
+            return new ReplyBean(401, "Unauthorized", JsonMessage.getJsonMsg("401", "Unauthorized"));
         }
     }
 
     @Override
     @SuppressWarnings("empty-statement")
-    public String getpage() throws Exception {
+    public ReplyBean getpage() throws Exception {
         if (this.checkpermission("getpage")) {
             int intRegsPerPag = ParameterCook.prepareRpp(oRequest);;
             int intPage = ParameterCook.preparePage(oRequest);
@@ -190,14 +188,14 @@ public class TipousuarioService implements TableServiceInterface, ViewServiceInt
                     oDataConnectionSource.disposeConnection();
                 }
             }
-            return data;
+            return new ReplyBean(200, "OK", JsonMessage.getJsonMsg("200", data));
         } else {
-            return JsonMessage.getJsonMsg("401", "Unauthorized");
+            return new ReplyBean(401, "Unauthorized", JsonMessage.getJsonMsg("401", "Unauthorized"));
         }
     }
 
     @Override
-    public String getpages() throws Exception {
+    public ReplyBean getpages() throws Exception {
         if (this.checkpermission("getpages")) {
             int intRegsPerPag = ParameterCook.prepareRpp(oRequest);
             ArrayList<FilterBeanHelper> alFilter = ParameterCook.prepareFilter(oRequest);
@@ -220,20 +218,20 @@ public class TipousuarioService implements TableServiceInterface, ViewServiceInt
                     oDataConnectionSource.disposeConnection();
                 }
             }
-            return data;
+            return new ReplyBean(200, "OK", JsonMessage.getJsonMsg("200", data));
         } else {
-            return JsonMessage.getJsonMsg("401", "Unauthorized");
+            return new ReplyBean(401, "Unauthorized", JsonMessage.getJsonMsg("401", "Unauthorized"));
         }
     }
 
     @Override
-    public String getaggregateviewsome() throws Exception {
+    public ReplyBean getaggregateviewsome() throws Exception {
         if (this.checkpermission("getaggregateviewsome")) {
             String data = null;
             try {
-                String page = this.getpage();
-                String pages = this.getpages();
-                String registers = this.getcount();
+                String page = this.getpage().getJson();
+                String pages = this.getpages().getJson();
+                String registers = this.getcount().getJson();
                 data = "{"
                         + "\"page\":" + page
                         + ",\"pages\":" + pages
@@ -244,17 +242,17 @@ public class TipousuarioService implements TableServiceInterface, ViewServiceInt
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
                 throw new Exception();
             }
-            return data;
+            return new ReplyBean(200, "OK", JsonMessage.getJsonMsg("200", data));
         } else {
-            return JsonMessage.getJsonMsg("401", "Unauthorized");
+            return new ReplyBean(401, "Unauthorized", JsonMessage.getJsonMsg("401", "Unauthorized"));
         }
     }
 
     @Override
-    public String remove() throws Exception {
+    public ReplyBean remove() throws Exception {
         if (this.checkpermission("remove")) {
             Integer id = ParameterCook.prepareId(oRequest);
-            String resultado = null;
+            String data = null;
             Connection oConnection = null;
             ConnectionInterface oDataConnectionSource = null;
             try {
@@ -262,7 +260,7 @@ public class TipousuarioService implements TableServiceInterface, ViewServiceInt
                 oConnection = oDataConnectionSource.newConnection();
                 oConnection.setAutoCommit(false);
                 TipousuarioDao oTipousuarioDao = new TipousuarioDao(oConnection);
-                resultado = JsonMessage.getJson("200", (String) oTipousuarioDao.remove(id).toString());
+                data = JsonMessage.getJson("200", (String) oTipousuarioDao.remove(id).toString());
                 oConnection.commit();
             } catch (Exception ex) {
                 oConnection.rollback();
@@ -276,17 +274,17 @@ public class TipousuarioService implements TableServiceInterface, ViewServiceInt
                     oDataConnectionSource.disposeConnection();
                 }
             }
-            return resultado;
+            return new ReplyBean(200, "OK", JsonMessage.getJsonMsg("200", data));
         } else {
-            return JsonMessage.getJsonMsg("401", "Unauthorized");
+            return new ReplyBean(401, "Unauthorized", JsonMessage.getJsonMsg("401", "Unauthorized"));
         }
     }
 
     @Override
-    public String set() throws Exception {
+    public ReplyBean set() throws Exception {
         if (this.checkpermission("set")) {
             String jason = ParameterCook.prepareJson(oRequest);
-            String resultado = null;
+            String data = null;
             Connection oConnection = null;
             ConnectionInterface oDataConnectionSource = null;
             try {
@@ -299,12 +297,12 @@ public class TipousuarioService implements TableServiceInterface, ViewServiceInt
                 if (oTipousuarioBean != null) {
                     Integer iResult = oTipousuarioDao.set(oTipousuarioBean);
                     if (iResult >= 1) {
-                        resultado = JsonMessage.getJson("200", iResult.toString());
+                        data = JsonMessage.getJson("200", iResult.toString());
                     } else {
-                        resultado = JsonMessage.getJson("500", "Error during registry set");
+                        data = JsonMessage.getJson("500", "Error during registry set");
                     }
                 } else {
-                    resultado = JsonMessage.getJson("500", "Error during registry set");
+                    data = JsonMessage.getJson("500", "Error during registry set");
                 }
                 oConnection.commit();
             } catch (Exception ex) {
@@ -319,9 +317,9 @@ public class TipousuarioService implements TableServiceInterface, ViewServiceInt
                     oDataConnectionSource.disposeConnection();
                 }
             }
-            return resultado;
+            return new ReplyBean(200, "OK", JsonMessage.getJsonMsg("200", data));
         } else {
-            return JsonMessage.getJsonMsg("401", "Unauthorized");
+            return new ReplyBean(401, "Unauthorized", JsonMessage.getJsonMsg("401", "Unauthorized"));
         }
     }
 

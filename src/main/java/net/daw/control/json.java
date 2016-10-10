@@ -31,6 +31,7 @@ package net.daw.control;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import net.daw.bean.implementation.ReplyBean;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -56,9 +57,8 @@ public class json extends HttpServlet {
 //        request.setAttribute("contenido", gson.toJson(data));
 //        getServletContext().getRequestDispatcher("/jsp/messageAjax.jsp").forward(request, response);
 //    }
-    
-    private void sendResponseJson(HttpServletRequest request, HttpServletResponse response, String strMessage) throws ServletException, IOException {
-        request.setAttribute("contenido", strMessage);
+    private void sendResponseJson(HttpServletRequest request, HttpServletResponse response, ReplyBean answer) throws ServletException, IOException {
+        request.setAttribute("answer", answer);
         getServletContext().getRequestDispatcher("/jsp/messageAjax.jsp").forward(request, response);
     }
 
@@ -82,7 +82,8 @@ public class json extends HttpServlet {
             try {
                 Class.forName("com.mysql.jdbc.Driver");
             } catch (Exception ex) {
-                sendResponseJson(request, response, JsonMessage.getJsonMsg("500", "zylkanexy server error. Please, contact your administrator."));
+                ReplyBean oReplyBean = new ReplyBean(500, "zylkanexy server error. Please, contact your administrator.", "zylkanexy server error. Please, contact your administrator.");
+                sendResponseJson(request, response, oReplyBean);
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
                 return;
             }
@@ -98,15 +99,17 @@ public class json extends HttpServlet {
                     String strClassName = "net.daw.service.implementation." + ParameterCook.prepareCamelCaseObject(request) + "Service";
                     ViewServiceInterface oService = (ViewServiceInterface) Class.forName(strClassName).getDeclaredConstructor(HttpServletRequest.class).newInstance(request);
                     Method oMethodService = oService.getClass().getMethod(ParameterCook.prepareOperation(request));
-                    String jsonResult = (String) oMethodService.invoke(oService);
-                    sendResponseJson(request, response, jsonResult);
+                    ReplyBean Result = (ReplyBean) oMethodService.invoke(oService);
+                    sendResponseJson(request, response, Result);
                 } catch (ClassNotFoundException | InstantiationException | IllegalAccessException ex) {
-                    sendResponseJson(request, response, JsonMessage.getJsonMsg("500", "zylkanexy server error. Please, contact your administrator."));
+                    ReplyBean oReplyBean = new ReplyBean(500, "zylkanexy server error. Please, contact your administrator.", "zylkanexy server error. Please, contact your administrator.");
+                    sendResponseJson(request, response, oReplyBean);
                     Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
                 }
             }
         } catch (ServletException | IOException | NoSuchMethodException | SecurityException | IllegalArgumentException | InvocationTargetException ex) {
-            sendResponseJson(request, response, JsonMessage.getJsonMsg("500", "zylkanexy server error. Please, contact your administrator."));
+            ReplyBean oReplyBean = new ReplyBean(500, "zylkanexy server error. Please, contact your administrator.", "zylkanexy server error. Please, contact your administrator.");
+            sendResponseJson(request, response, oReplyBean);
             Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
         }
     }

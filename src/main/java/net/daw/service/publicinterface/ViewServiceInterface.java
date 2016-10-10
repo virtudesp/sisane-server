@@ -28,16 +28,18 @@
  */
 package net.daw.service.publicinterface;
 
+import net.daw.bean.implementation.ReplyBean;
+
 public interface ViewServiceInterface {
 
-    public String getall() throws Exception;
+    public ReplyBean getall() throws Exception;
 
-    public String getpage() throws Exception;
+    public ReplyBean getpage() throws Exception;
 
-    public String getpages() throws Exception;
+    public ReplyBean getpages() throws Exception;
 
-    public String getcount() throws Exception;
+    public ReplyBean getcount() throws Exception;
 
-    public String getaggregateviewsome() throws Exception;
+    public ReplyBean getaggregateviewsome() throws Exception;
 
 }

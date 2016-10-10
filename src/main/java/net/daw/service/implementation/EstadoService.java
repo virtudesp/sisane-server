@@ -35,13 +35,13 @@ import java.util.HashMap;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import net.daw.bean.implementation.EstadoBean;
+import net.daw.bean.implementation.ReplyBean;
 import net.daw.bean.implementation.UsuarioBean;
 import net.daw.connection.publicinterface.ConnectionInterface;
 import net.daw.dao.implementation.EstadoDao;
 
 import net.daw.helper.statics.AppConfigurationHelper;
 import static net.daw.helper.statics.AppConfigurationHelper.getSourceConnection;
-import net.daw.helper.statics.ExceptionBooster;
 import net.daw.helper.statics.FilterBeanHelper;
 import net.daw.helper.statics.JsonMessage;
 import net.daw.helper.statics.Log4j;
@@ -64,7 +64,7 @@ public class EstadoService implements TableServiceInterface, ViewServiceInterfac
     }
 
     @Override
-    public String getcount() throws Exception {
+    public ReplyBean getcount() throws Exception {
         if (this.checkpermission("getcount")) {
             String data = null;
             ArrayList<FilterBeanHelper> alFilter = ParameterCook.prepareFilter(oRequest);
@@ -86,14 +86,14 @@ public class EstadoService implements TableServiceInterface, ViewServiceInterfac
                     oDataConnectionSource.disposeConnection();
                 }
             }
-            return data;
+            return new ReplyBean(200, "OK", JsonMessage.getJsonMsg("200", data));
         } else {
-            return JsonMessage.getJsonMsg("401", "Unauthorized");
+            return new ReplyBean(401, "Unauthorized", JsonMessage.getJsonMsg("401", "Unauthorized"));
         }
     }
 
     @Override
-    public String get() throws Exception {
+    public ReplyBean get() throws Exception {
         if (this.checkpermission("get")) {
             int id = ParameterCook.prepareId(oRequest);
             String data = null;
@@ -118,15 +118,14 @@ public class EstadoService implements TableServiceInterface, ViewServiceInterfac
                     oDataConnectionSource.disposeConnection();
                 }
             }
-            return data;
-
+            return new ReplyBean(200, "OK", JsonMessage.getJsonMsg("200", data));
         } else {
-            return JsonMessage.getJsonMsg("401", "Unauthorized");
+            return new ReplyBean(401, "Unauthorized", JsonMessage.getJsonMsg("401", "Unauthorized"));
         }
     }
 
     @Override
-    public String getall() throws Exception {
+    public ReplyBean getall() throws Exception {
         if (this.checkpermission("getall")) {
             ArrayList<FilterBeanHelper> alFilter = ParameterCook.prepareFilter(oRequest);
             HashMap<String, String> hmOrder = ParameterCook.prepareOrder(oRequest);
@@ -152,14 +151,14 @@ public class EstadoService implements TableServiceInterface, ViewServiceInterfac
                 }
             }
 
-            return data;
+            return new ReplyBean(200, "OK", JsonMessage.getJsonMsg("200", data));
         } else {
-            return JsonMessage.getJsonMsg("401", "Unauthorized");
+            return new ReplyBean(401, "Unauthorized", JsonMessage.getJsonMsg("401", "Unauthorized"));
         }
     }
 
     @Override
-    public String getpage() throws Exception {
+    public ReplyBean getpage() throws Exception {
         if (this.checkpermission("getpage")) {
             int intRegsPerPag = ParameterCook.prepareRpp(oRequest);
             int intPage = ParameterCook.preparePage(oRequest);
@@ -185,14 +184,14 @@ public class EstadoService implements TableServiceInterface, ViewServiceInterfac
                     oDataConnectionSource.disposeConnection();
                 }
             }
-            return data;
+            return new ReplyBean(200, "OK", JsonMessage.getJsonMsg("200", data));
         } else {
-            return JsonMessage.getJsonMsg("401", "Unauthorized");
+            return new ReplyBean(401, "Unauthorized", JsonMessage.getJsonMsg("401", "Unauthorized"));
         }
     }
 
     @Override
-    public String getpages() throws Exception {
+    public ReplyBean getpages() throws Exception {
         if (this.checkpermission("getpages")) {
             int intRegsPerPag = ParameterCook.prepareRpp(oRequest);
             ArrayList<FilterBeanHelper> alFilter = ParameterCook.prepareFilter(oRequest);
@@ -215,20 +214,20 @@ public class EstadoService implements TableServiceInterface, ViewServiceInterfac
                     oDataConnectionSource.disposeConnection();
                 }
             }
-            return data;
+            return new ReplyBean(200, "OK", JsonMessage.getJsonMsg("200", data));
         } else {
-            return JsonMessage.getJsonMsg("401", "Unauthorized");
+            return new ReplyBean(401, "Unauthorized", JsonMessage.getJsonMsg("401", "Unauthorized"));
         }
     }
 
     @Override
-    public String getaggregateviewsome() throws Exception {
+    public ReplyBean getaggregateviewsome() throws Exception {
         if (this.checkpermission("getaggregateviewsome")) {
             String data = null;
             try {
-                String page = this.getpage();
-                String pages = this.getpages();
-                String registers = this.getcount();
+                String page = this.getpage().getJson();
+                String pages = this.getpages().getJson();
+                String registers = this.getcount().getJson();
                 data = "{"
                         + "\"page\":" + page
                         + ",\"pages\":" + pages
@@ -239,14 +238,14 @@ public class EstadoService implements TableServiceInterface, ViewServiceInterfac
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
                 throw new Exception();
             }
-            return data;
+            return new ReplyBean(200, "OK", JsonMessage.getJsonMsg("200", data));
         } else {
-            return JsonMessage.getJsonMsg("401", "Unauthorized");
+            return new ReplyBean(401, "Unauthorized", JsonMessage.getJsonMsg("401", "Unauthorized"));
         }
     }
 
     @Override
-    public String remove() throws Exception {
+    public ReplyBean remove() throws Exception {
         if (this.checkpermission("remove")) {
             Integer id = ParameterCook.prepareId(oRequest);
             String resultado = null;
@@ -273,14 +272,14 @@ public class EstadoService implements TableServiceInterface, ViewServiceInterfac
                     oDataConnectionSource.disposeConnection();
                 }
             }
-            return resultado;
+            return new ReplyBean(200, "OK", JsonMessage.getJsonMsg("200", resultado));
         } else {
-            return JsonMessage.getJsonMsg("401", "Unauthorized");
+            return new ReplyBean(401, "Unauthorized", JsonMessage.getJsonMsg("401", "Unauthorized"));
         }
     }
 
     @Override
-    public String set() throws Exception {
+    public ReplyBean set() throws Exception {
         if (this.checkpermission("set")) {
             String jason = ParameterCook.prepareJson(oRequest);
             String resultado = null;
@@ -318,9 +317,9 @@ public class EstadoService implements TableServiceInterface, ViewServiceInterfac
                     oDataConnectionSource.disposeConnection();
                 }
             }
-            return resultado;
+            return new ReplyBean(200, "OK", JsonMessage.getJsonMsg("200", resultado));
         } else {
-            return JsonMessage.getJsonMsg("401", "Unauthorized");
+            return new ReplyBean(401, "Unauthorized", JsonMessage.getJsonMsg("401", "Unauthorized"));
         }
     }
 
