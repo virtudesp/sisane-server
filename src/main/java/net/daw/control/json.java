@@ -32,15 +32,12 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import net.daw.bean.implementation.ReplyBean;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import net.daw.helper.statics.EstadoHelper;
 import net.daw.helper.statics.EstadoHelper.Tipo_estado;
-import net.daw.helper.statics.JsonMessage;
 import net.daw.helper.statics.Log4j;
 import net.daw.helper.statics.ParameterCook;
 import net.daw.service.publicinterface.ViewServiceInterface;
@@ -78,6 +75,11 @@ public class json extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, Exception {
         Log4j.infoLog(this.getClass().getName() + ": " + request.getMethod() + " request: " + request.getRequestURL().append('?').append(request.getQueryString()));
+        response.setHeader("Access-Control-Allow-Origin", request.getHeader("origin"));
+        response.setHeader("Access-Control-Allow-Methods", "PATCH, POST, GET, PUT, OPTIONS, DELETE");
+        response.setHeader("Access-Control-Max-Age", "86400");
+        response.setHeader("Access-Control-Allow-Credentials", "true");
+        response.setHeader("Access-Control-Allow-Headers", "Origin, Accept, x-requested-with, Content-Type");
         try {
             try {
                 Class.forName("com.mysql.jdbc.Driver");

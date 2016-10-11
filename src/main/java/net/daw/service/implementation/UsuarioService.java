@@ -374,41 +374,48 @@ public class UsuarioService implements TableServiceInterface, ViewServiceInterfa
         UsuarioBean oUserBean = (UsuarioBean) oRequest.getSession().getAttribute("userBean");
         String strAnswer = null;
         String strCode = "200";
-        if (oUserBean == null) {
-            String login = oRequest.getParameter("login");
-            String pass = oRequest.getParameter("password");
-            if (!login.equals("") && !pass.equals("")) {
-                ConnectionInterface oDataConnectionSource = null;
-                Connection oConnection = null;
-                try {
-                    oDataConnectionSource = getSourceConnection();
-                    oConnection = oDataConnectionSource.newConnection();
-                    UsuarioBean oUsuario = new UsuarioBean();
-                    oUsuario.setLogin(login);
-                    oUsuario.setPassword(pass);
-                    UsuarioDao oUsuarioDao = new UsuarioDao(oConnection);
-                    oUsuario = oUsuarioDao.getFromLogin(oUsuario);
-                    if (oUsuario.getId() != 0) {
-                        oRequest.getSession().setAttribute("userBean", oUsuario);
-                        strAnswer = oUsuario.getLogin();
-                    } else {
+        try {
+            if (oUserBean == null) {
+                String login = oRequest.getParameter("user");
+                String pass = oRequest.getParameter("pass");
+                if (!login.equals("") && !pass.equals("")) {
+                    ConnectionInterface oDataConnectionSource = null;
+                    Connection oConnection = null;
+                    try {
+                        oDataConnectionSource = getSourceConnection();
+                        oConnection = oDataConnectionSource.newConnection();
+                        UsuarioBean oUsuario = new UsuarioBean();
+                        oUsuario.setLogin(login);
+                        oUsuario.setPassword(pass);
+                        UsuarioDao oUsuarioDao = new UsuarioDao(oConnection);
+                        oUsuario = oUsuarioDao.getFromLogin(oUsuario);
+                        if (oUsuario.getId() != 0) {
+                            oRequest.getSession().setAttribute("userBean", oUsuario);
+                            strAnswer = oUsuario.getLogin();
+                        } else {
+                            strCode = "403";
+                            strAnswer = "User or password incorrect";
+                        }
+                    } catch (Exception ex) {
+                        Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
                         strCode = "403";
-                        strAnswer = "User or password incorrect";
-                    }
-                } catch (Exception ex) {
-                    Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
-                    throw new Exception();
-                } finally {
-                    if (oConnection != null) {
-                        oConnection.close();
-                    }
-                    if (oDataConnectionSource != null) {
-                        oDataConnectionSource.disposeConnection();
+                        strAnswer = "ERROR01";
+                    } finally {
+                        if (oConnection != null) {
+                            oConnection.close();
+                        }
+                        if (oDataConnectionSource != null) {
+                            oDataConnectionSource.disposeConnection();
+                        }
                     }
                 }
+            } else {
+                strAnswer = "Already logged in";
             }
-        } else {
-            strAnswer = "Already logged in";
+        } catch (Exception ex) {
+            Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
+            strCode = "403";
+            strAnswer = "ERROR02";
         }
         return new ReplyBean(Integer.parseInt(strCode), strAnswer, JsonMessage.getJsonMsg(strCode, strAnswer));
 
@@ -421,8 +428,7 @@ public class UsuarioService implements TableServiceInterface, ViewServiceInterfa
 
     public ReplyBean getsessionstatus() {
         String strAnswer = null;
-        UsuarioBean oUserBean = (UsuarioBean) oRequest.getSession().getAttribute("userBean");
-        Map<Integer, String> map = new HashMap<Integer, String>();
+        UsuarioBean oUserBean = (UsuarioBean) oRequest.getSession().getAttribute("userBean");        
         if (oUserBean == null) {
             return new ReplyBean(403, "Unauthorized", JsonMessage.getJsonMsg("403", "Unauthorized"));
         } else {
