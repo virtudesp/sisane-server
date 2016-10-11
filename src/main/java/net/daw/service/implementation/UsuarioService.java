@@ -410,37 +410,35 @@ public class UsuarioService implements TableServiceInterface, ViewServiceInterfa
         } else {
             strAnswer = "Already logged in";
         }
-        return new ReplyBean(Integer.parseInt(strCode), "OK", JsonMessage.getJsonMsg(strCode, strAnswer));
+        return new ReplyBean(Integer.parseInt(strCode), strAnswer, JsonMessage.getJsonMsg(strCode, strAnswer));
 
     }
 
-    public String logout() {
+    public ReplyBean logout() {
         oRequest.getSession().invalidate();
-        return JsonMessage.getJsonMsg("200", "Bye");
+        return new ReplyBean(200, "OK", JsonMessage.getJsonMsg("200", "bye"));
     }
 
-    public Map<Integer, String> getsessionstatus() {
+    public ReplyBean getsessionstatus() {
         String strAnswer = null;
         UsuarioBean oUserBean = (UsuarioBean) oRequest.getSession().getAttribute("userBean");
         Map<Integer, String> map = new HashMap<Integer, String>();
         if (oUserBean == null) {
-            map.put(403, "ERROR: You don't have permission to perform this operation");
+            return new ReplyBean(403, "Unauthorized", JsonMessage.getJsonMsg("403", "Unauthorized"));
         } else {
-            map.put(200, oUserBean.getLogin());
+            return new ReplyBean(200, "OK", JsonMessage.getJsonMsg("200", oUserBean.getLogin()));
         }
-        return map;
     }
 
-    public Map<Integer, String> sessionuserlevel() {
+    public ReplyBean sessionuserlevel() {
         String strAnswer = null;
         UsuarioBean oUserBean = (UsuarioBean) oRequest.getSession().getAttribute("userBean");
         Map<Integer, String> map = new HashMap<Integer, String>();
         if (oUserBean == null) {
-            map.put(403, "ERROR: You don't have permission to perform this operation");
+            return new ReplyBean(403, "Unauthorized", JsonMessage.getJsonMsg("403", "Unauthorized"));
         } else {
-            map.put(200, oUserBean.getId_estado().toString());
+            return new ReplyBean(200, "OK", JsonMessage.getJsonMsg("200", oUserBean.getId_estado().toString()));
         }
-        return map;
     }
 
 }
