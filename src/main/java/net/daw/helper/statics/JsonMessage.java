@@ -35,12 +35,14 @@ import java.util.Map;
 public class JsonMessage {
 
     public static String getJsonMsg(String strStatus, String strMessage) {
-        Map<String, String> data = new HashMap<>();
-        data.put("status", strStatus);
-        data.put("message", strMessage);
-        Gson gson = new Gson();
-        return gson.toJson(data);
+        return "{\"status\":" + strStatus + ",\"message\":" + strMessage + "}";
+//        Map<String, String> data = new HashMap<>();
+//        data.put("status", strStatus);
+//        data.put("message", strMessage);
+//        Gson gson = new Gson();
+//        return gson.toJson(data);
     }
+
     public static String getJson(String strStatus, String strMessage) {
         return "{\"status\":200,\"message\":" + strMessage + "}";
     }
