@@ -35,7 +35,7 @@ import java.util.HashMap;
 import net.daw.bean.implementation.TipousuarioBean;
 import net.daw.dao.publicinterface.TableDaoInterface;
 import net.daw.dao.publicinterface.ViewDaoInterface;
-import net.daw.data.implementation.MysqlDataSpImpl;
+import net.daw.data.implementation.MysqlData;
 import net.daw.helper.statics.FilterBeanHelper;
 import net.daw.helper.statics.Log4j;
 import net.daw.helper.statics.SqlBuilder;
@@ -44,30 +44,17 @@ public class TipousuarioDao implements ViewDaoInterface<TipousuarioBean>, TableD
 
     private String strTable = "tipousuario";
     private String strSQL = "select * from tipousuario where 1=1 ";
-    private MysqlDataSpImpl oMysql = null;
+    private MysqlData oMysql = null;
     private Connection oConnection = null;
 
     public TipousuarioDao(Connection oPooledConnection) throws Exception {
         try {
             oConnection = oPooledConnection;
-            oMysql = new MysqlDataSpImpl(oConnection);
+            oMysql = new MysqlData(oConnection);
         } catch (Exception ex) {
             Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
             throw new Exception();
         }
-    }
-
-    @Override
-    public int getPages(int intRegsPerPag, ArrayList<FilterBeanHelper> hmFilter) throws Exception {
-        strSQL += SqlBuilder.buildSqlWhere(hmFilter);
-        int pages = 0;
-        try {
-            pages = oMysql.getPages(strSQL, intRegsPerPag);
-        } catch (Exception ex) {
-            Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
-            throw new Exception();
-        }
-        return pages;
     }
 
     @Override
@@ -90,7 +77,7 @@ public class TipousuarioDao implements ViewDaoInterface<TipousuarioBean>, TableD
         strSQL += SqlBuilder.buildSqlLimit(oMysql.getCount(strSQL), intRegsPerPag, intPage);
         ArrayList<TipousuarioBean> arrTipousuario = new ArrayList<>();
         try {
-            ResultSet oResultSet = oMysql.getAllSql(strSQL);
+            ResultSet oResultSet = oMysql.getAllSQL(strSQL);
             if (oResultSet != null) {
                 while (oResultSet.next()) {
                     TipousuarioBean oTipousuarioBean = new TipousuarioBean();
@@ -109,7 +96,7 @@ public class TipousuarioDao implements ViewDaoInterface<TipousuarioBean>, TableD
         strSQL += SqlBuilder.buildSqlOrder(hmOrder);
         ArrayList<TipousuarioBean> arrTipousuario = new ArrayList<>();
         try {
-            ResultSet oResultSet = oMysql.getAllSql(strSQL);
+            ResultSet oResultSet = oMysql.getAllSQL(strSQL);
             if (oResultSet != null) {
                 while (oResultSet.next()) {
                     TipousuarioBean oTipousuarioBean = new TipousuarioBean();
@@ -127,7 +114,7 @@ public class TipousuarioDao implements ViewDaoInterface<TipousuarioBean>, TableD
     public TipousuarioBean get(TipousuarioBean oTipousuarioBean, Integer expand) throws Exception {
         if (oTipousuarioBean.getId() > 0) {
             try {
-                ResultSet oResultSet = oMysql.getAllSql(strSQL + " And id= " + oTipousuarioBean.getId() + " ");
+                ResultSet oResultSet = oMysql.getAllSQL(strSQL + " And id= " + oTipousuarioBean.getId() + " ");
                 if (oResultSet != null) {
                     while (oResultSet.next()) {
                         oTipousuarioBean = oTipousuarioBean.fill(oResultSet, oConnection, expand);

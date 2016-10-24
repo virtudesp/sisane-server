@@ -35,7 +35,7 @@ import java.util.HashMap;
 import net.daw.bean.implementation.EstadoBean;
 import net.daw.dao.publicinterface.TableDaoInterface;
 import net.daw.dao.publicinterface.ViewDaoInterface;
-import net.daw.data.implementation.MysqlDataSpImpl;
+import net.daw.data.implementation.MysqlData;
 import net.daw.helper.statics.FilterBeanHelper;
 import net.daw.helper.statics.Log4j;
 import net.daw.helper.statics.SqlBuilder;
@@ -44,30 +44,17 @@ public class EstadoDao implements ViewDaoInterface<EstadoBean>, TableDaoInterfac
 
     private String strTable = "estado";
     private String strSQL = "select * from estado where 1=1 ";
-    private MysqlDataSpImpl oMysql = null;
+    private MysqlData oMysql = null;
     private Connection oConnection = null;
 
     public EstadoDao(Connection oPooledConnection) throws Exception {
         try {
             oConnection = oPooledConnection;
-            oMysql = new MysqlDataSpImpl(oConnection);
+            oMysql = new MysqlData(oConnection);
         } catch (Exception ex) {
             Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
             throw new Exception();
         }
-    }
-
-    @Override
-    public int getPages(int intRegsPerPag, ArrayList<FilterBeanHelper> hmFilter) throws Exception {
-        strSQL += SqlBuilder.buildSqlWhere(hmFilter);
-        int pages = 0;
-        try {
-            pages = oMysql.getPages(strSQL, intRegsPerPag);
-        } catch (Exception ex) {
-            Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
-            throw new Exception();
-        }
-        return pages;
     }
 
     @Override
@@ -90,7 +77,7 @@ public class EstadoDao implements ViewDaoInterface<EstadoBean>, TableDaoInterfac
         strSQL += SqlBuilder.buildSqlLimit(oMysql.getCount(strSQL), intRegsPerPag, intPage);
         ArrayList<EstadoBean> arrEstado = new ArrayList<>();
         try {
-            ResultSet oResultSet = oMysql.getAllSql(strSQL);
+            ResultSet oResultSet = oMysql.getAllSQL(strSQL);
             if (oResultSet != null) {
                 while (oResultSet.next()) {
                     EstadoBean oEstadoBean = new EstadoBean();
@@ -109,7 +96,7 @@ public class EstadoDao implements ViewDaoInterface<EstadoBean>, TableDaoInterfac
         strSQL += SqlBuilder.buildSqlOrder(hmOrder);
         ArrayList<EstadoBean> arrEstado = new ArrayList<>();
         try {
-            ResultSet oResultSet = oMysql.getAllSql(strSQL);
+            ResultSet oResultSet = oMysql.getAllSQL(strSQL);
             if (oResultSet != null) {
                 while (oResultSet.next()) {
                     EstadoBean oEstadoBean = new EstadoBean();
@@ -127,7 +114,7 @@ public class EstadoDao implements ViewDaoInterface<EstadoBean>, TableDaoInterfac
     public EstadoBean get(EstadoBean oEstadoBean, Integer expand) throws Exception {
         if (oEstadoBean.getId() > 0) {
             try {
-                ResultSet oResultSet = oMysql.getAllSql(strSQL + " And id= " + oEstadoBean.getId() + " ");
+                ResultSet oResultSet = oMysql.getAllSQL(strSQL + " And id= " + oEstadoBean.getId() + " ");
                 if (oResultSet != null) {
                     while (oResultSet.next()) {
                         oEstadoBean = oEstadoBean.fill(oResultSet, oConnection, expand);

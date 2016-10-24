@@ -34,7 +34,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import net.daw.bean.implementation.View01Bean;
 import net.daw.dao.publicinterface.ViewDaoInterface;
-import net.daw.data.implementation.MysqlDataSpImpl;
+import net.daw.data.implementation.MysqlData;
 import net.daw.helper.statics.FilterBeanHelper;
 import net.daw.helper.statics.Log4j;
 import net.daw.helper.statics.SqlBuilder;
@@ -42,30 +42,17 @@ import net.daw.helper.statics.SqlBuilder;
 public class View01Dao implements ViewDaoInterface<View01Bean> {
 
     private String strSQL = "select etiquetas, id_usuario, count(id) as numetiquetas from documento where publicado=0 group by etiquetas, id_usuario";
-    private MysqlDataSpImpl oMysql = null;
+    private MysqlData oMysql = null;
     private Connection oConnection = null;
 
     public View01Dao(Connection oPooledConnection) throws Exception {
         try {
             oConnection = oPooledConnection;
-            oMysql = new MysqlDataSpImpl(oConnection);
+            oMysql = new MysqlData(oConnection);
         } catch (Exception ex) {
             Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
             throw new Exception();
         }
-    }
-
-    @Override
-    public int getPages(int intRegsPerPag, ArrayList<FilterBeanHelper> hmFilter) throws Exception {
-        strSQL += SqlBuilder.buildSqlWhere(hmFilter);
-        int pages = 0;
-        try {
-            pages = oMysql.getPages(strSQL, intRegsPerPag);
-        } catch (Exception ex) {
-            Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
-            throw new Exception();
-        }
-        return pages;
     }
 
     @Override
@@ -88,7 +75,7 @@ public class View01Dao implements ViewDaoInterface<View01Bean> {
         strSQL += SqlBuilder.buildSqlLimit(oMysql.getCount(strSQL), intRegsPerPag, intPage);
         ArrayList<View01Bean> oBeanList = new ArrayList<>();
         try {
-            ResultSet oResultSet = oMysql.getAllSql(strSQL);
+            ResultSet oResultSet = oMysql.getAllSQL(strSQL);
             if (oResultSet != null) {
                 while (oResultSet.next()) {
                     View01Bean oBean = new View01Bean();
@@ -107,7 +94,7 @@ public class View01Dao implements ViewDaoInterface<View01Bean> {
         strSQL += SqlBuilder.buildSqlOrder(hmOrder);
         ArrayList<View01Bean> arrDocumento = new ArrayList<>();
         try {
-            ResultSet oResultSet = oMysql.getAllSql(strSQL);
+            ResultSet oResultSet = oMysql.getAllSQL(strSQL);
             if (oResultSet != null) {
                 while (oResultSet.next()) {
                     View01Bean oBean = new View01Bean();

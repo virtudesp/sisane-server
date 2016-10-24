@@ -32,23 +32,15 @@ import java.sql.ResultSet;
 
 public interface DataInterface {
 
-    public Boolean existsOne(String strSqlSelectDataOrigin, int id) throws Exception;
-
     public String getId(String strTabla, String strCampo, String strValor) throws Exception;
 
     public String getOne(String strSqlSelectDataOrigin, String strCampo, int id) throws Exception;
 
-    public int insertOne(String strTabla) throws Exception;
-
-    public int updateOne(int intId, String strTabla, String strCampo, String strValor) throws Exception;
-
-    public int removeOne(int intId, String strTabla) throws Exception;
-   
-    public int getPages(String strSqlSelectDataOrigin, int intRegsPerPage) throws Exception;
+    public int removeOne(int intId, String strTabla) throws Exception;  
 
     public int getCount(String strSqlSelectDataOrigin) throws Exception;
 
-    public ResultSet getAllSql(String strSqlSelectDataOrigin) throws Exception;
+    public ResultSet getAllSQL(String strSqlSelectDataOrigin) throws Exception;
     
     public int executeUpdateSQL(String strSQL) throws Exception;
     

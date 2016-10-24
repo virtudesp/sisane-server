@@ -34,14 +34,13 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import net.daw.helper.statics.ExceptionBooster;
 import net.daw.helper.statics.Log4j;
 
-public class MysqlDataSpImpl implements DataInterface {
+public class MysqlData implements DataInterface {
 
     Connection connection = null;
 
-    public MysqlDataSpImpl(Connection pooledConnection) {
+    public MysqlData(Connection pooledConnection) {
         connection = pooledConnection;
     }
 
@@ -99,57 +98,6 @@ public class MysqlDataSpImpl implements DataInterface {
             }
         }
         return id;
-    }
-
-    @Override
-    public int insertOne(String strTabla) throws Exception {
-        ResultSet oResultSet = null;
-        java.sql.PreparedStatement oPreparedStatement = null;
-        int id = 0;
-        try {
-            String strSQL = "INSERT INTO " + strTabla + " (id) VALUES (null) ";
-            oPreparedStatement = connection.prepareStatement(strSQL, Statement.RETURN_GENERATED_KEYS);
-            int returnLastInsertId = oPreparedStatement.executeUpdate();
-            if (returnLastInsertId != -1) {
-                oResultSet = oPreparedStatement.getGeneratedKeys();
-                oResultSet.next();
-                id = oResultSet.getInt(1);
-            } else {
-                Log4j.errorLog(this.getClass().getName() + ":" + "insertOne error");
-                throw new SQLException();
-            }
-        } catch (SQLException ex) {
-            Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
-            throw new Exception();
-        } finally {
-            if (oResultSet != null) {
-                oResultSet.close();
-            }
-            if (oPreparedStatement != null) {
-                oPreparedStatement.close();
-            }
-        }
-        return id;
-    }
-
-    @Override
-    public int updateOne(int intId, String strTabla, String strCampo, String strValor) throws Exception {
-        int intResult = 0;
-        PreparedStatement oPreparedStatement = null;
-        try {
-            String strSQL = "UPDATE " + strTabla + " SET " + strCampo + " = '" + strValor + "' WHERE id = ?";
-            oPreparedStatement = (PreparedStatement) connection.prepareStatement(strSQL);
-            oPreparedStatement.setInt(1, intId);
-            intResult = oPreparedStatement.executeUpdate();
-        } catch (SQLException ex) {
-            Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
-            throw new Exception();
-        } finally {
-            if (oPreparedStatement != null) {
-                oPreparedStatement.close();
-            }
-        }
-        return intResult;
     }
 
     @Override
@@ -259,28 +207,7 @@ public class MysqlDataSpImpl implements DataInterface {
     }
 
     @Override
-    public int getPages(String strSqlSelectDataOrigin, int intRegsPerPage) throws Exception {
-        int intResult = 0;
-        int intCount = 0;
-        Statement oStatement = null;
-        try {
-            intCount = Math.max(this.getCount(strSqlSelectDataOrigin), 1);
-            intResult = (intCount - 1) / intRegsPerPage;
-            intResult++;
-        } catch (SQLException ex) {
-            Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
-            throw new Exception();
-        } finally {
-
-            if (oStatement != null) {
-                oStatement.close();
-            }
-        }
-        return intResult;
-    }
-
-    @Override
-    public ResultSet getAllSql(String strSqlSelectDataOrigin) throws Exception {
+    public ResultSet getAllSQL(String strSqlSelectDataOrigin) throws Exception {
         Statement oStatement = null;
         ResultSet oResultSet = null;
         try {
@@ -294,30 +221,6 @@ public class MysqlDataSpImpl implements DataInterface {
         return oResultSet;
     }
 
-    @Override
-    public Boolean existsOne(String strSqlSelectDataOrigin, int id) throws Exception {
-        ResultSet oResultSet = null;
-        int intResult = 0;
-        Statement oStatement = null;
-        try {
-            oStatement = (Statement) connection.createStatement();
-            String strSQL = "SELECT COUNT(*) " + strSqlSelectDataOrigin.substring(strSqlSelectDataOrigin.toLowerCase().indexOf("from"), strSqlSelectDataOrigin.length());
-            oResultSet = oStatement.executeQuery(strSQL);
-            while (oResultSet.next()) {
-                intResult = oResultSet.getInt("COUNT(*)");
-            }
-        } catch (SQLException ex) {
-            Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
-            throw new Exception();
-        } finally {
-            if (oResultSet != null) {
-                oResultSet.close();
-            }
-            if (oStatement != null) {
-                oStatement.close();
-            }
-        }
-        return intResult > 0;
-    }
+
 
 }

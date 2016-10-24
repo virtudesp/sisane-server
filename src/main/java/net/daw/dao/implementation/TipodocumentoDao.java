@@ -35,7 +35,7 @@ import java.util.HashMap;
 import net.daw.bean.implementation.TipodocumentoBean;
 import net.daw.dao.publicinterface.TableDaoInterface;
 import net.daw.dao.publicinterface.ViewDaoInterface;
-import net.daw.data.implementation.MysqlDataSpImpl;
+import net.daw.data.implementation.MysqlData;
 import net.daw.helper.statics.FilterBeanHelper;
 import net.daw.helper.statics.Log4j;
 import net.daw.helper.statics.SqlBuilder;
@@ -44,30 +44,17 @@ public class TipodocumentoDao implements ViewDaoInterface<TipodocumentoBean>, Ta
 
     private String strTable = "tipodocumento";
     private String strSQL = "select * from tipodocumento where 1=1 ";
-    private MysqlDataSpImpl oMysql = null;
+    private MysqlData oMysql = null;
     private Connection oConnection = null;
 
     public TipodocumentoDao(Connection oPooledConnection) throws Exception {
         try {
             oConnection = oPooledConnection;
-            oMysql = new MysqlDataSpImpl(oConnection);
+            oMysql = new MysqlData(oConnection);
         } catch (Exception ex) {
             Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
             throw new Exception();
         }
-    }
-
-    @Override
-    public int getPages(int intRegsPerPag, ArrayList<FilterBeanHelper> hmFilter) throws Exception {
-        strSQL += SqlBuilder.buildSqlWhere(hmFilter);
-        int pages = 0;
-        try {
-            pages = oMysql.getPages(strSQL, intRegsPerPag);
-        } catch (Exception ex) {
-            Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
-            throw new Exception();
-        }
-        return pages;
     }
 
     @Override
@@ -90,7 +77,7 @@ public class TipodocumentoDao implements ViewDaoInterface<TipodocumentoBean>, Ta
         strSQL += SqlBuilder.buildSqlLimit(oMysql.getCount(strSQL), intRegsPerPag, intPage);
         ArrayList<TipodocumentoBean> arrTipodocumento = new ArrayList<>();
         try {
-            ResultSet oResultSet = oMysql.getAllSql(strSQL);
+            ResultSet oResultSet = oMysql.getAllSQL(strSQL);
             if (oResultSet != null) {
                 while (oResultSet.next()) {
                     TipodocumentoBean oTipodocumentoBean = new TipodocumentoBean();
@@ -109,7 +96,7 @@ public class TipodocumentoDao implements ViewDaoInterface<TipodocumentoBean>, Ta
         strSQL += SqlBuilder.buildSqlOrder(hmOrder);
         ArrayList<TipodocumentoBean> arrTipodocumento = new ArrayList<>();
         try {
-            ResultSet oResultSet = oMysql.getAllSql(strSQL);
+            ResultSet oResultSet = oMysql.getAllSQL(strSQL);
             if (oResultSet != null) {
                 while (oResultSet.next()) {
                     TipodocumentoBean oTipodocumentoBean = new TipodocumentoBean();
@@ -127,7 +114,7 @@ public class TipodocumentoDao implements ViewDaoInterface<TipodocumentoBean>, Ta
     public TipodocumentoBean get(TipodocumentoBean oTipodocumentoBean, Integer expand) throws Exception {
         if (oTipodocumentoBean.getId() > 0) {
             try {
-                ResultSet oResultSet = oMysql.getAllSql(strSQL + " And id= " + oTipodocumentoBean.getId() + " ");
+                ResultSet oResultSet = oMysql.getAllSQL(strSQL + " And id= " + oTipodocumentoBean.getId() + " ");
                 if (oResultSet != null) {
                     while (oResultSet.next()) {
                         oTipodocumentoBean = oTipodocumentoBean.fill(oResultSet, oConnection, expand);

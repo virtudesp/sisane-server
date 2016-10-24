@@ -46,14 +46,6 @@ public class json extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
 
-//    private void sendResponseJson2(HttpServletRequest request, HttpServletResponse response, String strStatus, String strMessage) throws ServletException, IOException {
-//        Map<String, String> data = new HashMap<>();
-//        data.put("status", strStatus);
-//        data.put("message", strMessage);
-//        Gson gson = new Gson();
-//        request.setAttribute("contenido", gson.toJson(data));
-//        getServletContext().getRequestDispatcher("/jsp/messageAjax.jsp").forward(request, response);
-//    }
     private void sendResponseJson(HttpServletRequest request, HttpServletResponse response, ReplyBean answer) throws ServletException, IOException {
         request.setAttribute("answer", answer);
         getServletContext().getRequestDispatcher("/jsp/messageAjax.jsp").forward(request, response);
@@ -76,7 +68,8 @@ public class json extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, Exception {
         Log4j.infoLog(this.getClass().getName() + ": " + request.getMethod() + " request: " + request.getRequestURL().append('?').append(request.getQueryString()));
         response.setHeader("Access-Control-Allow-Origin", request.getHeader("origin"));
-        response.setHeader("Access-Control-Allow-Methods", "PATCH, POST, GET, PUT, OPTIONS, DELETE");
+        //response.setHeader("Access-Control-Allow-Methods", "PATCH, POST, GET, PUT, OPTIONS, DELETE");
+        response.setHeader("Access-Control-Allow-Methods", "GET");
         response.setHeader("Access-Control-Max-Age", "86400");
         response.setHeader("Access-Control-Allow-Credentials", "true");
         response.setHeader("Access-Control-Allow-Headers", "Origin, Accept, x-requested-with, Content-Type");

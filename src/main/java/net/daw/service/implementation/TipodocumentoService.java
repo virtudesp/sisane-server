@@ -195,60 +195,6 @@ public class TipodocumentoService implements TableServiceInterface, ViewServiceI
     }
 
     @Override
-    public ReplyBean getpages() throws Exception {
-        if (this.checkpermission("getpages")) {
-            int intRegsPerPag = ParameterCook.prepareRpp(oRequest);
-            ArrayList<FilterBeanHelper> alFilter = ParameterCook.prepareFilter(oRequest);
-            String data = null;
-            Connection oConnection = null;
-            ConnectionInterface oDataConnectionSource = null;
-            try {
-                oDataConnectionSource = getSourceConnection();
-                oConnection = oDataConnectionSource.newConnection();
-                TipodocumentoDao oTipodocumentoDao = new TipodocumentoDao(oConnection);
-                data = JsonMessage.getJson("200", Integer.toString(oTipodocumentoDao.getPages(intRegsPerPag, alFilter)));
-            } catch (Exception ex) {
-                Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
-                throw new Exception();
-            } finally {
-                if (oConnection != null) {
-                    oConnection.close();
-                }
-                if (oDataConnectionSource != null) {
-                    oDataConnectionSource.disposeConnection();
-                }
-            }
-            return new ReplyBean(200, "OK", JsonMessage.getJsonMsg("200", data));
-        } else {
-            return new ReplyBean(401, "Unauthorized", JsonMessage.getJsonMsg("401", "Unauthorized"));
-        }
-    }
-
-    @Override
-    public ReplyBean getaggregateviewsome() throws Exception {
-        if (this.checkpermission("getaggregateviewsome")) {
-            String data = null;
-            try {
-                String page = this.getpage().getJson();
-                String pages = this.getpages().getJson();
-                String registers = this.getcount().getJson();
-                data = "{"
-                        + "\"page\":" + page
-                        + ",\"pages\":" + pages
-                        + ",\"registers\":" + registers
-                        + "}";
-                data = JsonMessage.getJson("200", data);
-            } catch (Exception ex) {
-                Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
-                throw new Exception();
-            }
-            return new ReplyBean(200, "OK", JsonMessage.getJsonMsg("200", data));
-        } else {
-            return new ReplyBean(401, "Unauthorized", JsonMessage.getJsonMsg("401", "Unauthorized"));
-        }
-    }
-
-    @Override
     public ReplyBean remove() throws Exception {
         if (this.checkpermission("remove")) {
             Integer id = ParameterCook.prepareId(oRequest);

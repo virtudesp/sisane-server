@@ -35,7 +35,7 @@ import java.util.HashMap;
 import net.daw.bean.implementation.UsuarioBean;
 import net.daw.dao.publicinterface.TableDaoInterface;
 import net.daw.dao.publicinterface.ViewDaoInterface;
-import net.daw.data.implementation.MysqlDataSpImpl;
+import net.daw.data.implementation.MysqlData;
 import net.daw.helper.statics.AppConfigurationHelper;
 import net.daw.helper.statics.FilterBeanHelper;
 import net.daw.helper.statics.Log4j;
@@ -45,30 +45,17 @@ public class UsuarioDao implements ViewDaoInterface<UsuarioBean>, TableDaoInterf
 
     private String strTable = "usuario";
     private String strSQL = "select * from usuario where 1=1 ";
-    private MysqlDataSpImpl oMysql = null;
+    private MysqlData oMysql = null;
     private Connection oConnection = null;
 
     public UsuarioDao(Connection oPooledConnection) throws Exception {
         try {
             oConnection = oPooledConnection;
-            oMysql = new MysqlDataSpImpl(oConnection);
+            oMysql = new MysqlData(oConnection);
         } catch (Exception ex) {
             Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
             throw new Exception();
         }
-    }
-
-    @Override
-    public int getPages(int intRegsPerPag, ArrayList<FilterBeanHelper> hmFilter) throws Exception {
-        strSQL += SqlBuilder.buildSqlWhere(hmFilter);
-        int pages = 0;
-        try {
-            pages = oMysql.getPages(strSQL, intRegsPerPag);
-        } catch (Exception ex) {
-            Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
-            throw new Exception();
-        }
-        return pages;
     }
 
     @Override
@@ -91,7 +78,7 @@ public class UsuarioDao implements ViewDaoInterface<UsuarioBean>, TableDaoInterf
         strSQL += SqlBuilder.buildSqlLimit(oMysql.getCount(strSQL), intRegsPerPag, intPage);
         ArrayList<UsuarioBean> arrUsuario = new ArrayList<>();
         try {
-            ResultSet oResultSet = oMysql.getAllSql(strSQL);
+            ResultSet oResultSet = oMysql.getAllSQL(strSQL);
             if (oResultSet != null) {
                 while (oResultSet.next()) {
                     UsuarioBean oUsuarioBean = new UsuarioBean();
@@ -110,7 +97,7 @@ public class UsuarioDao implements ViewDaoInterface<UsuarioBean>, TableDaoInterf
         strSQL += SqlBuilder.buildSqlOrder(hmOrder);
         ArrayList<UsuarioBean> arrUsuario = new ArrayList<>();
         try {
-            ResultSet oResultSet = oMysql.getAllSql(strSQL);
+            ResultSet oResultSet = oMysql.getAllSQL(strSQL);
             if (oResultSet != null) {
                 while (oResultSet.next()) {
                     UsuarioBean oUsuarioBean = new UsuarioBean();
@@ -128,7 +115,7 @@ public class UsuarioDao implements ViewDaoInterface<UsuarioBean>, TableDaoInterf
     public UsuarioBean get(UsuarioBean oUsuarioBean, Integer expand) throws Exception {
         if (oUsuarioBean.getId() > 0) {
             try {
-                ResultSet oResultSet = oMysql.getAllSql(strSQL + " And id= " + oUsuarioBean.getId() + " ");
+                ResultSet oResultSet = oMysql.getAllSQL(strSQL + " And id= " + oUsuarioBean.getId() + " ");
                 if (oResultSet != null) {
                     while (oResultSet.next()) {
                         oUsuarioBean = oUsuarioBean.fill(oResultSet, oConnection, expand);
@@ -181,6 +168,9 @@ public class UsuarioDao implements ViewDaoInterface<UsuarioBean>, TableDaoInterf
 
     public UsuarioBean getFromLogin(UsuarioBean oUsuario) throws Exception {
         try {
+            
+            //String strId = oMysql. getId("usuario", "login", oUsuario.getLogin());
+            
             String strId = oMysql.getId("usuario", "login", oUsuario.getLogin());
             if (strId == null) {
                 oUsuario.setId(0);
