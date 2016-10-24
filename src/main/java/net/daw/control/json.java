@@ -96,8 +96,11 @@ public class json extends HttpServlet {
                 try {
                     oDataConnectionSource = getSourceConnection();
                     oConnection = oDataConnectionSource.newConnection();
-                    boolean reachable = oConnection.isValid(10);
-                    sendResponseHtml(request, response, "zylkanexy server by rafael aznar", "<p>the server is up and running on " + request.getLocalName() + ":" + request.getLocalPort() + "</p><p>Database access OK</p>");
+                    if (oConnection.isValid(10)) {
+                        sendResponseHtml(request, response, "zylkanexy server by rafael aznar", "<p>the server is up and running on " + request.getLocalName() + ":" + request.getLocalPort() + "</p><p>Database access OK</p>");
+                    } else {
+                        sendResponseHtml(request, response, "zylkanexy server by rafael aznar", "<p>the server is up and running on " + request.getLocalName() + ":" + request.getLocalPort() + "</p><p>Database access timeout KO</p>");
+                    }
                 } catch (Exception ex) {
                     sendResponseHtml(request, response, "zylkanexy server by rafael aznar", "the server is up and running on " + request.getLocalName() + ":" + request.getLocalPort() + "</p><p>Database access KO</p>");
                 } finally {
