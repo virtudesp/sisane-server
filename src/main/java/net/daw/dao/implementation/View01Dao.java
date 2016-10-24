@@ -74,17 +74,18 @@ public class View01Dao implements ViewDaoInterface<View01Bean> {
         strSQL += SqlBuilder.buildSqlOrder(hmOrder);
         strSQL += SqlBuilder.buildSqlLimit(oMysql.getCount(strSQL), intRegsPerPag, intPage);
         ArrayList<View01Bean> oBeanList = new ArrayList<>();
+        ResultSet oResultSet = null;
         try {
-            ResultSet oResultSet = oMysql.getAllSQL(strSQL);
-            if (oResultSet != null) {
-                while (oResultSet.next()) {
-                    View01Bean oBean = new View01Bean();
-                    oBeanList.add(oBean.fill(oResultSet, oConnection, expand));
-                }
+            oResultSet = oMysql.getAllSQL(strSQL);
+            while (oResultSet.next()) {
+                View01Bean oBean = new View01Bean();
+                oBeanList.add(oBean.fill(oResultSet, oConnection, expand));
             }
         } catch (Exception ex) {
             Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
             throw new Exception();
+        } finally {
+            oResultSet.close();
         }
         return oBeanList;
     }
@@ -93,17 +94,18 @@ public class View01Dao implements ViewDaoInterface<View01Bean> {
     public ArrayList<View01Bean> getAll(ArrayList<FilterBeanHelper> alFilter, HashMap<String, String> hmOrder, Integer expand) throws Exception {
         strSQL += SqlBuilder.buildSqlOrder(hmOrder);
         ArrayList<View01Bean> arrDocumento = new ArrayList<>();
+        ResultSet oResultSet = null;
         try {
-            ResultSet oResultSet = oMysql.getAllSQL(strSQL);
-            if (oResultSet != null) {
-                while (oResultSet.next()) {
-                    View01Bean oBean = new View01Bean();
-                    arrDocumento.add(oBean.fill(oResultSet, oConnection, expand));
-                }
+            oResultSet = oMysql.getAllSQL(strSQL);
+            while (oResultSet.next()) {
+                View01Bean oBean = new View01Bean();
+                arrDocumento.add(oBean.fill(oResultSet, oConnection, expand));
             }
         } catch (Exception ex) {
             Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
             throw new Exception();
+        } finally {
+            oResultSet.close();
         }
         return arrDocumento;
     }

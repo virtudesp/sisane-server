@@ -76,17 +76,18 @@ public class EstadoDao implements ViewDaoInterface<EstadoBean>, TableDaoInterfac
         strSQL += SqlBuilder.buildSqlOrder(hmOrder);
         strSQL += SqlBuilder.buildSqlLimit(oMysql.getCount(strSQL), intRegsPerPag, intPage);
         ArrayList<EstadoBean> arrEstado = new ArrayList<>();
+        ResultSet oResultSet = null;
         try {
-            ResultSet oResultSet = oMysql.getAllSQL(strSQL);
-            if (oResultSet != null) {
-                while (oResultSet.next()) {
-                    EstadoBean oEstadoBean = new EstadoBean();
-                    arrEstado.add(oEstadoBean.fill(oResultSet, oConnection, expand));
-                }
+            oResultSet = oMysql.getAllSQL(strSQL);
+            while (oResultSet.next()) {
+                EstadoBean oEstadoBean = new EstadoBean();
+                arrEstado.add(oEstadoBean.fill(oResultSet, oConnection, expand));
             }
         } catch (Exception ex) {
             Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
             throw new Exception();
+        } finally {
+            oResultSet.close();
         }
         return arrEstado;
     }
@@ -95,17 +96,18 @@ public class EstadoDao implements ViewDaoInterface<EstadoBean>, TableDaoInterfac
     public ArrayList<EstadoBean> getAll(ArrayList<FilterBeanHelper> alFilter, HashMap<String, String> hmOrder, Integer expand) throws Exception {
         strSQL += SqlBuilder.buildSqlOrder(hmOrder);
         ArrayList<EstadoBean> arrEstado = new ArrayList<>();
+        ResultSet oResultSet = null;
         try {
-            ResultSet oResultSet = oMysql.getAllSQL(strSQL);
-            if (oResultSet != null) {
-                while (oResultSet.next()) {
-                    EstadoBean oEstadoBean = new EstadoBean();
-                    arrEstado.add(oEstadoBean.fill(oResultSet, oConnection, expand));
-                }
+            oResultSet = oMysql.getAllSQL(strSQL);
+            while (oResultSet.next()) {
+                EstadoBean oEstadoBean = new EstadoBean();
+                arrEstado.add(oEstadoBean.fill(oResultSet, oConnection, expand));
             }
         } catch (Exception ex) {
             Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
             throw new Exception();
+        } finally {
+            oResultSet.close();
         }
         return arrEstado;
     }
@@ -113,16 +115,18 @@ public class EstadoDao implements ViewDaoInterface<EstadoBean>, TableDaoInterfac
     @Override
     public EstadoBean get(EstadoBean oEstadoBean, Integer expand) throws Exception {
         if (oEstadoBean.getId() > 0) {
+            ResultSet oResultSet = null;
             try {
-                ResultSet oResultSet = oMysql.getAllSQL(strSQL + " And id= " + oEstadoBean.getId() + " ");
-                if (oResultSet != null) {
-                    while (oResultSet.next()) {
-                        oEstadoBean = oEstadoBean.fill(oResultSet, oConnection, expand);
-                    }
+                oResultSet = oMysql.getAllSQL(strSQL + " And id= " + oEstadoBean.getId() + " ");
+                while (oResultSet.next()) {
+                    oEstadoBean = oEstadoBean.fill(oResultSet, oConnection, expand);
                 }
+                oResultSet.close();
             } catch (Exception ex) {
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
                 throw new Exception();
+            } finally {
+                oResultSet.close();
             }
         } else {
             oEstadoBean.setId(0);

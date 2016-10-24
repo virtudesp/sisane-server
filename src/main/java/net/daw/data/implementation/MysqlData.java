@@ -53,16 +53,14 @@ public class MysqlData implements DataInterface {
             oPreparedStatement = connection.prepareStatement(strSQL, Statement.RETURN_GENERATED_KEYS);
             iResult = oPreparedStatement.executeUpdate();
             if (iResult == -1) {
-                            Log4j.errorLog(this.getClass().getName() + ":" + "executeUpdateSQL error");
+                Log4j.errorLog(this.getClass().getName() + ":" + "executeUpdateSQL error");
                 throw new SQLException();
             }
         } catch (SQLException ex) {
             Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
             throw new Exception();
         } finally {
-            if (oResultSet != null) {
-                oResultSet.close();
-            }
+            oResultSet.close();
             if (oPreparedStatement != null) {
                 oPreparedStatement.close();
             }
@@ -90,9 +88,7 @@ public class MysqlData implements DataInterface {
             Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
             throw new Exception();
         } finally {
-            if (oResultSet != null) {
-                oResultSet.close();
-            }
+            oResultSet.close();
             if (oPreparedStatement != null) {
                 oPreparedStatement.close();
             }
@@ -139,12 +135,8 @@ public class MysqlData implements DataInterface {
             Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
             throw new Exception();
         } finally {
-            if (oResultSet != null) {
-                oResultSet.close();
-            }
-            if (oStatement != null) {
-                oStatement.close();
-            }
+            oResultSet.close();
+            oStatement.close();
         }
         return strResult;
     }
@@ -169,12 +161,8 @@ public class MysqlData implements DataInterface {
             Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
             throw new Exception();
         } finally {
-            if (oResultSet != null) {
-                oResultSet.close();
-            }
-            if (oPreparedStatement != null) {
-                oPreparedStatement.close();
-            }
+            oResultSet.close();
+            oPreparedStatement.close();
         }
         return strResult;
     }
@@ -196,12 +184,8 @@ public class MysqlData implements DataInterface {
             Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
             throw new Exception();
         } finally {
-            if (oResultSet != null) {
-                oResultSet.close();
-            }
-            if (oStatement != null) {
-                oStatement.close();
-            }
+            oResultSet.close();
+            oStatement.close();
         }
         return intResult;
     }
@@ -220,7 +204,5 @@ public class MysqlData implements DataInterface {
         }
         return oResultSet;
     }
-
-
 
 }

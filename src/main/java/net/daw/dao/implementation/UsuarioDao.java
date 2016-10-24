@@ -77,17 +77,18 @@ public class UsuarioDao implements ViewDaoInterface<UsuarioBean>, TableDaoInterf
         strSQL += SqlBuilder.buildSqlOrder(hmOrder);
         strSQL += SqlBuilder.buildSqlLimit(oMysql.getCount(strSQL), intRegsPerPag, intPage);
         ArrayList<UsuarioBean> arrUsuario = new ArrayList<>();
+        ResultSet oResultSet = null;
         try {
-            ResultSet oResultSet = oMysql.getAllSQL(strSQL);
-            if (oResultSet != null) {
-                while (oResultSet.next()) {
-                    UsuarioBean oUsuarioBean = new UsuarioBean();
-                    arrUsuario.add(oUsuarioBean.fill(oResultSet, oConnection, expand));
-                }
+            oResultSet = oMysql.getAllSQL(strSQL);
+            while (oResultSet.next()) {
+                UsuarioBean oUsuarioBean = new UsuarioBean();
+                arrUsuario.add(oUsuarioBean.fill(oResultSet, oConnection, expand));
             }
         } catch (Exception ex) {
             Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
             throw new Exception();
+        } finally {
+            oResultSet.close();
         }
         return arrUsuario;
     }
@@ -96,17 +97,18 @@ public class UsuarioDao implements ViewDaoInterface<UsuarioBean>, TableDaoInterf
     public ArrayList<UsuarioBean> getAll(ArrayList<FilterBeanHelper> alFilter, HashMap<String, String> hmOrder, Integer expand) throws Exception {
         strSQL += SqlBuilder.buildSqlOrder(hmOrder);
         ArrayList<UsuarioBean> arrUsuario = new ArrayList<>();
+        ResultSet oResultSet = null;
         try {
-            ResultSet oResultSet = oMysql.getAllSQL(strSQL);
-            if (oResultSet != null) {
-                while (oResultSet.next()) {
-                    UsuarioBean oUsuarioBean = new UsuarioBean();
-                    arrUsuario.add(oUsuarioBean.fill(oResultSet, oConnection, expand));
-                }
+            oResultSet = oMysql.getAllSQL(strSQL);
+            while (oResultSet.next()) {
+                UsuarioBean oUsuarioBean = new UsuarioBean();
+                arrUsuario.add(oUsuarioBean.fill(oResultSet, oConnection, expand));
             }
         } catch (Exception ex) {
             Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
             throw new Exception();
+        } finally {
+            oResultSet.close();
         }
         return arrUsuario;
     }
@@ -114,16 +116,17 @@ public class UsuarioDao implements ViewDaoInterface<UsuarioBean>, TableDaoInterf
     @Override
     public UsuarioBean get(UsuarioBean oUsuarioBean, Integer expand) throws Exception {
         if (oUsuarioBean.getId() > 0) {
+            ResultSet oResultSet = null;
             try {
-                ResultSet oResultSet = oMysql.getAllSQL(strSQL + " And id= " + oUsuarioBean.getId() + " ");
-                if (oResultSet != null) {
-                    while (oResultSet.next()) {
-                        oUsuarioBean = oUsuarioBean.fill(oResultSet, oConnection, expand);
-                    }
+                oResultSet = oMysql.getAllSQL(strSQL + " And id= " + oUsuarioBean.getId() + " ");
+                while (oResultSet.next()) {
+                    oUsuarioBean = oUsuarioBean.fill(oResultSet, oConnection, expand);
                 }
             } catch (Exception ex) {
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
                 throw new Exception();
+            } finally {
+                oResultSet.close();
             }
         } else {
             oUsuarioBean.setId(0);
@@ -168,9 +171,8 @@ public class UsuarioDao implements ViewDaoInterface<UsuarioBean>, TableDaoInterf
 
     public UsuarioBean getFromLogin(UsuarioBean oUsuario) throws Exception {
         try {
-            
+
             //String strId = oMysql. getId("usuario", "login", oUsuario.getLogin());
-            
             String strId = oMysql.getId("usuario", "login", oUsuario.getLogin());
             if (strId == null) {
                 oUsuario.setId(0);

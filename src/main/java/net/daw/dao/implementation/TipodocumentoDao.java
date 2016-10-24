@@ -76,17 +76,18 @@ public class TipodocumentoDao implements ViewDaoInterface<TipodocumentoBean>, Ta
         strSQL += SqlBuilder.buildSqlOrder(hmOrder);
         strSQL += SqlBuilder.buildSqlLimit(oMysql.getCount(strSQL), intRegsPerPag, intPage);
         ArrayList<TipodocumentoBean> arrTipodocumento = new ArrayList<>();
+        ResultSet oResultSet = null;
         try {
-            ResultSet oResultSet = oMysql.getAllSQL(strSQL);
-            if (oResultSet != null) {
-                while (oResultSet.next()) {
-                    TipodocumentoBean oTipodocumentoBean = new TipodocumentoBean();
-                    arrTipodocumento.add(oTipodocumentoBean.fill(oResultSet, oConnection, expand));
-                }
+            oResultSet = oMysql.getAllSQL(strSQL);
+            while (oResultSet.next()) {
+                TipodocumentoBean oTipodocumentoBean = new TipodocumentoBean();
+                arrTipodocumento.add(oTipodocumentoBean.fill(oResultSet, oConnection, expand));
             }
         } catch (Exception ex) {
             Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
             throw new Exception();
+        } finally {
+            oResultSet.close();
         }
         return arrTipodocumento;
     }
@@ -95,17 +96,18 @@ public class TipodocumentoDao implements ViewDaoInterface<TipodocumentoBean>, Ta
     public ArrayList<TipodocumentoBean> getAll(ArrayList<FilterBeanHelper> alFilter, HashMap<String, String> hmOrder, Integer expand) throws Exception {
         strSQL += SqlBuilder.buildSqlOrder(hmOrder);
         ArrayList<TipodocumentoBean> arrTipodocumento = new ArrayList<>();
+        ResultSet oResultSet = null;
         try {
-            ResultSet oResultSet = oMysql.getAllSQL(strSQL);
-            if (oResultSet != null) {
-                while (oResultSet.next()) {
-                    TipodocumentoBean oTipodocumentoBean = new TipodocumentoBean();
-                    arrTipodocumento.add(oTipodocumentoBean.fill(oResultSet, oConnection, expand));
-                }
+            oResultSet = oMysql.getAllSQL(strSQL);
+            while (oResultSet.next()) {
+                TipodocumentoBean oTipodocumentoBean = new TipodocumentoBean();
+                arrTipodocumento.add(oTipodocumentoBean.fill(oResultSet, oConnection, expand));
             }
         } catch (Exception ex) {
             Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
             throw new Exception();
+        } finally {
+            oResultSet.close();
         }
         return arrTipodocumento;
     }
@@ -113,16 +115,17 @@ public class TipodocumentoDao implements ViewDaoInterface<TipodocumentoBean>, Ta
     @Override
     public TipodocumentoBean get(TipodocumentoBean oTipodocumentoBean, Integer expand) throws Exception {
         if (oTipodocumentoBean.getId() > 0) {
+            ResultSet oResultSet = null;
             try {
-                ResultSet oResultSet = oMysql.getAllSQL(strSQL + " And id= " + oTipodocumentoBean.getId() + " ");
-                if (oResultSet != null) {
-                    while (oResultSet.next()) {
-                        oTipodocumentoBean = oTipodocumentoBean.fill(oResultSet, oConnection, expand);
-                    }
+                oResultSet = oMysql.getAllSQL(strSQL + " And id= " + oTipodocumentoBean.getId() + " ");
+                while (oResultSet.next()) {
+                    oTipodocumentoBean = oTipodocumentoBean.fill(oResultSet, oConnection, expand);
                 }
             } catch (Exception ex) {
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
                 throw new Exception();
+            } finally {
+                oResultSet.close();
             }
         } else {
             oTipodocumentoBean.setId(0);
