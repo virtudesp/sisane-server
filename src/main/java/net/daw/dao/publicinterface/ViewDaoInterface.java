@@ -40,5 +40,4 @@ public interface ViewDaoInterface<GenericBeanImplementation> {
 
     public ArrayList<GenericBeanImplementation> getAll(ArrayList<FilterBeanHelper> alFilter, HashMap<String, String> hmOrder, Integer expand) throws Exception;
 
-   
 }

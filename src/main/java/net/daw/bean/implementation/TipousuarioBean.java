@@ -34,7 +34,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import net.daw.bean.publicinterface.GenericBean;
 
-public class TipousuarioBean implements GenericBean{
+public class TipousuarioBean implements GenericBean {
 
     @Expose
     private Integer id;

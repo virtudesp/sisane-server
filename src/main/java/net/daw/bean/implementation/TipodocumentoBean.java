@@ -34,7 +34,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import net.daw.bean.publicinterface.GenericBean;
 
-public class TipodocumentoBean implements GenericBean{
+public class TipodocumentoBean implements GenericBean {
 
     @Expose
     private Integer id;

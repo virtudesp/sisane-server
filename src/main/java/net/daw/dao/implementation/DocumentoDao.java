@@ -83,12 +83,16 @@ public class DocumentoDao implements ViewDaoInterface<DocumentoBean>, TableDaoIn
                 DocumentoBean oDocumentoBean = new DocumentoBean();
                 arrDocumento.add(oDocumentoBean.fill(oResultSet, oConnection, expand));
             }
-            oResultSet.close();
+            if (oResultSet != null) {
+                oResultSet.close();
+            }
         } catch (Exception ex) {
             Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
             throw new Exception();
         } finally {
-            oResultSet.close();
+            if (oResultSet != null) {
+                oResultSet.close();
+            }
         }
         return arrDocumento;
     }
@@ -108,7 +112,9 @@ public class DocumentoDao implements ViewDaoInterface<DocumentoBean>, TableDaoIn
             Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
             throw new Exception();
         } finally {
-            oResultSet.close();
+            if (oResultSet != null) {
+                oResultSet.close();
+            }
         }
         return arrDocumento;
     }
@@ -126,7 +132,9 @@ public class DocumentoDao implements ViewDaoInterface<DocumentoBean>, TableDaoIn
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
                 throw new Exception();
             } finally {
-                oResultSet.close();
+                if (oResultSet != null) {
+                    oResultSet.close();
+                }
             }
         } else {
             oDocumentoBean.setId(0);

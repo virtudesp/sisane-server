@@ -88,7 +88,9 @@ public class UsuarioDao implements ViewDaoInterface<UsuarioBean>, TableDaoInterf
             Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
             throw new Exception();
         } finally {
-            oResultSet.close();
+            if (oResultSet != null) {
+                oResultSet.close();
+            }
         }
         return arrUsuario;
     }
@@ -108,7 +110,9 @@ public class UsuarioDao implements ViewDaoInterface<UsuarioBean>, TableDaoInterf
             Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
             throw new Exception();
         } finally {
-            oResultSet.close();
+            if (oResultSet != null) {
+                oResultSet.close();
+            }
         }
         return arrUsuario;
     }
@@ -126,7 +130,9 @@ public class UsuarioDao implements ViewDaoInterface<UsuarioBean>, TableDaoInterf
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
                 throw new Exception();
             } finally {
-                oResultSet.close();
+                if (oResultSet != null) {
+                    oResultSet.close();
+                }
             }
         } else {
             oUsuarioBean.setId(0);

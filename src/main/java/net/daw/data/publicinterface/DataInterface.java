@@ -36,13 +36,13 @@ public interface DataInterface {
 
     public String getOne(String strSqlSelectDataOrigin, String strCampo, int id) throws Exception;
 
-    public int removeOne(int intId, String strTabla) throws Exception;  
+    public int removeOne(int intId, String strTabla) throws Exception;
 
     public int getCount(String strSqlSelectDataOrigin) throws Exception;
 
     public ResultSet getAllSQL(String strSqlSelectDataOrigin) throws Exception;
-    
+
     public int executeUpdateSQL(String strSQL) throws Exception;
-    
+
     public int executeInsertSQL(String strSQL) throws Exception;
 }

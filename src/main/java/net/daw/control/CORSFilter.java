@@ -26,7 +26,6 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-
 package net.daw.control;
 
 import java.io.IOException;
@@ -43,7 +42,7 @@ public class CORSFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {
-        HttpServletResponse response = (HttpServletResponse) res;   
+        HttpServletResponse response = (HttpServletResponse) res;
 //        response.setHeader("Access-Control-Allow-Methods", "PATCH, POST, GET, PUT, OPTIONS, DELETE");
 //        response.setHeader("Access-Control-Max-Age", "86400");
 //        response.setHeader("Access-Control-Allow-Credentials", "true");

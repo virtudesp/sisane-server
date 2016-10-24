@@ -374,7 +374,7 @@ public class UsuarioService implements TableServiceInterface, ViewServiceInterfa
 
     public ReplyBean getsessionstatus() {
         String strAnswer = null;
-        UsuarioBean oUserBean = (UsuarioBean) oRequest.getSession().getAttribute("userBean");        
+        UsuarioBean oUserBean = (UsuarioBean) oRequest.getSession().getAttribute("userBean");
         if (oUserBean == null) {
             return new ReplyBean(403, "Unauthorized", JsonMessage.getJsonMsg("403", "Unauthorized"));
         } else {

@@ -33,14 +33,16 @@ package net.daw.helper.statics;
  * @author raznara
  */
 public class MetaEnum {
-       public static enum FieldType {
+
+    public static enum FieldType {
         String,
         Integer,
         Decimal,
         Date,
         Boolean
     };
-              public static enum SourceType {
+
+    public static enum SourceType {
         SQL,
         Table
     };

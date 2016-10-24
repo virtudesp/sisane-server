@@ -87,7 +87,9 @@ public class TipousuarioDao implements ViewDaoInterface<TipousuarioBean>, TableD
             Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
             throw new Exception();
         } finally {
-            oResultSet.close();
+            if (oResultSet != null) {
+                oResultSet.close();
+            }
         }
         return arrTipousuario;
     }
@@ -107,7 +109,9 @@ public class TipousuarioDao implements ViewDaoInterface<TipousuarioBean>, TableD
             Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
             throw new Exception();
         } finally {
-            oResultSet.close();
+            if (oResultSet != null) {
+                oResultSet.close();
+            }
         }
         return arrTipousuario;
     }
@@ -125,7 +129,9 @@ public class TipousuarioDao implements ViewDaoInterface<TipousuarioBean>, TableD
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
                 throw new Exception();
             } finally {
-                oResultSet.close();
+                if (oResultSet != null) {
+                    oResultSet.close();
+                }
             }
         } else {
             oTipousuarioBean.setId(0);

@@ -60,7 +60,9 @@ public class MysqlData implements DataInterface {
             Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
             throw new Exception();
         } finally {
-            oResultSet.close();
+            if (oResultSet != null) {
+                oResultSet.close();
+            }
             if (oPreparedStatement != null) {
                 oPreparedStatement.close();
             }
@@ -88,7 +90,9 @@ public class MysqlData implements DataInterface {
             Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
             throw new Exception();
         } finally {
-            oResultSet.close();
+            if (oResultSet != null) {
+                oResultSet.close();
+            }
             if (oPreparedStatement != null) {
                 oPreparedStatement.close();
             }
@@ -135,8 +139,12 @@ public class MysqlData implements DataInterface {
             Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
             throw new Exception();
         } finally {
-            oResultSet.close();
-            oStatement.close();
+            if (oResultSet != null) {
+                oResultSet.close();
+            }
+            if (oStatement != null) {
+                oStatement.close();
+            }
         }
         return strResult;
     }
@@ -161,7 +169,9 @@ public class MysqlData implements DataInterface {
             Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
             throw new Exception();
         } finally {
-            oResultSet.close();
+            if (oResultSet != null) {
+                oResultSet.close();
+            }
             oPreparedStatement.close();
         }
         return strResult;
@@ -184,8 +194,12 @@ public class MysqlData implements DataInterface {
             Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
             throw new Exception();
         } finally {
-            oResultSet.close();
-            oStatement.close();
+            if (oResultSet != null) {
+                oResultSet.close();
+            }
+            if (oStatement != null) {
+                oStatement.close();
+            }
         }
         return intResult;
     }

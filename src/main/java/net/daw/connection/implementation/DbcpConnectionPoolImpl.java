@@ -61,7 +61,7 @@ public class DbcpConnectionPoolImpl implements ConnectionInterface {
                 basicDataSource.close();
             }
         } catch (SQLException ex) {
-                        Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
+            Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
             throw new Exception();
         }
     }

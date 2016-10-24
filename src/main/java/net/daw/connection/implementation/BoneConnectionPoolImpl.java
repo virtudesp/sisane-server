@@ -53,7 +53,7 @@ public class BoneConnectionPoolImpl implements ConnectionInterface {
         config.setPartitionCount(1);
         try {
             connectionPool = new BoneCP(config); // setup the connection pool
-        } catch (SQLException ex) {                        
+        } catch (SQLException ex) {
             ExceptionBooster.boost(new Exception(
                     this.getClass().getName() + ":newConnection ERROR al crear la clase BoneCP: " + ex.getMessage()
             //                            + " // " 

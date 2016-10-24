@@ -87,7 +87,9 @@ public class TipodocumentoDao implements ViewDaoInterface<TipodocumentoBean>, Ta
             Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
             throw new Exception();
         } finally {
-            oResultSet.close();
+            if (oResultSet != null) {
+                oResultSet.close();
+            }
         }
         return arrTipodocumento;
     }
@@ -107,7 +109,9 @@ public class TipodocumentoDao implements ViewDaoInterface<TipodocumentoBean>, Ta
             Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
             throw new Exception();
         } finally {
-            oResultSet.close();
+            if (oResultSet != null) {
+                oResultSet.close();
+            }
         }
         return arrTipodocumento;
     }
@@ -125,7 +129,9 @@ public class TipodocumentoDao implements ViewDaoInterface<TipodocumentoBean>, Ta
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
                 throw new Exception();
             } finally {
-                oResultSet.close();
+                if (oResultSet != null) {
+                    oResultSet.close();
+                }
             }
         } else {
             oTipodocumentoBean.setId(0);

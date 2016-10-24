@@ -87,7 +87,9 @@ public class EstadoDao implements ViewDaoInterface<EstadoBean>, TableDaoInterfac
             Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
             throw new Exception();
         } finally {
-            oResultSet.close();
+            if (oResultSet != null) {
+                oResultSet.close();
+            }
         }
         return arrEstado;
     }
@@ -107,7 +109,9 @@ public class EstadoDao implements ViewDaoInterface<EstadoBean>, TableDaoInterfac
             Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
             throw new Exception();
         } finally {
-            oResultSet.close();
+            if (oResultSet != null) {
+                oResultSet.close();
+            }
         }
         return arrEstado;
     }
@@ -121,12 +125,16 @@ public class EstadoDao implements ViewDaoInterface<EstadoBean>, TableDaoInterfac
                 while (oResultSet.next()) {
                     oEstadoBean = oEstadoBean.fill(oResultSet, oConnection, expand);
                 }
-                oResultSet.close();
+                if (oResultSet != null) {
+                    oResultSet.close();
+                }
             } catch (Exception ex) {
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
                 throw new Exception();
             } finally {
-                oResultSet.close();
+                if (oResultSet != null) {
+                    oResultSet.close();
+                }
             }
         } else {
             oEstadoBean.setId(0);
