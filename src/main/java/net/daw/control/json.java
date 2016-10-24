@@ -31,11 +31,14 @@ package net.daw.control;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.sql.Connection;
 import net.daw.bean.implementation.ReplyBean;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import net.daw.connection.publicinterface.ConnectionInterface;
+import static net.daw.helper.statics.AppConfigurationHelper.getSourceConnection;
 import net.daw.helper.statics.EstadoHelper;
 import net.daw.helper.statics.EstadoHelper.Tipo_estado;
 import net.daw.helper.statics.Log4j;
@@ -88,7 +91,23 @@ public class json extends HttpServlet {
             String ob = ParameterCook.prepareObject(request);
             String op = ParameterCook.prepareOperation(request);
             if ("".equals(op) && "".equals(ob)) {
-                sendResponseHtml(request, response, "zylkanexy server by rafael aznar", "the server is up and running on " + request.getLocalName() + ":" + request.getLocalPort());
+                Connection oConnection = null;
+                ConnectionInterface oDataConnectionSource = null;
+                try {
+                    oDataConnectionSource = getSourceConnection();
+                    oConnection = oDataConnectionSource.newConnection();
+                    boolean reachable = oConnection.isValid(10);
+                    sendResponseHtml(request, response, "zylkanexy server by rafael aznar", "<p>the server is up and running on " + request.getLocalName() + ":" + request.getLocalPort() + "</p><p>Database access OK</p>");
+                } catch (Exception ex) {
+                    sendResponseHtml(request, response, "zylkanexy server by rafael aznar", "the server is up and running on " + request.getLocalName() + ":" + request.getLocalPort() + "</p><p>Database access KO</p>");
+                } finally {
+                    if (oConnection != null) {
+                        oConnection.close();
+                    }
+                    if (oDataConnectionSource != null) {
+                        oDataConnectionSource.disposeConnection();
+                    }
+                }
             } else {
                 try {
                     String strClassName = "net.daw.service.implementation." + ParameterCook.prepareCamelCaseObject(request) + "Service";
