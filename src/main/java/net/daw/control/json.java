@@ -176,6 +176,6 @@ public class json extends HttpServlet {
      */
     @Override
     public String getServletInfo() {
-        return "openAusiàs Servlet";
+        return "zylkanexy Servlet";
     }// </editor-fold>
 }

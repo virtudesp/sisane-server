@@ -87,7 +87,7 @@ public class View01Service implements ViewServiceInterface {
                     oDataConnectionSource.disposeConnection();
                 }
             }
-            return new ReplyBean(200,  data);
+            return new ReplyBean(200, data);
         } else {
             return new ReplyBean(401, JsonMessage.getJsonMsg("401", "Unauthorized"));
         }
@@ -119,7 +119,7 @@ public class View01Service implements ViewServiceInterface {
                     oDataConnectionSource.disposeConnection();
                 }
             }
-            return new ReplyBean(200,  data);
+            return new ReplyBean(200, data);
         } else {
             return new ReplyBean(401, JsonMessage.getJsonMsg("401", "Unauthorized"));
         }
@@ -152,7 +152,7 @@ public class View01Service implements ViewServiceInterface {
                     oDataConnectionSource.disposeConnection();
                 }
             }
-            return new ReplyBean(200,  data);
+            return new ReplyBean(200, data);
         } else {
             return new ReplyBean(401, JsonMessage.getJsonMsg("401", "Unauthorized"));
         }

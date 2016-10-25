@@ -35,7 +35,6 @@ package net.daw.helper.statics;
 public class AppInformationHelper {
 
     public static String getAppName() {
-        return System.getProperty("program.name");
-        //return "openAUSIAS";
+        return System.getProperty("zylkanexy");
     }
 }
