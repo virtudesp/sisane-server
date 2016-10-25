@@ -65,14 +65,6 @@ public class TipousuarioBean implements GenericBean {
         this.descripcion = descripcion;
     }
 
-    public String toJson(Boolean expand) {
-        String strJson = "{";
-        strJson += "id:" + id + ",";
-        strJson += "descripcion:" + descripcion + ",";
-        strJson += "}";
-        return strJson;
-    }
-
     public String getColumns() {
         String strColumns = "";
         strColumns += "id,";

@@ -65,14 +65,6 @@ public class EstadoBean implements GenericBean {
         this.id = id;
     }
 
-    public String toJson(Boolean expand) {
-        String strJson = "{";
-        strJson += "id:" + id + ",";
-        strJson += "tipo:" + tipo + ",";
-        strJson += "}";
-        return strJson;
-    }
-
     @Override
     public String getColumns() {
         String strColumns = "";

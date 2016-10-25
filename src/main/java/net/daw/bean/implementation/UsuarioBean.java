@@ -178,28 +178,6 @@ public class UsuarioBean implements GenericBean {
         this.email = email;
     }
 
-    public String toJson(Boolean expand) {
-        String strJson = "{";
-        strJson += "id:" + id + ",";
-        strJson += "login:" + EncodingUtilHelper.quotate(login) + ",";
-        strJson += "nombre:" + EncodingUtilHelper.quotate(nombre) + ",";
-        strJson += "apellidos:" + EncodingUtilHelper.quotate(apellidos) + ",";
-        strJson += "email:" + EncodingUtilHelper.quotate(email) + ",";
-        strJson += "password:" + EncodingUtilHelper.quotate(password) + ",";
-        strJson += "ciudad:" + EncodingUtilHelper.quotate(ciudad) + ",";
-        strJson += "firma:" + EncodingUtilHelper.quotate(firma) + ",";
-        strJson += "skin:" + EncodingUtilHelper.quotate(skin) + ",";
-        if (expand) {
-            strJson += "obj_estado:" + obj_estado.toJson(false) + ",";
-            strJson += "obj_tipousuario:" + obj_tipousuario.toJson(false) + ",";
-        } else {
-            strJson += "id_estado:" + id_estado + ",";
-            strJson += "id_tipousuario:" + id_tipousuario + ",";
-        }
-        strJson += "}";
-        return strJson;
-    }
-
     @Override
     public String getColumns() {
         String strColumns = "";

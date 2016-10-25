@@ -75,15 +75,6 @@ public class TipodocumentoBean implements GenericBean {
         this.id = id;
     }
 
-    public String toJson(Boolean expand) {
-        String strJson = "{";
-        strJson += "id:" + id + ",";
-        strJson += "descripcion:" + descripcion + ",";
-        strJson += "privado:" + privado + ",";
-        strJson += "}";
-        return strJson;
-    }
-
     @Override
     public String getColumns() {
         String strColumns = "";
