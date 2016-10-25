@@ -33,13 +33,11 @@ package net.daw.bean.implementation;
  */
 public class ReplyBean {
 
-    private Integer code;
-    private String message;
+    private Integer code;    
     private String json;
 
-    public ReplyBean(Integer code, String message, String json) {
+    public ReplyBean(Integer code, String json) {
         this.code = code;
-        this.message = message;
         this.json = json;
     }
 
@@ -49,15 +47,7 @@ public class ReplyBean {
 
     public void setCode(Integer code) {
         this.code = code;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
+    }  
 
     public String getJson() {
         return json;

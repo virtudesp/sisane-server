@@ -86,9 +86,9 @@ public class EstadoService implements TableServiceInterface, ViewServiceInterfac
                     oDataConnectionSource.disposeConnection();
                 }
             }
-            return new ReplyBean(200, "OK", JsonMessage.getJsonMsg("200", data));
+            return new ReplyBean(200, data);
         } else {
-            return new ReplyBean(401, "Unauthorized", JsonMessage.getJsonMsg("401", "Unauthorized"));
+            return new ReplyBean(401, JsonMessage.getJsonMsg("401", "Unauthorized"));
         }
     }
 
@@ -118,9 +118,9 @@ public class EstadoService implements TableServiceInterface, ViewServiceInterfac
                     oDataConnectionSource.disposeConnection();
                 }
             }
-            return new ReplyBean(200, "OK", JsonMessage.getJsonMsg("200", data));
+            return new ReplyBean(200, data);
         } else {
-            return new ReplyBean(401, "Unauthorized", JsonMessage.getJsonMsg("401", "Unauthorized"));
+            return new ReplyBean(401, JsonMessage.getJsonMsg("401", "Unauthorized"));
         }
     }
 
@@ -151,9 +151,9 @@ public class EstadoService implements TableServiceInterface, ViewServiceInterfac
                 }
             }
 
-            return new ReplyBean(200, "OK", JsonMessage.getJsonMsg("200", data));
+            return new ReplyBean(200, data);
         } else {
-            return new ReplyBean(401, "Unauthorized", JsonMessage.getJsonMsg("401", "Unauthorized"));
+            return new ReplyBean(401, JsonMessage.getJsonMsg("401", "Unauthorized"));
         }
     }
 
@@ -184,9 +184,9 @@ public class EstadoService implements TableServiceInterface, ViewServiceInterfac
                     oDataConnectionSource.disposeConnection();
                 }
             }
-            return new ReplyBean(200, "OK", JsonMessage.getJsonMsg("200", data));
+            return new ReplyBean(200, data);
         } else {
-            return new ReplyBean(401, "Unauthorized", JsonMessage.getJsonMsg("401", "Unauthorized"));
+            return new ReplyBean(401, JsonMessage.getJsonMsg("401", "Unauthorized"));
         }
     }
 
@@ -218,9 +218,9 @@ public class EstadoService implements TableServiceInterface, ViewServiceInterfac
                     oDataConnectionSource.disposeConnection();
                 }
             }
-            return new ReplyBean(200, "OK", JsonMessage.getJsonMsg("200", resultado));
+            return new ReplyBean(200, JsonMessage.getJsonMsg("200", resultado));
         } else {
-            return new ReplyBean(401, "Unauthorized", JsonMessage.getJsonMsg("401", "Unauthorized"));
+            return new ReplyBean(401, JsonMessage.getJsonMsg("401", "Unauthorized"));
         }
     }
 
@@ -263,9 +263,9 @@ public class EstadoService implements TableServiceInterface, ViewServiceInterfac
                     oDataConnectionSource.disposeConnection();
                 }
             }
-            return new ReplyBean(200, "OK", JsonMessage.getJsonMsg("200", resultado));
+            return new ReplyBean(200, JsonMessage.getJsonMsg("200", resultado));
         } else {
-            return new ReplyBean(401, "Unauthorized", JsonMessage.getJsonMsg("401", "Unauthorized"));
+            return new ReplyBean(401, JsonMessage.getJsonMsg("401", "Unauthorized"));
         }
     }
 

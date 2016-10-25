@@ -44,6 +44,6 @@ public class JsonMessage {
     }
 
     public static String getJson(String strStatus, String strMessage) {
-        return "{\"status\":200,\"message\":" + strMessage + "}";
+        return "{\"status\":" + strStatus + ",\"message\":" + strMessage + "}";
     }
 }

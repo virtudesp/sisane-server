@@ -90,9 +90,9 @@ public class DocumentoService implements TableServiceInterface, ViewServiceInter
                     oDataConnectionSource.disposeConnection();
                 }
             }
-            return new ReplyBean(200, "OK", JsonMessage.getJsonMsg("200", data));
+            return new ReplyBean(200, data);
         } else {
-            return new ReplyBean(401, "Unauthorized", JsonMessage.getJsonMsg("401", "Unauthorized"));
+            return new ReplyBean(401, JsonMessage.getJsonMsg("401", "Unauthorized"));
         }
     }
 
@@ -122,9 +122,9 @@ public class DocumentoService implements TableServiceInterface, ViewServiceInter
                     oDataConnectionSource.disposeConnection();
                 }
             }
-            return new ReplyBean(200, "OK", JsonMessage.getJsonMsg("200", data));
+            return new ReplyBean(200, data);
         } else {
-            return new ReplyBean(401, "Unauthorized", JsonMessage.getJsonMsg("401", "Unauthorized"));
+            return new ReplyBean(401, JsonMessage.getJsonMsg("401", "Unauthorized"));
         }
     }
 
@@ -154,9 +154,9 @@ public class DocumentoService implements TableServiceInterface, ViewServiceInter
                     oDataConnectionSource.disposeConnection();
                 }
             }
-            return new ReplyBean(200, "OK", JsonMessage.getJsonMsg("200", data));
+            return new ReplyBean(200, data);
         } else {
-            return new ReplyBean(401, "Unauthorized", JsonMessage.getJsonMsg("401", "Unauthorized"));
+            return new ReplyBean(401, JsonMessage.getJsonMsg("401", "Unauthorized"));
         }
     }
 
@@ -187,9 +187,9 @@ public class DocumentoService implements TableServiceInterface, ViewServiceInter
                     oDataConnectionSource.disposeConnection();
                 }
             }
-            return new ReplyBean(200, "OK", JsonMessage.getJsonMsg("200", data));
+            return new ReplyBean(200, data);
         } else {
-            return new ReplyBean(401, "Unauthorized", JsonMessage.getJsonMsg("401", "Unauthorized"));
+            return new ReplyBean(401, JsonMessage.getJsonMsg("401", "Unauthorized"));
         }
     }
 
@@ -219,9 +219,9 @@ public class DocumentoService implements TableServiceInterface, ViewServiceInter
                     oDataConnectionSource.disposeConnection();
                 }
             }
-            return new ReplyBean(200, "OK", JsonMessage.getJsonMsg("200", data));
+            return new ReplyBean(200, data);
         } else {
-            return new ReplyBean(401, "Unauthorized", JsonMessage.getJsonMsg("401", "Unauthorized"));
+            return new ReplyBean(401, JsonMessage.getJsonMsg("401", "Unauthorized"));
         }
     }
 
@@ -262,9 +262,9 @@ public class DocumentoService implements TableServiceInterface, ViewServiceInter
                     oDataConnectionSource.disposeConnection();
                 }
             }
-            return new ReplyBean(200, "OK", JsonMessage.getJsonMsg("200", resultado));
+            return new ReplyBean(200, JsonMessage.getJsonMsg("200", resultado));
         } else {
-            return new ReplyBean(401, "Unauthorized", JsonMessage.getJsonMsg("401", "Unauthorized"));
+            return new ReplyBean(401, JsonMessage.getJsonMsg("401", "Unauthorized"));
         }
     }
 
@@ -283,9 +283,9 @@ public class DocumentoService implements TableServiceInterface, ViewServiceInter
                 throw new Exception();
             }
             oConnection.close();
-            return new ReplyBean(200, "OK", JsonMessage.getJsonMsg("200", oDocumentoBean.getContenido()));
+            return new ReplyBean(200, JsonMessage.getJsonMsg("200", oDocumentoBean.getContenido()));
         } else {
-            return new ReplyBean(401, "Unauthorized", JsonMessage.getJsonMsg("401", "Unauthorized"));
+            return new ReplyBean(401, JsonMessage.getJsonMsg("401", "Unauthorized"));
         }
     }
 

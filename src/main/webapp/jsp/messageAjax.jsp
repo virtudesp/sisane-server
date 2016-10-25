@@ -31,5 +31,5 @@
 --%><%@page import="net.daw.bean.implementation.ReplyBean"%><%@page contentType="application/json" pageEncoding="UTF-8"%><%
     ReplyBean oReplyBean = (ReplyBean) request.getAttribute("answer");
     //response.sendError(oReplyBean.getCode(), oReplyBean.getMessage());
-    response.setStatus(oReplyBean.getCode(), oReplyBean.getMessage());
+    response.setStatus(oReplyBean.getCode());
     out.print(oReplyBean.getJson());%>

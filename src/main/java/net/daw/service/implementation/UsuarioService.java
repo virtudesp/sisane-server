@@ -135,9 +135,9 @@ public class UsuarioService implements TableServiceInterface, ViewServiceInterfa
                     oDataConnectionSource.disposeConnection();
                 }
             }
-            return new ReplyBean(200, "OK", JsonMessage.getJsonMsg("200", data));
+            return new ReplyBean(200,  data);
         } else {
-            return new ReplyBean(401, "Unauthorized", JsonMessage.getJsonMsg("401", "Unauthorized"));
+            return new ReplyBean(401, JsonMessage.getJsonMsg("401", "Unauthorized"));
         }
     }
 
@@ -167,9 +167,9 @@ public class UsuarioService implements TableServiceInterface, ViewServiceInterfa
                     oDataConnectionSource.disposeConnection();
                 }
             }
-            return new ReplyBean(200, "OK", JsonMessage.getJsonMsg("200", data));
+            return new ReplyBean(200, data);
         } else {
-            return new ReplyBean(401, "Unauthorized", JsonMessage.getJsonMsg("401", "Unauthorized"));
+            return new ReplyBean(401, JsonMessage.getJsonMsg("401", "Unauthorized"));
         }
     }
 
@@ -200,9 +200,9 @@ public class UsuarioService implements TableServiceInterface, ViewServiceInterfa
                 }
             }
 
-            return new ReplyBean(200, "OK", JsonMessage.getJsonMsg("200", data));
+            return new ReplyBean(200,  data);
         } else {
-            return new ReplyBean(401, "Unauthorized", JsonMessage.getJsonMsg("401", "Unauthorized"));
+            return new ReplyBean(401, JsonMessage.getJsonMsg("401", "Unauthorized"));
         }
     }
 
@@ -234,9 +234,9 @@ public class UsuarioService implements TableServiceInterface, ViewServiceInterfa
                     oDataConnectionSource.disposeConnection();
                 }
             }
-            return new ReplyBean(200, "OK", JsonMessage.getJsonMsg("200", data));
+            return new ReplyBean(200, data);
         } else {
-            return new ReplyBean(401, "Unauthorized", JsonMessage.getJsonMsg("401", "Unauthorized"));
+            return new ReplyBean(401, JsonMessage.getJsonMsg("401", "Unauthorized"));
         }
     }
 
@@ -266,9 +266,9 @@ public class UsuarioService implements TableServiceInterface, ViewServiceInterfa
                     oDataConnectionSource.disposeConnection();
                 }
             }
-            return new ReplyBean(200, "OK", JsonMessage.getJsonMsg("200", data));
+            return new ReplyBean(200, data);
         } else {
-            return new ReplyBean(401, "Unauthorized", JsonMessage.getJsonMsg("401", "Unauthorized"));
+            return new ReplyBean(401, JsonMessage.getJsonMsg("401", "Unauthorized"));
         }
     }
 
@@ -309,9 +309,9 @@ public class UsuarioService implements TableServiceInterface, ViewServiceInterfa
                     oDataConnectionSource.disposeConnection();
                 }
             }
-            return new ReplyBean(200, "OK", JsonMessage.getJsonMsg("200", data));
+            return new ReplyBean(200,  data);
         } else {
-            return new ReplyBean(401, "Unauthorized", JsonMessage.getJsonMsg("401", "Unauthorized"));
+            return new ReplyBean(401, JsonMessage.getJsonMsg("401", "Unauthorized"));
 
         }
     }
@@ -363,22 +363,22 @@ public class UsuarioService implements TableServiceInterface, ViewServiceInterfa
             strCode = "403";
             strAnswer = "ERROR02";
         }
-        return new ReplyBean(Integer.parseInt(strCode), strAnswer, JsonMessage.getJsonMsg(strCode, strAnswer));
+        return new ReplyBean(Integer.parseInt(strCode), JsonMessage.getJsonMsg(strCode, strAnswer));
 
     }
 
     public ReplyBean logout() {
         oRequest.getSession().invalidate();
-        return new ReplyBean(200, "OK", JsonMessage.getJsonMsg("200", "bye"));
+        return new ReplyBean(200, JsonMessage.getJsonMsg("200", "bye"));
     }
 
     public ReplyBean getsessionstatus() {
         String strAnswer = null;
         UsuarioBean oUserBean = (UsuarioBean) oRequest.getSession().getAttribute("userBean");
         if (oUserBean == null) {
-            return new ReplyBean(403, "Unauthorized", JsonMessage.getJsonMsg("403", "Unauthorized"));
+            return new ReplyBean(403, JsonMessage.getJsonMsg("403", "Unauthorized"));
         } else {
-            return new ReplyBean(200, "OK", JsonMessage.getJsonMsg("200", oUserBean.getLogin()));
+            return new ReplyBean(200, JsonMessage.getJsonMsg("200", oUserBean.getLogin()));
         }
     }
 
@@ -387,9 +387,9 @@ public class UsuarioService implements TableServiceInterface, ViewServiceInterfa
         UsuarioBean oUserBean = (UsuarioBean) oRequest.getSession().getAttribute("userBean");
         Map<Integer, String> map = new HashMap<Integer, String>();
         if (oUserBean == null) {
-            return new ReplyBean(403, "Unauthorized", JsonMessage.getJsonMsg("403", "Unauthorized"));
+            return new ReplyBean(403, JsonMessage.getJsonMsg("403", "Unauthorized"));
         } else {
-            return new ReplyBean(200, "OK", JsonMessage.getJsonMsg("200", oUserBean.getId_estado().toString()));
+            return new ReplyBean(200, JsonMessage.getJsonMsg("200", oUserBean.getId_estado().toString()));
         }
     }
 
