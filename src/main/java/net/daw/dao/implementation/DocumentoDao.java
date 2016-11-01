@@ -58,9 +58,9 @@ public class DocumentoDao implements ViewDaoInterface<DocumentoBean>, TableDaoIn
     }
 
     @Override
-    public int getCount(ArrayList<FilterBeanHelper> hmFilter) throws Exception {
+    public Long getCount(ArrayList<FilterBeanHelper> hmFilter) throws Exception {
         strSQL += SqlBuilder.buildSqlWhere(hmFilter);
-        int pages = 0;
+        Long pages = 0L;
         try {
             pages = oMysql.getCount(strSQL);
         } catch (Exception ex) {
@@ -71,8 +71,8 @@ public class DocumentoDao implements ViewDaoInterface<DocumentoBean>, TableDaoIn
     }
 
     @Override
-    public ArrayList<DocumentoBean> getPage(int intRegsPerPag, int intPage, ArrayList<FilterBeanHelper> hmFilter, HashMap<String, String> hmOrder, Integer expand) throws Exception {
-        strSQL += SqlBuilder.buildSqlWhere(hmFilter);
+    public ArrayList<DocumentoBean> getPage(int intRegsPerPag, int intPage, ArrayList<FilterBeanHelper> alFilter, HashMap<String, String> hmOrder, Integer expand) throws Exception {
+        strSQL += SqlBuilder.buildSqlWhere(alFilter);
         strSQL += SqlBuilder.buildSqlOrder(hmOrder);
         strSQL += SqlBuilder.buildSqlLimit(oMysql.getCount(strSQL), intRegsPerPag, intPage);
         ArrayList<DocumentoBean> arrDocumento = new ArrayList<>();
@@ -99,6 +99,7 @@ public class DocumentoDao implements ViewDaoInterface<DocumentoBean>, TableDaoIn
 
     @Override
     public ArrayList<DocumentoBean> getAll(ArrayList<FilterBeanHelper> alFilter, HashMap<String, String> hmOrder, Integer expand) throws Exception {
+        strSQL += SqlBuilder.buildSqlWhere(alFilter);
         strSQL += SqlBuilder.buildSqlOrder(hmOrder);
         ArrayList<DocumentoBean> arrDocumento = new ArrayList<>();
         ResultSet oResultSet = null;
@@ -157,7 +158,6 @@ public class DocumentoDao implements ViewDaoInterface<DocumentoBean>, TableDaoIn
                 strSQL += " WHERE id=" + oDocumentoBean.getId();
                 iResult = oMysql.executeUpdateSQL(strSQL);
             }
-
         } catch (Exception ex) {
             Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
             throw new Exception();

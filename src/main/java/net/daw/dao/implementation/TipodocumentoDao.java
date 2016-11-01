@@ -58,9 +58,9 @@ public class TipodocumentoDao implements ViewDaoInterface<TipodocumentoBean>, Ta
     }
 
     @Override
-    public int getCount(ArrayList<FilterBeanHelper> hmFilter) throws Exception {
+    public Long getCount(ArrayList<FilterBeanHelper> hmFilter) throws Exception {
         strSQL += SqlBuilder.buildSqlWhere(hmFilter);
-        int pages = 0;
+        Long pages = 0L;
         try {
             pages = oMysql.getCount(strSQL);
         } catch (Exception ex) {

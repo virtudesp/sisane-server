@@ -39,14 +39,12 @@ import net.daw.bean.implementation.TipousuarioBean;
 import net.daw.bean.implementation.UsuarioBean;
 import net.daw.connection.publicinterface.ConnectionInterface;
 import net.daw.dao.implementation.TipousuarioDao;
-
 import net.daw.helper.statics.AppConfigurationHelper;
 import static net.daw.helper.statics.AppConfigurationHelper.getSourceConnection;
 import net.daw.helper.statics.FilterBeanHelper;
 import net.daw.helper.statics.JsonMessage;
 import net.daw.helper.statics.Log4j;
 import net.daw.helper.statics.ParameterCook;
-
 import net.daw.service.publicinterface.TableServiceInterface;
 import net.daw.service.publicinterface.ViewServiceInterface;
 
@@ -71,14 +69,16 @@ public class TipousuarioService implements TableServiceInterface, ViewServiceInt
     public ReplyBean getcount() throws Exception {
         if (this.checkpermission("getcount")) {
             String data = null;
-            ArrayList<FilterBeanHelper> alFilter = ParameterCook.prepareFilter(oRequest);
+                        HashMap<String, String> hmOrder = ParameterCook.getOrderParams(ParameterCook.prepareOrder(oRequest));
+            ArrayList<FilterBeanHelper> alFilter = ParameterCook.getFilterParams(ParameterCook.prepareFilter(oRequest));
+
             Connection oConnection = null;
             ConnectionInterface oDataConnectionSource = null;
             try {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
                 TipousuarioDao oTipousuarioDao = new TipousuarioDao(oConnection);
-                data = JsonMessage.getJson("200", Integer.toString(oTipousuarioDao.getCount(alFilter)));
+                data = JsonMessage.getJson("200", Long.toString(oTipousuarioDao.getCount(alFilter)));
             } catch (Exception ex) {
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
                 throw new Exception();
@@ -131,8 +131,8 @@ public class TipousuarioService implements TableServiceInterface, ViewServiceInt
     @Override
     public ReplyBean getall() throws Exception {
         if (this.checkpermission("getall")) {
-            ArrayList<FilterBeanHelper> alFilter = ParameterCook.prepareFilter(oRequest);
-            HashMap<String, String> hmOrder = ParameterCook.prepareOrder(oRequest);
+            HashMap<String, String> hmOrder = ParameterCook.getOrderParams(ParameterCook.prepareOrder(oRequest));
+            ArrayList<FilterBeanHelper> alFilter = ParameterCook.getFilterParams(ParameterCook.prepareFilter(oRequest));
             String data = null;
             Connection oConnection = null;
             ConnectionInterface oDataConnectionSource = null;
@@ -166,8 +166,8 @@ public class TipousuarioService implements TableServiceInterface, ViewServiceInt
         if (this.checkpermission("getpage")) {
             int intRegsPerPag = ParameterCook.prepareRpp(oRequest);;
             int intPage = ParameterCook.preparePage(oRequest);
-            ArrayList<FilterBeanHelper> alFilter = ParameterCook.prepareFilter(oRequest);
-            HashMap<String, String> hmOrder = ParameterCook.prepareOrder(oRequest);
+            HashMap<String, String> hmOrder = ParameterCook.getOrderParams(ParameterCook.prepareOrder(oRequest));
+            ArrayList<FilterBeanHelper> alFilter = ParameterCook.getFilterParams(ParameterCook.prepareFilter(oRequest));
             String data = null;
             Connection oConnection = null;
             ConnectionInterface oDataConnectionSource = null;

@@ -38,7 +38,7 @@ public interface DataInterface {
 
     public int removeOne(int intId, String strTabla) throws Exception;
 
-    public int getCount(String strSqlSelectDataOrigin) throws Exception;
+    public Long getCount(String strSqlSelectDataOrigin) throws Exception;
 
     public ResultSet getAllSQL(String strSqlSelectDataOrigin) throws Exception;
 

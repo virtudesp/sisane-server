@@ -178,8 +178,8 @@ public class MysqlData implements DataInterface {
     }
 
     @Override
-    public int getCount(String strSqlSelectDataOrigin) throws Exception {
-        int intResult = 0;
+    public Long getCount(String strSqlSelectDataOrigin) throws Exception {
+        Long longResult = 0L;
         Statement oStatement = null;
         ResultSet oResultSet = null;
         try {
@@ -188,7 +188,7 @@ public class MysqlData implements DataInterface {
             oStatement = (Statement) connection.createStatement();
             oResultSet = oStatement.executeQuery(strNewSqlDataSource);
             while (oResultSet.next()) {
-                intResult = oResultSet.getInt("COUNT(*)");
+                longResult = oResultSet.getLong("COUNT(*)");
             }
         } catch (SQLException ex) {
             Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
@@ -201,7 +201,7 @@ public class MysqlData implements DataInterface {
                 oStatement.close();
             }
         }
-        return intResult;
+        return longResult;
     }
 
     @Override

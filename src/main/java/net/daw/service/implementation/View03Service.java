@@ -38,7 +38,6 @@ import net.daw.bean.implementation.UsuarioBean;
 import net.daw.bean.implementation.View03Bean;
 import net.daw.connection.publicinterface.ConnectionInterface;
 import net.daw.dao.implementation.View03Dao;
-
 import net.daw.helper.statics.AppConfigurationHelper;
 import static net.daw.helper.statics.AppConfigurationHelper.getSourceConnection;
 import net.daw.helper.statics.FilterBeanHelper;
@@ -68,14 +67,14 @@ public class View03Service implements ViewServiceInterface {
     public ReplyBean getcount() throws Exception {
         if (this.checkpermission("getcount")) {
             String data = null;
-            ArrayList<FilterBeanHelper> alFilter = ParameterCook.prepareFilter(oRequest);
+            ArrayList<FilterBeanHelper> alFilter = ParameterCook.getFilterParams(ParameterCook.prepareFilter(oRequest));
             Connection oConnection = null;
             ConnectionInterface oDataConnectionSource = null;
             try {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
                 View03Dao oDao = new View03Dao(oConnection);
-                data = JsonMessage.getJson("200", Integer.toString(oDao.getCount(alFilter)));
+                data = JsonMessage.getJson("200", Long.toString(oDao.getCount(alFilter)));
             } catch (Exception ex) {
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
                 throw new Exception();
@@ -96,8 +95,8 @@ public class View03Service implements ViewServiceInterface {
     @Override
     public ReplyBean getall() throws Exception {
         if (this.checkpermission("getall")) {
-            ArrayList<FilterBeanHelper> alFilter = ParameterCook.prepareFilter(oRequest);
-            HashMap<String, String> hmOrder = ParameterCook.prepareOrder(oRequest);
+            HashMap<String, String> hmOrder = ParameterCook.getOrderParams(ParameterCook.prepareOrder(oRequest));
+            ArrayList<FilterBeanHelper> alFilter = ParameterCook.getFilterParams(ParameterCook.prepareFilter(oRequest));
             String data = null;
             Connection oConnection = null;
             ConnectionInterface oDataConnectionSource = null;
@@ -129,8 +128,8 @@ public class View03Service implements ViewServiceInterface {
         if (this.checkpermission("getpage")) {
             int intRegsPerPag = ParameterCook.prepareRpp(oRequest);;
             int intPage = ParameterCook.preparePage(oRequest);
-            ArrayList<FilterBeanHelper> alFilter = ParameterCook.prepareFilter(oRequest);
-            HashMap<String, String> hmOrder = ParameterCook.prepareOrder(oRequest);
+            HashMap<String, String> hmOrder = ParameterCook.getOrderParams(ParameterCook.prepareOrder(oRequest));
+            ArrayList<FilterBeanHelper> alFilter = ParameterCook.getFilterParams(ParameterCook.prepareFilter(oRequest));
             String data = null;
             Connection oConnection = null;
             ConnectionInterface oDataConnectionSource = null;

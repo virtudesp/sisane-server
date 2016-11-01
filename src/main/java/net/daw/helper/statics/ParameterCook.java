@@ -30,6 +30,7 @@ package net.daw.helper.statics;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.regex.Pattern;
 import javax.servlet.http.HttpServletRequest;
 
 public class ParameterCook {
@@ -124,47 +125,20 @@ public class ParameterCook {
         return intPage;
     }
 
-    public static ArrayList<FilterBeanHelper> prepareFilter(HttpServletRequest request) {
-        ArrayList<FilterBeanHelper> alFilter = new ArrayList<>();
-        if (request.getParameter("filter") != null) {
-            if (request.getParameter("filteroperator") != null) {
-                if (request.getParameter("filtervalue") != null) {
-                    FilterBeanHelper oFilterBean = new FilterBeanHelper();
-                    oFilterBean.setFilter(request.getParameter("filter"));
-                    oFilterBean.setFilterOperator(request.getParameter("filteroperator"));
-                    oFilterBean.setFilterValue(request.getParameter("filtervalue"));
-                    oFilterBean.setFilterOrigin("user");
-                    alFilter.add(oFilterBean);
-                }
-            }
+    public static String prepareOrder(HttpServletRequest oRequest) {
+        String strOrder = oRequest.getParameter("order");
+        if (strOrder.toLowerCase().contains("select") || strOrder.toLowerCase().contains("insert") || strOrder.toLowerCase().contains("update") || strOrder.toLowerCase().contains("delete")) {
+            return null;
         }
-        if (request.getParameter("systemfilter") != null) {
-            if (request.getParameter("systemfilteroperator") != null) {
-                if (request.getParameter("systemfiltervalue") != null) {
-                    FilterBeanHelper oFilterBean = new FilterBeanHelper();
-                    oFilterBean.setFilter(request.getParameter("systemfilter"));
-                    oFilterBean.setFilterOperator(request.getParameter("systemfilteroperator"));
-                    oFilterBean.setFilterValue(request.getParameter("systemfiltervalue"));
-                    oFilterBean.setFilterOrigin("system");
-                    alFilter.add(oFilterBean);
-                }
-            }
-        }
-        return alFilter;
+        return strOrder;
     }
 
-    public static HashMap<String, String> prepareOrder(HttpServletRequest request) {
-        HashMap<String, String> hmOrder = new HashMap<>();
-        if (request.getParameter("order") != null) {
-            if (request.getParameter("ordervalue") != null) {
-                hmOrder.put(request.getParameter("order"), request.getParameter("ordervalue"));
-            } else {
-                hmOrder = null;
-            }
-        } else {
-            hmOrder = null;
+    public static String prepareFilter(HttpServletRequest oRequest) {
+        String strFilter = oRequest.getParameter("filter");
+        if (strFilter.toLowerCase().contains("select") || strFilter.toLowerCase().contains("insert") || strFilter.toLowerCase().contains("update") || strFilter.toLowerCase().contains("delete")) {
+            return null;
         }
-        return hmOrder;
+        return strFilter;
     }
 
     public static int prepareInt(String strParameter, HttpServletRequest request) {
@@ -176,4 +150,62 @@ public class ParameterCook {
         }
         return result;
     }
+
+    private static FilterBeanHelper getFilterExpression(String s) {
+        if (s.indexOf(",") >= 0) {
+            String[] temp = s.split(",");
+            if (temp.length == 4) {
+                FilterBeanHelper oFilterBeanHelper = new FilterBeanHelper();
+                oFilterBeanHelper.setFilterConnector(temp[0]);
+                oFilterBeanHelper.setFilter(temp[1]);
+                oFilterBeanHelper.setFilterOperator(temp[2]);
+                oFilterBeanHelper.setFilterValue(temp[3]);
+                return oFilterBeanHelper;
+            } else {
+                return null;
+            }
+        } else {
+            return null;
+        }
+    }
+
+    public static ArrayList<FilterBeanHelper> getFilterParams(String strFilter) {
+        ArrayList<FilterBeanHelper> oFilterBean = new ArrayList<>();
+        if (strFilter != null && strFilter.length() > 0) {
+            strFilter += " ";
+            String[] split1 = strFilter.split(Pattern.quote(" "));
+            for (String s : split1) {
+
+                oFilterBean.add(getFilterExpression(s));
+            }
+        } else {
+            oFilterBean = null;
+        }
+
+        return oFilterBean;
+    }
+
+    public static HashMap<String, String> getOrderParams(String strOrder) {
+        HashMap<String, String> oHMOrder = new HashMap<>();
+        if (strOrder != null && strOrder.length() > 0) {
+            strOrder += " ";
+            String[] split1 = strOrder.split(Pattern.quote(" "));
+            for (String s : split1) {
+                if (s.contains(",")) {
+                    String[] split2 = s.split(",");
+                    if ("asc".equalsIgnoreCase(split2[1])) {
+                        oHMOrder.put(split2[0], "ASC");
+                    } else {
+                        oHMOrder.put(split2[0], "DESC");
+                    }
+                } else {
+                    oHMOrder.put(s, "ASC");
+                }
+            }
+        } else {
+            oHMOrder = null;
+        }
+        return oHMOrder;
+    }
+
 }

@@ -34,7 +34,7 @@ import net.daw.helper.statics.FilterBeanHelper;
 
 public interface ViewDaoInterface<GenericBeanImplementation> {
 
-    public int getCount(ArrayList<FilterBeanHelper> alFilter) throws Exception;
+    public Long getCount(ArrayList<FilterBeanHelper> alFilter) throws Exception;
 
     public ArrayList<GenericBeanImplementation> getPage(int intRegsPerPag, int intPage, ArrayList<FilterBeanHelper> alFilter, HashMap<String, String> hmOrder, Integer expand) throws Exception;
 

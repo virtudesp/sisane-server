@@ -38,6 +38,7 @@ public class FilterBeanHelper {
     private String filterOperator;
     private String filterValue; //Equals,Like,NotLike,NotEqualTo,Less,LessOrEqual,Greater,GreaterOrEqual
     private String filterOrigin; //user, system
+    private String filterConnector; //and, or, not
 
     public String getFilter() {
         return filter;
@@ -69,6 +70,14 @@ public class FilterBeanHelper {
 
     public void setFilterOrigin(String filterOrigin) {
         this.filterOrigin = filterOrigin;
+    }
+
+    public String getFilterConnector() {
+        return filterConnector;
+    }
+
+    public void setFilterConnector(String filterConnector) {
+        this.filterConnector = filterConnector;
     }
 
 }

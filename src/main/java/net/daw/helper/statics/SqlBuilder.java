@@ -28,6 +28,9 @@
  */
 package net.daw.helper.statics;
 
+import static java.lang.Math.floor;
+import static java.lang.Math.max;
+import static java.lang.Math.min;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -35,44 +38,45 @@ import java.util.Map;
 
 public class SqlBuilder {
 
+    private static String getFilterExpression(FilterBeanHelper temp) {
+
+        switch (temp.getFilterOperator()) {
+            case "like": //like
+                return temp.getFilterConnector() + " " + temp.getFilter() + " LIKE '%" + temp.getFilterValue() + "%' ";
+            case "nlik": //not like
+                return temp.getFilterConnector() + " " + temp.getFilter() + " NOT LIKE '%" + temp.getFilterValue() + "%' ";
+            case "star": //starts with
+                return temp.getFilterConnector() + " " + temp.getFilter() + " LIKE " + temp.getFilterValue() + "% ";
+            case "nsta": //not starts with
+                return temp.getFilterConnector() + " " + temp.getFilter() + " NOT LIKE " + temp.getFilterValue() + "% ";
+            case "ends": //ends with
+                return temp.getFilterConnector() + " " + temp.getFilter() + " LIKE %" + temp.getFilterValue() + " ";
+            case "nend": //not ends with
+                return temp.getFilterConnector() + " " + temp.getFilter() + " NOT LIKE %" + temp.getFilterValue() + " ";
+            case "equa": //equal
+                return temp.getFilterConnector() + " " + temp.getFilter() + " = " + temp.getFilterValue() + " ";
+            case "nequ": //not equal
+                return temp.getFilterConnector() + " " + temp.getFilter() + " != " + temp.getFilterValue() + " ";
+            case "lowe": //lower than
+                return temp.getFilterConnector() + " " + temp.getFilter() + " < " + temp.getFilterValue() + " ";
+            case "lequ": //lower or equal than
+                return temp.getFilterConnector() + " " + temp.getFilter() + " <= " + temp.getFilterValue() + " ";
+            case "grea": //greater than
+                return temp.getFilterConnector() + " " + temp.getFilter() + " > " + temp.getFilterValue() + " ";
+            case "gequ": //greater or equal than
+                return temp.getFilterConnector() + " " + temp.getFilter() + " >= " + temp.getFilterValue() + " ";
+            default:
+                throw new Error("Filter expression malformed. Operator not valid.");
+        }
+    }
+
     public static String buildSqlWhere(ArrayList<FilterBeanHelper> alFilter) {
         String strSQLFilter = "";
         if (alFilter != null) {
             Iterator iterator = alFilter.iterator();
             while (iterator.hasNext()) {
                 FilterBeanHelper oFilterBean = (FilterBeanHelper) iterator.next();
-                String strFilterFieldName = oFilterBean.getFilter();
-                if (strFilterFieldName.length() >= 4) {
-                    if ("obj_".equals(strFilterFieldName.substring(0, 4))) {
-                        strFilterFieldName = "id_" + strFilterFieldName.substring(4);
-                    }
-                }
-                switch (oFilterBean.getFilterOperator()) {
-                    case "like":
-                        strSQLFilter += " AND " + strFilterFieldName + " LIKE '%" + oFilterBean.getFilterValue() + "%'";
-                        break;
-                    case "notlike":
-                        strSQLFilter += " AND " + strFilterFieldName + " NOT LIKE '%" + oFilterBean.getFilterValue() + "%'";
-                        break;
-                    case "equals":
-                        strSQLFilter += " AND " + strFilterFieldName + " = '" + oFilterBean.getFilterValue() + "'";
-                        break;
-                    case "notequalto":
-                        strSQLFilter += " AND " + strFilterFieldName + " <> '" + oFilterBean.getFilterValue() + "'";
-                        break;
-                    case "less":
-                        strSQLFilter += " AND " + strFilterFieldName + " < " + oFilterBean.getFilterValue() + "";
-                        break;
-                    case "lessorequal":
-                        strSQLFilter += " AND " + strFilterFieldName + " <= " + oFilterBean.getFilterValue() + "";
-                        break;
-                    case "greater":
-                        strSQLFilter += " AND " + strFilterFieldName + " > " + oFilterBean.getFilterValue() + "";
-                        break;
-                    case "greaterorequal":
-                        strSQLFilter += " AND " + strFilterFieldName + " >= " + oFilterBean.getFilterValue() + "";
-                        break;
-                }
+                strSQLFilter += getFilterExpression(oFilterBean);
             }
         }
         return strSQLFilter;
@@ -97,11 +101,25 @@ public class SqlBuilder {
         return strSQLOrder;
     }
 
-    public static String buildSqlLimit(int intTotalRegs, int intRegsPerPage, int intPageNumber) {
-        int maxPaginas = new Double(intTotalRegs / intRegsPerPage).intValue();
-        intPageNumber = Math.min(intPageNumber - 1, maxPaginas) + 1;
-        int intOffset = Math.max(((intPageNumber - 1) * intRegsPerPage), 0);
-        return " LIMIT " + intOffset + " , " + intRegsPerPage;
+//    public static String buildSqlLimit(int intTotalRegs, int intRegsPerPage, int intPageNumber) {
+//        int maxPaginas = new Double(intTotalRegs / intRegsPerPage).intValue();
+//        intPageNumber = Math.min(intPageNumber - 1, maxPaginas) + 1;
+//        int intOffset = Math.max(((intPageNumber - 1) * intRegsPerPage), 0);
+//        return " LIMIT " + intOffset + " , " + intRegsPerPage;
+//    }
+    
+    public static String buildSqlLimit(Long intTotalRegs, Integer intRegsPerPage, Integer intPageNumber) {
+        String SQLLimit = "";
+        if (intRegsPerPage > 0 || intRegsPerPage < 10000) {
+            if (intPageNumber > 0 || intPageNumber <= (floor(intTotalRegs / intRegsPerPage))) {
+                Double maxPaginas = floor(intTotalRegs / intRegsPerPage);
+                Integer intMaxPaginas = maxPaginas.intValue();
+                Integer intPageNumberMin = min(intPageNumber - 1, intMaxPaginas) + 1;
+                Integer intOffset = max(((intPageNumberMin - 1) * intRegsPerPage), 0);
+                SQLLimit = " LIMIT " + intOffset + " , " + intRegsPerPage;
+            }
+        }
+        return SQLLimit;
     }
 
 }
