@@ -1,23 +1,23 @@
 /*
  * Copyright (c) 2016 by Rafael Angel Aznar Aparici (rafaaznar at gmail dot com)
- * 
- * zylkanexy server: Helps you to develop easily AJAX web applications 
+ *
+ * zylkanexy server: Helps you to develop easily AJAX web applications
  *                   by copying and modifying this Java Server.
  *
  * Sources at https://github.com/rafaelaznar/zylkanexy
- * 
+ *
  * zylkanexy server is distributed under the MIT License (MIT)
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -78,7 +78,7 @@ public class TipousuarioService implements TableServiceInterface, ViewServiceInt
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
                 TipousuarioDao oTipousuarioDao = new TipousuarioDao(oConnection);
-                data = JsonMessage.getJsonMsg("200", Long.toString(oTipousuarioDao.getCount(alFilter)));
+                data = JsonMessage.getJsonExpression(200, Long.toString(oTipousuarioDao.getCount(alFilter)));
             } catch (Exception ex) {
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
                 throw new Exception();
@@ -92,7 +92,7 @@ public class TipousuarioService implements TableServiceInterface, ViewServiceInt
             }
             return new ReplyBean(200, data);
         } else {
-            return new ReplyBean(401, JsonMessage.getJsonMsg("401", "Unauthorized"));
+            return new ReplyBean(401, JsonMessage.getJsonMsg(401, "Unauthorized"));
         }
     }
 
@@ -110,7 +110,7 @@ public class TipousuarioService implements TableServiceInterface, ViewServiceInt
                 TipousuarioBean oTipousuarioBean = new TipousuarioBean(id);
                 oTipousuarioBean = oTipousuarioDao.get(oTipousuarioBean, AppConfigurationHelper.getJsonMsgDepth());
                 Gson gson = AppConfigurationHelper.getGson();
-                data = JsonMessage.getJsonMsg("200", AppConfigurationHelper.getGson().toJson(oTipousuarioBean));
+                data = JsonMessage.getJsonExpression(200, AppConfigurationHelper.getGson().toJson(oTipousuarioBean));
             } catch (Exception ex) {
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
                 throw new Exception();
@@ -124,7 +124,7 @@ public class TipousuarioService implements TableServiceInterface, ViewServiceInt
             }
             return new ReplyBean(200, data);
         } else {
-            return new ReplyBean(401, JsonMessage.getJsonMsg("401", "Unauthorized"));
+            return new ReplyBean(401, JsonMessage.getJsonMsg(401, "Unauthorized"));
         }
     }
 
@@ -142,7 +142,7 @@ public class TipousuarioService implements TableServiceInterface, ViewServiceInt
                 oConnection = oDataConnectionSource.newConnection();
                 TipousuarioDao oTipousuarioDao = new TipousuarioDao(oConnection);
                 ArrayList<TipousuarioBean> arrBeans = oTipousuarioDao.getAll(alFilter, hmOrder, 1);
-                data = JsonMessage.getJsonMsg("200", AppConfigurationHelper.getGson().toJson(arrBeans));
+                data = JsonMessage.getJsonExpression(200, AppConfigurationHelper.getGson().toJson(arrBeans));
             } catch (Exception ex) {
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
                 throw new Exception();
@@ -156,7 +156,7 @@ public class TipousuarioService implements TableServiceInterface, ViewServiceInt
             }
             return new ReplyBean(200, data);
         } else {
-            return new ReplyBean(401, JsonMessage.getJsonMsg("401", "Unauthorized"));
+            return new ReplyBean(401, JsonMessage.getJsonMsg(401, "Unauthorized"));
         }
     }
 
@@ -176,7 +176,7 @@ public class TipousuarioService implements TableServiceInterface, ViewServiceInt
                 oConnection = oDataConnectionSource.newConnection();
                 TipousuarioDao oTipousuarioDao = new TipousuarioDao(oConnection);
                 List<TipousuarioBean> arrBeans = oTipousuarioDao.getPage(intRegsPerPag, intPage, alFilter, hmOrder, AppConfigurationHelper.getJsonMsgDepth());
-                data = JsonMessage.getJsonMsg("200", AppConfigurationHelper.getGson().toJson(arrBeans));
+                data = JsonMessage.getJsonExpression(200, AppConfigurationHelper.getGson().toJson(arrBeans));
             } catch (Exception ex) {
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
                 throw new Exception();
@@ -190,7 +190,7 @@ public class TipousuarioService implements TableServiceInterface, ViewServiceInt
             }
             return new ReplyBean(200, data);
         } else {
-            return new ReplyBean(401, JsonMessage.getJsonMsg("401", "Unauthorized"));
+            return new ReplyBean(401, JsonMessage.getJsonMsg(401, "Unauthorized"));
         }
     }
 
@@ -206,7 +206,7 @@ public class TipousuarioService implements TableServiceInterface, ViewServiceInt
                 oConnection = oDataConnectionSource.newConnection();
                 oConnection.setAutoCommit(false);
                 TipousuarioDao oTipousuarioDao = new TipousuarioDao(oConnection);
-                data = JsonMessage.getJsonMsg("200", (String) oTipousuarioDao.remove(id).toString());
+                data = JsonMessage.getJsonExpression(200, (String) oTipousuarioDao.remove(id).toString());
                 oConnection.commit();
             } catch (Exception ex) {
                 if (oConnection != null) {
@@ -224,7 +224,7 @@ public class TipousuarioService implements TableServiceInterface, ViewServiceInt
             }
             return new ReplyBean(200, data);
         } else {
-            return new ReplyBean(401, JsonMessage.getJsonMsg("401", "Unauthorized"));
+            return new ReplyBean(401, JsonMessage.getJsonMsg(401, "Unauthorized"));
         }
     }
 
@@ -232,7 +232,7 @@ public class TipousuarioService implements TableServiceInterface, ViewServiceInt
     public ReplyBean set() throws Exception {
         if (this.checkpermission("set")) {
             String jason = ParameterCook.prepareJson(oRequest);
-            String data = null;
+            ReplyBean oReplyBean = new ReplyBean();
             Connection oConnection = null;
             ConnectionInterface oDataConnectionSource = null;
             try {
@@ -245,12 +245,15 @@ public class TipousuarioService implements TableServiceInterface, ViewServiceInt
                 if (oTipousuarioBean != null) {
                     Integer iResult = oTipousuarioDao.set(oTipousuarioBean);
                     if (iResult >= 1) {
-                        data = JsonMessage.getJsonMsg("200", iResult.toString());
+                        oReplyBean.setCode(200);
+                        oReplyBean.setJson(JsonMessage.getJsonExpression(200, iResult.toString()));
                     } else {
-                        data = JsonMessage.getJsonMsg("500", "Error during registry set");
+                        oReplyBean.setCode(500);
+                        oReplyBean.setJson(JsonMessage.getJsonMsg(500, "Error during registry set"));
                     }
                 } else {
-                    data = JsonMessage.getJsonMsg("500", "Error during registry set");
+                    oReplyBean.setCode(500);
+                    oReplyBean.setJson(JsonMessage.getJsonMsg(500, "Error during registry set"));
                 }
                 oConnection.commit();
             } catch (Exception ex) {
@@ -267,9 +270,9 @@ public class TipousuarioService implements TableServiceInterface, ViewServiceInt
                     oDataConnectionSource.disposeConnection();
                 }
             }
-            return new ReplyBean(200, data);
+            return oReplyBean;
         } else {
-            return new ReplyBean(401, JsonMessage.getJsonMsg("401", "Unauthorized"));
+            return new ReplyBean(401, JsonMessage.getJsonMsg(401, "Unauthorized"));
         }
     }
 

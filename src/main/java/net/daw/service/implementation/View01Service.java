@@ -74,7 +74,7 @@ public class View01Service implements ViewServiceInterface {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
                 View01Dao oDao = new View01Dao(oConnection);
-                data = JsonMessage.getJsonMsg("200", Long.toString(oDao.getCount(alFilter)));
+                data = JsonMessage.getJsonExpression(200, Long.toString(oDao.getCount(alFilter)));
             } catch (Exception ex) {
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
                 throw new Exception();
@@ -88,7 +88,7 @@ public class View01Service implements ViewServiceInterface {
             }
             return new ReplyBean(200, data);
         } else {
-            return new ReplyBean(401, JsonMessage.getJsonMsg("401", "Unauthorized"));
+            return new ReplyBean(401, JsonMessage.getJsonMsg(401, "Unauthorized"));
         }
     }
 
@@ -106,7 +106,7 @@ public class View01Service implements ViewServiceInterface {
                 oConnection = oDataConnectionSource.newConnection();
                 View01Dao oDao = new View01Dao(oConnection);
                 ArrayList<View01Bean> arrBeans = oDao.getAll(alFilter, hmOrder, AppConfigurationHelper.getJsonMsgDepth());
-                data = JsonMessage.getJsonMsg("200", AppConfigurationHelper.getGson().toJson(arrBeans));
+                data = JsonMessage.getJsonExpression(200, AppConfigurationHelper.getGson().toJson(arrBeans));
             } catch (Exception ex) {
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
                 throw new Exception();
@@ -120,7 +120,7 @@ public class View01Service implements ViewServiceInterface {
             }
             return new ReplyBean(200, data);
         } else {
-            return new ReplyBean(401, JsonMessage.getJsonMsg("401", "Unauthorized"));
+            return new ReplyBean(401, JsonMessage.getJsonMsg(401, "Unauthorized"));
         }
     }
 
@@ -139,7 +139,7 @@ public class View01Service implements ViewServiceInterface {
                 oConnection = oDataConnectionSource.newConnection();
                 View01Dao oDao = new View01Dao(oConnection);
                 List<View01Bean> arrBeans = oDao.getPage(intRegsPerPag, intPage, alFilter, hmOrder, AppConfigurationHelper.getJsonMsgDepth());
-                data = JsonMessage.getJsonMsg("200", AppConfigurationHelper.getGson().toJson(arrBeans));
+                data = JsonMessage.getJsonExpression(200, AppConfigurationHelper.getGson().toJson(arrBeans));
             } catch (Exception ex) {
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
                 throw new Exception();
@@ -153,7 +153,7 @@ public class View01Service implements ViewServiceInterface {
             }
             return new ReplyBean(200, data);
         } else {
-            return new ReplyBean(401, JsonMessage.getJsonMsg("401", "Unauthorized"));
+            return new ReplyBean(401, JsonMessage.getJsonMsg(401, "Unauthorized"));
         }
     }
 

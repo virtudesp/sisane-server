@@ -28,19 +28,13 @@
  */
 package net.daw.helper.statics;
 
-import com.google.gson.Gson;
-import java.util.HashMap;
-import java.util.Map;
-
 public class JsonMessage {
 
-    public static String getJsonMsg(String strStatus, String strMessage) {
+    public static String getJsonExpression(Integer strStatus, String strMessage) {
+        return "{\"status\":" + strStatus + ",\"message\":" + strMessage + "}";
+    }
+    public static String getJsonMsg(Integer strStatus, String strMessage) {
         return "{\"status\":" + strStatus + ",\"message\":\"" + strMessage + "\"}";
-//        Map<String, String> data = new HashMap<>();
-//        data.put("status", strStatus);
-//        data.put("message", strMessage);
-//        Gson gson = new Gson();
-//        return gson.toJson(data);
     }
 
 }

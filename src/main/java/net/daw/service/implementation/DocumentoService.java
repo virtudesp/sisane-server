@@ -78,7 +78,7 @@ public class DocumentoService implements TableServiceInterface, ViewServiceInter
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
                 DocumentoDao oDocumentoDao = new DocumentoDao(oConnection);
-                data = JsonMessage.getJsonMsg("200", Long.toString(oDocumentoDao.getCount(alFilter)));
+                data = JsonMessage.getJsonExpression(200, Long.toString(oDocumentoDao.getCount(alFilter)));
             } catch (Exception ex) {
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
                 throw new Exception();
@@ -92,7 +92,7 @@ public class DocumentoService implements TableServiceInterface, ViewServiceInter
             }
             return new ReplyBean(200, data);
         } else {
-            return new ReplyBean(401, JsonMessage.getJsonMsg("401", "Unauthorized"));
+            return new ReplyBean(401, JsonMessage.getJsonMsg(401, "Unauthorized"));
         }
     }
 
@@ -110,7 +110,7 @@ public class DocumentoService implements TableServiceInterface, ViewServiceInter
                 DocumentoBean oDocumentoBean = new DocumentoBean(id);
                 oDocumentoBean = oDocumentoDao.get(oDocumentoBean, AppConfigurationHelper.getJsonMsgDepth());
                 Gson gson = AppConfigurationHelper.getGson();
-                data = JsonMessage.getJsonMsg("200", AppConfigurationHelper.getGson().toJson(oDocumentoBean));
+                data = JsonMessage.getJsonExpression(200, AppConfigurationHelper.getGson().toJson(oDocumentoBean));
             } catch (Exception ex) {
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
                 throw new Exception();
@@ -124,7 +124,7 @@ public class DocumentoService implements TableServiceInterface, ViewServiceInter
             }
             return new ReplyBean(200, data);
         } else {
-            return new ReplyBean(401, JsonMessage.getJsonMsg("401", "Unauthorized"));
+            return new ReplyBean(401, JsonMessage.getJsonMsg(401, "Unauthorized"));
         }
     }
 
@@ -141,7 +141,7 @@ public class DocumentoService implements TableServiceInterface, ViewServiceInter
                 oConnection = oDataConnectionSource.newConnection();
                 DocumentoDao oDocumentoDao = new DocumentoDao(oConnection);
                 ArrayList<DocumentoBean> arrBeans = oDocumentoDao.getAll(alFilter, hmOrder, AppConfigurationHelper.getJsonMsgDepth());
-                data = JsonMessage.getJsonMsg("200", AppConfigurationHelper.getGson().toJson(arrBeans));
+                data = JsonMessage.getJsonExpression(200, AppConfigurationHelper.getGson().toJson(arrBeans));
             } catch (Exception ex) {
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
                 throw new Exception();
@@ -155,7 +155,7 @@ public class DocumentoService implements TableServiceInterface, ViewServiceInter
             }
             return new ReplyBean(200, data);
         } else {
-            return new ReplyBean(401, JsonMessage.getJsonMsg("401", "Unauthorized"));
+            return new ReplyBean(401, JsonMessage.getJsonMsg(401, "Unauthorized"));
         }
     }
 
@@ -174,7 +174,7 @@ public class DocumentoService implements TableServiceInterface, ViewServiceInter
                 oConnection = oDataConnectionSource.newConnection();
                 DocumentoDao oDocumentoDao = new DocumentoDao(oConnection);
                 List<DocumentoBean> arrBeans = oDocumentoDao.getPage(intRegsPerPag, intPage, alFilter, hmOrder, AppConfigurationHelper.getJsonMsgDepth());
-                data = JsonMessage.getJsonMsg("200", AppConfigurationHelper.getGson().toJson(arrBeans));
+                data = JsonMessage.getJsonExpression(200, AppConfigurationHelper.getGson().toJson(arrBeans));
             } catch (Exception ex) {
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
                 throw new Exception();
@@ -188,7 +188,7 @@ public class DocumentoService implements TableServiceInterface, ViewServiceInter
             }
             return new ReplyBean(200, data);
         } else {
-            return new ReplyBean(401, JsonMessage.getJsonMsg("401", "Unauthorized"));
+            return new ReplyBean(401, JsonMessage.getJsonMsg(401, "Unauthorized"));
         }
     }
 
@@ -204,7 +204,7 @@ public class DocumentoService implements TableServiceInterface, ViewServiceInter
                 oConnection = oDataConnectionSource.newConnection();
                 oConnection.setAutoCommit(false);
                 DocumentoDao oDocumentoDao = new DocumentoDao(oConnection);
-                data = JsonMessage.getJsonMsg("200", (String) oDocumentoDao.remove(id).toString());
+                data = JsonMessage.getJsonExpression(200, (String) oDocumentoDao.remove(id).toString());
                 oConnection.commit();
             } catch (Exception ex) {
                 if (oConnection != null) {
@@ -222,7 +222,7 @@ public class DocumentoService implements TableServiceInterface, ViewServiceInter
             }
             return new ReplyBean(200, data);
         } else {
-            return new ReplyBean(401, JsonMessage.getJsonMsg("401", "Unauthorized"));
+            return new ReplyBean(401, JsonMessage.getJsonMsg(401, "Unauthorized"));
         }
     }
 
@@ -230,7 +230,7 @@ public class DocumentoService implements TableServiceInterface, ViewServiceInter
     public ReplyBean set() throws Exception {
         if (this.checkpermission("set")) {
             String jason = ParameterCook.prepareJson(oRequest);
-            String resultado = null;
+            ReplyBean oReplyBean = new ReplyBean();
             Connection oConnection = null;
             ConnectionInterface oDataConnectionSource = null;
             try {
@@ -243,12 +243,15 @@ public class DocumentoService implements TableServiceInterface, ViewServiceInter
                 if (oDocumentoBean != null) {
                     Integer iResult = oDocumentoDao.set(oDocumentoBean);
                     if (iResult >= 1) {
-                        resultado = JsonMessage.getJsonMsg("200", iResult.toString());
+                        oReplyBean.setCode(200);
+                        oReplyBean.setJson(JsonMessage.getJsonExpression(200, iResult.toString()));
                     } else {
-                        resultado = JsonMessage.getJsonMsg("500", "Error during registry set");
+                        oReplyBean.setCode(500);
+                        oReplyBean.setJson(JsonMessage.getJsonMsg(500, "Error during registry set"));
                     }
                 } else {
-                    resultado = JsonMessage.getJsonMsg("500", "Error during registry set");
+                    oReplyBean.setCode(500);
+                    oReplyBean.setJson(JsonMessage.getJsonMsg(500, "Error during registry set"));
                 }
                 oConnection.commit();
             } catch (Exception ex) {
@@ -265,14 +268,13 @@ public class DocumentoService implements TableServiceInterface, ViewServiceInter
                     oDataConnectionSource.disposeConnection();
                 }
             }
-            return new ReplyBean(200, JsonMessage.getJsonMsg("200", resultado));
+            return oReplyBean;
         } else {
-            return new ReplyBean(401, JsonMessage.getJsonMsg("401", "Unauthorized"));
+            return new ReplyBean(401, JsonMessage.getJsonMsg(401, "Unauthorized"));
         }
     }
 
     public ReplyBean getcontenido(Integer id) throws Exception {
-        String data;
         Connection oConnection = null;
         DocumentoBean oDocumentoBean;
         if (this.checkpermission("set")) {
@@ -286,9 +288,9 @@ public class DocumentoService implements TableServiceInterface, ViewServiceInter
                 throw new Exception();
             }
             oConnection.close();
-            return new ReplyBean(200, JsonMessage.getJsonMsg("200", oDocumentoBean.getContenido()));
+            return new ReplyBean(200, JsonMessage.getJsonExpression(200, oDocumentoBean.getContenido()));
         } else {
-            return new ReplyBean(401, JsonMessage.getJsonMsg("401", "Unauthorized"));
+            return new ReplyBean(401, JsonMessage.getJsonMsg(401, "Unauthorized"));
         }
     }
 

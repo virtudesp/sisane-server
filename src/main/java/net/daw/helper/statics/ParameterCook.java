@@ -127,16 +127,20 @@ public class ParameterCook {
 
     public static String prepareOrder(HttpServletRequest oRequest) {
         String strOrder = oRequest.getParameter("order");
-        if (strOrder.toLowerCase().contains("select") || strOrder.toLowerCase().contains("insert") || strOrder.toLowerCase().contains("update") || strOrder.toLowerCase().contains("delete")) {
-            return null;
+        if (strOrder != null) {
+            if (strOrder.toLowerCase().contains("select") || strOrder.toLowerCase().contains("insert") || strOrder.toLowerCase().contains("update") || strOrder.toLowerCase().contains("delete")) {
+                return null;
+            }
         }
         return strOrder;
     }
 
     public static String prepareFilter(HttpServletRequest oRequest) {
         String strFilter = oRequest.getParameter("filter");
-        if (strFilter.toLowerCase().contains("select") || strFilter.toLowerCase().contains("insert") || strFilter.toLowerCase().contains("update") || strFilter.toLowerCase().contains("delete")) {
-            return null;
+        if (strFilter != null) {
+            if (strFilter.toLowerCase().contains("select") || strFilter.toLowerCase().contains("insert") || strFilter.toLowerCase().contains("update") || strFilter.toLowerCase().contains("delete")) {
+                return null;
+            }
         }
         return strFilter;
     }

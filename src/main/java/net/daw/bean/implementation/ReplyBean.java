@@ -42,6 +42,9 @@ public class ReplyBean {
         this.json = json;
     }
 
+    public ReplyBean() {        
+    }
+
     public Integer getCode() {
         return code;
     }

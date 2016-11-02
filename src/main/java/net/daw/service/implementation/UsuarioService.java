@@ -67,49 +67,6 @@ public class UsuarioService implements TableServiceInterface, ViewServiceInterfa
         }
     }
 
-    public String getenvironment() throws Exception {
-        String data = "";
-        if (this.checkpermission("getenvironment")) {
-            data = "{"
-                    + "\"OPENSHIFT_APP_DNS\":" + EncodingUtilHelper.quotate(System.getenv("OPENSHIFT_APP_DNS"))
-                    + ",\"OPENSHIFT_APP_NAME\":" + EncodingUtilHelper.quotate(System.getenv("OPENSHIFT_APP_NAME"))
-                    + ",\"OPENSHIFT_APP_UUID\":" + EncodingUtilHelper.quotate(System.getenv("OPENSHIFT_APP_UUID"))
-                    + ",\"OPENSHIFT_JBOSSEWS_IP\":" + EncodingUtilHelper.quotate(System.getenv("OPENSHIFT_JBOSSEWS_IP"))
-                    + ",\"OPENSHIFT_JBOSSEWS_PORT\":" + EncodingUtilHelper.quotate(System.getenv("OPENSHIFT_JBOSSEWS_PORT"))
-                    + ",\"OPENSHIFT_SECRET_TOKEN\":" + EncodingUtilHelper.quotate(System.getenv("OPENSHIFT_SECRET_TOKEN"))
-                    + ",\"OPENSHIFT_HOMEDIR\":" + EncodingUtilHelper.quotate(System.getenv("OPENSHIFT_HOMEDIR"))
-                    + ",\"OPENSHIFT_DATA_DIR\":" + EncodingUtilHelper.quotate(System.getenv("OPENSHIFT_DATA_DIR"))
-                    + ",\"OPENSHIFT_REPO_DIR\":" + EncodingUtilHelper.quotate(System.getenv("OPENSHIFT_REPO_DIR"))
-                    + ",\"OPENSHIFT_TMP_DIR\":" + EncodingUtilHelper.quotate(System.getenv("OPENSHIFT_TMP_DIR"))
-                    + ",\"OPENSHIFT_LOG_DIR\":" + EncodingUtilHelper.quotate(System.getenv("OPENSHIFT_LOG_DIR"))
-                    + ",\"LOGSHIFTER_JBOSSEWS_MAX_FILESIZE\":" + EncodingUtilHelper.quotate(System.getenv("LOGSHIFTER_JBOSSEWS_MAX_FILESIZE"))
-                    + ",\"LOGSHIFTER_JBOSSEWS_MAX_FILES\":" + EncodingUtilHelper.quotate(System.getenv("LOGSHIFTER_JBOSSEWS_MAX_FILES"))
-                    + ",\"OPENSHIFT_MYSQL_DB_HOST\":" + EncodingUtilHelper.quotate(System.getenv("OPENSHIFT_MYSQL_DB_HOST"))
-                    + ",\"OPENSHIFT_MYSQL_DB_PORT\":" + EncodingUtilHelper.quotate(System.getenv("OPENSHIFT_MYSQL_DB_PORT"))
-                    + ",\"OPENSHIFT_MYSQL_DB_USERNAME\":" + EncodingUtilHelper.quotate(System.getenv("OPENSHIFT_MYSQL_DB_USERNAME"))
-                    + ",\"OPENSHIFT_MYSQL_DB_PASSWORD\":" + EncodingUtilHelper.quotate(System.getenv("OPENSHIFT_MYSQL_DB_PASSWORD"))
-                    + ",\"OPENSHIFT_MYSQL_DB_SOCKET\":" + EncodingUtilHelper.quotate(System.getenv("OPENSHIFT_MYSQL_DB_SOCKET"))
-                    + ",\"OPENSHIFT_MYSQL_DB_URL\":" + EncodingUtilHelper.quotate(System.getenv("OPENSHIFT_MYSQL_DB_URL"))
-                    + ",\"OPENSHIFT_MAX_SESSIONS_PER_GEAR\":" + EncodingUtilHelper.quotate(System.getenv("OPENSHIFT_MAX_SESSIONS_PER_GEAR"))
-                    + ",\"OPENSHIFT_JBOSSEWS_LD_LIBRARY_PATH_ELEMENT\":" + EncodingUtilHelper.quotate(System.getenv("OPENSHIFT_JBOSSEWS_LD_LIBRARY_PATH_ELEMENT"))
-                    + ",\"JENKINS_USERNAME\":" + EncodingUtilHelper.quotate(System.getenv("JENKINS_USERNAME"))
-                    + ",\"JENKINS_PASSWORD\":" + EncodingUtilHelper.quotate(System.getenv("JENKINS_PASSWORD"))
-                    + ",\"JENKINS_URL\":" + EncodingUtilHelper.quotate(System.getenv("JENKINS_URL"))
-                    + ",\"JAVA_OPTS_EXT\":" + EncodingUtilHelper.quotate(System.getenv("JAVA_OPTS_EXT"))
-                    + ",\"OPENSHIFT_GEAR_DNS\":" + EncodingUtilHelper.quotate(System.getenv("OPENSHIFT_GEAR_DNS"))
-                    + ",\"OPENSHIFT_GEAR_NAME\":" + EncodingUtilHelper.quotate(System.getenv("OPENSHIFT_GEAR_NAME"))
-                    + ",\"OPENSHIFT_GEAR_UUID\":" + EncodingUtilHelper.quotate(System.getenv("OPENSHIFT_GEAR_UUID"))
-                    + "}";
-            data = JsonMessage.getJsonMsg("200", data);
-
-            return data;
-
-        } else {
-            return JsonMessage.getJsonMsg("401", "Unauthorized");
-        }
-
-    }
-
     @Override
     public ReplyBean getcount() throws Exception {
         if (this.checkpermission("getcount")) {
@@ -121,7 +78,7 @@ public class UsuarioService implements TableServiceInterface, ViewServiceInterfa
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
                 UsuarioDao oUsuarioDao = new UsuarioDao(oConnection);
-                data = JsonMessage.getJsonMsg("200", Long.toString(oUsuarioDao.getCount(alFilter)));
+                data = JsonMessage.getJsonExpression(200, Long.toString(oUsuarioDao.getCount(alFilter)));
             } catch (Exception ex) {
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
                 throw new Exception();
@@ -135,7 +92,7 @@ public class UsuarioService implements TableServiceInterface, ViewServiceInterfa
             }
             return new ReplyBean(200, data);
         } else {
-            return new ReplyBean(401, JsonMessage.getJsonMsg("401", "Unauthorized"));
+            return new ReplyBean(401, JsonMessage.getJsonMsg(401, "Unauthorized"));
         }
     }
 
@@ -153,7 +110,7 @@ public class UsuarioService implements TableServiceInterface, ViewServiceInterfa
                 UsuarioBean oUsuarioBean = new UsuarioBean(id);
                 oUsuarioBean = oUsuarioDao.get(oUsuarioBean, AppConfigurationHelper.getJsonMsgDepth());
                 Gson gson = AppConfigurationHelper.getGson();
-                data = JsonMessage.getJsonMsg("200", AppConfigurationHelper.getGson().toJson(oUsuarioBean));
+                data = JsonMessage.getJsonExpression(200, AppConfigurationHelper.getGson().toJson(oUsuarioBean));
             } catch (Exception ex) {
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
                 throw new Exception();
@@ -167,7 +124,7 @@ public class UsuarioService implements TableServiceInterface, ViewServiceInterfa
             }
             return new ReplyBean(200, data);
         } else {
-            return new ReplyBean(401, JsonMessage.getJsonMsg("401", "Unauthorized"));
+            return new ReplyBean(401, JsonMessage.getJsonMsg(401, "Unauthorized"));
         }
     }
 
@@ -185,7 +142,7 @@ public class UsuarioService implements TableServiceInterface, ViewServiceInterfa
                 oConnection = oDataConnectionSource.newConnection();
                 UsuarioDao oUsuarioDao = new UsuarioDao(oConnection);
                 ArrayList<UsuarioBean> arrBeans = oUsuarioDao.getAll(alFilter, hmOrder, 1);
-                data = JsonMessage.getJsonMsg("200", AppConfigurationHelper.getGson().toJson(arrBeans));
+                data = JsonMessage.getJsonExpression(200, AppConfigurationHelper.getGson().toJson(arrBeans));
             } catch (Exception ex) {
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
                 throw new Exception();
@@ -200,7 +157,7 @@ public class UsuarioService implements TableServiceInterface, ViewServiceInterfa
 
             return new ReplyBean(200, data);
         } else {
-            return new ReplyBean(401, JsonMessage.getJsonMsg("401", "Unauthorized"));
+            return new ReplyBean(401, JsonMessage.getJsonMsg(401, "Unauthorized"));
         }
     }
 
@@ -220,7 +177,7 @@ public class UsuarioService implements TableServiceInterface, ViewServiceInterfa
                 oConnection = oDataConnectionSource.newConnection();
                 UsuarioDao oUsuarioDao = new UsuarioDao(oConnection);
                 List<UsuarioBean> arrBeans = oUsuarioDao.getPage(intRegsPerPag, intPage, alFilter, hmOrder, AppConfigurationHelper.getJsonMsgDepth());
-                data = JsonMessage.getJsonMsg("200", AppConfigurationHelper.getGson().toJson(arrBeans));
+                data = JsonMessage.getJsonExpression(200, AppConfigurationHelper.getGson().toJson(arrBeans));
             } catch (Exception ex) {
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
                 throw new Exception();
@@ -234,7 +191,7 @@ public class UsuarioService implements TableServiceInterface, ViewServiceInterfa
             }
             return new ReplyBean(200, data);
         } else {
-            return new ReplyBean(401, JsonMessage.getJsonMsg("401", "Unauthorized"));
+            return new ReplyBean(401, JsonMessage.getJsonMsg(401, "Unauthorized"));
         }
     }
 
@@ -250,7 +207,7 @@ public class UsuarioService implements TableServiceInterface, ViewServiceInterfa
                 oConnection = oDataConnectionSource.newConnection();
                 oConnection.setAutoCommit(false);
                 UsuarioDao oUsuarioDao = new UsuarioDao(oConnection);
-                data = JsonMessage.getJsonMsg("200", (String) oUsuarioDao.remove(id).toString());
+                data = JsonMessage.getJsonExpression(200, (String) oUsuarioDao.remove(id).toString());
                 oConnection.commit();
             } catch (Exception ex) {
                 if (oConnection != null) {
@@ -268,7 +225,7 @@ public class UsuarioService implements TableServiceInterface, ViewServiceInterfa
             }
             return new ReplyBean(200, data);
         } else {
-            return new ReplyBean(401, JsonMessage.getJsonMsg("401", "Unauthorized"));
+            return new ReplyBean(401, JsonMessage.getJsonMsg(401, "Unauthorized"));
         }
     }
 
@@ -276,7 +233,7 @@ public class UsuarioService implements TableServiceInterface, ViewServiceInterfa
     public ReplyBean set() throws Exception {
         if (this.checkpermission("set")) {
             String jason = ParameterCook.prepareJson(oRequest);
-            String data = null;
+            ReplyBean oReplyBean = new ReplyBean();
             Connection oConnection = null;
             ConnectionInterface oDataConnectionSource = null;
             try {
@@ -289,12 +246,15 @@ public class UsuarioService implements TableServiceInterface, ViewServiceInterfa
                 if (oUsuarioBean != null) {
                     Integer iResult = oUsuarioDao.set(oUsuarioBean);
                     if (iResult >= 1) {
-                        data = JsonMessage.getJsonMsg("200", iResult.toString());
+                        oReplyBean.setCode(200);
+                        oReplyBean.setJson(JsonMessage.getJsonExpression(200, iResult.toString()));
                     } else {
-                        data = JsonMessage.getJsonMsg("500", "Error during registry set");
+                        oReplyBean.setCode(500);
+                        oReplyBean.setJson(JsonMessage.getJsonMsg(500, "Error during registry set"));
                     }
                 } else {
-                    data = JsonMessage.getJsonMsg("500", "Error during registry set");
+                    oReplyBean.setCode(500);
+                    oReplyBean.setJson(JsonMessage.getJsonMsg(500, "Error during registry set"));
                 }
                 oConnection.commit();
             } catch (Exception ex) {
@@ -311,9 +271,9 @@ public class UsuarioService implements TableServiceInterface, ViewServiceInterfa
                     oDataConnectionSource.disposeConnection();
                 }
             }
-            return new ReplyBean(200, data);
+            return oReplyBean;
         } else {
-            return new ReplyBean(401, JsonMessage.getJsonMsg("401", "Unauthorized"));
+            return new ReplyBean(401, JsonMessage.getJsonMsg(401, "Unauthorized"));
 
         }
     }
@@ -365,33 +325,33 @@ public class UsuarioService implements TableServiceInterface, ViewServiceInterfa
             strCode = "403";
             strAnswer = "ERROR02";
         }
-        return new ReplyBean(Integer.parseInt(strCode), JsonMessage.getJsonMsg(strCode, strAnswer));
+        return new ReplyBean(Integer.parseInt(strCode), JsonMessage.getJsonMsg(Integer.parseInt(strCode), strAnswer));
 
     }
 
     public ReplyBean logout() {
         oRequest.getSession().invalidate();
-        return new ReplyBean(200, JsonMessage.getJsonMsg("200", "bye"));
+        return new ReplyBean(200, JsonMessage.getJsonMsg(200, "bye"));
     }
 
     public ReplyBean getsessionstatus() {
         String strAnswer = null;
         UsuarioBean oUserBean = (UsuarioBean) oRequest.getSession().getAttribute("userBean");
         if (oUserBean == null) {
-            return new ReplyBean(403, JsonMessage.getJsonMsg("403", "Unauthorized"));
+            return new ReplyBean(403, JsonMessage.getJsonMsg(403, "Unauthorized"));
         } else {
-            return new ReplyBean(200, JsonMessage.getJsonMsg("200", oUserBean.getLogin()));
+            return new ReplyBean(200, JsonMessage.getJsonMsg(200, oUserBean.getLogin()));
         }
     }
 
     public ReplyBean sessionuserlevel() {
         String strAnswer = null;
         UsuarioBean oUserBean = (UsuarioBean) oRequest.getSession().getAttribute("userBean");
-        Map<Integer, String> map = new HashMap<Integer, String>();
+        Map<Integer, String> map = new HashMap<>();
         if (oUserBean == null) {
-            return new ReplyBean(403, JsonMessage.getJsonMsg("403", "Unauthorized"));
+            return new ReplyBean(403, JsonMessage.getJsonMsg(403, "Unauthorized"));
         } else {
-            return new ReplyBean(200, JsonMessage.getJsonMsg("200", oUserBean.getId_estado().toString()));
+            return new ReplyBean(200, JsonMessage.getJsonExpression(200, oUserBean.getId_estado().toString()));
         }
     }
 

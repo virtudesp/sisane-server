@@ -72,7 +72,7 @@ public class EstadoService implements TableServiceInterface, ViewServiceInterfac
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
                 EstadoDao oEstadoDao = new EstadoDao(oConnection);
-                data = JsonMessage.getJsonMsg("200", Long.toString(oEstadoDao.getCount(alFilter)));
+                data = JsonMessage.getJsonExpression(200, Long.toString(oEstadoDao.getCount(alFilter)));
             } catch (Exception ex) {
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
                 throw new Exception();
@@ -86,7 +86,7 @@ public class EstadoService implements TableServiceInterface, ViewServiceInterfac
             }
             return new ReplyBean(200, data);
         } else {
-            return new ReplyBean(401, JsonMessage.getJsonMsg("401", "Unauthorized"));
+            return new ReplyBean(401, JsonMessage.getJsonMsg(401, "Unauthorized"));
         }
     }
 
@@ -104,7 +104,7 @@ public class EstadoService implements TableServiceInterface, ViewServiceInterfac
                 EstadoBean oEstadoBean = new EstadoBean(id);
                 oEstadoBean = oEstadoDao.get(oEstadoBean, AppConfigurationHelper.getJsonMsgDepth());
                 Gson gson = AppConfigurationHelper.getGson();
-                data = JsonMessage.getJsonMsg("200", AppConfigurationHelper.getGson().toJson(oEstadoBean));
+                data = JsonMessage.getJsonExpression(200, AppConfigurationHelper.getGson().toJson(oEstadoBean));
             } catch (Exception ex) {
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
                 throw new Exception();
@@ -118,7 +118,7 @@ public class EstadoService implements TableServiceInterface, ViewServiceInterfac
             }
             return new ReplyBean(200, data);
         } else {
-            return new ReplyBean(401, JsonMessage.getJsonMsg("401", "Unauthorized"));
+            return new ReplyBean(401, JsonMessage.getJsonMsg(401, "Unauthorized"));
         }
     }
 
@@ -135,7 +135,7 @@ public class EstadoService implements TableServiceInterface, ViewServiceInterfac
                 oConnection = oDataConnectionSource.newConnection();
                 EstadoDao oEstadoDao = new EstadoDao(oConnection);
                 ArrayList<EstadoBean> arrBeans = oEstadoDao.getAll(alFilter, hmOrder, 1);
-                data = JsonMessage.getJsonMsg("200", AppConfigurationHelper.getGson().toJson(arrBeans));
+                data = JsonMessage.getJsonExpression(200, AppConfigurationHelper.getGson().toJson(arrBeans));
             } catch (Exception ex) {
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
                 throw new Exception();
@@ -150,7 +150,7 @@ public class EstadoService implements TableServiceInterface, ViewServiceInterfac
 
             return new ReplyBean(200, data);
         } else {
-            return new ReplyBean(401, JsonMessage.getJsonMsg("401", "Unauthorized"));
+            return new ReplyBean(401, JsonMessage.getJsonMsg(401, "Unauthorized"));
         }
     }
 
@@ -169,7 +169,7 @@ public class EstadoService implements TableServiceInterface, ViewServiceInterfac
                 oConnection = oDataConnectionSource.newConnection();
                 EstadoDao oEstadoDao = new EstadoDao(oConnection);
                 List<EstadoBean> arrBeans = oEstadoDao.getPage(intRegsPerPag, intPage, alFilter, hmOrder, AppConfigurationHelper.getJsonMsgDepth());
-                data = JsonMessage.getJsonMsg("200", AppConfigurationHelper.getGson().toJson(arrBeans));
+                data = JsonMessage.getJsonExpression(200, AppConfigurationHelper.getGson().toJson(arrBeans));
             } catch (Exception ex) {
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
                 throw new Exception();
@@ -183,7 +183,7 @@ public class EstadoService implements TableServiceInterface, ViewServiceInterfac
             }
             return new ReplyBean(200, data);
         } else {
-            return new ReplyBean(401, JsonMessage.getJsonMsg("401", "Unauthorized"));
+            return new ReplyBean(401, JsonMessage.getJsonMsg(401, "Unauthorized"));
         }
     }
 
@@ -191,7 +191,7 @@ public class EstadoService implements TableServiceInterface, ViewServiceInterfac
     public ReplyBean remove() throws Exception {
         if (this.checkpermission("remove")) {
             Integer id = ParameterCook.prepareId(oRequest);
-            String resultado = null;
+            String data = null;
             Connection oConnection = null;
             ConnectionInterface oDataConnectionSource = null;
             try {
@@ -199,7 +199,7 @@ public class EstadoService implements TableServiceInterface, ViewServiceInterfac
                 oConnection = oDataConnectionSource.newConnection();
                 oConnection.setAutoCommit(false);
                 EstadoDao oEstadoDao = new EstadoDao(oConnection);
-                resultado = JsonMessage.getJsonMsg("200", (String) oEstadoDao.remove(id).toString());
+                data = JsonMessage.getJsonExpression(200, (String) oEstadoDao.remove(id).toString());
                 oConnection.commit();
             } catch (Exception ex) {
                 if (oConnection != null) {
@@ -217,9 +217,9 @@ public class EstadoService implements TableServiceInterface, ViewServiceInterfac
                     oDataConnectionSource.disposeConnection();
                 }
             }
-            return new ReplyBean(200, JsonMessage.getJsonMsg("200", resultado));
+            return new ReplyBean(200, data);
         } else {
-            return new ReplyBean(401, JsonMessage.getJsonMsg("401", "Unauthorized"));
+            return new ReplyBean(401, JsonMessage.getJsonMsg(401, "Unauthorized"));
         }
     }
 
@@ -227,7 +227,7 @@ public class EstadoService implements TableServiceInterface, ViewServiceInterfac
     public ReplyBean set() throws Exception {
         if (this.checkpermission("set")) {
             String jason = ParameterCook.prepareJson(oRequest);
-            String resultado = null;
+            ReplyBean oReplyBean = new ReplyBean();
             Connection oConnection = null;
             ConnectionInterface oDataConnectionSource = null;
             try {
@@ -240,12 +240,15 @@ public class EstadoService implements TableServiceInterface, ViewServiceInterfac
                 if (oEstadoBean != null) {
                     Integer iResult = oEstadoDao.set(oEstadoBean);
                     if (iResult >= 1) {
-                        resultado = JsonMessage.getJsonMsg("200", iResult.toString());
+                        oReplyBean.setCode(200);
+                        oReplyBean.setJson(JsonMessage.getJsonExpression(200, iResult.toString()));
                     } else {
-                        resultado = JsonMessage.getJsonMsg("500", "Error during registry set");
+                        oReplyBean.setCode(500);
+                        oReplyBean.setJson(JsonMessage.getJsonMsg(500, "Error during registry set"));
                     }
                 } else {
-                    resultado = JsonMessage.getJsonMsg("500", "Error during registry set");
+                    oReplyBean.setCode(500);
+                    oReplyBean.setJson(JsonMessage.getJsonMsg(500, "Error during registry set"));
                 }
                 oConnection.commit();
             } catch (Exception ex) {
@@ -264,9 +267,9 @@ public class EstadoService implements TableServiceInterface, ViewServiceInterfac
                     oDataConnectionSource.disposeConnection();
                 }
             }
-            return new ReplyBean(200, JsonMessage.getJsonMsg("200", resultado));
+            return oReplyBean;
         } else {
-            return new ReplyBean(401, JsonMessage.getJsonMsg("401", "Unauthorized"));
+            return new ReplyBean(401, JsonMessage.getJsonMsg(401, "Unauthorized"));
         }
     }
 
