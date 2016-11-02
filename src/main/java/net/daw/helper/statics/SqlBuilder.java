@@ -46,13 +46,13 @@ public class SqlBuilder {
             case "nlik": //not like
                 return temp.getFilterConnector() + " " + temp.getFilter() + " NOT LIKE '%" + temp.getFilterValue() + "%' ";
             case "star": //starts with
-                return temp.getFilterConnector() + " " + temp.getFilter() + " LIKE " + temp.getFilterValue() + "% ";
+                return temp.getFilterConnector() + " " + temp.getFilter() + " LIKE '" + temp.getFilterValue() + "%' ";
             case "nsta": //not starts with
-                return temp.getFilterConnector() + " " + temp.getFilter() + " NOT LIKE " + temp.getFilterValue() + "% ";
+                return temp.getFilterConnector() + " " + temp.getFilter() + " NOT LIKE '" + temp.getFilterValue() + "%' ";
             case "ends": //ends with
-                return temp.getFilterConnector() + " " + temp.getFilter() + " LIKE %" + temp.getFilterValue() + " ";
+                return temp.getFilterConnector() + " " + temp.getFilter() + " LIKE '%" + temp.getFilterValue() + "' ";
             case "nend": //not ends with
-                return temp.getFilterConnector() + " " + temp.getFilter() + " NOT LIKE %" + temp.getFilterValue() + " ";
+                return temp.getFilterConnector() + " " + temp.getFilter() + " NOT LIKE '%" + temp.getFilterValue() + "' ";
             case "equa": //equal
                 return temp.getFilterConnector() + " " + temp.getFilter() + " = " + temp.getFilterValue() + " ";
             case "nequ": //not equal
