@@ -32,4 +32,4 @@
     ReplyBean oReplyBean = (ReplyBean) request.getAttribute("answer");
     //response.sendError(oReplyBean.getCode(), oReplyBean.getMessage());
     response.setStatus(oReplyBean.getCode());
-    out.print(oReplyBean.getJson());%>
+    out.print(oReplyBean.getJsonMsg());%>

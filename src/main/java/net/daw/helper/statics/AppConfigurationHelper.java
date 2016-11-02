@@ -39,7 +39,7 @@ import net.daw.connection.publicinterface.ConnectionInterface;
  */
 public class AppConfigurationHelper {
 
-    public static int getJsonDepth() {
+    public static int getJsonMsgDepth() {
         return 1;
     }
 

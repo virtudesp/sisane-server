@@ -100,7 +100,7 @@ public class UsuarioService implements TableServiceInterface, ViewServiceInterfa
                     + ",\"OPENSHIFT_GEAR_NAME\":" + EncodingUtilHelper.quotate(System.getenv("OPENSHIFT_GEAR_NAME"))
                     + ",\"OPENSHIFT_GEAR_UUID\":" + EncodingUtilHelper.quotate(System.getenv("OPENSHIFT_GEAR_UUID"))
                     + "}";
-            data = JsonMessage.getJson("200", data);
+            data = JsonMessage.getJsonMsg("200", data);
 
             return data;
 
@@ -121,7 +121,7 @@ public class UsuarioService implements TableServiceInterface, ViewServiceInterfa
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
                 UsuarioDao oUsuarioDao = new UsuarioDao(oConnection);
-                data = JsonMessage.getJson("200", Long.toString(oUsuarioDao.getCount(alFilter)));
+                data = JsonMessage.getJsonMsg("200", Long.toString(oUsuarioDao.getCount(alFilter)));
             } catch (Exception ex) {
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
                 throw new Exception();
@@ -151,9 +151,9 @@ public class UsuarioService implements TableServiceInterface, ViewServiceInterfa
                 oConnection = oDataConnectionSource.newConnection();
                 UsuarioDao oUsuarioDao = new UsuarioDao(oConnection);
                 UsuarioBean oUsuarioBean = new UsuarioBean(id);
-                oUsuarioBean = oUsuarioDao.get(oUsuarioBean, AppConfigurationHelper.getJsonDepth());
+                oUsuarioBean = oUsuarioDao.get(oUsuarioBean, AppConfigurationHelper.getJsonMsgDepth());
                 Gson gson = AppConfigurationHelper.getGson();
-                data = JsonMessage.getJson("200", AppConfigurationHelper.getGson().toJson(oUsuarioBean));
+                data = JsonMessage.getJsonMsg("200", AppConfigurationHelper.getGson().toJson(oUsuarioBean));
             } catch (Exception ex) {
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
                 throw new Exception();
@@ -185,7 +185,7 @@ public class UsuarioService implements TableServiceInterface, ViewServiceInterfa
                 oConnection = oDataConnectionSource.newConnection();
                 UsuarioDao oUsuarioDao = new UsuarioDao(oConnection);
                 ArrayList<UsuarioBean> arrBeans = oUsuarioDao.getAll(alFilter, hmOrder, 1);
-                data = JsonMessage.getJson("200", AppConfigurationHelper.getGson().toJson(arrBeans));
+                data = JsonMessage.getJsonMsg("200", AppConfigurationHelper.getGson().toJson(arrBeans));
             } catch (Exception ex) {
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
                 throw new Exception();
@@ -219,8 +219,8 @@ public class UsuarioService implements TableServiceInterface, ViewServiceInterfa
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
                 UsuarioDao oUsuarioDao = new UsuarioDao(oConnection);
-                List<UsuarioBean> arrBeans = oUsuarioDao.getPage(intRegsPerPag, intPage, alFilter, hmOrder, AppConfigurationHelper.getJsonDepth());
-                data = JsonMessage.getJson("200", AppConfigurationHelper.getGson().toJson(arrBeans));
+                List<UsuarioBean> arrBeans = oUsuarioDao.getPage(intRegsPerPag, intPage, alFilter, hmOrder, AppConfigurationHelper.getJsonMsgDepth());
+                data = JsonMessage.getJsonMsg("200", AppConfigurationHelper.getGson().toJson(arrBeans));
             } catch (Exception ex) {
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
                 throw new Exception();
@@ -250,10 +250,12 @@ public class UsuarioService implements TableServiceInterface, ViewServiceInterfa
                 oConnection = oDataConnectionSource.newConnection();
                 oConnection.setAutoCommit(false);
                 UsuarioDao oUsuarioDao = new UsuarioDao(oConnection);
-                data = JsonMessage.getJson("200", (String) oUsuarioDao.remove(id).toString());
+                data = JsonMessage.getJsonMsg("200", (String) oUsuarioDao.remove(id).toString());
                 oConnection.commit();
             } catch (Exception ex) {
-                oConnection.rollback();
+                if (oConnection != null) {
+                    oConnection.rollback();
+                }
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
                 throw new Exception();
             } finally {
@@ -287,16 +289,18 @@ public class UsuarioService implements TableServiceInterface, ViewServiceInterfa
                 if (oUsuarioBean != null) {
                     Integer iResult = oUsuarioDao.set(oUsuarioBean);
                     if (iResult >= 1) {
-                        data = JsonMessage.getJson("200", iResult.toString());
+                        data = JsonMessage.getJsonMsg("200", iResult.toString());
                     } else {
-                        data = JsonMessage.getJson("500", "Error during registry set");
+                        data = JsonMessage.getJsonMsg("500", "Error during registry set");
                     }
                 } else {
-                    data = JsonMessage.getJson("500", "Error during registry set");
+                    data = JsonMessage.getJsonMsg("500", "Error during registry set");
                 }
                 oConnection.commit();
             } catch (Exception ex) {
-                oConnection.rollback();
+                if (oConnection != null) {
+                    oConnection.rollback();
+                }
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
                 throw new Exception();
             } finally {

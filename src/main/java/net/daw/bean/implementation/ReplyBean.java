@@ -50,7 +50,7 @@ public class ReplyBean {
         this.code = code;
     }
 
-    public String getJson() {
+    public String getJsonMsg() {
         return json;
     }
 

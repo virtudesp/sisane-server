@@ -35,7 +35,7 @@ import java.util.Map;
 public class JsonMessage {
 
     public static String getJsonMsg(String strStatus, String strMessage) {
-        return "{\"status\":" + strStatus + ",\"message\":" + strMessage + "}";
+        return "{\"status\":" + strStatus + ",\"message\":\"" + strMessage + "\"}";
 //        Map<String, String> data = new HashMap<>();
 //        data.put("status", strStatus);
 //        data.put("message", strMessage);
@@ -43,7 +43,4 @@ public class JsonMessage {
 //        return gson.toJson(data);
     }
 
-    public static String getJson(String strStatus, String strMessage) {
-        return "{\"status\":" + strStatus + ",\"message\":" + strMessage + "}";
-    }
 }

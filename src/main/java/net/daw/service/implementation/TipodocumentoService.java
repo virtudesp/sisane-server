@@ -76,7 +76,7 @@ public class TipodocumentoService implements TableServiceInterface, ViewServiceI
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
                 TipodocumentoDao oTipodocumentoDao = new TipodocumentoDao(oConnection);
-                data = JsonMessage.getJson("200", Long.toString(oTipodocumentoDao.getCount(alFilter)));
+                data = JsonMessage.getJsonMsg("200", Long.toString(oTipodocumentoDao.getCount(alFilter)));
             } catch (Exception ex) {
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
                 throw new Exception();
@@ -106,9 +106,9 @@ public class TipodocumentoService implements TableServiceInterface, ViewServiceI
                 oConnection = oDataConnectionSource.newConnection();
                 TipodocumentoDao oTipodocumentoDao = new TipodocumentoDao(oConnection);
                 TipodocumentoBean oTipodocumentoBean = new TipodocumentoBean(id);
-                oTipodocumentoBean = oTipodocumentoDao.get(oTipodocumentoBean, AppConfigurationHelper.getJsonDepth());
+                oTipodocumentoBean = oTipodocumentoDao.get(oTipodocumentoBean, AppConfigurationHelper.getJsonMsgDepth());
                 Gson gson = AppConfigurationHelper.getGson();
-                data = JsonMessage.getJson("200", AppConfigurationHelper.getGson().toJson(oTipodocumentoBean));
+                data = JsonMessage.getJsonMsg("200", AppConfigurationHelper.getGson().toJson(oTipodocumentoBean));
             } catch (Exception ex) {
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
                 throw new Exception();
@@ -140,7 +140,7 @@ public class TipodocumentoService implements TableServiceInterface, ViewServiceI
                 oConnection = oDataConnectionSource.newConnection();
                 TipodocumentoDao oTipodocumentoDao = new TipodocumentoDao(oConnection);
                 ArrayList<TipodocumentoBean> arrBeans = oTipodocumentoDao.getAll(alFilter, hmOrder, 1);
-                data = JsonMessage.getJson("200", AppConfigurationHelper.getGson().toJson(arrBeans));
+                data = JsonMessage.getJsonMsg("200", AppConfigurationHelper.getGson().toJson(arrBeans));
             } catch (Exception ex) {
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
                 throw new Exception();
@@ -173,8 +173,8 @@ public class TipodocumentoService implements TableServiceInterface, ViewServiceI
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
                 TipodocumentoDao oTipodocumentoDao = new TipodocumentoDao(oConnection);
-                List<TipodocumentoBean> arrBeans = oTipodocumentoDao.getPage(intRegsPerPag, intPage, alFilter, hmOrder, AppConfigurationHelper.getJsonDepth());
-                data = JsonMessage.getJson("200", AppConfigurationHelper.getGson().toJson(arrBeans));
+                List<TipodocumentoBean> arrBeans = oTipodocumentoDao.getPage(intRegsPerPag, intPage, alFilter, hmOrder, AppConfigurationHelper.getJsonMsgDepth());
+                data = JsonMessage.getJsonMsg("200", AppConfigurationHelper.getGson().toJson(arrBeans));
             } catch (Exception ex) {
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
                 throw new Exception();
@@ -204,10 +204,12 @@ public class TipodocumentoService implements TableServiceInterface, ViewServiceI
                 oConnection = oDataConnectionSource.newConnection();
                 oConnection.setAutoCommit(false);
                 TipodocumentoDao oTipodocumentoDao = new TipodocumentoDao(oConnection);
-                data = JsonMessage.getJson("200", (String) oTipodocumentoDao.remove(id).toString());
+                data = JsonMessage.getJsonMsg("200", (String) oTipodocumentoDao.remove(id).toString());
                 oConnection.commit();
             } catch (Exception ex) {
-                oConnection.rollback();
+                if (oConnection != null) {
+                    oConnection.rollback();
+                }
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
                 throw new Exception();
             } finally {
@@ -241,16 +243,18 @@ public class TipodocumentoService implements TableServiceInterface, ViewServiceI
                 if (oTipodocumentoBean != null) {
                     Integer iResult = oTipodocumentoDao.set(oTipodocumentoBean);
                     if (iResult >= 1) {
-                        data = JsonMessage.getJson("200", iResult.toString());
+                        data = JsonMessage.getJsonMsg("200", iResult.toString());
                     } else {
-                        data = JsonMessage.getJson("500", "Error during registry set");
+                        data = JsonMessage.getJsonMsg("500", "Error during registry set");
                     }
                 } else {
-                    data = JsonMessage.getJson("500", "Error during registry set");
+                    data = JsonMessage.getJsonMsg("500", "Error during registry set");
                 }
                 oConnection.commit();
             } catch (Exception ex) {
-                oConnection.rollback();
+                if (oConnection != null) {
+                    oConnection.rollback();
+                }
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
                 throw new Exception();
             } finally {

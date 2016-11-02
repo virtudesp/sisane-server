@@ -190,7 +190,7 @@ public class UsuarioDao implements ViewDaoInterface<UsuarioBean>, TableDaoInterf
                 if (!pass.equals(oUsuario.getPassword())) {
                     oUsuario.setId(0);
                 }
-                oUsuario = this.get(oUsuario, AppConfigurationHelper.getJsonDepth());
+                oUsuario = this.get(oUsuario, AppConfigurationHelper.getJsonMsgDepth());
             }
             return oUsuario;
         } catch (Exception ex) {

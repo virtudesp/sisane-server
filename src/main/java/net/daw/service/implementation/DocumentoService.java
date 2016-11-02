@@ -70,7 +70,7 @@ public class DocumentoService implements TableServiceInterface, ViewServiceInter
     @Override
     public ReplyBean getcount() throws Exception {
         if (this.checkpermission("getcount")) {
-            String data = null;                        
+            String data = null;
             ArrayList<FilterBeanHelper> alFilter = ParameterCook.getFilterParams(ParameterCook.prepareFilter(oRequest));
             Connection oConnection = null;
             ConnectionInterface oDataConnectionSource = null;
@@ -78,7 +78,7 @@ public class DocumentoService implements TableServiceInterface, ViewServiceInter
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
                 DocumentoDao oDocumentoDao = new DocumentoDao(oConnection);
-                data = JsonMessage.getJson("200", Long.toString(oDocumentoDao.getCount(alFilter)));
+                data = JsonMessage.getJsonMsg("200", Long.toString(oDocumentoDao.getCount(alFilter)));
             } catch (Exception ex) {
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
                 throw new Exception();
@@ -108,9 +108,9 @@ public class DocumentoService implements TableServiceInterface, ViewServiceInter
                 oConnection = oDataConnectionSource.newConnection();
                 DocumentoDao oDocumentoDao = new DocumentoDao(oConnection);
                 DocumentoBean oDocumentoBean = new DocumentoBean(id);
-                oDocumentoBean = oDocumentoDao.get(oDocumentoBean, AppConfigurationHelper.getJsonDepth());
+                oDocumentoBean = oDocumentoDao.get(oDocumentoBean, AppConfigurationHelper.getJsonMsgDepth());
                 Gson gson = AppConfigurationHelper.getGson();
-                data = JsonMessage.getJson("200", AppConfigurationHelper.getGson().toJson(oDocumentoBean));
+                data = JsonMessage.getJsonMsg("200", AppConfigurationHelper.getGson().toJson(oDocumentoBean));
             } catch (Exception ex) {
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
                 throw new Exception();
@@ -140,8 +140,8 @@ public class DocumentoService implements TableServiceInterface, ViewServiceInter
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
                 DocumentoDao oDocumentoDao = new DocumentoDao(oConnection);
-                ArrayList<DocumentoBean> arrBeans = oDocumentoDao.getAll(alFilter, hmOrder, AppConfigurationHelper.getJsonDepth());
-                data = JsonMessage.getJson("200", AppConfigurationHelper.getGson().toJson(arrBeans));
+                ArrayList<DocumentoBean> arrBeans = oDocumentoDao.getAll(alFilter, hmOrder, AppConfigurationHelper.getJsonMsgDepth());
+                data = JsonMessage.getJsonMsg("200", AppConfigurationHelper.getGson().toJson(arrBeans));
             } catch (Exception ex) {
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
                 throw new Exception();
@@ -173,8 +173,8 @@ public class DocumentoService implements TableServiceInterface, ViewServiceInter
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
                 DocumentoDao oDocumentoDao = new DocumentoDao(oConnection);
-                List<DocumentoBean> arrBeans = oDocumentoDao.getPage(intRegsPerPag, intPage, alFilter, hmOrder, AppConfigurationHelper.getJsonDepth());
-                data = JsonMessage.getJson("200", AppConfigurationHelper.getGson().toJson(arrBeans));
+                List<DocumentoBean> arrBeans = oDocumentoDao.getPage(intRegsPerPag, intPage, alFilter, hmOrder, AppConfigurationHelper.getJsonMsgDepth());
+                data = JsonMessage.getJsonMsg("200", AppConfigurationHelper.getGson().toJson(arrBeans));
             } catch (Exception ex) {
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
                 throw new Exception();
@@ -204,10 +204,12 @@ public class DocumentoService implements TableServiceInterface, ViewServiceInter
                 oConnection = oDataConnectionSource.newConnection();
                 oConnection.setAutoCommit(false);
                 DocumentoDao oDocumentoDao = new DocumentoDao(oConnection);
-                data = JsonMessage.getJson("200", (String) oDocumentoDao.remove(id).toString());
+                data = JsonMessage.getJsonMsg("200", (String) oDocumentoDao.remove(id).toString());
                 oConnection.commit();
             } catch (Exception ex) {
-                oConnection.rollback();
+                if (oConnection != null) {
+                    oConnection.rollback();
+                }
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
                 throw new Exception();
             } finally {
@@ -241,16 +243,18 @@ public class DocumentoService implements TableServiceInterface, ViewServiceInter
                 if (oDocumentoBean != null) {
                     Integer iResult = oDocumentoDao.set(oDocumentoBean);
                     if (iResult >= 1) {
-                        resultado = JsonMessage.getJson("200", iResult.toString());
+                        resultado = JsonMessage.getJsonMsg("200", iResult.toString());
                     } else {
-                        resultado = JsonMessage.getJson("500", "Error during registry set");
+                        resultado = JsonMessage.getJsonMsg("500", "Error during registry set");
                     }
                 } else {
-                    resultado = JsonMessage.getJson("500", "Error during registry set");
+                    resultado = JsonMessage.getJsonMsg("500", "Error during registry set");
                 }
                 oConnection.commit();
             } catch (Exception ex) {
-                oConnection.rollback();
+                if (oConnection != null) {
+                    oConnection.rollback();
+                }
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
                 throw new Exception();
             } finally {
@@ -276,7 +280,7 @@ public class DocumentoService implements TableServiceInterface, ViewServiceInter
                 oConnection = new BoneConnectionPoolImpl().newConnection();
                 oDocumentoBean = new DocumentoBean(id);
                 DocumentoDao oDocumentoDao = new DocumentoDao(oConnection);
-                oDocumentoBean = oDocumentoDao.get(oDocumentoBean, AppConfigurationHelper.getJsonDepth());
+                oDocumentoBean = oDocumentoDao.get(oDocumentoBean, AppConfigurationHelper.getJsonMsgDepth());
             } catch (Exception ex) {
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
                 throw new Exception();

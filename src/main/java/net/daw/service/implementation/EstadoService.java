@@ -64,7 +64,7 @@ public class EstadoService implements TableServiceInterface, ViewServiceInterfac
     @Override
     public ReplyBean getcount() throws Exception {
         if (this.checkpermission("getcount")) {
-            String data = null;                        
+            String data = null;
             ArrayList<FilterBeanHelper> alFilter = ParameterCook.getFilterParams(ParameterCook.prepareFilter(oRequest));
             Connection oConnection = null;
             ConnectionInterface oDataConnectionSource = null;
@@ -72,7 +72,7 @@ public class EstadoService implements TableServiceInterface, ViewServiceInterfac
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
                 EstadoDao oEstadoDao = new EstadoDao(oConnection);
-                data = JsonMessage.getJson("200", Long.toString(oEstadoDao.getCount(alFilter)));
+                data = JsonMessage.getJsonMsg("200", Long.toString(oEstadoDao.getCount(alFilter)));
             } catch (Exception ex) {
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
                 throw new Exception();
@@ -102,9 +102,9 @@ public class EstadoService implements TableServiceInterface, ViewServiceInterfac
                 oConnection = oDataConnectionSource.newConnection();
                 EstadoDao oEstadoDao = new EstadoDao(oConnection);
                 EstadoBean oEstadoBean = new EstadoBean(id);
-                oEstadoBean = oEstadoDao.get(oEstadoBean, AppConfigurationHelper.getJsonDepth());
+                oEstadoBean = oEstadoDao.get(oEstadoBean, AppConfigurationHelper.getJsonMsgDepth());
                 Gson gson = AppConfigurationHelper.getGson();
-                data = JsonMessage.getJson("200", AppConfigurationHelper.getGson().toJson(oEstadoBean));
+                data = JsonMessage.getJsonMsg("200", AppConfigurationHelper.getGson().toJson(oEstadoBean));
             } catch (Exception ex) {
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
                 throw new Exception();
@@ -135,7 +135,7 @@ public class EstadoService implements TableServiceInterface, ViewServiceInterfac
                 oConnection = oDataConnectionSource.newConnection();
                 EstadoDao oEstadoDao = new EstadoDao(oConnection);
                 ArrayList<EstadoBean> arrBeans = oEstadoDao.getAll(alFilter, hmOrder, 1);
-                data = JsonMessage.getJson("200", AppConfigurationHelper.getGson().toJson(arrBeans));
+                data = JsonMessage.getJsonMsg("200", AppConfigurationHelper.getGson().toJson(arrBeans));
             } catch (Exception ex) {
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
                 throw new Exception();
@@ -168,8 +168,8 @@ public class EstadoService implements TableServiceInterface, ViewServiceInterfac
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
                 EstadoDao oEstadoDao = new EstadoDao(oConnection);
-                List<EstadoBean> arrBeans = oEstadoDao.getPage(intRegsPerPag, intPage, alFilter, hmOrder, AppConfigurationHelper.getJsonDepth());
-                data = JsonMessage.getJson("200", AppConfigurationHelper.getGson().toJson(arrBeans));
+                List<EstadoBean> arrBeans = oEstadoDao.getPage(intRegsPerPag, intPage, alFilter, hmOrder, AppConfigurationHelper.getJsonMsgDepth());
+                data = JsonMessage.getJsonMsg("200", AppConfigurationHelper.getGson().toJson(arrBeans));
             } catch (Exception ex) {
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
                 throw new Exception();
@@ -199,11 +199,13 @@ public class EstadoService implements TableServiceInterface, ViewServiceInterfac
                 oConnection = oDataConnectionSource.newConnection();
                 oConnection.setAutoCommit(false);
                 EstadoDao oEstadoDao = new EstadoDao(oConnection);
-                resultado = JsonMessage.getJson("200", (String) oEstadoDao.remove(id).toString());
+                resultado = JsonMessage.getJsonMsg("200", (String) oEstadoDao.remove(id).toString());
                 oConnection.commit();
             } catch (Exception ex) {
                 if (oConnection != null) {
-                    oConnection.rollback();
+                    if (oConnection != null) {
+                        oConnection.rollback();
+                    }
                 }
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
                 throw new Exception();
@@ -238,17 +240,19 @@ public class EstadoService implements TableServiceInterface, ViewServiceInterfac
                 if (oEstadoBean != null) {
                     Integer iResult = oEstadoDao.set(oEstadoBean);
                     if (iResult >= 1) {
-                        resultado = JsonMessage.getJson("200", iResult.toString());
+                        resultado = JsonMessage.getJsonMsg("200", iResult.toString());
                     } else {
-                        resultado = JsonMessage.getJson("500", "Error during registry set");
+                        resultado = JsonMessage.getJsonMsg("500", "Error during registry set");
                     }
                 } else {
-                    resultado = JsonMessage.getJson("500", "Error during registry set");
+                    resultado = JsonMessage.getJsonMsg("500", "Error during registry set");
                 }
                 oConnection.commit();
             } catch (Exception ex) {
                 if (oConnection != null) {
-                    oConnection.rollback();
+                    if (oConnection != null) {
+                        oConnection.rollback();
+                    }
                 }
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
                 throw new Exception();
