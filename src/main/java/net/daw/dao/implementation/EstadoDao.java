@@ -122,11 +122,13 @@ public class EstadoDao implements ViewDaoInterface<EstadoBean>, TableDaoInterfac
             ResultSet oResultSet = null;
             try {
                 oResultSet = oMysql.getAllSQL(strSQL + " And id= " + oEstadoBean.getId() + " ");
+                Boolean empty = true;
                 while (oResultSet.next()) {
                     oEstadoBean = oEstadoBean.fill(oResultSet, oConnection, expand);
+                    empty = false;
                 }
-                if (oResultSet != null) {
-                    oResultSet.close();
+                if (empty) {
+                    oEstadoBean.setId(0);
                 }
             } catch (Exception ex) {
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);

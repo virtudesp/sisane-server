@@ -122,8 +122,13 @@ public class TipousuarioDao implements ViewDaoInterface<TipousuarioBean>, TableD
             ResultSet oResultSet = null;
             try {
                 oResultSet = oMysql.getAllSQL(strSQL + " And id= " + oTipousuarioBean.getId() + " ");
+                Boolean empty = true;
                 while (oResultSet.next()) {
                     oTipousuarioBean = oTipousuarioBean.fill(oResultSet, oConnection, expand);
+                    empty = false;
+                }
+                if (empty) {
+                    oTipousuarioBean.setId(0);
                 }
             } catch (Exception ex) {
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);

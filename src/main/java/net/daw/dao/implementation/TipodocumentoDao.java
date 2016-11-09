@@ -122,8 +122,13 @@ public class TipodocumentoDao implements ViewDaoInterface<TipodocumentoBean>, Ta
             ResultSet oResultSet = null;
             try {
                 oResultSet = oMysql.getAllSQL(strSQL + " And id= " + oTipodocumentoBean.getId() + " ");
+                Boolean empty = true;
                 while (oResultSet.next()) {
                     oTipodocumentoBean = oTipodocumentoBean.fill(oResultSet, oConnection, expand);
+                    empty = false;
+                }
+                if (empty) {
+                    oTipodocumentoBean.setId(0);
                 }
             } catch (Exception ex) {
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
