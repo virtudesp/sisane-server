@@ -123,8 +123,13 @@ public class UsuarioDao implements ViewDaoInterface<UsuarioBean>, TableDaoInterf
             ResultSet oResultSet = null;
             try {
                 oResultSet = oMysql.getAllSQL(strSQL + " And id= " + oUsuarioBean.getId() + " ");
+                Boolean empty=true;
                 while (oResultSet.next()) {
                     oUsuarioBean = oUsuarioBean.fill(oResultSet, oConnection, expand);
+                    empty=false;
+                }
+                if (empty){
+                    oUsuarioBean.setId(0);
                 }
             } catch (Exception ex) {
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
