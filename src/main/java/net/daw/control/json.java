@@ -72,7 +72,7 @@ public class json extends HttpServlet {
         Log4j.infoLog(this.getClass().getName() + ": " + request.getMethod() + " request: " + request.getRequestURL().append('?').append(request.getQueryString()));
         response.setHeader("Access-Control-Allow-Origin", request.getHeader("origin"));
         //response.setHeader("Access-Control-Allow-Methods", "PATCH, POST, GET, PUT, OPTIONS, DELETE");
-        response.setHeader("Access-Control-Allow-Methods", "GET");
+        response.setHeader("Access-Control-Allow-Methods", "GET,POST");
         response.setHeader("Access-Control-Max-Age", "86400");
         response.setHeader("Access-Control-Allow-Credentials", "true");
         response.setHeader("Access-Control-Allow-Headers", "Origin, Accept, x-requested-with, Content-Type");
