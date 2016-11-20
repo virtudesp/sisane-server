@@ -41,7 +41,7 @@ import net.daw.helper.statics.EncodingUtilHelper;
 public class DocumentBean implements GenericBean {
 
     @Expose
-    private Integer id;
+    private Integer id = 0;
     @Expose
     private String description;
     @Expose

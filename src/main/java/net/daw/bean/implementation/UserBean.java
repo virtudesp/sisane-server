@@ -38,7 +38,7 @@ import net.daw.helper.statics.EncodingUtilHelper;
 public class UserBean implements GenericBean {
 
     @Expose
-    private Integer id;
+    private Integer id = 0;
     @Expose
     private String name;
     @Expose

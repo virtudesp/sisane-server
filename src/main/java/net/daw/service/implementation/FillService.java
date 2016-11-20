@@ -26,7 +26,6 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-
 package net.daw.service.implementation;
 
 import java.security.MessageDigest;
@@ -38,8 +37,10 @@ import java.util.Random;
 import javax.servlet.http.HttpServletRequest;
 import net.daw.bean.implementation.ReplyBean;
 import net.daw.bean.implementation.UserBean;
+import net.daw.bean.implementation.UsertypeBean;
 import net.daw.connection.publicinterface.ConnectionInterface;
 import net.daw.dao.implementation.UserDao;
+import net.daw.dao.implementation.UsertypeDao;
 
 import static net.daw.helper.statics.AppConfigurationHelper.getSourceConnection;
 import net.daw.helper.statics.FilterBeanHelper;
@@ -111,9 +112,43 @@ public class FillService implements TableServiceInterface, ViewServiceInterface 
     public ReplyBean user() throws Exception {
 
         String data = null;
-        ArrayList<FilterBeanHelper> alFilter = ParameterCook.getFilterParams(ParameterCook.prepareFilter(oRequest));
+
         Connection oConnection = null;
         ConnectionInterface oDataConnectionSource = null;
+        oDataConnectionSource = getSourceConnection();
+        oConnection = oDataConnectionSource.newConnection();
+
+        UsertypeBean oUsertypeBean = new UsertypeBean();
+        UsertypeDao oUsertypeDao = new UsertypeDao(oConnection);
+
+        oUsertypeBean.setDescription("Administrador");
+        oUsertypeBean.setDiscount(0.0);
+        try {
+            oUsertypeDao.set(oUsertypeBean);
+        } catch (Exception e) {
+            return new ReplyBean(500, JsonMessage.getJsonMsg(500, "Fill: Update Error: Phase 1: " + e.getMessage()));
+        }
+        oUsertypeBean.setDescription("Publicador");
+        oUsertypeBean.setDiscount(0.0);
+        try {
+            oUsertypeDao.set(oUsertypeBean);
+        } catch (Exception e) {
+            return new ReplyBean(500, JsonMessage.getJsonMsg(500, "Fill: Update Error: Phase 1: " + e.getMessage()));
+        }
+        oUsertypeBean.setDescription("Cliente");
+        oUsertypeBean.setDiscount(0.0);
+        try {
+            oUsertypeDao.set(oUsertypeBean);
+        } catch (Exception e) {
+            return new ReplyBean(500, JsonMessage.getJsonMsg(500, "Fill: Update Error: Phase 1: " + e.getMessage()));
+        }
+        oUsertypeBean.setDescription("Cliente preferente");
+        oUsertypeBean.setDiscount(2.5);
+        try {
+            oUsertypeDao.set(oUsertypeBean);
+        } catch (Exception e) {
+            return new ReplyBean(500, JsonMessage.getJsonMsg(500, "Fill: Update Error: Phase 1: " + e.getMessage()));
+        }
 
         ArrayList<String> arrNombre = new ArrayList<>();
 
@@ -722,41 +757,60 @@ public class FillService implements TableServiceInterface, ViewServiceInterface 
         arrPass.add("Rinoceronte");
         arrPass.add("Leon");
 
-        oDataConnectionSource = getSourceConnection();
-        oConnection = oDataConnectionSource.newConnection();
+        UserBean oUserBean = new UserBean();
+        UserDao oUserDao = new UserDao(oConnection);
+        oUserBean.setId(0);
+        oUserBean.setName("Rafael");
+        oUserBean.setSurname("Aznar");
+        oUserBean.setLogin("rafael");
+        oUserBean.setPassword(sha256("rafael"));
+        String Via = arrVia.get(getRandomInt(0, arrVia.size() - 1));
+        String Via1 = arrNombre.get(getRandomInt(0, arrNombre.size() - 1));
+        String Via2 = arrApe.get(getRandomInt(0, arrApe.size() - 1));
+        String num = (String) getRandomInt(1, 100).toString();
+        oUserBean.setAddress(Via + " de " + Via1 + " " + Via2 + ", nº " + num);
+        oUserBean.setCity("Valencia");
+        oUserBean.setZip("46" + getDigito() + getDigito() + getDigito());
+        oUserBean.setState("València");
+        oUserBean.setCountry("Spain");
+        oUserBean.setEmail("rafaaznar@gmail.com");
+        oUserBean.setPhone("6" + getDigito() + getDigito() + getDigito() + getDigito() + getDigito() + getDigito() + getDigito());
+        oUserBean.setId_usertype(1);
+        try {
+            oUserDao.set(oUserBean);
+        } catch (Exception e) {
+            return new ReplyBean(500, JsonMessage.getJsonMsg(500, "Fill: Update Error: Phase 1: " + e.getMessage()));
+        }
 
         int num1;
         int num2;
 
         for (int i = 1; i <= 100; i++) {
-            UserBean oUserBean = new UserBean();
-            UserDao oUserDao = new UserDao(oConnection);
+            oUserBean = new UserBean();
             oUserBean.setId(0);
-            String Name = arrNombre.get(getRandomInt(0, arrNombre.size()-1));
-            String Surname1 = arrApe.get(getRandomInt(0, arrApe.size()-1));
-            String Surname2 = arrApe.get(getRandomInt(0, arrApe.size()-1));
+            String Name = arrNombre.get(getRandomInt(0, arrNombre.size() - 1));
+            String Surname1 = arrApe.get(getRandomInt(0, arrApe.size() - 1));
+            String Surname2 = arrApe.get(getRandomInt(0, arrApe.size() - 1));
             oUserBean.setName(Name);
             oUserBean.setSurname(Surname1 + ' ' + Surname2);
             String Login = (Name.substring(0, 3) + Surname1.substring(0, 2) + Surname2.substring(0, 2)).toLowerCase();
-            
             oUserBean.setLogin(Login);
             MessageDigest oDigest = MessageDigest.getInstance("SHA-256");
             oUserBean.setPassword(sha256(Login));
-            String Via = arrVia.get(getRandomInt(0, arrVia.size()-1));
-            String Via1 = arrNombre.get(getRandomInt(0, arrNombre.size()-1));
-            String Via2 = arrApe.get(getRandomInt(0, arrApe.size()-1));
-            String num = (String) getRandomInt(1, 100).toString();
+            Via = arrVia.get(getRandomInt(0, arrVia.size() - 1));
+            Via1 = arrNombre.get(getRandomInt(0, arrNombre.size() - 1));
+            Via2 = arrApe.get(getRandomInt(0, arrApe.size() - 1));
+            num = (String) getRandomInt(1, 100).toString();
             oUserBean.setAddress(Via + " de " + Via1 + " " + Via2 + ", nº " + num);
-            oUserBean.setCity(arrPoblacion.get(getRandomInt(0, arrApe.size()-1)));
+            oUserBean.setCity(arrPoblacion.get(getRandomInt(0, arrApe.size() - 1)));
             oUserBean.setZip("46" + getDigito() + getDigito() + getDigito());
             //oUserBean.setZip("46" + String.format("%0010d", Integer.parseInt(getRandomInt(1, 999).toString())));
-
             oUserBean.setState("València");
             oUserBean.setCountry("Spain");
-            oUserBean.setEmail(Login + arrEmail.get(getRandomInt(0, arrEmail.size()-1)));
+            oUserBean.setEmail(Login + arrEmail.get(getRandomInt(0, arrEmail.size() - 1)));
             oUserBean.setPhone("6" + getDigito() + getDigito() + getDigito() + getDigito() + getDigito() + getDigito() + getDigito());
             //oUserBean.setZip("6" + String.format("%10000000d", Integer.parseInt(getRandomInt(1, 99999999).toString())));
-            oUserBean.setId_usertype(getRandomInt(1, 9));
+            oUserBean.setId_usertype(getRandomInt(2, 4));
 
             try {
                 oUserDao.set(oUserBean);
@@ -766,11 +820,7 @@ public class FillService implements TableServiceInterface, ViewServiceInterface 
 
         }
         return new ReplyBean(500, JsonMessage.getJsonMsg(500, "Fill: Phase 1: OK"));
-        
-        
-        
-        
-        
+
 //                do {
 //                    num1 = 1 + (int) (Math.random() * ((200 - 1) + 1));
 //                    oCompraBean.getCliente().setId(num1);

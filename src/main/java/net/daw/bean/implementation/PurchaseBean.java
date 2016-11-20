@@ -42,7 +42,7 @@ import net.daw.helper.statics.EncodingUtilHelper;
 public class PurchaseBean implements GenericBean {
 
     @Expose
-    private Integer id;
+    private Integer id = 0;
 
     @Expose(serialize = false)
     private Integer id_user = 0;
