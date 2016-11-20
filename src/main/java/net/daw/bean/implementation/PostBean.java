@@ -38,7 +38,7 @@ import java.util.Date;
 import net.daw.dao.implementation.UserDao;
 import net.daw.helper.statics.EncodingUtilHelper;
 
-public class Post implements GenericBean {
+public class PostBean implements GenericBean {
 
     @Expose
     private Integer id;
@@ -67,11 +67,11 @@ public class Post implements GenericBean {
     @Expose
     private Boolean emphasized = false;
 
-    public Post() {
+    public PostBean() {
         this.id = 0;
     }
 
-    public Post(Integer id) {
+    public PostBean(Integer id) {
         this.id = id;
     }
 
@@ -223,7 +223,7 @@ public class Post implements GenericBean {
     }
 
     @Override
-    public Post fill(ResultSet oResultSet, Connection pooledConnection, Integer expand) throws SQLException, Exception {
+    public PostBean fill(ResultSet oResultSet, Connection pooledConnection, Integer expand) throws SQLException, Exception {
         this.setId(oResultSet.getInt("id"));
         this.setTitle(oResultSet.getString("title"));
         this.setContent(oResultSet.getString("content"));
