@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Nov 20, 2016 at 08:39 AM
+-- Generation Time: Nov 20, 2016 at 01:33 PM
 -- Server version: 5.6.32
 -- PHP Version: 5.6.25
 
@@ -119,7 +119,7 @@ CREATE TABLE `user` (
   `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `surname` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `login` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `password` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `password` varchar(256) COLLATE utf8_unicode_ci DEFAULT NULL,
   `address` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `city` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `zip` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -240,7 +240,7 @@ ALTER TABLE `purchase`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT for table `usertype`
 --
