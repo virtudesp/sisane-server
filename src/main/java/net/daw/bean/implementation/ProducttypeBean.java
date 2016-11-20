@@ -42,7 +42,7 @@ public class ProducttypeBean implements GenericBean {
     @Expose
     private String description;
     @Expose
-    private String discount;
+    private Double discount;
 
     public ProducttypeBean(Integer id) {
         this.id = id;
@@ -67,11 +67,11 @@ public class ProducttypeBean implements GenericBean {
         this.description = description;
     }
 
-    public String getDiscount() {
+    public Double getDiscount() {
         return discount;
     }
 
-    public void setDiscount(String discount) {
+    public void setDiscount(Double discount) {
         this.discount = discount;
     }
 
@@ -95,7 +95,7 @@ public class ProducttypeBean implements GenericBean {
 
     @Override
     public String toPairs() {
-         String strPairs = "";
+        String strPairs = "";
         //strPairs += "id=" + id + ",";
         strPairs += "description=" + EncodingUtilHelper.quotate(description) + ",";
         strPairs += "discount=" + discount;
@@ -104,7 +104,10 @@ public class ProducttypeBean implements GenericBean {
 
     @Override
     public ProducttypeBean fill(ResultSet oResultSet, Connection pooledConnection, Integer expand) throws SQLException, Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        this.setId(oResultSet.getInt("id"));
+        this.setDescription(oResultSet.getString("description"));
+        this.setDiscount(oResultSet.getDouble("discount"));
+        return this;
     }
 
 }

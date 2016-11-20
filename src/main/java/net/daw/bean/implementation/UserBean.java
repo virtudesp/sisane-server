@@ -64,7 +64,7 @@ public class UserBean implements GenericBean {
     @Expose(serialize = false)
     private Integer id_usertype = 0;
     @Expose(deserialize = false)
-    private UsuarioBean obj_usertype = null;
+    private UsertypeBean obj_usertype = null;
 
     public UserBean() {
     }
@@ -177,11 +177,11 @@ public class UserBean implements GenericBean {
         this.id_usertype = id_usertype;
     }
 
-    public UsuarioBean getObj_usertype() {
+    public UsertypeBean getObj_usertype() {
         return obj_usertype;
     }
 
-    public void setObj_usertype(UsuarioBean obj_usertype) {
+    public void setObj_usertype(UsertypeBean obj_usertype) {
         this.obj_usertype = obj_usertype;
     }
 

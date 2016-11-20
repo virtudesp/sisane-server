@@ -7,7 +7,7 @@ package net.daw.service.implementation;
 
 import javax.servlet.http.HttpServletRequest;
 import net.daw.bean.implementation.ReplyBean;
-import net.daw.bean.implementation.UsuarioBean;
+import net.daw.bean.implementation.UserBean;
 import net.daw.helper.statics.EncodingUtilHelper;
 import net.daw.helper.statics.JsonMessage;
 import net.daw.service.publicinterface.ViewServiceInterface;
@@ -25,7 +25,7 @@ public class DebugService implements ViewServiceInterface {
     }
 
     private Boolean checkpermission(String strMethodName) throws Exception {
-        UsuarioBean oUserBean = (UsuarioBean) oRequest.getSession().getAttribute("userBean");
+        UserBean oUserBean = (UserBean) oRequest.getSession().getAttribute("userBean");
         if (oUserBean != null) {
             return true;
         } else {

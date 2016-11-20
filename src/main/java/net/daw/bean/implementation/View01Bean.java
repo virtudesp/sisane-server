@@ -33,8 +33,8 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import net.daw.bean.publicinterface.GenericBean;
-import net.daw.bean.implementation.UsuarioBean;
-import net.daw.dao.implementation.UsuarioDao;
+import net.daw.bean.implementation.UserBean;
+import net.daw.dao.implementation.UserDao;
 
 public class View01Bean implements GenericBean {
 
@@ -45,7 +45,7 @@ public class View01Bean implements GenericBean {
     @Expose(serialize = false)
     private Integer id_usuario = 0; //important zero-initialize foreign keys
     @Expose(deserialize = false)
-    private UsuarioBean obj_usuario = null;
+    private UserBean obj_usuario = null;
 
     public String getEtiquetas() {
         return etiquetas;
@@ -71,11 +71,11 @@ public class View01Bean implements GenericBean {
         this.id_usuario = id_usuario;
     }
 
-    public UsuarioBean getObj_usuario() {
+    public UserBean getObj_usuario() {
         return obj_usuario;
     }
 
-    public void setObj_usuario(UsuarioBean obj_usuario) {
+    public void setObj_usuario(UserBean obj_usuario) {
         this.obj_usuario = obj_usuario;
     }
 
@@ -110,11 +110,11 @@ public class View01Bean implements GenericBean {
         this.setEtiquetas(oResultSet.getString("etiquetas"));
         this.setNumetiquetas(oResultSet.getInt("numetiquetas"));
         if (expand > 0) {
-            UsuarioBean oUsuarioBean = new UsuarioBean();
-            UsuarioDao oUsuarioDao = new UsuarioDao(pooledConnection);
-            oUsuarioBean.setId(oResultSet.getInt("id_usuario"));
-            oUsuarioBean = oUsuarioDao.get(oUsuarioBean, expand - 1);
-            this.setObj_usuario(oUsuarioBean);
+            UserBean oUserBean = new UserBean();
+            UserDao oUserDao = new UserDao(pooledConnection);
+            oUserBean.setId(oResultSet.getInt("id_usuario"));
+            oUserBean = oUserDao.get(oUserBean, expand - 1);
+            this.setObj_usuario(oUserBean);
         } else {
             this.setId_usuario(oResultSet.getInt("id_usuario"));
         }

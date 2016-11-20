@@ -34,11 +34,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
-import net.daw.bean.implementation.EstadoBean;
+import net.daw.bean.implementation.ProducttypeBean;
 import net.daw.bean.implementation.ReplyBean;
-import net.daw.bean.implementation.UsuarioBean;
+import net.daw.bean.implementation.UserBean;
+import net.daw.connection.implementation.BoneConnectionPoolImpl;
 import net.daw.connection.publicinterface.ConnectionInterface;
-import net.daw.dao.implementation.EstadoDao;
+import net.daw.dao.implementation.ProducttypeDao;
+
 import net.daw.helper.statics.AppConfigurationHelper;
 import static net.daw.helper.statics.AppConfigurationHelper.getSourceConnection;
 import net.daw.helper.statics.FilterBeanHelper;
@@ -48,17 +50,21 @@ import net.daw.helper.statics.ParameterCook;
 import net.daw.service.publicinterface.TableServiceInterface;
 import net.daw.service.publicinterface.ViewServiceInterface;
 
-public class EstadoService implements TableServiceInterface, ViewServiceInterface {
+public class ProducttypeService implements TableServiceInterface, ViewServiceInterface {
 
     protected HttpServletRequest oRequest = null;
 
-    public EstadoService(HttpServletRequest request) {
+    public ProducttypeService(HttpServletRequest request) {
         oRequest = request;
     }
 
     private Boolean checkpermission(String strMethodName) throws Exception {
-        UsuarioBean oUserBean = (UsuarioBean) oRequest.getSession().getAttribute("userBean");
-        return oUserBean != null;
+        UserBean oUserBean = (UserBean) oRequest.getSession().getAttribute("userBean");
+        if (oUserBean != null) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override
@@ -71,8 +77,8 @@ public class EstadoService implements TableServiceInterface, ViewServiceInterfac
             try {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
-                EstadoDao oEstadoDao = new EstadoDao(oConnection);
-                data = JsonMessage.getJsonExpression(200, Long.toString(oEstadoDao.getCount(alFilter)));
+                ProducttypeDao oProducttypeDao = new ProducttypeDao(oConnection);
+                data = JsonMessage.getJsonExpression(200, Long.toString(oProducttypeDao.getCount(alFilter)));
             } catch (Exception ex) {
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
                 throw new Exception();
@@ -100,11 +106,11 @@ public class EstadoService implements TableServiceInterface, ViewServiceInterfac
             try {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
-                EstadoDao oEstadoDao = new EstadoDao(oConnection);
-                EstadoBean oEstadoBean = new EstadoBean(id);
-                oEstadoBean = oEstadoDao.get(oEstadoBean, AppConfigurationHelper.getJsonMsgDepth());
+                ProducttypeDao oProducttypeDao = new ProducttypeDao(oConnection);
+                ProducttypeBean oProducttypeBean = new ProducttypeBean(id);
+                oProducttypeBean = oProducttypeDao.get(oProducttypeBean, AppConfigurationHelper.getJsonMsgDepth());
                 Gson gson = AppConfigurationHelper.getGson();
-                data = JsonMessage.getJsonExpression(200, AppConfigurationHelper.getGson().toJson(oEstadoBean));
+                data = JsonMessage.getJsonExpression(200, AppConfigurationHelper.getGson().toJson(oProducttypeBean));
             } catch (Exception ex) {
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
                 throw new Exception();
@@ -133,8 +139,8 @@ public class EstadoService implements TableServiceInterface, ViewServiceInterfac
             try {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
-                EstadoDao oEstadoDao = new EstadoDao(oConnection);
-                ArrayList<EstadoBean> arrBeans = oEstadoDao.getAll(alFilter, hmOrder, 1);
+                ProducttypeDao oProducttypeDao = new ProducttypeDao(oConnection);
+                ArrayList<ProducttypeBean> arrBeans = oProducttypeDao.getAll(alFilter, hmOrder, AppConfigurationHelper.getJsonMsgDepth());
                 data = JsonMessage.getJsonExpression(200, AppConfigurationHelper.getGson().toJson(arrBeans));
             } catch (Exception ex) {
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
@@ -147,7 +153,6 @@ public class EstadoService implements TableServiceInterface, ViewServiceInterfac
                     oDataConnectionSource.disposeConnection();
                 }
             }
-
             return new ReplyBean(200, data);
         } else {
             return new ReplyBean(401, JsonMessage.getJsonMsg(401, "Unauthorized"));
@@ -167,8 +172,8 @@ public class EstadoService implements TableServiceInterface, ViewServiceInterfac
             try {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
-                EstadoDao oEstadoDao = new EstadoDao(oConnection);
-                List<EstadoBean> arrBeans = oEstadoDao.getPage(intRegsPerPag, intPage, alFilter, hmOrder, AppConfigurationHelper.getJsonMsgDepth());
+                ProducttypeDao oProducttypeDao = new ProducttypeDao(oConnection);
+                List<ProducttypeBean> arrBeans = oProducttypeDao.getPage(intRegsPerPag, intPage, alFilter, hmOrder, AppConfigurationHelper.getJsonMsgDepth());
                 data = JsonMessage.getJsonExpression(200, AppConfigurationHelper.getGson().toJson(arrBeans));
             } catch (Exception ex) {
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
@@ -198,14 +203,12 @@ public class EstadoService implements TableServiceInterface, ViewServiceInterfac
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
                 oConnection.setAutoCommit(false);
-                EstadoDao oEstadoDao = new EstadoDao(oConnection);
-                data = JsonMessage.getJsonExpression(200, (String) oEstadoDao.remove(id).toString());
+                ProducttypeDao oProducttypeDao = new ProducttypeDao(oConnection);
+                data = JsonMessage.getJsonExpression(200, (String) oProducttypeDao.remove(id).toString());
                 oConnection.commit();
             } catch (Exception ex) {
                 if (oConnection != null) {
-                    if (oConnection != null) {
-                        oConnection.rollback();
-                    }
+                    oConnection.rollback();
                 }
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
                 throw new Exception();
@@ -234,11 +237,11 @@ public class EstadoService implements TableServiceInterface, ViewServiceInterfac
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
                 oConnection.setAutoCommit(false);
-                EstadoDao oEstadoDao = new EstadoDao(oConnection);
-                EstadoBean oEstadoBean = new EstadoBean();
-                oEstadoBean = AppConfigurationHelper.getGson().fromJson(jason, oEstadoBean.getClass());
-                if (oEstadoBean != null) {
-                    Integer iResult = oEstadoDao.set(oEstadoBean);
+                ProducttypeDao oProducttypeDao = new ProducttypeDao(oConnection);
+                ProducttypeBean oProducttypeBean = new ProducttypeBean();
+                oProducttypeBean = AppConfigurationHelper.getGson().fromJson(jason, oProducttypeBean.getClass());
+                if (oProducttypeBean != null) {
+                    Integer iResult = oProducttypeDao.set(oProducttypeBean);
                     if (iResult >= 1) {
                         oReplyBean.setCode(200);
                         oReplyBean.setJson(JsonMessage.getJsonExpression(200, iResult.toString()));
@@ -253,9 +256,7 @@ public class EstadoService implements TableServiceInterface, ViewServiceInterfac
                 oConnection.commit();
             } catch (Exception ex) {
                 if (oConnection != null) {
-                    if (oConnection != null) {
-                        oConnection.rollback();
-                    }
+                    oConnection.rollback();
                 }
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
                 throw new Exception();
@@ -272,5 +273,7 @@ public class EstadoService implements TableServiceInterface, ViewServiceInterfac
             return new ReplyBean(401, JsonMessage.getJsonMsg(401, "Unauthorized"));
         }
     }
+
+   
 
 }

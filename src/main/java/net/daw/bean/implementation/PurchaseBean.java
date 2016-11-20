@@ -71,6 +71,10 @@ public class PurchaseBean implements GenericBean {
         return id;
     }
 
+    public PurchaseBean(Integer id) {
+        this.id = id;
+    }
+
     public void setId(Integer id) {
         this.id = id;
     }

@@ -56,6 +56,10 @@ public class ProductBean implements GenericBean {
     public ProductBean() {
     }
 
+    public ProductBean(Integer id) {
+        this.id = id;
+    }
+
     public Integer getId() {
         return id;
     }

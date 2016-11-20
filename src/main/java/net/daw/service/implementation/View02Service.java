@@ -34,7 +34,7 @@ import java.util.HashMap;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import net.daw.bean.implementation.ReplyBean;
-import net.daw.bean.implementation.UsuarioBean;
+import net.daw.bean.implementation.UserBean;
 import net.daw.bean.implementation.View02Bean;
 import net.daw.connection.publicinterface.ConnectionInterface;
 import net.daw.dao.implementation.View02Dao;
@@ -55,7 +55,7 @@ public class View02Service implements ViewServiceInterface {
     }
 
     private Boolean checkpermission(String strMethodName) throws Exception {
-        UsuarioBean oUserBean = (UsuarioBean) oRequest.getSession().getAttribute("userBean");
+        UserBean oUserBean = (UserBean) oRequest.getSession().getAttribute("userBean");
         return oUserBean != null;
     }
 

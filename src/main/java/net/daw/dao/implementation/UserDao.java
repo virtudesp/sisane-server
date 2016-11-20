@@ -33,9 +33,11 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.HashMap;
 import net.daw.bean.implementation.UserBean;
+import net.daw.bean.implementation.UserBean;
 import net.daw.dao.publicinterface.TableDaoInterface;
 import net.daw.dao.publicinterface.ViewDaoInterface;
 import net.daw.data.implementation.MysqlData;
+import net.daw.helper.statics.AppConfigurationHelper;
 import net.daw.helper.statics.FilterBeanHelper;
 import net.daw.helper.statics.Log4j;
 import net.daw.helper.statics.SqlBuilder;
@@ -182,4 +184,27 @@ public class UserDao implements ViewDaoInterface<UserBean>, TableDaoInterface<Us
         return result;
     }
 
+    public UserBean getFromLogin(UserBean oUser) throws Exception {
+        try {
+
+            //String strId = oMysql. getId("usuario", "login", oUser.getLogin());
+            String strId = oMysql.getId("usuario", "login", oUser.getLogin());
+            if (strId == null) {
+                oUser.setId(0);
+            } else {
+                Integer intId = Integer.parseInt(strId);
+                oUser.setId(intId);
+                String pass = oUser.getPassword();
+                oUser.setPassword(oMysql.getOne(strSQL, "password", oUser.getId()));
+                if (!pass.equals(oUser.getPassword())) {
+                    oUser.setId(0);
+                }
+                oUser = this.get(oUser, AppConfigurationHelper.getJsonMsgDepth());
+            }
+            return oUser;
+        } catch (Exception ex) {
+            Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
+            throw new Exception();
+        }
+    }
 }
