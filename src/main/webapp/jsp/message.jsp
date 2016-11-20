@@ -2,12 +2,12 @@
 /*
  * Copyright (c) 2016 by Rafael Angel Aznar Aparici (rafaaznar at gmail dot com)
  * 
- * zylkanexy server: Helps you to develop easily AJAX web applications 
+ * bauxer server: Helps you to develop easily AJAX web applications 
  *                   by copying and modifying this Java Server.
  *
- * Sources at https://github.com/rafaelaznar/zylkanexy
+ * Sources at https://github.com/rafaelaznar/bauxer
  * 
- * zylkanexy server is distributed under the MIT License (MIT)
+ * bauxer server is distributed under the MIT License (MIT)
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -33,7 +33,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>zylkanexy server</title>
+        <title>bauxer server</title>
     </head>
     <body>
         <h1><%=request.getAttribute("title")%></h1>
