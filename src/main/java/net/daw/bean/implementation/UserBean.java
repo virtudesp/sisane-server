@@ -33,6 +33,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import net.daw.bean.publicinterface.GenericBean;
+import net.daw.dao.implementation.UsertypeDao;
 import net.daw.helper.statics.EncodingUtilHelper;
 
 public class UserBean implements GenericBean {
@@ -61,6 +62,7 @@ public class UserBean implements GenericBean {
     private String email;
     @Expose
     private String phone;
+    
     @Expose(serialize = false)
     private Integer id_usertype = 0;
     @Expose(deserialize = false)
@@ -239,6 +241,7 @@ public class UserBean implements GenericBean {
         strPairs += "country=" + EncodingUtilHelper.quotate(country) + ",";
         strPairs += "email=" + EncodingUtilHelper.quotate(email) + ",";
         strPairs += "phone=" + EncodingUtilHelper.quotate(phone);
+        strPairs += "id_usertype=" + id_usertype;
         return strPairs;
     }
 
@@ -256,6 +259,15 @@ public class UserBean implements GenericBean {
         this.setCountry(oResultSet.getString("country"));
         this.setEmail(oResultSet.getString("email"));
         this.setPhone(oResultSet.getString("phone"));
+        if (expand > 0) {
+            UsertypeBean oUsertypeBean = new UsertypeBean();
+            UsertypeDao oUsertypeDao = new UsertypeDao(pooledConnection);
+            oUsertypeBean.setId(oResultSet.getInt("id_usertype"));
+            oUsertypeBean = oUsertypeDao.get(oUsertypeBean, expand - 1);
+            this.setObj_usertype(oUsertypeBean);
+        } else {
+            this.setId_usertype(oResultSet.getInt("id_usertype"));
+        }                     
         return this;
     }
 
