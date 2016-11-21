@@ -45,7 +45,7 @@ public class ProductBean implements GenericBean {
     @Expose
     private String description;
     @Expose
-    private Float price;
+    private Double price;
     @Expose
     private Integer stock;
     @Expose(serialize = false)
@@ -84,11 +84,11 @@ public class ProductBean implements GenericBean {
         this.description = description;
     }
 
-    public Float getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(Float price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 
@@ -157,7 +157,7 @@ public class ProductBean implements GenericBean {
         this.setId(oResultSet.getInt("id"));
         this.setCode(oResultSet.getString("code"));
         this.setDescription(oResultSet.getString("description"));
-        this.setPrice(oResultSet.getFloat("price"));
+        this.setPrice(oResultSet.getDouble("price"));
         this.setStock(oResultSet.getInt("stock"));
 
         if (expand > 0) {

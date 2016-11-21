@@ -42,8 +42,8 @@ import net.daw.helper.statics.SqlBuilder;
 
 public class DocumenttypeDao implements ViewDaoInterface<DocumenttypeBean>, TableDaoInterface<DocumenttypeBean> {
 
-    private String strTable = "documentotype";
-    private String strSQL = "select * from documentotype where 1=1 ";
+    private String strTable = "documenttype";
+    private String strSQL = "select * from documenttype where 1=1 ";
     private MysqlData oMysql = null;
     private Connection oConnection = null;
 

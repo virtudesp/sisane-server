@@ -33,14 +33,28 @@ import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.Random;
 import javax.servlet.http.HttpServletRequest;
+import net.daw.bean.implementation.DocumentBean;
+import net.daw.bean.implementation.DocumenttypeBean;
+import net.daw.bean.implementation.PostBean;
+import net.daw.bean.implementation.ProductBean;
+import net.daw.bean.implementation.ProducttypeBean;
+import net.daw.bean.implementation.PurchaseBean;
 import net.daw.bean.implementation.ReplyBean;
 import net.daw.bean.implementation.UserBean;
 import net.daw.bean.implementation.UsertypeBean;
 import net.daw.connection.publicinterface.ConnectionInterface;
+import net.daw.dao.implementation.DocumentDao;
+import net.daw.dao.implementation.DocumenttypeDao;
+import net.daw.dao.implementation.PostDao;
+import net.daw.dao.implementation.ProductDao;
+import net.daw.dao.implementation.ProducttypeDao;
+import net.daw.dao.implementation.PurchaseDao;
 import net.daw.dao.implementation.UserDao;
 import net.daw.dao.implementation.UsertypeDao;
+import net.daw.data.implementation.MysqlData;
 
 import static net.daw.helper.statics.AppConfigurationHelper.getSourceConnection;
 import net.daw.helper.statics.FilterBeanHelper;
@@ -62,6 +76,232 @@ public class FillService implements TableServiceInterface, ViewServiceInterface 
         Random rand = new Random();
         int randomNum = rand.nextInt((max - min) + 1) + min;
         return randomNum;
+    }
+
+    public String getText(Integer sentences) {
+        String discurso = "";
+        String SacaPedazo1 = null, SacaPedazo2 = null, SacaPedazo3 = null, SacaPedazo4 = null;
+        for (int i = 1; i <= sentences; i++) {
+
+            switch (getRandomInt(1, 14)) {
+                case 1:
+                    SacaPedazo1 = "No obstante ";
+                    break;
+                case 2:
+                    SacaPedazo1 = "Por otra parte, ";
+                    break;
+                case 3:
+                    SacaPedazo1 = "Asimismo, ";
+                    break;
+                case 4:
+                    SacaPedazo1 = "Sin embargo no hemos de olvidar que ";
+                    break;
+                case 5:
+                    SacaPedazo1 = "De igual manera, ";
+                    break;
+                case 6:
+                    SacaPedazo1 = "La práctica prueba que ";
+                    break;
+                case 7:
+                    SacaPedazo1 = "Y no es menos cierto que ";
+                    break;
+                case 8:
+                    SacaPedazo1 = "Las experiencias, ricas y diversas, muestran que, ";
+                    break;
+                case 9:
+                    SacaPedazo1 = "Y aún así ";
+                    break;
+                case 10:
+                    SacaPedazo1 = "No obstante ";
+                    break;
+                case 11:
+                    SacaPedazo1 = "Incluso, bien pudiéramos atrevernos a sugerir que ";
+                    break;
+                case 12:
+                    SacaPedazo1 = "Es obvio señalar que, ";
+                    break;
+                case 13:
+                    SacaPedazo1 = "De hecho, ";
+                    break;
+                case 14:
+                    SacaPedazo1 = "También cabe añadir en este punto que ";
+                    break;
+
+            }
+            switch (getRandomInt(1, 14)) {
+                case 1:
+                    SacaPedazo2 = "la realización de las premisas del programa ";
+                    break;
+                case 2:
+                    SacaPedazo2 = "la complejidad de los estudios de los dirigentes ";
+                    break;
+                case 3:
+                    SacaPedazo2 = "el aumento constante, en cantidad y en extensión, de nuestra actividad ";
+                    break;
+                case 4:
+                    SacaPedazo2 = "la estructura actual de la organización ";
+                    break;
+                case 5:
+                    SacaPedazo2 = "el nuevo modelo de actividad de la organización, ";
+                    break;
+                case 6:
+                    SacaPedazo2 = "el desarrollo continuo de distintas formas de actividad ";
+                    break;
+                case 7:
+                    SacaPedazo2 = "nuestra actividad de información y propaganda ";
+                    break;
+                case 8:
+                    SacaPedazo2 = "el reforzamiento y desarrollo de las estructuras ";
+                    break;
+                case 9:
+                    SacaPedazo2 = "la consulta con los numerosos militantes ";
+                    break;
+                case 10:
+                    SacaPedazo2 = "el inicio de la acción general de formación de las actitudes ";
+                    break;
+                case 11:
+                    SacaPedazo2 = "un relanzamiento específico de todos los sectores implicados ";
+                    break;
+                case 12:
+                    SacaPedazo2 = "la superación de experiencias periclitadas ";
+                    break;
+                case 13:
+                    SacaPedazo2 = "una aplicación indiscriminada de los factores confluyentes ";
+                    break;
+                case 14:
+                    SacaPedazo2 = "el proceso consensuado de unas y otras aplicaciones concurrentes ";
+                    break;
+            }
+            switch (getRandomInt(1, 14)) {
+                case 1:
+                    SacaPedazo3 = "nos obliga a un exhaustivo análisis ";
+                    break;
+                case 2:
+                    SacaPedazo3 = "cumple un rol esencial en la formación ";
+                    break;
+                case 3:
+                    SacaPedazo3 = "exige la precisión y la determinación ";
+                    break;
+                case 4:
+                    SacaPedazo3 = "ayuda a la preparación y a la realización ";
+                    break;
+                case 5:
+                    SacaPedazo3 = "garantiza la participación de un grupo importante en la formación ";
+                    break;
+                case 6:
+                    SacaPedazo3 = "cumple deberes importantes en la determinación ";
+                    break;
+                case 7:
+                    SacaPedazo3 = "facilita la creación ";
+                    break;
+                case 8:
+                    SacaPedazo3 = "obstaculiza la apreciación de la importancia ";
+                    break;
+                case 9:
+                    SacaPedazo3 = "ofrece un ensayo interesante de verificación ";
+                    break;
+                case 10:
+                    SacaPedazo3 = "implica el proceso de reestructuración y modernización ";
+                    break;
+                case 11:
+                    SacaPedazo3 = "habrá de significar un auténtico y eficaz punto de partida ";
+                    break;
+                case 12:
+                    SacaPedazo3 = "permite en todo caso explicitar las razones fundamentales ";
+                    break;
+                case 13:
+                    SacaPedazo3 = "asegura, en todo caso, un proceso muy sensible de inversión ";
+                    break;
+                case 14:
+                    SacaPedazo3 = "deriva de una indirecta incidencia superadora ";
+                    break;
+            }
+            switch (getRandomInt(1, 14)) {
+                case 1:
+                    SacaPedazo4 = "de las condiciones financieras y administrativas existentes. ";
+                    break;
+                case 2:
+                    SacaPedazo4 = "de las directivas de desarrollo para el futuro. ";
+                    break;
+                case 3:
+                    SacaPedazo4 = "del sistema de participación general. ";
+                    break;
+                case 4:
+                    SacaPedazo4 = "de las actitudes de los miembros hacia sus deberes ineludibles. ";
+                    break;
+                case 5:
+                    SacaPedazo4 = "de las nuevas proposiciones. ";
+                    break;
+                case 6:
+                    SacaPedazo4 = "de las direcciones educativas en el sentido del progreso. ";
+                    break;
+                case 7:
+                    SacaPedazo4 = "del sistema de formación de cuadros que corresponda a las necesidades. ";
+                    break;
+                case 8:
+                    SacaPedazo4 = "de las condiciones de las actividades apropiadas. ";
+                    break;
+                case 9:
+                    SacaPedazo4 = "del modelo de desarrollo. ";
+                    break;
+                case 10:
+                    SacaPedazo4 = "de las formas de acción. ";
+                    break;
+                case 11:
+                    SacaPedazo4 = "de las básicas premisas adoptadas. ";
+                    break;
+                case 12:
+                    SacaPedazo4 = "de toda una casuística de amplio espectro. ";
+                    break;
+                case 13:
+                    SacaPedazo4 = "de los elementos generadores. ";
+                    break;
+                case 14:
+                    SacaPedazo4 = "de toda una serie de criterios ideológicamente sistematizados en un frente común de actuación regeneradora. ";
+                    break;
+            }
+            if (i == 1) {
+                SacaPedazo2 = Character.toUpperCase(SacaPedazo2.charAt(0)) + SacaPedazo2.substring(1);
+                discurso += SacaPedazo2 + SacaPedazo3 + SacaPedazo4;
+            } else {
+                discurso += SacaPedazo1 + SacaPedazo2 + SacaPedazo3 + SacaPedazo4;
+            }
+        }
+        return discurso;
+    }
+
+    public String getLabels(Integer labels) {
+        String labelstext = "";
+
+        ArrayList<String> arrLabels = new ArrayList<>();
+
+        arrLabels.add("Mejora, ");
+        arrLabels.add("Descuento, ");
+        arrLabels.add("Anticrisis, ");
+        arrLabels.add("Calidad, ");
+        arrLabels.add("Esfuerzo, ");
+        arrLabels.add("Práctica, ");
+        arrLabels.add("Servicio, ");
+        arrLabels.add("Experiencia, ");
+        arrLabels.add("Innovavión, ");
+        arrLabels.add("Tecnología, ");
+        arrLabels.add("Programa, ");
+        arrLabels.add("Complejidad, ");
+        arrLabels.add("Actividades, ");
+        arrLabels.add("Estructura, ");
+        arrLabels.add("Organización, ");
+        arrLabels.add("Desarrollo, ");
+        arrLabels.add("Información, ");
+        arrLabels.add("Estructuras, ");
+        arrLabels.add("Actitudes, ");
+        arrLabels.add("Relanzamiento, ");
+        arrLabels.add("Sectores, ");
+        arrLabels.add("Aplicación, ");
+        arrLabels.add("Proceso, ");
+        for (int i = 1; i <= labels; i++) {
+            labelstext += arrLabels.get(getRandomInt(0, arrLabels.size() - 1));
+        }
+        return labelstext;
     }
 
     public Date getRandDate(Integer days) {
@@ -118,6 +358,17 @@ public class FillService implements TableServiceInterface, ViewServiceInterface 
         oDataConnectionSource = getSourceConnection();
         oConnection = oDataConnectionSource.newConnection();
 
+        MysqlData oMysqlData = new MysqlData(oConnection);
+
+        oMysqlData.truncateTable("document");
+        oMysqlData.truncateTable("documenttype");
+        oMysqlData.truncateTable("post");
+        oMysqlData.truncateTable("product");
+        oMysqlData.truncateTable("producttype");
+        oMysqlData.truncateTable("purchase");
+        oMysqlData.truncateTable("user");
+        oMysqlData.truncateTable("usertype");
+
         UsertypeBean oUsertypeBean = new UsertypeBean();
         UsertypeDao oUsertypeDao = new UsertypeDao(oConnection);
 
@@ -128,6 +379,7 @@ public class FillService implements TableServiceInterface, ViewServiceInterface 
         } catch (Exception e) {
             return new ReplyBean(500, JsonMessage.getJsonMsg(500, "Fill: Update Error: Phase 1: " + e.getMessage()));
         }
+
         oUsertypeBean.setDescription("Publicador");
         oUsertypeBean.setDiscount(0.0);
         try {
@@ -760,8 +1012,8 @@ public class FillService implements TableServiceInterface, ViewServiceInterface 
         UserBean oUserBean = new UserBean();
         UserDao oUserDao = new UserDao(oConnection);
         oUserBean.setId(0);
-        oUserBean.setName("Rafael");
-        oUserBean.setSurname("Aznar");
+        oUserBean.setName("Rafael Angel");
+        oUserBean.setSurname("Aznar Aparici");
         oUserBean.setLogin("rafael");
         oUserBean.setPassword(sha256("rafael"));
         String Via = arrVia.get(getRandomInt(0, arrVia.size() - 1));
@@ -817,262 +1069,212 @@ public class FillService implements TableServiceInterface, ViewServiceInterface 
             } catch (Exception e) {
                 return new ReplyBean(500, JsonMessage.getJsonMsg(500, "Fill: Update Error: Phase 1: " + e.getMessage()));
             }
+        }
+        ArrayList<String> uno = new ArrayList<>();
+        ArrayList<String> dos = new ArrayList<>();
+
+        uno.add("Herramienta");
+        uno.add("Accesorio");
+        uno.add("Producto");
+        uno.add("Artículo");
+        uno.add("Referencia");
+        uno.add("Mercancía");
+        uno.add("Género");
+
+        dos.add("manual");
+        dos.add("automático");
+        dos.add("descatalogado");
+        dos.add("preferente");
+
+        String primero;
+        String segundo;
+
+        ProducttypeBean oProducttypeBean = new ProducttypeBean();
+        ProducttypeDao oProducttypeDao = new ProducttypeDao(oConnection);
+
+        Integer contador = 0;
+        Iterator<String> iterador1 = uno.listIterator();
+        while (iterador1.hasNext()) {
+            primero = iterador1.next();
+            contador++;
+            Iterator<String> iterador2 = dos.listIterator();
+            while (iterador2.hasNext()) {
+                segundo = iterador2.next();
+                contador++;
+                oProducttypeBean.setId(0);
+                oProducttypeBean.setDescription(primero + " " + segundo);
+                oProducttypeBean.setDiscount(getRandomInt(0, 5).doubleValue());
+                try {
+                    oProducttypeDao.set(oProducttypeBean);
+
+                } catch (Exception e) {
+                    return new ReplyBean(500, JsonMessage.getJsonMsg(500, "Fill: Update Error: Phase 2: " + e.getMessage()));
+                }
+
+            }
+        }
+
+        //-----------
+        uno = new ArrayList<>();
+        dos = new ArrayList<>();
+        ArrayList<String> tres = new ArrayList<>();
+
+        uno.add("Llave");
+        uno.add("Soldador");
+        uno.add("Pieza");
+        uno.add("Herramienta");
+        uno.add("Asadura");
+        uno.add("Mecanizador");
+        uno.add("Bote");
+        uno.add("Manivela");
+        uno.add("Pasante");
+        uno.add("Rejilla");
+        uno.add("Torno");
+        uno.add("Accionamiento");
+        uno.add("Fijación");
+        uno.add("Bajante");
+        uno.add("Sujeción");
+
+        dos.add("auxiliar");
+        dos.add("manual");
+        dos.add("con rodadura");
+        dos.add("extensivo");
+        dos.add("intensivo");
+
+        tres.add("de emergencia");
+        tres.add("de repuesto");
+        tres.add("de paso");
+        tres.add("de acople");
+        tres.add("de mano");
+
+        ProductBean oProductBean = new ProductBean();
+        ProductDao oProductDao = new ProductDao(oConnection);
+        String tercero;
+        contador = 0;
+        iterador1 = uno.listIterator();
+        while (iterador1.hasNext()) {
+            primero = iterador1.next();
+            contador++;
+            Iterator<String> iterador2 = dos.listIterator();
+            while (iterador2.hasNext()) {
+                segundo = iterador2.next();
+                contador++;
+                Iterator<String> iterador3 = tres.listIterator();
+                while (iterador3.hasNext()) {
+                    tercero = iterador3.next();
+                    contador++;
+                    Random generator = new Random();
+                    oProductBean.setId(0);
+                    oProductBean.setCode(Character.toUpperCase(primero.charAt(0)) + Character.toUpperCase(segundo.charAt(0)) + contador.toString() + Character.toUpperCase(tercero.charAt(0)));
+                    oProductBean.setDescription(primero + " " + segundo + " " + tercero);
+                    oProductBean.setPrice(Double.parseDouble(Integer.toString(generator.nextInt(2000)) + "." + Integer.toString(generator.nextInt(99))));
+                    oProductBean.setId_producttype(getRandomInt(1, 28));
+                    oProductBean.setStock(getRandomInt(1, 2000));
+                    try {
+                        oProductDao.set(oProductBean);
+                    } catch (Exception e) {
+                        return new ReplyBean(500, JsonMessage.getJsonMsg(500, "Fill: Update Error: Phase 3: " + e.getMessage()));
+                    }
+                }
+            }
+        }
+
+        DocumenttypeBean oDocumenttypeBean = new DocumenttypeBean();
+        DocumenttypeDao oDocumenttypeDao = new DocumenttypeDao(oConnection);
+
+        oDocumenttypeBean.setId(0);
+        oDocumenttypeBean.setDescription("Pendiente");
+        try {
+            oDocumenttypeDao.set(oDocumenttypeBean);
+        } catch (Exception e) {
+            return new ReplyBean(500, JsonMessage.getJsonMsg(500, "Fill: Update Error: Phase 6a: " + e.getMessage()));
+        }
+        oDocumenttypeBean.setId(0);
+        oDocumenttypeBean.setDescription("Cobrado");
+        try {
+            oDocumenttypeDao.set(oDocumenttypeBean);
+        } catch (Exception e) {
+            return new ReplyBean(500, JsonMessage.getJsonMsg(500, "Fill: Update Error: Phase 6b: " + e.getMessage()));
+        }
+        oDocumenttypeBean.setId(0);
+        oDocumenttypeBean.setDescription("Pendiente de remesar");
+        try {
+            oDocumenttypeDao.set(oDocumenttypeBean);
+        } catch (Exception e) {
+            return new ReplyBean(500, JsonMessage.getJsonMsg(500, "Fill: Update Error: Phase 6c: " + e.getMessage()));
+        }
+        oDocumenttypeBean.setId(0);
+        oDocumenttypeBean.setDescription("Remesado");
+        try {
+            oDocumenttypeDao.set(oDocumenttypeBean);
+        } catch (Exception e) {
+            return new ReplyBean(500, JsonMessage.getJsonMsg(500, "Fill: Update Error: Phase 6d: " + e.getMessage()));
+        }
+        oDocumenttypeBean.setId(0);
+        oDocumenttypeBean.setDescription("Devuelto");
+        try {
+            oDocumenttypeDao.set(oDocumenttypeBean);
+        } catch (Exception e) {
+            return new ReplyBean(500, JsonMessage.getJsonMsg(500, "Fill: Update Error: Phase 6: " + e.getMessage()));
+        }
+
+        //---------DOCUMENT----------
+        DocumentBean oDocumentBean = new DocumentBean();
+        DocumentDao oDocumentDao = new DocumentDao(oConnection);
+        for (int i = 1; i <= 100; i++) {
+            oDocumentBean.setId(0);
+            oDocumentBean.setDescription("Factura");
+            oDocumentBean.setCreation(getRandDate(getRandomInt(0, 5000)));
+            oDocumentBean.setFreezed(Boolean.FALSE);
+            oDocumentBean.setId_documenttype(getRandomInt(1, 5));
+            oDocumentBean.setId_user(getRandomInt(1, 100));
+            try {
+                oDocumentDao.set(oDocumentBean);
+            } catch (Exception e) {
+                return new ReplyBean(500, JsonMessage.getJsonMsg(500, "Fill: Update Error: Phase 7: " + e.getMessage()));
+            }
 
         }
-        return new ReplyBean(500, JsonMessage.getJsonMsg(500, "Fill: Phase 1: OK"));
+        //---------PURCHASE----------
+        PurchaseBean oPurchaseBean = new PurchaseBean();
+        PurchaseDao oPurchaseDao = new PurchaseDao(oConnection);
+        for (int i = 1; i <= 3000; i++) {
+            oPurchaseBean.setId(0);
+            oPurchaseBean.setDate(getRandDate(getRandomInt(0, 5000)));
+            oPurchaseBean.setId_document(getRandomInt(1, 100));
+            oPurchaseBean.setId_user(getRandomInt(1, 100));
+            oPurchaseBean.setId_product(getRandomInt(1, 370));
+            oPurchaseBean.setQuantity(getRandomInt(1, 20));
+            try {
+                oPurchaseDao.set(oPurchaseBean);
+            } catch (Exception e) {
+                return new ReplyBean(500, JsonMessage.getJsonMsg(500, "Fill: Update Error: Phase 8: " + e.getMessage()));
+            }
 
-//                do {
-//                    num1 = 1 + (int) (Math.random() * ((200 - 1) + 1));
-//                    oCompraBean.getCliente().setId(num1);
-//                    oClienteDao.get(oCompraBean.getCliente());
-//                } while (oCompraBean.getCliente().getId() == 0);
-//
-//                do {
-//                    num2 = 1 + (int) (Math.random() * ((100 - 1) + 1));
-//                    oCompraBean.getProducto().setId(num2);
-//                    oProductoDao.get(oCompraBean.getProducto());
-//                } while (oCompraBean.getProducto().getId() == 0);
-//
-//                oCompraBean.setCantidad(num1 + num2);
-//                Date date = new Date(97, 1, 23);
-//
-//                oCompraBean.setFecha(date);
-//
-//                try {
-//                    oCompraDao.set(oCompraBean);
-//
-//                } catch (Exception e) {
-//                    throw new ServletException("CompraRellena: Update Error: Phase 1: " + e.getMessage());
-//                }
-//
-//            }
-//
-//            int index;
-//            int contador = 0;
-//            Iterator<String> iterador = arrNombre.listIterator();
-//            Random generator;
-//            while (iterador.hasNext()) {
-//                contador++;
-//                arrNombrebre = iterador.next();
-//                generator = new Random();
-//                oUserBean.setId(0);
-//                oUserBean.setId_usuario(0);
-//
-//                index = generator.nextInt(arrDni.size());
-//                String randomDNI = arrDni.get(index);
-//                oUserBean.setDni(contador + randomDNI);
-//                generator = new Random();
-//
-//                index = generator.nextInt(arrExpediente.size());
-//                String randomNUMEXPEDIENTE = arrExpediente.get(index);
-//                oUserBean.setNumexpediente(contador + randomNUMEXPEDIENTE);
-//                generator = new Random();
-//
-//                index = generator.nextInt(arrNombre.size());
-//                String randomNOMBRE = arrNombre.get(index);
-//                oUserBean.setNombre(randomNOMBRE);
-//                generator = new Random();
-//
-//                index = generator.nextInt(arrApe.size());
-//                String randomAPE1 = arrApe.get(index);
-//                oUserBean.setApe(randomAPE1);
-//                generator = new Random();
-//
-//                index = generator.nextInt(arrApe.size());
-//                String randomAPE2 = arrApe.get(index);
-//                oUserBean.setApe(randomAPE2);
-//                generator = new Random();
-//
-//                index = generator.nextInt(arrSexo.size());
-//                String randomSEXO = arrSexo.get(index);
-//                oUserBean.setSexo(randomSEXO);
-//                generator = new Random();
-//
-//                index = generator.nextInt(arrDomicilio.size());
-//                String randomDOMICILIO = arrDomicilio.get(index);
-//                oUserBean.setDomicilio(randomDOMICILIO);
-//                generator = new Random();
-//
-//                index = generator.nextInt(arrCodpostal.size());
-//                String randomCODPOSTAL = arrCodpostal.get(index);
-//                oUserBean.setCodpostal(randomCODPOSTAL);
-//                generator = new Random();
-//
-//                index = generator.nextInt(arrPoblacion.size());
-//                String randomPOBLACION = arrPoblacion.get(index);
-//                oUserBean.setPoblacion(randomPOBLACION);
-//                generator = new Random();
-//
-//                index = generator.nextInt(arrProvincia.size());
-//                String randomPROVINCIA = arrProvincia.get(index);
-//                oUserBean.setProvincia(randomPROVINCIA);
-//                generator = new Random();
-//
-//                index = generator.nextInt(arrTelefono.size());
-//                String randomTELEFONO = arrTelefono.get(index);
-//                oUserBean.setTelefono(randomTELEFONO);
-//                generator = new Random();
-//
-//                index = generator.nextInt(arrEmail.size());
-//                String randomEMAIL = arrEmail.get(index);
-//                oUserBean.setEmail(randomNOMBRE + randomAPE1 + randomEMAIL);
-//                generator = new Random();
-//
-//                index = generator.nextInt(arrValidado.size());
-//                String randomVALIDADO = arrValidado.get(index);
-//                oUserBean.setValidado(randomVALIDADO);
-//                generator = new Random();
-//
-//                index = generator.nextInt(arrLogin.size());
-//                String randomLOGIN = arrLogin.get(index);
-//                oUserBean.getUsuario().setLogin(randomLOGIN + contador);
-//                generator = new Random();
-//
-//                index = generator.nextInt(arrPass.size());
-//                String randomPASSWORD = arrPass.get(index);
-//                oUserBean.getUsuario().setPassword(randomPASSWORD + contador);
-//                generator = new Random();
-//
-//                try {
-//                    oUserDao.set(oUserBean);
-//
-//                } catch (Exception e) {
-//                    throw new ServletException("UserController: Update Error: Phase 2: " + e.getMessage());
-//                }
-//            }
-//
-//            //producto
-//            Contexto oContexto = (Contexto) request.getAttribute("contexto");
-//            oContexto.setVista("jsp/mensaje.jsp");
-//            ProductoBean oProductoBean = new ProductoBean();
-//            ProductoDao oProductoDao = new ProductoDao(oContexto.getEnumTipoConexion());
-//
-//            ArrayList<String> uno = new ArrayList<>();
-//            ArrayList<String> dos = new ArrayList<>();
-//            ArrayList<String> tres = new ArrayList<>();
-//
-//            uno.add("Llave");
-//            uno.add("Soldadura");
-//            uno.add("Pieza");
-//            uno.add("Bote");
-//            uno.add("Asadura");
-//            uno.add("Mecanizado");
-//            uno.add("Bote");
-//            uno.add("Manivela");
-//            uno.add("Pasante");
-//            uno.add("Rejilla");
-//            uno.add("Torno");
-//            uno.add("Accionamiento");
-//            uno.add("Fijación");
-//            uno.add("Bajante");
-//            uno.add("Sujeción");
-//
-//            dos.add("auxiliar");
-//            dos.add("manual");
-//            dos.add("con rodadura");
-//            dos.add("extensivo");
-//            dos.add("intensivo");
-//
-//            tres.add("de emergencia");
-//            tres.add("de repuesto");
-//            tres.add("de paso");
-//            tres.add("de acople");
-//            tres.add("de mano");
-//
-//            Random generator;
-//            String primero;
-//            String segundo;
-//            String tercero;
-//            Integer contador = 0;
-//            Iterator<String> iterador1 = uno.listIterator();
-//            while (iterador1.hasNext()) {
-//                primero = iterador1.next();
-//                contador++;
-//                Iterator<String> iterador2 = dos.listIterator();
-//                while (iterador2.hasNext()) {
-//                    segundo = iterador2.next();
-//                    contador++;
-//                    Iterator<String> iterador3 = tres.listIterator();
-//                    while (iterador3.hasNext()) {
-//                        tercero = iterador3.next();
-//                        contador++;
-//                        generator = new Random();
-//                        oProductoBean.setId(0);
-//                        oProductoBean.setCodigo(Character.toUpperCase(primero.charAt(0)) + Character.toUpperCase(segundo.charAt(0)) + contador.toString() + Character.toUpperCase(tercero.charAt(0)));
-//                        oProductoBean.setDescripcion(primero + " " + segundo + " " + tercero);
-//                        oProductoBean.setPrecio(Double.parseDouble(Integer.toString(generator.nextInt(2000)) + "." + Integer.toString(generator.nextInt(99))));
-//                        try {
-//                            oProductoDao.set(oProductoBean);
-//
-//                        } catch (Exception e) {
-//                            throw new ServletException("ProductoController: Update Error: Phase 2: " + e.getMessage());
-//                        }
-//
-//                    }
-//                }
-//            }
-//
-//            Contexto oContexto = (Contexto) request.getAttribute("contexto");
-//            oContexto.setVista("jsp/mensaje.jsp");
-//            TipoproductoBean oTipoproductoBean = new TipoproductoBean();
-//            TipoproductoDao oTipoproductoDao = new TipoproductoDao(oContexto.getEnumTipoConexion());
-//
-//            ArrayList<String> uno = new ArrayList<>();
-//            ArrayList<String> dos = new ArrayList<>();
-//
-//            uno.add("Herramienta");
-//            uno.add("Accesorio");
-//            uno.add("Producto");
-//            uno.add("Artículo");
-//            uno.add("Referencia");
-//            uno.add("Mercancía");
-//            uno.add("Género");
-//
-//            dos.add("manual");
-//            dos.add("automático");
-//            dos.add("descatalogado");
-//            dos.add("inexistente");
-//
-//            String primero;
-//            String segundo;
-//
-//            Integer contador = 0;
-//            Iterator<String> iterador1 = uno.listIterator();
-//            while (iterador1.hasNext()) {
-//                primero = iterador1.next();
-//                contador++;
-//                Iterator<String> iterador2 = dos.listIterator();
-//                while (iterador2.hasNext()) {
-//                    segundo = iterador2.next();
-//                    contador++;
-//                    oTipoproductoBean.setId(0);
-//                    oTipoproductoBean.setDescripcion(primero + " " + segundo);
-//                    try {
-//                        oTipoproductoDao.set(oTipoproductoBean);
-//
-//                    } catch (Exception e) {
-//                        throw new ServletException("ProductoController: Update Error: Phase 2: " + e.getMessage());
-//                    }
-//
-//                }
-//            }
-//            return "OK- información generada.";
-//
-//            return "OK- información generada.";
-//
-//            return "OK- Información Autorellena User generada.";
-//
-//        } catch (Exception ex) {
-//            Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
-//            throw new Exception();
-//        } finally {
-//            if (oConnection != null) {
-//                oConnection.close();
-//            }
-//            if (oDataConnectionSource != null) {
-//                oDataConnectionSource.disposeConnection();
-//            }
-//        }
+        }
+
+        //---------POST----------
+        PostBean oPostBean = new PostBean();
+        PostDao oPostDao = new PostDao(oConnection);
+        for (int i = 1; i <= 3000; i++) {
+            oPostBean.setId(0);
+            oPostBean.setTitle(getText(1));
+            oPostBean.setContent(getText(getRandomInt(3, 15)));
+            oPostBean.setCreation(getRandDate(getRandomInt(0, 5000)));
+            oPostBean.setHits(0);
+            oPostBean.setLabels(getLabels(getRandomInt(1, 4)));
+            oPostBean.setId_user(getRandomInt(1, 100));
+            oPostBean.setPublished(Boolean.TRUE);
+            oPostBean.setEmphasized(Boolean.FALSE);
+            oPostBean.setFrontpaged(Boolean.TRUE);
+            try {
+                oPostDao.set(oPostBean);
+            } catch (Exception e) {
+                return new ReplyBean(500, JsonMessage.getJsonMsg(500, "Fill: Update Error: Phase 8: " + e.getMessage()));
+            }
+
+        }
+        return new ReplyBean(500, JsonMessage.getJsonMsg(500, "Fill: OK"));
     }
 
     @Override

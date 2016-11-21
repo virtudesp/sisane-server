@@ -219,4 +219,24 @@ public class MysqlData implements DataInterface {
         return oResultSet;
     }
 
+    public int truncateTable(String strTabla) throws Exception {
+        PreparedStatement oPreparedStatement = null;
+        int intResult = 0;
+        try {
+            Statement s = connection.createStatement();;
+            s.addBatch("SET FOREIGN_KEY_CHECKS = 0");
+            s.addBatch("TRUNCATE TABLE " + strTabla);
+            s.addBatch("SET FOREIGN_KEY_CHECKS = 1");
+            s.executeBatch();
+        } catch (SQLException ex) {
+            Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
+            throw new Exception();
+        } finally {
+            if (oPreparedStatement != null) {
+                oPreparedStatement.close();
+            }
+        }
+        return intResult;
+    }
+
 }
