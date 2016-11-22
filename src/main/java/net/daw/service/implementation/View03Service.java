@@ -73,7 +73,7 @@ public class View03Service implements ViewServiceInterface {
             try {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
-                View03Dao oDao = new View03Dao(oConnection);
+                View03Dao oDao = new View03Dao(oConnection, (UserBean) oRequest.getSession().getAttribute("userBean"));
                 data = JsonMessage.getJsonExpression(200, Long.toString(oDao.getCount(alFilter)));
             } catch (Exception ex) {
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
@@ -103,7 +103,7 @@ public class View03Service implements ViewServiceInterface {
             try {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
-                View03Dao oDao = new View03Dao(oConnection);
+                View03Dao oDao = new View03Dao(oConnection, (UserBean) oRequest.getSession().getAttribute("userBean"));
                 ArrayList<View03Bean> arrBeans = oDao.getAll(alFilter, hmOrder, AppConfigurationHelper.getJsonMsgDepth());
                 data = JsonMessage.getJsonExpression(200, AppConfigurationHelper.getGson().toJson(arrBeans));
             } catch (Exception ex) {
@@ -136,7 +136,7 @@ public class View03Service implements ViewServiceInterface {
             try {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
-                View03Dao oDao = new View03Dao(oConnection);
+                View03Dao oDao = new View03Dao(oConnection, (UserBean) oRequest.getSession().getAttribute("userBean"));
                 List<View03Bean> arrBeans = oDao.getPage(intRegsPerPag, intPage, alFilter, hmOrder, AppConfigurationHelper.getJsonMsgDepth());
                 data = JsonMessage.getJsonExpression(200, AppConfigurationHelper.getGson().toJson(arrBeans));
             } catch (Exception ex) {

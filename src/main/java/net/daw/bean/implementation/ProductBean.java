@@ -153,7 +153,7 @@ public class ProductBean implements GenericBean {
     }
 
     @Override
-    public ProductBean fill(ResultSet oResultSet, Connection pooledConnection, Integer expand) throws SQLException, Exception {
+    public ProductBean fill(ResultSet oResultSet, Connection pooledConnection, UserBean oUserBean_security, Integer expand) throws SQLException, Exception {
         this.setId(oResultSet.getInt("id"));
         this.setCode(oResultSet.getString("code"));
         this.setDescription(oResultSet.getString("description"));
@@ -162,7 +162,7 @@ public class ProductBean implements GenericBean {
 
         if (expand > 0) {
             ProducttypeBean oProducttypeBean = new ProducttypeBean();
-            ProducttypeDao oProducttypeDao = new ProducttypeDao(pooledConnection);
+            ProducttypeDao oProducttypeDao = new ProducttypeDao(pooledConnection, oUserBean_security);
             oProducttypeBean.setId(oResultSet.getInt("id_producttype"));
             oProducttypeBean = oProducttypeDao.get(oProducttypeBean, expand - 1);
             this.setObj_producttype(oProducttypeBean);

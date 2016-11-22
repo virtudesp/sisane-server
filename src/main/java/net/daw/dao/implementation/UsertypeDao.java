@@ -32,6 +32,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.HashMap;
+import net.daw.bean.implementation.UserBean;
 import net.daw.bean.implementation.UsertypeBean;
 import net.daw.dao.publicinterface.TableDaoInterface;
 import net.daw.dao.publicinterface.ViewDaoInterface;
@@ -46,11 +47,13 @@ public class UsertypeDao implements ViewDaoInterface<UsertypeBean>, TableDaoInte
     private String strSQL = "select * from usertype where 1=1 ";
     private MysqlData oMysql = null;
     private Connection oConnection = null;
+    private UserBean oUserSecurity = null;
 
-    public UsertypeDao(Connection oPooledConnection) throws Exception {
+    public UsertypeDao(Connection oPooledConnection, UserBean oUserBean_security) throws Exception {
         try {
             oConnection = oPooledConnection;
             oMysql = new MysqlData(oConnection);
+            oUserSecurity = oUserBean_security;
         } catch (Exception ex) {
             Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
             throw new Exception();
@@ -81,7 +84,7 @@ public class UsertypeDao implements ViewDaoInterface<UsertypeBean>, TableDaoInte
             oResultSet = oMysql.getAllSQL(strSQL);
             while (oResultSet.next()) {
                 UsertypeBean oUsertypeBean = new UsertypeBean();
-                arrUsertype.add(oUsertypeBean.fill(oResultSet, oConnection, expand));
+                arrUsertype.add(oUsertypeBean.fill(oResultSet, oConnection, oUserSecurity, expand));
             }
             if (oResultSet != null) {
                 oResultSet.close();
@@ -107,7 +110,7 @@ public class UsertypeDao implements ViewDaoInterface<UsertypeBean>, TableDaoInte
             oResultSet = oMysql.getAllSQL(strSQL);
             while (oResultSet.next()) {
                 UsertypeBean oUsertypeBean = new UsertypeBean();
-                arrUsertype.add(oUsertypeBean.fill(oResultSet, oConnection, expand));
+                arrUsertype.add(oUsertypeBean.fill(oResultSet, oConnection, oUserSecurity, expand));
             }
         } catch (Exception ex) {
             Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
@@ -128,7 +131,7 @@ public class UsertypeDao implements ViewDaoInterface<UsertypeBean>, TableDaoInte
                 oResultSet = oMysql.getAllSQL(strSQL + " And id= " + oUsertypeBean.getId() + " ");
                 Boolean empty = true;
                 while (oResultSet.next()) {
-                    oUsertypeBean = oUsertypeBean.fill(oResultSet, oConnection, expand);
+                    oUsertypeBean = oUsertypeBean.fill(oResultSet, oConnection, oUserSecurity, expand);
                     empty = false;
                 }
                 if (empty) {

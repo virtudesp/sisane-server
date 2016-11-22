@@ -173,12 +173,12 @@ public class PurchaseBean implements GenericBean {
     }
 
     @Override
-    public PurchaseBean fill(ResultSet oResultSet, Connection pooledConnection, Integer expand) throws SQLException, Exception {
+    public PurchaseBean fill(ResultSet oResultSet, Connection pooledConnection, UserBean oUserBean_security, Integer expand) throws SQLException, Exception {
         this.setId(oResultSet.getInt("id"));
 
         if (expand > 0) {
             UserBean oUserBean = new UserBean();
-            UserDao oUserDao = new UserDao(pooledConnection);
+            UserDao oUserDao = new UserDao(pooledConnection, oUserBean_security);
             oUserBean.setId(oResultSet.getInt("id_user"));
             oUserBean = oUserDao.get(oUserBean, expand - 1);
             this.setObj_user(oUserBean);
@@ -188,7 +188,7 @@ public class PurchaseBean implements GenericBean {
 
         if (expand > 0) {
             ProductBean oProductBean = new ProductBean();
-            ProductDao oProductDao = new ProductDao(pooledConnection);
+            ProductDao oProductDao = new ProductDao(pooledConnection, oUserBean_security);
             oProductBean.setId(oResultSet.getInt("id_product"));
             oProductBean = oProductDao.get(oProductBean, expand - 1);
             this.setObj_product(oProductBean);
@@ -198,7 +198,7 @@ public class PurchaseBean implements GenericBean {
 
         if (expand > 0) {
             DocumentBean oDocumentBean = new DocumentBean();
-            DocumentDao oDocumentDao = new DocumentDao(pooledConnection);
+            DocumentDao oDocumentDao = new DocumentDao(pooledConnection, oUserBean_security);
             oDocumentBean.setId(oResultSet.getInt("id_document"));
             oDocumentBean = oDocumentDao.get(oDocumentBean, expand - 1);
             this.setObj_document(oDocumentBean);

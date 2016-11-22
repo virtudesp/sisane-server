@@ -62,7 +62,7 @@ public class UserBean implements GenericBean {
     private String email;
     @Expose
     private String phone;
-    
+
     @Expose(serialize = false)
     private Integer id_usertype = 0;
     @Expose(deserialize = false)
@@ -246,7 +246,7 @@ public class UserBean implements GenericBean {
     }
 
     @Override
-    public UserBean fill(ResultSet oResultSet, Connection pooledConnection, Integer expand) throws SQLException, Exception {
+    public UserBean fill(ResultSet oResultSet, Connection pooledConnection, UserBean oUserBean_security, Integer expand) throws SQLException, Exception {
         this.setId(oResultSet.getInt("id"));
         this.setName(oResultSet.getString("name"));
         this.setSurname(oResultSet.getString("surname"));
@@ -261,13 +261,13 @@ public class UserBean implements GenericBean {
         this.setPhone(oResultSet.getString("phone"));
         if (expand > 0) {
             UsertypeBean oUsertypeBean = new UsertypeBean();
-            UsertypeDao oUsertypeDao = new UsertypeDao(pooledConnection);
+            UsertypeDao oUsertypeDao = new UsertypeDao(pooledConnection, oUserBean_security);
             oUsertypeBean.setId(oResultSet.getInt("id_usertype"));
             oUsertypeBean = oUsertypeDao.get(oUsertypeBean, expand - 1);
             this.setObj_usertype(oUsertypeBean);
         } else {
             this.setId_usertype(oResultSet.getInt("id_usertype"));
-        }                     
+        }
         return this;
     }
 

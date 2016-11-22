@@ -223,7 +223,7 @@ public class View04Bean implements GenericBean {
     }
 
     @Override
-    public View04Bean fill(ResultSet oResultSet, Connection pooledConnection, Integer expand) throws SQLException, Exception {
+    public View04Bean fill(ResultSet oResultSet, Connection pooledConnection, UserBean oUserBean_security, Integer expand) throws SQLException, Exception {
         this.setId(oResultSet.getInt("id"));
         this.setTitle(oResultSet.getString("title"));
         this.setContent(oResultSet.getString("content"));
@@ -236,7 +236,7 @@ public class View04Bean implements GenericBean {
         this.setEmphasized(oResultSet.getBoolean("emphasized"));
         if (expand > 0) {
             UserBean oUserBean = new UserBean();
-            UserDao oUserDao = new UserDao(pooledConnection);
+            UserDao oUserDao = new UserDao(pooledConnection, oUserBean_security);
             oUserBean.setId(oResultSet.getInt("id_usuario"));
             oUserBean = oUserDao.get(oUserBean, expand - 1);
             this.setObj_user(oUserBean);

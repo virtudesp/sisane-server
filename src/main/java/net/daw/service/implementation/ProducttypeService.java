@@ -77,7 +77,7 @@ public class ProducttypeService implements TableServiceInterface, ViewServiceInt
             try {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
-                ProducttypeDao oProducttypeDao = new ProducttypeDao(oConnection);
+                ProducttypeDao oProducttypeDao = new ProducttypeDao(oConnection, (UserBean) oRequest.getSession().getAttribute("userBean"));
                 data = JsonMessage.getJsonExpression(200, Long.toString(oProducttypeDao.getCount(alFilter)));
             } catch (Exception ex) {
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
@@ -106,7 +106,7 @@ public class ProducttypeService implements TableServiceInterface, ViewServiceInt
             try {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
-                ProducttypeDao oProducttypeDao = new ProducttypeDao(oConnection);
+                ProducttypeDao oProducttypeDao = new ProducttypeDao(oConnection, (UserBean) oRequest.getSession().getAttribute("userBean"));
                 ProducttypeBean oProducttypeBean = new ProducttypeBean(id);
                 oProducttypeBean = oProducttypeDao.get(oProducttypeBean, AppConfigurationHelper.getJsonMsgDepth());
                 Gson gson = AppConfigurationHelper.getGson();
@@ -139,7 +139,7 @@ public class ProducttypeService implements TableServiceInterface, ViewServiceInt
             try {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
-                ProducttypeDao oProducttypeDao = new ProducttypeDao(oConnection);
+                ProducttypeDao oProducttypeDao = new ProducttypeDao(oConnection, (UserBean) oRequest.getSession().getAttribute("userBean"));
                 ArrayList<ProducttypeBean> arrBeans = oProducttypeDao.getAll(alFilter, hmOrder, AppConfigurationHelper.getJsonMsgDepth());
                 data = JsonMessage.getJsonExpression(200, AppConfigurationHelper.getGson().toJson(arrBeans));
             } catch (Exception ex) {
@@ -172,7 +172,7 @@ public class ProducttypeService implements TableServiceInterface, ViewServiceInt
             try {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
-                ProducttypeDao oProducttypeDao = new ProducttypeDao(oConnection);
+                ProducttypeDao oProducttypeDao = new ProducttypeDao(oConnection, (UserBean) oRequest.getSession().getAttribute("userBean"));
                 List<ProducttypeBean> arrBeans = oProducttypeDao.getPage(intRegsPerPag, intPage, alFilter, hmOrder, AppConfigurationHelper.getJsonMsgDepth());
                 data = JsonMessage.getJsonExpression(200, AppConfigurationHelper.getGson().toJson(arrBeans));
             } catch (Exception ex) {
@@ -203,7 +203,7 @@ public class ProducttypeService implements TableServiceInterface, ViewServiceInt
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
                 oConnection.setAutoCommit(false);
-                ProducttypeDao oProducttypeDao = new ProducttypeDao(oConnection);
+                ProducttypeDao oProducttypeDao = new ProducttypeDao(oConnection, (UserBean) oRequest.getSession().getAttribute("userBean"));
                 data = JsonMessage.getJsonExpression(200, (String) oProducttypeDao.remove(id).toString());
                 oConnection.commit();
             } catch (Exception ex) {
@@ -237,7 +237,7 @@ public class ProducttypeService implements TableServiceInterface, ViewServiceInt
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
                 oConnection.setAutoCommit(false);
-                ProducttypeDao oProducttypeDao = new ProducttypeDao(oConnection);
+                ProducttypeDao oProducttypeDao = new ProducttypeDao(oConnection, (UserBean) oRequest.getSession().getAttribute("userBean"));
                 ProducttypeBean oProducttypeBean = new ProducttypeBean();
                 oProducttypeBean = AppConfigurationHelper.getGson().fromJson(jason, oProducttypeBean.getClass());
                 if (oProducttypeBean != null) {
@@ -273,7 +273,5 @@ public class ProducttypeService implements TableServiceInterface, ViewServiceInt
             return new ReplyBean(401, JsonMessage.getJsonMsg(401, "Unauthorized"));
         }
     }
-
-   
 
 }

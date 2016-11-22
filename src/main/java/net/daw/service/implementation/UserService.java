@@ -80,7 +80,7 @@ public class UserService implements TableServiceInterface, ViewServiceInterface 
             try {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
-                UserDao oUserDao = new UserDao(oConnection);
+                UserDao oUserDao = new UserDao(oConnection, (UserBean) oRequest.getSession().getAttribute("userBean"));
                 data = JsonMessage.getJsonExpression(200, Long.toString(oUserDao.getCount(alFilter)));
             } catch (Exception ex) {
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
@@ -109,7 +109,7 @@ public class UserService implements TableServiceInterface, ViewServiceInterface 
             try {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
-                UserDao oUserDao = new UserDao(oConnection);
+                UserDao oUserDao = new UserDao(oConnection, (UserBean) oRequest.getSession().getAttribute("userBean"));
                 UserBean oUserBean = new UserBean(id);
                 oUserBean = oUserDao.get(oUserBean, AppConfigurationHelper.getJsonMsgDepth());
                 Gson gson = AppConfigurationHelper.getGson();
@@ -142,7 +142,7 @@ public class UserService implements TableServiceInterface, ViewServiceInterface 
             try {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
-                UserDao oUserDao = new UserDao(oConnection);
+                UserDao oUserDao = new UserDao(oConnection, (UserBean) oRequest.getSession().getAttribute("userBean"));
                 ArrayList<UserBean> arrBeans = oUserDao.getAll(alFilter, hmOrder, AppConfigurationHelper.getJsonMsgDepth());
                 data = JsonMessage.getJsonExpression(200, AppConfigurationHelper.getGson().toJson(arrBeans));
             } catch (Exception ex) {
@@ -175,7 +175,7 @@ public class UserService implements TableServiceInterface, ViewServiceInterface 
             try {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
-                UserDao oUserDao = new UserDao(oConnection);
+                UserDao oUserDao = new UserDao(oConnection, (UserBean) oRequest.getSession().getAttribute("userBean"));
                 List<UserBean> arrBeans = oUserDao.getPage(intRegsPerPag, intPage, alFilter, hmOrder, AppConfigurationHelper.getJsonMsgDepth());
                 data = JsonMessage.getJsonExpression(200, AppConfigurationHelper.getGson().toJson(arrBeans));
             } catch (Exception ex) {
@@ -206,7 +206,7 @@ public class UserService implements TableServiceInterface, ViewServiceInterface 
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
                 oConnection.setAutoCommit(false);
-                UserDao oUserDao = new UserDao(oConnection);
+                UserDao oUserDao = new UserDao(oConnection, (UserBean) oRequest.getSession().getAttribute("userBean"));
                 data = JsonMessage.getJsonExpression(200, (String) oUserDao.remove(id).toString());
                 oConnection.commit();
             } catch (Exception ex) {
@@ -240,7 +240,7 @@ public class UserService implements TableServiceInterface, ViewServiceInterface 
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
                 oConnection.setAutoCommit(false);
-                UserDao oUserDao = new UserDao(oConnection);
+                UserDao oUserDao = new UserDao(oConnection, (UserBean) oRequest.getSession().getAttribute("userBean"));
                 UserBean oUserBean = new UserBean();
                 oUserBean = AppConfigurationHelper.getGson().fromJson(jason, oUserBean.getClass());
                 if (oUserBean != null) {
@@ -277,13 +277,6 @@ public class UserService implements TableServiceInterface, ViewServiceInterface 
         }
     }
 
- 
-    
-    
-    
-    
-    
-    
     public ReplyBean login() throws SQLException, Exception {
         UserBean oUserBean = (UserBean) oRequest.getSession().getAttribute("userBean");
         String strAnswer = null;
@@ -301,7 +294,7 @@ public class UserService implements TableServiceInterface, ViewServiceInterface 
                         UserBean oUser = new UserBean();
                         oUser.setLogin(login);
                         oUser.setPassword(pass);
-                        UserDao oUserDao = new UserDao(oConnection);
+                        UserDao oUserDao = new UserDao(oConnection, (UserBean) oRequest.getSession().getAttribute("userBean"));
                         oUser = oUserDao.getFromLogin(oUser);
                         if (oUser.getId() != 0) {
                             oRequest.getSession().setAttribute("userBean", oUser);

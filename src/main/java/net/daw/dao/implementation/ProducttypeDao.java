@@ -33,6 +33,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.HashMap;
 import net.daw.bean.implementation.ProducttypeBean;
+import net.daw.bean.implementation.UserBean;
 import net.daw.dao.publicinterface.TableDaoInterface;
 import net.daw.dao.publicinterface.ViewDaoInterface;
 import net.daw.data.implementation.MysqlData;
@@ -46,11 +47,13 @@ public class ProducttypeDao implements ViewDaoInterface<ProducttypeBean>, TableD
     private String strSQL = "select * from producttype where 1=1 ";
     private MysqlData oMysql = null;
     private Connection oConnection = null;
+    private UserBean oUserSecurity = null;
 
-    public ProducttypeDao(Connection oPooledConnection) throws Exception {
+    public ProducttypeDao(Connection oPooledConnection, UserBean oUserBean_security) throws Exception {
         try {
             oConnection = oPooledConnection;
             oMysql = new MysqlData(oConnection);
+            oUserSecurity = oUserBean_security;
         } catch (Exception ex) {
             Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
             throw new Exception();
@@ -81,7 +84,7 @@ public class ProducttypeDao implements ViewDaoInterface<ProducttypeBean>, TableD
             oResultSet = oMysql.getAllSQL(strSQL);
             while (oResultSet.next()) {
                 ProducttypeBean oProducttypeBean = new ProducttypeBean();
-                arrProducttype.add((ProducttypeBean) oProducttypeBean.fill(oResultSet, oConnection, expand));
+                arrProducttype.add((ProducttypeBean) oProducttypeBean.fill(oResultSet, oConnection, oUserSecurity, expand));
             }
             if (oResultSet != null) {
                 oResultSet.close();
@@ -107,7 +110,7 @@ public class ProducttypeDao implements ViewDaoInterface<ProducttypeBean>, TableD
             oResultSet = oMysql.getAllSQL(strSQL);
             while (oResultSet.next()) {
                 ProducttypeBean oProducttypeBean = new ProducttypeBean();
-                arrProducttype.add((ProducttypeBean) oProducttypeBean.fill(oResultSet, oConnection, expand));
+                arrProducttype.add((ProducttypeBean) oProducttypeBean.fill(oResultSet, oConnection, oUserSecurity, expand));
             }
         } catch (Exception ex) {
             Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
@@ -128,7 +131,7 @@ public class ProducttypeDao implements ViewDaoInterface<ProducttypeBean>, TableD
                 oResultSet = oMysql.getAllSQL(strSQL + " And id= " + oProducttypeBean.getId() + " ");
                 Boolean empty = true;
                 while (oResultSet.next()) {
-                    oProducttypeBean = (ProducttypeBean) oProducttypeBean.fill(oResultSet, oConnection, expand);
+                    oProducttypeBean = (ProducttypeBean) oProducttypeBean.fill(oResultSet, oConnection, oUserSecurity, expand);
                     empty = false;
                 }
                 if (empty) {

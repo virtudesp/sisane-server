@@ -48,11 +48,13 @@ public class UserDao implements ViewDaoInterface<UserBean>, TableDaoInterface<Us
     private String strSQL = "select * from user where 1=1 ";
     private MysqlData oMysql = null;
     private Connection oConnection = null;
+    private UserBean oUserSecurity = null;
 
-    public UserDao(Connection oPooledConnection) throws Exception {
+    public UserDao(Connection oPooledConnection, UserBean oUserBean_security) throws Exception {
         try {
             oConnection = oPooledConnection;
             oMysql = new MysqlData(oConnection);
+            oUserSecurity = oUserBean_security;
         } catch (Exception ex) {
             Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
             throw new Exception();
@@ -83,7 +85,7 @@ public class UserDao implements ViewDaoInterface<UserBean>, TableDaoInterface<Us
             oResultSet = oMysql.getAllSQL(strSQL);
             while (oResultSet.next()) {
                 UserBean oUserBean = new UserBean();
-                arrUser.add((UserBean) oUserBean.fill(oResultSet, oConnection, expand));
+                arrUser.add((UserBean) oUserBean.fill(oResultSet, oConnection, oUserSecurity, expand));
             }
             if (oResultSet != null) {
                 oResultSet.close();
@@ -109,7 +111,7 @@ public class UserDao implements ViewDaoInterface<UserBean>, TableDaoInterface<Us
             oResultSet = oMysql.getAllSQL(strSQL);
             while (oResultSet.next()) {
                 UserBean oUserBean = new UserBean();
-                arrUser.add((UserBean) oUserBean.fill(oResultSet, oConnection, expand));
+                arrUser.add((UserBean) oUserBean.fill(oResultSet, oConnection, oUserSecurity, expand));
             }
         } catch (Exception ex) {
             Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
@@ -130,7 +132,7 @@ public class UserDao implements ViewDaoInterface<UserBean>, TableDaoInterface<Us
                 oResultSet = oMysql.getAllSQL(strSQL + " And id= " + oUserBean.getId() + " ");
                 Boolean empty = true;
                 while (oResultSet.next()) {
-                    oUserBean = (UserBean) oUserBean.fill(oResultSet, oConnection, expand);
+                    oUserBean = (UserBean) oUserBean.fill(oResultSet, oConnection, oUserSecurity, expand);
                     empty = false;
                 }
                 if (empty) {

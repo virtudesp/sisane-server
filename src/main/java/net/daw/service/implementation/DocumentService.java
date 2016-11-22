@@ -77,7 +77,7 @@ public class DocumentService implements TableServiceInterface, ViewServiceInterf
             try {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
-                DocumentDao oDocumentDao = new DocumentDao(oConnection);
+                DocumentDao oDocumentDao = new DocumentDao(oConnection, (UserBean) oRequest.getSession().getAttribute("userBean"));
                 data = JsonMessage.getJsonExpression(200, Long.toString(oDocumentDao.getCount(alFilter)));
             } catch (Exception ex) {
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
@@ -106,7 +106,7 @@ public class DocumentService implements TableServiceInterface, ViewServiceInterf
             try {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
-                DocumentDao oDocumentDao = new DocumentDao(oConnection);
+                DocumentDao oDocumentDao = new DocumentDao(oConnection, (UserBean) oRequest.getSession().getAttribute("userBean"));
                 DocumentBean oDocumentBean = new DocumentBean(id);
                 oDocumentBean = oDocumentDao.get(oDocumentBean, AppConfigurationHelper.getJsonMsgDepth());
                 Gson gson = AppConfigurationHelper.getGson();
@@ -139,7 +139,7 @@ public class DocumentService implements TableServiceInterface, ViewServiceInterf
             try {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
-                DocumentDao oDocumentDao = new DocumentDao(oConnection);
+                DocumentDao oDocumentDao = new DocumentDao(oConnection, (UserBean) oRequest.getSession().getAttribute("userBean"));
                 ArrayList<DocumentBean> arrBeans = oDocumentDao.getAll(alFilter, hmOrder, AppConfigurationHelper.getJsonMsgDepth());
                 data = JsonMessage.getJsonExpression(200, AppConfigurationHelper.getGson().toJson(arrBeans));
             } catch (Exception ex) {
@@ -172,7 +172,7 @@ public class DocumentService implements TableServiceInterface, ViewServiceInterf
             try {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
-                DocumentDao oDocumentDao = new DocumentDao(oConnection);
+                DocumentDao oDocumentDao = new DocumentDao(oConnection, (UserBean) oRequest.getSession().getAttribute("userBean"));
                 List<DocumentBean> arrBeans = oDocumentDao.getPage(intRegsPerPag, intPage, alFilter, hmOrder, AppConfigurationHelper.getJsonMsgDepth());
                 data = JsonMessage.getJsonExpression(200, AppConfigurationHelper.getGson().toJson(arrBeans));
             } catch (Exception ex) {
@@ -203,7 +203,7 @@ public class DocumentService implements TableServiceInterface, ViewServiceInterf
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
                 oConnection.setAutoCommit(false);
-                DocumentDao oDocumentDao = new DocumentDao(oConnection);
+                DocumentDao oDocumentDao = new DocumentDao(oConnection, (UserBean) oRequest.getSession().getAttribute("userBean"));
                 data = JsonMessage.getJsonExpression(200, (String) oDocumentDao.remove(id).toString());
                 oConnection.commit();
             } catch (Exception ex) {
@@ -237,7 +237,7 @@ public class DocumentService implements TableServiceInterface, ViewServiceInterf
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
                 oConnection.setAutoCommit(false);
-                DocumentDao oDocumentDao = new DocumentDao(oConnection);
+                DocumentDao oDocumentDao = new DocumentDao(oConnection, (UserBean) oRequest.getSession().getAttribute("userBean"));
                 DocumentBean oDocumentBean = new DocumentBean();
                 oDocumentBean = AppConfigurationHelper.getGson().fromJson(jason, oDocumentBean.getClass());
                 if (oDocumentBean != null) {
@@ -273,7 +273,5 @@ public class DocumentService implements TableServiceInterface, ViewServiceInterf
             return new ReplyBean(401, JsonMessage.getJsonMsg(401, "Unauthorized"));
         }
     }
-
-  
 
 }

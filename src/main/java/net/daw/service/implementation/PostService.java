@@ -77,7 +77,7 @@ public class PostService implements TableServiceInterface, ViewServiceInterface 
             try {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
-                PostDao oPostDao = new PostDao(oConnection);
+                PostDao oPostDao = new PostDao(oConnection, (UserBean) oRequest.getSession().getAttribute("userBean"));
                 data = JsonMessage.getJsonExpression(200, Long.toString(oPostDao.getCount(alFilter)));
             } catch (Exception ex) {
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
@@ -106,7 +106,7 @@ public class PostService implements TableServiceInterface, ViewServiceInterface 
             try {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
-                PostDao oPostDao = new PostDao(oConnection);
+                PostDao oPostDao = new PostDao(oConnection, (UserBean) oRequest.getSession().getAttribute("userBean"));
                 PostBean oPostBean = new PostBean(id);
                 oPostBean = oPostDao.get(oPostBean, AppConfigurationHelper.getJsonMsgDepth());
                 Gson gson = AppConfigurationHelper.getGson();
@@ -139,7 +139,7 @@ public class PostService implements TableServiceInterface, ViewServiceInterface 
             try {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
-                PostDao oPostDao = new PostDao(oConnection);
+                PostDao oPostDao = new PostDao(oConnection, (UserBean) oRequest.getSession().getAttribute("userBean"));
                 ArrayList<PostBean> arrBeans = oPostDao.getAll(alFilter, hmOrder, AppConfigurationHelper.getJsonMsgDepth());
                 data = JsonMessage.getJsonExpression(200, AppConfigurationHelper.getGson().toJson(arrBeans));
             } catch (Exception ex) {
@@ -172,7 +172,7 @@ public class PostService implements TableServiceInterface, ViewServiceInterface 
             try {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
-                PostDao oPostDao = new PostDao(oConnection);
+                PostDao oPostDao = new PostDao(oConnection, (UserBean) oRequest.getSession().getAttribute("userBean"));
                 List<PostBean> arrBeans = oPostDao.getPage(intRegsPerPag, intPage, alFilter, hmOrder, AppConfigurationHelper.getJsonMsgDepth());
                 data = JsonMessage.getJsonExpression(200, AppConfigurationHelper.getGson().toJson(arrBeans));
             } catch (Exception ex) {
@@ -203,7 +203,7 @@ public class PostService implements TableServiceInterface, ViewServiceInterface 
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
                 oConnection.setAutoCommit(false);
-                PostDao oPostDao = new PostDao(oConnection);
+                PostDao oPostDao = new PostDao(oConnection, (UserBean) oRequest.getSession().getAttribute("userBean"));
                 data = JsonMessage.getJsonExpression(200, (String) oPostDao.remove(id).toString());
                 oConnection.commit();
             } catch (Exception ex) {
@@ -237,7 +237,7 @@ public class PostService implements TableServiceInterface, ViewServiceInterface 
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
                 oConnection.setAutoCommit(false);
-                PostDao oPostDao = new PostDao(oConnection);
+                PostDao oPostDao = new PostDao(oConnection, (UserBean) oRequest.getSession().getAttribute("userBean"));
                 PostBean oPostBean = new PostBean();
                 oPostBean = AppConfigurationHelper.getGson().fromJson(jason, oPostBean.getClass());
                 if (oPostBean != null) {
@@ -273,6 +273,5 @@ public class PostService implements TableServiceInterface, ViewServiceInterface 
             return new ReplyBean(401, JsonMessage.getJsonMsg(401, "Unauthorized"));
         }
     }
-   
 
 }

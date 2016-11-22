@@ -33,6 +33,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.HashMap;
 import net.daw.bean.implementation.PostBean;
+import net.daw.bean.implementation.UserBean;
 import net.daw.dao.publicinterface.TableDaoInterface;
 import net.daw.dao.publicinterface.ViewDaoInterface;
 import net.daw.data.implementation.MysqlData;
@@ -46,11 +47,13 @@ public class PostDao implements ViewDaoInterface<PostBean>, TableDaoInterface<Po
     private String strSQL = "select * from post where 1=1 ";
     private MysqlData oMysql = null;
     private Connection oConnection = null;
+    private UserBean oUserSecurity = null;
 
-    public PostDao(Connection oPooledConnection) throws Exception {
+    public PostDao(Connection oPooledConnection, UserBean oUserBean_security) throws Exception {
         try {
             oConnection = oPooledConnection;
             oMysql = new MysqlData(oConnection);
+            oUserSecurity = oUserBean_security;
         } catch (Exception ex) {
             Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
             throw new Exception();
@@ -81,7 +84,7 @@ public class PostDao implements ViewDaoInterface<PostBean>, TableDaoInterface<Po
             oResultSet = oMysql.getAllSQL(strSQL);
             while (oResultSet.next()) {
                 PostBean oPostBean = new PostBean();
-                arrPost.add(oPostBean.fill(oResultSet, oConnection, expand));
+                arrPost.add(oPostBean.fill(oResultSet, oConnection, oUserSecurity, expand));
             }
             if (oResultSet != null) {
                 oResultSet.close();
@@ -107,7 +110,7 @@ public class PostDao implements ViewDaoInterface<PostBean>, TableDaoInterface<Po
             oResultSet = oMysql.getAllSQL(strSQL);
             while (oResultSet.next()) {
                 PostBean oPostBean = new PostBean();
-                arrPost.add(oPostBean.fill(oResultSet, oConnection, expand));
+                arrPost.add(oPostBean.fill(oResultSet, oConnection, oUserSecurity, expand));
             }
         } catch (Exception ex) {
             Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
@@ -128,7 +131,7 @@ public class PostDao implements ViewDaoInterface<PostBean>, TableDaoInterface<Po
                 oResultSet = oMysql.getAllSQL(strSQL + " And id= " + oPostBean.getId() + " ");
                 Boolean empty = true;
                 while (oResultSet.next()) {
-                    oPostBean = oPostBean.fill(oResultSet, oConnection, expand);
+                    oPostBean = oPostBean.fill(oResultSet, oConnection, oUserSecurity, expand);
                     empty = false;
                 }
                 if (empty) {

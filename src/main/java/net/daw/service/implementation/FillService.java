@@ -370,7 +370,7 @@ public class FillService implements TableServiceInterface, ViewServiceInterface 
         oMysqlData.truncateTable("usertype");
 
         UsertypeBean oUsertypeBean = new UsertypeBean();
-        UsertypeDao oUsertypeDao = new UsertypeDao(oConnection);
+        UsertypeDao oUsertypeDao = new UsertypeDao(oConnection, (UserBean) oRequest.getSession().getAttribute("userBean"));
 
         oUsertypeBean.setDescription("Administrador");
         oUsertypeBean.setDiscount(0.0);
@@ -1010,7 +1010,7 @@ public class FillService implements TableServiceInterface, ViewServiceInterface 
         arrPass.add("Leon");
 
         UserBean oUserBean = new UserBean();
-        UserDao oUserDao = new UserDao(oConnection);
+        UserDao oUserDao = new UserDao(oConnection, (UserBean) oRequest.getSession().getAttribute("userBean"));
         oUserBean.setId(0);
         oUserBean.setName("Rafael Angel");
         oUserBean.setSurname("Aznar Aparici");
@@ -1090,7 +1090,7 @@ public class FillService implements TableServiceInterface, ViewServiceInterface 
         String segundo;
 
         ProducttypeBean oProducttypeBean = new ProducttypeBean();
-        ProducttypeDao oProducttypeDao = new ProducttypeDao(oConnection);
+        ProducttypeDao oProducttypeDao = new ProducttypeDao(oConnection, (UserBean) oRequest.getSession().getAttribute("userBean"));
 
         Integer contador = 0;
         Iterator<String> iterador1 = uno.listIterator();
@@ -1148,7 +1148,7 @@ public class FillService implements TableServiceInterface, ViewServiceInterface 
         tres.add("de mano");
 
         ProductBean oProductBean = new ProductBean();
-        ProductDao oProductDao = new ProductDao(oConnection);
+        ProductDao oProductDao = new ProductDao(oConnection, (UserBean) oRequest.getSession().getAttribute("userBean"));
         String tercero;
         contador = 0;
         iterador1 = uno.listIterator();
@@ -1180,7 +1180,7 @@ public class FillService implements TableServiceInterface, ViewServiceInterface 
         }
 
         DocumenttypeBean oDocumenttypeBean = new DocumenttypeBean();
-        DocumenttypeDao oDocumenttypeDao = new DocumenttypeDao(oConnection);
+        DocumenttypeDao oDocumenttypeDao = new DocumenttypeDao(oConnection, (UserBean) oRequest.getSession().getAttribute("userBean"));
 
         oDocumenttypeBean.setId(0);
         oDocumenttypeBean.setDescription("Pendiente");
@@ -1220,7 +1220,7 @@ public class FillService implements TableServiceInterface, ViewServiceInterface 
 
         //---------DOCUMENT----------
         DocumentBean oDocumentBean = new DocumentBean();
-        DocumentDao oDocumentDao = new DocumentDao(oConnection);
+        DocumentDao oDocumentDao = new DocumentDao(oConnection, (UserBean) oRequest.getSession().getAttribute("userBean"));
         for (int i = 1; i <= 100; i++) {
             oDocumentBean.setId(0);
             oDocumentBean.setDescription("Factura");
@@ -1237,7 +1237,7 @@ public class FillService implements TableServiceInterface, ViewServiceInterface 
         }
         //---------PURCHASE----------
         PurchaseBean oPurchaseBean = new PurchaseBean();
-        PurchaseDao oPurchaseDao = new PurchaseDao(oConnection);
+        PurchaseDao oPurchaseDao = new PurchaseDao(oConnection, (UserBean) oRequest.getSession().getAttribute("userBean"));
         for (int i = 1; i <= 3000; i++) {
             oPurchaseBean.setId(0);
             oPurchaseBean.setDate(getRandDate(getRandomInt(0, 5000)));
@@ -1255,7 +1255,7 @@ public class FillService implements TableServiceInterface, ViewServiceInterface 
 
         //---------POST----------
         PostBean oPostBean = new PostBean();
-        PostDao oPostDao = new PostDao(oConnection);
+        PostDao oPostDao = new PostDao(oConnection, (UserBean) oRequest.getSession().getAttribute("userBean"));
         for (int i = 1; i <= 3000; i++) {
             oPostBean.setId(0);
             oPostBean.setTitle(getText(1));

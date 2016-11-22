@@ -103,7 +103,7 @@ public class ProducttypeBean implements GenericBean {
     }
 
     @Override
-    public ProducttypeBean fill(ResultSet oResultSet, Connection pooledConnection, Integer expand) throws SQLException, Exception {
+    public ProducttypeBean fill(ResultSet oResultSet, Connection pooledConnection, UserBean oUserBean_security, Integer expand) throws SQLException, Exception {
         this.setId(oResultSet.getInt("id"));
         this.setDescription(oResultSet.getString("description"));
         this.setDiscount(oResultSet.getDouble("discount"));

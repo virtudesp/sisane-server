@@ -103,7 +103,7 @@ public class UsertypeBean implements GenericBean {
     }
 
     @Override
-    public UsertypeBean fill(ResultSet oResultSet, Connection pooledConnection, Integer expand) throws SQLException, Exception {
+    public UsertypeBean fill(ResultSet oResultSet, Connection pooledConnection, UserBean oUserBean_security, Integer expand) throws SQLException, Exception {
         this.setId(oResultSet.getInt("id"));
         this.setDescription(oResultSet.getString("description"));
         this.setDiscount(oResultSet.getDouble("discount"));

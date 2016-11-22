@@ -84,7 +84,7 @@ public class View02Bean implements GenericBean {
     }
 
     @Override
-    public View02Bean fill(ResultSet oResultSet, Connection pooledConnection, Integer expand) throws SQLException, Exception {
+    public View02Bean fill(ResultSet oResultSet, Connection pooledConnection, UserBean oUserBean_security, Integer expand) throws SQLException, Exception {
         this.setEtiquetas(oResultSet.getString("etiquetas"));
         this.setNumetiquetas(oResultSet.getInt("numetiquetas"));
 

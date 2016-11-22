@@ -32,6 +32,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.HashMap;
+import net.daw.bean.implementation.UserBean;
 import net.daw.bean.implementation.View01Bean;
 import net.daw.dao.publicinterface.ViewDaoInterface;
 import net.daw.data.implementation.MysqlData;
@@ -44,11 +45,13 @@ public class View01Dao implements ViewDaoInterface<View01Bean> {
     private String strSQL = "select etiquetas, id_usuario, count(id) as numetiquetas from documento where publicado=0 group by etiquetas, id_usuario";
     private MysqlData oMysql = null;
     private Connection oConnection = null;
+    private UserBean oUserSecurity = null;
 
-    public View01Dao(Connection oPooledConnection) throws Exception {
+    public View01Dao(Connection oPooledConnection, UserBean oUserBean_security) throws Exception {
         try {
             oConnection = oPooledConnection;
             oMysql = new MysqlData(oConnection);
+            oUserSecurity = oUserBean_security;
         } catch (Exception ex) {
             Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
             throw new Exception();
@@ -79,7 +82,7 @@ public class View01Dao implements ViewDaoInterface<View01Bean> {
             oResultSet = oMysql.getAllSQL(strSQL);
             while (oResultSet.next()) {
                 View01Bean oBean = new View01Bean();
-                oBeanList.add(oBean.fill(oResultSet, oConnection, expand));
+                oBeanList.add(oBean.fill(oResultSet, oConnection, oUserSecurity, expand));
             }
         } catch (Exception ex) {
             Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
@@ -101,7 +104,7 @@ public class View01Dao implements ViewDaoInterface<View01Bean> {
             oResultSet = oMysql.getAllSQL(strSQL);
             while (oResultSet.next()) {
                 View01Bean oBean = new View01Bean();
-                arrDocumento.add(oBean.fill(oResultSet, oConnection, expand));
+                arrDocumento.add(oBean.fill(oResultSet, oConnection, oUserSecurity, expand));
             }
         } catch (Exception ex) {
             Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);

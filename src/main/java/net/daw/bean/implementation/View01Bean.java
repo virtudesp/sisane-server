@@ -106,12 +106,12 @@ public class View01Bean implements GenericBean {
     }
 
     @Override
-    public View01Bean fill(ResultSet oResultSet, Connection pooledConnection, Integer expand) throws SQLException, Exception {
+    public View01Bean fill(ResultSet oResultSet, Connection pooledConnection, UserBean oUserBean_security, Integer expand) throws SQLException, Exception {
         this.setEtiquetas(oResultSet.getString("etiquetas"));
         this.setNumetiquetas(oResultSet.getInt("numetiquetas"));
         if (expand > 0) {
             UserBean oUserBean = new UserBean();
-            UserDao oUserDao = new UserDao(pooledConnection);
+            UserDao oUserDao = new UserDao(pooledConnection, oUserBean_security);
             oUserBean.setId(oResultSet.getInt("id_usuario"));
             oUserBean = oUserDao.get(oUserBean, expand - 1);
             this.setObj_usuario(oUserBean);
