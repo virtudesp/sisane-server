@@ -39,6 +39,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import net.daw.connection.publicinterface.ConnectionInterface;
 import static net.daw.helper.statics.AppConfigurationHelper.getSourceConnection;
+import net.daw.helper.statics.ConnectionClassHelper;
 import net.daw.helper.statics.EstadoHelper;
 import net.daw.helper.statics.EstadoHelper.Tipo_estado;
 import net.daw.helper.statics.Log4j;
@@ -97,12 +98,12 @@ public class json extends HttpServlet {
                     oDataConnectionSource = getSourceConnection();
                     oConnection = oDataConnectionSource.newConnection();
                     if (oConnection.isValid(10)) {
-                        sendResponseHtml(request, response, "bauxer server by rafael aznar", "<p>the server is up and running on " + request.getLocalName() + ":" + request.getLocalPort() + "</p><p>Database access OK</p>");
+                        sendResponseHtml(request, response, "bauxer server by rafael aznar", "<p>the server is up and running on " + request.getLocalName() + ":" + request.getLocalPort() + "</p><p>Database name: " + ConnectionClassHelper.getDatabaseName() + "</p><p>Database access OK</p>");
                     } else {
-                        sendResponseHtml(request, response, "bauxer server by rafael aznar", "<p>the server is up and running on " + request.getLocalName() + ":" + request.getLocalPort() + "</p><p>Database access timeout KO</p>");
+                        sendResponseHtml(request, response, "bauxer server by rafael aznar", "<p>the server is up and running on " + request.getLocalName() + ":" + request.getLocalPort() + "</p><p>Database name: " + ConnectionClassHelper.getDatabaseName() + "</p><p>Database access timeout KO</p>");
                     }
                 } catch (Exception ex) {
-                    sendResponseHtml(request, response, "bauxer server by rafael aznar", "the server is up and running on " + request.getLocalName() + ":" + request.getLocalPort() + "</p><p>Database access KO</p>");
+                    sendResponseHtml(request, response, "bauxer server by rafael aznar", "the server is up and running on " + request.getLocalName() + ":" + request.getLocalPort() + "</p><p>Database name: " + ConnectionClassHelper.getDatabaseName() + "</p><p>Database access KO</p>");
                 } finally {
                     if (oConnection != null) {
                         oConnection.close();
