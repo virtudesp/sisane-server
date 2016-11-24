@@ -55,11 +55,8 @@ import net.daw.dao.implementation.PurchaseDao;
 import net.daw.dao.implementation.UserDao;
 import net.daw.dao.implementation.UsertypeDao;
 import net.daw.data.implementation.MysqlData;
-
 import static net.daw.helper.statics.AppConfigurationHelper.getSourceConnection;
-import net.daw.helper.statics.FilterBeanHelper;
 import net.daw.helper.statics.JsonMessage;
-import net.daw.helper.statics.ParameterCook;
 import net.daw.service.publicinterface.TableServiceInterface;
 import net.daw.service.publicinterface.ViewServiceInterface;
 

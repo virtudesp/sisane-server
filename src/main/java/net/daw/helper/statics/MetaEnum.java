@@ -28,10 +28,7 @@
  */
 package net.daw.helper.statics;
 
-/**
- *
- * @author raznara
- */
+
 public class MetaEnum {
 
     public static enum FieldType {

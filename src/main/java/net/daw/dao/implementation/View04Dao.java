@@ -34,7 +34,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import net.daw.bean.implementation.UserBean;
 import net.daw.bean.implementation.View04Bean;
-import net.daw.bean.implementation.View04Bean;
 import net.daw.dao.publicinterface.ViewDaoInterface;
 import net.daw.data.implementation.MysqlData;
 import net.daw.helper.statics.FilterBeanHelper;
