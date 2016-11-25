@@ -34,6 +34,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>bauxer server</title>
+        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
     </head>
     <body>
         <h1><%=request.getAttribute("title")%></h1>
