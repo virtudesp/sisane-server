@@ -214,7 +214,7 @@ public class PostBean implements GenericBean {
         strPairs += "alta=" + EncodingUtilHelper.quotate(format.format(creation)) + ",";
         strPairs += "cambio=" + EncodingUtilHelper.quotate(format.format(modification)) + ",";
         strPairs += "hits=" + hits + ",";
-        strPairs += "id_usuario=" + id_user + ",";
+        strPairs += "id_user=" + id_user + ",";
         strPairs += "etiquetas=" + EncodingUtilHelper.quotate(labels) + ",";
         strPairs += "publicado=" + published + ",";
         strPairs += "portada=" + frontpaged + ",";
@@ -237,11 +237,11 @@ public class PostBean implements GenericBean {
         if (expand > 0) {
             UserBean oUserBean = new UserBean();
             UserDao oUserDao = new UserDao(pooledConnection, oUserBean_security);
-            oUserBean.setId(oResultSet.getInt("id_usuario"));
+            oUserBean.setId(oResultSet.getInt("id_user"));
             oUserBean = oUserDao.get(oUserBean, expand - 1);
             this.setObj_user(oUserBean);
         } else {
-            this.setId_user(oResultSet.getInt("id_usuario"));
+            this.setId_user(oResultSet.getInt("id_user"));
         }
 
         return this;
