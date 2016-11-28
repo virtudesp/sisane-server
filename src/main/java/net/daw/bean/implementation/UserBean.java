@@ -240,7 +240,7 @@ public class UserBean implements GenericBean {
         strPairs += "state=" + EncodingUtilHelper.quotate(state) + ",";
         strPairs += "country=" + EncodingUtilHelper.quotate(country) + ",";
         strPairs += "email=" + EncodingUtilHelper.quotate(email) + ",";
-        strPairs += "phone=" + EncodingUtilHelper.quotate(phone);
+        strPairs += "phone=" + EncodingUtilHelper.quotate(phone) + ",";
         strPairs += "id_usertype=" + id_usertype;
         return strPairs;
     }
