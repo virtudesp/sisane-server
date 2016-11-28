@@ -209,16 +209,16 @@ public class PostBean implements GenericBean {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         String strPairs = "";
         //strPairs += "id=" + id + ",";
-        strPairs += "titulo=" + EncodingUtilHelper.quotate(title) + ",";
-        strPairs += "contenido=" + EncodingUtilHelper.quotate(content) + ",";
-        strPairs += "alta=" + EncodingUtilHelper.quotate(format.format(creation)) + ",";
-        strPairs += "cambio=" + EncodingUtilHelper.quotate(format.format(modification)) + ",";
+        strPairs += "title=" + EncodingUtilHelper.quotate(title) + ",";
+        strPairs += "content=" + EncodingUtilHelper.quotate(content) + ",";
+        strPairs += "creation=" + EncodingUtilHelper.quotate(format.format(creation)) + ",";
+        strPairs += "modification=" + EncodingUtilHelper.quotate(format.format(modification)) + ",";
         strPairs += "hits=" + hits + ",";
         strPairs += "id_user=" + id_user + ",";
-        strPairs += "etiquetas=" + EncodingUtilHelper.quotate(labels) + ",";
-        strPairs += "publicado=" + published + ",";
-        strPairs += "portada=" + frontpaged + ",";
-        strPairs += "destacado=" + emphasized;
+        strPairs += "labels=" + EncodingUtilHelper.quotate(labels) + ",";
+        strPairs += "published=" + published + ",";
+        strPairs += "frontpaged=" + frontpaged + ",";
+        strPairs += "emphasized=" + emphasized;
         return strPairs;
     }
 
