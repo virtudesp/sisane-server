@@ -1,12 +1,12 @@
 /*
  * Copyright (c) 2016 by Rafael Angel Aznar Aparici (rafaaznar at gmail dot com)
  * 
- * bauxer server: Helps you to develop easily AJAX web applications 
+ * sisane-server: Helps you to develop easily AJAX web applications 
  *                   by copying and modifying this Java Server.
  *
- * Sources at https://github.com/rafaelaznar/bauxer
+ * Sources at https://github.com/rafaelaznar/sisane-server
  * 
- * bauxer server is distributed under the MIT License (MIT)
+ * sisane-server is distributed under the MIT License (MIT)
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -37,7 +37,7 @@ public class Log4jInit extends HttpServlet {
     public void init() {
 
         String prefix = getServletContext().getRealPath("/");
-        String file = getInitParameter("log4j-bauxer");
+        String file = getInitParameter("log4j-sisane-server");
 
         if (file != null) {
             PropertyConfigurator.configure(prefix + file);
