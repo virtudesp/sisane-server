@@ -75,7 +75,7 @@ public class UserService implements TableServiceInterface, ViewServiceInterface 
             Connection oConnection = null;
             ConnectionInterface oDataConnectionSource = null;
             try {
-                
+
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
                 UserDao oUserDao = new UserDao(oConnection, (PuserBean) oRequest.getSession().getAttribute("userBean"));
@@ -297,7 +297,7 @@ public class UserService implements TableServiceInterface, ViewServiceInterface 
                         oPuser = oUserDao.getFromLogin(oPuser);
                         if (oPuser.getId() != 0) {
                             strCode = "200";
-                            oRequest.getSession().setAttribute("userBean", oPuser);                            
+                            oRequest.getSession().setAttribute("userBean", oPuser);
                         } else {
                             strCode = "403";
                             strAnswer = "User or password incorrect";
@@ -344,7 +344,7 @@ public class UserService implements TableServiceInterface, ViewServiceInterface 
         } else {
             return new ReplyBean(200, JsonMessage.getJsonExpression(200, AppConfigurationHelper.getGson().toJson(oPuserBean)));
         }
-    }   
+    }
 
     public ReplyBean sessionuserlevel() {
         String strAnswer = null;
@@ -354,6 +354,47 @@ public class UserService implements TableServiceInterface, ViewServiceInterface 
             return new ReplyBean(403, JsonMessage.getJsonMsg(403, "Unauthorized"));
         } else {
             return new ReplyBean(200, JsonMessage.getJsonExpression(200, oUserBean.getId_usertype().toString()));
+        }
+    }
+
+    public ReplyBean passchange() throws Exception {
+        if (this.checkpermission("passchange")) {            
+            String oldPass = oRequest.getParameter("old");
+            String newPass = oRequest.getParameter("new");
+            ReplyBean oReplyBean = new ReplyBean();
+            Connection oConnection = null;
+            ConnectionInterface oDataConnectionSource = null;
+            try {
+                oDataConnectionSource = getSourceConnection();
+                oConnection = oDataConnectionSource.newConnection();
+                oConnection.setAutoCommit(false);
+                UserDao oUserDao = new UserDao(oConnection, (PuserBean) oRequest.getSession().getAttribute("userBean"));
+                Integer iResult = oUserDao.passchange(oldPass, newPass);
+                if (iResult >= 1) {
+                    oReplyBean.setCode(200);
+                    oReplyBean.setJson(JsonMessage.getJsonExpression(200, iResult.toString()));
+                } else {
+                    oReplyBean.setCode(500);
+                    oReplyBean.setJson(JsonMessage.getJsonMsg(500, "Error during changing password"));
+                }
+                oConnection.commit();
+            } catch (Exception ex) {
+                if (oConnection != null) {
+                    oConnection.rollback();
+                }
+                Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
+                throw new Exception();
+            } finally {
+                if (oConnection != null) {
+                    oConnection.close();
+                }
+                if (oDataConnectionSource != null) {
+                    oDataConnectionSource.disposeConnection();
+                }
+            }
+            return oReplyBean;
+        } else {
+            return new ReplyBean(401, JsonMessage.getJsonMsg(401, "Unauthorized"));
         }
     }
 

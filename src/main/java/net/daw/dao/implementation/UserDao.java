@@ -38,6 +38,7 @@ import net.daw.dao.publicinterface.TableDaoInterface;
 import net.daw.dao.publicinterface.ViewDaoInterface;
 import net.daw.data.implementation.MysqlData;
 import net.daw.helper.statics.AppConfigurationHelper;
+import net.daw.helper.statics.EncodingUtilHelper;
 import net.daw.helper.statics.FilterBeanHelper;
 import net.daw.helper.statics.Log4j;
 import net.daw.helper.statics.SqlBuilder;
@@ -236,6 +237,7 @@ public class UserDao implements ViewDaoInterface<UserBean>, TableDaoInterface<Us
     }
 
     public Integer setP(PuserBean oPuserBean) throws Exception {
+        //only 4 fill service
         Integer iResult = null;
         try {
             if (oPuserBean.getId() == 0) {
@@ -249,6 +251,21 @@ public class UserDao implements ViewDaoInterface<UserBean>, TableDaoInterface<Us
                 strSQL += " WHERE id=" + oPuserBean.getId();
                 iResult = oMysql.executeUpdateSQL(strSQL);
             }
+        } catch (Exception ex) {
+            Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
+            throw new Exception();
+        }
+        return iResult;
+    }
+
+    public Integer passchange(String oldPassword, String newPassword) throws Exception {
+        Integer iResult = null;
+        try {
+            strSQL = "UPDATE user";
+            strSQL += " SET password = " + EncodingUtilHelper.quotate(newPassword);
+            strSQL += " WHERE id=" + oPuserSecurity.getId();
+            strSQL += " and password=" + EncodingUtilHelper.quotate(oldPassword);
+            iResult = oMysql.executeUpdateSQL(strSQL);
         } catch (Exception ex) {
             Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
             throw new Exception();
