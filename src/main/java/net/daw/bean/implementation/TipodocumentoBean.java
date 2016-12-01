@@ -16,17 +16,17 @@ import net.daw.helper.statics.EncodingUtilHelper;
  * @author MatarredonaDS
  */
 
-public class TipousuarioBean implements GenericBean {
-
+public class TipodocumentoBean implements GenericBean {
+    
     @Expose
     private Integer id = 0;
     @Expose
     private String descripcion;
     
-    public TipousuarioBean() {
+    public TipodocumentoBean() {
     }
 
-    public TipousuarioBean(Integer id) {
+    public TipodocumentoBean(Integer id) {
         this.id = id;
     }
     
@@ -71,11 +71,10 @@ public class TipousuarioBean implements GenericBean {
     }
 
     @Override
-    public TipousuarioBean fill(ResultSet oResultSet, Connection pooledConnection, PuserBean oPuserBean_security, Integer expand) throws SQLException, Exception {
+    public TipodocumentoBean fill(ResultSet oResultSet, Connection pooledConnection, PuserBean oPuserBean_security, Integer expand) throws SQLException, Exception {
         this.setId(oResultSet.getInt("id"));
         this.setDescripcion(oResultSet.getString("descripcion"));
         
         return this;
     }
-    
 }

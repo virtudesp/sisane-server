@@ -11,11 +11,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
-import net.daw.bean.implementation.TipousuarioBean;
+import net.daw.bean.implementation.TipodocumentoBean;
 import net.daw.bean.implementation.PuserBean;
 import net.daw.bean.implementation.ReplyBean;
 import net.daw.connection.publicinterface.ConnectionInterface;
-import net.daw.dao.implementation.TipousuarioDao;
+import net.daw.dao.implementation.TipodocumentoDao;
 import net.daw.helper.statics.AppConfigurationHelper;
 import static net.daw.helper.statics.AppConfigurationHelper.getSourceConnection;
 import net.daw.helper.statics.FilterBeanHelper;
@@ -29,14 +29,14 @@ import net.daw.service.publicinterface.ViewServiceInterface;
  * @author MatarredonaDS
  */
 
-public class TipousuarioService implements TableServiceInterface, ViewServiceInterface {
-
+public class TipodocumentoService implements TableServiceInterface, ViewServiceInterface {
+    
     protected HttpServletRequest oRequest = null;
 
-    public TipousuarioService(HttpServletRequest request) {
+    public TipodocumentoService(HttpServletRequest request) {
         oRequest = request;
     }
-    
+
     private Boolean checkpermission(String strMethodName) throws Exception {
         PuserBean oPuserBean = (PuserBean) oRequest.getSession().getAttribute("userBean");
         if (oPuserBean != null) {
@@ -56,11 +56,11 @@ public class TipousuarioService implements TableServiceInterface, ViewServiceInt
             try {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
-                TipousuarioDao oTipousuarioDao = new TipousuarioDao(oConnection, (PuserBean) oRequest.getSession().getAttribute("userBean"));
-                TipousuarioBean oTipousuarioBean = new TipousuarioBean(id);
-                oTipousuarioBean = oTipousuarioDao.get(oTipousuarioBean, AppConfigurationHelper.getJsonMsgDepth());
+                TipodocumentoDao oTipodocumentoDao = new TipodocumentoDao(oConnection, (PuserBean) oRequest.getSession().getAttribute("userBean"));
+                TipodocumentoBean oTipodocumentoBean = new TipodocumentoBean(id);
+                oTipodocumentoBean = oTipodocumentoDao.get(oTipodocumentoBean, AppConfigurationHelper.getJsonMsgDepth());
                 Gson gson = AppConfigurationHelper.getGson();
-                data = JsonMessage.getJsonExpression(200, AppConfigurationHelper.getGson().toJson(oTipousuarioBean));
+                data = JsonMessage.getJsonExpression(200, AppConfigurationHelper.getGson().toJson(oTipodocumentoBean));
             } catch (Exception ex) {
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
                 throw new Exception();
@@ -89,8 +89,8 @@ public class TipousuarioService implements TableServiceInterface, ViewServiceInt
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
                 oConnection.setAutoCommit(false);
-                TipousuarioDao oTipousuarioDao = new TipousuarioDao(oConnection, (PuserBean) oRequest.getSession().getAttribute("userBean"));
-                data = JsonMessage.getJsonExpression(200, (String) oTipousuarioDao.remove(id).toString());
+                TipodocumentoDao oTipodocumentoDao = new TipodocumentoDao(oConnection, (PuserBean) oRequest.getSession().getAttribute("userBean"));
+                data = JsonMessage.getJsonExpression(200, (String) oTipodocumentoDao.remove(id).toString());
                 oConnection.commit();
             } catch (Exception ex) {
                 if (oConnection != null) {
@@ -123,11 +123,11 @@ public class TipousuarioService implements TableServiceInterface, ViewServiceInt
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
                 oConnection.setAutoCommit(false);
-                TipousuarioDao oTipousuarioDao = new TipousuarioDao(oConnection, (PuserBean) oRequest.getSession().getAttribute("userBean"));
-                TipousuarioBean oTipousuarioBean = new TipousuarioBean();
-                oTipousuarioBean = AppConfigurationHelper.getGson().fromJson(jason, oTipousuarioBean.getClass());
-                if (oTipousuarioBean != null) {
-                    Integer iResult = oTipousuarioDao.set(oTipousuarioBean);
+                TipodocumentoDao oTipodocumentoDao = new TipodocumentoDao(oConnection, (PuserBean) oRequest.getSession().getAttribute("userBean"));
+                TipodocumentoBean oTipodocumentoBean = new TipodocumentoBean();
+                oTipodocumentoBean = AppConfigurationHelper.getGson().fromJson(jason, oTipodocumentoBean.getClass());
+                if (oTipodocumentoBean != null) {
+                    Integer iResult = oTipodocumentoDao.set(oTipodocumentoBean);
                     if (iResult >= 1) {
                         oReplyBean.setCode(200);
                         oReplyBean.setJson(JsonMessage.getJsonExpression(200, iResult.toString()));
@@ -171,8 +171,8 @@ public class TipousuarioService implements TableServiceInterface, ViewServiceInt
             try {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
-                TipousuarioDao oTipousuarioDao = new TipousuarioDao(oConnection, (PuserBean) oRequest.getSession().getAttribute("userBean"));
-                ArrayList<TipousuarioBean> arrBeans = oTipousuarioDao.getAll(alFilter, hmOrder, AppConfigurationHelper.getJsonMsgDepth());
+                TipodocumentoDao oTipodocumentoDao = new TipodocumentoDao(oConnection, (PuserBean) oRequest.getSession().getAttribute("userBean"));
+                ArrayList<TipodocumentoBean> arrBeans = oTipodocumentoDao.getAll(alFilter, hmOrder, AppConfigurationHelper.getJsonMsgDepth());
                 data = JsonMessage.getJsonExpression(200, AppConfigurationHelper.getGson().toJson(arrBeans));
             } catch (Exception ex) {
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
@@ -204,8 +204,8 @@ public class TipousuarioService implements TableServiceInterface, ViewServiceInt
             try {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
-                TipousuarioDao oTipousuarioDao = new TipousuarioDao(oConnection, (PuserBean) oRequest.getSession().getAttribute("userBean"));
-                List<TipousuarioBean> arrBeans = oTipousuarioDao.getPage(intRegsPerPag, intPage, alFilter, hmOrder, AppConfigurationHelper.getJsonMsgDepth());
+                TipodocumentoDao oTipodocumentoDao = new TipodocumentoDao(oConnection, (PuserBean) oRequest.getSession().getAttribute("userBean"));
+                List<TipodocumentoBean> arrBeans = oTipodocumentoDao.getPage(intRegsPerPag, intPage, alFilter, hmOrder, AppConfigurationHelper.getJsonMsgDepth());
                 data = JsonMessage.getJsonExpression(200, AppConfigurationHelper.getGson().toJson(arrBeans));
             } catch (Exception ex) {
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
@@ -234,8 +234,8 @@ public class TipousuarioService implements TableServiceInterface, ViewServiceInt
             try {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
-                TipousuarioDao oTipousuarioDao = new TipousuarioDao(oConnection, (PuserBean) oRequest.getSession().getAttribute("userBean"));
-                data = JsonMessage.getJsonExpression(200, Long.toString(oTipousuarioDao.getCount(alFilter)));
+                TipodocumentoDao oTipodocumentoDao = new TipodocumentoDao(oConnection, (PuserBean) oRequest.getSession().getAttribute("userBean"));
+                data = JsonMessage.getJsonExpression(200, Long.toString(oTipodocumentoDao.getCount(alFilter)));
             } catch (Exception ex) {
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
                 throw new Exception();
