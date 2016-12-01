@@ -34,6 +34,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
+import net.daw.bean.implementation.PuserBean;
 import net.daw.bean.implementation.UsertypeBean;
 import net.daw.bean.implementation.ReplyBean;
 import net.daw.bean.implementation.UserBean;
@@ -57,8 +58,8 @@ public class UsertypeService implements TableServiceInterface, ViewServiceInterf
     }
 
     private Boolean checkpermission(String strMethodName) throws Exception {
-        UserBean oUserBean = (UserBean) oRequest.getSession().getAttribute("userBean");
-        if (oUserBean != null) {
+        PuserBean oPuserBean = (PuserBean) oRequest.getSession().getAttribute("userBean");
+        if (oPuserBean != null) {
             return true;
         } else {
             return false;
@@ -75,7 +76,7 @@ public class UsertypeService implements TableServiceInterface, ViewServiceInterf
             try {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
-                UsertypeDao oUsertypeDao = new UsertypeDao(oConnection, (UserBean) oRequest.getSession().getAttribute("userBean"));
+                UsertypeDao oUsertypeDao = new UsertypeDao(oConnection, (PuserBean) oRequest.getSession().getAttribute("userBean"));
                 data = JsonMessage.getJsonExpression(200, Long.toString(oUsertypeDao.getCount(alFilter)));
             } catch (Exception ex) {
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
@@ -104,7 +105,7 @@ public class UsertypeService implements TableServiceInterface, ViewServiceInterf
             try {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
-                UsertypeDao oUsertypeDao = new UsertypeDao(oConnection, (UserBean) oRequest.getSession().getAttribute("userBean"));
+                UsertypeDao oUsertypeDao = new UsertypeDao(oConnection, (PuserBean) oRequest.getSession().getAttribute("userBean"));
                 UsertypeBean oUsertypeBean = new UsertypeBean(id);
                 oUsertypeBean = oUsertypeDao.get(oUsertypeBean, AppConfigurationHelper.getJsonMsgDepth());
                 Gson gson = AppConfigurationHelper.getGson();
@@ -137,7 +138,7 @@ public class UsertypeService implements TableServiceInterface, ViewServiceInterf
             try {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
-                UsertypeDao oUsertypeDao = new UsertypeDao(oConnection, (UserBean) oRequest.getSession().getAttribute("userBean"));
+                UsertypeDao oUsertypeDao = new UsertypeDao(oConnection, (PuserBean) oRequest.getSession().getAttribute("userBean"));
                 ArrayList<UsertypeBean> arrBeans = oUsertypeDao.getAll(alFilter, hmOrder, AppConfigurationHelper.getJsonMsgDepth());
                 data = JsonMessage.getJsonExpression(200, AppConfigurationHelper.getGson().toJson(arrBeans));
             } catch (Exception ex) {
@@ -170,7 +171,7 @@ public class UsertypeService implements TableServiceInterface, ViewServiceInterf
             try {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
-                UsertypeDao oUsertypeDao = new UsertypeDao(oConnection, (UserBean) oRequest.getSession().getAttribute("userBean"));
+                UsertypeDao oUsertypeDao = new UsertypeDao(oConnection, (PuserBean) oRequest.getSession().getAttribute("userBean"));
                 List<UsertypeBean> arrBeans = oUsertypeDao.getPage(intRegsPerPag, intPage, alFilter, hmOrder, AppConfigurationHelper.getJsonMsgDepth());
                 data = JsonMessage.getJsonExpression(200, AppConfigurationHelper.getGson().toJson(arrBeans));
             } catch (Exception ex) {
@@ -201,7 +202,7 @@ public class UsertypeService implements TableServiceInterface, ViewServiceInterf
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
                 oConnection.setAutoCommit(false);
-                UsertypeDao oUsertypeDao = new UsertypeDao(oConnection, (UserBean) oRequest.getSession().getAttribute("userBean"));
+                UsertypeDao oUsertypeDao = new UsertypeDao(oConnection, (PuserBean) oRequest.getSession().getAttribute("userBean"));
                 data = JsonMessage.getJsonExpression(200, (String) oUsertypeDao.remove(id).toString());
                 oConnection.commit();
             } catch (Exception ex) {
@@ -235,7 +236,7 @@ public class UsertypeService implements TableServiceInterface, ViewServiceInterf
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
                 oConnection.setAutoCommit(false);
-                UsertypeDao oUsertypeDao = new UsertypeDao(oConnection, (UserBean) oRequest.getSession().getAttribute("userBean"));
+                UsertypeDao oUsertypeDao = new UsertypeDao(oConnection, (PuserBean) oRequest.getSession().getAttribute("userBean"));
                 UsertypeBean oUsertypeBean = new UsertypeBean();
                 oUsertypeBean = AppConfigurationHelper.getGson().fromJson(jason, oUsertypeBean.getClass());
                 if (oUsertypeBean != null) {

@@ -32,7 +32,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.HashMap;
-import net.daw.bean.implementation.UserBean;
+import net.daw.bean.implementation.PuserBean;
 import net.daw.bean.implementation.View02Bean;
 import net.daw.dao.publicinterface.ViewDaoInterface;
 import net.daw.data.implementation.MysqlData;
@@ -45,13 +45,13 @@ public class View02Dao implements ViewDaoInterface<View02Bean> {
     private String strSQL = "select etiquetas, count(id) as numetiquetas from documento where publicado=0 group by etiquetas";
     private MysqlData oMysql = null;
     private Connection oConnection = null;
-    private UserBean oUserSecurity = null;
+    private PuserBean oPuserSecurity = null;
 
-    public View02Dao(Connection oPooledConnection, UserBean oUserBean_security) throws Exception {
+    public View02Dao(Connection oPooledConnection, PuserBean oPuserBean_security) throws Exception {
         try {
             oConnection = oPooledConnection;
             oMysql = new MysqlData(oConnection);
-            oUserSecurity = oUserBean_security;
+            oPuserSecurity = oPuserBean_security;
         } catch (Exception ex) {
             Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
             throw new Exception();
@@ -82,7 +82,7 @@ public class View02Dao implements ViewDaoInterface<View02Bean> {
             oResultSet = oMysql.getAllSQL(strSQL);
             while (oResultSet.next()) {
                 View02Bean oBean = new View02Bean();
-                oBeanList.add(oBean.fill(oResultSet, oConnection, oUserSecurity, expand));
+                oBeanList.add(oBean.fill(oResultSet, oConnection, oPuserSecurity, expand));
             }
         } catch (Exception ex) {
             Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
@@ -104,7 +104,7 @@ public class View02Dao implements ViewDaoInterface<View02Bean> {
             oResultSet = oMysql.getAllSQL(strSQL);
             while (oResultSet.next()) {
                 View02Bean oBean = new View02Bean();
-                arrDocumento.add(oBean.fill(oResultSet, oConnection, oUserSecurity, expand));
+                arrDocumento.add(oBean.fill(oResultSet, oConnection, oPuserSecurity, expand));
             }
         } catch (Exception ex) {
             Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);

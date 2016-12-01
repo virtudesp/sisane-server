@@ -33,7 +33,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.HashMap;
 import net.daw.bean.implementation.DocumentBean;
-import net.daw.bean.implementation.UserBean;
+import net.daw.bean.implementation.PuserBean;
 import net.daw.dao.publicinterface.TableDaoInterface;
 import net.daw.dao.publicinterface.ViewDaoInterface;
 import net.daw.data.implementation.MysqlData;
@@ -47,13 +47,13 @@ public class DocumentDao implements ViewDaoInterface<DocumentBean>, TableDaoInte
     private String strSQL = "select * from document where 1=1 ";
     private MysqlData oMysql = null;
     private Connection oConnection = null;
-    private UserBean oUserSecurity = null;
+    private PuserBean oPuserSecurity = null;
 
-    public DocumentDao(Connection oPooledConnection, UserBean oUserBean_security) throws Exception {
+    public DocumentDao(Connection oPooledConnection, PuserBean oPuserBean_security) throws Exception {
         try {
             oConnection = oPooledConnection;
             oMysql = new MysqlData(oConnection);
-            oUserSecurity = oUserBean_security;
+            oPuserSecurity = oPuserBean_security;
         } catch (Exception ex) {
             Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
             throw new Exception();
@@ -84,7 +84,7 @@ public class DocumentDao implements ViewDaoInterface<DocumentBean>, TableDaoInte
             oResultSet = oMysql.getAllSQL(strSQL);
             while (oResultSet.next()) {
                 DocumentBean oDocumentBean = new DocumentBean();
-                arrDocument.add(oDocumentBean.fill(oResultSet, oConnection, oUserSecurity, expand));
+                arrDocument.add(oDocumentBean.fill(oResultSet, oConnection, oPuserSecurity, expand));
             }
             if (oResultSet != null) {
                 oResultSet.close();
@@ -110,7 +110,7 @@ public class DocumentDao implements ViewDaoInterface<DocumentBean>, TableDaoInte
             oResultSet = oMysql.getAllSQL(strSQL);
             while (oResultSet.next()) {
                 DocumentBean oDocumentBean = new DocumentBean();
-                arrDocument.add(oDocumentBean.fill(oResultSet, oConnection, oUserSecurity, expand));
+                arrDocument.add(oDocumentBean.fill(oResultSet, oConnection, oPuserSecurity, expand));
             }
         } catch (Exception ex) {
             Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
@@ -131,7 +131,7 @@ public class DocumentDao implements ViewDaoInterface<DocumentBean>, TableDaoInte
                 oResultSet = oMysql.getAllSQL(strSQL + " And id= " + oDocumentBean.getId() + " ");
                 Boolean empty = true;
                 while (oResultSet.next()) {
-                    oDocumentBean = oDocumentBean.fill(oResultSet, oConnection, oUserSecurity, expand);
+                    oDocumentBean = oDocumentBean.fill(oResultSet, oConnection, oPuserSecurity, expand);
                     empty = false;
                 }
                 if (empty) {

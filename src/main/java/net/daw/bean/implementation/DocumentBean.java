@@ -167,14 +167,14 @@ public class DocumentBean implements GenericBean {
     }
 
     @Override
-    public DocumentBean fill(ResultSet oResultSet, Connection pooledConnection, UserBean oUserBean_security, Integer expand) throws SQLException, Exception {
+    public DocumentBean fill(ResultSet oResultSet, Connection pooledConnection, PuserBean oPuserBean_security, Integer expand) throws SQLException, Exception {
         this.setId(oResultSet.getInt("id"));
         this.setDescription(oResultSet.getString("description"));
         this.setCreation(oResultSet.getDate("creation"));
         this.setFreezed(oResultSet.getBoolean("freezed"));
         if (expand > 0) {
             DocumenttypeBean oDocumenttypeBean = new DocumenttypeBean();
-            DocumenttypeDao oDocumenttypeDao = new DocumenttypeDao(pooledConnection, oUserBean_security);
+            DocumenttypeDao oDocumenttypeDao = new DocumenttypeDao(pooledConnection, oPuserBean_security);
             oDocumenttypeBean.setId(oResultSet.getInt("id_documenttype"));
             oDocumenttypeBean = oDocumenttypeDao.get(oDocumenttypeBean, expand - 1);
             this.setObj_documenttype(oDocumenttypeBean);
@@ -183,7 +183,7 @@ public class DocumentBean implements GenericBean {
         }
         if (expand > 0) {
             UserBean oUserBean = new UserBean();
-            UserDao oUserDao = new UserDao(pooledConnection, oUserBean_security);
+            UserDao oUserDao = new UserDao(pooledConnection, oPuserBean_security);
             oUserBean.setId(oResultSet.getInt("id_user"));
             oUserBean = oUserDao.get(oUserBean, expand - 1);
             this.setObj_user(oUserBean);

@@ -32,6 +32,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.HashMap;
+import net.daw.bean.implementation.PuserBean;
 import net.daw.bean.implementation.UserBean;
 import net.daw.dao.publicinterface.TableDaoInterface;
 import net.daw.dao.publicinterface.ViewDaoInterface;
@@ -47,13 +48,13 @@ public class UserDao implements ViewDaoInterface<UserBean>, TableDaoInterface<Us
     private String strSQL = "select * from user where 1=1 ";
     private MysqlData oMysql = null;
     private Connection oConnection = null;
-    private UserBean oUserSecurity = null;
+    private PuserBean oPuserSecurity = null;
 
-    public UserDao(Connection oPooledConnection, UserBean oUserBean_security) throws Exception {
+    public UserDao(Connection oPooledConnection, PuserBean oPuserBean_security) throws Exception {
         try {
             oConnection = oPooledConnection;
             oMysql = new MysqlData(oConnection);
-            oUserSecurity = oUserBean_security;
+            oPuserSecurity = oPuserBean_security;
         } catch (Exception ex) {
             Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
             throw new Exception();
@@ -84,7 +85,7 @@ public class UserDao implements ViewDaoInterface<UserBean>, TableDaoInterface<Us
             oResultSet = oMysql.getAllSQL(strSQL);
             while (oResultSet.next()) {
                 UserBean oUserBean = new UserBean();
-                arrUser.add((UserBean) oUserBean.fill(oResultSet, oConnection, oUserSecurity, expand));
+                arrUser.add((UserBean) oUserBean.fill(oResultSet, oConnection, oPuserSecurity, expand));
             }
             if (oResultSet != null) {
                 oResultSet.close();
@@ -110,7 +111,7 @@ public class UserDao implements ViewDaoInterface<UserBean>, TableDaoInterface<Us
             oResultSet = oMysql.getAllSQL(strSQL);
             while (oResultSet.next()) {
                 UserBean oUserBean = new UserBean();
-                arrUser.add((UserBean) oUserBean.fill(oResultSet, oConnection, oUserSecurity, expand));
+                arrUser.add((UserBean) oUserBean.fill(oResultSet, oConnection, oPuserSecurity, expand));
             }
         } catch (Exception ex) {
             Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
@@ -131,7 +132,7 @@ public class UserDao implements ViewDaoInterface<UserBean>, TableDaoInterface<Us
                 oResultSet = oMysql.getAllSQL(strSQL + " And id= " + oUserBean.getId() + " ");
                 Boolean empty = true;
                 while (oResultSet.next()) {
-                    oUserBean = (UserBean) oUserBean.fill(oResultSet, oConnection, oUserSecurity, expand);
+                    oUserBean = (UserBean) oUserBean.fill(oResultSet, oConnection, oPuserSecurity, expand);
                     empty = false;
                 }
                 if (empty) {
@@ -185,25 +186,73 @@ public class UserDao implements ViewDaoInterface<UserBean>, TableDaoInterface<Us
         return result;
     }
 
-    public UserBean getFromLogin(UserBean oUser) throws Exception {
+    public PuserBean getFromLogin(PuserBean oPuser) throws Exception {
         try {
-            String strId = oMysql.getId(strTable, "login", oUser.getLogin());
+            String strId = oMysql.getId(strTable, "login", oPuser.getLogin());
             if (strId == null) {
-                oUser.setId(0);
+                oPuser.setId(0);
             } else {
                 Integer intId = Integer.parseInt(strId);
-                oUser.setId(intId);
-                String pass = oUser.getPassword();
-                oUser.setPassword(oMysql.getOne(strSQL, "password", oUser.getId()));
-                if (!pass.equals(oUser.getPassword())) {
-                    oUser.setId(0);
+                oPuser.setId(intId);
+                String pass = oPuser.getPassword();
+                oPuser.setPassword(oMysql.getOne(strSQL, "password", oPuser.getId()));
+                if (!pass.equals(oPuser.getPassword())) {
+                    oPuser.setId(0);
                 }
-                oUser = this.get(oUser, AppConfigurationHelper.getJsonMsgDepth());
+                oPuser = this.getP(oPuser, AppConfigurationHelper.getJsonMsgDepth());
             }
-            return oUser;
+            return oPuser;
         } catch (Exception ex) {
             Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
             throw new Exception();
         }
+    }
+
+    public PuserBean getP(PuserBean oPuserBean, Integer expand) throws Exception {
+        if (oPuserBean.getId() > 0) {
+            ResultSet oResultSet = null;
+            try {
+                oResultSet = oMysql.getAllSQL(strSQL + " And id= " + oPuserBean.getId() + " ");
+                Boolean empty = true;
+                while (oResultSet.next()) {
+                    oPuserBean = (PuserBean) oPuserBean.fill(oResultSet, oConnection, oPuserSecurity, expand);
+                    empty = false;
+                }
+                if (empty) {
+                    oPuserBean.setId(0);
+                }
+            } catch (Exception ex) {
+                Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
+                throw new Exception();
+            } finally {
+                if (oResultSet != null) {
+                    oResultSet.close();
+                }
+            }
+        } else {
+            oPuserBean.setId(0);
+        }
+        return oPuserBean;
+    }
+
+    public Integer setP(PuserBean oPuserBean) throws Exception {
+        Integer iResult = null;
+        try {
+            if (oPuserBean.getId() == 0) {
+                strSQL = "INSERT INTO " + strTable + " ";
+                strSQL += "(" + oPuserBean.getColumns() + ")";
+                strSQL += "VALUES(" + oPuserBean.getValues() + ")";
+                iResult = oMysql.executeInsertSQL(strSQL);
+            } else {
+                strSQL = "UPDATE " + strTable + " ";
+                strSQL += " SET " + oPuserBean.toPairs();
+                strSQL += " WHERE id=" + oPuserBean.getId();
+                iResult = oMysql.executeUpdateSQL(strSQL);
+            }
+        } catch (Exception ex) {
+            Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
+            throw new Exception();
+        }
+        return iResult;
     }
 }

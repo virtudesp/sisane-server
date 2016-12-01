@@ -33,7 +33,6 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import net.daw.bean.publicinterface.GenericBean;
-import net.daw.bean.implementation.UserBean;
 import net.daw.dao.implementation.UserDao;
 
 public class View01Bean implements GenericBean {
@@ -106,12 +105,12 @@ public class View01Bean implements GenericBean {
     }
 
     @Override
-    public View01Bean fill(ResultSet oResultSet, Connection pooledConnection, UserBean oUserBean_security, Integer expand) throws SQLException, Exception {
+    public View01Bean fill(ResultSet oResultSet, Connection pooledConnection, PuserBean oPuserBean_security, Integer expand) throws SQLException, Exception {
         this.setEtiquetas(oResultSet.getString("etiquetas"));
         this.setNumetiquetas(oResultSet.getInt("numetiquetas"));
         if (expand > 0) {
             UserBean oUserBean = new UserBean();
-            UserDao oUserDao = new UserDao(pooledConnection, oUserBean_security);
+            UserDao oUserDao = new UserDao(pooledConnection, oPuserBean_security);
             oUserBean.setId(oResultSet.getInt("id_usuario"));
             oUserBean = oUserDao.get(oUserBean, expand - 1);
             this.setObj_usuario(oUserBean);

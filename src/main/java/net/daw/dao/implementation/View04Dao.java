@@ -32,7 +32,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.HashMap;
-import net.daw.bean.implementation.UserBean;
+import net.daw.bean.implementation.PuserBean;
 import net.daw.bean.implementation.View04Bean;
 import net.daw.dao.publicinterface.ViewDaoInterface;
 import net.daw.data.implementation.MysqlData;
@@ -45,13 +45,13 @@ public class View04Dao implements ViewDaoInterface<View04Bean> {
     private String strSQL = "select * from post where published=1 ";
     private MysqlData oMysql = null;
     private Connection oConnection = null;
-    private UserBean oUserSecurity = null;
+    private PuserBean oPuserSecurity = null;
 
-    public View04Dao(Connection oPooledConnection, UserBean oUserBean_security) throws Exception {
+    public View04Dao(Connection oPooledConnection, PuserBean oPuserBean_security) throws Exception {
         try {
             oConnection = oPooledConnection;
             oMysql = new MysqlData(oConnection);
-            oUserSecurity = oUserBean_security;
+            oPuserSecurity = oPuserBean_security;
         } catch (Exception ex) {
             Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
             throw new Exception();
@@ -82,7 +82,7 @@ public class View04Dao implements ViewDaoInterface<View04Bean> {
             oResultSet = oMysql.getAllSQL(strSQL);
             while (oResultSet.next()) {
                 View04Bean oBean = new View04Bean();
-                oBeanList.add(oBean.fill(oResultSet, oConnection, oUserSecurity, expand));
+                oBeanList.add(oBean.fill(oResultSet, oConnection, oPuserSecurity, expand));
             }
         } catch (Exception ex) {
             Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
@@ -104,7 +104,7 @@ public class View04Dao implements ViewDaoInterface<View04Bean> {
             oResultSet = oMysql.getAllSQL(strSQL);
             while (oResultSet.next()) {
                 View04Bean oBean = new View04Bean();
-                arrDocumento.add(oBean.fill(oResultSet, oConnection, oUserSecurity, expand));
+                arrDocumento.add(oBean.fill(oResultSet, oConnection, oPuserSecurity, expand));
             }
         } catch (Exception ex) {
             Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);

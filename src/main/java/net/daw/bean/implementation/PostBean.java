@@ -223,7 +223,7 @@ public class PostBean implements GenericBean {
     }
 
     @Override
-    public PostBean fill(ResultSet oResultSet, Connection pooledConnection, UserBean oUserBean_security, Integer expand) throws SQLException, Exception {
+    public PostBean fill(ResultSet oResultSet, Connection pooledConnection, PuserBean oPuserBean_security, Integer expand) throws SQLException, Exception {
         this.setId(oResultSet.getInt("id"));
         this.setTitle(oResultSet.getString("title"));
         this.setContent(oResultSet.getString("content"));
@@ -236,7 +236,7 @@ public class PostBean implements GenericBean {
         this.setEmphasized(oResultSet.getBoolean("emphasized"));
         if (expand > 0) {
             UserBean oUserBean = new UserBean();
-            UserDao oUserDao = new UserDao(pooledConnection, oUserBean_security);
+            UserDao oUserDao = new UserDao(pooledConnection, oPuserBean_security);
             oUserBean.setId(oResultSet.getInt("id_user"));
             oUserBean = oUserDao.get(oUserBean, expand - 1);
             this.setObj_user(oUserBean);

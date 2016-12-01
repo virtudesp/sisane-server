@@ -33,6 +33,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
+import net.daw.bean.implementation.PuserBean;
 import net.daw.bean.implementation.ReplyBean;
 import net.daw.bean.implementation.UserBean;
 import net.daw.bean.implementation.View01Bean;
@@ -55,8 +56,8 @@ public class View01Service implements ViewServiceInterface {
     }
 
     private Boolean checkpermission(String strMethodName) throws Exception {
-        UserBean oUserBean = (UserBean) oRequest.getSession().getAttribute("userBean");
-        if (oUserBean != null) {
+        PuserBean oPuserBean = (PuserBean) oRequest.getSession().getAttribute("userBean");
+        if (oPuserBean != null) {
             return true;
         } else {
             return false;
@@ -73,7 +74,7 @@ public class View01Service implements ViewServiceInterface {
             try {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
-                View01Dao oDao = new View01Dao(oConnection, (UserBean) oRequest.getSession().getAttribute("userBean"));
+                View01Dao oDao = new View01Dao(oConnection, (PuserBean) oRequest.getSession().getAttribute("userBean"));
                 data = JsonMessage.getJsonExpression(200, Long.toString(oDao.getCount(alFilter)));
             } catch (Exception ex) {
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
@@ -104,7 +105,7 @@ public class View01Service implements ViewServiceInterface {
             try {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
-                View01Dao oDao = new View01Dao(oConnection, (UserBean) oRequest.getSession().getAttribute("userBean"));
+                View01Dao oDao = new View01Dao(oConnection, (PuserBean) oRequest.getSession().getAttribute("userBean"));
                 ArrayList<View01Bean> arrBeans = oDao.getAll(alFilter, hmOrder, AppConfigurationHelper.getJsonMsgDepth());
                 data = JsonMessage.getJsonExpression(200, AppConfigurationHelper.getGson().toJson(arrBeans));
             } catch (Exception ex) {
@@ -137,7 +138,7 @@ public class View01Service implements ViewServiceInterface {
             try {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
-                View01Dao oDao = new View01Dao(oConnection, (UserBean) oRequest.getSession().getAttribute("userBean"));
+                View01Dao oDao = new View01Dao(oConnection, (PuserBean) oRequest.getSession().getAttribute("userBean"));
                 List<View01Bean> arrBeans = oDao.getPage(intRegsPerPag, intPage, alFilter, hmOrder, AppConfigurationHelper.getJsonMsgDepth());
                 data = JsonMessage.getJsonExpression(200, AppConfigurationHelper.getGson().toJson(arrBeans));
             } catch (Exception ex) {

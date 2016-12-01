@@ -35,6 +35,7 @@ import java.util.HashMap;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import net.daw.bean.implementation.PurchaseBean;
+import net.daw.bean.implementation.PuserBean;
 import net.daw.bean.implementation.ReplyBean;
 import net.daw.bean.implementation.UserBean;
 import net.daw.connection.publicinterface.ConnectionInterface;
@@ -57,8 +58,8 @@ public class PurchaseService implements TableServiceInterface, ViewServiceInterf
     }
 
     private Boolean checkpermission(String strMethodName) throws Exception {
-        UserBean oUserBean = (UserBean) oRequest.getSession().getAttribute("userBean");
-        if (oUserBean != null) {
+        PuserBean oPuserBean = (PuserBean) oRequest.getSession().getAttribute("userBean");
+        if (oPuserBean != null) {
             return true;
         } else {
             return false;
@@ -75,7 +76,7 @@ public class PurchaseService implements TableServiceInterface, ViewServiceInterf
             try {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
-                PurchaseDao oPurchaseDao = new PurchaseDao(oConnection, (UserBean) oRequest.getSession().getAttribute("userBean"));
+                PurchaseDao oPurchaseDao = new PurchaseDao(oConnection, (PuserBean) oRequest.getSession().getAttribute("userBean"));
                 data = JsonMessage.getJsonExpression(200, Long.toString(oPurchaseDao.getCount(alFilter)));
             } catch (Exception ex) {
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
@@ -104,7 +105,7 @@ public class PurchaseService implements TableServiceInterface, ViewServiceInterf
             try {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
-                PurchaseDao oPurchaseDao = new PurchaseDao(oConnection, (UserBean) oRequest.getSession().getAttribute("userBean"));
+                PurchaseDao oPurchaseDao = new PurchaseDao(oConnection, (PuserBean) oRequest.getSession().getAttribute("userBean"));
                 PurchaseBean oPurchaseBean = new PurchaseBean(id);
                 oPurchaseBean = oPurchaseDao.get(oPurchaseBean, AppConfigurationHelper.getJsonMsgDepth());
                 Gson gson = AppConfigurationHelper.getGson();
@@ -137,7 +138,7 @@ public class PurchaseService implements TableServiceInterface, ViewServiceInterf
             try {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
-                PurchaseDao oPurchaseDao = new PurchaseDao(oConnection, (UserBean) oRequest.getSession().getAttribute("userBean"));
+                PurchaseDao oPurchaseDao = new PurchaseDao(oConnection, (PuserBean) oRequest.getSession().getAttribute("userBean"));
                 ArrayList<PurchaseBean> arrBeans = oPurchaseDao.getAll(alFilter, hmOrder, AppConfigurationHelper.getJsonMsgDepth());
                 data = JsonMessage.getJsonExpression(200, AppConfigurationHelper.getGson().toJson(arrBeans));
             } catch (Exception ex) {
@@ -170,7 +171,7 @@ public class PurchaseService implements TableServiceInterface, ViewServiceInterf
             try {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
-                PurchaseDao oPurchaseDao = new PurchaseDao(oConnection, (UserBean) oRequest.getSession().getAttribute("userBean"));
+                PurchaseDao oPurchaseDao = new PurchaseDao(oConnection, (PuserBean) oRequest.getSession().getAttribute("userBean"));
                 List<PurchaseBean> arrBeans = oPurchaseDao.getPage(intRegsPerPag, intPage, alFilter, hmOrder, AppConfigurationHelper.getJsonMsgDepth());
                 data = JsonMessage.getJsonExpression(200, AppConfigurationHelper.getGson().toJson(arrBeans));
             } catch (Exception ex) {
@@ -201,7 +202,7 @@ public class PurchaseService implements TableServiceInterface, ViewServiceInterf
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
                 oConnection.setAutoCommit(false);
-                PurchaseDao oPurchaseDao = new PurchaseDao(oConnection, (UserBean) oRequest.getSession().getAttribute("userBean"));
+                PurchaseDao oPurchaseDao = new PurchaseDao(oConnection, (PuserBean) oRequest.getSession().getAttribute("userBean"));
                 data = JsonMessage.getJsonExpression(200, (String) oPurchaseDao.remove(id).toString());
                 oConnection.commit();
             } catch (Exception ex) {
@@ -235,7 +236,7 @@ public class PurchaseService implements TableServiceInterface, ViewServiceInterf
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
                 oConnection.setAutoCommit(false);
-                PurchaseDao oPurchaseDao = new PurchaseDao(oConnection, (UserBean) oRequest.getSession().getAttribute("userBean"));
+                PurchaseDao oPurchaseDao = new PurchaseDao(oConnection, (PuserBean) oRequest.getSession().getAttribute("userBean"));
                 PurchaseBean oPurchaseBean = new PurchaseBean();
                 oPurchaseBean = AppConfigurationHelper.getGson().fromJson(jason, oPurchaseBean.getClass());
                 if (oPurchaseBean != null) {

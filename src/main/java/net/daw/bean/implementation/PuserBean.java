@@ -36,7 +36,7 @@ import net.daw.bean.publicinterface.GenericBean;
 import net.daw.dao.implementation.UsertypeDao;
 import net.daw.helper.statics.EncodingUtilHelper;
 
-public class UserBean implements GenericBean {
+public class PuserBean implements GenericBean {
 
     @Expose
     private Integer id = 0;
@@ -46,8 +46,8 @@ public class UserBean implements GenericBean {
     private String surname;
     @Expose
     private String login;
-//    @Expose
-//    private String password;
+    @Expose
+    private String password;
     @Expose
     private String address;
     @Expose
@@ -68,10 +68,10 @@ public class UserBean implements GenericBean {
     @Expose(deserialize = false)
     private UsertypeBean obj_usertype = null;
 
-    public UserBean() {
+    public PuserBean() {
     }
 
-    public UserBean(Integer id) {
+    public PuserBean(Integer id) {
         this.id = id;
     }
 
@@ -107,13 +107,13 @@ public class UserBean implements GenericBean {
         this.login = login;
     }
 
-//    public String getPassword() {
-//        return password;
-//    }
-//
-//    public void setPassword(String password) {
-//        this.password = password;
-//    }
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
     public String getAddress() {
         return address;
@@ -213,7 +213,7 @@ public class UserBean implements GenericBean {
         strColumns += EncodingUtilHelper.quotate(name) + ",";
         strColumns += EncodingUtilHelper.quotate(surname) + ",";
         strColumns += EncodingUtilHelper.quotate(login) + ",";
-        strColumns += EncodingUtilHelper.quotate("5E884898DA28047151D0E56F8DC6292773603D0D6AABBDD62A11EF721D1542D8") + ","; //password
+        strColumns += EncodingUtilHelper.quotate(password) + ",";
         strColumns += EncodingUtilHelper.quotate(address) + ",";
         strColumns += EncodingUtilHelper.quotate(city) + ",";
         strColumns += EncodingUtilHelper.quotate(zip) + ",";
@@ -233,7 +233,7 @@ public class UserBean implements GenericBean {
         strPairs += "name=" + EncodingUtilHelper.quotate(name) + ",";
         strPairs += "surname=" + EncodingUtilHelper.quotate(surname) + ",";
         strPairs += "login=" + EncodingUtilHelper.quotate(login) + ",";
-//        strPairs += "password=" + EncodingUtilHelper.quotate(password) + ",";
+        strPairs += "password=" + EncodingUtilHelper.quotate(password) + ",";
         strPairs += "address=" + EncodingUtilHelper.quotate(address) + ",";
         strPairs += "city=" + EncodingUtilHelper.quotate(city) + ",";
         strPairs += "zip=" + EncodingUtilHelper.quotate(zip) + ",";
@@ -246,12 +246,12 @@ public class UserBean implements GenericBean {
     }
 
     @Override
-    public UserBean fill(ResultSet oResultSet, Connection pooledConnection, PuserBean oPuserBean_security, Integer expand) throws SQLException, Exception {
+    public PuserBean fill(ResultSet oResultSet, Connection pooledConnection, PuserBean oPuserBean_security, Integer expand) throws SQLException, Exception {
         this.setId(oResultSet.getInt("id"));
         this.setName(oResultSet.getString("name"));
         this.setSurname(oResultSet.getString("surname"));
         this.setLogin(oResultSet.getString("login"));
-//        this.setPassword(oResultSet.getString("password"));
+        this.setPassword(oResultSet.getString("password"));
         this.setAddress(oResultSet.getString("address"));
         this.setCity(oResultSet.getString("city"));
         this.setZip(oResultSet.getString("zip"));

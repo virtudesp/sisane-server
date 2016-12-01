@@ -42,6 +42,7 @@ import net.daw.bean.implementation.PostBean;
 import net.daw.bean.implementation.ProductBean;
 import net.daw.bean.implementation.ProducttypeBean;
 import net.daw.bean.implementation.PurchaseBean;
+import net.daw.bean.implementation.PuserBean;
 import net.daw.bean.implementation.ReplyBean;
 import net.daw.bean.implementation.UserBean;
 import net.daw.bean.implementation.UsertypeBean;
@@ -63,6 +64,15 @@ import net.daw.service.publicinterface.ViewServiceInterface;
 public class FillService implements TableServiceInterface, ViewServiceInterface {
 
     protected HttpServletRequest oRequest = null;
+
+    private Boolean checkpermission(String strMethodName) throws Exception {
+        PuserBean oPuserBean = (PuserBean) oRequest.getSession().getAttribute("userBean");
+        if (oPuserBean != null) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
     public FillService(HttpServletRequest request) {
         oRequest = request;
@@ -346,930 +356,931 @@ public class FillService implements TableServiceInterface, ViewServiceInterface 
 //        fecha = ("2013-10-25");
 //        
 
-    public ReplyBean user() throws Exception {
+    public ReplyBean fill() throws Exception {
+        if (this.checkpermission("fill")) {
+            String data = null;
 
-        String data = null;
+            Connection oConnection = null;
+            ConnectionInterface oDataConnectionSource = null;
+            oDataConnectionSource = getSourceConnection();
+            oConnection = oDataConnectionSource.newConnection();
 
-        Connection oConnection = null;
-        ConnectionInterface oDataConnectionSource = null;
-        oDataConnectionSource = getSourceConnection();
-        oConnection = oDataConnectionSource.newConnection();
+            MysqlData oMysqlData = new MysqlData(oConnection);
 
-        MysqlData oMysqlData = new MysqlData(oConnection);
+            oMysqlData.truncateTable("document");
+            oMysqlData.truncateTable("documenttype");
+            oMysqlData.truncateTable("post");
+            oMysqlData.truncateTable("product");
+            oMysqlData.truncateTable("producttype");
+            oMysqlData.truncateTable("purchase");
+            oMysqlData.truncateTable("user");
+            oMysqlData.truncateTable("usertype");
 
-        oMysqlData.truncateTable("document");
-        oMysqlData.truncateTable("documenttype");
-        oMysqlData.truncateTable("post");
-        oMysqlData.truncateTable("product");
-        oMysqlData.truncateTable("producttype");
-        oMysqlData.truncateTable("purchase");
-        oMysqlData.truncateTable("user");
-        oMysqlData.truncateTable("usertype");
+            UsertypeBean oUsertypeBean = new UsertypeBean();
+            UsertypeDao oUsertypeDao = new UsertypeDao(oConnection, (PuserBean) oRequest.getSession().getAttribute("userBean"));
 
-        UsertypeBean oUsertypeBean = new UsertypeBean();
-        UsertypeDao oUsertypeDao = new UsertypeDao(oConnection, (UserBean) oRequest.getSession().getAttribute("userBean"));
-
-        oUsertypeBean.setDescription("Administrador");
-        oUsertypeBean.setDiscount(0.0);
-        try {
-            oUsertypeDao.set(oUsertypeBean);
-        } catch (Exception e) {
-            return new ReplyBean(500, JsonMessage.getJsonMsg(500, "Fill: Update Error: Phase 1: " + e.getMessage()));
-        }
-
-        oUsertypeBean.setDescription("Publicador");
-        oUsertypeBean.setDiscount(0.0);
-        try {
-            oUsertypeDao.set(oUsertypeBean);
-        } catch (Exception e) {
-            return new ReplyBean(500, JsonMessage.getJsonMsg(500, "Fill: Update Error: Phase 1: " + e.getMessage()));
-        }
-        oUsertypeBean.setDescription("Cliente");
-        oUsertypeBean.setDiscount(0.0);
-        try {
-            oUsertypeDao.set(oUsertypeBean);
-        } catch (Exception e) {
-            return new ReplyBean(500, JsonMessage.getJsonMsg(500, "Fill: Update Error: Phase 1: " + e.getMessage()));
-        }
-        oUsertypeBean.setDescription("Cliente preferente");
-        oUsertypeBean.setDiscount(2.5);
-        try {
-            oUsertypeDao.set(oUsertypeBean);
-        } catch (Exception e) {
-            return new ReplyBean(500, JsonMessage.getJsonMsg(500, "Fill: Update Error: Phase 1: " + e.getMessage()));
-        }
-
-        ArrayList<String> arrNombre = new ArrayList<>();
-
-        arrNombre.add("Santiago");
-        arrNombre.add("Sebastián");
-        arrNombre.add("Matías");
-        arrNombre.add("Mateo");
-        arrNombre.add("Nicolás");
-        arrNombre.add("Alejandro");
-        arrNombre.add("Diego");
-        arrNombre.add("Samuel");
-        arrNombre.add("Benjamín");
-        arrNombre.add("Daniel");
-        arrNombre.add("Joaquín");
-        arrNombre.add("Lucas");
-        arrNombre.add("Tomas");
-        arrNombre.add("Gabriel");
-        arrNombre.add("Martín");
-        arrNombre.add("David");
-        arrNombre.add("Emiliano");
-        arrNombre.add("Jerónimo");
-        arrNombre.add("Emmanuel");
-        arrNombre.add("Agustín");
-        arrNombre.add("Juan Pablo");
-        arrNombre.add("Juan José");
-        arrNombre.add("Andrés");
-        arrNombre.add("Thiago");
-        arrNombre.add("Leonardo");
-        arrNombre.add("Felipe");
-        arrNombre.add("Ángel");
-        arrNombre.add("Maximiliano");
-        arrNombre.add("Christopher");
-        arrNombre.add("Juan Diego");
-        arrNombre.add("Adrián");
-        arrNombre.add("Pablo");
-        arrNombre.add("Miguel Ángel");
-        arrNombre.add("Rodrigo");
-        arrNombre.add("Alexander");
-        arrNombre.add("Ignacio");
-        arrNombre.add("Emilio");
-        arrNombre.add("Dylan");
-        arrNombre.add("Bruno");
-        arrNombre.add("Carlos");
-        arrNombre.add("Vicente");
-        arrNombre.add("Valentino");
-        arrNombre.add("Santino");
-        arrNombre.add("Julián");
-        arrNombre.add("Juan Sebastián");
-        arrNombre.add("Aarón");
-        arrNombre.add("Lautaro");
-        arrNombre.add("Axel");
-        arrNombre.add("Fernando");
-        arrNombre.add("Ian");
-        arrNombre.add("Christian");
-        arrNombre.add("Javier");
-        arrNombre.add("Manuel");
-        arrNombre.add("Luciano");
-        arrNombre.add("Francisco");
-        arrNombre.add("Juan David");
-        arrNombre.add("Iker");
-        arrNombre.add("Facundo");
-        arrNombre.add("Rafael");
-        arrNombre.add("Alex");
-        arrNombre.add("Franco");
-        arrNombre.add("Antonio");
-        arrNombre.add("Luis");
-        arrNombre.add("Isaac");
-        arrNombre.add("Máximo");
-        arrNombre.add("Pedro");
-        arrNombre.add("Ricardo");
-        arrNombre.add("Sergio");
-        arrNombre.add("Eduardo");
-        arrNombre.add("Bautista");
-        arrNombre.add("Miguel");
-        arrNombre.add("Cristóbal");
-        arrNombre.add("Kevin");
-        arrNombre.add("Jorge");
-        arrNombre.add("Alonso");
-        arrNombre.add("Anthony");
-        arrNombre.add("Simón");
-        arrNombre.add("Juan");
-        arrNombre.add("Joshua");
-        arrNombre.add("Diego Alejandro");
-        arrNombre.add("Juan Manuel");
-        arrNombre.add("Mario");
-        arrNombre.add("Alan");
-        arrNombre.add("Josué");
-        arrNombre.add("Gael");
-        arrNombre.add("Hugo");
-        arrNombre.add("Matthew");
-        arrNombre.add("Ivan");
-        arrNombre.add("Damián");
-        arrNombre.add("Lorenzo");
-        arrNombre.add("Juan Martín");
-        arrNombre.add("Esteban");
-        arrNombre.add("Álvaro");
-        arrNombre.add("Valentín");
-        arrNombre.add("Dante");
-        arrNombre.add("Jacobo");
-        arrNombre.add("Jesús");
-        arrNombre.add("Camilo");
-        arrNombre.add("Juan Esteban");
-        arrNombre.add("Elías");
-        arrNombre.add("Sofía");
-        arrNombre.add("Isabella");
-        arrNombre.add("Camila");
-        arrNombre.add("Valentina");
-        arrNombre.add("Valeria");
-        arrNombre.add("Mariana");
-        arrNombre.add("Luciana");
-        arrNombre.add("Daniela");
-        arrNombre.add("Gabriela");
-        arrNombre.add("Victoria");
-        arrNombre.add("Martina");
-        arrNombre.add("Lucía");
-        arrNombre.add("Jimena");
-        arrNombre.add("Sara");
-        arrNombre.add("Samantha");
-        arrNombre.add("María José");
-        arrNombre.add("Emma");
-        arrNombre.add("Catalina");
-        arrNombre.add("Julieta");
-        arrNombre.add("Mía");
-        arrNombre.add("Antonella");
-        arrNombre.add("Renata");
-        arrNombre.add("Emilia");
-        arrNombre.add("Natalia");
-        arrNombre.add("Zoe");
-        arrNombre.add("Nicole");
-        arrNombre.add("Paula");
-        arrNombre.add("Amanda");
-        arrNombre.add("María Fernanda");
-        arrNombre.add("Emily");
-        arrNombre.add("Antonia");
-        arrNombre.add("Alejandra");
-        arrNombre.add("Juana");
-        arrNombre.add("Andrea");
-        arrNombre.add("Manuela");
-        arrNombre.add("Ana Sofía");
-        arrNombre.add("Guadalupe");
-        arrNombre.add("Agustina");
-        arrNombre.add("Elena");
-        arrNombre.add("María");
-        arrNombre.add("Bianca");
-        arrNombre.add("Ariana");
-        arrNombre.add("Ivanna");
-        arrNombre.add("Abril");
-        arrNombre.add("Florencia");
-        arrNombre.add("Carolina");
-        arrNombre.add("Maite");
-        arrNombre.add("Rafaela");
-        arrNombre.add("Regina");
-        arrNombre.add("Adriana");
-        arrNombre.add("Michelle");
-        arrNombre.add("Alma");
-        arrNombre.add("Violeta");
-        arrNombre.add("Salomé");
-        arrNombre.add("Abigail");
-        arrNombre.add("Juliana");
-        arrNombre.add("Valery");
-        arrNombre.add("Isabel");
-        arrNombre.add("Montserrat");
-        arrNombre.add("Allison");
-        arrNombre.add("Jazmín");
-        arrNombre.add("Julia");
-        arrNombre.add("Lola");
-        arrNombre.add("Luna");
-        arrNombre.add("Ana");
-        arrNombre.add("Delfina");
-        arrNombre.add("Alessandra");
-        arrNombre.add("Ashley");
-        arrNombre.add("Olivia");
-        arrNombre.add("Constanza");
-        arrNombre.add("Paulina");
-        arrNombre.add("Rebeca");
-        arrNombre.add("Carla");
-        arrNombre.add("María Paula");
-        arrNombre.add("Micaela");
-        arrNombre.add("Fabiana");
-        arrNombre.add("Miranda");
-        arrNombre.add("Josefina");
-        arrNombre.add("Laura");
-        arrNombre.add("Alexa");
-        arrNombre.add("María Alejandra");
-        arrNombre.add("Luana");
-        arrNombre.add("Fátima");
-        arrNombre.add("Sara Sofía");
-        arrNombre.add("Isidora");
-        arrNombre.add("Malena");
-        arrNombre.add("Romina");
-        arrNombre.add("Ana Paula");
-        arrNombre.add("Mariangel");
-        arrNombre.add("Amelia");
-        arrNombre.add("Elizabeth");
-        arrNombre.add("Aitana");
-        arrNombre.add("Ariadna");
-        arrNombre.add("María Camila");
-        arrNombre.add("Irene");
-        arrNombre.add("Silvana");
-        arrNombre.add("Clara");
-        arrNombre.add("Magdalena");
-        arrNombre.add("Sophie");
-        arrNombre.add("Josefa");
-        arrNombre.add("Sergio");
-        arrNombre.add("Javi");
-        arrNombre.add("Pedro");
-        arrNombre.add("Antonio");
-        arrNombre.add("José");
-        arrNombre.add("Eduardo");
-        arrNombre.add("Ana");
-        arrNombre.add("Diana");
-        arrNombre.add("Noemí");
-        arrNombre.add("Arancha");
-        arrNombre.add("Javier");
-        arrNombre.add("Lucia");
-        arrNombre.add("Lucas");
-        arrNombre.add("Javier");
-        arrNombre.add("Marco");
-        arrNombre.add("Sandra");
-        arrNombre.add("Margarita");
-        arrNombre.add("Pedro");
-        arrNombre.add("Toni");
-        arrNombre.add("José");
-        arrNombre.add("Guillermo");
-        arrNombre.add("Rosa");
-        arrNombre.add("Adela");
-        arrNombre.add("Lucia");
-        arrNombre.add("Paco");
-        arrNombre.add("Sergio");
-        arrNombre.add("Almudena");
-        arrNombre.add("Francisca");
-        arrNombre.add("Lola");
-        arrNombre.add("Manuel");
-        arrNombre.add("Miguel");
-        arrNombre.add("Agustin");
-        arrNombre.add("Noelia");
-        arrNombre.add("Amparo");
-        arrNombre.add("Benito");
-        arrNombre.add("Ana");
-
-        ArrayList<String> arrApe = new ArrayList<>();
-        arrApe.add("Martín");
-        arrApe.add("Benito");
-        arrApe.add("Navarro");
-        arrApe.add("Bonet");
-        arrApe.add("Martinez");
-        arrApe.add("Grancha");
-        arrApe.add("Gavilan");
-        arrApe.add("Perez");
-        arrApe.add("Lopez");
-        arrApe.add("Carreño");
-        arrApe.add("Soria");
-        arrApe.add("Tárraga");
-        arrApe.add("Muñoz");
-        arrApe.add("Vellisca");
-        arrApe.add("Aznar");
-        arrApe.add("Zapatero");
-        arrApe.add("Blanco");
-        arrApe.add("Soriano");
-        arrApe.add("Reig");
-        arrApe.add("Cabrera");
-        arrApe.add("García");
-        arrApe.add("Sancho");
-        arrApe.add("Sanchís");
-        arrApe.add("Gómez");
-        arrApe.add("Giménez");
-        arrApe.add("Montoya");
-        arrApe.add("López");
-        arrApe.add("Domínguez");
-        arrApe.add("González");
-        arrApe.add("Fernández");
-        arrApe.add("Rodríguez");
-        arrApe.add("Martínez");
-        arrApe.add("Pérez");
-        arrApe.add("Hernández");
-        arrApe.add("Alvarez");
-        arrApe.add("Gutierrez");
-        arrApe.add("Belmonte");
-        arrApe.add("Palomino");
-        arrApe.add("Casanova");
-        arrApe.add("Gutierrez");
-        arrApe.add("Garcia");
-        arrApe.add("Benito");
-        arrApe.add("Soria");
-        arrApe.add("Grancha");
-        arrApe.add("Martinez");
-        arrApe.add("Rodriguez");
-        arrApe.add("Gutierrez");
-        arrApe.add("Rubio");
-        arrApe.add("Moreno");
-        arrApe.add("Aragon");
-        arrApe.add("Atienza");
-        arrApe.add("Pons");
-        arrApe.add("Ochoa");
-        arrApe.add("Delicado");
-        arrApe.add("Sanchez");
-        arrApe.add("Sistiaga");
-        arrApe.add("Urkullu");
-        arrApe.add("Albert");
-        arrApe.add("Laplaza");
-        arrApe.add("Alpuente");
-        arrApe.add("Pons");
-        arrApe.add("Garrido");
-        arrApe.add("Lopez");
-        arrApe.add("Cuerda");
-        arrApe.add("Cañizares");
-
-        ArrayList<String> arrSexo = new ArrayList<>();
-        arrSexo.add("Hombre");
-        arrSexo.add("Mujer");
-
-        ArrayList<String> arrVia = new ArrayList<>();
-        arrVia.add("Avenida");
-        arrVia.add("Paseo");
-        arrVia.add("Plaza");
-        arrVia.add("Rambla");
-        arrVia.add("Calle");
-        arrVia.add("Camino");
-
-        ArrayList<String> arrDomicilio = new ArrayList<>();
-
-        ArrayList<String> arrCodpostal = new ArrayList<>();
-        arrCodpostal.add("46910");
-        arrCodpostal.add("46490");
-        arrCodpostal.add("46001");
-        arrCodpostal.add("46022");
-        arrCodpostal.add("46013");
-
-        ArrayList<String> arrPoblacion = new ArrayList<>();
-
-        arrPoblacion.add("Ademuz");
-        arrPoblacion.add("Agullent");
-        arrPoblacion.add("Aielo de Malferit");
-        arrPoblacion.add("Aielo de Rugat");
-        arrPoblacion.add("Alaquàs");
-        arrPoblacion.add("Albaida");
-        arrPoblacion.add("Albal");
-        arrPoblacion.add("Albalat de la Ribera");
-        arrPoblacion.add("Albalat dels Sorells");
-        arrPoblacion.add("Albalat dels Tarongers");
-        arrPoblacion.add("Alberic");
-        arrPoblacion.add("Alborache");
-        arrPoblacion.add("Alboraya");
-        arrPoblacion.add("Albuixech");
-        arrPoblacion.add("Alcublas");
-        arrPoblacion.add("Alcàntera de Xúquer");
-        arrPoblacion.add("Alcàsser");
-        arrPoblacion.add("Aldaia");
-        arrPoblacion.add("Alfafar");
-        arrPoblacion.add("Alfara de Algimia");
-        arrPoblacion.add("Alfara del Patriarca");
-        arrPoblacion.add("Alfarp");
-        arrPoblacion.add("Alfarrasí");
-        arrPoblacion.add("Alfauir");
-        arrPoblacion.add("Algar de Palancia");
-        arrPoblacion.add("Algemesí");
-        arrPoblacion.add("Algimia de Alfara");
-        arrPoblacion.add("Alginet");
-        arrPoblacion.add("Almiserà");
-        arrPoblacion.add("Almoines");
-        arrPoblacion.add("Almussafes");
-        arrPoblacion.add("Almàssera");
-        arrPoblacion.add("Alpuente");
-        arrPoblacion.add("Alzira");
-        arrPoblacion.add("Andilla");
-        arrPoblacion.add("Anna");
-        arrPoblacion.add("Antella");
-        arrPoblacion.add("Aras de los Olmos");
-        arrPoblacion.add("Ayora");
-        arrPoblacion.add("Barx");
-        arrPoblacion.add("Barxeta");
-        arrPoblacion.add("Bellreguard");
-        arrPoblacion.add("Bellús");
-        arrPoblacion.add("Benaguasil");
-        arrPoblacion.add("Benagéber");
-        arrPoblacion.add("Benavites");
-        arrPoblacion.add("Beneixida");
-        arrPoblacion.add("Benetússer");
-        arrPoblacion.add("Beniarjó");
-        arrPoblacion.add("Beniatjar");
-        arrPoblacion.add("Benicolet");
-        arrPoblacion.add("Benifairó de la Valldigna");
-        arrPoblacion.add("Benifairó de les Valls");
-        arrPoblacion.add("Benifaió");
-        arrPoblacion.add("Beniflá");
-        arrPoblacion.add("Benigánim");
-        arrPoblacion.add("Benimodo");
-        arrPoblacion.add("Benimuslem");
-        arrPoblacion.add("Beniparrell");
-        arrPoblacion.add("Benirredrà");
-        arrPoblacion.add("Benisanó");
-        arrPoblacion.add("Benissoda");
-        arrPoblacion.add("Benisuera");
-        arrPoblacion.add("Bicorp");
-        arrPoblacion.add("Bocairent");
-        arrPoblacion.add("Bolbaite");
-        arrPoblacion.add("Bonrepòs i Mirambell");
-        arrPoblacion.add("Bufali");
-        arrPoblacion.add("Bugarra");
-        arrPoblacion.add("Burjassot");
-        arrPoblacion.add("Buñol");
-        arrPoblacion.add("Bèlgida");
-        arrPoblacion.add("Bétera");
-        arrPoblacion.add("Calles");
-        arrPoblacion.add("Camporrobles");
-        arrPoblacion.add("Canals");
-        arrPoblacion.add("Carcaixent");
-        arrPoblacion.add("Carlet");
-        arrPoblacion.add("Carrícola");
-        arrPoblacion.add("Casas Altas");
-        arrPoblacion.add("Casas Bajas");
-        arrPoblacion.add("Casinos");
-        arrPoblacion.add("Castellonet de la Conquesta");
-        arrPoblacion.add("Castelló de Rugat");
-        arrPoblacion.add("Castelló de la Ribera");
-        arrPoblacion.add("Castielfabib");
-        arrPoblacion.add("Catadau");
-        arrPoblacion.add("Catarroja");
-        arrPoblacion.add("Caudete de las Fuentes");
-        arrPoblacion.add("Cerdà");
-        arrPoblacion.add("Chella");
-        arrPoblacion.add("Chelva");
-        arrPoblacion.add("Chera");
-        arrPoblacion.add("Cheste");
-        arrPoblacion.add("Chiva");
-        arrPoblacion.add("Chulilla");
-        arrPoblacion.add("Cofrentes");
-        arrPoblacion.add("Corbera");
-        arrPoblacion.add("Cortes de Pallás");
-        arrPoblacion.add("Cotes");
-        arrPoblacion.add("Cullera");
-        arrPoblacion.add("Càrcer");
-        arrPoblacion.add("Daimús");
-        arrPoblacion.add("Domeño");
-        arrPoblacion.add("Dos Aguas");
-        arrPoblacion.add("Emperador");
-        arrPoblacion.add("Enguera");
-        arrPoblacion.add("Estivella");
-        arrPoblacion.add("Estubeny");
-        arrPoblacion.add("Faura");
-        arrPoblacion.add("Favara");
-        arrPoblacion.add("Foios");
-        arrPoblacion.add("Font de la Figuera (la)");
-        arrPoblacion.add("Fontanars dels Alforins");
-        arrPoblacion.add("Fortaleny");
-        arrPoblacion.add("Fuenterrobles");
-        arrPoblacion.add("Gandia");
-        arrPoblacion.add("Gavarda");
-        arrPoblacion.add("Genovés");
-        arrPoblacion.add("Gestalgar");
-        arrPoblacion.add("Gilet");
-        arrPoblacion.add("Godella");
-        arrPoblacion.add("Godelleta");
-        arrPoblacion.add("Granja de la Costera (la)");
-        arrPoblacion.add("Guadasequies");
-        arrPoblacion.add("Guadassuar");
-        arrPoblacion.add("Guardamar de la Safor");
-        arrPoblacion.add("Higueruelas");
-        arrPoblacion.add("Jalance");
-        arrPoblacion.add("Jarafuel");
-        arrPoblacion.add("Llanera de Ranes");
-        arrPoblacion.add("Llaurí");
-        arrPoblacion.add("Llocnou de Sant Jeroni");
-        arrPoblacion.add("Llocnou de la Corona");
-        arrPoblacion.add("Llombai");
-        arrPoblacion.add("Llosa de Ranes (la)");
-        arrPoblacion.add("Llutxent");
-        arrPoblacion.add("Llíria");
-        arrPoblacion.add("Loriguilla");
-        arrPoblacion.add("Losa del Obispo");
-        arrPoblacion.add("Macastre");
-        arrPoblacion.add("Manises");
-        arrPoblacion.add("Manuel");
-        arrPoblacion.add("Marines");
-        arrPoblacion.add("Masalavés");
-        arrPoblacion.add("Massalfassar");
-        arrPoblacion.add("Massamagrell");
-        arrPoblacion.add("Massanassa");
-        arrPoblacion.add("Meliana");
-        arrPoblacion.add("Millares");
-        arrPoblacion.add("Miramar");
-        arrPoblacion.add("Mislata");
-        arrPoblacion.add("Mogente");
-        arrPoblacion.add("Moncada");
-        arrPoblacion.add("Montaverner");
-        arrPoblacion.add("Montesa");
-        arrPoblacion.add("Montitxelvo");
-        arrPoblacion.add("Montroy");
-        arrPoblacion.add("Montserrat");
-        arrPoblacion.add("Museros");
-        arrPoblacion.add("Navarrés");
-        arrPoblacion.add("Novelé");
-        arrPoblacion.add("Náquera");
-        arrPoblacion.add("Oliva");
-        arrPoblacion.add("Olocau");
-        arrPoblacion.add("Ontinyent");
-        arrPoblacion.add("Otos");
-        arrPoblacion.add("Paiporta");
-        arrPoblacion.add("Palma de Gandía");
-        arrPoblacion.add("Palmera");
-        arrPoblacion.add("Palomar (el)");
-        arrPoblacion.add("Paterna");
-        arrPoblacion.add("Pedralba");
-        arrPoblacion.add("Petrés");
-        arrPoblacion.add("Picanya");
-        arrPoblacion.add("Picassent");
-        arrPoblacion.add("Piles");
-        arrPoblacion.add("Pinet");
-        arrPoblacion.add("Pobla Llarga (la)");
-        arrPoblacion.add("Pobla de Farnals (la)");
-        arrPoblacion.add("Pobla de Vallbona (la)");
-        arrPoblacion.add("Pobla del Duc (la)");
-        arrPoblacion.add("Polinyà de Xúquer");
-        arrPoblacion.add("Potríes");
-        arrPoblacion.add("Puebla de San Miguel");
-        arrPoblacion.add("Puig");
-        arrPoblacion.add("Puçol");
-        arrPoblacion.add("Quart de Poblet");
-        arrPoblacion.add("Quart de les Valls");
-        arrPoblacion.add("Quartell");
-        arrPoblacion.add("Quatretonda");
-        arrPoblacion.add("Quesa");
-        arrPoblacion.add("Rafelbuñol");
-        arrPoblacion.add("Rafelcofer");
-        arrPoblacion.add("Rafelguaraf");
-        arrPoblacion.add("Real de Gandía");
-        arrPoblacion.add("Real de Montroi");
-        arrPoblacion.add("Requena");
-        arrPoblacion.add("Riba-roja de Túria");
-        arrPoblacion.add("Riola");
-        arrPoblacion.add("Rocafort");
-        arrPoblacion.add("Rotglà i Corberà");
-        arrPoblacion.add("Rugat");
-        arrPoblacion.add("Ráfol de Salem");
-        arrPoblacion.add("Rótova");
-        arrPoblacion.add("Sagunto");
-        arrPoblacion.add("Salem");
-        arrPoblacion.add("San Juan de Énova");
-        arrPoblacion.add("Sedaví");
-        arrPoblacion.add("Segart");
-        arrPoblacion.add("Sellent");
-        arrPoblacion.add("Sempere");
-        arrPoblacion.add("Senyera");
-        arrPoblacion.add("Serra");
-        arrPoblacion.add("Siete Aguas");
-        arrPoblacion.add("Silla");
-        arrPoblacion.add("Simat de la Valldigna");
-        arrPoblacion.add("Sinarcas");
-        arrPoblacion.add("Sollana");
-        arrPoblacion.add("Sot de Chera");
-        arrPoblacion.add("Sueca");
-        arrPoblacion.add("Sumacàrcer");
-        arrPoblacion.add("Tavernes Blanques");
-        arrPoblacion.add("Tavernes de la Valldigna");
-        arrPoblacion.add("Teresa de Cofrentes");
-        arrPoblacion.add("Terrateig");
-        arrPoblacion.add("Titaguas");
-        arrPoblacion.add("Torrebaja");
-        arrPoblacion.add("Torrella");
-        arrPoblacion.add("Torrent");
-        arrPoblacion.add("Torres Torres");
-        arrPoblacion.add("Tous");
-        arrPoblacion.add("Turís");
-        arrPoblacion.add("Tuéjar");
-        arrPoblacion.add("Utiel");
-        arrPoblacion.add("Valencia");
-        arrPoblacion.add("Vallada");
-        arrPoblacion.add("Vallanca");
-        arrPoblacion.add("Vallés");
-        arrPoblacion.add("Venta del Moro");
-        arrPoblacion.add("Vilamarxant");
-        arrPoblacion.add("Villalonga");
-        arrPoblacion.add("Villar del Arzobispo");
-        arrPoblacion.add("Villargordo del Cabriel");
-        arrPoblacion.add("Vinalesa");
-        arrPoblacion.add("Xeraco");
-        arrPoblacion.add("Xeresa");
-        arrPoblacion.add("Xirivella");
-        arrPoblacion.add("Xàtiva");
-
-        ArrayList<String> arrEmail = new ArrayList<>();
-        arrEmail.add("@hotmail.com");
-        arrEmail.add("@hotmail.es");
-        arrEmail.add("@gmail.com");
-        arrEmail.add("@yahoo.com");
-        arrEmail.add("@ono.es");
-        arrEmail.add("@outlook.es");
-        arrEmail.add("@outlook.com");
-        arrEmail.add("@gmail.es");
-        arrEmail.add("@yahoo.es");
-        arrEmail.add("@ono.com");
-
-        ArrayList<String> arrValidado = new ArrayList<>();
-        arrValidado.add("Si");
-        arrValidado.add("No");
-
-        ArrayList<String> arrPass = new ArrayList<>();
-        arrPass.add("Perro");
-        arrPass.add("Gato");
-        arrPass.add("Loro");
-        arrPass.add("Ballena");
-        arrPass.add("Canguro");
-        arrPass.add("Panda");
-        arrPass.add("Elefante");
-        arrPass.add("Jirafa");
-        arrPass.add("Rinoceronte");
-        arrPass.add("Leon");
-
-        UserBean oUserBean = new UserBean();
-        UserDao oUserDao = new UserDao(oConnection, (UserBean) oRequest.getSession().getAttribute("userBean"));
-        oUserBean.setId(0);
-        oUserBean.setName("Rafael Angel");
-        oUserBean.setSurname("Aznar Aparici");
-        oUserBean.setLogin("rafael");
-        oUserBean.setPassword(sha256("rafael"));
-        String Via = arrVia.get(getRandomInt(0, arrVia.size() - 1));
-        String Via1 = arrNombre.get(getRandomInt(0, arrNombre.size() - 1));
-        String Via2 = arrApe.get(getRandomInt(0, arrApe.size() - 1));
-        String num = (String) getRandomInt(1, 100).toString();
-        oUserBean.setAddress(Via + " de " + Via1 + " " + Via2 + ", nº " + num);
-        oUserBean.setCity("Valencia");
-        oUserBean.setZip("46" + getDigito() + getDigito() + getDigito());
-        oUserBean.setState("València");
-        oUserBean.setCountry("Spain");
-        oUserBean.setEmail("rafaaznar@gmail.com");
-        oUserBean.setPhone("6" + getDigito() + getDigito() + getDigito() + getDigito() + getDigito() + getDigito() + getDigito());
-        oUserBean.setId_usertype(1);
-        try {
-            oUserDao.set(oUserBean);
-        } catch (Exception e) {
-            return new ReplyBean(500, JsonMessage.getJsonMsg(500, "Fill: Update Error: Phase 1: " + e.getMessage()));
-        }
-
-        int num1;
-        int num2;
-
-        for (int i = 1; i <= 100; i++) {
-            oUserBean = new UserBean();
-            oUserBean.setId(0);
-            String Name = arrNombre.get(getRandomInt(0, arrNombre.size() - 1));
-            String Surname1 = arrApe.get(getRandomInt(0, arrApe.size() - 1));
-            String Surname2 = arrApe.get(getRandomInt(0, arrApe.size() - 1));
-            oUserBean.setName(Name);
-            oUserBean.setSurname(Surname1 + ' ' + Surname2);
-            String Login = (Name.substring(0, 3) + Surname1.substring(0, 2) + Surname2.substring(0, 2)).toLowerCase();
-            oUserBean.setLogin(Login);
-            MessageDigest oDigest = MessageDigest.getInstance("SHA-256");
-            oUserBean.setPassword(sha256(Login));
-            Via = arrVia.get(getRandomInt(0, arrVia.size() - 1));
-            Via1 = arrNombre.get(getRandomInt(0, arrNombre.size() - 1));
-            Via2 = arrApe.get(getRandomInt(0, arrApe.size() - 1));
-            num = (String) getRandomInt(1, 100).toString();
-            oUserBean.setAddress(Via + " de " + Via1 + " " + Via2 + ", nº " + num);
-            oUserBean.setCity(arrPoblacion.get(getRandomInt(0, arrApe.size() - 1)));
-            oUserBean.setZip("46" + getDigito() + getDigito() + getDigito());
-            //oUserBean.setZip("46" + String.format("%0010d", Integer.parseInt(getRandomInt(1, 999).toString())));
-            oUserBean.setState("València");
-            oUserBean.setCountry("Spain");
-            oUserBean.setEmail(Login + arrEmail.get(getRandomInt(0, arrEmail.size() - 1)));
-            oUserBean.setPhone("6" + getDigito() + getDigito() + getDigito() + getDigito() + getDigito() + getDigito() + getDigito());
-            //oUserBean.setZip("6" + String.format("%10000000d", Integer.parseInt(getRandomInt(1, 99999999).toString())));
-            oUserBean.setId_usertype(getRandomInt(2, 4));
-
+            oUsertypeBean.setDescription("Administrador");
+            oUsertypeBean.setDiscount(0.0);
             try {
-                oUserDao.set(oUserBean);
+                oUsertypeDao.set(oUsertypeBean);
             } catch (Exception e) {
                 return new ReplyBean(500, JsonMessage.getJsonMsg(500, "Fill: Update Error: Phase 1: " + e.getMessage()));
             }
-        }
-        ArrayList<String> uno = new ArrayList<>();
-        ArrayList<String> dos = new ArrayList<>();
 
-        uno.add("Herramienta");
-        uno.add("Accesorio");
-        uno.add("Producto");
-        uno.add("Artículo");
-        uno.add("Referencia");
-        uno.add("Mercancía");
-        uno.add("Género");
-
-        dos.add("manual");
-        dos.add("automático");
-        dos.add("descatalogado");
-        dos.add("preferente");
-
-        String primero;
-        String segundo;
-
-        ProducttypeBean oProducttypeBean = new ProducttypeBean();
-        ProducttypeDao oProducttypeDao = new ProducttypeDao(oConnection, (UserBean) oRequest.getSession().getAttribute("userBean"));
-
-        Integer contador = 0;
-        Iterator<String> iterador1 = uno.listIterator();
-        while (iterador1.hasNext()) {
-            primero = iterador1.next();
-            contador++;
-            Iterator<String> iterador2 = dos.listIterator();
-            while (iterador2.hasNext()) {
-                segundo = iterador2.next();
-                contador++;
-                oProducttypeBean.setId(0);
-                oProducttypeBean.setDescription(primero + " " + segundo);
-                oProducttypeBean.setDiscount(getRandomInt(0, 5).doubleValue());
-                try {
-                    oProducttypeDao.set(oProducttypeBean);
-
-                } catch (Exception e) {
-                    return new ReplyBean(500, JsonMessage.getJsonMsg(500, "Fill: Update Error: Phase 2: " + e.getMessage()));
-                }
-
+            oUsertypeBean.setDescription("Publicador");
+            oUsertypeBean.setDiscount(0.0);
+            try {
+                oUsertypeDao.set(oUsertypeBean);
+            } catch (Exception e) {
+                return new ReplyBean(500, JsonMessage.getJsonMsg(500, "Fill: Update Error: Phase 1: " + e.getMessage()));
             }
-        }
+            oUsertypeBean.setDescription("Cliente");
+            oUsertypeBean.setDiscount(0.0);
+            try {
+                oUsertypeDao.set(oUsertypeBean);
+            } catch (Exception e) {
+                return new ReplyBean(500, JsonMessage.getJsonMsg(500, "Fill: Update Error: Phase 1: " + e.getMessage()));
+            }
+            oUsertypeBean.setDescription("Cliente preferente");
+            oUsertypeBean.setDiscount(2.5);
+            try {
+                oUsertypeDao.set(oUsertypeBean);
+            } catch (Exception e) {
+                return new ReplyBean(500, JsonMessage.getJsonMsg(500, "Fill: Update Error: Phase 1: " + e.getMessage()));
+            }
 
-        //-----------
-        uno = new ArrayList<>();
-        dos = new ArrayList<>();
-        ArrayList<String> tres = new ArrayList<>();
+            ArrayList<String> arrNombre = new ArrayList<>();
 
-        uno.add("Llave");
-        uno.add("Soldador");
-        uno.add("Pieza");
-        uno.add("Herramienta");
-        uno.add("Asadura");
-        uno.add("Mecanizador");
-        uno.add("Bote");
-        uno.add("Manivela");
-        uno.add("Pasante");
-        uno.add("Rejilla");
-        uno.add("Torno");
-        uno.add("Accionamiento");
-        uno.add("Fijación");
-        uno.add("Bajante");
-        uno.add("Sujeción");
+            arrNombre.add("Santiago");
+            arrNombre.add("Sebastián");
+            arrNombre.add("Matías");
+            arrNombre.add("Mateo");
+            arrNombre.add("Nicolás");
+            arrNombre.add("Alejandro");
+            arrNombre.add("Diego");
+            arrNombre.add("Samuel");
+            arrNombre.add("Benjamín");
+            arrNombre.add("Daniel");
+            arrNombre.add("Joaquín");
+            arrNombre.add("Lucas");
+            arrNombre.add("Tomas");
+            arrNombre.add("Gabriel");
+            arrNombre.add("Martín");
+            arrNombre.add("David");
+            arrNombre.add("Emiliano");
+            arrNombre.add("Jerónimo");
+            arrNombre.add("Emmanuel");
+            arrNombre.add("Agustín");
+            arrNombre.add("Juan Pablo");
+            arrNombre.add("Juan José");
+            arrNombre.add("Andrés");
+            arrNombre.add("Thiago");
+            arrNombre.add("Leonardo");
+            arrNombre.add("Felipe");
+            arrNombre.add("Ángel");
+            arrNombre.add("Maximiliano");
+            arrNombre.add("Christopher");
+            arrNombre.add("Juan Diego");
+            arrNombre.add("Adrián");
+            arrNombre.add("Pablo");
+            arrNombre.add("Miguel Ángel");
+            arrNombre.add("Rodrigo");
+            arrNombre.add("Alexander");
+            arrNombre.add("Ignacio");
+            arrNombre.add("Emilio");
+            arrNombre.add("Dylan");
+            arrNombre.add("Bruno");
+            arrNombre.add("Carlos");
+            arrNombre.add("Vicente");
+            arrNombre.add("Valentino");
+            arrNombre.add("Santino");
+            arrNombre.add("Julián");
+            arrNombre.add("Juan Sebastián");
+            arrNombre.add("Aarón");
+            arrNombre.add("Lautaro");
+            arrNombre.add("Axel");
+            arrNombre.add("Fernando");
+            arrNombre.add("Ian");
+            arrNombre.add("Christian");
+            arrNombre.add("Javier");
+            arrNombre.add("Manuel");
+            arrNombre.add("Luciano");
+            arrNombre.add("Francisco");
+            arrNombre.add("Juan David");
+            arrNombre.add("Iker");
+            arrNombre.add("Facundo");
+            arrNombre.add("Rafael");
+            arrNombre.add("Alex");
+            arrNombre.add("Franco");
+            arrNombre.add("Antonio");
+            arrNombre.add("Luis");
+            arrNombre.add("Isaac");
+            arrNombre.add("Máximo");
+            arrNombre.add("Pedro");
+            arrNombre.add("Ricardo");
+            arrNombre.add("Sergio");
+            arrNombre.add("Eduardo");
+            arrNombre.add("Bautista");
+            arrNombre.add("Miguel");
+            arrNombre.add("Cristóbal");
+            arrNombre.add("Kevin");
+            arrNombre.add("Jorge");
+            arrNombre.add("Alonso");
+            arrNombre.add("Anthony");
+            arrNombre.add("Simón");
+            arrNombre.add("Juan");
+            arrNombre.add("Joshua");
+            arrNombre.add("Diego Alejandro");
+            arrNombre.add("Juan Manuel");
+            arrNombre.add("Mario");
+            arrNombre.add("Alan");
+            arrNombre.add("Josué");
+            arrNombre.add("Gael");
+            arrNombre.add("Hugo");
+            arrNombre.add("Matthew");
+            arrNombre.add("Ivan");
+            arrNombre.add("Damián");
+            arrNombre.add("Lorenzo");
+            arrNombre.add("Juan Martín");
+            arrNombre.add("Esteban");
+            arrNombre.add("Álvaro");
+            arrNombre.add("Valentín");
+            arrNombre.add("Dante");
+            arrNombre.add("Jacobo");
+            arrNombre.add("Jesús");
+            arrNombre.add("Camilo");
+            arrNombre.add("Juan Esteban");
+            arrNombre.add("Elías");
+            arrNombre.add("Sofía");
+            arrNombre.add("Isabella");
+            arrNombre.add("Camila");
+            arrNombre.add("Valentina");
+            arrNombre.add("Valeria");
+            arrNombre.add("Mariana");
+            arrNombre.add("Luciana");
+            arrNombre.add("Daniela");
+            arrNombre.add("Gabriela");
+            arrNombre.add("Victoria");
+            arrNombre.add("Martina");
+            arrNombre.add("Lucía");
+            arrNombre.add("Jimena");
+            arrNombre.add("Sara");
+            arrNombre.add("Samantha");
+            arrNombre.add("María José");
+            arrNombre.add("Emma");
+            arrNombre.add("Catalina");
+            arrNombre.add("Julieta");
+            arrNombre.add("Mía");
+            arrNombre.add("Antonella");
+            arrNombre.add("Renata");
+            arrNombre.add("Emilia");
+            arrNombre.add("Natalia");
+            arrNombre.add("Zoe");
+            arrNombre.add("Nicole");
+            arrNombre.add("Paula");
+            arrNombre.add("Amanda");
+            arrNombre.add("María Fernanda");
+            arrNombre.add("Emily");
+            arrNombre.add("Antonia");
+            arrNombre.add("Alejandra");
+            arrNombre.add("Juana");
+            arrNombre.add("Andrea");
+            arrNombre.add("Manuela");
+            arrNombre.add("Ana Sofía");
+            arrNombre.add("Guadalupe");
+            arrNombre.add("Agustina");
+            arrNombre.add("Elena");
+            arrNombre.add("María");
+            arrNombre.add("Bianca");
+            arrNombre.add("Ariana");
+            arrNombre.add("Ivanna");
+            arrNombre.add("Abril");
+            arrNombre.add("Florencia");
+            arrNombre.add("Carolina");
+            arrNombre.add("Maite");
+            arrNombre.add("Rafaela");
+            arrNombre.add("Regina");
+            arrNombre.add("Adriana");
+            arrNombre.add("Michelle");
+            arrNombre.add("Alma");
+            arrNombre.add("Violeta");
+            arrNombre.add("Salomé");
+            arrNombre.add("Abigail");
+            arrNombre.add("Juliana");
+            arrNombre.add("Valery");
+            arrNombre.add("Isabel");
+            arrNombre.add("Montserrat");
+            arrNombre.add("Allison");
+            arrNombre.add("Jazmín");
+            arrNombre.add("Julia");
+            arrNombre.add("Lola");
+            arrNombre.add("Luna");
+            arrNombre.add("Ana");
+            arrNombre.add("Delfina");
+            arrNombre.add("Alessandra");
+            arrNombre.add("Ashley");
+            arrNombre.add("Olivia");
+            arrNombre.add("Constanza");
+            arrNombre.add("Paulina");
+            arrNombre.add("Rebeca");
+            arrNombre.add("Carla");
+            arrNombre.add("María Paula");
+            arrNombre.add("Micaela");
+            arrNombre.add("Fabiana");
+            arrNombre.add("Miranda");
+            arrNombre.add("Josefina");
+            arrNombre.add("Laura");
+            arrNombre.add("Alexa");
+            arrNombre.add("María Alejandra");
+            arrNombre.add("Luana");
+            arrNombre.add("Fátima");
+            arrNombre.add("Sara Sofía");
+            arrNombre.add("Isidora");
+            arrNombre.add("Malena");
+            arrNombre.add("Romina");
+            arrNombre.add("Ana Paula");
+            arrNombre.add("Mariangel");
+            arrNombre.add("Amelia");
+            arrNombre.add("Elizabeth");
+            arrNombre.add("Aitana");
+            arrNombre.add("Ariadna");
+            arrNombre.add("María Camila");
+            arrNombre.add("Irene");
+            arrNombre.add("Silvana");
+            arrNombre.add("Clara");
+            arrNombre.add("Magdalena");
+            arrNombre.add("Sophie");
+            arrNombre.add("Josefa");
+            arrNombre.add("Sergio");
+            arrNombre.add("Javi");
+            arrNombre.add("Pedro");
+            arrNombre.add("Antonio");
+            arrNombre.add("José");
+            arrNombre.add("Eduardo");
+            arrNombre.add("Ana");
+            arrNombre.add("Diana");
+            arrNombre.add("Noemí");
+            arrNombre.add("Arancha");
+            arrNombre.add("Javier");
+            arrNombre.add("Lucia");
+            arrNombre.add("Lucas");
+            arrNombre.add("Javier");
+            arrNombre.add("Marco");
+            arrNombre.add("Sandra");
+            arrNombre.add("Margarita");
+            arrNombre.add("Pedro");
+            arrNombre.add("Toni");
+            arrNombre.add("José");
+            arrNombre.add("Guillermo");
+            arrNombre.add("Rosa");
+            arrNombre.add("Adela");
+            arrNombre.add("Lucia");
+            arrNombre.add("Paco");
+            arrNombre.add("Sergio");
+            arrNombre.add("Almudena");
+            arrNombre.add("Francisca");
+            arrNombre.add("Lola");
+            arrNombre.add("Manuel");
+            arrNombre.add("Miguel");
+            arrNombre.add("Agustin");
+            arrNombre.add("Noelia");
+            arrNombre.add("Amparo");
+            arrNombre.add("Benito");
+            arrNombre.add("Ana");
 
-        dos.add("auxiliar");
-        dos.add("manual");
-        dos.add("con rodadura");
-        dos.add("extensivo");
-        dos.add("intensivo");
+            ArrayList<String> arrApe = new ArrayList<>();
+            arrApe.add("Martín");
+            arrApe.add("Benito");
+            arrApe.add("Navarro");
+            arrApe.add("Bonet");
+            arrApe.add("Martinez");
+            arrApe.add("Grancha");
+            arrApe.add("Gavilan");
+            arrApe.add("Perez");
+            arrApe.add("Lopez");
+            arrApe.add("Carreño");
+            arrApe.add("Soria");
+            arrApe.add("Tárraga");
+            arrApe.add("Muñoz");
+            arrApe.add("Vellisca");
+            arrApe.add("Aznar");
+            arrApe.add("Zapatero");
+            arrApe.add("Blanco");
+            arrApe.add("Soriano");
+            arrApe.add("Reig");
+            arrApe.add("Cabrera");
+            arrApe.add("García");
+            arrApe.add("Sancho");
+            arrApe.add("Sanchís");
+            arrApe.add("Gómez");
+            arrApe.add("Giménez");
+            arrApe.add("Montoya");
+            arrApe.add("López");
+            arrApe.add("Domínguez");
+            arrApe.add("González");
+            arrApe.add("Fernández");
+            arrApe.add("Rodríguez");
+            arrApe.add("Martínez");
+            arrApe.add("Pérez");
+            arrApe.add("Hernández");
+            arrApe.add("Alvarez");
+            arrApe.add("Gutierrez");
+            arrApe.add("Belmonte");
+            arrApe.add("Palomino");
+            arrApe.add("Casanova");
+            arrApe.add("Gutierrez");
+            arrApe.add("Garcia");
+            arrApe.add("Benito");
+            arrApe.add("Soria");
+            arrApe.add("Grancha");
+            arrApe.add("Martinez");
+            arrApe.add("Rodriguez");
+            arrApe.add("Gutierrez");
+            arrApe.add("Rubio");
+            arrApe.add("Moreno");
+            arrApe.add("Aragon");
+            arrApe.add("Atienza");
+            arrApe.add("Pons");
+            arrApe.add("Ochoa");
+            arrApe.add("Delicado");
+            arrApe.add("Sanchez");
+            arrApe.add("Sistiaga");
+            arrApe.add("Urkullu");
+            arrApe.add("Albert");
+            arrApe.add("Laplaza");
+            arrApe.add("Alpuente");
+            arrApe.add("Pons");
+            arrApe.add("Garrido");
+            arrApe.add("Lopez");
+            arrApe.add("Cuerda");
+            arrApe.add("Cañizares");
 
-        tres.add("de emergencia");
-        tres.add("de repuesto");
-        tres.add("de paso");
-        tres.add("de acople");
-        tres.add("de mano");
+            ArrayList<String> arrSexo = new ArrayList<>();
+            arrSexo.add("Hombre");
+            arrSexo.add("Mujer");
 
-        ProductBean oProductBean = new ProductBean();
-        ProductDao oProductDao = new ProductDao(oConnection, (UserBean) oRequest.getSession().getAttribute("userBean"));
-        String tercero;
-        contador = 0;
-        iterador1 = uno.listIterator();
-        while (iterador1.hasNext()) {
-            primero = iterador1.next();
-            contador++;
-            Iterator<String> iterador2 = dos.listIterator();
-            while (iterador2.hasNext()) {
-                segundo = iterador2.next();
+            ArrayList<String> arrVia = new ArrayList<>();
+            arrVia.add("Avenida");
+            arrVia.add("Paseo");
+            arrVia.add("Plaza");
+            arrVia.add("Rambla");
+            arrVia.add("Calle");
+            arrVia.add("Camino");
+
+            ArrayList<String> arrDomicilio = new ArrayList<>();
+
+            ArrayList<String> arrCodpostal = new ArrayList<>();
+            arrCodpostal.add("46910");
+            arrCodpostal.add("46490");
+            arrCodpostal.add("46001");
+            arrCodpostal.add("46022");
+            arrCodpostal.add("46013");
+
+            ArrayList<String> arrPoblacion = new ArrayList<>();
+
+            arrPoblacion.add("Ademuz");
+            arrPoblacion.add("Agullent");
+            arrPoblacion.add("Aielo de Malferit");
+            arrPoblacion.add("Aielo de Rugat");
+            arrPoblacion.add("Alaquàs");
+            arrPoblacion.add("Albaida");
+            arrPoblacion.add("Albal");
+            arrPoblacion.add("Albalat de la Ribera");
+            arrPoblacion.add("Albalat dels Sorells");
+            arrPoblacion.add("Albalat dels Tarongers");
+            arrPoblacion.add("Alberic");
+            arrPoblacion.add("Alborache");
+            arrPoblacion.add("Alboraya");
+            arrPoblacion.add("Albuixech");
+            arrPoblacion.add("Alcublas");
+            arrPoblacion.add("Alcàntera de Xúquer");
+            arrPoblacion.add("Alcàsser");
+            arrPoblacion.add("Aldaia");
+            arrPoblacion.add("Alfafar");
+            arrPoblacion.add("Alfara de Algimia");
+            arrPoblacion.add("Alfara del Patriarca");
+            arrPoblacion.add("Alfarp");
+            arrPoblacion.add("Alfarrasí");
+            arrPoblacion.add("Alfauir");
+            arrPoblacion.add("Algar de Palancia");
+            arrPoblacion.add("Algemesí");
+            arrPoblacion.add("Algimia de Alfara");
+            arrPoblacion.add("Alginet");
+            arrPoblacion.add("Almiserà");
+            arrPoblacion.add("Almoines");
+            arrPoblacion.add("Almussafes");
+            arrPoblacion.add("Almàssera");
+            arrPoblacion.add("Alpuente");
+            arrPoblacion.add("Alzira");
+            arrPoblacion.add("Andilla");
+            arrPoblacion.add("Anna");
+            arrPoblacion.add("Antella");
+            arrPoblacion.add("Aras de los Olmos");
+            arrPoblacion.add("Ayora");
+            arrPoblacion.add("Barx");
+            arrPoblacion.add("Barxeta");
+            arrPoblacion.add("Bellreguard");
+            arrPoblacion.add("Bellús");
+            arrPoblacion.add("Benaguasil");
+            arrPoblacion.add("Benagéber");
+            arrPoblacion.add("Benavites");
+            arrPoblacion.add("Beneixida");
+            arrPoblacion.add("Benetússer");
+            arrPoblacion.add("Beniarjó");
+            arrPoblacion.add("Beniatjar");
+            arrPoblacion.add("Benicolet");
+            arrPoblacion.add("Benifairó de la Valldigna");
+            arrPoblacion.add("Benifairó de les Valls");
+            arrPoblacion.add("Benifaió");
+            arrPoblacion.add("Beniflá");
+            arrPoblacion.add("Benigánim");
+            arrPoblacion.add("Benimodo");
+            arrPoblacion.add("Benimuslem");
+            arrPoblacion.add("Beniparrell");
+            arrPoblacion.add("Benirredrà");
+            arrPoblacion.add("Benisanó");
+            arrPoblacion.add("Benissoda");
+            arrPoblacion.add("Benisuera");
+            arrPoblacion.add("Bicorp");
+            arrPoblacion.add("Bocairent");
+            arrPoblacion.add("Bolbaite");
+            arrPoblacion.add("Bonrepòs i Mirambell");
+            arrPoblacion.add("Bufali");
+            arrPoblacion.add("Bugarra");
+            arrPoblacion.add("Burjassot");
+            arrPoblacion.add("Buñol");
+            arrPoblacion.add("Bèlgida");
+            arrPoblacion.add("Bétera");
+            arrPoblacion.add("Calles");
+            arrPoblacion.add("Camporrobles");
+            arrPoblacion.add("Canals");
+            arrPoblacion.add("Carcaixent");
+            arrPoblacion.add("Carlet");
+            arrPoblacion.add("Carrícola");
+            arrPoblacion.add("Casas Altas");
+            arrPoblacion.add("Casas Bajas");
+            arrPoblacion.add("Casinos");
+            arrPoblacion.add("Castellonet de la Conquesta");
+            arrPoblacion.add("Castelló de Rugat");
+            arrPoblacion.add("Castelló de la Ribera");
+            arrPoblacion.add("Castielfabib");
+            arrPoblacion.add("Catadau");
+            arrPoblacion.add("Catarroja");
+            arrPoblacion.add("Caudete de las Fuentes");
+            arrPoblacion.add("Cerdà");
+            arrPoblacion.add("Chella");
+            arrPoblacion.add("Chelva");
+            arrPoblacion.add("Chera");
+            arrPoblacion.add("Cheste");
+            arrPoblacion.add("Chiva");
+            arrPoblacion.add("Chulilla");
+            arrPoblacion.add("Cofrentes");
+            arrPoblacion.add("Corbera");
+            arrPoblacion.add("Cortes de Pallás");
+            arrPoblacion.add("Cotes");
+            arrPoblacion.add("Cullera");
+            arrPoblacion.add("Càrcer");
+            arrPoblacion.add("Daimús");
+            arrPoblacion.add("Domeño");
+            arrPoblacion.add("Dos Aguas");
+            arrPoblacion.add("Emperador");
+            arrPoblacion.add("Enguera");
+            arrPoblacion.add("Estivella");
+            arrPoblacion.add("Estubeny");
+            arrPoblacion.add("Faura");
+            arrPoblacion.add("Favara");
+            arrPoblacion.add("Foios");
+            arrPoblacion.add("Font de la Figuera (la)");
+            arrPoblacion.add("Fontanars dels Alforins");
+            arrPoblacion.add("Fortaleny");
+            arrPoblacion.add("Fuenterrobles");
+            arrPoblacion.add("Gandia");
+            arrPoblacion.add("Gavarda");
+            arrPoblacion.add("Genovés");
+            arrPoblacion.add("Gestalgar");
+            arrPoblacion.add("Gilet");
+            arrPoblacion.add("Godella");
+            arrPoblacion.add("Godelleta");
+            arrPoblacion.add("Granja de la Costera (la)");
+            arrPoblacion.add("Guadasequies");
+            arrPoblacion.add("Guadassuar");
+            arrPoblacion.add("Guardamar de la Safor");
+            arrPoblacion.add("Higueruelas");
+            arrPoblacion.add("Jalance");
+            arrPoblacion.add("Jarafuel");
+            arrPoblacion.add("Llanera de Ranes");
+            arrPoblacion.add("Llaurí");
+            arrPoblacion.add("Llocnou de Sant Jeroni");
+            arrPoblacion.add("Llocnou de la Corona");
+            arrPoblacion.add("Llombai");
+            arrPoblacion.add("Llosa de Ranes (la)");
+            arrPoblacion.add("Llutxent");
+            arrPoblacion.add("Llíria");
+            arrPoblacion.add("Loriguilla");
+            arrPoblacion.add("Losa del Obispo");
+            arrPoblacion.add("Macastre");
+            arrPoblacion.add("Manises");
+            arrPoblacion.add("Manuel");
+            arrPoblacion.add("Marines");
+            arrPoblacion.add("Masalavés");
+            arrPoblacion.add("Massalfassar");
+            arrPoblacion.add("Massamagrell");
+            arrPoblacion.add("Massanassa");
+            arrPoblacion.add("Meliana");
+            arrPoblacion.add("Millares");
+            arrPoblacion.add("Miramar");
+            arrPoblacion.add("Mislata");
+            arrPoblacion.add("Mogente");
+            arrPoblacion.add("Moncada");
+            arrPoblacion.add("Montaverner");
+            arrPoblacion.add("Montesa");
+            arrPoblacion.add("Montitxelvo");
+            arrPoblacion.add("Montroy");
+            arrPoblacion.add("Montserrat");
+            arrPoblacion.add("Museros");
+            arrPoblacion.add("Navarrés");
+            arrPoblacion.add("Novelé");
+            arrPoblacion.add("Náquera");
+            arrPoblacion.add("Oliva");
+            arrPoblacion.add("Olocau");
+            arrPoblacion.add("Ontinyent");
+            arrPoblacion.add("Otos");
+            arrPoblacion.add("Paiporta");
+            arrPoblacion.add("Palma de Gandía");
+            arrPoblacion.add("Palmera");
+            arrPoblacion.add("Palomar (el)");
+            arrPoblacion.add("Paterna");
+            arrPoblacion.add("Pedralba");
+            arrPoblacion.add("Petrés");
+            arrPoblacion.add("Picanya");
+            arrPoblacion.add("Picassent");
+            arrPoblacion.add("Piles");
+            arrPoblacion.add("Pinet");
+            arrPoblacion.add("Pobla Llarga (la)");
+            arrPoblacion.add("Pobla de Farnals (la)");
+            arrPoblacion.add("Pobla de Vallbona (la)");
+            arrPoblacion.add("Pobla del Duc (la)");
+            arrPoblacion.add("Polinyà de Xúquer");
+            arrPoblacion.add("Potríes");
+            arrPoblacion.add("Puebla de San Miguel");
+            arrPoblacion.add("Puig");
+            arrPoblacion.add("Puçol");
+            arrPoblacion.add("Quart de Poblet");
+            arrPoblacion.add("Quart de les Valls");
+            arrPoblacion.add("Quartell");
+            arrPoblacion.add("Quatretonda");
+            arrPoblacion.add("Quesa");
+            arrPoblacion.add("Rafelbuñol");
+            arrPoblacion.add("Rafelcofer");
+            arrPoblacion.add("Rafelguaraf");
+            arrPoblacion.add("Real de Gandía");
+            arrPoblacion.add("Real de Montroi");
+            arrPoblacion.add("Requena");
+            arrPoblacion.add("Riba-roja de Túria");
+            arrPoblacion.add("Riola");
+            arrPoblacion.add("Rocafort");
+            arrPoblacion.add("Rotglà i Corberà");
+            arrPoblacion.add("Rugat");
+            arrPoblacion.add("Ráfol de Salem");
+            arrPoblacion.add("Rótova");
+            arrPoblacion.add("Sagunto");
+            arrPoblacion.add("Salem");
+            arrPoblacion.add("San Juan de Énova");
+            arrPoblacion.add("Sedaví");
+            arrPoblacion.add("Segart");
+            arrPoblacion.add("Sellent");
+            arrPoblacion.add("Sempere");
+            arrPoblacion.add("Senyera");
+            arrPoblacion.add("Serra");
+            arrPoblacion.add("Siete Aguas");
+            arrPoblacion.add("Silla");
+            arrPoblacion.add("Simat de la Valldigna");
+            arrPoblacion.add("Sinarcas");
+            arrPoblacion.add("Sollana");
+            arrPoblacion.add("Sot de Chera");
+            arrPoblacion.add("Sueca");
+            arrPoblacion.add("Sumacàrcer");
+            arrPoblacion.add("Tavernes Blanques");
+            arrPoblacion.add("Tavernes de la Valldigna");
+            arrPoblacion.add("Teresa de Cofrentes");
+            arrPoblacion.add("Terrateig");
+            arrPoblacion.add("Titaguas");
+            arrPoblacion.add("Torrebaja");
+            arrPoblacion.add("Torrella");
+            arrPoblacion.add("Torrent");
+            arrPoblacion.add("Torres Torres");
+            arrPoblacion.add("Tous");
+            arrPoblacion.add("Turís");
+            arrPoblacion.add("Tuéjar");
+            arrPoblacion.add("Utiel");
+            arrPoblacion.add("Valencia");
+            arrPoblacion.add("Vallada");
+            arrPoblacion.add("Vallanca");
+            arrPoblacion.add("Vallés");
+            arrPoblacion.add("Venta del Moro");
+            arrPoblacion.add("Vilamarxant");
+            arrPoblacion.add("Villalonga");
+            arrPoblacion.add("Villar del Arzobispo");
+            arrPoblacion.add("Villargordo del Cabriel");
+            arrPoblacion.add("Vinalesa");
+            arrPoblacion.add("Xeraco");
+            arrPoblacion.add("Xeresa");
+            arrPoblacion.add("Xirivella");
+            arrPoblacion.add("Xàtiva");
+
+            ArrayList<String> arrEmail = new ArrayList<>();
+            arrEmail.add("@hotmail.com");
+            arrEmail.add("@hotmail.es");
+            arrEmail.add("@gmail.com");
+            arrEmail.add("@yahoo.com");
+            arrEmail.add("@ono.es");
+            arrEmail.add("@outlook.es");
+            arrEmail.add("@outlook.com");
+            arrEmail.add("@gmail.es");
+            arrEmail.add("@yahoo.es");
+            arrEmail.add("@ono.com");
+
+            ArrayList<String> arrValidado = new ArrayList<>();
+            arrValidado.add("Si");
+            arrValidado.add("No");
+
+            ArrayList<String> arrPass = new ArrayList<>();
+            arrPass.add("Perro");
+            arrPass.add("Gato");
+            arrPass.add("Loro");
+            arrPass.add("Ballena");
+            arrPass.add("Canguro");
+            arrPass.add("Panda");
+            arrPass.add("Elefante");
+            arrPass.add("Jirafa");
+            arrPass.add("Rinoceronte");
+            arrPass.add("Leon");
+
+            PuserBean oPuserBean = new PuserBean();
+            UserDao oUserDao = new UserDao(oConnection, (PuserBean) oRequest.getSession().getAttribute("userBean"));
+            oPuserBean.setId(0);
+            oPuserBean.setName("Rafael Angel");
+            oPuserBean.setSurname("Aznar Aparici");
+            oPuserBean.setLogin("rafael");
+            oPuserBean.setPassword(sha256("rafael"));
+            String Via = arrVia.get(getRandomInt(0, arrVia.size() - 1));
+            String Via1 = arrNombre.get(getRandomInt(0, arrNombre.size() - 1));
+            String Via2 = arrApe.get(getRandomInt(0, arrApe.size() - 1));
+            String num = (String) getRandomInt(1, 100).toString();
+            oPuserBean.setAddress(Via + " de " + Via1 + " " + Via2 + ", nº " + num);
+            oPuserBean.setCity("Valencia");
+            oPuserBean.setZip("46" + getDigito() + getDigito() + getDigito());
+            oPuserBean.setState("València");
+            oPuserBean.setCountry("Spain");
+            oPuserBean.setEmail("rafaaznar@gmail.com");
+            oPuserBean.setPhone("6" + getDigito() + getDigito() + getDigito() + getDigito() + getDigito() + getDigito() + getDigito());
+            oPuserBean.setId_usertype(1);
+            try {
+                oUserDao.setP(oPuserBean);
+            } catch (Exception e) {
+                return new ReplyBean(500, JsonMessage.getJsonMsg(500, "Fill: Update Error: Phase 1: " + e.getMessage()));
+            }
+
+            int num1;
+            int num2;
+
+            for (int i = 1; i <= 100; i++) {
+                oPuserBean = new PuserBean();
+                oPuserBean.setId(0);
+                String Name = arrNombre.get(getRandomInt(0, arrNombre.size() - 1));
+                String Surname1 = arrApe.get(getRandomInt(0, arrApe.size() - 1));
+                String Surname2 = arrApe.get(getRandomInt(0, arrApe.size() - 1));
+                oPuserBean.setName(Name);
+                oPuserBean.setSurname(Surname1 + ' ' + Surname2);
+                String Login = (Name.substring(0, 3) + Surname1.substring(0, 2) + Surname2.substring(0, 2)).toLowerCase();
+                oPuserBean.setLogin(Login);
+                MessageDigest oDigest = MessageDigest.getInstance("SHA-256");
+                oPuserBean.setPassword(sha256(Login));
+                Via = arrVia.get(getRandomInt(0, arrVia.size() - 1));
+                Via1 = arrNombre.get(getRandomInt(0, arrNombre.size() - 1));
+                Via2 = arrApe.get(getRandomInt(0, arrApe.size() - 1));
+                num = (String) getRandomInt(1, 100).toString();
+                oPuserBean.setAddress(Via + " de " + Via1 + " " + Via2 + ", nº " + num);
+                oPuserBean.setCity(arrPoblacion.get(getRandomInt(0, arrApe.size() - 1)));
+                oPuserBean.setZip("46" + getDigito() + getDigito() + getDigito());
+                //oUserBean.setZip("46" + String.format("%0010d", Integer.parseInt(getRandomInt(1, 999).toString())));
+                oPuserBean.setState("València");
+                oPuserBean.setCountry("Spain");
+                oPuserBean.setEmail(Login + arrEmail.get(getRandomInt(0, arrEmail.size() - 1)));
+                oPuserBean.setPhone("6" + getDigito() + getDigito() + getDigito() + getDigito() + getDigito() + getDigito() + getDigito());
+                //oUserBean.setZip("6" + String.format("%10000000d", Integer.parseInt(getRandomInt(1, 99999999).toString())));
+                oPuserBean.setId_usertype(getRandomInt(2, 4));
+
+                try {
+                    oUserDao.setP(oPuserBean);
+                } catch (Exception e) {
+                    return new ReplyBean(500, JsonMessage.getJsonMsg(500, "Fill: Update Error: Phase 1: " + e.getMessage()));
+                }
+            }
+            ArrayList<String> uno = new ArrayList<>();
+            ArrayList<String> dos = new ArrayList<>();
+
+            uno.add("Herramienta");
+            uno.add("Accesorio");
+            uno.add("Producto");
+            uno.add("Artículo");
+            uno.add("Referencia");
+            uno.add("Mercancía");
+            uno.add("Género");
+
+            dos.add("manual");
+            dos.add("automático");
+            dos.add("descatalogado");
+            dos.add("preferente");
+
+            String primero;
+            String segundo;
+
+            ProducttypeBean oProducttypeBean = new ProducttypeBean();
+            ProducttypeDao oProducttypeDao = new ProducttypeDao(oConnection, (PuserBean) oRequest.getSession().getAttribute("userBean"));
+
+            Integer contador = 0;
+            Iterator<String> iterador1 = uno.listIterator();
+            while (iterador1.hasNext()) {
+                primero = iterador1.next();
                 contador++;
-                Iterator<String> iterador3 = tres.listIterator();
-                while (iterador3.hasNext()) {
-                    tercero = iterador3.next();
+                Iterator<String> iterador2 = dos.listIterator();
+                while (iterador2.hasNext()) {
+                    segundo = iterador2.next();
                     contador++;
-                    Random generator = new Random();
-                    oProductBean.setId(0);
-                    oProductBean.setCode(Character.toUpperCase(primero.charAt(0)) + Character.toUpperCase(segundo.charAt(0)) + contador.toString() + Character.toUpperCase(tercero.charAt(0)));
-                    oProductBean.setDescription(primero + " " + segundo + " " + tercero);
-                    oProductBean.setPrice(Double.parseDouble(Integer.toString(generator.nextInt(2000)) + "." + Integer.toString(generator.nextInt(99))));
-                    oProductBean.setId_producttype(getRandomInt(1, 28));
-                    oProductBean.setStock(getRandomInt(1, 2000));
+                    oProducttypeBean.setId(0);
+                    oProducttypeBean.setDescription(primero + " " + segundo);
+                    oProducttypeBean.setDiscount(getRandomInt(0, 5).doubleValue());
                     try {
-                        oProductDao.set(oProductBean);
+                        oProducttypeDao.set(oProducttypeBean);
+
                     } catch (Exception e) {
-                        return new ReplyBean(500, JsonMessage.getJsonMsg(500, "Fill: Update Error: Phase 3: " + e.getMessage()));
+                        return new ReplyBean(500, JsonMessage.getJsonMsg(500, "Fill: Update Error: Phase 2: " + e.getMessage()));
+                    }
+
+                }
+            }
+
+            //-----------
+            uno = new ArrayList<>();
+            dos = new ArrayList<>();
+            ArrayList<String> tres = new ArrayList<>();
+
+            uno.add("Llave");
+            uno.add("Soldador");
+            uno.add("Pieza");
+            uno.add("Herramienta");
+            uno.add("Asadura");
+            uno.add("Mecanizador");
+            uno.add("Bote");
+            uno.add("Manivela");
+            uno.add("Pasante");
+            uno.add("Rejilla");
+            uno.add("Torno");
+            uno.add("Accionamiento");
+            uno.add("Fijación");
+            uno.add("Bajante");
+            uno.add("Sujeción");
+
+            dos.add("auxiliar");
+            dos.add("manual");
+            dos.add("con rodadura");
+            dos.add("extensivo");
+            dos.add("intensivo");
+
+            tres.add("de emergencia");
+            tres.add("de repuesto");
+            tres.add("de paso");
+            tres.add("de acople");
+            tres.add("de mano");
+
+            ProductBean oProductBean = new ProductBean();
+            ProductDao oProductDao = new ProductDao(oConnection, (PuserBean) oRequest.getSession().getAttribute("userBean"));
+            String tercero;
+            contador = 0;
+            iterador1 = uno.listIterator();
+            while (iterador1.hasNext()) {
+                primero = iterador1.next();
+                contador++;
+                Iterator<String> iterador2 = dos.listIterator();
+                while (iterador2.hasNext()) {
+                    segundo = iterador2.next();
+                    contador++;
+                    Iterator<String> iterador3 = tres.listIterator();
+                    while (iterador3.hasNext()) {
+                        tercero = iterador3.next();
+                        contador++;
+                        Random generator = new Random();
+                        oProductBean.setId(0);
+                        oProductBean.setCode(Character.toUpperCase(primero.charAt(0)) + Character.toUpperCase(segundo.charAt(0)) + contador.toString() + Character.toUpperCase(tercero.charAt(0)));
+                        oProductBean.setDescription(primero + " " + segundo + " " + tercero);
+                        oProductBean.setPrice(Double.parseDouble(Integer.toString(generator.nextInt(2000)) + "." + Integer.toString(generator.nextInt(99))));
+                        oProductBean.setId_producttype(getRandomInt(1, 28));
+                        oProductBean.setStock(getRandomInt(1, 2000));
+                        try {
+                            oProductDao.set(oProductBean);
+                        } catch (Exception e) {
+                            return new ReplyBean(500, JsonMessage.getJsonMsg(500, "Fill: Update Error: Phase 3: " + e.getMessage()));
+                        }
                     }
                 }
             }
-        }
 
-        DocumenttypeBean oDocumenttypeBean = new DocumenttypeBean();
-        DocumenttypeDao oDocumenttypeDao = new DocumenttypeDao(oConnection, (UserBean) oRequest.getSession().getAttribute("userBean"));
+            DocumenttypeBean oDocumenttypeBean = new DocumenttypeBean();
+            DocumenttypeDao oDocumenttypeDao = new DocumenttypeDao(oConnection, (PuserBean) oRequest.getSession().getAttribute("userBean"));
 
-        oDocumenttypeBean.setId(0);
-        oDocumenttypeBean.setDescription("Pendiente");
-        try {
-            oDocumenttypeDao.set(oDocumenttypeBean);
-        } catch (Exception e) {
-            return new ReplyBean(500, JsonMessage.getJsonMsg(500, "Fill: Update Error: Phase 6a: " + e.getMessage()));
-        }
-        oDocumenttypeBean.setId(0);
-        oDocumenttypeBean.setDescription("Cobrado");
-        try {
-            oDocumenttypeDao.set(oDocumenttypeBean);
-        } catch (Exception e) {
-            return new ReplyBean(500, JsonMessage.getJsonMsg(500, "Fill: Update Error: Phase 6b: " + e.getMessage()));
-        }
-        oDocumenttypeBean.setId(0);
-        oDocumenttypeBean.setDescription("Pendiente de remesar");
-        try {
-            oDocumenttypeDao.set(oDocumenttypeBean);
-        } catch (Exception e) {
-            return new ReplyBean(500, JsonMessage.getJsonMsg(500, "Fill: Update Error: Phase 6c: " + e.getMessage()));
-        }
-        oDocumenttypeBean.setId(0);
-        oDocumenttypeBean.setDescription("Remesado");
-        try {
-            oDocumenttypeDao.set(oDocumenttypeBean);
-        } catch (Exception e) {
-            return new ReplyBean(500, JsonMessage.getJsonMsg(500, "Fill: Update Error: Phase 6d: " + e.getMessage()));
-        }
-        oDocumenttypeBean.setId(0);
-        oDocumenttypeBean.setDescription("Devuelto");
-        try {
-            oDocumenttypeDao.set(oDocumenttypeBean);
-        } catch (Exception e) {
-            return new ReplyBean(500, JsonMessage.getJsonMsg(500, "Fill: Update Error: Phase 6: " + e.getMessage()));
-        }
-
-        //---------DOCUMENT----------
-        DocumentBean oDocumentBean = new DocumentBean();
-        DocumentDao oDocumentDao = new DocumentDao(oConnection, (UserBean) oRequest.getSession().getAttribute("userBean"));
-        for (int i = 1; i <= 100; i++) {
-            oDocumentBean.setId(0);
-            oDocumentBean.setDescription("Factura");
-            oDocumentBean.setCreation(getRandDate(getRandomInt(0, 5000)));
-            oDocumentBean.setFreezed(Boolean.FALSE);
-            oDocumentBean.setId_documenttype(getRandomInt(1, 5));
-            oDocumentBean.setId_user(getRandomInt(1, 100));
+            oDocumenttypeBean.setId(0);
+            oDocumenttypeBean.setDescription("Pendiente");
             try {
-                oDocumentDao.set(oDocumentBean);
+                oDocumenttypeDao.set(oDocumenttypeBean);
             } catch (Exception e) {
-                return new ReplyBean(500, JsonMessage.getJsonMsg(500, "Fill: Update Error: Phase 7: " + e.getMessage()));
+                return new ReplyBean(500, JsonMessage.getJsonMsg(500, "Fill: Update Error: Phase 6a: " + e.getMessage()));
+            }
+            oDocumenttypeBean.setId(0);
+            oDocumenttypeBean.setDescription("Cobrado");
+            try {
+                oDocumenttypeDao.set(oDocumenttypeBean);
+            } catch (Exception e) {
+                return new ReplyBean(500, JsonMessage.getJsonMsg(500, "Fill: Update Error: Phase 6b: " + e.getMessage()));
+            }
+            oDocumenttypeBean.setId(0);
+            oDocumenttypeBean.setDescription("Pendiente de remesar");
+            try {
+                oDocumenttypeDao.set(oDocumenttypeBean);
+            } catch (Exception e) {
+                return new ReplyBean(500, JsonMessage.getJsonMsg(500, "Fill: Update Error: Phase 6c: " + e.getMessage()));
+            }
+            oDocumenttypeBean.setId(0);
+            oDocumenttypeBean.setDescription("Remesado");
+            try {
+                oDocumenttypeDao.set(oDocumenttypeBean);
+            } catch (Exception e) {
+                return new ReplyBean(500, JsonMessage.getJsonMsg(500, "Fill: Update Error: Phase 6d: " + e.getMessage()));
+            }
+            oDocumenttypeBean.setId(0);
+            oDocumenttypeBean.setDescription("Devuelto");
+            try {
+                oDocumenttypeDao.set(oDocumenttypeBean);
+            } catch (Exception e) {
+                return new ReplyBean(500, JsonMessage.getJsonMsg(500, "Fill: Update Error: Phase 6: " + e.getMessage()));
             }
 
-        }
-        //---------PURCHASE----------
-        PurchaseBean oPurchaseBean = new PurchaseBean();
-        PurchaseDao oPurchaseDao = new PurchaseDao(oConnection, (UserBean) oRequest.getSession().getAttribute("userBean"));
-        for (int i = 1; i <= 3000; i++) {
-            oPurchaseBean.setId(0);
-            oPurchaseBean.setDate(getRandDate(getRandomInt(0, 5000)));
-            oPurchaseBean.setId_document(getRandomInt(1, 100));
-            oPurchaseBean.setId_user(getRandomInt(1, 100));
-            oPurchaseBean.setId_product(getRandomInt(1, 370));
-            oPurchaseBean.setQuantity(getRandomInt(1, 20));
-            try {
-                oPurchaseDao.set(oPurchaseBean);
-            } catch (Exception e) {
-                return new ReplyBean(500, JsonMessage.getJsonMsg(500, "Fill: Update Error: Phase 8: " + e.getMessage()));
+            //---------DOCUMENT----------
+            DocumentBean oDocumentBean = new DocumentBean();
+            DocumentDao oDocumentDao = new DocumentDao(oConnection, (PuserBean) oRequest.getSession().getAttribute("userBean"));
+            for (int i = 1; i <= 100; i++) {
+                oDocumentBean.setId(0);
+                oDocumentBean.setDescription("Factura");
+                oDocumentBean.setCreation(getRandDate(getRandomInt(0, 5000)));
+                oDocumentBean.setFreezed(Boolean.FALSE);
+                oDocumentBean.setId_documenttype(getRandomInt(1, 5));
+                oDocumentBean.setId_user(getRandomInt(1, 100));
+                try {
+                    oDocumentDao.set(oDocumentBean);
+                } catch (Exception e) {
+                    return new ReplyBean(500, JsonMessage.getJsonMsg(500, "Fill: Update Error: Phase 7: " + e.getMessage()));
+                }
+
+            }
+            //---------PURCHASE----------
+            PurchaseBean oPurchaseBean = new PurchaseBean();
+            PurchaseDao oPurchaseDao = new PurchaseDao(oConnection, (PuserBean) oRequest.getSession().getAttribute("userBean"));
+            for (int i = 1; i <= 3000; i++) {
+                oPurchaseBean.setId(0);
+                oPurchaseBean.setDate(getRandDate(getRandomInt(0, 5000)));
+                oPurchaseBean.setId_document(getRandomInt(1, 100));
+                oPurchaseBean.setId_user(getRandomInt(1, 100));
+                oPurchaseBean.setId_product(getRandomInt(1, 370));
+                oPurchaseBean.setQuantity(getRandomInt(1, 20));
+                try {
+                    oPurchaseDao.set(oPurchaseBean);
+                } catch (Exception e) {
+                    return new ReplyBean(500, JsonMessage.getJsonMsg(500, "Fill: Update Error: Phase 8: " + e.getMessage()));
+                }
+
             }
 
-        }
+            //---------POST----------
+            PostBean oPostBean = new PostBean();
+            PostDao oPostDao = new PostDao(oConnection, (PuserBean) oRequest.getSession().getAttribute("userBean"));
+            for (int i = 1; i <= 3000; i++) {
+                oPostBean.setId(0);
+                oPostBean.setTitle(getText(1));
+                oPostBean.setContent(getText(getRandomInt(3, 15)));
+                oPostBean.setCreation(getRandDate(getRandomInt(0, 5000)));
+                oPostBean.setHits(0);
+                oPostBean.setLabels(getLabels(getRandomInt(1, 4)));
+                oPostBean.setId_user(getRandomInt(1, 100));
+                oPostBean.setPublished(Boolean.TRUE);
+                oPostBean.setEmphasized(Boolean.FALSE);
+                oPostBean.setFrontpaged(Boolean.TRUE);
+                try {
+                    oPostDao.set(oPostBean);
+                } catch (Exception e) {
+                    return new ReplyBean(500, JsonMessage.getJsonMsg(500, "Fill: Update Error: Phase 8: " + e.getMessage()));
+                }
 
-        //---------POST----------
-        PostBean oPostBean = new PostBean();
-        PostDao oPostDao = new PostDao(oConnection, (UserBean) oRequest.getSession().getAttribute("userBean"));
-        for (int i = 1; i <= 3000; i++) {
-            oPostBean.setId(0);
-            oPostBean.setTitle(getText(1));
-            oPostBean.setContent(getText(getRandomInt(3, 15)));
-            oPostBean.setCreation(getRandDate(getRandomInt(0, 5000)));
-            oPostBean.setHits(0);
-            oPostBean.setLabels(getLabels(getRandomInt(1, 4)));
-            oPostBean.setId_user(getRandomInt(1, 100));
-            oPostBean.setPublished(Boolean.TRUE);
-            oPostBean.setEmphasized(Boolean.FALSE);
-            oPostBean.setFrontpaged(Boolean.TRUE);
-            try {
-                oPostDao.set(oPostBean);
-            } catch (Exception e) {
-                return new ReplyBean(500, JsonMessage.getJsonMsg(500, "Fill: Update Error: Phase 8: " + e.getMessage()));
             }
-
         }
         return new ReplyBean(500, JsonMessage.getJsonMsg(500, "Fill: OK"));
     }

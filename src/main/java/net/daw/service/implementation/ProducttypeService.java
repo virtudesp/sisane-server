@@ -35,6 +35,7 @@ import java.util.HashMap;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import net.daw.bean.implementation.ProducttypeBean;
+import net.daw.bean.implementation.PuserBean;
 import net.daw.bean.implementation.ReplyBean;
 import net.daw.bean.implementation.UserBean;
 import net.daw.connection.publicinterface.ConnectionInterface;
@@ -57,8 +58,8 @@ public class ProducttypeService implements TableServiceInterface, ViewServiceInt
     }
 
     private Boolean checkpermission(String strMethodName) throws Exception {
-        UserBean oUserBean = (UserBean) oRequest.getSession().getAttribute("userBean");
-        if (oUserBean != null) {
+        PuserBean oPuserBean = (PuserBean) oRequest.getSession().getAttribute("userBean");
+        if (oPuserBean != null) {
             return true;
         } else {
             return false;
@@ -75,7 +76,7 @@ public class ProducttypeService implements TableServiceInterface, ViewServiceInt
             try {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
-                ProducttypeDao oProducttypeDao = new ProducttypeDao(oConnection, (UserBean) oRequest.getSession().getAttribute("userBean"));
+                ProducttypeDao oProducttypeDao = new ProducttypeDao(oConnection, (PuserBean) oRequest.getSession().getAttribute("userBean"));
                 data = JsonMessage.getJsonExpression(200, Long.toString(oProducttypeDao.getCount(alFilter)));
             } catch (Exception ex) {
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
@@ -104,7 +105,7 @@ public class ProducttypeService implements TableServiceInterface, ViewServiceInt
             try {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
-                ProducttypeDao oProducttypeDao = new ProducttypeDao(oConnection, (UserBean) oRequest.getSession().getAttribute("userBean"));
+                ProducttypeDao oProducttypeDao = new ProducttypeDao(oConnection, (PuserBean) oRequest.getSession().getAttribute("userBean"));
                 ProducttypeBean oProducttypeBean = new ProducttypeBean(id);
                 oProducttypeBean = oProducttypeDao.get(oProducttypeBean, AppConfigurationHelper.getJsonMsgDepth());
                 Gson gson = AppConfigurationHelper.getGson();
@@ -137,7 +138,7 @@ public class ProducttypeService implements TableServiceInterface, ViewServiceInt
             try {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
-                ProducttypeDao oProducttypeDao = new ProducttypeDao(oConnection, (UserBean) oRequest.getSession().getAttribute("userBean"));
+                ProducttypeDao oProducttypeDao = new ProducttypeDao(oConnection, (PuserBean) oRequest.getSession().getAttribute("userBean"));
                 ArrayList<ProducttypeBean> arrBeans = oProducttypeDao.getAll(alFilter, hmOrder, AppConfigurationHelper.getJsonMsgDepth());
                 data = JsonMessage.getJsonExpression(200, AppConfigurationHelper.getGson().toJson(arrBeans));
             } catch (Exception ex) {
@@ -170,7 +171,7 @@ public class ProducttypeService implements TableServiceInterface, ViewServiceInt
             try {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
-                ProducttypeDao oProducttypeDao = new ProducttypeDao(oConnection, (UserBean) oRequest.getSession().getAttribute("userBean"));
+                ProducttypeDao oProducttypeDao = new ProducttypeDao(oConnection, (PuserBean) oRequest.getSession().getAttribute("userBean"));
                 List<ProducttypeBean> arrBeans = oProducttypeDao.getPage(intRegsPerPag, intPage, alFilter, hmOrder, AppConfigurationHelper.getJsonMsgDepth());
                 data = JsonMessage.getJsonExpression(200, AppConfigurationHelper.getGson().toJson(arrBeans));
             } catch (Exception ex) {
@@ -201,7 +202,7 @@ public class ProducttypeService implements TableServiceInterface, ViewServiceInt
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
                 oConnection.setAutoCommit(false);
-                ProducttypeDao oProducttypeDao = new ProducttypeDao(oConnection, (UserBean) oRequest.getSession().getAttribute("userBean"));
+                ProducttypeDao oProducttypeDao = new ProducttypeDao(oConnection, (PuserBean) oRequest.getSession().getAttribute("userBean"));
                 data = JsonMessage.getJsonExpression(200, (String) oProducttypeDao.remove(id).toString());
                 oConnection.commit();
             } catch (Exception ex) {
@@ -235,7 +236,7 @@ public class ProducttypeService implements TableServiceInterface, ViewServiceInt
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
                 oConnection.setAutoCommit(false);
-                ProducttypeDao oProducttypeDao = new ProducttypeDao(oConnection, (UserBean) oRequest.getSession().getAttribute("userBean"));
+                ProducttypeDao oProducttypeDao = new ProducttypeDao(oConnection, (PuserBean) oRequest.getSession().getAttribute("userBean"));
                 ProducttypeBean oProducttypeBean = new ProducttypeBean();
                 oProducttypeBean = AppConfigurationHelper.getGson().fromJson(jason, oProducttypeBean.getClass());
                 if (oProducttypeBean != null) {
