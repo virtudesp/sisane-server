@@ -32,8 +32,8 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.HashMap;
-import net.daw.bean.implementation.PostBean;
-import net.daw.bean.implementation.PuserBean;
+import net.daw.bean.implementation.PusuarioBean;
+import net.daw.bean.implementation.TipousuarioBean;
 import net.daw.dao.publicinterface.TableDaoInterface;
 import net.daw.dao.publicinterface.ViewDaoInterface;
 import net.daw.data.implementation.MysqlData;
@@ -41,15 +41,15 @@ import net.daw.helper.statics.FilterBeanHelper;
 import net.daw.helper.statics.Log4j;
 import net.daw.helper.statics.SqlBuilder;
 
-public class PostDao implements ViewDaoInterface<PostBean>, TableDaoInterface<PostBean> {
+public class TipousuarioDao implements ViewDaoInterface<TipousuarioBean>, TableDaoInterface<TipousuarioBean> {
 
-    private String strTable = "post";
-    private String strSQL = "select * from post where 1=1 ";
+    private String strTable = "usertype";
+    private String strSQL = "select * from usertype where 1=1 ";
     private MysqlData oMysql = null;
     private Connection oConnection = null;
-    private PuserBean oPuserSecurity = null;
+    private PusuarioBean oPuserSecurity = null;
 
-    public PostDao(Connection oPooledConnection, PuserBean oPuserBean_security) throws Exception {
+    public TipousuarioDao(Connection oPooledConnection, PusuarioBean oPuserBean_security) throws Exception {
         try {
             oConnection = oPooledConnection;
             oMysql = new MysqlData(oConnection);
@@ -74,17 +74,17 @@ public class PostDao implements ViewDaoInterface<PostBean>, TableDaoInterface<Po
     }
 
     @Override
-    public ArrayList<PostBean> getPage(int intRegsPerPag, int intPage, ArrayList<FilterBeanHelper> alFilter, HashMap<String, String> hmOrder, Integer expand) throws Exception {
+    public ArrayList<TipousuarioBean> getPage(int intRegsPerPag, int intPage, ArrayList<FilterBeanHelper> alFilter, HashMap<String, String> hmOrder, Integer expand) throws Exception {
         strSQL += SqlBuilder.buildSqlWhere(alFilter);
         strSQL += SqlBuilder.buildSqlOrder(hmOrder);
         strSQL += SqlBuilder.buildSqlLimit(oMysql.getCount(strSQL), intRegsPerPag, intPage);
-        ArrayList<PostBean> arrPost = new ArrayList<>();
+        ArrayList<TipousuarioBean> arrUsertype = new ArrayList<>();
         ResultSet oResultSet = null;
         try {
             oResultSet = oMysql.getAllSQL(strSQL);
             while (oResultSet.next()) {
-                PostBean oPostBean = new PostBean();
-                arrPost.add(oPostBean.fill(oResultSet, oConnection, oPuserSecurity, expand));
+                TipousuarioBean oUsertypeBean = new TipousuarioBean();
+                arrUsertype.add(oUsertypeBean.fill(oResultSet, oConnection, oPuserSecurity, expand));
             }
             if (oResultSet != null) {
                 oResultSet.close();
@@ -97,20 +97,20 @@ public class PostDao implements ViewDaoInterface<PostBean>, TableDaoInterface<Po
                 oResultSet.close();
             }
         }
-        return arrPost;
+        return arrUsertype;
     }
 
     @Override
-    public ArrayList<PostBean> getAll(ArrayList<FilterBeanHelper> alFilter, HashMap<String, String> hmOrder, Integer expand) throws Exception {
+    public ArrayList<TipousuarioBean> getAll(ArrayList<FilterBeanHelper> alFilter, HashMap<String, String> hmOrder, Integer expand) throws Exception {
         strSQL += SqlBuilder.buildSqlWhere(alFilter);
         strSQL += SqlBuilder.buildSqlOrder(hmOrder);
-        ArrayList<PostBean> arrPost = new ArrayList<>();
+        ArrayList<TipousuarioBean> arrUsertype = new ArrayList<>();
         ResultSet oResultSet = null;
         try {
             oResultSet = oMysql.getAllSQL(strSQL);
             while (oResultSet.next()) {
-                PostBean oPostBean = new PostBean();
-                arrPost.add(oPostBean.fill(oResultSet, oConnection, oPuserSecurity, expand));
+                TipousuarioBean oUsertypeBean = new TipousuarioBean();
+                arrUsertype.add(oUsertypeBean.fill(oResultSet, oConnection, oPuserSecurity, expand));
             }
         } catch (Exception ex) {
             Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
@@ -120,22 +120,22 @@ public class PostDao implements ViewDaoInterface<PostBean>, TableDaoInterface<Po
                 oResultSet.close();
             }
         }
-        return arrPost;
+        return arrUsertype;
     }
 
     @Override
-    public PostBean get(PostBean oPostBean, Integer expand) throws Exception {
-        if (oPostBean.getId() > 0) {
+    public TipousuarioBean get(TipousuarioBean oUsertypeBean, Integer expand) throws Exception {
+        if (oUsertypeBean.getId() > 0) {
             ResultSet oResultSet = null;
             try {
-                oResultSet = oMysql.getAllSQL(strSQL + " And id= " + oPostBean.getId() + " ");
+                oResultSet = oMysql.getAllSQL(strSQL + " And id= " + oUsertypeBean.getId() + " ");
                 Boolean empty = true;
                 while (oResultSet.next()) {
-                    oPostBean = oPostBean.fill(oResultSet, oConnection, oPuserSecurity, expand);
+                    oUsertypeBean = oUsertypeBean.fill(oResultSet, oConnection, oPuserSecurity, expand);
                     empty = false;
                 }
                 if (empty) {
-                    oPostBean.setId(0);
+                    oUsertypeBean.setId(0);
                 }
             } catch (Exception ex) {
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
@@ -146,24 +146,24 @@ public class PostDao implements ViewDaoInterface<PostBean>, TableDaoInterface<Po
                 }
             }
         } else {
-            oPostBean.setId(0);
+            oUsertypeBean.setId(0);
         }
-        return oPostBean;
+        return oUsertypeBean;
     }
 
     @Override
-    public Integer set(PostBean oPostBean) throws Exception {
+    public Integer set(TipousuarioBean oUsertypeBean) throws Exception {
         Integer iResult = null;
         try {
-            if (oPostBean.getId() == 0) {
+            if (oUsertypeBean.getId() == 0) {
                 strSQL = "INSERT INTO " + strTable + " ";
-                strSQL += "(" + oPostBean.getColumns() + ")";
-                strSQL += "VALUES(" + oPostBean.getValues() + ")";
+                strSQL += "(" + oUsertypeBean.getColumns() + ")";
+                strSQL += "VALUES(" + oUsertypeBean.getValues() + ")";
                 iResult = oMysql.executeInsertSQL(strSQL);
             } else {
                 strSQL = "UPDATE " + strTable + " ";
-                strSQL += " SET " + oPostBean.toPairs();
-                strSQL += " WHERE id=" + oPostBean.getId();
+                strSQL += " SET " + oUsertypeBean.toPairs();
+                strSQL += " WHERE id=" + oUsertypeBean.getId();
                 iResult = oMysql.executeUpdateSQL(strSQL);
             }
         } catch (Exception ex) {
