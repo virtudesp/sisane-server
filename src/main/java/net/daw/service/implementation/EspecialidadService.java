@@ -34,13 +34,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
-import net.daw.bean.implementation.DocumentBean;
 import net.daw.bean.implementation.EspecialidadBean;
-import net.daw.bean.implementation.PuserBean;
+import net.daw.bean.implementation.PusuarioBean;
 import net.daw.bean.implementation.ReplyBean;
-import net.daw.bean.implementation.UserBean;
 import net.daw.connection.publicinterface.ConnectionInterface;
-import net.daw.dao.implementation.DocumentDao;
 import net.daw.dao.implementation.EspecialidadDao;
 import net.daw.helper.statics.AppConfigurationHelper;
 import static net.daw.helper.statics.AppConfigurationHelper.getSourceConnection;
@@ -60,8 +57,8 @@ public class EspecialidadService implements TableServiceInterface, ViewServiceIn
     }
 
     private Boolean checkpermission(String strMethodName) throws Exception {
-        PuserBean oPuserBean = (PuserBean) oRequest.getSession().getAttribute("userBean");
-        if (oPuserBean != null) {
+        PusuarioBean oPusuarioBean = (PusuarioBean) oRequest.getSession().getAttribute("userBean");
+        if (oPusuarioBean != null) {
             return true;
         } else {
             return false;
@@ -78,7 +75,7 @@ public class EspecialidadService implements TableServiceInterface, ViewServiceIn
             try {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
-                EspecialidadDao oEspecialidadDao = new EspecialidadDao(oConnection, (PuserBean) oRequest.getSession().getAttribute("userBean"));
+                EspecialidadDao oEspecialidadDao = new EspecialidadDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
                 data = JsonMessage.getJsonExpression(200, Long.toString(oEspecialidadDao.getCount(alFilter)));
             } catch (Exception ex) {
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
@@ -107,7 +104,7 @@ public class EspecialidadService implements TableServiceInterface, ViewServiceIn
             try {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
-                EspecialidadDao oEspecialidadDao = new EspecialidadDao(oConnection, (PuserBean) oRequest.getSession().getAttribute("userBean"));
+                EspecialidadDao oEspecialidadDao = new EspecialidadDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
                 EspecialidadBean oEspecialidadBean = new EspecialidadBean(id);
                 oEspecialidadBean = oEspecialidadDao.get(oEspecialidadBean, AppConfigurationHelper.getJsonMsgDepth());
                 Gson gson = AppConfigurationHelper.getGson();
@@ -140,7 +137,7 @@ public class EspecialidadService implements TableServiceInterface, ViewServiceIn
             try {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
-                EspecialidadDao oEspecialidadDao = new EspecialidadDao(oConnection, (PuserBean) oRequest.getSession().getAttribute("userBean"));
+                EspecialidadDao oEspecialidadDao = new EspecialidadDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
                 ArrayList<EspecialidadBean> arrBeans = oEspecialidadDao.getAll(alFilter, hmOrder, AppConfigurationHelper.getJsonMsgDepth());
                 data = JsonMessage.getJsonExpression(200, AppConfigurationHelper.getGson().toJson(arrBeans));
             } catch (Exception ex) {
@@ -173,7 +170,7 @@ public class EspecialidadService implements TableServiceInterface, ViewServiceIn
             try {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
-                EspecialidadDao oEspecialidadDao = new EspecialidadDao(oConnection, (PuserBean) oRequest.getSession().getAttribute("userBean"));
+                EspecialidadDao oEspecialidadDao = new EspecialidadDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
                 List<EspecialidadBean> arrBeans = oEspecialidadDao.getPage(intRegsPerPag, intPage, alFilter, hmOrder, AppConfigurationHelper.getJsonMsgDepth());
                 data = JsonMessage.getJsonExpression(200, AppConfigurationHelper.getGson().toJson(arrBeans));
             } catch (Exception ex) {
@@ -204,7 +201,7 @@ public class EspecialidadService implements TableServiceInterface, ViewServiceIn
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
                 oConnection.setAutoCommit(false);
-                EspecialidadDao oEspecialidadDao = new EspecialidadDao(oConnection, (PuserBean) oRequest.getSession().getAttribute("userBean"));
+                EspecialidadDao oEspecialidadDao = new EspecialidadDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
                 data = JsonMessage.getJsonExpression(200, (String) oEspecialidadDao.remove(id).toString());
                 oConnection.commit();
             } catch (Exception ex) {
@@ -238,7 +235,7 @@ public class EspecialidadService implements TableServiceInterface, ViewServiceIn
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
                 oConnection.setAutoCommit(false);
-                EspecialidadDao oEspecialidadDao = new EspecialidadDao(oConnection, (PuserBean) oRequest.getSession().getAttribute("userBean"));
+                EspecialidadDao oEspecialidadDao = new EspecialidadDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
                 EspecialidadBean oEspecialidadBean = new EspecialidadBean();
                 oEspecialidadBean = AppConfigurationHelper.getGson().fromJson(jason, oEspecialidadBean.getClass());
                 if (oEspecialidadBean != null) {

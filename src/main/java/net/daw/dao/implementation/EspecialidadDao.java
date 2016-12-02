@@ -32,9 +32,8 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.HashMap;
-import net.daw.bean.implementation.DocumentBean;
 import net.daw.bean.implementation.EspecialidadBean;
-import net.daw.bean.implementation.PuserBean;
+import net.daw.bean.implementation.PusuarioBean;
 import net.daw.dao.publicinterface.TableDaoInterface;
 import net.daw.dao.publicinterface.ViewDaoInterface;
 import net.daw.data.implementation.MysqlData;
@@ -48,13 +47,13 @@ public class EspecialidadDao implements ViewDaoInterface<EspecialidadBean>, Tabl
     private String strSQL = "select * from especialidad where 1=1 ";
     private MysqlData oMysql = null;
     private Connection oConnection = null;
-    private PuserBean oPuserSecurity = null;
+    private PusuarioBean oPusuarioSecurity = null;
 
-    public EspecialidadDao(Connection oPooledConnection, PuserBean oPuserBean_security) throws Exception {
+    public EspecialidadDao(Connection oPooledConnection, PusuarioBean oPusuarioBean_security) throws Exception {
         try {
             oConnection = oPooledConnection;
             oMysql = new MysqlData(oConnection);
-            oPuserSecurity = oPuserBean_security;
+            oPusuarioSecurity = oPusuarioBean_security;
         } catch (Exception ex) {
             Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
             throw new Exception();
@@ -85,7 +84,7 @@ public class EspecialidadDao implements ViewDaoInterface<EspecialidadBean>, Tabl
             oResultSet = oMysql.getAllSQL(strSQL);
             while (oResultSet.next()) {
                 EspecialidadBean oEspecialidadBean = new EspecialidadBean();
-                arrEspecialidad.add(oEspecialidadBean.fill(oResultSet, oConnection, oPuserSecurity, expand));
+                arrEspecialidad.add(oEspecialidadBean.fill(oResultSet, oConnection, oPusuarioSecurity, expand));
             }
             if (oResultSet != null) {
                 oResultSet.close();
@@ -111,7 +110,7 @@ public class EspecialidadDao implements ViewDaoInterface<EspecialidadBean>, Tabl
             oResultSet = oMysql.getAllSQL(strSQL);
             while (oResultSet.next()) {
                 EspecialidadBean oEspecialidadBean = new EspecialidadBean();
-                arrEspecialidad.add(oEspecialidadBean.fill(oResultSet, oConnection, oPuserSecurity, expand));
+                arrEspecialidad.add(oEspecialidadBean.fill(oResultSet, oConnection, oPusuarioSecurity, expand));
             }
         } catch (Exception ex) {
             Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
@@ -132,7 +131,7 @@ public class EspecialidadDao implements ViewDaoInterface<EspecialidadBean>, Tabl
                 oResultSet = oMysql.getAllSQL(strSQL + " And id= " + oEspecialidadBean.getId() + " ");
                 Boolean empty = true;
                 while (oResultSet.next()) {
-                    oEspecialidadBean = oEspecialidadBean.fill(oResultSet, oConnection, oPuserSecurity, expand);
+                    oEspecialidadBean = oEspecialidadBean.fill(oResultSet, oConnection, oPusuarioSecurity, expand);
                     empty = false;
                 }
                 if (empty) {

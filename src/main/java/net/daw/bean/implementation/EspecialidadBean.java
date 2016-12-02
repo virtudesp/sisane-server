@@ -32,10 +32,9 @@ import com.google.gson.annotations.Expose;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Date;
+
 import net.daw.bean.publicinterface.GenericBean;
-import net.daw.dao.implementation.DocumenttypeDao;
-import net.daw.dao.implementation.UserDao;
+
 import net.daw.helper.statics.EncodingUtilHelper;
 
 public class EspecialidadBean implements GenericBean {
@@ -95,7 +94,7 @@ public class EspecialidadBean implements GenericBean {
     }
 
     @Override
-    public EspecialidadBean fill(ResultSet oResultSet, Connection pooledConnection, PuserBean oPuserBean_security, Integer expand) throws SQLException, Exception {
+    public EspecialidadBean fill(ResultSet oResultSet, Connection pooledConnection, PusuarioBean oPuserBean_security, Integer expand) throws SQLException, Exception {
         this.setId(oResultSet.getInt("id"));
         this.setDescripcion(oResultSet.getString("descripcion"));
 
