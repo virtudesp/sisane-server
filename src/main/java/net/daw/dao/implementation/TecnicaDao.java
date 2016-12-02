@@ -9,7 +9,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.HashMap;
-import net.daw.bean.implementation.PuserBean;
+import net.daw.bean.implementation.PusuarioBean;
 import net.daw.bean.implementation.TecnicaBean;
 import net.daw.dao.publicinterface.TableDaoInterface;
 import net.daw.dao.publicinterface.ViewDaoInterface;
@@ -28,13 +28,13 @@ public class TecnicaDao implements ViewDaoInterface<TecnicaBean>, TableDaoInterf
     private String strSQL = "select * from tecnica where 1=1 ";
     private MysqlData oMysql = null;
     private Connection oConnection = null;
-    private PuserBean oPuserSecurity = null;
+    private PusuarioBean oPusuarioSecurity = null;
 
-    public TecnicaDao(Connection oPooledConnection, PuserBean oPuserBean_security) throws Exception {
+    public TecnicaDao(Connection oPooledConnection, PusuarioBean oPusuarioBean_security) throws Exception {
         try {
             oConnection = oPooledConnection;
             oMysql = new MysqlData(oConnection);
-            oPuserSecurity = oPuserBean_security;
+            oPusuarioSecurity = oPusuarioBean_security;
         } catch (Exception ex) {
             Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
             throw new Exception();
@@ -69,7 +69,7 @@ public class TecnicaDao implements ViewDaoInterface<TecnicaBean>, TableDaoInterf
             oResultSet = oMysql.getAllSQL(strSQL);
             while (oResultSet.next()) {
                 TecnicaBean oTecnicaBean = new TecnicaBean();
-                arrTecnica.add((TecnicaBean) oTecnicaBean.fill(oResultSet, oConnection, oPuserSecurity, expand));
+                arrTecnica.add((TecnicaBean) oTecnicaBean.fill(oResultSet, oConnection, oPusuarioSecurity, expand));
             }
             if (oResultSet != null) {
                 oResultSet.close();
@@ -97,7 +97,7 @@ public class TecnicaDao implements ViewDaoInterface<TecnicaBean>, TableDaoInterf
             oResultSet = oMysql.getAllSQL(strSQL);
             while (oResultSet.next()) {
                 TecnicaBean oTecnicaBean = new TecnicaBean();
-                arrTecnica.add((TecnicaBean) oTecnicaBean.fill(oResultSet, oConnection, oPuserSecurity, expand));
+                arrTecnica.add((TecnicaBean) oTecnicaBean.fill(oResultSet, oConnection, oPusuarioSecurity, expand));
             }
         } catch (Exception ex) {
             Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
@@ -120,7 +120,7 @@ public class TecnicaDao implements ViewDaoInterface<TecnicaBean>, TableDaoInterf
                 oResultSet = oMysql.getAllSQL(strSQL + " And id= " + oTecnicaBean.getId() + " ");
                 Boolean empty = true;
                 while (oResultSet.next()) {
-                    oTecnicaBean = (TecnicaBean) oTecnicaBean.fill(oResultSet, oConnection, oPuserSecurity, expand);
+                    oTecnicaBean = (TecnicaBean) oTecnicaBean.fill(oResultSet, oConnection, oPusuarioSecurity, expand);
                     empty = false;
                 }
                 if (empty) {

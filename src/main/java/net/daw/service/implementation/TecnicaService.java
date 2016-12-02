@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
-import net.daw.bean.implementation.PuserBean;
+import net.daw.bean.implementation.PusuarioBean;
 import net.daw.bean.implementation.ReplyBean;
 import net.daw.bean.implementation.TecnicaBean;
 import net.daw.connection.publicinterface.ConnectionInterface;
@@ -38,8 +38,8 @@ public class TecnicaService implements TableServiceInterface, ViewServiceInterfa
     }
 
     private Boolean checkpermission(String strMethodName) throws Exception {
-        PuserBean oPuserBean = (PuserBean) oRequest.getSession().getAttribute("userBean");
-        if (oPuserBean != null) {
+        PusuarioBean oPusuarioBean = (PusuarioBean) oRequest.getSession().getAttribute("userBean");
+        if (oPusuarioBean != null) {
             return true;
         } else {
             return false;
@@ -58,7 +58,7 @@ public class TecnicaService implements TableServiceInterface, ViewServiceInterfa
             try {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
-                TecnicaDao oTecnicaDao = new TecnicaDao(oConnection, (PuserBean) oRequest.getSession().getAttribute("userBean"));
+                TecnicaDao oTecnicaDao = new TecnicaDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
                 TecnicaBean oTecnicaBean = new TecnicaBean(id);
                 oTecnicaBean = oTecnicaDao.get(oTecnicaBean, AppConfigurationHelper.getJsonMsgDepth());
                 Gson gson = AppConfigurationHelper.getGson();
@@ -93,7 +93,7 @@ public class TecnicaService implements TableServiceInterface, ViewServiceInterfa
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
                 oConnection.setAutoCommit(false);
-                TecnicaDao oUserDao = new TecnicaDao(oConnection, (PuserBean) oRequest.getSession().getAttribute("userBean"));
+                TecnicaDao oUserDao = new TecnicaDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
                 data = JsonMessage.getJsonExpression(200, (String) oUserDao.remove(id).toString());
                 oConnection.commit();
             } catch (Exception ex) {
@@ -129,7 +129,7 @@ public class TecnicaService implements TableServiceInterface, ViewServiceInterfa
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
                 oConnection.setAutoCommit(false);
-                TecnicaDao oTecnicaDao = new TecnicaDao(oConnection, (PuserBean) oRequest.getSession().getAttribute("userBean"));
+                TecnicaDao oTecnicaDao = new TecnicaDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
                 TecnicaBean oTecnicaBean = new TecnicaBean();
                 oTecnicaBean = AppConfigurationHelper.getGson().fromJson(jason, oTecnicaBean.getClass());
                 if (oTecnicaBean != null) {
@@ -179,7 +179,7 @@ public class TecnicaService implements TableServiceInterface, ViewServiceInterfa
             try {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
-                TecnicaDao oUserDao = new TecnicaDao(oConnection, (PuserBean) oRequest.getSession().getAttribute("userBean"));
+                TecnicaDao oUserDao = new TecnicaDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
                 ArrayList<TecnicaBean> arrBeans = oUserDao.getAll(alFilter, hmOrder, AppConfigurationHelper.getJsonMsgDepth());
                 data = JsonMessage.getJsonExpression(200, AppConfigurationHelper.getGson().toJson(arrBeans));
             } catch (Exception ex) {
@@ -214,7 +214,7 @@ public class TecnicaService implements TableServiceInterface, ViewServiceInterfa
             try {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
-                TecnicaDao oUserDao = new TecnicaDao(oConnection, (PuserBean) oRequest.getSession().getAttribute("userBean"));
+                TecnicaDao oUserDao = new TecnicaDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
                 List<TecnicaBean> arrBeans = oUserDao.getPage(intRegsPerPag, intPage, alFilter, hmOrder, AppConfigurationHelper.getJsonMsgDepth());
                 data = JsonMessage.getJsonExpression(200, AppConfigurationHelper.getGson().toJson(arrBeans));
             } catch (Exception ex) {
@@ -247,7 +247,7 @@ public class TecnicaService implements TableServiceInterface, ViewServiceInterfa
 
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
-                TecnicaDao oUserDao = new TecnicaDao(oConnection, (PuserBean) oRequest.getSession().getAttribute("userBean"));
+                TecnicaDao oUserDao = new TecnicaDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
                 data = JsonMessage.getJsonExpression(200, Long.toString(oUserDao.getCount(alFilter)));
             } catch (Exception ex) {
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
