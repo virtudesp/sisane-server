@@ -32,8 +32,8 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.HashMap;
-import net.daw.bean.implementation.PuserBean;
-import net.daw.bean.implementation.UserBean;
+import net.daw.bean.implementation.PusuarioBean;
+import net.daw.bean.implementation.UsuarioBean;
 import net.daw.dao.publicinterface.TableDaoInterface;
 import net.daw.dao.publicinterface.ViewDaoInterface;
 import net.daw.data.implementation.MysqlData;
@@ -43,15 +43,15 @@ import net.daw.helper.statics.FilterBeanHelper;
 import net.daw.helper.statics.Log4j;
 import net.daw.helper.statics.SqlBuilder;
 
-public class UserDao implements ViewDaoInterface<UserBean>, TableDaoInterface<UserBean> {
+public class UsuarioDao implements ViewDaoInterface<UsuarioBean>, TableDaoInterface<UsuarioBean> {
 
     private String strTable = "user";
     private String strSQL = "select * from user where 1=1 ";
     private MysqlData oMysql = null;
     private Connection oConnection = null;
-    private PuserBean oPuserSecurity = null;
+    private PusuarioBean oPuserSecurity = null;
 
-    public UserDao(Connection oPooledConnection, PuserBean oPuserBean_security) throws Exception {
+    public UsuarioDao(Connection oPooledConnection, PusuarioBean oPuserBean_security) throws Exception {
         try {
             oConnection = oPooledConnection;
             oMysql = new MysqlData(oConnection);
@@ -76,17 +76,17 @@ public class UserDao implements ViewDaoInterface<UserBean>, TableDaoInterface<Us
     }
 
     @Override
-    public ArrayList<UserBean> getPage(int intRegsPerPag, int intPage, ArrayList<FilterBeanHelper> alFilter, HashMap<String, String> hmOrder, Integer expand) throws Exception {
+    public ArrayList<UsuarioBean> getPage(int intRegsPerPag, int intPage, ArrayList<FilterBeanHelper> alFilter, HashMap<String, String> hmOrder, Integer expand) throws Exception {
         strSQL += SqlBuilder.buildSqlWhere(alFilter);
         strSQL += SqlBuilder.buildSqlOrder(hmOrder);
         strSQL += SqlBuilder.buildSqlLimit(oMysql.getCount(strSQL), intRegsPerPag, intPage);
-        ArrayList<UserBean> arrUser = new ArrayList<>();
+        ArrayList<UsuarioBean> arrUser = new ArrayList<>();
         ResultSet oResultSet = null;
         try {
             oResultSet = oMysql.getAllSQL(strSQL);
             while (oResultSet.next()) {
-                UserBean oUserBean = new UserBean();
-                arrUser.add((UserBean) oUserBean.fill(oResultSet, oConnection, oPuserSecurity, expand));
+                UsuarioBean oUserBean = new UsuarioBean();
+                arrUser.add((UsuarioBean) oUserBean.fill(oResultSet, oConnection, oPuserSecurity, expand));
             }
             if (oResultSet != null) {
                 oResultSet.close();
@@ -103,16 +103,16 @@ public class UserDao implements ViewDaoInterface<UserBean>, TableDaoInterface<Us
     }
 
     @Override
-    public ArrayList<UserBean> getAll(ArrayList<FilterBeanHelper> alFilter, HashMap<String, String> hmOrder, Integer expand) throws Exception {
+    public ArrayList<UsuarioBean> getAll(ArrayList<FilterBeanHelper> alFilter, HashMap<String, String> hmOrder, Integer expand) throws Exception {
         strSQL += SqlBuilder.buildSqlWhere(alFilter);
         strSQL += SqlBuilder.buildSqlOrder(hmOrder);
-        ArrayList<UserBean> arrUser = new ArrayList<>();
+        ArrayList<UsuarioBean> arrUser = new ArrayList<>();
         ResultSet oResultSet = null;
         try {
             oResultSet = oMysql.getAllSQL(strSQL);
             while (oResultSet.next()) {
-                UserBean oUserBean = new UserBean();
-                arrUser.add((UserBean) oUserBean.fill(oResultSet, oConnection, oPuserSecurity, expand));
+                UsuarioBean oUserBean = new UsuarioBean();
+                arrUser.add((UsuarioBean) oUserBean.fill(oResultSet, oConnection, oPuserSecurity, expand));
             }
         } catch (Exception ex) {
             Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
@@ -126,14 +126,14 @@ public class UserDao implements ViewDaoInterface<UserBean>, TableDaoInterface<Us
     }
 
     @Override
-    public UserBean get(UserBean oUserBean, Integer expand) throws Exception {
+    public UsuarioBean get(UsuarioBean oUserBean, Integer expand) throws Exception {
         if (oUserBean.getId() > 0) {
             ResultSet oResultSet = null;
             try {
                 oResultSet = oMysql.getAllSQL(strSQL + " And id= " + oUserBean.getId() + " ");
                 Boolean empty = true;
                 while (oResultSet.next()) {
-                    oUserBean = (UserBean) oUserBean.fill(oResultSet, oConnection, oPuserSecurity, expand);
+                    oUserBean = (UsuarioBean) oUserBean.fill(oResultSet, oConnection, oPuserSecurity, expand);
                     empty = false;
                 }
                 if (empty) {
@@ -154,7 +154,7 @@ public class UserDao implements ViewDaoInterface<UserBean>, TableDaoInterface<Us
     }
 
     @Override
-    public Integer set(UserBean oUserBean) throws Exception {
+    public Integer set(UsuarioBean oUserBean) throws Exception {
         Integer iResult = null;
         try {
             if (oUserBean.getId() == 0) {
@@ -187,7 +187,7 @@ public class UserDao implements ViewDaoInterface<UserBean>, TableDaoInterface<Us
         return result;
     }
 
-    public PuserBean getFromLogin(PuserBean oPuser) throws Exception {
+    public PusuarioBean getFromLogin(PusuarioBean oPuser) throws Exception {
         try {
             String strId = oMysql.getId(strTable, "login", oPuser.getLogin());
             if (strId == null) {
@@ -209,14 +209,14 @@ public class UserDao implements ViewDaoInterface<UserBean>, TableDaoInterface<Us
         }
     }
 
-    public PuserBean getP(PuserBean oPuserBean, Integer expand) throws Exception {
+    public PusuarioBean getP(PusuarioBean oPuserBean, Integer expand) throws Exception {
         if (oPuserBean.getId() > 0) {
             ResultSet oResultSet = null;
             try {
                 oResultSet = oMysql.getAllSQL(strSQL + " And id= " + oPuserBean.getId() + " ");
                 Boolean empty = true;
                 while (oResultSet.next()) {
-                    oPuserBean = (PuserBean) oPuserBean.fill(oResultSet, oConnection, oPuserSecurity, expand);
+                    oPuserBean = (PusuarioBean) oPuserBean.fill(oResultSet, oConnection, oPuserSecurity, expand);
                     empty = false;
                 }
                 if (empty) {
@@ -236,7 +236,7 @@ public class UserDao implements ViewDaoInterface<UserBean>, TableDaoInterface<Us
         return oPuserBean;
     }
 
-    public Integer setP(PuserBean oPuserBean) throws Exception {
+    public Integer setP(PusuarioBean oPuserBean) throws Exception {
         //only 4 fill service
         Integer iResult = null;
         try {
