@@ -34,12 +34,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
-import net.daw.bean.implementation.PuserBean;
-import net.daw.bean.implementation.UsertypeBean;
+import net.daw.bean.implementation.PusuarioBean;
+import net.daw.bean.implementation.TipousuarioBean;
 import net.daw.bean.implementation.ReplyBean;
-import net.daw.bean.implementation.UserBean;
+import net.daw.bean.implementation.UsuarioBean;
 import net.daw.connection.publicinterface.ConnectionInterface;
-import net.daw.dao.implementation.UsertypeDao;
+import net.daw.dao.implementation.TipousuarioDao;
 import net.daw.helper.statics.AppConfigurationHelper;
 import static net.daw.helper.statics.AppConfigurationHelper.getSourceConnection;
 import net.daw.helper.statics.FilterBeanHelper;
@@ -49,16 +49,16 @@ import net.daw.helper.statics.ParameterCook;
 import net.daw.service.publicinterface.TableServiceInterface;
 import net.daw.service.publicinterface.ViewServiceInterface;
 
-public class UsertypeService implements TableServiceInterface, ViewServiceInterface {
+public class TipousuarioService implements TableServiceInterface, ViewServiceInterface {
 
     protected HttpServletRequest oRequest = null;
 
-    public UsertypeService(HttpServletRequest request) {
+    public TipousuarioService(HttpServletRequest request) {
         oRequest = request;
     }
 
     private Boolean checkpermission(String strMethodName) throws Exception {
-        PuserBean oPuserBean = (PuserBean) oRequest.getSession().getAttribute("userBean");
+        PusuarioBean oPuserBean = (PusuarioBean) oRequest.getSession().getAttribute("userBean");
         if (oPuserBean != null) {
             return true;
         } else {
@@ -76,7 +76,7 @@ public class UsertypeService implements TableServiceInterface, ViewServiceInterf
             try {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
-                UsertypeDao oUsertypeDao = new UsertypeDao(oConnection, (PuserBean) oRequest.getSession().getAttribute("userBean"));
+                TipousuarioDao oUsertypeDao = new TipousuarioDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
                 data = JsonMessage.getJsonExpression(200, Long.toString(oUsertypeDao.getCount(alFilter)));
             } catch (Exception ex) {
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
@@ -105,8 +105,8 @@ public class UsertypeService implements TableServiceInterface, ViewServiceInterf
             try {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
-                UsertypeDao oUsertypeDao = new UsertypeDao(oConnection, (PuserBean) oRequest.getSession().getAttribute("userBean"));
-                UsertypeBean oUsertypeBean = new UsertypeBean(id);
+                TipousuarioDao oUsertypeDao = new TipousuarioDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
+                TipousuarioBean oUsertypeBean = new TipousuarioBean(id);
                 oUsertypeBean = oUsertypeDao.get(oUsertypeBean, AppConfigurationHelper.getJsonMsgDepth());
                 Gson gson = AppConfigurationHelper.getGson();
                 data = JsonMessage.getJsonExpression(200, AppConfigurationHelper.getGson().toJson(oUsertypeBean));
@@ -138,8 +138,8 @@ public class UsertypeService implements TableServiceInterface, ViewServiceInterf
             try {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
-                UsertypeDao oUsertypeDao = new UsertypeDao(oConnection, (PuserBean) oRequest.getSession().getAttribute("userBean"));
-                ArrayList<UsertypeBean> arrBeans = oUsertypeDao.getAll(alFilter, hmOrder, AppConfigurationHelper.getJsonMsgDepth());
+                TipousuarioDao oUsertypeDao = new TipousuarioDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
+                ArrayList<TipousuarioBean> arrBeans = oUsertypeDao.getAll(alFilter, hmOrder, AppConfigurationHelper.getJsonMsgDepth());
                 data = JsonMessage.getJsonExpression(200, AppConfigurationHelper.getGson().toJson(arrBeans));
             } catch (Exception ex) {
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
@@ -171,8 +171,8 @@ public class UsertypeService implements TableServiceInterface, ViewServiceInterf
             try {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
-                UsertypeDao oUsertypeDao = new UsertypeDao(oConnection, (PuserBean) oRequest.getSession().getAttribute("userBean"));
-                List<UsertypeBean> arrBeans = oUsertypeDao.getPage(intRegsPerPag, intPage, alFilter, hmOrder, AppConfigurationHelper.getJsonMsgDepth());
+                TipousuarioDao oUsertypeDao = new TipousuarioDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
+                List<TipousuarioBean> arrBeans = oUsertypeDao.getPage(intRegsPerPag, intPage, alFilter, hmOrder, AppConfigurationHelper.getJsonMsgDepth());
                 data = JsonMessage.getJsonExpression(200, AppConfigurationHelper.getGson().toJson(arrBeans));
             } catch (Exception ex) {
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
@@ -202,7 +202,7 @@ public class UsertypeService implements TableServiceInterface, ViewServiceInterf
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
                 oConnection.setAutoCommit(false);
-                UsertypeDao oUsertypeDao = new UsertypeDao(oConnection, (PuserBean) oRequest.getSession().getAttribute("userBean"));
+                TipousuarioDao oUsertypeDao = new TipousuarioDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
                 data = JsonMessage.getJsonExpression(200, (String) oUsertypeDao.remove(id).toString());
                 oConnection.commit();
             } catch (Exception ex) {
@@ -236,8 +236,8 @@ public class UsertypeService implements TableServiceInterface, ViewServiceInterf
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
                 oConnection.setAutoCommit(false);
-                UsertypeDao oUsertypeDao = new UsertypeDao(oConnection, (PuserBean) oRequest.getSession().getAttribute("userBean"));
-                UsertypeBean oUsertypeBean = new UsertypeBean();
+                TipousuarioDao oUsertypeDao = new TipousuarioDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
+                TipousuarioBean oUsertypeBean = new TipousuarioBean();
                 oUsertypeBean = AppConfigurationHelper.getGson().fromJson(jason, oUsertypeBean.getClass());
                 if (oUsertypeBean != null) {
                     Integer iResult = oUsertypeDao.set(oUsertypeBean);

@@ -1,23 +1,23 @@
 /*
  * Copyright (c) 2016 by Rafael Angel Aznar Aparici (rafaaznar at gmail dot com)
- * 
- * sisane-server: Helps you to develop easily AJAX web applications 
+ *
+ * sisane-server: Helps you to develop easily AJAX web applications
  *                   by copying and modifying this Java Server.
  *
  * Sources at https://github.com/rafaelaznar/sisane-server
- * 
+ *
  * sisane-server is distributed under the MIT License (MIT)
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -33,77 +33,67 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import net.daw.bean.publicinterface.GenericBean;
-import net.daw.bean.implementation.UserBean;
-import net.daw.dao.implementation.UserDao;
+import net.daw.helper.statics.EncodingUtilHelper;
 
-public class View03Bean implements GenericBean {
+public class TipousuarioBean implements GenericBean {
 
-    @Expose(serialize = false)
-    private Integer id_usuario = 0;
-    @Expose(deserialize = false)
-    private UserBean obj_usuario = null;
     @Expose
-    private Integer numautores = 0;
+    private Integer id = 0;
+    @Expose
+    private String descripcion;
 
-    public Integer getId_usuario() {
-        return id_usuario;
+
+    public TipousuarioBean() {
     }
 
-    public void setId_usuario(Integer id_usuario) {
-        this.id_usuario = id_usuario;
+    public TipousuarioBean(Integer id) {
+        this.id = id;
     }
 
-    public UserBean getObj_usuario() {
-        return obj_usuario;
+    public Integer getId() {
+        return id;
     }
 
-    public void setObj_usuario(UserBean obj_usuario) {
-        this.obj_usuario = obj_usuario;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public Integer getNumautores() {
-        return numautores;
+    public String getDescription() {
+        return descripcion;
     }
 
-    public void setNumautores(Integer numautores) {
-        this.numautores = numautores;
+    public void setDescription(String descripcion) {
+        this.descripcion = descripcion;
     }
 
+    @Override
     public String getColumns() {
         String strColumns = "";
-        strColumns += "id_usuario,";
-        strColumns += "numautores";
+        strColumns += "id,";
+        strColumns += "descripcion";
         return strColumns;
     }
 
     @Override
     public String getValues() {
         String strColumns = "";
-        strColumns += id_usuario + ",";
-        strColumns += numautores;
+        strColumns += id + ",";
+        strColumns += EncodingUtilHelper.quotate(descripcion);
         return strColumns;
     }
 
     @Override
     public String toPairs() {
         String strPairs = "";
-        strPairs += "id_usuario=" + id_usuario + ",";
-        strPairs += "numautores=" + numautores;
+        //strPairs += "id=" + id + ",";
+        strPairs += "descripcion=" + EncodingUtilHelper.quotate(descripcion);
         return strPairs;
     }
 
     @Override
-    public View03Bean fill(ResultSet oResultSet, Connection pooledConnection, PuserBean oPuserBean_security, Integer expand) throws SQLException, Exception {
-        if (expand > 0) {
-            UserBean oUserBean = new UserBean();
-            UserDao oUserDao = new UserDao(pooledConnection, oPuserBean_security);
-            oUserBean.setId(oResultSet.getInt("id_usuario"));
-            oUserBean = oUserDao.get(oUserBean, expand - 1);
-            this.setObj_usuario(oUserBean);
-        } else {
-            this.setId_usuario(oResultSet.getInt("id_usuario"));
-        }
-        this.setNumautores(oResultSet.getInt("numautores"));
+    public TipousuarioBean fill(ResultSet oResultSet, Connection pooledConnection, PusuarioBean oPuserBean_security, Integer expand) throws SQLException, Exception {
+        this.setId(oResultSet.getInt("id"));
+        this.setDescription(oResultSet.getString("descripcion"));
         return this;
     }
 

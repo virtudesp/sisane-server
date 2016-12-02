@@ -32,7 +32,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.HashMap;
-import net.daw.bean.implementation.PostBean;
+import net.daw.bean.implementation.DiagnosticoBean;
 import net.daw.bean.implementation.PuserBean;
 import net.daw.dao.publicinterface.TableDaoInterface;
 import net.daw.dao.publicinterface.ViewDaoInterface;
@@ -41,15 +41,15 @@ import net.daw.helper.statics.FilterBeanHelper;
 import net.daw.helper.statics.Log4j;
 import net.daw.helper.statics.SqlBuilder;
 
-public class PostDao implements ViewDaoInterface<PostBean>, TableDaoInterface<PostBean> {
+public class DiagnosticoDao implements ViewDaoInterface<DiagnosticoBean>, TableDaoInterface<DiagnosticoBean> {
 
-    private String strTable = "post";
-    private String strSQL = "select * from post where 1=1 ";
+    private String strTable = "diagnostico";
+    private String strSQL = "select * from " + strTable + " where 1=1 ";
     private MysqlData oMysql = null;
     private Connection oConnection = null;
     private PuserBean oPuserSecurity = null;
 
-    public PostDao(Connection oPooledConnection, PuserBean oPuserBean_security) throws Exception {
+    public DiagnosticoDao(Connection oPooledConnection, PuserBean oPuserBean_security) throws Exception {
         try {
             oConnection = oPooledConnection;
             oMysql = new MysqlData(oConnection);
@@ -74,17 +74,17 @@ public class PostDao implements ViewDaoInterface<PostBean>, TableDaoInterface<Po
     }
 
     @Override
-    public ArrayList<PostBean> getPage(int intRegsPerPag, int intPage, ArrayList<FilterBeanHelper> alFilter, HashMap<String, String> hmOrder, Integer expand) throws Exception {
+    public ArrayList<DiagnosticoBean> getPage(int intRegsPerPag, int intPage, ArrayList<FilterBeanHelper> alFilter, HashMap<String, String> hmOrder, Integer expand) throws Exception {
         strSQL += SqlBuilder.buildSqlWhere(alFilter);
         strSQL += SqlBuilder.buildSqlOrder(hmOrder);
         strSQL += SqlBuilder.buildSqlLimit(oMysql.getCount(strSQL), intRegsPerPag, intPage);
-        ArrayList<PostBean> arrPost = new ArrayList<>();
+        ArrayList<DiagnosticoBean> arrDiagnostico = new ArrayList<>();
         ResultSet oResultSet = null;
         try {
             oResultSet = oMysql.getAllSQL(strSQL);
             while (oResultSet.next()) {
-                PostBean oPostBean = new PostBean();
-                arrPost.add(oPostBean.fill(oResultSet, oConnection, oPuserSecurity, expand));
+                DiagnosticoBean oDiagnosticoBean = new DiagnosticoBean();
+                arrDiagnostico.add(oDiagnosticoBean.fill(oResultSet, oConnection, oPuserSecurity, expand));
             }
             if (oResultSet != null) {
                 oResultSet.close();
@@ -97,20 +97,20 @@ public class PostDao implements ViewDaoInterface<PostBean>, TableDaoInterface<Po
                 oResultSet.close();
             }
         }
-        return arrPost;
+        return arrDiagnostico;
     }
 
     @Override
-    public ArrayList<PostBean> getAll(ArrayList<FilterBeanHelper> alFilter, HashMap<String, String> hmOrder, Integer expand) throws Exception {
+    public ArrayList<DiagnosticoBean> getAll(ArrayList<FilterBeanHelper> alFilter, HashMap<String, String> hmOrder, Integer expand) throws Exception {
         strSQL += SqlBuilder.buildSqlWhere(alFilter);
         strSQL += SqlBuilder.buildSqlOrder(hmOrder);
-        ArrayList<PostBean> arrPost = new ArrayList<>();
+        ArrayList<DiagnosticoBean> arrDiagnostico = new ArrayList<>();
         ResultSet oResultSet = null;
         try {
             oResultSet = oMysql.getAllSQL(strSQL);
             while (oResultSet.next()) {
-                PostBean oPostBean = new PostBean();
-                arrPost.add(oPostBean.fill(oResultSet, oConnection, oPuserSecurity, expand));
+                DiagnosticoBean oDiagnosticoBean = new DiagnosticoBean();
+                arrDiagnostico.add(oDiagnosticoBean.fill(oResultSet, oConnection, oPuserSecurity, expand));
             }
         } catch (Exception ex) {
             Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
@@ -120,22 +120,22 @@ public class PostDao implements ViewDaoInterface<PostBean>, TableDaoInterface<Po
                 oResultSet.close();
             }
         }
-        return arrPost;
+        return arrDiagnostico;
     }
 
     @Override
-    public PostBean get(PostBean oPostBean, Integer expand) throws Exception {
-        if (oPostBean.getId() > 0) {
+    public DiagnosticoBean get(DiagnosticoBean oDiagnosticoBean, Integer expand) throws Exception {
+        if (oDiagnosticoBean.getId() > 0) {
             ResultSet oResultSet = null;
             try {
-                oResultSet = oMysql.getAllSQL(strSQL + " And id= " + oPostBean.getId() + " ");
+                oResultSet = oMysql.getAllSQL(strSQL + " And id= " + oDiagnosticoBean.getId() + " ");
                 Boolean empty = true;
                 while (oResultSet.next()) {
-                    oPostBean = oPostBean.fill(oResultSet, oConnection, oPuserSecurity, expand);
+                    oDiagnosticoBean = oDiagnosticoBean.fill(oResultSet, oConnection, oPuserSecurity, expand);
                     empty = false;
                 }
                 if (empty) {
-                    oPostBean.setId(0);
+                    oDiagnosticoBean.setId(0);
                 }
             } catch (Exception ex) {
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
@@ -146,24 +146,24 @@ public class PostDao implements ViewDaoInterface<PostBean>, TableDaoInterface<Po
                 }
             }
         } else {
-            oPostBean.setId(0);
+            oDiagnosticoBean.setId(0);
         }
-        return oPostBean;
+        return oDiagnosticoBean;
     }
 
     @Override
-    public Integer set(PostBean oPostBean) throws Exception {
+    public Integer set(DiagnosticoBean oDiagnosticoBean) throws Exception {
         Integer iResult = null;
         try {
-            if (oPostBean.getId() == 0) {
+            if (oDiagnosticoBean.getId() == 0) {
                 strSQL = "INSERT INTO " + strTable + " ";
-                strSQL += "(" + oPostBean.getColumns() + ")";
-                strSQL += "VALUES(" + oPostBean.getValues() + ")";
+                strSQL += "(" + oDiagnosticoBean.getColumns() + ")";
+                strSQL += "VALUES(" + oDiagnosticoBean.getValues() + ")";
                 iResult = oMysql.executeInsertSQL(strSQL);
             } else {
                 strSQL = "UPDATE " + strTable + " ";
-                strSQL += " SET " + oPostBean.toPairs();
-                strSQL += " WHERE id=" + oPostBean.getId();
+                strSQL += " SET " + oDiagnosticoBean.toPairs();
+                strSQL += " WHERE id=" + oDiagnosticoBean.getId();
                 iResult = oMysql.executeUpdateSQL(strSQL);
             }
         } catch (Exception ex) {

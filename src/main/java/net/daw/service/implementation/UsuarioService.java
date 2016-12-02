@@ -30,16 +30,17 @@ package net.daw.service.implementation;
 
 import com.google.gson.Gson;
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
-import net.daw.bean.implementation.PurchaseBean;
-import net.daw.bean.implementation.PuserBean;
+import net.daw.bean.implementation.PusuarioBean;
 import net.daw.bean.implementation.ReplyBean;
-import net.daw.bean.implementation.UserBean;
+import net.daw.bean.implementation.UsuarioBean;
 import net.daw.connection.publicinterface.ConnectionInterface;
-import net.daw.dao.implementation.PurchaseDao;
+import net.daw.dao.implementation.UsuarioDao;
 import net.daw.helper.statics.AppConfigurationHelper;
 import static net.daw.helper.statics.AppConfigurationHelper.getSourceConnection;
 import net.daw.helper.statics.FilterBeanHelper;
@@ -49,16 +50,16 @@ import net.daw.helper.statics.ParameterCook;
 import net.daw.service.publicinterface.TableServiceInterface;
 import net.daw.service.publicinterface.ViewServiceInterface;
 
-public class PurchaseService implements TableServiceInterface, ViewServiceInterface {
+public class UsuarioService implements TableServiceInterface, ViewServiceInterface {
 
     protected HttpServletRequest oRequest = null;
 
-    public PurchaseService(HttpServletRequest request) {
+    public UsuarioService(HttpServletRequest request) {
         oRequest = request;
     }
 
     private Boolean checkpermission(String strMethodName) throws Exception {
-        PuserBean oPuserBean = (PuserBean) oRequest.getSession().getAttribute("userBean");
+        PusuarioBean oPuserBean = (PusuarioBean) oRequest.getSession().getAttribute("userBean");
         if (oPuserBean != null) {
             return true;
         } else {
@@ -74,10 +75,11 @@ public class PurchaseService implements TableServiceInterface, ViewServiceInterf
             Connection oConnection = null;
             ConnectionInterface oDataConnectionSource = null;
             try {
+
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
-                PurchaseDao oPurchaseDao = new PurchaseDao(oConnection, (PuserBean) oRequest.getSession().getAttribute("userBean"));
-                data = JsonMessage.getJsonExpression(200, Long.toString(oPurchaseDao.getCount(alFilter)));
+                UsuarioDao oUserDao = new UsuarioDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
+                data = JsonMessage.getJsonExpression(200, Long.toString(oUserDao.getCount(alFilter)));
             } catch (Exception ex) {
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
                 throw new Exception();
@@ -105,11 +107,11 @@ public class PurchaseService implements TableServiceInterface, ViewServiceInterf
             try {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
-                PurchaseDao oPurchaseDao = new PurchaseDao(oConnection, (PuserBean) oRequest.getSession().getAttribute("userBean"));
-                PurchaseBean oPurchaseBean = new PurchaseBean(id);
-                oPurchaseBean = oPurchaseDao.get(oPurchaseBean, AppConfigurationHelper.getJsonMsgDepth());
+                UsuarioDao oUserDao = new UsuarioDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
+                UsuarioBean oUserBean = new UsuarioBean(id);
+                oUserBean = oUserDao.get(oUserBean, AppConfigurationHelper.getJsonMsgDepth());
                 Gson gson = AppConfigurationHelper.getGson();
-                data = JsonMessage.getJsonExpression(200, AppConfigurationHelper.getGson().toJson(oPurchaseBean));
+                data = JsonMessage.getJsonExpression(200, AppConfigurationHelper.getGson().toJson(oUserBean));
             } catch (Exception ex) {
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
                 throw new Exception();
@@ -138,8 +140,8 @@ public class PurchaseService implements TableServiceInterface, ViewServiceInterf
             try {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
-                PurchaseDao oPurchaseDao = new PurchaseDao(oConnection, (PuserBean) oRequest.getSession().getAttribute("userBean"));
-                ArrayList<PurchaseBean> arrBeans = oPurchaseDao.getAll(alFilter, hmOrder, AppConfigurationHelper.getJsonMsgDepth());
+                UsuarioDao oUserDao = new UsuarioDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
+                ArrayList<UsuarioBean> arrBeans = oUserDao.getAll(alFilter, hmOrder, AppConfigurationHelper.getJsonMsgDepth());
                 data = JsonMessage.getJsonExpression(200, AppConfigurationHelper.getGson().toJson(arrBeans));
             } catch (Exception ex) {
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
@@ -171,8 +173,8 @@ public class PurchaseService implements TableServiceInterface, ViewServiceInterf
             try {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
-                PurchaseDao oPurchaseDao = new PurchaseDao(oConnection, (PuserBean) oRequest.getSession().getAttribute("userBean"));
-                List<PurchaseBean> arrBeans = oPurchaseDao.getPage(intRegsPerPag, intPage, alFilter, hmOrder, AppConfigurationHelper.getJsonMsgDepth());
+                UsuarioDao oUserDao = new UsuarioDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
+                List<UsuarioBean> arrBeans = oUserDao.getPage(intRegsPerPag, intPage, alFilter, hmOrder, AppConfigurationHelper.getJsonMsgDepth());
                 data = JsonMessage.getJsonExpression(200, AppConfigurationHelper.getGson().toJson(arrBeans));
             } catch (Exception ex) {
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
@@ -202,8 +204,8 @@ public class PurchaseService implements TableServiceInterface, ViewServiceInterf
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
                 oConnection.setAutoCommit(false);
-                PurchaseDao oPurchaseDao = new PurchaseDao(oConnection, (PuserBean) oRequest.getSession().getAttribute("userBean"));
-                data = JsonMessage.getJsonExpression(200, (String) oPurchaseDao.remove(id).toString());
+                UsuarioDao oUserDao = new UsuarioDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
+                data = JsonMessage.getJsonExpression(200, (String) oUserDao.remove(id).toString());
                 oConnection.commit();
             } catch (Exception ex) {
                 if (oConnection != null) {
@@ -236,11 +238,11 @@ public class PurchaseService implements TableServiceInterface, ViewServiceInterf
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
                 oConnection.setAutoCommit(false);
-                PurchaseDao oPurchaseDao = new PurchaseDao(oConnection, (PuserBean) oRequest.getSession().getAttribute("userBean"));
-                PurchaseBean oPurchaseBean = new PurchaseBean();
-                oPurchaseBean = AppConfigurationHelper.getGson().fromJson(jason, oPurchaseBean.getClass());
-                if (oPurchaseBean != null) {
-                    Integer iResult = oPurchaseDao.set(oPurchaseBean);
+                UsuarioDao oUserDao = new UsuarioDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
+                UsuarioBean oUserBean = new UsuarioBean();
+                oUserBean = AppConfigurationHelper.getGson().fromJson(jason, oUserBean.getClass());
+                if (oUserBean != null) {
+                    Integer iResult = oUserDao.set(oUserBean);
                     if (iResult >= 1) {
                         oReplyBean.setCode(200);
                         oReplyBean.setJson(JsonMessage.getJsonExpression(200, iResult.toString()));
@@ -251,6 +253,129 @@ public class PurchaseService implements TableServiceInterface, ViewServiceInterf
                 } else {
                     oReplyBean.setCode(500);
                     oReplyBean.setJson(JsonMessage.getJsonMsg(500, "Error during registry set"));
+                }
+                oConnection.commit();
+            } catch (Exception ex) {
+                if (oConnection != null) {
+                    oConnection.rollback();
+                }
+                Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
+                throw new Exception();
+            } finally {
+                if (oConnection != null) {
+                    oConnection.close();
+                }
+                if (oDataConnectionSource != null) {
+                    oDataConnectionSource.disposeConnection();
+                }
+            }
+            return oReplyBean;
+        } else {
+            return new ReplyBean(401, JsonMessage.getJsonMsg(401, "Unauthorized"));
+        }
+    }
+
+    public ReplyBean login() throws SQLException, Exception {
+        PusuarioBean oPuserBean = (PusuarioBean) oRequest.getSession().getAttribute("userBean");
+        PusuarioBean oPuser = null;
+        String strAnswer = null;
+        String strCode = "200";
+        try {
+            if (oPuserBean == null) {
+                String login = oRequest.getParameter("user");
+                String pass = oRequest.getParameter("pass");
+                if (!login.equals("") && !pass.equals("")) {
+                    ConnectionInterface oDataConnectionSource = null;
+                    Connection oConnection = null;
+                    try {
+                        oDataConnectionSource = getSourceConnection();
+                        oConnection = oDataConnectionSource.newConnection();
+                        oPuser = new PusuarioBean();
+                        oPuser.setLogin(login);
+                        oPuser.setPassword(pass);
+                        UsuarioDao oUserDao = new UsuarioDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
+                        oPuser = oUserDao.getFromLogin(oPuser);
+                        if (oPuser.getId() != 0) {
+                            strCode = "200";
+                            oRequest.getSession().setAttribute("userBean", oPuser);
+                        } else {
+                            strCode = "403";
+                            strAnswer = "User or password incorrect";
+                        }
+                    } catch (Exception ex) {
+                        Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
+                        strCode = "403";
+                        strAnswer = "ERROR01";
+                    } finally {
+                        if (oConnection != null) {
+                            oConnection.close();
+                        }
+                        if (oDataConnectionSource != null) {
+                            oDataConnectionSource.disposeConnection();
+                        }
+                    }
+                }
+            } else {
+                //strAnswer = "Already logged in";
+            }
+        } catch (Exception ex) {
+            Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
+            strCode = "403";
+            strAnswer = "ERROR02";
+        }
+        if (strCode == "200") {
+            return new ReplyBean(200, JsonMessage.getJsonExpression(200, AppConfigurationHelper.getGson().toJson(oPuser)));
+        } else {
+            return new ReplyBean(Integer.parseInt(strCode), JsonMessage.getJsonMsg(Integer.parseInt(strCode), strAnswer));
+        }
+
+    }
+
+    public ReplyBean logout() {
+        oRequest.getSession().invalidate();
+        return new ReplyBean(200, JsonMessage.getJsonMsg(200, "bye"));
+    }
+
+    public ReplyBean getsessionstatus() throws Exception {
+        String strAnswer = null;
+        PusuarioBean oPuserBean = (PusuarioBean) oRequest.getSession().getAttribute("userBean");
+        if (oPuserBean == null) {
+            return new ReplyBean(403, JsonMessage.getJsonMsg(403, "Unauthorized"));
+        } else {
+            return new ReplyBean(200, JsonMessage.getJsonExpression(200, AppConfigurationHelper.getGson().toJson(oPuserBean)));
+        }
+    }
+
+    public ReplyBean sessionuserlevel() {
+        String strAnswer = null;
+        UsuarioBean oUserBean = (UsuarioBean) oRequest.getSession().getAttribute("userBean");
+        Map<Integer, String> map = new HashMap<>();
+        if (oUserBean == null) {
+            return new ReplyBean(403, JsonMessage.getJsonMsg(403, "Unauthorized"));
+        } else {
+            return new ReplyBean(200, JsonMessage.getJsonExpression(200, oUserBean.getId_tipousuario().toString()));
+        }
+    }
+
+    public ReplyBean passchange() throws Exception {
+        if (this.checkpermission("passchange")) {            
+            String oldPass = oRequest.getParameter("old");
+            String newPass = oRequest.getParameter("new");
+            ReplyBean oReplyBean = new ReplyBean();
+            Connection oConnection = null;
+            ConnectionInterface oDataConnectionSource = null;
+            try {
+                oDataConnectionSource = getSourceConnection();
+                oConnection = oDataConnectionSource.newConnection();
+                oConnection.setAutoCommit(false);
+                UsuarioDao oUserDao = new UsuarioDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
+                Integer iResult = oUserDao.passchange(oldPass, newPass);
+                if (iResult >= 1) {
+                    oReplyBean.setCode(200);
+                    oReplyBean.setJson(JsonMessage.getJsonExpression(200, iResult.toString()));
+                } else {
+                    oReplyBean.setCode(500);
+                    oReplyBean.setJson(JsonMessage.getJsonMsg(500, "Error during changing password"));
                 }
                 oConnection.commit();
             } catch (Exception ex) {

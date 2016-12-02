@@ -34,12 +34,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
-import net.daw.bean.implementation.DocumentBean;
+import net.daw.bean.implementation.DiagnosticoBean;
 import net.daw.bean.implementation.PuserBean;
 import net.daw.bean.implementation.ReplyBean;
 import net.daw.bean.implementation.UserBean;
 import net.daw.connection.publicinterface.ConnectionInterface;
-import net.daw.dao.implementation.DocumentDao;
+import net.daw.dao.implementation.DiagnosticoDao;
 import net.daw.helper.statics.AppConfigurationHelper;
 import static net.daw.helper.statics.AppConfigurationHelper.getSourceConnection;
 import net.daw.helper.statics.FilterBeanHelper;
@@ -49,11 +49,11 @@ import net.daw.helper.statics.ParameterCook;
 import net.daw.service.publicinterface.TableServiceInterface;
 import net.daw.service.publicinterface.ViewServiceInterface;
 
-public class DocumentService implements TableServiceInterface, ViewServiceInterface {
+public class DiagnosticoService implements TableServiceInterface, ViewServiceInterface {
 
     protected HttpServletRequest oRequest = null;
 
-    public DocumentService(HttpServletRequest request) {
+    public DiagnosticoService(HttpServletRequest request) {
         oRequest = request;
     }
 
@@ -76,8 +76,8 @@ public class DocumentService implements TableServiceInterface, ViewServiceInterf
             try {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
-                DocumentDao oDocumentDao = new DocumentDao(oConnection, (PuserBean) oRequest.getSession().getAttribute("userBean"));
-                data = JsonMessage.getJsonExpression(200, Long.toString(oDocumentDao.getCount(alFilter)));
+                DiagnosticoDao oDiagnosticoDao = new DiagnosticoDao(oConnection, (PuserBean) oRequest.getSession().getAttribute("userBean"));
+                data = JsonMessage.getJsonExpression(200, Long.toString(oDiagnosticoDao.getCount(alFilter)));
             } catch (Exception ex) {
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
                 throw new Exception();
@@ -105,11 +105,11 @@ public class DocumentService implements TableServiceInterface, ViewServiceInterf
             try {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
-                DocumentDao oDocumentDao = new DocumentDao(oConnection, (PuserBean) oRequest.getSession().getAttribute("userBean"));
-                DocumentBean oDocumentBean = new DocumentBean(id);
-                oDocumentBean = oDocumentDao.get(oDocumentBean, AppConfigurationHelper.getJsonMsgDepth());
+                DiagnosticoDao oDiagnosticoDao = new DiagnosticoDao(oConnection, (PuserBean) oRequest.getSession().getAttribute("userBean"));
+                DiagnosticoBean oDiagnosticoBean = new DiagnosticoBean(id);
+                oDiagnosticoBean = oDiagnosticoDao.get(oDiagnosticoBean, AppConfigurationHelper.getJsonMsgDepth());
                 Gson gson = AppConfigurationHelper.getGson();
-                data = JsonMessage.getJsonExpression(200, AppConfigurationHelper.getGson().toJson(oDocumentBean));
+                data = JsonMessage.getJsonExpression(200, AppConfigurationHelper.getGson().toJson(oDiagnosticoBean));
             } catch (Exception ex) {
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
                 throw new Exception();
@@ -138,8 +138,8 @@ public class DocumentService implements TableServiceInterface, ViewServiceInterf
             try {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
-                DocumentDao oDocumentDao = new DocumentDao(oConnection, (PuserBean) oRequest.getSession().getAttribute("userBean"));
-                ArrayList<DocumentBean> arrBeans = oDocumentDao.getAll(alFilter, hmOrder, AppConfigurationHelper.getJsonMsgDepth());
+                DiagnosticoDao oDiagnosticoDao = new DiagnosticoDao(oConnection, (PuserBean) oRequest.getSession().getAttribute("userBean"));
+                ArrayList<DiagnosticoBean> arrBeans = oDiagnosticoDao.getAll(alFilter, hmOrder, AppConfigurationHelper.getJsonMsgDepth());
                 data = JsonMessage.getJsonExpression(200, AppConfigurationHelper.getGson().toJson(arrBeans));
             } catch (Exception ex) {
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
@@ -171,8 +171,8 @@ public class DocumentService implements TableServiceInterface, ViewServiceInterf
             try {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
-                DocumentDao oDocumentDao = new DocumentDao(oConnection, (PuserBean) oRequest.getSession().getAttribute("userBean"));
-                List<DocumentBean> arrBeans = oDocumentDao.getPage(intRegsPerPag, intPage, alFilter, hmOrder, AppConfigurationHelper.getJsonMsgDepth());
+                DiagnosticoDao oDiagnosticoDao = new DiagnosticoDao(oConnection, (PuserBean) oRequest.getSession().getAttribute("userBean"));
+                List<DiagnosticoBean> arrBeans = oDiagnosticoDao.getPage(intRegsPerPag, intPage, alFilter, hmOrder, AppConfigurationHelper.getJsonMsgDepth());
                 data = JsonMessage.getJsonExpression(200, AppConfigurationHelper.getGson().toJson(arrBeans));
             } catch (Exception ex) {
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
@@ -202,8 +202,8 @@ public class DocumentService implements TableServiceInterface, ViewServiceInterf
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
                 oConnection.setAutoCommit(false);
-                DocumentDao oDocumentDao = new DocumentDao(oConnection, (PuserBean) oRequest.getSession().getAttribute("userBean"));
-                data = JsonMessage.getJsonExpression(200, (String) oDocumentDao.remove(id).toString());
+                DiagnosticoDao oDiagnosticoDao = new DiagnosticoDao(oConnection, (PuserBean) oRequest.getSession().getAttribute("userBean"));
+                data = JsonMessage.getJsonExpression(200, (String) oDiagnosticoDao.remove(id).toString());
                 oConnection.commit();
             } catch (Exception ex) {
                 if (oConnection != null) {
@@ -236,11 +236,11 @@ public class DocumentService implements TableServiceInterface, ViewServiceInterf
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
                 oConnection.setAutoCommit(false);
-                DocumentDao oDocumentDao = new DocumentDao(oConnection, (PuserBean) oRequest.getSession().getAttribute("userBean"));
-                DocumentBean oDocumentBean = new DocumentBean();
-                oDocumentBean = AppConfigurationHelper.getGson().fromJson(jason, oDocumentBean.getClass());
-                if (oDocumentBean != null) {
-                    Integer iResult = oDocumentDao.set(oDocumentBean);
+                DiagnosticoDao oDiagnosticoDao = new DiagnosticoDao(oConnection, (PuserBean) oRequest.getSession().getAttribute("userBean"));
+                DiagnosticoBean oDiagnosticoBean = new DiagnosticoBean();
+                oDiagnosticoBean = AppConfigurationHelper.getGson().fromJson(jason, oDiagnosticoBean.getClass());
+                if (oDiagnosticoBean != null) {
+                    Integer iResult = oDiagnosticoDao.set(oDiagnosticoBean);
                     if (iResult >= 1) {
                         oReplyBean.setCode(200);
                         oReplyBean.setJson(JsonMessage.getJsonExpression(200, iResult.toString()));

@@ -34,12 +34,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
-import net.daw.bean.implementation.ProducttypeBean;
 import net.daw.bean.implementation.PuserBean;
+import net.daw.bean.implementation.MedicamentoBean;
 import net.daw.bean.implementation.ReplyBean;
-import net.daw.bean.implementation.UserBean;
 import net.daw.connection.publicinterface.ConnectionInterface;
-import net.daw.dao.implementation.ProducttypeDao;
+import net.daw.dao.implementation.MedicamentoDao;
 import net.daw.helper.statics.AppConfigurationHelper;
 import static net.daw.helper.statics.AppConfigurationHelper.getSourceConnection;
 import net.daw.helper.statics.FilterBeanHelper;
@@ -49,11 +48,11 @@ import net.daw.helper.statics.ParameterCook;
 import net.daw.service.publicinterface.TableServiceInterface;
 import net.daw.service.publicinterface.ViewServiceInterface;
 
-public class ProducttypeService implements TableServiceInterface, ViewServiceInterface {
+public class MedicamentoService implements TableServiceInterface, ViewServiceInterface {
 
     protected HttpServletRequest oRequest = null;
 
-    public ProducttypeService(HttpServletRequest request) {
+    public MedicamentoService(HttpServletRequest request) {
         oRequest = request;
     }
 
@@ -76,8 +75,8 @@ public class ProducttypeService implements TableServiceInterface, ViewServiceInt
             try {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
-                ProducttypeDao oProducttypeDao = new ProducttypeDao(oConnection, (PuserBean) oRequest.getSession().getAttribute("userBean"));
-                data = JsonMessage.getJsonExpression(200, Long.toString(oProducttypeDao.getCount(alFilter)));
+                MedicamentoDao oMedicamentoDao = new MedicamentoDao(oConnection, (PuserBean) oRequest.getSession().getAttribute("userBean"));
+                data = JsonMessage.getJsonExpression(200, Long.toString(oMedicamentoDao.getCount(alFilter)));
             } catch (Exception ex) {
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
                 throw new Exception();
@@ -105,11 +104,11 @@ public class ProducttypeService implements TableServiceInterface, ViewServiceInt
             try {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
-                ProducttypeDao oProducttypeDao = new ProducttypeDao(oConnection, (PuserBean) oRequest.getSession().getAttribute("userBean"));
-                ProducttypeBean oProducttypeBean = new ProducttypeBean(id);
-                oProducttypeBean = oProducttypeDao.get(oProducttypeBean, AppConfigurationHelper.getJsonMsgDepth());
+                MedicamentoDao oMedicamentoDao = new MedicamentoDao(oConnection, (PuserBean) oRequest.getSession().getAttribute("userBean"));
+                MedicamentoBean oMedicamentoBean = new MedicamentoBean(id);
+                oMedicamentoBean = oMedicamentoDao.get(oMedicamentoBean, AppConfigurationHelper.getJsonMsgDepth());
                 Gson gson = AppConfigurationHelper.getGson();
-                data = JsonMessage.getJsonExpression(200, AppConfigurationHelper.getGson().toJson(oProducttypeBean));
+                data = JsonMessage.getJsonExpression(200, AppConfigurationHelper.getGson().toJson(oMedicamentoBean));
             } catch (Exception ex) {
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
                 throw new Exception();
@@ -138,8 +137,8 @@ public class ProducttypeService implements TableServiceInterface, ViewServiceInt
             try {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
-                ProducttypeDao oProducttypeDao = new ProducttypeDao(oConnection, (PuserBean) oRequest.getSession().getAttribute("userBean"));
-                ArrayList<ProducttypeBean> arrBeans = oProducttypeDao.getAll(alFilter, hmOrder, AppConfigurationHelper.getJsonMsgDepth());
+                MedicamentoDao oMedicamentoDao = new MedicamentoDao(oConnection, (PuserBean) oRequest.getSession().getAttribute("userBean"));
+                ArrayList<MedicamentoBean> arrBeans = oMedicamentoDao.getAll(alFilter, hmOrder, AppConfigurationHelper.getJsonMsgDepth());
                 data = JsonMessage.getJsonExpression(200, AppConfigurationHelper.getGson().toJson(arrBeans));
             } catch (Exception ex) {
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
@@ -171,8 +170,8 @@ public class ProducttypeService implements TableServiceInterface, ViewServiceInt
             try {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
-                ProducttypeDao oProducttypeDao = new ProducttypeDao(oConnection, (PuserBean) oRequest.getSession().getAttribute("userBean"));
-                List<ProducttypeBean> arrBeans = oProducttypeDao.getPage(intRegsPerPag, intPage, alFilter, hmOrder, AppConfigurationHelper.getJsonMsgDepth());
+                MedicamentoDao oMedicamentoDao = new MedicamentoDao(oConnection, (PuserBean) oRequest.getSession().getAttribute("userBean"));
+                List<MedicamentoBean> arrBeans = oMedicamentoDao.getPage(intRegsPerPag, intPage, alFilter, hmOrder, AppConfigurationHelper.getJsonMsgDepth());
                 data = JsonMessage.getJsonExpression(200, AppConfigurationHelper.getGson().toJson(arrBeans));
             } catch (Exception ex) {
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
@@ -202,8 +201,8 @@ public class ProducttypeService implements TableServiceInterface, ViewServiceInt
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
                 oConnection.setAutoCommit(false);
-                ProducttypeDao oProducttypeDao = new ProducttypeDao(oConnection, (PuserBean) oRequest.getSession().getAttribute("userBean"));
-                data = JsonMessage.getJsonExpression(200, (String) oProducttypeDao.remove(id).toString());
+                MedicamentoDao oMedicamentoDao = new MedicamentoDao(oConnection, (PuserBean) oRequest.getSession().getAttribute("userBean"));
+                data = JsonMessage.getJsonExpression(200, (String) oMedicamentoDao.remove(id).toString());
                 oConnection.commit();
             } catch (Exception ex) {
                 if (oConnection != null) {
@@ -236,11 +235,11 @@ public class ProducttypeService implements TableServiceInterface, ViewServiceInt
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
                 oConnection.setAutoCommit(false);
-                ProducttypeDao oProducttypeDao = new ProducttypeDao(oConnection, (PuserBean) oRequest.getSession().getAttribute("userBean"));
-                ProducttypeBean oProducttypeBean = new ProducttypeBean();
-                oProducttypeBean = AppConfigurationHelper.getGson().fromJson(jason, oProducttypeBean.getClass());
-                if (oProducttypeBean != null) {
-                    Integer iResult = oProducttypeDao.set(oProducttypeBean);
+                MedicamentoDao oMedicamentoDao = new MedicamentoDao(oConnection, (PuserBean) oRequest.getSession().getAttribute("userBean"));
+                MedicamentoBean oMedicamentoBean = new MedicamentoBean();
+                oMedicamentoBean = AppConfigurationHelper.getGson().fromJson(jason, oMedicamentoBean.getClass());
+                if (oMedicamentoBean != null) {
+                    Integer iResult = oMedicamentoDao.set(oMedicamentoBean);
                     if (iResult >= 1) {
                         oReplyBean.setCode(200);
                         oReplyBean.setJson(JsonMessage.getJsonExpression(200, iResult.toString()));
