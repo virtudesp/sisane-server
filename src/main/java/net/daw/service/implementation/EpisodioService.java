@@ -34,12 +34,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
-import net.daw.bean.implementation.DiagnosticoBean;
+import net.daw.bean.implementation.EpisodioBean;
 import net.daw.bean.implementation.PusuarioBean;
 import net.daw.bean.implementation.ReplyBean;
-import net.daw.bean.implementation.UsuarioBean;
 import net.daw.connection.publicinterface.ConnectionInterface;
-import net.daw.dao.implementation.DiagnosticoDao;
+import net.daw.dao.implementation.EpisodioDao;
 import net.daw.helper.statics.AppConfigurationHelper;
 import static net.daw.helper.statics.AppConfigurationHelper.getSourceConnection;
 import net.daw.helper.statics.FilterBeanHelper;
@@ -49,21 +48,19 @@ import net.daw.helper.statics.ParameterCook;
 import net.daw.service.publicinterface.TableServiceInterface;
 import net.daw.service.publicinterface.ViewServiceInterface;
 
-public class DiagnosticoService implements TableServiceInterface, ViewServiceInterface {
+public class EpisodioService implements TableServiceInterface, ViewServiceInterface {
 
     protected HttpServletRequest oRequest = null;
 
-    public DiagnosticoService(HttpServletRequest request) {
+    public EpisodioService(HttpServletRequest request) {
         oRequest = request;
     }
 
     private Boolean checkpermission(String strMethodName) throws Exception {
         PusuarioBean oPusuarioBean = (PusuarioBean) oRequest.getSession().getAttribute("userBean");
-        if (oPusuarioBean != null) {
-            return true;
-        } else {
-            return false;
-        }
+        
+        return oPusuarioBean != null;
+        
     }
 
     @Override
@@ -76,8 +73,8 @@ public class DiagnosticoService implements TableServiceInterface, ViewServiceInt
             try {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
-                DiagnosticoDao oDiagnosticoDao = new DiagnosticoDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
-                data = JsonMessage.getJsonExpression(200, Long.toString(oDiagnosticoDao.getCount(alFilter)));
+                EpisodioDao oEpisodioDao = new EpisodioDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
+                data = JsonMessage.getJsonExpression(200, Long.toString(oEpisodioDao.getCount(alFilter)));
             } catch (Exception ex) {
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
                 throw new Exception();
@@ -105,11 +102,11 @@ public class DiagnosticoService implements TableServiceInterface, ViewServiceInt
             try {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
-                DiagnosticoDao oDiagnosticoDao = new DiagnosticoDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
-                DiagnosticoBean oDiagnosticoBean = new DiagnosticoBean(id);
-                oDiagnosticoBean = oDiagnosticoDao.get(oDiagnosticoBean, AppConfigurationHelper.getJsonMsgDepth());
+                EpisodioDao oEpisodioDao = new EpisodioDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
+                EpisodioBean oEpisodioBean = new EpisodioBean(id);
+                oEpisodioBean = oEpisodioDao.get(oEpisodioBean, AppConfigurationHelper.getJsonMsgDepth());
                 Gson gson = AppConfigurationHelper.getGson();
-                data = JsonMessage.getJsonExpression(200, AppConfigurationHelper.getGson().toJson(oDiagnosticoBean));
+                data = JsonMessage.getJsonExpression(200, AppConfigurationHelper.getGson().toJson(oEpisodioBean));
             } catch (Exception ex) {
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
                 throw new Exception();
@@ -138,8 +135,8 @@ public class DiagnosticoService implements TableServiceInterface, ViewServiceInt
             try {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
-                DiagnosticoDao oDiagnosticoDao = new DiagnosticoDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
-                ArrayList<DiagnosticoBean> arrBeans = oDiagnosticoDao.getAll(alFilter, hmOrder, AppConfigurationHelper.getJsonMsgDepth());
+                EpisodioDao oEpisodioDao = new EpisodioDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
+                ArrayList<EpisodioBean> arrBeans = oEpisodioDao.getAll(alFilter, hmOrder, AppConfigurationHelper.getJsonMsgDepth());
                 data = JsonMessage.getJsonExpression(200, AppConfigurationHelper.getGson().toJson(arrBeans));
             } catch (Exception ex) {
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
@@ -171,8 +168,8 @@ public class DiagnosticoService implements TableServiceInterface, ViewServiceInt
             try {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
-                DiagnosticoDao oDiagnosticoDao = new DiagnosticoDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
-                List<DiagnosticoBean> arrBeans = oDiagnosticoDao.getPage(intRegsPerPag, intPage, alFilter, hmOrder, AppConfigurationHelper.getJsonMsgDepth());
+                EpisodioDao oEpisodioDao = new EpisodioDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
+                List<EpisodioBean> arrBeans = oEpisodioDao.getPage(intRegsPerPag, intPage, alFilter, hmOrder, AppConfigurationHelper.getJsonMsgDepth());
                 data = JsonMessage.getJsonExpression(200, AppConfigurationHelper.getGson().toJson(arrBeans));
             } catch (Exception ex) {
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
@@ -202,8 +199,8 @@ public class DiagnosticoService implements TableServiceInterface, ViewServiceInt
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
                 oConnection.setAutoCommit(false);
-                DiagnosticoDao oDiagnosticoDao = new DiagnosticoDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
-                data = JsonMessage.getJsonExpression(200, (String) oDiagnosticoDao.remove(id).toString());
+                EpisodioDao oEpisodioDao = new EpisodioDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
+                data = JsonMessage.getJsonExpression(200, (String) oEpisodioDao.remove(id).toString());
                 oConnection.commit();
             } catch (Exception ex) {
                 if (oConnection != null) {
@@ -236,11 +233,11 @@ public class DiagnosticoService implements TableServiceInterface, ViewServiceInt
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
                 oConnection.setAutoCommit(false);
-                DiagnosticoDao oDiagnosticoDao = new DiagnosticoDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
-                DiagnosticoBean oDiagnosticoBean = new DiagnosticoBean();
-                oDiagnosticoBean = AppConfigurationHelper.getGson().fromJson(jason, oDiagnosticoBean.getClass());
-                if (oDiagnosticoBean != null) {
-                    Integer iResult = oDiagnosticoDao.set(oDiagnosticoBean);
+                EpisodioDao oEpisodioDao = new EpisodioDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
+                EpisodioBean oEpisodioBean = new EpisodioBean();
+                oEpisodioBean = AppConfigurationHelper.getGson().fromJson(jason, oEpisodioBean.getClass());
+                if (oEpisodioBean != null) {
+                    Integer iResult = oEpisodioDao.set(oEpisodioBean);
                     if (iResult >= 1) {
                         oReplyBean.setCode(200);
                         oReplyBean.setJson(JsonMessage.getJsonExpression(200, iResult.toString()));
