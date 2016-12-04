@@ -302,13 +302,13 @@ public class PusuarioBean implements GenericBean {
         this.setSegundoapellido(oResultSet.getString("segundoapellido"));
         this.setLogin(oResultSet.getString("login"));
         this.setPassword(oResultSet.getString("password"));
-        this.setDireccion(oResultSet.getString("address"));
-        this.setCiudad(oResultSet.getString("city"));
-        this.setCodigopostal(oResultSet.getString("zip"));
-        this.setProvincia(oResultSet.getString("state"));
-        this.setPais(oResultSet.getString("country"));
+        this.setDireccion(oResultSet.getString("direccion"));
+        this.setCiudad(oResultSet.getString("ciudad"));
+        this.setCodigopostal(oResultSet.getString("codigopostal"));
+        this.setProvincia(oResultSet.getString("provincia"));
+        this.setPais(oResultSet.getString("pais"));
         this.setEmail(oResultSet.getString("email"));
-        this.setTelefono(oResultSet.getString("phone"));
+        this.setTelefono(oResultSet.getString("telefono"));
         
         if (expand > 0) {
             TipousuarioBean oTipousuarioBean = new TipousuarioBean();
