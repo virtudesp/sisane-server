@@ -294,7 +294,7 @@ public class PusuarioBean implements GenericBean {
     }
 
     @Override
-    public PusuarioBean fill(ResultSet oResultSet, Connection pooledConnection, PusuarioBean oPuserBean_security, Integer expand) throws SQLException, Exception {
+    public PusuarioBean fill(ResultSet oResultSet, Connection pooledConnection, PusuarioBean oPusuarioBean_security, Integer expand) throws SQLException, Exception {
         this.setId(oResultSet.getInt("id"));
         this.setDni(oResultSet.getString("dni"));
         this.setNombre(oResultSet.getString("nombre"));
@@ -312,7 +312,7 @@ public class PusuarioBean implements GenericBean {
         
         if (expand > 0) {
             TipousuarioBean oTipousuarioBean = new TipousuarioBean();
-            TipousuarioDao oTipousuarioDao = new TipousuarioDao(pooledConnection, oPuserBean_security);
+            TipousuarioDao oTipousuarioDao = new TipousuarioDao(pooledConnection, oPusuarioBean_security);
             oTipousuarioBean.setId(oResultSet.getInt("id_tipousuario"));
             oTipousuarioBean = oTipousuarioDao.get(oTipousuarioBean, expand - 1);
             this.setObj_tipousuario(oTipousuarioBean);
@@ -322,7 +322,7 @@ public class PusuarioBean implements GenericBean {
 
         if (expand > 0) {
             MedicoBean oMedicoBean = new MedicoBean();
-            MedicoDao oMedicoDao = new MedicoDao(pooledConnection, oPuserBean_security);
+            MedicoDao oMedicoDao = new MedicoDao(pooledConnection, oPusuarioBean_security);
             oMedicoBean.setId(oResultSet.getInt("id_medico"));
             oMedicoBean = oMedicoDao.get(oMedicoBean, expand - 1);
             this.setObj_medico(oMedicoBean);
