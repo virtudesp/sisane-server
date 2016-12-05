@@ -12,8 +12,8 @@ import java.sql.SQLException;
 import java.util.Date;
 import net.daw.bean.publicinterface.GenericBean;
 import net.daw.helper.statics.EncodingUtilHelper;
-import net.daw.dao.implementation.TipodiagnosticoDao;
-import net.daw.dao.implementation.EpisodioDao;
+//import net.daw.dao.implementation.TipodiagnosticoDao;
+//import net.daw.dao.implementation.EpisodioDao;
 
 /**
  *
@@ -28,12 +28,12 @@ public class DiagnosticoBean implements GenericBean{
     private Date fecha;
     @Expose(serialize = false)
     private int id_episodio;
-    @Expose(deserialize = false)
-    private EpisodioBean obj_episodio;
+//    @Expose(deserialize = false)
+//    private EpisodioBean obj_episodio;
     @Expose(serialize = false)
     private int id_tipodiagnostico;
-    @Expose(deserialize = false)
-    private TipodiagnosticoBean obj_tipodiagnostico;
+//    @Expose(deserialize = false)
+//    private TipodiagnosticoBean obj_tipodiagnostico;
     
     
     public DiagnosticoBean(int id){
@@ -75,13 +75,13 @@ public class DiagnosticoBean implements GenericBean{
         this.id_episodio = id_episodio;
     }
 
-    public EpisodioBean getObj_episodio() {
-        return obj_episodio;
-    }
-
-    public void setObj_episodio(EpisodioBean obj_episodio) {
-        this.obj_episodio = obj_episodio;
-    }
+//    public EpisodioBean getObj_episodio() {
+//        return obj_episodio;
+//    }
+//
+//    public void setObj_episodio(EpisodioBean obj_episodio) {
+//        this.obj_episodio = obj_episodio;
+//    }
 
     public int getId_tipodiagnostico() {
         return id_tipodiagnostico;
@@ -91,13 +91,13 @@ public class DiagnosticoBean implements GenericBean{
         this.id_tipodiagnostico = id_tipodiagnostico;
     }
 
-    public TipodiagnosticoBean getObj_tipodiagnostico() {
-        return obj_tipodiagnostico;
-    }
-
-    public void setObj_tipodiagnostico(TipodiagnosticoBean obj_tipodiagnostico) {
-        this.obj_tipodiagnostico = obj_tipodiagnostico;
-    }
+//    public TipodiagnosticoBean getObj_tipodiagnostico() {
+//        return obj_tipodiagnostico;
+//    }
+//
+//    public void setObj_tipodiagnostico(TipodiagnosticoBean obj_tipodiagnostico) {
+//        this.obj_tipodiagnostico = obj_tipodiagnostico;
+//    }
         
     @Override
     public String getColumns() {
@@ -136,17 +136,17 @@ public class DiagnosticoBean implements GenericBean{
         this.id_episodio = oResultSet.getInt("id_episodio");
         this.id_tipodiagnostico = oResultSet.getInt("id_tipodiagnostico");
         
-        if(expand > 0){
-            EpisodioDao eDao = new EpisodioDao(pooledConnection,oPusuarioBean_security);
-            EpisodioBean eBean = new EpisodioBean();
-            eBean.setId(this.id_episodio);
-            this.obj_episodio = eDao.get(eBean,expand - 1);
-            
-            TipodiagnosticoDao tDao = new TipodiagnosticoDao(pooledConnection,oPusuarioBean_security);
-            TipodiagnosticoBean tBean = new TipodiagnosticoBean();
-            tBean.setId(this.id_tipodiagnostico);
-            this.obj_tipodiagnostico = tDao.get(tBean,expand - 1);
-        }
+//        if(expand > 0){
+//            EpisodioDao eDao = new EpisodioDao(pooledConnection,oPusuarioBean_security);
+//            EpisodioBean eBean = new EpisodioBean();
+//            eBean.setId(this.id_episodio);
+//            this.obj_episodio = eDao.get(eBean,expand - 1);
+//            
+//            TipodiagnosticoDao tDao = new TipodiagnosticoDao(pooledConnection,oPusuarioBean_security);
+//            TipodiagnosticoBean tBean = new TipodiagnosticoBean();
+//            tBean.setId(this.id_tipodiagnostico);
+//            this.obj_tipodiagnostico = tDao.get(tBean,expand - 1);
+//        }
         
         return this;        
     }
