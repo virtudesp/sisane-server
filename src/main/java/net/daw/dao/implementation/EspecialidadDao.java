@@ -32,8 +32,8 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.HashMap;
+import net.daw.bean.implementation.EspecialidadBean;
 import net.daw.bean.implementation.PusuarioBean;
-import net.daw.bean.implementation.MedicamentoBean;
 import net.daw.dao.publicinterface.TableDaoInterface;
 import net.daw.dao.publicinterface.ViewDaoInterface;
 import net.daw.data.implementation.MysqlData;
@@ -41,15 +41,15 @@ import net.daw.helper.statics.FilterBeanHelper;
 import net.daw.helper.statics.Log4j;
 import net.daw.helper.statics.SqlBuilder;
 
-public class MedicamentoDao implements ViewDaoInterface<MedicamentoBean>, TableDaoInterface<MedicamentoBean> {
+public class EspecialidadDao implements ViewDaoInterface<EspecialidadBean>, TableDaoInterface<EspecialidadBean> {
 
-    private String strTable = "medicamento";
-    private String strSQL = "select * from medicamento where 1=1 ";
+    private String strTable = "especialidad";
+    private String strSQL = "select * from especialidad where 1=1 ";
     private MysqlData oMysql = null;
     private Connection oConnection = null;
     private PusuarioBean oPusuarioSecurity = null;
 
-    public MedicamentoDao(Connection oPooledConnection, PusuarioBean oPusuarioBean_security) throws Exception {
+    public EspecialidadDao(Connection oPooledConnection, PusuarioBean oPusuarioBean_security) throws Exception {
         try {
             oConnection = oPooledConnection;
             oMysql = new MysqlData(oConnection);
@@ -74,17 +74,17 @@ public class MedicamentoDao implements ViewDaoInterface<MedicamentoBean>, TableD
     }
 
     @Override
-    public ArrayList<MedicamentoBean> getPage(int intRegsPerPag, int intPage, ArrayList<FilterBeanHelper> alFilter, HashMap<String, String> hmOrder, Integer expand) throws Exception {
+    public ArrayList<EspecialidadBean> getPage(int intRegsPerPag, int intPage, ArrayList<FilterBeanHelper> alFilter, HashMap<String, String> hmOrder, Integer expand) throws Exception {
         strSQL += SqlBuilder.buildSqlWhere(alFilter);
         strSQL += SqlBuilder.buildSqlOrder(hmOrder);
         strSQL += SqlBuilder.buildSqlLimit(oMysql.getCount(strSQL), intRegsPerPag, intPage);
-        ArrayList<MedicamentoBean> arrMedicamento = new ArrayList<>();
+        ArrayList<EspecialidadBean> arrEspecialidad = new ArrayList<>();
         ResultSet oResultSet = null;
         try {
             oResultSet = oMysql.getAllSQL(strSQL);
             while (oResultSet.next()) {
-                MedicamentoBean oMedicamentoBean = new MedicamentoBean();
-                arrMedicamento.add(oMedicamentoBean.fill(oResultSet, oConnection, oPusuarioSecurity, expand));
+                EspecialidadBean oEspecialidadBean = new EspecialidadBean();
+                arrEspecialidad.add(oEspecialidadBean.fill(oResultSet, oConnection, oPusuarioSecurity, expand));
             }
             if (oResultSet != null) {
                 oResultSet.close();
@@ -97,20 +97,20 @@ public class MedicamentoDao implements ViewDaoInterface<MedicamentoBean>, TableD
                 oResultSet.close();
             }
         }
-        return arrMedicamento;
+        return arrEspecialidad;
     }
 
     @Override
-    public ArrayList<MedicamentoBean> getAll(ArrayList<FilterBeanHelper> alFilter, HashMap<String, String> hmOrder, Integer expand) throws Exception {
+    public ArrayList<EspecialidadBean> getAll(ArrayList<FilterBeanHelper> alFilter, HashMap<String, String> hmOrder, Integer expand) throws Exception {
         strSQL += SqlBuilder.buildSqlWhere(alFilter);
         strSQL += SqlBuilder.buildSqlOrder(hmOrder);
-        ArrayList<MedicamentoBean> arrMedicamento = new ArrayList<>();
+        ArrayList<EspecialidadBean> arrEspecialidad = new ArrayList<>();
         ResultSet oResultSet = null;
         try {
             oResultSet = oMysql.getAllSQL(strSQL);
             while (oResultSet.next()) {
-                MedicamentoBean oMedicamentoBean = new MedicamentoBean();
-                arrMedicamento.add(oMedicamentoBean.fill(oResultSet, oConnection, oPusuarioSecurity, expand));
+                EspecialidadBean oEspecialidadBean = new EspecialidadBean();
+                arrEspecialidad.add(oEspecialidadBean.fill(oResultSet, oConnection, oPusuarioSecurity, expand));
             }
         } catch (Exception ex) {
             Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
@@ -120,22 +120,22 @@ public class MedicamentoDao implements ViewDaoInterface<MedicamentoBean>, TableD
                 oResultSet.close();
             }
         }
-        return arrMedicamento;
+        return arrEspecialidad;
     }
 
     @Override
-    public MedicamentoBean get(MedicamentoBean oMedicamentoBean, Integer expand) throws Exception {
-        if (oMedicamentoBean.getId() > 0) {
+    public EspecialidadBean get(EspecialidadBean oEspecialidadBean, Integer expand) throws Exception {
+        if (oEspecialidadBean.getId() > 0) {
             ResultSet oResultSet = null;
             try {
-                oResultSet = oMysql.getAllSQL(strSQL + " And id= " + oMedicamentoBean.getId() + " ");
+                oResultSet = oMysql.getAllSQL(strSQL + " And id= " + oEspecialidadBean.getId() + " ");
                 Boolean empty = true;
                 while (oResultSet.next()) {
-                    oMedicamentoBean = oMedicamentoBean.fill(oResultSet, oConnection, oPusuarioSecurity, expand);
+                    oEspecialidadBean = oEspecialidadBean.fill(oResultSet, oConnection, oPusuarioSecurity, expand);
                     empty = false;
                 }
                 if (empty) {
-                    oMedicamentoBean.setId(0);
+                    oEspecialidadBean.setId(0);
                 }
             } catch (Exception ex) {
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
@@ -146,24 +146,24 @@ public class MedicamentoDao implements ViewDaoInterface<MedicamentoBean>, TableD
                 }
             }
         } else {
-            oMedicamentoBean.setId(0);
+            oEspecialidadBean.setId(0);
         }
-        return oMedicamentoBean;
+        return oEspecialidadBean;
     }
 
     @Override
-    public Integer set(MedicamentoBean oMedicamentoBean) throws Exception {
+    public Integer set(EspecialidadBean oEspecialidadBean) throws Exception {
         Integer iResult = null;
         try {
-            if (oMedicamentoBean.getId() == 0) {
+            if (oEspecialidadBean.getId() == 0) {
                 strSQL = "INSERT INTO " + strTable + " ";
-                strSQL += "(" + oMedicamentoBean.getColumns() + ")";
-                strSQL += "VALUES(" + oMedicamentoBean.getValues() + ")";
+                strSQL += "(" + oEspecialidadBean.getColumns() + ")";
+                strSQL += "VALUES(" + oEspecialidadBean.getValues() + ")";
                 iResult = oMysql.executeInsertSQL(strSQL);
             } else {
                 strSQL = "UPDATE " + strTable + " ";
-                strSQL += " SET " + oMedicamentoBean.toPairs();
-                strSQL += " WHERE id=" + oMedicamentoBean.getId();
+                strSQL += " SET " + oEspecialidadBean.toPairs();
+                strSQL += " WHERE id=" + oEspecialidadBean.getId();
                 iResult = oMysql.executeUpdateSQL(strSQL);
             }
         } catch (Exception ex) {
