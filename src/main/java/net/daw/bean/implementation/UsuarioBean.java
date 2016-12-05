@@ -33,6 +33,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import net.daw.bean.publicinterface.GenericBean;
+import net.daw.dao.implementation.MedicoDao;
 import net.daw.dao.implementation.TipousuarioDao;
 import net.daw.helper.statics.EncodingUtilHelper;
 
@@ -73,7 +74,7 @@ public class UsuarioBean implements GenericBean {
     @Expose(serialize = false)
     private Integer id_medico = 0;
     @Expose(deserialize = false)
-    private TipousuarioBean obj_medico = null;
+    private MedicoBean obj_medico = null;
 
     public UsuarioBean() {
     }
@@ -210,11 +211,11 @@ public class UsuarioBean implements GenericBean {
         this.id_medico = id_medico;
     }
 
-    public TipousuarioBean getObj_medico() {
+    public MedicoBean getObj_medico() {
         return obj_medico;
     }
 
-    public void setObj_medico(TipousuarioBean obj_medico) {
+    public void setObj_medico(MedicoBean obj_medico) {
         this.obj_medico = obj_medico;
     }
 

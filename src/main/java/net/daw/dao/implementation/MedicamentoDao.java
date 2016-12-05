@@ -32,7 +32,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.HashMap;
-import net.daw.bean.implementation.PuserBean;
+import net.daw.bean.implementation.PusuarioBean;
 import net.daw.bean.implementation.MedicamentoBean;
 import net.daw.dao.publicinterface.TableDaoInterface;
 import net.daw.dao.publicinterface.ViewDaoInterface;
@@ -47,13 +47,13 @@ public class MedicamentoDao implements ViewDaoInterface<MedicamentoBean>, TableD
     private String strSQL = "select * from medicamento where 1=1 ";
     private MysqlData oMysql = null;
     private Connection oConnection = null;
-    private PuserBean oPuserSecurity = null;
+    private PusuarioBean oPusuarioBeanSecurity = null;
 
-    public MedicamentoDao(Connection oPooledConnection, PuserBean oPuserBean_security) throws Exception {
+    public MedicamentoDao(Connection oPooledConnection, PusuarioBean oPuserBean_security) throws Exception {
         try {
             oConnection = oPooledConnection;
             oMysql = new MysqlData(oConnection);
-            oPuserSecurity = oPuserBean_security;
+            oPusuarioBeanSecurity = oPuserBean_security;
         } catch (Exception ex) {
             Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
             throw new Exception();
@@ -84,7 +84,7 @@ public class MedicamentoDao implements ViewDaoInterface<MedicamentoBean>, TableD
             oResultSet = oMysql.getAllSQL(strSQL);
             while (oResultSet.next()) {
                 MedicamentoBean oMedicamentoBean = new MedicamentoBean();
-                arrMedicamento.add(oMedicamentoBean.fill(oResultSet, oConnection, oPuserSecurity, expand));
+                arrMedicamento.add(oMedicamentoBean.fill(oResultSet, oConnection, oPusuarioBeanSecurity, expand));
             }
             if (oResultSet != null) {
                 oResultSet.close();
@@ -110,7 +110,7 @@ public class MedicamentoDao implements ViewDaoInterface<MedicamentoBean>, TableD
             oResultSet = oMysql.getAllSQL(strSQL);
             while (oResultSet.next()) {
                 MedicamentoBean oMedicamentoBean = new MedicamentoBean();
-                arrMedicamento.add(oMedicamentoBean.fill(oResultSet, oConnection, oPuserSecurity, expand));
+                arrMedicamento.add(oMedicamentoBean.fill(oResultSet, oConnection, oPusuarioBeanSecurity, expand));
             }
         } catch (Exception ex) {
             Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
@@ -131,7 +131,7 @@ public class MedicamentoDao implements ViewDaoInterface<MedicamentoBean>, TableD
                 oResultSet = oMysql.getAllSQL(strSQL + " And id= " + oMedicamentoBean.getId() + " ");
                 Boolean empty = true;
                 while (oResultSet.next()) {
-                    oMedicamentoBean = oMedicamentoBean.fill(oResultSet, oConnection, oPuserSecurity, expand);
+                    oMedicamentoBean = oMedicamentoBean.fill(oResultSet, oConnection, oPusuarioBeanSecurity, expand);
                     empty = false;
                 }
                 if (empty) {
