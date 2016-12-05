@@ -57,11 +57,11 @@ public class MedicamentoBean implements GenericBean {
         this.id = id;
     }
 
-    public String getDescripcion() {
+    public String getdescripcion() {
         return descripcion;
     }
 
-    public void setDescripcion(String descripcion) {
+    public void setdescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
 
@@ -69,7 +69,7 @@ public class MedicamentoBean implements GenericBean {
     public String getColumns() {
         String strColumns = "";
         strColumns += "id,";
-        strColumns += "descripcion";
+        strColumns += "descripcion,";
         return strColumns;
     }
 
@@ -92,7 +92,7 @@ public class MedicamentoBean implements GenericBean {
     @Override
     public MedicamentoBean fill(ResultSet oResultSet, Connection pooledConnection, PusuarioBean oPusuarioBean_security, Integer expand) throws SQLException, Exception {
         this.setId(oResultSet.getInt("id"));
-        this.setDescripcion(oResultSet.getString("descripcion"));
+        this.setdescripcion(oResultSet.getString("descripcion"));
         return this;
     }
 

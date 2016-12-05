@@ -1,23 +1,23 @@
 /*
  * Copyright (c) 2016 by Rafael Angel Aznar Aparici (rafaaznar at gmail dot com)
- * 
- * sisane-server: Helps you to develop easily AJAX web applications 
+ *
+ * sisane-server: Helps you to develop easily AJAX web applications
  *                   by copying and modifying this Java Server.
  *
  * Sources at https://github.com/rafaelaznar/sisane-server
- * 
+ *
  * sisane-server is distributed under the MIT License (MIT)
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -33,7 +33,6 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import net.daw.bean.publicinterface.GenericBean;
-import net.daw.dao.implementation.MedicoDao;
 import net.daw.dao.implementation.TipousuarioDao;
 import net.daw.helper.statics.EncodingUtilHelper;
 
@@ -73,8 +72,9 @@ public class UsuarioBean implements GenericBean {
 
     @Expose(serialize = false)
     private Integer id_medico = 0;
-//    @Expose(deserialize = false)
-//    private MedicoBean obj_medico = null;
+
+    /*@Expose(deserialize = false)
+    private MedicoBean obj_medico = null;*/
 
     public UsuarioBean() {
     }
@@ -211,14 +211,13 @@ public class UsuarioBean implements GenericBean {
         this.id_medico = id_medico;
     }
 
-//    public MedicoBean getObj_medico() {
-//        return obj_medico;
-//    }
-//
-//    public void setObj_medico(MedicoBean obj_medico) {
-//        this.obj_medico = obj_medico;
-//    }
+    /*public MedicoBean getObj_medico() {
+        return obj_medico;
+    }
 
+    public void setObj_medico(MedicoBean obj_medico) {
+        this.obj_medico = obj_medico;
+    }*/
     @Override
     public String getColumns() {
         String strColumns = "";
@@ -297,7 +296,7 @@ public class UsuarioBean implements GenericBean {
         this.setPais(oResultSet.getString("pais"));
         this.setEmail(oResultSet.getString("email"));
         this.setTelefono(oResultSet.getString("telefono"));
-        
+
         if (expand > 0) {
             TipousuarioBean oTipousuarioBean = new TipousuarioBean();
             TipousuarioDao oTipousuarioDao = new TipousuarioDao(pooledConnection, oPuserBean_security);
@@ -308,16 +307,15 @@ public class UsuarioBean implements GenericBean {
             this.setId_tipousuario(oResultSet.getInt("id_tipousuario"));
         }
 
-//        if (expand > 0) {
-//            MedicoBean oMedicoBean = new MedicoBean();
-//            MedicoDao oMedicoDao = new MedicoDao(pooledConnection, oPuserBean_security);
-//            oMedicoBean.setId(oResultSet.getInt("id_medico"));
-//            oMedicoBean = oMedicoDao.get(oMedicoBean, expand - 1);
-//            this.setObj_medico(oMedicoBean);
-//        } else {
-//            this.setId_medico(oResultSet.getInt("id_medico"));
-//        }
-
+        /*if (expand > 0) {
+            MedicoBean oMedicoBean = new MedicoBean();
+            MedicoDao oMedicoDao = new MedicoDao(pooledConnection, oPuserBean_security);
+            oMedicoBean.setId(oResultSet.getInt("id_medico"));
+            oMedicoBean = oMedicoDao.get(oMedicoBean, expand - 1);
+            this.setObj_medico(oMedicoBean);
+        } else {
+            this.setId_medico(oResultSet.getInt("id_medico"));
+        }*/
         return this;
     }
 }

@@ -1,30 +1,7 @@
 /*
- * Copyright (c) 2016 by Rafael Angel Aznar Aparici (rafaaznar at gmail dot com)
- * 
- * sisane-server: Helps you to develop easily AJAX web applications 
- *               by copying and modifying this Java Server.
- *
- * Sources at https://github.com/rafaelaznar/sisane-server
- * 
- * sisane-server is distributed under the MIT License (MIT)
- * 
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- * 
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- * 
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
  */
 package net.daw.dao.implementation;
 
@@ -32,7 +9,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.HashMap;
-import net.daw.bean.implementation.DiagnosticoBean;
+import net.daw.bean.implementation.DocumentoBean;
 import net.daw.bean.implementation.PusuarioBean;
 import net.daw.dao.publicinterface.TableDaoInterface;
 import net.daw.dao.publicinterface.ViewDaoInterface;
@@ -41,19 +18,23 @@ import net.daw.helper.statics.FilterBeanHelper;
 import net.daw.helper.statics.Log4j;
 import net.daw.helper.statics.SqlBuilder;
 
-public class DiagnosticoDao implements ViewDaoInterface<DiagnosticoBean>, TableDaoInterface<DiagnosticoBean> {
+/**
+ *
+ * @author a003153722p
+ */
+public class DocumentoDao implements ViewDaoInterface<DocumentoBean>, TableDaoInterface<DocumentoBean> {
 
-    private String strTable = "diagnostico";
-    private String strSQL = "select * from " + strTable + " where 1=1 ";
+    private String strTable = "documento";
+    private String strSQL = "select * from documento where 1=1 ";
     private MysqlData oMysql = null;
     private Connection oConnection = null;
     private PusuarioBean oPuserSecurity = null;
 
-    public DiagnosticoDao(Connection oPooledConnection, PusuarioBean oPusuarioBean_security) throws Exception {
+    public DocumentoDao(Connection oPooledConnection, PusuarioBean oPuserBean_security) throws Exception {
         try {
             oConnection = oPooledConnection;
             oMysql = new MysqlData(oConnection);
-            oPuserSecurity = oPusuarioBean_security;
+            oPuserSecurity = oPuserBean_security;
         } catch (Exception ex) {
             Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
             throw new Exception();
@@ -61,8 +42,8 @@ public class DiagnosticoDao implements ViewDaoInterface<DiagnosticoBean>, TableD
     }
 
     @Override
-    public Long getCount(ArrayList<FilterBeanHelper> hmFilter) throws Exception {
-        strSQL += SqlBuilder.buildSqlWhere(hmFilter);
+    public Long getCount(ArrayList<FilterBeanHelper> alFilter) throws Exception {
+        strSQL += SqlBuilder.buildSqlWhere(alFilter);
         Long pages = 0L;
         try {
             pages = oMysql.getCount(strSQL);
@@ -74,17 +55,17 @@ public class DiagnosticoDao implements ViewDaoInterface<DiagnosticoBean>, TableD
     }
 
     @Override
-    public ArrayList<DiagnosticoBean> getPage(int intRegsPerPag, int intPage, ArrayList<FilterBeanHelper> alFilter, HashMap<String, String> hmOrder, Integer expand) throws Exception {
+    public ArrayList<DocumentoBean> getPage(int intRegsPerPag, int intPage, ArrayList<FilterBeanHelper> alFilter, HashMap<String, String> hmOrder, Integer expand) throws Exception {
         strSQL += SqlBuilder.buildSqlWhere(alFilter);
         strSQL += SqlBuilder.buildSqlOrder(hmOrder);
         strSQL += SqlBuilder.buildSqlLimit(oMysql.getCount(strSQL), intRegsPerPag, intPage);
-        ArrayList<DiagnosticoBean> arrDiagnostico = new ArrayList<>();
+        ArrayList<DocumentoBean> arrDoc = new ArrayList<>();
         ResultSet oResultSet = null;
         try {
             oResultSet = oMysql.getAllSQL(strSQL);
             while (oResultSet.next()) {
-                DiagnosticoBean oDiagnosticoBean = new DiagnosticoBean();
-                arrDiagnostico.add(oDiagnosticoBean.fill(oResultSet, oConnection, oPuserSecurity, expand));
+                DocumentoBean oDocumentoBean = new DocumentoBean();
+                arrDoc.add((DocumentoBean) oDocumentoBean.fill(oResultSet, oConnection, oPuserSecurity, expand));
             }
             if (oResultSet != null) {
                 oResultSet.close();
@@ -97,20 +78,20 @@ public class DiagnosticoDao implements ViewDaoInterface<DiagnosticoBean>, TableD
                 oResultSet.close();
             }
         }
-        return arrDiagnostico;
+        return arrDoc;
     }
 
     @Override
-    public ArrayList<DiagnosticoBean> getAll(ArrayList<FilterBeanHelper> alFilter, HashMap<String, String> hmOrder, Integer expand) throws Exception {
+    public ArrayList<DocumentoBean> getAll(ArrayList<FilterBeanHelper> alFilter, HashMap<String, String> hmOrder, Integer expand) throws Exception {
         strSQL += SqlBuilder.buildSqlWhere(alFilter);
         strSQL += SqlBuilder.buildSqlOrder(hmOrder);
-        ArrayList<DiagnosticoBean> arrDiagnostico = new ArrayList<>();
+        ArrayList<DocumentoBean> arrDoc = new ArrayList<>();
         ResultSet oResultSet = null;
         try {
             oResultSet = oMysql.getAllSQL(strSQL);
             while (oResultSet.next()) {
-                DiagnosticoBean oDiagnosticoBean = new DiagnosticoBean();
-                arrDiagnostico.add(oDiagnosticoBean.fill(oResultSet, oConnection, oPuserSecurity, expand));
+                DocumentoBean oDocumentoBean = new DocumentoBean();
+                arrDoc.add((DocumentoBean) oDocumentoBean.fill(oResultSet, oConnection, oPuserSecurity, expand));
             }
         } catch (Exception ex) {
             Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
@@ -120,22 +101,22 @@ public class DiagnosticoDao implements ViewDaoInterface<DiagnosticoBean>, TableD
                 oResultSet.close();
             }
         }
-        return arrDiagnostico;
+        return arrDoc;
     }
 
     @Override
-    public DiagnosticoBean get(DiagnosticoBean oDiagnosticoBean, Integer expand) throws Exception {
-        if (oDiagnosticoBean.getId() > 0) {
+    public DocumentoBean get(DocumentoBean oBean, Integer expand) throws Exception {
+        if (oBean.getId() > 0) {
             ResultSet oResultSet = null;
             try {
-                oResultSet = oMysql.getAllSQL(strSQL + " And id= " + oDiagnosticoBean.getId() + " ");
+                oResultSet = oMysql.getAllSQL(strSQL + " And id= " + oBean.getId() + " ");
                 Boolean empty = true;
                 while (oResultSet.next()) {
-                    oDiagnosticoBean = oDiagnosticoBean.fill(oResultSet, oConnection, oPuserSecurity, expand);
+                    oBean = (DocumentoBean) oBean.fill(oResultSet, oConnection, oPuserSecurity, expand);
                     empty = false;
                 }
                 if (empty) {
-                    oDiagnosticoBean.setId(0);
+                    oBean.setId(0);
                 }
             } catch (Exception ex) {
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
@@ -146,24 +127,24 @@ public class DiagnosticoDao implements ViewDaoInterface<DiagnosticoBean>, TableD
                 }
             }
         } else {
-            oDiagnosticoBean.setId(0);
+            oBean.setId(0);
         }
-        return oDiagnosticoBean;
+        return oBean;
     }
 
     @Override
-    public Integer set(DiagnosticoBean oDiagnosticoBean) throws Exception {
+    public Integer set(DocumentoBean oBean) throws Exception {
         Integer iResult = null;
         try {
-            if (oDiagnosticoBean.getId() == 0) {
+            if (oBean.getId() == 0) {
                 strSQL = "INSERT INTO " + strTable + " ";
-                strSQL += "(" + oDiagnosticoBean.getColumns() + ")";
-                strSQL += "VALUES(" + oDiagnosticoBean.getValues() + ")";
+                strSQL += "(" + oBean.getColumns() + ")";
+                strSQL += "VALUES(" + oBean.getValues() + ")";
                 iResult = oMysql.executeInsertSQL(strSQL);
             } else {
                 strSQL = "UPDATE " + strTable + " ";
-                strSQL += " SET " + oDiagnosticoBean.toPairs();
-                strSQL += " WHERE id=" + oDiagnosticoBean.getId();
+                strSQL += " SET " + oBean.toPairs();
+                strSQL += " WHERE id=" + oBean.getId();
                 iResult = oMysql.executeUpdateSQL(strSQL);
             }
         } catch (Exception ex) {
@@ -184,5 +165,4 @@ public class DiagnosticoDao implements ViewDaoInterface<DiagnosticoBean>, TableD
         }
         return result;
     }
-
 }
