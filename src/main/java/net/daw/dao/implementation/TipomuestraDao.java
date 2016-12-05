@@ -24,8 +24,8 @@ import net.daw.helper.statics.SqlBuilder;
  */
 public class TipomuestraDao implements ViewDaoInterface<TipomuestraBean>, TableDaoInterface<TipomuestraBean>{
     
-    private String strTable = "tecnica";
-    private String strSQL = "select * from tecnica where 1=1 ";
+    private String strTable = "tipomuestra";
+    private String strSQL = "select * from tipomuestra where 1=1 ";
     private MysqlData oMysql = null;
     private Connection oConnection = null;
     private PusuarioBean oPusuarioSecurity = null;
