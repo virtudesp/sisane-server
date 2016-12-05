@@ -10,7 +10,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.HashMap;
 import net.daw.bean.implementation.ImportanciaBean;
-import net.daw.bean.implementation.PuserBean;
+import net.daw.bean.implementation.PusuarioBean;
 import net.daw.dao.publicinterface.TableDaoInterface;
 import net.daw.dao.publicinterface.ViewDaoInterface;
 import net.daw.data.implementation.MysqlData;
@@ -28,13 +28,13 @@ public class ImportanciaDao implements ViewDaoInterface<ImportanciaBean>, TableD
     private String strSQL = "select * from importancia where 1=1 ";
     private MysqlData oMysql = null;
     private Connection oConnection = null;
-    private PuserBean oPuserSecurity = null;
+    private PusuarioBean oPusuarioSecurity = null;
     
-    public ImportanciaDao(Connection oPooledConnection, PuserBean oPuserBean_security) throws Exception {
+    public ImportanciaDao(Connection oPooledConnection, PusuarioBean oPusuarioBean_security) throws Exception {
         try {
             oConnection = oPooledConnection;
             oMysql = new MysqlData(oConnection);
-            oPuserSecurity = oPuserBean_security;
+            oPusuarioSecurity = oPusuarioBean_security;
         } catch (Exception ex) {
             Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
             throw new Exception();
@@ -65,7 +65,7 @@ public class ImportanciaDao implements ViewDaoInterface<ImportanciaBean>, TableD
             oResultSet = oMysql.getAllSQL(strSQL);
             while (oResultSet.next()) {
                 ImportanciaBean oImportanciaBean = new ImportanciaBean();
-                arrImportancia.add(oImportanciaBean.fill(oResultSet, oConnection, oPuserSecurity, expand));
+                arrImportancia.add(oImportanciaBean.fill(oResultSet, oConnection, oPusuarioSecurity, expand));
             }
             if (oResultSet != null) {
                 oResultSet.close();
@@ -91,7 +91,7 @@ public class ImportanciaDao implements ViewDaoInterface<ImportanciaBean>, TableD
             oResultSet = oMysql.getAllSQL(strSQL);
             while (oResultSet.next()) {
                 ImportanciaBean oImportanciaBean = new ImportanciaBean();
-                arrImportancia.add(oImportanciaBean.fill(oResultSet, oConnection, oPuserSecurity, expand));
+                arrImportancia.add(oImportanciaBean.fill(oResultSet, oConnection, oPusuarioSecurity, expand));
             }
         } catch (Exception ex) {
             Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
@@ -112,7 +112,7 @@ public class ImportanciaDao implements ViewDaoInterface<ImportanciaBean>, TableD
                 oResultSet = oMysql.getAllSQL(strSQL + " And id= " + oImportanciaBean.getId() + " ");
                 Boolean empty = true;
                 while (oResultSet.next()) {
-                    oImportanciaBean = oImportanciaBean.fill(oResultSet, oConnection, oPuserSecurity, expand);
+                    oImportanciaBean = oImportanciaBean.fill(oResultSet, oConnection, oPusuarioSecurity, expand);
                     empty = false;
                 }
                 if (empty) {
