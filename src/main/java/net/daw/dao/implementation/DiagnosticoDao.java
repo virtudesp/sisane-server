@@ -47,15 +47,13 @@ public class DiagnosticoDao implements ViewDaoInterface<DiagnosticoBean>, TableD
     private String strSQL = "select * from " + strTable + " where 1=1 ";
     private MysqlData oMysql = null;
     private Connection oConnection = null;
-    private PusuarioBean oPusuarioSecurity = null;
-
+    private PusuarioBean oPuserSecurity = null;
 
     public DiagnosticoDao(Connection oPooledConnection, PusuarioBean oPusuarioBean_security) throws Exception {
         try {
             oConnection = oPooledConnection;
             oMysql = new MysqlData(oConnection);
-            oPusuarioSecurity = oPusuarioBean_security;
-
+            oPuserSecurity = oPusuarioBean_security;
         } catch (Exception ex) {
             Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
             throw new Exception();
@@ -86,7 +84,7 @@ public class DiagnosticoDao implements ViewDaoInterface<DiagnosticoBean>, TableD
             oResultSet = oMysql.getAllSQL(strSQL);
             while (oResultSet.next()) {
                 DiagnosticoBean oDiagnosticoBean = new DiagnosticoBean();
-                arrDiagnostico.add(oDiagnosticoBean.fill(oResultSet, oConnection, oPusuarioSecurity, expand));
+                arrDiagnostico.add(oDiagnosticoBean.fill(oResultSet, oConnection, oPuserSecurity, expand));
             }
             if (oResultSet != null) {
                 oResultSet.close();
@@ -112,7 +110,7 @@ public class DiagnosticoDao implements ViewDaoInterface<DiagnosticoBean>, TableD
             oResultSet = oMysql.getAllSQL(strSQL);
             while (oResultSet.next()) {
                 DiagnosticoBean oDiagnosticoBean = new DiagnosticoBean();
-                arrDiagnostico.add(oDiagnosticoBean.fill(oResultSet, oConnection, oPusuarioSecurity, expand));
+                arrDiagnostico.add(oDiagnosticoBean.fill(oResultSet, oConnection, oPuserSecurity, expand));
             }
         } catch (Exception ex) {
             Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
@@ -133,7 +131,7 @@ public class DiagnosticoDao implements ViewDaoInterface<DiagnosticoBean>, TableD
                 oResultSet = oMysql.getAllSQL(strSQL + " And id= " + oDiagnosticoBean.getId() + " ");
                 Boolean empty = true;
                 while (oResultSet.next()) {
-                    oDiagnosticoBean = oDiagnosticoBean.fill(oResultSet, oConnection, oPusuarioSecurity, expand);
+                    oDiagnosticoBean = oDiagnosticoBean.fill(oResultSet, oConnection, oPuserSecurity, expand);
                     empty = false;
                 }
                 if (empty) {
