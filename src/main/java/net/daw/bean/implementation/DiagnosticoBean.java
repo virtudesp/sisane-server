@@ -129,6 +129,7 @@ public class DiagnosticoBean implements GenericBean{
     }
 
     @Override
+
     public DiagnosticoBean fill(ResultSet oResultSet, Connection pooledConnection, PusuarioBean oPusuarioBean_security, Integer expand) throws SQLException, Exception {
         this.id = oResultSet.getInt("id");
         this.informe = oResultSet.getString("informe");
