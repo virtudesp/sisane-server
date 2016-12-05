@@ -26,10 +26,9 @@ public class DocumentoBean implements GenericBean {
     @Expose
     private Date fecha;
 
-    @Expose(serialize = false)
+    /*@Expose(serialize = false)
     private Integer id_tipodocumento = 0;
-
-    /*@Expose(deserialize = false)
+    @Expose(deserialize = false)
     private TipoDocumentoBean obj_tipodocumento = null;*/
     public Integer getId() {
         return id;
@@ -55,19 +54,18 @@ public class DocumentoBean implements GenericBean {
         this.fecha = fecha;
     }
 
+    /*public TipoDocumentoBean getObj_tipodocumento() {
+        return obj_tipodocumento;
+    }
+
+    public void setObj_tipodocumento(TipoDocumentoBean obj_tipodocumento) {
+        this.obj_tipodocumento = obj_tipodocumento;
+    }*/
     public DocumentoBean() {
     }
 
     public DocumentoBean(Integer id) {
         this.id = id;
-    }
-
-    public Integer getId_tipodocumento() {
-        return id_tipodocumento;
-    }
-
-    public void setId_tipodocumento(Integer id_tipodocumento) {
-        this.id_tipodocumento = id_tipodocumento;
     }
 
     @Override
@@ -98,11 +96,20 @@ public class DocumentoBean implements GenericBean {
     }
 
     @Override
-    public GenericBean fill(ResultSet oResultSet, Connection pooledConnection, PusuarioBean oPuserBean_security, Integer expand) throws SQLException, Exception {
+    public GenericBean fill(ResultSet oResultSet, Connection pooledConnection, PusuarioBean oPusuarioBean_security, Integer expand) throws SQLException, Exception {
         this.setId(oResultSet.getInt("id"));
         this.setDescripcion(oResultSet.getString("descripcion"));
         this.setFecha(oResultSet.getDate("fecha"));
-        this.setId_tipodocumento(oResultSet.getInt("id_documento"));
+
+        /*if (expand > 0) {
+            TipoDocumentoBean oTipoDocumentoBean = new TipoDocumentoBean();
+            TipoDocumentoDao oTipoDocumentoDao = new TipoDocumentoDao(pooledConnection, oPusuarioBean_security);
+            oTipoDocumentoBean.setId(oResultSet.getInt("id_medico"));
+            oTipoDocumentoBean = oTipoDocumentoDao.get(oTipoDocumentoBean, expand - 1);
+            this.setObj_tipodocumento("id_tipodocumento");
+        } else {
+            this.setId_tipodocumento(oResultSet.getInt("id_tipodocumento"));
+        }*/
         return this;
     }
 

@@ -13,6 +13,9 @@ import java.util.Date;
 import net.daw.bean.publicinterface.GenericBean;
 import net.daw.helper.statics.EncodingUtilHelper;
 
+/*import net.daw.dao.implementation.TipodiagnosticoDao;
+import net.daw.dao.implementation.EpisodioDao;*/
+
 /**
  *
  * @author a044887852v
@@ -34,6 +37,7 @@ public class DiagnosticoBean implements GenericBean {
 
     /*@Expose(deserialize = false)
     private TipodiagnosticoBean obj_tipodiagnostico;*/
+
     public DiagnosticoBean(int id) {
         this.id = id;
     }
@@ -91,8 +95,9 @@ public class DiagnosticoBean implements GenericBean {
 
     /*public TipodiagnosticoBean getObj_tipodiagnostico() {
         return obj_tipodiagnostico;
-    }*/
- /*public void setObj_tipodiagnostico(TipodiagnosticoBean obj_tipodiagnostico) {
+    }
+
+    public void setObj_tipodiagnostico(TipodiagnosticoBean obj_tipodiagnostico) {
         this.obj_tipodiagnostico = obj_tipodiagnostico;
     }*/
     @Override
@@ -125,23 +130,23 @@ public class DiagnosticoBean implements GenericBean {
     }
 
     @Override
-    public DiagnosticoBean fill(ResultSet oResultSet, Connection pooledConnection, PusuarioBean oPuserBean_security, Integer expand) throws SQLException, Exception {
+    public DiagnosticoBean fill(ResultSet oResultSet, Connection pooledConnection, PusuarioBean oPusuarioBean_security, Integer expand) throws SQLException, Exception {
         this.id = oResultSet.getInt("id");
         this.informe = oResultSet.getString("informe");
         this.fecha = oResultSet.getDate("fecha");
         this.id_episodio = oResultSet.getInt("id_episodio");
         this.id_tipodiagnostico = oResultSet.getInt("id_tipodiagnostico");
 
-        /*if (expand > 0) {
-            EpisodioDao eDao = new EpisodioDao(pooledConnection, oPuserBean_security);
+        /*if(expand > 0){
+            EpisodioDao eDao = new EpisodioDao(pooledConnection,oPusuarioBean_security);
             EpisodioBean eBean = new EpisodioBean();
             eBean.setId(this.id_episodio);
-            this.obj_episodio = eDao.get(eBean, expand - 1);
+            this.obj_episodio = eDao.get(eBean,expand - 1);
 
-            TipodiagnosticoDao tDao = new TipodiagnosticoDao(pooledConnection, oPuserBean_security);
+            TipodiagnosticoDao tDao = new TipodiagnosticoDao(pooledConnection,oPusuarioBean_security);
             TipodiagnosticoBean tBean = new TipodiagnosticoBean();
             tBean.setId(this.id_tipodiagnostico);
-            this.obj_tipodiagnostico = tDao.get(tBean, expand - 1);
+            this.obj_tipodiagnostico = tDao.get(tBean,expand - 1);
         }*/
         return this;
     }

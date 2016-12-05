@@ -1,23 +1,23 @@
 /*
  * Copyright (c) 2016 by Rafael Angel Aznar Aparici (rafaaznar at gmail dot com)
- *
- * sisane-server: Helps you to develop easily AJAX web applications
+ * 
+ * sisane-server: Helps you to develop easily AJAX web applications 
  *                   by copying and modifying this Java Server.
  *
  * Sources at https://github.com/rafaelaznar/sisane-server
- *
+ * 
  * sisane-server is distributed under the MIT License (MIT)
- *
+ * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- *
+ * 
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- *
+ * 
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -34,8 +34,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
-import net.daw.bean.implementation.MedicamentoBean;
 import net.daw.bean.implementation.PusuarioBean;
+import net.daw.bean.implementation.MedicamentoBean;
 import net.daw.bean.implementation.ReplyBean;
 import net.daw.connection.publicinterface.ConnectionInterface;
 import net.daw.dao.implementation.MedicamentoDao;
@@ -57,8 +57,8 @@ public class MedicamentoService implements TableServiceInterface, ViewServiceInt
     }
 
     private Boolean checkpermission(String strMethodName) throws Exception {
-        PusuarioBean oPuserBean = (PusuarioBean) oRequest.getSession().getAttribute("userBean");
-        if (oPuserBean != null) {
+        PusuarioBean oPusuarioBean = (PusuarioBean) oRequest.getSession().getAttribute("userBean");
+        if (oPusuarioBean != null) {
             return true;
         } else {
             return false;

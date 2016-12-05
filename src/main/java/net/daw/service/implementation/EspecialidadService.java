@@ -34,11 +34,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
-import net.daw.bean.implementation.DiagnosticoBean;
+import net.daw.bean.implementation.EspecialidadBean;
 import net.daw.bean.implementation.PusuarioBean;
 import net.daw.bean.implementation.ReplyBean;
 import net.daw.connection.publicinterface.ConnectionInterface;
-import net.daw.dao.implementation.DiagnosticoDao;
+import net.daw.dao.implementation.EspecialidadDao;
 import net.daw.helper.statics.AppConfigurationHelper;
 import static net.daw.helper.statics.AppConfigurationHelper.getSourceConnection;
 import net.daw.helper.statics.FilterBeanHelper;
@@ -48,11 +48,11 @@ import net.daw.helper.statics.ParameterCook;
 import net.daw.service.publicinterface.TableServiceInterface;
 import net.daw.service.publicinterface.ViewServiceInterface;
 
-public class DiagnosticoService implements TableServiceInterface, ViewServiceInterface {
+public class EspecialidadService implements TableServiceInterface, ViewServiceInterface {
 
     protected HttpServletRequest oRequest = null;
 
-    public DiagnosticoService(HttpServletRequest request) {
+    public EspecialidadService(HttpServletRequest request) {
         oRequest = request;
     }
 
@@ -75,8 +75,8 @@ public class DiagnosticoService implements TableServiceInterface, ViewServiceInt
             try {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
-                DiagnosticoDao oDiagnosticoDao = new DiagnosticoDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
-                data = JsonMessage.getJsonExpression(200, Long.toString(oDiagnosticoDao.getCount(alFilter)));
+                EspecialidadDao oEspecialidadDao = new EspecialidadDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
+                data = JsonMessage.getJsonExpression(200, Long.toString(oEspecialidadDao.getCount(alFilter)));
             } catch (Exception ex) {
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
                 throw new Exception();
@@ -104,11 +104,11 @@ public class DiagnosticoService implements TableServiceInterface, ViewServiceInt
             try {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
-                DiagnosticoDao oDiagnosticoDao = new DiagnosticoDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
-                DiagnosticoBean oDiagnosticoBean = new DiagnosticoBean(id);
-                oDiagnosticoBean = oDiagnosticoDao.get(oDiagnosticoBean, AppConfigurationHelper.getJsonMsgDepth());
+                EspecialidadDao oEspecialidadDao = new EspecialidadDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
+                EspecialidadBean oEspecialidadBean = new EspecialidadBean(id);
+                oEspecialidadBean = oEspecialidadDao.get(oEspecialidadBean, AppConfigurationHelper.getJsonMsgDepth());
                 Gson gson = AppConfigurationHelper.getGson();
-                data = JsonMessage.getJsonExpression(200, AppConfigurationHelper.getGson().toJson(oDiagnosticoBean));
+                data = JsonMessage.getJsonExpression(200, AppConfigurationHelper.getGson().toJson(oEspecialidadBean));
             } catch (Exception ex) {
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
                 throw new Exception();
@@ -137,8 +137,8 @@ public class DiagnosticoService implements TableServiceInterface, ViewServiceInt
             try {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
-                DiagnosticoDao oDiagnosticoDao = new DiagnosticoDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
-                ArrayList<DiagnosticoBean> arrBeans = oDiagnosticoDao.getAll(alFilter, hmOrder, AppConfigurationHelper.getJsonMsgDepth());
+                EspecialidadDao oEspecialidadDao = new EspecialidadDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
+                ArrayList<EspecialidadBean> arrBeans = oEspecialidadDao.getAll(alFilter, hmOrder, AppConfigurationHelper.getJsonMsgDepth());
                 data = JsonMessage.getJsonExpression(200, AppConfigurationHelper.getGson().toJson(arrBeans));
             } catch (Exception ex) {
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
@@ -170,8 +170,8 @@ public class DiagnosticoService implements TableServiceInterface, ViewServiceInt
             try {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
-                DiagnosticoDao oDiagnosticoDao = new DiagnosticoDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
-                List<DiagnosticoBean> arrBeans = oDiagnosticoDao.getPage(intRegsPerPag, intPage, alFilter, hmOrder, AppConfigurationHelper.getJsonMsgDepth());
+                EspecialidadDao oEspecialidadDao = new EspecialidadDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
+                List<EspecialidadBean> arrBeans = oEspecialidadDao.getPage(intRegsPerPag, intPage, alFilter, hmOrder, AppConfigurationHelper.getJsonMsgDepth());
                 data = JsonMessage.getJsonExpression(200, AppConfigurationHelper.getGson().toJson(arrBeans));
             } catch (Exception ex) {
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
@@ -201,8 +201,8 @@ public class DiagnosticoService implements TableServiceInterface, ViewServiceInt
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
                 oConnection.setAutoCommit(false);
-                DiagnosticoDao oDiagnosticoDao = new DiagnosticoDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
-                data = JsonMessage.getJsonExpression(200, (String) oDiagnosticoDao.remove(id).toString());
+                EspecialidadDao oEspecialidadDao = new EspecialidadDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
+                data = JsonMessage.getJsonExpression(200, (String) oEspecialidadDao.remove(id).toString());
                 oConnection.commit();
             } catch (Exception ex) {
                 if (oConnection != null) {
@@ -235,11 +235,11 @@ public class DiagnosticoService implements TableServiceInterface, ViewServiceInt
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
                 oConnection.setAutoCommit(false);
-                DiagnosticoDao oDiagnosticoDao = new DiagnosticoDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
-                DiagnosticoBean oDiagnosticoBean = new DiagnosticoBean();
-                oDiagnosticoBean = AppConfigurationHelper.getGson().fromJson(jason, oDiagnosticoBean.getClass());
-                if (oDiagnosticoBean != null) {
-                    Integer iResult = oDiagnosticoDao.set(oDiagnosticoBean);
+                EspecialidadDao oEspecialidadDao = new EspecialidadDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
+                EspecialidadBean oEspecialidadBean = new EspecialidadBean();
+                oEspecialidadBean = AppConfigurationHelper.getGson().fromJson(jason, oEspecialidadBean.getClass());
+                if (oEspecialidadBean != null) {
+                    Integer iResult = oEspecialidadDao.set(oEspecialidadBean);
                     if (iResult >= 1) {
                         oReplyBean.setCode(200);
                         oReplyBean.setJson(JsonMessage.getJsonExpression(200, iResult.toString()));
