@@ -45,8 +45,8 @@ import net.daw.helper.statics.SqlBuilder;
 
 public class UsuarioDao implements ViewDaoInterface<UsuarioBean>, TableDaoInterface<UsuarioBean> {
 
-    private String strTable = "user";
-    private String strSQL = "select * from user where 1=1 ";
+    private String strTable = "usuario";
+    private String strSQL = "select * from usuario where 1=1 ";
     private MysqlData oMysql = null;
     private Connection oConnection = null;
     private PusuarioBean oPuserSecurity = null;
