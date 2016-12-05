@@ -75,8 +75,8 @@ public class PusuarioBean implements GenericBean {
 
     @Expose(serialize = false)
     private Integer id_medico = 0;
-    @Expose(deserialize = false)
-    private MedicoBean obj_medico = null;
+//    @Expose(deserialize = false)
+//    private MedicoBean obj_medico = null;
 
     public PusuarioBean() {
     }
@@ -221,13 +221,13 @@ public class PusuarioBean implements GenericBean {
         this.id_medico = id_medico;
     }
 
-    public MedicoBean getObj_medico() {
-        return obj_medico;
-    }
-
-    public void setObj_medico(MedicoBean obj_medico) {
-        this.obj_medico = obj_medico;
-    }
+//    public MedicoBean getObj_medico() {
+//        return obj_medico;
+//    }
+//
+//    public void setObj_medico(MedicoBean obj_medico) {
+//        this.obj_medico = obj_medico;
+//    }
 
     @Override
     public String getColumns() {
@@ -321,15 +321,15 @@ public class PusuarioBean implements GenericBean {
             this.setId_tipousuario(oResultSet.getInt("id_tipousuario"));
         }
 
-        if (expand > 0) {
-            MedicoBean oMedicoBean = new MedicoBean();
-            MedicoDao oMedicoDao = new MedicoDao(pooledConnection, oPusuarioBean_security);
-            oMedicoBean.setId(oResultSet.getInt("id_medico"));
-            oMedicoBean = oMedicoDao.get(oMedicoBean, expand - 1);
-            this.setObj_medico(oMedicoBean);
-        } else {
-            this.setId_medico(oResultSet.getInt("id_medico"));
-        }
+//        if (expand > 0) {
+//            MedicoBean oMedicoBean = new MedicoBean();
+//            MedicoDao oMedicoDao = new MedicoDao(pooledConnection, oPusuarioBean_security);
+//            oMedicoBean.setId(oResultSet.getInt("id_medico"));
+//            oMedicoBean = oMedicoDao.get(oMedicoBean, expand - 1);
+//            this.setObj_medico(oMedicoBean);
+//        } else {
+//            this.setId_medico(oResultSet.getInt("id_medico"));
+//        }
 
         return this;
     }
