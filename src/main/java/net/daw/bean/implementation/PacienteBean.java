@@ -11,6 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
 import net.daw.bean.publicinterface.GenericBean;
+import net.daw.dao.implementation.ServicioDao;
 import net.daw.dao.implementation.TipousuarioDao;
 import net.daw.helper.statics.EncodingUtilHelper;
 import static net.daw.helper.statics.MetaEnum.FieldType.Date;
@@ -51,7 +52,7 @@ public class PacienteBean implements GenericBean {
     @Expose(serialize = false)
     private Integer id_servicio = 0;
     @Expose(deserialize = false)
-    private TipousuarioBean obj_servicio = null;
+    private ServicioBean obj_servicio = null;
 
     @Expose
     private Date fecha_salida;
@@ -284,14 +285,14 @@ public class PacienteBean implements GenericBean {
     /**
      * @return the obj_servicio
      */
-    public TipousuarioBean getObj_servicio() {
+    public ServicioBean getObj_servicio() {
         return obj_servicio;
     }
 
     /**
      * @param obj_servicio the obj_servicio to set
      */
-    public void setObj_servicio(TipousuarioBean obj_servicio) {
+    public void setObj_servicio(ServicioBean obj_servicio) {
         this.obj_servicio = obj_servicio;
     }
 
@@ -351,7 +352,7 @@ public class PacienteBean implements GenericBean {
         strColumns += EncodingUtilHelper.quotate(getEmail()) + ",";
         strColumns += EncodingUtilHelper.quotate(getTelefono()) + ",";
         strColumns += getId_servicio() + ",";
-        strColumns += getFecha_salida();
+        strColumns += EncodingUtilHelper.stringifyAndQuotate(fecha_salida);
         return strColumns;
     }
 
@@ -373,7 +374,7 @@ public class PacienteBean implements GenericBean {
         strPairs += "email=" + EncodingUtilHelper.quotate(getEmail()) + ",";
         strPairs += "telefono=" + EncodingUtilHelper.quotate(getTelefono()) + ",";
         strPairs += "id_servicio=" + getId_servicio() + ",";
-        strPairs += "fecha_salida=" + getFecha_salida();
+        strPairs += "fecha_salida=" + EncodingUtilHelper.stringifyAndQuotate(fecha_salida);
         return strPairs;
     }
 
@@ -394,7 +395,7 @@ public class PacienteBean implements GenericBean {
         this.setEmail(oResultSet.getString("email"));
         this.setTelefono(oResultSet.getString("telefono"));
         
-        /*if (expand > 0) {
+        if (expand > 0) {
             ServicioBean oServicioBean = new ServicioBean();
             ServicioDao oServicioDao = new ServicioDao(pooledConnection, oPuserBean_security);
             oServicioBean.setId(oResultSet.getInt("id_servicio"));
@@ -402,7 +403,7 @@ public class PacienteBean implements GenericBean {
             this.setObj_servicio(oServicioBean);
         } else {
             this.setId_servicio(oResultSet.getInt("id_servicio"));
-        }*/
+        }
 
         this.setFecha_salida(oResultSet.getDate("fecha_salida"));
         
