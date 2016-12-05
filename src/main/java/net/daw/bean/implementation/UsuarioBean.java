@@ -1,23 +1,23 @@
 /*
  * Copyright (c) 2016 by Rafael Angel Aznar Aparici (rafaaznar at gmail dot com)
- * 
- * sisane-server: Helps you to develop easily AJAX web applications 
+ *
+ * sisane-server: Helps you to develop easily AJAX web applications
  *                   by copying and modifying this Java Server.
  *
  * Sources at https://github.com/rafaelaznar/sisane-server
- * 
+ *
  * sisane-server is distributed under the MIT License (MIT)
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -296,7 +296,7 @@ public class UsuarioBean implements GenericBean {
         this.setPais(oResultSet.getString("country"));
         this.setEmail(oResultSet.getString("email"));
         this.setTelefono(oResultSet.getString("phone"));
-        
+
         if (expand > 0) {
             TipousuarioBean oTipousuarioBean = new TipousuarioBean();
             TipousuarioDao oTipousuarioDao = new TipousuarioDao(pooledConnection, oPuserBean_security);
@@ -307,7 +307,7 @@ public class UsuarioBean implements GenericBean {
             this.setId_tipousuario(oResultSet.getInt("id_tipousuario"));
         }
 
-        if (expand > 0) {
+        /*if (expand > 0) {
             MedicoBean oMedicoBean = new MedicoBean();
             MedicoDao oMedicoDao = new MedicoDao(pooledConnection, oPuserBean_security);
             oMedicoBean.setId(oResultSet.getInt("id_medico"));
@@ -315,8 +315,7 @@ public class UsuarioBean implements GenericBean {
             this.setObj_medico(oMedicoBean);
         } else {
             this.setId_medico(oResultSet.getInt("id_medico"));
-        }
-
+        }*/
         return this;
     }
 }

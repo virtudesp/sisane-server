@@ -98,7 +98,7 @@ public class DocumentoBean implements GenericBean {
     }
 
     @Override
-    public GenericBean fill(ResultSet oResultSet, Connection pooledConnection, PuserBean oPuserBean_security, Integer expand) throws SQLException, Exception {
+    public GenericBean fill(ResultSet oResultSet, Connection pooledConnection, PusuarioBean oPuserBean_security, Integer expand) throws SQLException, Exception {
         this.setId(oResultSet.getInt("id"));
         this.setDescripcion(oResultSet.getString("descripcion"));
         this.setFecha(oResultSet.getDate("fecha"));
