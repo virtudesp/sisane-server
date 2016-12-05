@@ -79,13 +79,13 @@ public class DiagnosticoBean implements GenericBean{
         return obj_episodio;
     }
 
-    public void setObj_episodio(EpisodioBean obj_episodio) {
-        this.obj_episodio = obj_episodio;
-    }
+//    public int getId_tipodiagnostico() {
+//        return id_tipodiagnostico;
+//    }
 
-    public int getId_tipodiagnostico() {
-        return id_tipodiagnostico;
-    }
+//    public void setId_tipodiagnostico(int id_tipodiagnostico) {
+//        this.id_tipodiagnostico = id_tipodiagnostico;
+//    }
 
     public void setId_tipodiagnostico(int id_tipodiagnostico) {
         this.id_tipodiagnostico = id_tipodiagnostico;
@@ -134,19 +134,6 @@ public class DiagnosticoBean implements GenericBean{
         this.informe = oResultSet.getString("informe");
         this.fecha = oResultSet.getDate("fecha");
         this.id_episodio = oResultSet.getInt("id_episodio");
-        /*this.id_tipodiagnostico = oResultSet.getInt("id_tipodiagnostico");
-        
-        if(expand > 0){
-            EpisodioDao eDao = new EpisodioDao(pooledConnection,oPusuarioBean_security);
-            EpisodioBean eBean = new EpisodioBean();
-            eBean.setId(this.id_episodio);
-            this.obj_episodio = eDao.get(eBean,expand - 1);
-            
-            TipodiagnosticoDao tDao = new TipodiagnosticoDao(pooledConnection,oPusuarioBean_security);
-            TipodiagnosticoBean tBean = new TipodiagnosticoBean();
-            tBean.setId(this.id_tipodiagnostico);
-            this.obj_tipodiagnostico = tDao.get(tBean,expand - 1);
-        }*/
         
         return this;        
     }
