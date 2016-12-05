@@ -31,9 +31,10 @@ public class DiagnosticoBean implements GenericBean{
     /*@Expose(deserialize = false)
     private EpisodioBean obj_episodio;
     @Expose(serialize = false)
-    private int id_tipodiagnostico;*/
-//    @Expose(deserialize = false)
-//    private TipodiagnosticoBean obj_tipodiagnostico;
+    private int id_tipodiagnostico;
+    @Expose(deserialize = false)
+    private TipodiagnosticoBean obj_tipodiagnostico;*/
+    
     
     public DiagnosticoBean(int id){
         this.id = id;
@@ -74,6 +75,9 @@ public class DiagnosticoBean implements GenericBean{
         this.id_episodio = id_episodio;
     }
 
+    /*public EpisodioBean getObj_episodio() {
+        return obj_episodio;
+    }
 
 //    public int getId_tipodiagnostico() {
 //        return id_tipodiagnostico;
@@ -83,14 +87,18 @@ public class DiagnosticoBean implements GenericBean{
 //        this.id_tipodiagnostico = id_tipodiagnostico;
 //    }
 
-//    public EpisodioBean getObj_episodio() {
-//        return obj_episodio;
-//    }
-//
-//    public void setObj_episodio(EpisodioBean obj_episodio) {
-//        this.obj_episodio = obj_episodio;
-//    }
-    
+    public void setId_tipodiagnostico(int id_tipodiagnostico) {
+        this.id_tipodiagnostico = id_tipodiagnostico;
+    }
+
+    public TipodiagnosticoBean getObj_tipodiagnostico() {
+        return obj_tipodiagnostico;
+    }
+
+    public void setObj_tipodiagnostico(TipodiagnosticoBean obj_tipodiagnostico) {
+        this.obj_tipodiagnostico = obj_tipodiagnostico;
+    }*/
+        
     @Override
     public String getColumns() {
         return "id,informe,fecha,id_episodio,id_tipodiagnostico";
@@ -126,16 +134,7 @@ public class DiagnosticoBean implements GenericBean{
         this.informe = oResultSet.getString("informe");
         this.fecha = oResultSet.getDate("fecha");
         this.id_episodio = oResultSet.getInt("id_episodio");
-//        this.id_tipodiagnostico = oResultSet.getInt("id_tipodiagnostico");
         
-//    public TipodiagnosticoBean getObj_tipodiagnostico() {
-//        return obj_tipodiagnostico;
-//    }
-//
-//    public void setObj_tipodiagnostico(TipodiagnosticoBean obj_tipodiagnostico) {
-//        this.obj_tipodiagnostico = obj_tipodiagnostico;
-//    }
-
         return this;        
     }
     
