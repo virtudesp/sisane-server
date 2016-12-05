@@ -49,11 +49,13 @@ public class DiagnosticoDao implements ViewDaoInterface<DiagnosticoBean>, TableD
     private Connection oConnection = null;
     private PusuarioBean oPusuarioSecurity = null;
 
+
     public DiagnosticoDao(Connection oPooledConnection, PusuarioBean oPusuarioBean_security) throws Exception {
         try {
             oConnection = oPooledConnection;
             oMysql = new MysqlData(oConnection);
             oPusuarioSecurity = oPusuarioBean_security;
+
         } catch (Exception ex) {
             Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
             throw new Exception();

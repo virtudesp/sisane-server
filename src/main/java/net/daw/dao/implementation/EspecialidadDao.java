@@ -32,8 +32,8 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.HashMap;
+import net.daw.bean.implementation.EspecialidadBean;
 import net.daw.bean.implementation.PusuarioBean;
-import net.daw.bean.implementation.TipousuarioBean;
 import net.daw.dao.publicinterface.TableDaoInterface;
 import net.daw.dao.publicinterface.ViewDaoInterface;
 import net.daw.data.implementation.MysqlData;
@@ -41,19 +41,19 @@ import net.daw.helper.statics.FilterBeanHelper;
 import net.daw.helper.statics.Log4j;
 import net.daw.helper.statics.SqlBuilder;
 
-public class TipousuarioDao implements ViewDaoInterface<TipousuarioBean>, TableDaoInterface<TipousuarioBean> {
+public class EspecialidadDao implements ViewDaoInterface<EspecialidadBean>, TableDaoInterface<EspecialidadBean> {
 
-    private String strTable = "tipousuario";
-    private String strSQL = "select * from tipousuario where 1=1 ";
+    private String strTable = "especialidad";
+    private String strSQL = "select * from especialidad where 1=1 ";
     private MysqlData oMysql = null;
     private Connection oConnection = null;
-    private PusuarioBean oPuserSecurity = null;
+    private PusuarioBean oPusuarioSecurity = null;
 
-    public TipousuarioDao(Connection oPooledConnection, PusuarioBean oPuserBean_security) throws Exception {
+    public EspecialidadDao(Connection oPooledConnection, PusuarioBean oPusuarioBean_security) throws Exception {
         try {
             oConnection = oPooledConnection;
             oMysql = new MysqlData(oConnection);
-            oPuserSecurity = oPuserBean_security;
+            oPusuarioSecurity = oPusuarioBean_security;
         } catch (Exception ex) {
             Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
             throw new Exception();
@@ -74,17 +74,17 @@ public class TipousuarioDao implements ViewDaoInterface<TipousuarioBean>, TableD
     }
 
     @Override
-    public ArrayList<TipousuarioBean> getPage(int intRegsPerPag, int intPage, ArrayList<FilterBeanHelper> alFilter, HashMap<String, String> hmOrder, Integer expand) throws Exception {
+    public ArrayList<EspecialidadBean> getPage(int intRegsPerPag, int intPage, ArrayList<FilterBeanHelper> alFilter, HashMap<String, String> hmOrder, Integer expand) throws Exception {
         strSQL += SqlBuilder.buildSqlWhere(alFilter);
         strSQL += SqlBuilder.buildSqlOrder(hmOrder);
         strSQL += SqlBuilder.buildSqlLimit(oMysql.getCount(strSQL), intRegsPerPag, intPage);
-        ArrayList<TipousuarioBean> arrUsertype = new ArrayList<>();
+        ArrayList<EspecialidadBean> arrEspecialidad = new ArrayList<>();
         ResultSet oResultSet = null;
         try {
             oResultSet = oMysql.getAllSQL(strSQL);
             while (oResultSet.next()) {
-                TipousuarioBean oUsertypeBean = new TipousuarioBean();
-                arrUsertype.add(oUsertypeBean.fill(oResultSet, oConnection, oPuserSecurity, expand));
+                EspecialidadBean oEspecialidadBean = new EspecialidadBean();
+                arrEspecialidad.add(oEspecialidadBean.fill(oResultSet, oConnection, oPusuarioSecurity, expand));
             }
             if (oResultSet != null) {
                 oResultSet.close();
@@ -97,20 +97,20 @@ public class TipousuarioDao implements ViewDaoInterface<TipousuarioBean>, TableD
                 oResultSet.close();
             }
         }
-        return arrUsertype;
+        return arrEspecialidad;
     }
 
     @Override
-    public ArrayList<TipousuarioBean> getAll(ArrayList<FilterBeanHelper> alFilter, HashMap<String, String> hmOrder, Integer expand) throws Exception {
+    public ArrayList<EspecialidadBean> getAll(ArrayList<FilterBeanHelper> alFilter, HashMap<String, String> hmOrder, Integer expand) throws Exception {
         strSQL += SqlBuilder.buildSqlWhere(alFilter);
         strSQL += SqlBuilder.buildSqlOrder(hmOrder);
-        ArrayList<TipousuarioBean> arrUsertype = new ArrayList<>();
+        ArrayList<EspecialidadBean> arrEspecialidad = new ArrayList<>();
         ResultSet oResultSet = null;
         try {
             oResultSet = oMysql.getAllSQL(strSQL);
             while (oResultSet.next()) {
-                TipousuarioBean oUsertypeBean = new TipousuarioBean();
-                arrUsertype.add(oUsertypeBean.fill(oResultSet, oConnection, oPuserSecurity, expand));
+                EspecialidadBean oEspecialidadBean = new EspecialidadBean();
+                arrEspecialidad.add(oEspecialidadBean.fill(oResultSet, oConnection, oPusuarioSecurity, expand));
             }
         } catch (Exception ex) {
             Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
@@ -120,22 +120,22 @@ public class TipousuarioDao implements ViewDaoInterface<TipousuarioBean>, TableD
                 oResultSet.close();
             }
         }
-        return arrUsertype;
+        return arrEspecialidad;
     }
 
     @Override
-    public TipousuarioBean get(TipousuarioBean oUsertypeBean, Integer expand) throws Exception {
-        if (oUsertypeBean.getId() > 0) {
+    public EspecialidadBean get(EspecialidadBean oEspecialidadBean, Integer expand) throws Exception {
+        if (oEspecialidadBean.getId() > 0) {
             ResultSet oResultSet = null;
             try {
-                oResultSet = oMysql.getAllSQL(strSQL + " And id= " + oUsertypeBean.getId() + " ");
+                oResultSet = oMysql.getAllSQL(strSQL + " And id= " + oEspecialidadBean.getId() + " ");
                 Boolean empty = true;
                 while (oResultSet.next()) {
-                    oUsertypeBean = oUsertypeBean.fill(oResultSet, oConnection, oPuserSecurity, expand);
+                    oEspecialidadBean = oEspecialidadBean.fill(oResultSet, oConnection, oPusuarioSecurity, expand);
                     empty = false;
                 }
                 if (empty) {
-                    oUsertypeBean.setId(0);
+                    oEspecialidadBean.setId(0);
                 }
             } catch (Exception ex) {
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
@@ -146,24 +146,24 @@ public class TipousuarioDao implements ViewDaoInterface<TipousuarioBean>, TableD
                 }
             }
         } else {
-            oUsertypeBean.setId(0);
+            oEspecialidadBean.setId(0);
         }
-        return oUsertypeBean;
+        return oEspecialidadBean;
     }
 
     @Override
-    public Integer set(TipousuarioBean oUsertypeBean) throws Exception {
+    public Integer set(EspecialidadBean oEspecialidadBean) throws Exception {
         Integer iResult = null;
         try {
-            if (oUsertypeBean.getId() == 0) {
+            if (oEspecialidadBean.getId() == 0) {
                 strSQL = "INSERT INTO " + strTable + " ";
-                strSQL += "(" + oUsertypeBean.getColumns() + ")";
-                strSQL += "VALUES(" + oUsertypeBean.getValues() + ")";
+                strSQL += "(" + oEspecialidadBean.getColumns() + ")";
+                strSQL += "VALUES(" + oEspecialidadBean.getValues() + ")";
                 iResult = oMysql.executeInsertSQL(strSQL);
             } else {
                 strSQL = "UPDATE " + strTable + " ";
-                strSQL += " SET " + oUsertypeBean.toPairs();
-                strSQL += " WHERE id=" + oUsertypeBean.getId();
+                strSQL += " SET " + oEspecialidadBean.toPairs();
+                strSQL += " WHERE id=" + oEspecialidadBean.getId();
                 iResult = oMysql.executeUpdateSQL(strSQL);
             }
         } catch (Exception ex) {

@@ -73,7 +73,7 @@ public class UsuarioBean implements GenericBean {
     @Expose(serialize = false)
     private Integer id_medico = 0;
     @Expose(deserialize = false)
-    private TipousuarioBean obj_medico = null;
+    private MedicoBean obj_medico = null;
 
     public UsuarioBean() {
     }
@@ -210,11 +210,11 @@ public class UsuarioBean implements GenericBean {
         this.id_medico = id_medico;
     }
 
-    public TipousuarioBean getObj_medico() {
+    public MedicoBean getObj_medico() {
         return obj_medico;
     }
 
-    public void setObj_medico(TipousuarioBean obj_medico) {
+    public void setObj_medico(MedicoBean obj_medico) {
         this.obj_medico = obj_medico;
     }
 
@@ -289,13 +289,13 @@ public class UsuarioBean implements GenericBean {
         this.setPrimerapellido(oResultSet.getString("primerapellido"));
         this.setSegundoapellido(oResultSet.getString("segundoapellido"));
         this.setLogin(oResultSet.getString("login"));
-        this.setDireccion(oResultSet.getString("address"));
-        this.setCiudad(oResultSet.getString("city"));
-        this.setCodigopostal(oResultSet.getString("zip"));
-        this.setProvincia(oResultSet.getString("state"));
-        this.setPais(oResultSet.getString("country"));
+        this.setDireccion(oResultSet.getString("direccion"));
+        this.setCiudad(oResultSet.getString("ciudad"));
+        this.setCodigopostal(oResultSet.getString("codigopostal"));
+        this.setProvincia(oResultSet.getString("provincia"));
+        this.setPais(oResultSet.getString("pais"));
         this.setEmail(oResultSet.getString("email"));
-        this.setTelefono(oResultSet.getString("phone"));
+        this.setTelefono(oResultSet.getString("telefono"));
         
         if (expand > 0) {
             TipousuarioBean oTipousuarioBean = new TipousuarioBean();

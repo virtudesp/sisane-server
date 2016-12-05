@@ -129,7 +129,8 @@ public class DiagnosticoBean implements GenericBean{
     }
 
     @Override
-    public DiagnosticoBean fill(ResultSet oResultSet, Connection pooledConnection, PusuarioBean oPuserBean_security, Integer expand) throws SQLException, Exception {
+
+    public DiagnosticoBean fill(ResultSet oResultSet, Connection pooledConnection, PusuarioBean oPusuarioBean_security, Integer expand) throws SQLException, Exception {
         this.id = oResultSet.getInt("id");
         this.informe = oResultSet.getString("informe");
         this.fecha = oResultSet.getDate("fecha");
@@ -137,12 +138,12 @@ public class DiagnosticoBean implements GenericBean{
         this.id_tipodiagnostico = oResultSet.getInt("id_tipodiagnostico");
         
         if(expand > 0){
-            EpisodioDao eDao = new EpisodioDao(pooledConnection,oPuserBean_security);
+            EpisodioDao eDao = new EpisodioDao(pooledConnection,oPusuarioBean_security);
             EpisodioBean eBean = new EpisodioBean();
             eBean.setId(this.id_episodio);
             this.obj_episodio = eDao.get(eBean,expand - 1);
             
-            TipodiagnosticoDao tDao = new TipodiagnosticoDao(pooledConnection,oPuserBean_security);
+            TipodiagnosticoDao tDao = new TipodiagnosticoDao(pooledConnection,oPusuarioBean_security);
             TipodiagnosticoBean tBean = new TipodiagnosticoBean();
             tBean.setId(this.id_tipodiagnostico);
             this.obj_tipodiagnostico = tDao.get(tBean,expand - 1);
