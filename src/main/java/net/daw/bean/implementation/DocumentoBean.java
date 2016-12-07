@@ -56,20 +56,20 @@ public class DocumentoBean implements GenericBean {
         this.fecha = fecha;
     }
 
-    public TipodocumentoBean getObj_tipodocumento() {
-        return obj_tipodocumento;
-    }
-
-    public void setObj_tipodocumento(TipodocumentoBean obj_tipodocumento) {
-        this.obj_tipodocumento = obj_tipodocumento;
-    }
-
     public Integer getId_tipodocumento() {
         return id_tipodocumento;
     }
 
     public void setId_tipodocumento(Integer id_tipodocumento) {
         this.id_tipodocumento = id_tipodocumento;
+    }
+
+    public TipodocumentoBean getObj_tipodocumento() {
+        return obj_tipodocumento;
+    }
+
+    public void setObj_tipodocumento(TipodocumentoBean obj_tipodocumento) {
+        this.obj_tipodocumento = obj_tipodocumento;
     }
 
     public DocumentoBean() {
@@ -121,8 +121,6 @@ public class DocumentoBean implements GenericBean {
         } else {
             this.setId_tipodocumento(oResultSet.getInt("id_tipodocumento"));
         }
-
         return this;
     }
-
 }

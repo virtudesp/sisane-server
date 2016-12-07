@@ -35,10 +35,10 @@ import java.util.HashMap;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import net.daw.bean.implementation.PusuarioBean;
-import net.daw.bean.implementation.MedicamentoBean;
+import net.daw.bean.implementation.ServicioBean;
 import net.daw.bean.implementation.ReplyBean;
 import net.daw.connection.publicinterface.ConnectionInterface;
-import net.daw.dao.implementation.MedicamentoDao;
+import net.daw.dao.implementation.ServicioDao;
 import net.daw.helper.statics.AppConfigurationHelper;
 import static net.daw.helper.statics.AppConfigurationHelper.getSourceConnection;
 import net.daw.helper.statics.FilterBeanHelper;
@@ -75,8 +75,8 @@ public class ServicioService implements TableServiceInterface, ViewServiceInterf
             try {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
-                MedicamentoDao oMedicamentoDao = new MedicamentoDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
-                data = JsonMessage.getJsonExpression(200, Long.toString(oMedicamentoDao.getCount(alFilter)));
+                ServicioDao oServicioDao = new ServicioDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
+                data = JsonMessage.getJsonExpression(200, Long.toString(oServicioDao.getCount(alFilter)));
             } catch (Exception ex) {
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
                 throw new Exception();
@@ -104,11 +104,11 @@ public class ServicioService implements TableServiceInterface, ViewServiceInterf
             try {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
-                MedicamentoDao oMedicamentoDao = new MedicamentoDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
-                MedicamentoBean oMedicamentoBean = new MedicamentoBean(id);
-                oMedicamentoBean = oMedicamentoDao.get(oMedicamentoBean, AppConfigurationHelper.getJsonMsgDepth());
+                ServicioDao oServicioDao = new ServicioDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
+                ServicioBean oServicioBean = new ServicioBean(id);
+                oServicioBean = oServicioDao.get(oServicioBean, AppConfigurationHelper.getJsonMsgDepth());
                 Gson gson = AppConfigurationHelper.getGson();
-                data = JsonMessage.getJsonExpression(200, AppConfigurationHelper.getGson().toJson(oMedicamentoBean));
+                data = JsonMessage.getJsonExpression(200, AppConfigurationHelper.getGson().toJson(oServicioBean));
             } catch (Exception ex) {
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
                 throw new Exception();
@@ -137,8 +137,8 @@ public class ServicioService implements TableServiceInterface, ViewServiceInterf
             try {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
-                MedicamentoDao oMedicamentoDao = new MedicamentoDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
-                ArrayList<MedicamentoBean> arrBeans = oMedicamentoDao.getAll(alFilter, hmOrder, AppConfigurationHelper.getJsonMsgDepth());
+                ServicioDao oServicioDao = new ServicioDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
+                ArrayList<ServicioBean> arrBeans = oServicioDao.getAll(alFilter, hmOrder, AppConfigurationHelper.getJsonMsgDepth());
                 data = JsonMessage.getJsonExpression(200, AppConfigurationHelper.getGson().toJson(arrBeans));
             } catch (Exception ex) {
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
@@ -170,8 +170,8 @@ public class ServicioService implements TableServiceInterface, ViewServiceInterf
             try {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
-                MedicamentoDao oMedicamentoDao = new MedicamentoDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
-                List<MedicamentoBean> arrBeans = oMedicamentoDao.getPage(intRegsPerPag, intPage, alFilter, hmOrder, AppConfigurationHelper.getJsonMsgDepth());
+                ServicioDao oServicioDao = new ServicioDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
+                List<ServicioBean> arrBeans = oServicioDao.getPage(intRegsPerPag, intPage, alFilter, hmOrder, AppConfigurationHelper.getJsonMsgDepth());
                 data = JsonMessage.getJsonExpression(200, AppConfigurationHelper.getGson().toJson(arrBeans));
             } catch (Exception ex) {
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
@@ -201,8 +201,8 @@ public class ServicioService implements TableServiceInterface, ViewServiceInterf
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
                 oConnection.setAutoCommit(false);
-                MedicamentoDao oMedicamentoDao = new MedicamentoDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
-                data = JsonMessage.getJsonExpression(200, (String) oMedicamentoDao.remove(id).toString());
+                ServicioDao oServicioDao = new ServicioDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
+                data = JsonMessage.getJsonExpression(200, (String) oServicioDao.remove(id).toString());
                 oConnection.commit();
             } catch (Exception ex) {
                 if (oConnection != null) {
@@ -235,11 +235,11 @@ public class ServicioService implements TableServiceInterface, ViewServiceInterf
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
                 oConnection.setAutoCommit(false);
-                MedicamentoDao oMedicamentoDao = new MedicamentoDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
-                MedicamentoBean oMedicamentoBean = new MedicamentoBean();
-                oMedicamentoBean = AppConfigurationHelper.getGson().fromJson(jason, oMedicamentoBean.getClass());
-                if (oMedicamentoBean != null) {
-                    Integer iResult = oMedicamentoDao.set(oMedicamentoBean);
+                ServicioDao oServicioDao = new ServicioDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
+                ServicioBean oServicioBean = new ServicioBean();
+                oServicioBean = AppConfigurationHelper.getGson().fromJson(jason, oServicioBean.getClass());
+                if (oServicioBean != null) {
+                    Integer iResult = oServicioDao.set(oServicioBean);
                     if (iResult >= 1) {
                         oReplyBean.setCode(200);
                         oReplyBean.setJson(JsonMessage.getJsonExpression(200, iResult.toString()));

@@ -34,12 +34,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
-import net.daw.bean.implementation.AnticoagulanteBean;
 import net.daw.bean.implementation.PusuarioBean;
+import net.daw.bean.implementation.TipoBean;
 import net.daw.bean.implementation.ReplyBean;
-import net.daw.bean.implementation.UsuarioBean;
 import net.daw.connection.publicinterface.ConnectionInterface;
-import net.daw.dao.implementation.AnticoagulanteDao;
+import net.daw.dao.implementation.TipoDao;
 import net.daw.helper.statics.AppConfigurationHelper;
 import static net.daw.helper.statics.AppConfigurationHelper.getSourceConnection;
 import net.daw.helper.statics.FilterBeanHelper;
@@ -49,17 +48,17 @@ import net.daw.helper.statics.ParameterCook;
 import net.daw.service.publicinterface.TableServiceInterface;
 import net.daw.service.publicinterface.ViewServiceInterface;
 
-public class AnticoagulanteService implements TableServiceInterface, ViewServiceInterface {
+public class TipoService implements TableServiceInterface, ViewServiceInterface {
 
     protected HttpServletRequest oRequest = null;
 
-    public AnticoagulanteService(HttpServletRequest request) {
+    public TipoService(HttpServletRequest request) {
         oRequest = request;
     }
 
     private Boolean checkpermission(String strMethodName) throws Exception {
-        PusuarioBean oPusuarioBean = (PusuarioBean) oRequest.getSession().getAttribute("userBean");
-        if (oPusuarioBean != null) {
+        PusuarioBean oPuserBean = (PusuarioBean) oRequest.getSession().getAttribute("userBean");
+        if (oPuserBean != null) {
             return true;
         } else {
             return false;
@@ -76,8 +75,8 @@ public class AnticoagulanteService implements TableServiceInterface, ViewService
             try {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
-                AnticoagulanteDao oAnticoagulanteDao = new AnticoagulanteDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
-                data = JsonMessage.getJsonExpression(200, Long.toString(oAnticoagulanteDao.getCount(alFilter)));
+                TipoDao oTipoDao = new TipoDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
+                data = JsonMessage.getJsonExpression(200, Long.toString(oTipoDao.getCount(alFilter)));
             } catch (Exception ex) {
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
                 throw new Exception();
@@ -105,11 +104,10 @@ public class AnticoagulanteService implements TableServiceInterface, ViewService
             try {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
-                AnticoagulanteDao oAnticoagulanteDao = new AnticoagulanteDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
-                AnticoagulanteBean oAnticoagulanteBean = new AnticoagulanteBean(id);
-                oAnticoagulanteBean = oAnticoagulanteDao.get(oAnticoagulanteBean, AppConfigurationHelper.getJsonMsgDepth());
-                Gson gson = AppConfigurationHelper.getGson();
-                data = JsonMessage.getJsonExpression(200, AppConfigurationHelper.getGson().toJson(oAnticoagulanteBean));
+                TipoDao oTipoDao = new TipoDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
+                TipoBean oTipoBean = new TipoBean(id);
+                oTipoBean = oTipoDao.get(oTipoBean, AppConfigurationHelper.getJsonMsgDepth());
+                data = JsonMessage.getJsonExpression(200, AppConfigurationHelper.getGson().toJson(oTipoBean));
             } catch (Exception ex) {
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
                 throw new Exception();
@@ -138,8 +136,8 @@ public class AnticoagulanteService implements TableServiceInterface, ViewService
             try {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
-                AnticoagulanteDao oAnticoagulanteDao = new AnticoagulanteDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
-                ArrayList<AnticoagulanteBean> arrBeans = oAnticoagulanteDao.getAll(alFilter, hmOrder, AppConfigurationHelper.getJsonMsgDepth());
+                TipoDao oTipoDao = new TipoDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
+                ArrayList<TipoBean> arrBeans = oTipoDao.getAll(alFilter, hmOrder, AppConfigurationHelper.getJsonMsgDepth());
                 data = JsonMessage.getJsonExpression(200, AppConfigurationHelper.getGson().toJson(arrBeans));
             } catch (Exception ex) {
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
@@ -171,8 +169,8 @@ public class AnticoagulanteService implements TableServiceInterface, ViewService
             try {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
-                AnticoagulanteDao oAnticoagulanteDao = new AnticoagulanteDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
-                List<AnticoagulanteBean> arrBeans = oAnticoagulanteDao.getPage(intRegsPerPag, intPage, alFilter, hmOrder, AppConfigurationHelper.getJsonMsgDepth());
+                TipoDao oTipoDao = new TipoDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
+                List<TipoBean> arrBeans = oTipoDao.getPage(intRegsPerPag, intPage, alFilter, hmOrder, AppConfigurationHelper.getJsonMsgDepth());
                 data = JsonMessage.getJsonExpression(200, AppConfigurationHelper.getGson().toJson(arrBeans));
             } catch (Exception ex) {
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
@@ -202,8 +200,8 @@ public class AnticoagulanteService implements TableServiceInterface, ViewService
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
                 oConnection.setAutoCommit(false);
-                AnticoagulanteDao oAnticoagulanteDao = new AnticoagulanteDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
-                data = JsonMessage.getJsonExpression(200, (String) oAnticoagulanteDao.remove(id).toString());
+                TipoDao oTipoDao = new TipoDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
+                data = JsonMessage.getJsonExpression(200, (String) oTipoDao.remove(id).toString());
                 oConnection.commit();
             } catch (Exception ex) {
                 if (oConnection != null) {
@@ -236,11 +234,11 @@ public class AnticoagulanteService implements TableServiceInterface, ViewService
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
                 oConnection.setAutoCommit(false);
-                AnticoagulanteDao oAnticoagulanteDao = new AnticoagulanteDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
-                AnticoagulanteBean oAnticoagulanteBean = new AnticoagulanteBean();
-                oAnticoagulanteBean = AppConfigurationHelper.getGson().fromJson(jason, oAnticoagulanteBean.getClass());
-                if (oAnticoagulanteBean != null) {
-                    Integer iResult = oAnticoagulanteDao.set(oAnticoagulanteBean);
+                TipoDao oTipoDao = new TipoDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
+                TipoBean oTipoBean = new TipoBean();
+                oTipoBean = AppConfigurationHelper.getGson().fromJson(jason, oTipoBean.getClass());
+                if (oTipoBean != null) {
+                    Integer iResult = oTipoDao.set(oTipoBean);
                     if (iResult >= 1) {
                         oReplyBean.setCode(200);
                         oReplyBean.setJson(JsonMessage.getJsonExpression(200, iResult.toString()));
