@@ -13,11 +13,8 @@ import java.util.Date;
 import net.daw.bean.publicinterface.GenericBean;
 import net.daw.dao.implementation.AnticoagulanteDao;
 import net.daw.dao.implementation.PrioridadDao;
-import net.daw.dao.implementation.ServicioDao;
 import net.daw.dao.implementation.TipomuestraDao;
-import net.daw.dao.implementation.TipousuarioDao;
 import net.daw.helper.statics.EncodingUtilHelper;
-import static net.daw.helper.statics.MetaEnum.FieldType.Date;
 
 public class AnaliticaBean implements GenericBean {
 
@@ -231,7 +228,7 @@ public class AnaliticaBean implements GenericBean {
         this.setFecha_peticion(oResultSet.getDate("fecha_peticion"));
         this.setImporte(oResultSet.getDouble("importe"));
         
-        
+
         if (expand > 0) {
             TipomuestraBean oTipomuestraBean = new TipomuestraBean();
             TipomuestraDao oTipomuestraDao = new TipomuestraDao(pooledConnection, oPuserBean_security);
@@ -240,8 +237,8 @@ public class AnaliticaBean implements GenericBean {
             this.setObj_tipomuestra(oTipomuestraBean);
         } else {
             this.setId_tipomuestra(oResultSet.getInt("id_tipomuestra"));
-        }
-       
+        }    
+
         if (expand > 0) {
             AnticoagulanteBean oAnticoagulanteBean = new AnticoagulanteBean();
             AnticoagulanteDao oAnticoagulanteDao = new AnticoagulanteDao(pooledConnection, oPuserBean_security);
@@ -251,7 +248,7 @@ public class AnaliticaBean implements GenericBean {
         } else {
             this.setId_anticoagulante(oResultSet.getInt("id_anticoagulante"));
         }
-     
+
      if (expand > 0) {
             TipomuestraBean oTipomuestraBean = new TipomuestraBean();
             TipomuestraDao oTipomuestraDao = new TipomuestraDao(pooledConnection, oPuserBean_security);
@@ -281,7 +278,7 @@ public class AnaliticaBean implements GenericBean {
         } else {
             this.setId_prioridad(oResultSet.getInt("id_prioridad"));
         }
-     
+
         return this;
     }
 

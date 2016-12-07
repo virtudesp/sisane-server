@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import java.util.Date;
 import net.daw.bean.publicinterface.GenericBean;
 import net.daw.helper.statics.EncodingUtilHelper;
+import net.daw.dao.implementation.TipodocumentoDao;
 
 /**
  *
@@ -26,10 +27,10 @@ public class DocumentoBean implements GenericBean {
     @Expose
     private Date fecha;
 
-    /*@Expose(serialize = false)
+    @Expose(serialize = false)
     private Integer id_tipodocumento = 0;
     @Expose(deserialize = false)
-    private TipoDocumentoBean obj_tipodocumento = null;*/
+    private TipodocumentoBean obj_tipodocumento = null;
     public Integer getId() {
         return id;
     }
@@ -53,14 +54,22 @@ public class DocumentoBean implements GenericBean {
     public void setFecha(Date fecha) {
         this.fecha = fecha;
     }
+    public Integer getId_tipodocumento() {
+        return id_tipodocumento;
+    }
 
-    /*public TipoDocumentoBean getObj_tipodocumento() {
+    public void setId_tipodocumento(Integer id_tipodocumento) {
+        this.id_tipodocumento = id_tipodocumento;
+    }
+
+
+    public TipodocumentoBean getObj_tipodocumento() {
         return obj_tipodocumento;
     }
 
-    public void setObj_tipodocumento(TipoDocumentoBean obj_tipodocumento) {
+    public void setObj_tipodocumento(TipodocumentoBean obj_tipodocumento) {
         this.obj_tipodocumento = obj_tipodocumento;
-    }*/
+    }
     public DocumentoBean() {
     }
 
@@ -101,15 +110,15 @@ public class DocumentoBean implements GenericBean {
         this.setDescripcion(oResultSet.getString("descripcion"));
         this.setFecha(oResultSet.getDate("fecha"));
 
-        /*if (expand > 0) {
-            TipoDocumentoBean oTipoDocumentoBean = new TipoDocumentoBean();
-            TipoDocumentoDao oTipoDocumentoDao = new TipoDocumentoDao(pooledConnection, oPusuarioBean_security);
-            oTipoDocumentoBean.setId(oResultSet.getInt("id_medico"));
-            oTipoDocumentoBean = oTipoDocumentoDao.get(oTipoDocumentoBean, expand - 1);
-            this.setObj_tipodocumento("id_tipodocumento");
+        if (expand > 0) {
+            TipodocumentoBean oTipodocumentoBean = new TipodocumentoBean();
+            TipodocumentoDao oTipoDocumentoDao = new TipodocumentoDao(pooledConnection, oPusuarioBean_security);
+            oTipodocumentoBean.setId(oResultSet.getInt("id_tipodocumento"));
+            oTipodocumentoBean = oTipoDocumentoDao.get(oTipodocumentoBean, expand - 1);
+            this.setObj_tipodocumento(oTipodocumentoBean);
         } else {
             this.setId_tipodocumento(oResultSet.getInt("id_tipodocumento"));
-        }*/
+        }
         return this;
     }
 

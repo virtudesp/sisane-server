@@ -16,7 +16,7 @@ import net.daw.dao.implementation.ImportanciaDao;
 import net.daw.dao.implementation.MedicoDao;
 import net.daw.dao.implementation.PacienteDao;
 import net.daw.dao.implementation.ServicioDao;
-import net.daw.dao.implementation.PrioridadDao;
+//import net.daw.dao.implementation.PrioridadDao;
 import net.daw.dao.implementation.TipoDao;
 import net.daw.helper.statics.EncodingUtilHelper;
 
@@ -58,10 +58,10 @@ public class EpisodioBean implements GenericBean {
     private int id_episodio;
     @Expose(deserialize = false)
     private EpisodioBean obj_episodio;
-    @Expose(serialize = false)
-    private int id_prioridad;
-    @Expose(deserialize = false)
-    private PrioridadBean obj_prioridad;
+//    @Expose(serialize = false)
+//    private int id_prioridad;
+//    @Expose(deserialize = false)
+//    private PrioridadBean obj_prioridad;
 
     public EpisodioBean(int id) {
         this.id = id;
@@ -197,21 +197,21 @@ public class EpisodioBean implements GenericBean {
         this.obj_episodio = obj_episodio;
     }
 
-    public int getId_prioridad() {
-        return id_prioridad;
-    }
-
-    public void setId_prioridad(int id_prioridad) {
-        this.id_prioridad = id_prioridad;
-    }
-
-    public PrioridadBean getObj_prioridad() {
-        return obj_prioridad;
-    }
-
-    public void setObj_prioridad(PrioridadBean obj_prioridad) {
-        this.obj_prioridad = obj_prioridad;
-    }
+//    public int getId_prioridad() {
+//        return id_prioridad;
+//    }
+//
+//    public void setId_prioridad(int id_prioridad) {
+//        this.id_prioridad = id_prioridad;
+//    }
+//
+//    public PrioridadBean getObj_prioridad() {
+//        return obj_prioridad;
+//    }
+//
+//    public void setObj_prioridad(PrioridadBean obj_prioridad) {
+//        this.obj_prioridad = obj_prioridad;
+//    }
     @Override
     public String getColumns() {
         return "id,fecha,informe,id_importancia,id_servicio,id_tipo,importe,id_paciente,id_medico,id_episodio,id_prioridad";
@@ -230,7 +230,7 @@ public class EpisodioBean implements GenericBean {
         values += id_paciente + ",";
         values += id_medico + ",";
         values += id_episodio;
-        values += id_prioridad;
+//        values += id_prioridad;
         return values;
     }
 
@@ -247,7 +247,7 @@ public class EpisodioBean implements GenericBean {
         pairs += "id_paciente = " + id_paciente + ",";
         pairs += "id_medico = " + id_medico + ",";
         pairs += "id_episodio = " + id_episodio;
-        pairs += "id_prioridad = " + id_prioridad;
+//        pairs += "id_prioridad = " + id_prioridad;
         return pairs;
     }
 
@@ -263,7 +263,7 @@ public class EpisodioBean implements GenericBean {
         this.id_paciente = oResultSet.getInt("id_paciente");
         this.id_medico = oResultSet.getInt("id_medico");
         this.id_episodio = oResultSet.getInt("id_episodio");
-        this.id_prioridad = oResultSet.getInt("id_prioridad");
+//        this.id_prioridad = oResultSet.getInt("id_prioridad");
 
         if(expand > 0){
             this.obj_importancia = new ImportanciaDao(pooledConnection,oPuserBean_security).get(new ImportanciaBean(this.id_importancia), expand - 1);
@@ -272,7 +272,7 @@ public class EpisodioBean implements GenericBean {
             this.obj_paciente = new PacienteDao(pooledConnection,oPuserBean_security).get(new PacienteBean(this.id_paciente), expand - 1);
             this.obj_medico = new MedicoDao(pooledConnection,oPuserBean_security).get(new MedicoBean(this.id_medico), expand - 1);
             this.obj_episodio = new EpisodioDao(pooledConnection,oPuserBean_security).get(new EpisodioBean(this.id_episodio), expand - 1);
-            this.obj_prioridad = new PrioridadDao(pooledConnection,oPuserBean_security).get(new PrioridadBean(this.id_prioridad), expand - 1);
+            //this.obj_prioridad = new PrioridadDao(pooledConnection,oPuserBean_security).get(new PrioridadBean(this.id_prioridad), expand - 1);
         }
         return this;
     }

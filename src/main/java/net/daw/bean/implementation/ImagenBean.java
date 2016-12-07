@@ -46,11 +46,11 @@ public class ImagenBean implements GenericBean {
     private Date fecha;
     @Expose
     private String ubicacion;
-    /*@Expose(serialize = false)
+    @Expose(serialize = false)
     private Integer id_tecnica = 0;
     @Expose(deserialize = false)
     private TecnicaBean obj_tecnica;
-*/
+
     public ImagenBean(){}
     
     public ImagenBean(Integer id){
@@ -88,7 +88,7 @@ public class ImagenBean implements GenericBean {
     public void setUbicacion(String ubicacion) {
         this.ubicacion = ubicacion;
     }
-/*
+
     public Integer getId_tecnica() {
         return id_tecnica;
     }
@@ -104,7 +104,7 @@ public class ImagenBean implements GenericBean {
     public void setObj_tecnica(TecnicaBean obj_tecnica) {
         this.obj_tecnica = obj_tecnica;
     }
-*/
+
     
 
     @Override
@@ -136,7 +136,7 @@ public class ImagenBean implements GenericBean {
         strColumns += "descripcion=" + EncodingUtilHelper.quotate(descripcion) + ",";
         strColumns += "price=" + EncodingUtilHelper.stringifyAndQuotate(fecha) + ",";
         strColumns += "descripcion=" + EncodingUtilHelper.quotate(ubicacion) + ",";
-        //strColumns += "id_tecnica=" + id_tecnica;
+        strColumns += "id_tecnica=" + id_tecnica;
         return strColumns;
     }
 
@@ -146,17 +146,17 @@ public class ImagenBean implements GenericBean {
         this.setDescripcion(oResultSet.getString("descripcion"));
         this.setFecha(oResultSet.getDate("fecha"));
         this.setUbicacion(oResultSet.getString("ubicacion"));
-/*
-        if (expand > 0) {
-            ProducttypeBean oProducttypeBean = new ProducttypeBean();
-            ProducttypeDao oProducttypeDao = new ProducttypeDao(pooledConnection, oPuserBean_security);
-            oProducttypeBean.setId(oResultSet.getInt("id_producttype"));
-            oProducttypeBean = oProducttypeDao.get(oProducttypeBean, expand - 1);
-            this.setObj_producttype(oProducttypeBean);
-        } else {
-            this.setId_producttype(oResultSet.getInt("id_producttype"));
-        }
-*/
+//
+//        if (expand > 0) {
+//            ProducttypeBean oProducttypeBean = new ProducttypeBean();
+//            ProducttypeDao oProducttypeDao = new ProducttypeDao(pooledConnection, oPuserBean_security);
+//            oProducttypeBean.setId(oResultSet.getInt("id_producttype"));
+//            oProducttypeBean = oProducttypeDao.get(oProducttypeBean, expand - 1);
+//            this.setObj_producttype(oProducttypeBean);
+//        } else {
+//            this.setId_producttype(oResultSet.getInt("id_producttype"));
+//        }
+
         return this;
     }
 
