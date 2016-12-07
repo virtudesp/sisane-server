@@ -38,7 +38,7 @@ public class TipodocumentoService implements TableServiceInterface, ViewServiceI
     }
 
     private Boolean checkpermission(String strMethodName) throws Exception {
-        PusuarioBean oPusuarioBean = (PusuarioBean) oRequest.getSession().getAttribute("usuarioBean");
+        PusuarioBean oPusuarioBean = (PusuarioBean) oRequest.getSession().getAttribute("userBean");
         if (oPusuarioBean != null) {
             return true;
         } else {
