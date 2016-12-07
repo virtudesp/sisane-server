@@ -28,7 +28,7 @@
  */
 package net.daw.service.implementation;
 
-import com.google.gson.Gson;
+
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -107,7 +107,6 @@ public class DiagnosticoService implements TableServiceInterface, ViewServiceInt
                 DiagnosticoDao oDiagnosticoDao = new DiagnosticoDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
                 DiagnosticoBean oDiagnosticoBean = new DiagnosticoBean(id);
                 oDiagnosticoBean = oDiagnosticoDao.get(oDiagnosticoBean, AppConfigurationHelper.getJsonMsgDepth());
-                Gson gson = AppConfigurationHelper.getGson();
                 data = JsonMessage.getJsonExpression(200, AppConfigurationHelper.getGson().toJson(oDiagnosticoBean));
             } catch (Exception ex) {
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
