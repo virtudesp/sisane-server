@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import java.util.Date;
 import net.daw.bean.publicinterface.GenericBean;
 import net.daw.dao.implementation.AnticoagulanteDao;
+import net.daw.dao.implementation.PrioridadDao;
 import net.daw.dao.implementation.ServicioDao;
 import net.daw.dao.implementation.TipomuestraDao;
 import net.daw.dao.implementation.TipousuarioDao;
@@ -42,7 +43,7 @@ public class AnaliticaBean implements GenericBean {
     @Expose(serialize = false)
     private Integer id_prioridad = 0;
     @Expose(deserialize = false)
-    private ServicioBean obj_prioridad = null;
+    private PrioridadBean obj_prioridad = null;
 
     public AnaliticaBean() {
     }
@@ -174,14 +175,14 @@ public class AnaliticaBean implements GenericBean {
     /**
      * @return the obj_prioridad
      */
-    public ServicioBean getObj_prioridad() {
+    public PrioridadBean getObj_prioridad() {
         return obj_prioridad;
     }
 
     /**
      * @param obj_prioridad the obj_prioridad to set
      */
-    public void setObj_prioridad(ServicioBean obj_prioridad) {
+    public void setObj_prioridad(PrioridadBean obj_prioridad) {
         this.obj_prioridad = obj_prioridad;
     }
 
@@ -270,16 +271,16 @@ public class AnaliticaBean implements GenericBean {
         } else {
             this.setId_anticoagulante(oResultSet.getInt("id_anticoagulante"));
         }
-        /*
+        
         if (expand > 0) {
             PrioridadBean oPrioridadBean = new PrioridadBean();
             PrioridadDao oPrioridadDao = new PrioridadDao(pooledConnection, oPuserBean_security);
             oPrioridadBean.setId(oResultSet.getInt("id_prioridad"));
-            oPrioridadBean = oPrioridadDao.get(oAnticoagulanteBean, expand - 1);
+            oPrioridadBean = oPrioridadDao.get(oPrioridadBean, expand - 1);
             this.setObj_prioridad(oPrioridadBean);
         } else {
             this.setId_prioridad(oResultSet.getInt("id_prioridad"));
-        }*/
+        }
      
         return this;
     }
