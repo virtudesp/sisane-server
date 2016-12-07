@@ -26,6 +26,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+//http://localhost:8081/sisane-server/json?ob=user&op=login&user=rafael&pass=79063E8037FFF16D297A1FE65136F1251126CDDB2CC9870ECF8D653835538E85
 package net.daw.bean.implementation;
 
 import com.google.gson.annotations.Expose;
@@ -33,22 +34,21 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import net.daw.bean.publicinterface.GenericBean;
+import net.daw.dao.implementation.ZonaDao;
 import net.daw.helper.statics.EncodingUtilHelper;
 
-public class ProducttypeBean implements GenericBean {
+public class ZonaBean implements GenericBean {
 
     @Expose
     private Integer id = 0;
     @Expose
-    private String description;
-    @Expose
-    private Double discount;
+    private String descripcion;
 
-    public ProducttypeBean(Integer id) {
-        this.id = id;
+    public ZonaBean() {
     }
 
-    public ProducttypeBean() {
+    public ZonaBean(Integer id) {
+        this.id = id;
     }
 
     public Integer getId() {
@@ -59,28 +59,19 @@ public class ProducttypeBean implements GenericBean {
         this.id = id;
     }
 
-    public String getDescription() {
-        return description;
+    public String getDescripcion() {
+        return descripcion;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Double getDiscount() {
-        return discount;
-    }
-
-    public void setDiscount(Double discount) {
-        this.discount = discount;
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
     }
 
     @Override
     public String getColumns() {
         String strColumns = "";
         strColumns += "id,";
-        strColumns += "description,";
-        strColumns += "discount";
+        strColumns += "descripcion";
         return strColumns;
     }
 
@@ -88,25 +79,24 @@ public class ProducttypeBean implements GenericBean {
     public String getValues() {
         String strColumns = "";
         strColumns += id + ",";
-        strColumns += EncodingUtilHelper.quotate(description) + ",";
-        strColumns += discount;
+        strColumns += EncodingUtilHelper.quotate(descripcion);
         return strColumns;
     }
 
     @Override
     public String toPairs() {
+
         String strPairs = "";
         //strPairs += "id=" + id + ",";
-        strPairs += "description=" + EncodingUtilHelper.quotate(description) + ",";
-        strPairs += "discount=" + discount;
+        strPairs += "descripcion=" + EncodingUtilHelper.quotate(descripcion);
+//        strPairs += "password=" + EncodingUtilHelper.quotate(password) + ",";
         return strPairs;
     }
 
     @Override
-    public ProducttypeBean fill(ResultSet oResultSet, Connection pooledConnection, PuserBean oPuserBean_security, Integer expand) throws SQLException, Exception {
+    public ZonaBean fill(ResultSet oResultSet, Connection pooledConnection, PuserBean oPuserBean_security, Integer expand) throws SQLException, Exception {
         this.setId(oResultSet.getInt("id"));
-        this.setDescription(oResultSet.getString("description"));
-        this.setDiscount(oResultSet.getDouble("discount"));
+        this.setDescripcion(oResultSet.getString("descripcion"));      
         return this;
     }
 

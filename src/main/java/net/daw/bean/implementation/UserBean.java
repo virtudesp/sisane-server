@@ -26,6 +26,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+//http://localhost:8081/sisane-server/json?ob=user&op=login&user=rafael&pass=79063E8037FFF16D297A1FE65136F1251126CDDB2CC9870ECF8D653835538E85
 package net.daw.bean.implementation;
 
 import com.google.gson.annotations.Expose;
