@@ -33,21 +33,21 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import net.daw.bean.publicinterface.GenericBean;
-//import net.daw.dao.implementation.ZonaDao;
-//import net.daw.dao.implementation.ImagenDao;
+import net.daw.dao.implementation.ZonaDao;
+import net.daw.dao.implementation.ImagenDao;
 
 public class ZonaimagenBean implements GenericBean {
 
     @Expose
     private Integer id = 0;
-    //@Expose(serialize = false)
-    //private Integer id_zona = 0;
-   // @Expose(deserialize = false)
-   // private ZonaBean obj_zona;
-    //@Expose(serialize = false)
-   // private Integer id_imagen = 0;
-   // @Expose(deserialize = false)
-   // private ImagenBean obj_imagen;
+    @Expose(serialize = false)
+    private Integer id_zona = 0;
+   @Expose(deserialize = false)
+   private ZonaBean obj_zona;
+    @Expose(serialize = false)
+    private Integer id_imagen = 0;
+    @Expose(deserialize = false)
+    private ImagenBean obj_imagen;
 
     public ZonaimagenBean() {
     }
@@ -64,7 +64,7 @@ public class ZonaimagenBean implements GenericBean {
         this.id = id;
     }
 
-    /*public Integer getId_zona() {
+    public Integer getId_zona() {
         return id_zona;
     }
 
@@ -94,23 +94,23 @@ public class ZonaimagenBean implements GenericBean {
 
     public void setObj_imagen(ImagenBean obj_imagen) {
         this.obj_imagen = obj_imagen;
-    }*/
+    }
 
     @Override
     public String getColumns() {
         String strColumns = "";
-        strColumns += "id"/* + ","*/;
-       /*strColumns += "id_zona,";
-        strColumns += "id_imagen";*/
+        strColumns += "id" + ",";
+       strColumns += "id_zona,";
+        strColumns += "id_imagen";
         return strColumns;
     }
 
     @Override
     public String getValues() {
         String strColumns = "";
-        strColumns += id/* + ","*/;
-//        strColumns += id_zona + ",";
-//        strColumns += id_imagen;
+        strColumns += id + ",";
+        strColumns += id_zona + ",";
+        strColumns += id_imagen;
         return strColumns;
     }
 
@@ -118,17 +118,17 @@ public class ZonaimagenBean implements GenericBean {
     public String toPairs() {
         String strColumns = "";
         //strColumns +="id="; id + ";
- //       strColumns += "id_zona=" + id_zona + ",";
- //       strColumns += "id_imagen=" + id_imagen;
+        strColumns += "id_zona=" + id_zona + ",";
+        strColumns += "id_imagen=" + id_imagen;
         return strColumns;
     }
 
     @Override
     public ZonaimagenBean fill(ResultSet oResultSet, Connection pooledConnection, PusuarioBean oUsuarioBean_security, Integer expand) throws SQLException, Exception {
         this.setId(oResultSet.getInt("id"));
-        /*if (expand > 0) {
+        if (expand > 0) {
             ZonaBean oZonaBean = new ZonaBean();
-            ZonaDao oZonaDao = new ZonaDao(pooledConnection, oImagenBean_security);
+            ZonaDao oZonaDao = new ZonaDao(pooledConnection, oUsuarioBean_security);
             oZonaBean.setId(oResultSet.getInt("id_zona"));
             oZonaBean = oZonaDao.get(oZonaBean, expand - 1);
             this.setObj_zona(oZonaBean);
@@ -137,13 +137,13 @@ public class ZonaimagenBean implements GenericBean {
         }
         if (expand > 0) {
             ImagenBean oImagenBean = new ImagenBean();
-            ImagenDao oImagenDao = new ImagenDao(pooledConnection, oImagenBean_security);
+            ImagenDao oImagenDao = new ImagenDao(pooledConnection, oUsuarioBean_security);
             oImagenBean.setId(oResultSet.getInt("id_imagen"));
             oImagenBean = oImagenDao.get(oImagenBean, expand - 1);
             this.setObj_imagen(oImagenBean);
         } else {
             this.setId_imagen(oResultSet.getInt("id_imagen"));
-        }*/
+        }
         return this;
     }
 
