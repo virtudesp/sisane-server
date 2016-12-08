@@ -11,8 +11,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
 import net.daw.bean.publicinterface.GenericBean;
-import net.daw.helper.statics.EncodingUtilHelper;
 import net.daw.dao.implementation.TipodocumentoDao;
+import net.daw.helper.statics.EncodingUtilHelper;
 
 /**
  *
@@ -31,6 +31,7 @@ public class DocumentoBean implements GenericBean {
     private Integer id_tipodocumento = 0;
     @Expose(deserialize = false)
     private TipodocumentoBean obj_tipodocumento = null;
+
     public Integer getId() {
         return id;
     }
@@ -54,6 +55,7 @@ public class DocumentoBean implements GenericBean {
     public void setFecha(Date fecha) {
         this.fecha = fecha;
     }
+
     public Integer getId_tipodocumento() {
         return id_tipodocumento;
     }
@@ -62,7 +64,6 @@ public class DocumentoBean implements GenericBean {
         this.id_tipodocumento = id_tipodocumento;
     }
 
-
     public TipodocumentoBean getObj_tipodocumento() {
         return obj_tipodocumento;
     }
@@ -70,6 +71,7 @@ public class DocumentoBean implements GenericBean {
     public void setObj_tipodocumento(TipodocumentoBean obj_tipodocumento) {
         this.obj_tipodocumento = obj_tipodocumento;
     }
+
     public DocumentoBean() {
     }
 
@@ -112,14 +114,13 @@ public class DocumentoBean implements GenericBean {
 
         if (expand > 0) {
             TipodocumentoBean oTipodocumentoBean = new TipodocumentoBean();
-            TipodocumentoDao oTipoDocumentoDao = new TipodocumentoDao(pooledConnection, oPusuarioBean_security);
+            TipodocumentoDao ooTipodocumentoDao = new TipodocumentoDao(pooledConnection, oPusuarioBean_security);
             oTipodocumentoBean.setId(oResultSet.getInt("id_tipodocumento"));
-            oTipodocumentoBean = oTipoDocumentoDao.get(oTipodocumentoBean, expand - 1);
+            oTipodocumentoBean = ooTipodocumentoDao.get(oTipodocumentoBean, expand - 1);
             this.setObj_tipodocumento(oTipodocumentoBean);
         } else {
             this.setId_tipodocumento(oResultSet.getInt("id_tipodocumento"));
         }
         return this;
     }
-
 }
