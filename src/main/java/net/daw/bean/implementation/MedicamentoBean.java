@@ -69,7 +69,7 @@ public class MedicamentoBean implements GenericBean {
     public String getColumns() {
         String strColumns = "";
         strColumns += "id,";
-        strColumns += "descripcion,";
+        strColumns += "descripcion";
         return strColumns;
     }
 
