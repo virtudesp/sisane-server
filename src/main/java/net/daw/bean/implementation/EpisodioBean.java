@@ -16,7 +16,7 @@ import net.daw.dao.implementation.ImportanciaDao;
 import net.daw.dao.implementation.MedicoDao;
 import net.daw.dao.implementation.PacienteDao;
 import net.daw.dao.implementation.ServicioDao;
-import net.daw.dao.implementation.PrioridadDao;
+//import net.daw.dao.implementation.PrioridadDao;
 import net.daw.dao.implementation.TipoDao;
 import net.daw.helper.statics.EncodingUtilHelper;
 
@@ -60,8 +60,8 @@ public class EpisodioBean implements GenericBean {
     private EpisodioBean obj_episodio;
     @Expose(serialize = false)
     private int id_prioridad;
-    @Expose(deserialize = false)
-    private PrioridadBean obj_prioridad;
+//    @Expose(deserialize = false)
+//    private PrioridadBean obj_prioridad;
 
     public EpisodioBean(int id) {
         this.id = id;
@@ -205,13 +205,13 @@ public class EpisodioBean implements GenericBean {
         this.id_prioridad = id_prioridad;
     }
 
-    public PrioridadBean getObj_prioridad() {
-        return obj_prioridad;
-    }
-
-    public void setObj_prioridad(PrioridadBean obj_prioridad) {
-        this.obj_prioridad = obj_prioridad;
-    }
+//    public PrioridadBean getObj_prioridad() {
+//        return obj_prioridad;
+//    }
+//
+//    public void setObj_prioridad(PrioridadBean obj_prioridad) {
+//        this.obj_prioridad = obj_prioridad;
+//    }
     @Override
     public String getColumns() {
         return "id,fecha,informe,id_importancia,id_servicio,id_tipo,importe,id_paciente,id_medico,id_episodio,id_prioridad";
@@ -272,7 +272,7 @@ public class EpisodioBean implements GenericBean {
             this.obj_paciente = new PacienteDao(pooledConnection,oPuserBean_security).get(new PacienteBean(this.id_paciente), expand - 1);
             this.obj_medico = new MedicoDao(pooledConnection,oPuserBean_security).get(new MedicoBean(this.id_medico), expand - 1);
             this.obj_episodio = new EpisodioDao(pooledConnection,oPuserBean_security).get(new EpisodioBean(this.id_episodio), expand - 1);
-            this.obj_prioridad = new PrioridadDao(pooledConnection,oPuserBean_security).get(new PrioridadBean(this.id_prioridad), expand - 1);
+//            this.obj_prioridad = new PrioridadDao(pooledConnection,oPuserBean_security).get(new PrioridadBean(this.id_prioridad), expand - 1);
         }
         return this;
     }

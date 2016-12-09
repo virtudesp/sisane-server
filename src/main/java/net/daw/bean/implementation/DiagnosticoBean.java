@@ -13,7 +13,7 @@ import java.util.Date;
 import net.daw.bean.publicinterface.GenericBean;
 import net.daw.helper.statics.EncodingUtilHelper;
 
-import net.daw.dao.implementation.TipodiagnosticoDao;
+//import net.daw.dao.implementation.TipodiagnosticoDao;
 import net.daw.dao.implementation.EpisodioDao;
 
 /**
@@ -35,8 +35,8 @@ public class DiagnosticoBean implements GenericBean {
     @Expose(serialize = false)
     private int id_tipodiagnostico;
 
-    @Expose(deserialize = false)
-    private TipodiagnosticoBean obj_tipodiagnostico;
+//    @Expose(deserialize = false)
+//    private TipodiagnosticoBean obj_tipodiagnostico;
 
     public DiagnosticoBean(int id) {
         this.id = id;
@@ -93,13 +93,13 @@ public class DiagnosticoBean implements GenericBean {
         this.id_tipodiagnostico = id_tipodiagnostico;
     }
 
-    public TipodiagnosticoBean getObj_tipodiagnostico() {
-        return obj_tipodiagnostico;
-    }
-
-    public void setObj_tipodiagnostico(TipodiagnosticoBean obj_tipodiagnostico) {
-        this.obj_tipodiagnostico = obj_tipodiagnostico;
-    }
+//    public TipodiagnosticoBean getObj_tipodiagnostico() {
+//        return obj_tipodiagnostico;
+//    }
+//
+//    public void setObj_tipodiagnostico(TipodiagnosticoBean obj_tipodiagnostico) {
+//        this.obj_tipodiagnostico = obj_tipodiagnostico;
+//    }
     @Override
     public String getColumns() {
         return "id,informe,fecha,id_episodio,id_tipodiagnostico";
@@ -143,10 +143,10 @@ public class DiagnosticoBean implements GenericBean {
             eBean.setId(this.id_episodio);
             this.obj_episodio = eDao.get(eBean,expand - 1);
 
-            TipodiagnosticoDao tDao = new TipodiagnosticoDao(pooledConnection,oPusuarioBean_security);
-            TipodiagnosticoBean tBean = new TipodiagnosticoBean();
-            tBean.setId(this.id_tipodiagnostico);
-            this.obj_tipodiagnostico = tDao.get(tBean,expand - 1);
+//            TipodiagnosticoDao tDao = new TipodiagnosticoDao(pooledConnection,oPusuarioBean_security);
+//            TipodiagnosticoBean tBean = new TipodiagnosticoBean();
+//            tBean.setId(this.id_tipodiagnostico);
+//            this.obj_tipodiagnostico = tDao.get(tBean,expand - 1);
         }
         return this;
     }
