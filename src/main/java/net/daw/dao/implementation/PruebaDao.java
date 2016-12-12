@@ -4,8 +4,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.HashMap;
-import net.daw.bean.implementation.CargoBean;
-import net.daw.bean.implementation.DiagnosticoBean;
+import net.daw.bean.implementation.PruebaBean;
 import net.daw.bean.implementation.PusuarioBean;
 import net.daw.dao.publicinterface.TableDaoInterface;
 import net.daw.dao.publicinterface.ViewDaoInterface;
@@ -14,19 +13,19 @@ import net.daw.helper.statics.FilterBeanHelper;
 import net.daw.helper.statics.Log4j;
 import net.daw.helper.statics.SqlBuilder;
 
-public class CargoDao implements ViewDaoInterface<CargoBean>, TableDaoInterface<CargoBean> {
+public class PruebaDao implements ViewDaoInterface<PruebaBean>, TableDaoInterface<PruebaBean> {
 
-    private String strTable = "cargo";
-    private String strSQL = "select * from " + strTable + " where 1=1 ";
+    private String strTable = "prueba";
+    private String strSQL = "select * from prueba where 1=1";
     private MysqlData oMysql = null;
     private Connection oConnection = null;
     private PusuarioBean oPuserSecurity = null;
 
-    public CargoDao(Connection oPooledConnection, PusuarioBean oPusuarioBean_security) throws Exception {
+    public PruebaDao(Connection oPooledConnection, PusuarioBean oPuserBean_security) throws Exception {
         try {
             oConnection = oPooledConnection;
             oMysql = new MysqlData(oConnection);
-            oPuserSecurity = oPusuarioBean_security;
+            oPuserSecurity = oPuserBean_security;
         } catch (Exception ex) {
             Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
             throw new Exception();
@@ -34,8 +33,8 @@ public class CargoDao implements ViewDaoInterface<CargoBean>, TableDaoInterface<
     }
 
     @Override
-    public Long getCount(ArrayList<FilterBeanHelper> hmFilter) throws Exception {
-        strSQL += SqlBuilder.buildSqlWhere(hmFilter);
+    public Long getCount(ArrayList<FilterBeanHelper> alFilter) throws Exception {
+        strSQL += SqlBuilder.buildSqlWhere(alFilter);
         Long pages = 0L;
         try {
             pages = oMysql.getCount(strSQL);
@@ -47,17 +46,17 @@ public class CargoDao implements ViewDaoInterface<CargoBean>, TableDaoInterface<
     }
 
     @Override
-    public ArrayList<CargoBean> getPage(int intRegsPerPag, int intPage, ArrayList<FilterBeanHelper> alFilter, HashMap<String, String> hmOrder, Integer expand) throws Exception {
+    public ArrayList<PruebaBean> getPage(int intRegsPerPag, int intPage, ArrayList<FilterBeanHelper> alFilter, HashMap<String, String> hmOrder, Integer expand) throws Exception {
         strSQL += SqlBuilder.buildSqlWhere(alFilter);
         strSQL += SqlBuilder.buildSqlOrder(hmOrder);
         strSQL += SqlBuilder.buildSqlLimit(oMysql.getCount(strSQL), intRegsPerPag, intPage);
-        ArrayList<CargoBean> arrCargo = new ArrayList<>();
+        ArrayList<PruebaBean> arrDoc = new ArrayList<>();
         ResultSet oResultSet = null;
         try {
             oResultSet = oMysql.getAllSQL(strSQL);
             while (oResultSet.next()) {
-                CargoBean oCargoBean = new CargoBean();
-                arrCargo.add(oCargoBean.fill(oResultSet, oConnection, oPuserSecurity, expand));
+                PruebaBean oPruebaBean = new PruebaBean();
+                arrDoc.add((PruebaBean) oPruebaBean.fill(oResultSet, oConnection, oPuserSecurity, expand));
             }
             if (oResultSet != null) {
                 oResultSet.close();
@@ -70,20 +69,20 @@ public class CargoDao implements ViewDaoInterface<CargoBean>, TableDaoInterface<
                 oResultSet.close();
             }
         }
-        return arrCargo;
+        return arrDoc;
     }
 
     @Override
-    public ArrayList<CargoBean> getAll(ArrayList<FilterBeanHelper> alFilter, HashMap<String, String> hmOrder, Integer expand) throws Exception {
+    public ArrayList<PruebaBean> getAll(ArrayList<FilterBeanHelper> alFilter, HashMap<String, String> hmOrder, Integer expand) throws Exception {
         strSQL += SqlBuilder.buildSqlWhere(alFilter);
         strSQL += SqlBuilder.buildSqlOrder(hmOrder);
-        ArrayList<CargoBean> arrCargo = new ArrayList<>();
+        ArrayList<PruebaBean> arrDoc = new ArrayList<>();
         ResultSet oResultSet = null;
         try {
             oResultSet = oMysql.getAllSQL(strSQL);
             while (oResultSet.next()) {
-                CargoBean oCargoBean = new CargoBean();
-                arrCargo.add(oCargoBean.fill(oResultSet, oConnection, oPuserSecurity, expand));
+                PruebaBean oDocumentoBean = new PruebaBean();
+                arrDoc.add((PruebaBean) oDocumentoBean.fill(oResultSet, oConnection, oPuserSecurity, expand));
             }
         } catch (Exception ex) {
             Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
@@ -93,22 +92,22 @@ public class CargoDao implements ViewDaoInterface<CargoBean>, TableDaoInterface<
                 oResultSet.close();
             }
         }
-        return arrCargo;
+        return arrDoc;
     }
 
     @Override
-    public CargoBean get(CargoBean oCargoBean, Integer expand) throws Exception {
-        if (oCargoBean.getId() > 0) {
+    public PruebaBean get(PruebaBean oProductBean, Integer expand) throws Exception {
+        if (oProductBean.getId() > 0) {
             ResultSet oResultSet = null;
             try {
-                oResultSet = oMysql.getAllSQL(strSQL + " And id= " + oCargoBean.getId() + " ");
+                oResultSet = oMysql.getAllSQL(strSQL + " And id= " + oProductBean.getId() + " ");
                 Boolean empty = true;
                 while (oResultSet.next()) {
-                    oCargoBean = oCargoBean.fill(oResultSet, oConnection, oPuserSecurity, expand);
+                    oProductBean = (PruebaBean) oProductBean.fill(oResultSet, oConnection, oPuserSecurity, expand);
                     empty = false;
                 }
                 if (empty) {
-                    oCargoBean.setId(0);
+                    oProductBean.setId(0);
                 }
             } catch (Exception ex) {
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
@@ -119,24 +118,24 @@ public class CargoDao implements ViewDaoInterface<CargoBean>, TableDaoInterface<
                 }
             }
         } else {
-            oCargoBean.setId(0);
+            oProductBean.setId(0);
         }
-        return oCargoBean;
+        return oProductBean;
     }
 
     @Override
-    public Integer set(CargoBean oCargoBean) throws Exception {
+    public Integer set(PruebaBean oProductBean) throws Exception {
         Integer iResult = null;
         try {
-            if (oCargoBean.getId() == 0) {
+            if (oProductBean.getId() == 0) {
                 strSQL = "INSERT INTO " + strTable + " ";
-                strSQL += "(" + oCargoBean.getColumns() + ")";
-                strSQL += "VALUES(" + oCargoBean.getValues() + ")";
+                strSQL += "(" + oProductBean.getColumns() + ")";
+                strSQL += "VALUES(" + oProductBean.getValues() + ")";
                 iResult = oMysql.executeInsertSQL(strSQL);
             } else {
                 strSQL = "UPDATE " + strTable + " ";
-                strSQL += " SET " + oCargoBean.toPairs();
-                strSQL += " WHERE id=" + oCargoBean.getId();
+                strSQL += " SET " + oProductBean.toPairs();
+                strSQL += " WHERE id=" + oProductBean.getId();
                 iResult = oMysql.executeUpdateSQL(strSQL);
             }
         } catch (Exception ex) {
