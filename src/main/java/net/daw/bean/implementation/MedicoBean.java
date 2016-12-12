@@ -120,8 +120,8 @@ public class MedicoBean implements GenericBean {
 
         String strPairs = "";
         //strPairs += "id=" + id + ",";
-        strPairs += "id_usertype=" + id_servicio + ",";
-        strPairs += "id_usertype=" + id_especialidad;
+        strPairs += "id_servicio=" + id_servicio + ",";
+        strPairs += "id_especialidad=" + id_especialidad;
         return strPairs;
     }
 
