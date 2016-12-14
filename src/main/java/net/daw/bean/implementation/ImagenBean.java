@@ -52,9 +52,10 @@ public class ImagenBean implements GenericBean {
     @Expose(deserialize = false)
     private TecnicaBean obj_tecnica;
 
-    public ImagenBean(){}
-    
-    public ImagenBean(Integer id){
+    public ImagenBean() {
+    }
+
+    public ImagenBean(Integer id) {
         this.id = id;
     }
 
@@ -106,8 +107,6 @@ public class ImagenBean implements GenericBean {
         this.obj_tecnica = obj_tecnica;
     }
 
-    
-
     @Override
     public String getColumns() {
         String strColumns = "";
@@ -135,8 +134,8 @@ public class ImagenBean implements GenericBean {
         String strColumns = "";
         //strColumns +="id="; id + ";
         strColumns += "descripcion=" + EncodingUtilHelper.quotate(descripcion) + ",";
-        strColumns += "price=" + EncodingUtilHelper.stringifyAndQuotate(fecha) + ",";
-        strColumns += "descripcion=" + EncodingUtilHelper.quotate(ubicacion) + ",";
+        strColumns += "fecha=" + EncodingUtilHelper.stringifyAndQuotate(fecha) + ",";
+        strColumns += "ubicacion=" + EncodingUtilHelper.quotate(ubicacion) + ",";
         strColumns += "id_tecnica=" + id_tecnica;
         return strColumns;
     }
