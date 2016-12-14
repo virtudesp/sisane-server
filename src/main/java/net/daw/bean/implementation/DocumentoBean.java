@@ -84,7 +84,8 @@ public class DocumentoBean implements GenericBean {
         String strColumns = "";
         strColumns += "id,";
         strColumns += "descripcion,";
-        strColumns += "fecha";
+        strColumns += "fecha,";
+        strColumns += "id_tipodocumento";
         return strColumns;
     }
 
@@ -93,7 +94,8 @@ public class DocumentoBean implements GenericBean {
         String strColumns = "";
         strColumns += id + ",";
         strColumns += EncodingUtilHelper.quotate(descripcion) + ",";
-        strColumns += EncodingUtilHelper.stringifyAndQuotate(fecha);
+        strColumns += EncodingUtilHelper.stringifyAndQuotate(fecha) + ",";
+        strColumns += id_tipodocumento;
         return strColumns;
     }
 
@@ -102,7 +104,8 @@ public class DocumentoBean implements GenericBean {
         String strPairs = "";
         //strPairs += "id=" + id + ",";
         strPairs += "descripcion=" + EncodingUtilHelper.quotate(descripcion) + ",";
-        strPairs += "fecha=" + EncodingUtilHelper.stringifyAndQuotate(fecha);
+        strPairs += "fecha=" + EncodingUtilHelper.stringifyAndQuotate(fecha) + ",";
+        strPairs += "id_tipodocumento=" + id_tipodocumento;
         return strPairs;
     }
 
