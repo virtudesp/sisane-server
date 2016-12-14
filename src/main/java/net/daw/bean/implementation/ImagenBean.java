@@ -34,6 +34,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
 import net.daw.bean.publicinterface.GenericBean;
+import net.daw.dao.implementation.TecnicaDao;
 import net.daw.helper.statics.EncodingUtilHelper;
 
 public class ImagenBean implements GenericBean {
@@ -51,9 +52,10 @@ public class ImagenBean implements GenericBean {
     @Expose(deserialize = false)
     private TecnicaBean obj_tecnica;
 
-    public ImagenBean(){}
-    
-    public ImagenBean(Integer id){
+    public ImagenBean() {
+    }
+
+    public ImagenBean(Integer id) {
         this.id = id;
     }
 
@@ -105,8 +107,6 @@ public class ImagenBean implements GenericBean {
         this.obj_tecnica = obj_tecnica;
     }
 
-    
-
     @Override
     public String getColumns() {
         String strColumns = "";
@@ -125,7 +125,7 @@ public class ImagenBean implements GenericBean {
         strColumns += EncodingUtilHelper.quotate(descripcion) + ",";
         strColumns += EncodingUtilHelper.stringifyAndQuotate(fecha) + ",";
         strColumns += EncodingUtilHelper.quotate(ubicacion) + ",";
-        //strColumns += id_tecnica;
+        strColumns += id_tecnica;
         return strColumns;
     }
 
@@ -134,8 +134,8 @@ public class ImagenBean implements GenericBean {
         String strColumns = "";
         //strColumns +="id="; id + ";
         strColumns += "descripcion=" + EncodingUtilHelper.quotate(descripcion) + ",";
-        strColumns += "price=" + EncodingUtilHelper.stringifyAndQuotate(fecha) + ",";
-        strColumns += "descripcion=" + EncodingUtilHelper.quotate(ubicacion) + ",";
+        strColumns += "fecha=" + EncodingUtilHelper.stringifyAndQuotate(fecha) + ",";
+        strColumns += "ubicacion=" + EncodingUtilHelper.quotate(ubicacion) + ",";
         strColumns += "id_tecnica=" + id_tecnica;
         return strColumns;
     }
@@ -146,16 +146,16 @@ public class ImagenBean implements GenericBean {
         this.setDescripcion(oResultSet.getString("descripcion"));
         this.setFecha(oResultSet.getDate("fecha"));
         this.setUbicacion(oResultSet.getString("ubicacion"));
-//
-//        if (expand > 0) {
-//            ProducttypeBean oProducttypeBean = new ProducttypeBean();
-//            ProducttypeDao oProducttypeDao = new ProducttypeDao(pooledConnection, oPuserBean_security);
-//            oProducttypeBean.setId(oResultSet.getInt("id_producttype"));
-//            oProducttypeBean = oProducttypeDao.get(oProducttypeBean, expand - 1);
-//            this.setObj_producttype(oProducttypeBean);
-//        } else {
-//            this.setId_producttype(oResultSet.getInt("id_producttype"));
-//        }
+
+        if (expand > 0) {
+            TecnicaBean oTecnicaBean = new TecnicaBean();
+            TecnicaDao oTecnicaDao = new TecnicaDao(pooledConnection, oPuserBean_security);
+            oTecnicaBean.setId(oResultSet.getInt("id_tecnica"));
+            oTecnicaBean = oTecnicaDao.get(oTecnicaBean, expand - 1);
+            this.setObj_tecnica(oTecnicaBean);
+        } else {
+            this.setId_tecnica(oResultSet.getInt("id_tecnica"));
+        }
 
         return this;
     }
