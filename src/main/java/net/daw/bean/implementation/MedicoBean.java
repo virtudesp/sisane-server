@@ -45,6 +45,7 @@ public class MedicoBean implements GenericBean {
     private Integer id_servicio = 0;
     @Expose(deserialize = false)
     private ServicioBean obj_servicio = null;
+    @Expose(serialize = false)
     private Integer id_especialidad = 0;
     @Expose(deserialize = false)
     private EspecialidadBean obj_especialidad = null;
@@ -110,7 +111,7 @@ public class MedicoBean implements GenericBean {
     public String getValues() {
         String strColumns = "";
         strColumns += id + ",";
-        strColumns += id_servicio;
+        strColumns += id_servicio+ ",";
         strColumns += id_especialidad;
         return strColumns;
     }
