@@ -94,7 +94,7 @@ public class ViaBean implements GenericBean{
     public String toPairs() {
         String strColumns = "";
 //        strColumns +="id=" + id + ",";
-        strColumns += "description=" + EncodingUtilHelper.quotate(descripcion) + ",";
+        strColumns += "descripcion=" + EncodingUtilHelper.quotate(descripcion) + ",";
         strColumns += "id_medicamento=" + id_medicamento;
         return strColumns;
     }

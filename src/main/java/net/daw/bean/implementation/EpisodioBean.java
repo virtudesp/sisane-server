@@ -17,7 +17,6 @@ import net.daw.dao.implementation.MedicoDao;
 import net.daw.dao.implementation.PacienteDao;
 import net.daw.dao.implementation.PrioridadDao;
 import net.daw.dao.implementation.ServicioDao;
-//import net.daw.dao.implementation.PrioridadDao;
 import net.daw.dao.implementation.TipoDao;
 import net.daw.helper.statics.EncodingUtilHelper;
 
@@ -233,7 +232,7 @@ public class EpisodioBean implements GenericBean {
         values += importe + ",";
         values += id_paciente + ",";
         values += id_medico + ",";
-        values += id_episodio;
+        values += id_episodio + ",";
         values += id_prioridad;
         return values;
     }
@@ -250,7 +249,7 @@ public class EpisodioBean implements GenericBean {
         pairs += "importe = " + importe + ",";
         pairs += "id_paciente = " + id_paciente + ",";
         pairs += "id_medico = " + id_medico + ",";
-        pairs += "id_episodio = " + id_episodio;
+        pairs += "id_episodio = " + id_episodio + ",";
         pairs += "id_prioridad = " + id_prioridad;
         return pairs;
     }
