@@ -161,12 +161,12 @@ public class PruebaBean implements GenericBean {
     public String toPairs() {
         String strPairs = "";
         //strPairs += "id=" + id + ",";
-        strPairs += EncodingUtilHelper.quotate(informe) + ",";
-        strPairs += EncodingUtilHelper.stringifyAndQuotate(fecha_peticion) + ",";
-        strPairs += id_episodio + ",";
-        strPairs += importe + ",";
-        strPairs += id_imagen + ",";
-        strPairs += id_analitica;
+        strPairs += "informe=" + EncodingUtilHelper.quotate(informe) + ",";
+        strPairs += "fecha_peticion=" + EncodingUtilHelper.stringifyAndQuotate(fecha_peticion) + ",";
+        strPairs += "id_episodio=" + id_episodio + ",";
+        strPairs += "importe=" + importe + ",";
+        strPairs += "id_imagen=" + id_imagen + ",";
+        strPairs += "id_analitica=" + id_analitica;
         return strPairs;
     }
 
