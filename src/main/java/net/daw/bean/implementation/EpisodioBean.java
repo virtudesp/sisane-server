@@ -35,31 +35,31 @@ public class EpisodioBean implements GenericBean {
     @Expose
     private float importe;
     @Expose(serialize = false)
-    private int id_importancia;
+    private Integer id_importancia;
     @Expose(deserialize = false)
     private ImportanciaBean obj_importancia;
     @Expose(serialize = false)
-    private int id_servicio;
+    private Integer id_servicio;
     @Expose(deserialize = false)
     private ServicioBean obj_servicio;
     @Expose(serialize = false)
-    private int id_tipo;
+    private Integer id_tipo;
     @Expose(deserialize = false)
     private TipoBean obj_tipo;
     @Expose(serialize = false)
-    private int id_paciente;
+    private Integer id_paciente;
     @Expose(deserialize = false)
     private PacienteBean obj_paciente;
     @Expose(serialize = false)
-    private int id_medico;
+    private Integer id_medico;
     @Expose(deserialize = false)
     private MedicoBean obj_medico;
     @Expose(serialize = false)
-    private int id_episodio;
+    private Integer id_episodio;
     @Expose(deserialize = false)
     private EpisodioBean obj_episodio;
     @Expose(serialize = false)
-    private int id_prioridad;
+    private Integer id_prioridad;
     @Expose(deserialize = false)
     private PrioridadBean obj_prioridad;
 
