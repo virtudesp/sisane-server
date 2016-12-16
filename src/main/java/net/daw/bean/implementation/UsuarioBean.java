@@ -227,8 +227,7 @@ public class UsuarioBean implements GenericBean {
         strColumns += "nombre,";
         strColumns += "primerapellido,";
         strColumns += "segundoapellido,";
-        strColumns += "login,";
-        strColumns += "password,";
+        strColumns += "login,";        
         strColumns += "direccion,";
         strColumns += "ciudad,";
         strColumns += "codigopostal,";
