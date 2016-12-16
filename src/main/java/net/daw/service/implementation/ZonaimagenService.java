@@ -1,12 +1,12 @@
 /*
  * Copyright (c) 2016 by Rafael Angel Aznar Aparici (rafaaznar at gmail dot com)
  * 
- * sisane-server: Helps you to develop easily AJAX web applications 
+ * bauxer server: Helps you to develop easily AJAX web applications 
  *                   by copying and modifying this Java Server.
  *
- * Sources at https://github.com/rafaelaznar/sisane-server
+ * Sources at https://github.com/rafaelaznar/bauxer
  * 
- * sisane-server is distributed under the MIT License (MIT)
+ * bauxer server is distributed under the MIT License (MIT)
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -34,12 +34,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
-import net.daw.bean.implementation.AnticoagulanteBean;
-import net.daw.bean.implementation.PusuarioBean;
+import net.daw.bean.implementation.ZonaimagenBean;
 import net.daw.bean.implementation.ReplyBean;
-import net.daw.bean.implementation.UsuarioBean;
+import net.daw.bean.implementation.PusuarioBean;
 import net.daw.connection.publicinterface.ConnectionInterface;
-import net.daw.dao.implementation.AnticoagulanteDao;
+import net.daw.dao.implementation.ZonaimagenDao;
 import net.daw.helper.statics.AppConfigurationHelper;
 import static net.daw.helper.statics.AppConfigurationHelper.getSourceConnection;
 import net.daw.helper.statics.FilterBeanHelper;
@@ -49,11 +48,11 @@ import net.daw.helper.statics.ParameterCook;
 import net.daw.service.publicinterface.TableServiceInterface;
 import net.daw.service.publicinterface.ViewServiceInterface;
 
-public class AnticoagulanteService implements TableServiceInterface, ViewServiceInterface {
+public class ZonaimagenService implements TableServiceInterface, ViewServiceInterface {
 
     protected HttpServletRequest oRequest = null;
 
-    public AnticoagulanteService(HttpServletRequest request) {
+    public ZonaimagenService(HttpServletRequest request) {
         oRequest = request;
     }
 
@@ -76,8 +75,8 @@ public class AnticoagulanteService implements TableServiceInterface, ViewService
             try {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
-                AnticoagulanteDao oAnticoagulanteDao = new AnticoagulanteDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
-                data = JsonMessage.getJsonExpression(200, Long.toString(oAnticoagulanteDao.getCount(alFilter)));
+                ZonaimagenDao oZonaimagenDao = new ZonaimagenDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
+                data = JsonMessage.getJsonExpression(200, Long.toString(oZonaimagenDao.getCount(alFilter)));
             } catch (Exception ex) {
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
                 throw new Exception();
@@ -105,11 +104,11 @@ public class AnticoagulanteService implements TableServiceInterface, ViewService
             try {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
-                AnticoagulanteDao oAnticoagulanteDao = new AnticoagulanteDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
-                AnticoagulanteBean oAnticoagulanteBean = new AnticoagulanteBean(id);
-                oAnticoagulanteBean = oAnticoagulanteDao.get(oAnticoagulanteBean, AppConfigurationHelper.getJsonMsgDepth());
+                ZonaimagenDao oZonaimagenDao = new ZonaimagenDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
+                ZonaimagenBean oZonaimagenBean = new ZonaimagenBean(id);
+                oZonaimagenBean = oZonaimagenDao.get(oZonaimagenBean, AppConfigurationHelper.getJsonMsgDepth());
                 Gson gson = AppConfigurationHelper.getGson();
-                data = JsonMessage.getJsonExpression(200, AppConfigurationHelper.getGson().toJson(oAnticoagulanteBean));
+                data = JsonMessage.getJsonExpression(200, AppConfigurationHelper.getGson().toJson(oZonaimagenBean));
             } catch (Exception ex) {
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
                 throw new Exception();
@@ -138,8 +137,8 @@ public class AnticoagulanteService implements TableServiceInterface, ViewService
             try {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
-                AnticoagulanteDao oAnticoagulanteDao = new AnticoagulanteDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
-                ArrayList<AnticoagulanteBean> arrBeans = oAnticoagulanteDao.getAll(alFilter, hmOrder, AppConfigurationHelper.getJsonMsgDepth());
+                ZonaimagenDao oZonaimagenDao = new ZonaimagenDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
+                ArrayList<ZonaimagenBean> arrBeans = oZonaimagenDao.getAll(alFilter, hmOrder, AppConfigurationHelper.getJsonMsgDepth());
                 data = JsonMessage.getJsonExpression(200, AppConfigurationHelper.getGson().toJson(arrBeans));
             } catch (Exception ex) {
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
@@ -171,8 +170,8 @@ public class AnticoagulanteService implements TableServiceInterface, ViewService
             try {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
-                AnticoagulanteDao oAnticoagulanteDao = new AnticoagulanteDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
-                List<AnticoagulanteBean> arrBeans = oAnticoagulanteDao.getPage(intRegsPerPag, intPage, alFilter, hmOrder, AppConfigurationHelper.getJsonMsgDepth());
+                ZonaimagenDao oZonaimagenDao = new ZonaimagenDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
+                List<ZonaimagenBean> arrBeans = oZonaimagenDao.getPage(intRegsPerPag, intPage, alFilter, hmOrder, AppConfigurationHelper.getJsonMsgDepth());
                 data = JsonMessage.getJsonExpression(200, AppConfigurationHelper.getGson().toJson(arrBeans));
             } catch (Exception ex) {
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
@@ -202,8 +201,8 @@ public class AnticoagulanteService implements TableServiceInterface, ViewService
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
                 oConnection.setAutoCommit(false);
-                AnticoagulanteDao oAnticoagulanteDao = new AnticoagulanteDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
-                data = JsonMessage.getJsonExpression(200, (String) oAnticoagulanteDao.remove(id).toString());
+                ZonaimagenDao oZonaimagenDao = new ZonaimagenDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
+                data = JsonMessage.getJsonExpression(200, (String) oZonaimagenDao.remove(id).toString());
                 oConnection.commit();
             } catch (Exception ex) {
                 if (oConnection != null) {
@@ -236,11 +235,11 @@ public class AnticoagulanteService implements TableServiceInterface, ViewService
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
                 oConnection.setAutoCommit(false);
-                AnticoagulanteDao oAnticoagulanteDao = new AnticoagulanteDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
-                AnticoagulanteBean oAnticoagulanteBean = new AnticoagulanteBean();
-                oAnticoagulanteBean = AppConfigurationHelper.getGson().fromJson(jason, oAnticoagulanteBean.getClass());
-                if (oAnticoagulanteBean != null) {
-                    Integer iResult = oAnticoagulanteDao.set(oAnticoagulanteBean);
+                ZonaimagenDao oZonaimagenDao = new ZonaimagenDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
+                ZonaimagenBean oZonaimagenBean = new ZonaimagenBean();
+                oZonaimagenBean = AppConfigurationHelper.getGson().fromJson(jason, oZonaimagenBean.getClass());
+                if (oZonaimagenBean != null) {
+                    Integer iResult = oZonaimagenDao.set(oZonaimagenBean);
                     if (iResult >= 1) {
                         oReplyBean.setCode(200);
                         oReplyBean.setJson(JsonMessage.getJsonExpression(200, iResult.toString()));

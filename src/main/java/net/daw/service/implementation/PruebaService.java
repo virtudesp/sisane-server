@@ -1,23 +1,23 @@
 /*
  * Copyright (c) 2016 by Rafael Angel Aznar Aparici (rafaaznar at gmail dot com)
- * 
- * sisane-server: Helps you to develop easily AJAX web applications 
+ *
+ * sisane-server: Helps you to develop easily AJAX web applications
  *                   by copying and modifying this Java Server.
  *
  * Sources at https://github.com/rafaelaznar/sisane-server
- * 
+ *
  * sisane-server is distributed under the MIT License (MIT)
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -34,12 +34,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
-import net.daw.bean.implementation.AnticoagulanteBean;
+import net.daw.bean.implementation.PruebaBean;
 import net.daw.bean.implementation.PusuarioBean;
 import net.daw.bean.implementation.ReplyBean;
-import net.daw.bean.implementation.UsuarioBean;
 import net.daw.connection.publicinterface.ConnectionInterface;
-import net.daw.dao.implementation.AnticoagulanteDao;
+import net.daw.dao.implementation.PruebaDao;
 import net.daw.helper.statics.AppConfigurationHelper;
 import static net.daw.helper.statics.AppConfigurationHelper.getSourceConnection;
 import net.daw.helper.statics.FilterBeanHelper;
@@ -49,17 +48,17 @@ import net.daw.helper.statics.ParameterCook;
 import net.daw.service.publicinterface.TableServiceInterface;
 import net.daw.service.publicinterface.ViewServiceInterface;
 
-public class AnticoagulanteService implements TableServiceInterface, ViewServiceInterface {
+public class PruebaService implements TableServiceInterface, ViewServiceInterface {
 
     protected HttpServletRequest oRequest = null;
 
-    public AnticoagulanteService(HttpServletRequest request) {
+    public PruebaService(HttpServletRequest request) {
         oRequest = request;
     }
 
     private Boolean checkpermission(String strMethodName) throws Exception {
-        PusuarioBean oPusuarioBean = (PusuarioBean) oRequest.getSession().getAttribute("userBean");
-        if (oPusuarioBean != null) {
+        PusuarioBean oPuserBean = (PusuarioBean) oRequest.getSession().getAttribute("userBean");
+        if (oPuserBean != null) {
             return true;
         } else {
             return false;
@@ -76,8 +75,8 @@ public class AnticoagulanteService implements TableServiceInterface, ViewService
             try {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
-                AnticoagulanteDao oAnticoagulanteDao = new AnticoagulanteDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
-                data = JsonMessage.getJsonExpression(200, Long.toString(oAnticoagulanteDao.getCount(alFilter)));
+                PruebaDao oDocumentDao = new PruebaDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
+                data = JsonMessage.getJsonExpression(200, Long.toString(oDocumentDao.getCount(alFilter)));
             } catch (Exception ex) {
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
                 throw new Exception();
@@ -105,11 +104,11 @@ public class AnticoagulanteService implements TableServiceInterface, ViewService
             try {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
-                AnticoagulanteDao oAnticoagulanteDao = new AnticoagulanteDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
-                AnticoagulanteBean oAnticoagulanteBean = new AnticoagulanteBean(id);
-                oAnticoagulanteBean = oAnticoagulanteDao.get(oAnticoagulanteBean, AppConfigurationHelper.getJsonMsgDepth());
+                PruebaDao oDocumentDao = new PruebaDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
+                PruebaBean oDocumentBean = new PruebaBean(id);
+                oDocumentBean = oDocumentDao.get(oDocumentBean, AppConfigurationHelper.getJsonMsgDepth());
                 Gson gson = AppConfigurationHelper.getGson();
-                data = JsonMessage.getJsonExpression(200, AppConfigurationHelper.getGson().toJson(oAnticoagulanteBean));
+                data = JsonMessage.getJsonExpression(200, AppConfigurationHelper.getGson().toJson(oDocumentBean));
             } catch (Exception ex) {
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
                 throw new Exception();
@@ -138,8 +137,8 @@ public class AnticoagulanteService implements TableServiceInterface, ViewService
             try {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
-                AnticoagulanteDao oAnticoagulanteDao = new AnticoagulanteDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
-                ArrayList<AnticoagulanteBean> arrBeans = oAnticoagulanteDao.getAll(alFilter, hmOrder, AppConfigurationHelper.getJsonMsgDepth());
+                PruebaDao oDocumentDao = new PruebaDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
+                ArrayList<PruebaBean> arrBeans = oDocumentDao.getAll(alFilter, hmOrder, AppConfigurationHelper.getJsonMsgDepth());
                 data = JsonMessage.getJsonExpression(200, AppConfigurationHelper.getGson().toJson(arrBeans));
             } catch (Exception ex) {
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
@@ -171,8 +170,8 @@ public class AnticoagulanteService implements TableServiceInterface, ViewService
             try {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
-                AnticoagulanteDao oAnticoagulanteDao = new AnticoagulanteDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
-                List<AnticoagulanteBean> arrBeans = oAnticoagulanteDao.getPage(intRegsPerPag, intPage, alFilter, hmOrder, AppConfigurationHelper.getJsonMsgDepth());
+                PruebaDao oDocumentDao = new PruebaDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
+                List<PruebaBean> arrBeans = oDocumentDao.getPage(intRegsPerPag, intPage, alFilter, hmOrder, AppConfigurationHelper.getJsonMsgDepth());
                 data = JsonMessage.getJsonExpression(200, AppConfigurationHelper.getGson().toJson(arrBeans));
             } catch (Exception ex) {
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
@@ -202,8 +201,8 @@ public class AnticoagulanteService implements TableServiceInterface, ViewService
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
                 oConnection.setAutoCommit(false);
-                AnticoagulanteDao oAnticoagulanteDao = new AnticoagulanteDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
-                data = JsonMessage.getJsonExpression(200, (String) oAnticoagulanteDao.remove(id).toString());
+                PruebaDao oDocumentDao = new PruebaDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
+                data = JsonMessage.getJsonExpression(200, (String) oDocumentDao.remove(id).toString());
                 oConnection.commit();
             } catch (Exception ex) {
                 if (oConnection != null) {
@@ -236,11 +235,11 @@ public class AnticoagulanteService implements TableServiceInterface, ViewService
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
                 oConnection.setAutoCommit(false);
-                AnticoagulanteDao oAnticoagulanteDao = new AnticoagulanteDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
-                AnticoagulanteBean oAnticoagulanteBean = new AnticoagulanteBean();
-                oAnticoagulanteBean = AppConfigurationHelper.getGson().fromJson(jason, oAnticoagulanteBean.getClass());
-                if (oAnticoagulanteBean != null) {
-                    Integer iResult = oAnticoagulanteDao.set(oAnticoagulanteBean);
+                PruebaDao oPruebaDao = new PruebaDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
+                PruebaBean oPruebaBean = new PruebaBean();
+                oPruebaBean = AppConfigurationHelper.getGson().fromJson(jason, oPruebaBean.getClass());
+                if (oPruebaBean != null) {
+                    Integer iResult = oPruebaDao.set(oPruebaBean);
                     if (iResult >= 1) {
                         oReplyBean.setCode(200);
                         oReplyBean.setJson(JsonMessage.getJsonExpression(200, iResult.toString()));

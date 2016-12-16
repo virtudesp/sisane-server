@@ -12,9 +12,7 @@ import java.sql.SQLException;
 import java.util.Date;
 import net.daw.bean.publicinterface.GenericBean;
 import net.daw.dao.implementation.ServicioDao;
-import net.daw.dao.implementation.TipousuarioDao;
 import net.daw.helper.statics.EncodingUtilHelper;
-import static net.daw.helper.statics.MetaEnum.FieldType.Date;
 
 public class PacienteBean implements GenericBean {
 
@@ -71,7 +69,7 @@ public class PacienteBean implements GenericBean {
     public void setId(Integer id) {
         this.id = id;
     }
-    
+
     /**
      * @return the dni
      */
@@ -387,6 +385,7 @@ public class PacienteBean implements GenericBean {
         this.setSegundo_apellido(oResultSet.getString("segundo_apellido"));
         this.setLogin(oResultSet.getString("login"));
         this.setPassword(oResultSet.getString("password"));
+        this.setEstado(oResultSet.getString("estado"));
         this.setDireccion(oResultSet.getString("direccion"));
         this.setCiudad(oResultSet.getString("ciudad"));
         this.setCodigopostal(oResultSet.getString("codigopostal"));
@@ -394,7 +393,7 @@ public class PacienteBean implements GenericBean {
         this.setPais(oResultSet.getString("pais"));
         this.setEmail(oResultSet.getString("email"));
         this.setTelefono(oResultSet.getString("telefono"));
-        
+
         if (expand > 0) {
             ServicioBean oServicioBean = new ServicioBean();
             ServicioDao oServicioDao = new ServicioDao(pooledConnection, oPuserBean_security);
@@ -406,9 +405,8 @@ public class PacienteBean implements GenericBean {
         }
 
         this.setFecha_salida(oResultSet.getDate("fecha_salida"));
-        
+
         return this;
     }
 
 }
-

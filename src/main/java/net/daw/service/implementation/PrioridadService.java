@@ -34,12 +34,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
-import net.daw.bean.implementation.AnticoagulanteBean;
+import net.daw.bean.implementation.PrioridadBean;
 import net.daw.bean.implementation.PusuarioBean;
 import net.daw.bean.implementation.ReplyBean;
-import net.daw.bean.implementation.UsuarioBean;
 import net.daw.connection.publicinterface.ConnectionInterface;
-import net.daw.dao.implementation.AnticoagulanteDao;
+import net.daw.dao.implementation.PrioridadDao;
 import net.daw.helper.statics.AppConfigurationHelper;
 import static net.daw.helper.statics.AppConfigurationHelper.getSourceConnection;
 import net.daw.helper.statics.FilterBeanHelper;
@@ -49,11 +48,11 @@ import net.daw.helper.statics.ParameterCook;
 import net.daw.service.publicinterface.TableServiceInterface;
 import net.daw.service.publicinterface.ViewServiceInterface;
 
-public class AnticoagulanteService implements TableServiceInterface, ViewServiceInterface {
+public class PrioridadService implements TableServiceInterface, ViewServiceInterface {
 
     protected HttpServletRequest oRequest = null;
 
-    public AnticoagulanteService(HttpServletRequest request) {
+    public PrioridadService(HttpServletRequest request) {
         oRequest = request;
     }
 
@@ -76,8 +75,8 @@ public class AnticoagulanteService implements TableServiceInterface, ViewService
             try {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
-                AnticoagulanteDao oAnticoagulanteDao = new AnticoagulanteDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
-                data = JsonMessage.getJsonExpression(200, Long.toString(oAnticoagulanteDao.getCount(alFilter)));
+                PrioridadDao oPrioridadDao = new PrioridadDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
+                data = JsonMessage.getJsonExpression(200, Long.toString(oPrioridadDao.getCount(alFilter)));
             } catch (Exception ex) {
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
                 throw new Exception();
@@ -105,11 +104,11 @@ public class AnticoagulanteService implements TableServiceInterface, ViewService
             try {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
-                AnticoagulanteDao oAnticoagulanteDao = new AnticoagulanteDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
-                AnticoagulanteBean oAnticoagulanteBean = new AnticoagulanteBean(id);
-                oAnticoagulanteBean = oAnticoagulanteDao.get(oAnticoagulanteBean, AppConfigurationHelper.getJsonMsgDepth());
+                PrioridadDao oPrioridadDao = new PrioridadDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
+                PrioridadBean oPrioridadBean = new PrioridadBean(id);
+                oPrioridadBean = oPrioridadDao.get(oPrioridadBean, AppConfigurationHelper.getJsonMsgDepth());
                 Gson gson = AppConfigurationHelper.getGson();
-                data = JsonMessage.getJsonExpression(200, AppConfigurationHelper.getGson().toJson(oAnticoagulanteBean));
+                data = JsonMessage.getJsonExpression(200, AppConfigurationHelper.getGson().toJson(oPrioridadBean));
             } catch (Exception ex) {
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
                 throw new Exception();
@@ -138,8 +137,8 @@ public class AnticoagulanteService implements TableServiceInterface, ViewService
             try {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
-                AnticoagulanteDao oAnticoagulanteDao = new AnticoagulanteDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
-                ArrayList<AnticoagulanteBean> arrBeans = oAnticoagulanteDao.getAll(alFilter, hmOrder, AppConfigurationHelper.getJsonMsgDepth());
+                PrioridadDao oPrioridadDao = new PrioridadDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
+                ArrayList<PrioridadBean> arrBeans = oPrioridadDao.getAll(alFilter, hmOrder, AppConfigurationHelper.getJsonMsgDepth());
                 data = JsonMessage.getJsonExpression(200, AppConfigurationHelper.getGson().toJson(arrBeans));
             } catch (Exception ex) {
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
@@ -171,8 +170,8 @@ public class AnticoagulanteService implements TableServiceInterface, ViewService
             try {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
-                AnticoagulanteDao oAnticoagulanteDao = new AnticoagulanteDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
-                List<AnticoagulanteBean> arrBeans = oAnticoagulanteDao.getPage(intRegsPerPag, intPage, alFilter, hmOrder, AppConfigurationHelper.getJsonMsgDepth());
+                PrioridadDao oPrioridadDao = new PrioridadDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
+                List<PrioridadBean> arrBeans = oPrioridadDao.getPage(intRegsPerPag, intPage, alFilter, hmOrder, AppConfigurationHelper.getJsonMsgDepth());
                 data = JsonMessage.getJsonExpression(200, AppConfigurationHelper.getGson().toJson(arrBeans));
             } catch (Exception ex) {
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
@@ -202,8 +201,8 @@ public class AnticoagulanteService implements TableServiceInterface, ViewService
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
                 oConnection.setAutoCommit(false);
-                AnticoagulanteDao oAnticoagulanteDao = new AnticoagulanteDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
-                data = JsonMessage.getJsonExpression(200, (String) oAnticoagulanteDao.remove(id).toString());
+                PrioridadDao oPrioridadDao = new PrioridadDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
+                data = JsonMessage.getJsonExpression(200, (String) oPrioridadDao.remove(id).toString());
                 oConnection.commit();
             } catch (Exception ex) {
                 if (oConnection != null) {
@@ -236,11 +235,11 @@ public class AnticoagulanteService implements TableServiceInterface, ViewService
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
                 oConnection.setAutoCommit(false);
-                AnticoagulanteDao oAnticoagulanteDao = new AnticoagulanteDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
-                AnticoagulanteBean oAnticoagulanteBean = new AnticoagulanteBean();
-                oAnticoagulanteBean = AppConfigurationHelper.getGson().fromJson(jason, oAnticoagulanteBean.getClass());
-                if (oAnticoagulanteBean != null) {
-                    Integer iResult = oAnticoagulanteDao.set(oAnticoagulanteBean);
+                PrioridadDao oPrioridadDao = new PrioridadDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
+                PrioridadBean oPrioridadBean = new PrioridadBean();
+                oPrioridadBean = AppConfigurationHelper.getGson().fromJson(jason, oPrioridadBean.getClass());
+                if (oPrioridadBean != null) {
+                    Integer iResult = oPrioridadDao.set(oPrioridadBean);
                     if (iResult >= 1) {
                         oReplyBean.setCode(200);
                         oReplyBean.setJson(JsonMessage.getJsonExpression(200, iResult.toString()));

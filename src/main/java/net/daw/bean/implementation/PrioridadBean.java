@@ -32,28 +32,20 @@ import com.google.gson.annotations.Expose;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Date;
 import net.daw.bean.publicinterface.GenericBean;
 import net.daw.helper.statics.EncodingUtilHelper;
 
-public class ImagenBean implements GenericBean {
+public class PrioridadBean implements GenericBean {
 
     @Expose
     private Integer id = 0;
     @Expose
     private String descripcion;
-    @Expose
-    private Date fecha;
-    @Expose
-    private String ubicacion;
-    @Expose(serialize = false)
-    private Integer id_tecnica = 0;
-    @Expose(deserialize = false)
-    private TecnicaBean obj_tecnica;
 
-    public ImagenBean(){}
-    
-    public ImagenBean(Integer id){
+    public PrioridadBean() {
+    }
+
+    public PrioridadBean(Integer id) {
         this.id = id;
     }
 
@@ -73,48 +65,11 @@ public class ImagenBean implements GenericBean {
         this.descripcion = descripcion;
     }
 
-    public Date getFecha() {
-        return fecha;
-    }
-
-    public void setFecha(Date fecha) {
-        this.fecha = fecha;
-    }
-
-    public String getUbicacion() {
-        return ubicacion;
-    }
-
-    public void setUbicacion(String ubicacion) {
-        this.ubicacion = ubicacion;
-    }
-
-    public Integer getId_tecnica() {
-        return id_tecnica;
-    }
-
-    public void setId_tecnica(Integer id_tecnica) {
-        this.id_tecnica = id_tecnica;
-    }
-
-    public TecnicaBean getObj_tecnica() {
-        return obj_tecnica;
-    }
-
-    public void setObj_tecnica(TecnicaBean obj_tecnica) {
-        this.obj_tecnica = obj_tecnica;
-    }
-
-    
-
     @Override
     public String getColumns() {
         String strColumns = "";
         strColumns += "id,";
-        strColumns += "descripcion,";
-        strColumns += "fecha,";
-        strColumns += "ubicacion,";
-        strColumns += "id_tecnica";
+        strColumns += "descripcion";
         return strColumns;
     }
 
@@ -122,10 +77,7 @@ public class ImagenBean implements GenericBean {
     public String getValues() {
         String strColumns = "";
         strColumns += id + ",";
-        strColumns += EncodingUtilHelper.quotate(descripcion) + ",";
-        strColumns += EncodingUtilHelper.stringifyAndQuotate(fecha) + ",";
-        strColumns += EncodingUtilHelper.quotate(ubicacion) + ",";
-        //strColumns += id_tecnica;
+        strColumns += EncodingUtilHelper.quotate(descripcion);
         return strColumns;
     }
 
@@ -133,31 +85,14 @@ public class ImagenBean implements GenericBean {
     public String toPairs() {
         String strColumns = "";
         //strColumns +="id="; id + ";
-        strColumns += "descripcion=" + EncodingUtilHelper.quotate(descripcion) + ",";
-        strColumns += "price=" + EncodingUtilHelper.stringifyAndQuotate(fecha) + ",";
-        strColumns += "descripcion=" + EncodingUtilHelper.quotate(ubicacion) + ",";
-        strColumns += "id_tecnica=" + id_tecnica;
+        strColumns += "descripcion=" + EncodingUtilHelper.quotate(descripcion);
         return strColumns;
     }
 
     @Override
-    public ImagenBean fill(ResultSet oResultSet, Connection pooledConnection, PusuarioBean oPuserBean_security, Integer expand) throws SQLException, Exception {
+    public PrioridadBean fill(ResultSet oResultSet, Connection pooledConnection, PusuarioBean oPusuarioBean_security, Integer expand) throws SQLException, Exception {
         this.setId(oResultSet.getInt("id"));
         this.setDescripcion(oResultSet.getString("descripcion"));
-        this.setFecha(oResultSet.getDate("fecha"));
-        this.setUbicacion(oResultSet.getString("ubicacion"));
-//
-//        if (expand > 0) {
-//            ProducttypeBean oProducttypeBean = new ProducttypeBean();
-//            ProducttypeDao oProducttypeDao = new ProducttypeDao(pooledConnection, oPuserBean_security);
-//            oProducttypeBean.setId(oResultSet.getInt("id_producttype"));
-//            oProducttypeBean = oProducttypeDao.get(oProducttypeBean, expand - 1);
-//            this.setObj_producttype(oProducttypeBean);
-//        } else {
-//            this.setId_producttype(oResultSet.getInt("id_producttype"));
-//        }
-
         return this;
     }
-
 }

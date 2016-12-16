@@ -34,12 +34,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
-import net.daw.bean.implementation.AnticoagulanteBean;
+import net.daw.bean.implementation.CargoBean;
 import net.daw.bean.implementation.PusuarioBean;
 import net.daw.bean.implementation.ReplyBean;
-import net.daw.bean.implementation.UsuarioBean;
 import net.daw.connection.publicinterface.ConnectionInterface;
-import net.daw.dao.implementation.AnticoagulanteDao;
+import net.daw.dao.implementation.CargoDao;
+import net.daw.dao.implementation.DiagnosticoDao;
 import net.daw.helper.statics.AppConfigurationHelper;
 import static net.daw.helper.statics.AppConfigurationHelper.getSourceConnection;
 import net.daw.helper.statics.FilterBeanHelper;
@@ -49,11 +49,11 @@ import net.daw.helper.statics.ParameterCook;
 import net.daw.service.publicinterface.TableServiceInterface;
 import net.daw.service.publicinterface.ViewServiceInterface;
 
-public class AnticoagulanteService implements TableServiceInterface, ViewServiceInterface {
+public class CargoService implements TableServiceInterface, ViewServiceInterface {
 
     protected HttpServletRequest oRequest = null;
 
-    public AnticoagulanteService(HttpServletRequest request) {
+    public CargoService(HttpServletRequest request) {
         oRequest = request;
     }
 
@@ -76,8 +76,8 @@ public class AnticoagulanteService implements TableServiceInterface, ViewService
             try {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
-                AnticoagulanteDao oAnticoagulanteDao = new AnticoagulanteDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
-                data = JsonMessage.getJsonExpression(200, Long.toString(oAnticoagulanteDao.getCount(alFilter)));
+                DiagnosticoDao oDiagnosticoDao = new DiagnosticoDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
+                data = JsonMessage.getJsonExpression(200, Long.toString(oDiagnosticoDao.getCount(alFilter)));
             } catch (Exception ex) {
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
                 throw new Exception();
@@ -105,11 +105,11 @@ public class AnticoagulanteService implements TableServiceInterface, ViewService
             try {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
-                AnticoagulanteDao oAnticoagulanteDao = new AnticoagulanteDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
-                AnticoagulanteBean oAnticoagulanteBean = new AnticoagulanteBean(id);
-                oAnticoagulanteBean = oAnticoagulanteDao.get(oAnticoagulanteBean, AppConfigurationHelper.getJsonMsgDepth());
+                CargoDao oCargoDao = new CargoDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
+                CargoBean oCargoBean = new CargoBean(id);
+                oCargoBean = oCargoDao.get(oCargoBean, AppConfigurationHelper.getJsonMsgDepth());
                 Gson gson = AppConfigurationHelper.getGson();
-                data = JsonMessage.getJsonExpression(200, AppConfigurationHelper.getGson().toJson(oAnticoagulanteBean));
+                data = JsonMessage.getJsonExpression(200, AppConfigurationHelper.getGson().toJson(oCargoBean));
             } catch (Exception ex) {
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
                 throw new Exception();
@@ -138,9 +138,9 @@ public class AnticoagulanteService implements TableServiceInterface, ViewService
             try {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
-                AnticoagulanteDao oAnticoagulanteDao = new AnticoagulanteDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
-                ArrayList<AnticoagulanteBean> arrBeans = oAnticoagulanteDao.getAll(alFilter, hmOrder, AppConfigurationHelper.getJsonMsgDepth());
-                data = JsonMessage.getJsonExpression(200, AppConfigurationHelper.getGson().toJson(arrBeans));
+                CargoDao oCargoDao = new CargoDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
+                ArrayList<CargoBean> arrCargo = oCargoDao.getAll(alFilter, hmOrder, AppConfigurationHelper.getJsonMsgDepth());
+                data = JsonMessage.getJsonExpression(200, AppConfigurationHelper.getGson().toJson(arrCargo));
             } catch (Exception ex) {
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
                 throw new Exception();
@@ -171,9 +171,9 @@ public class AnticoagulanteService implements TableServiceInterface, ViewService
             try {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
-                AnticoagulanteDao oAnticoagulanteDao = new AnticoagulanteDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
-                List<AnticoagulanteBean> arrBeans = oAnticoagulanteDao.getPage(intRegsPerPag, intPage, alFilter, hmOrder, AppConfigurationHelper.getJsonMsgDepth());
-                data = JsonMessage.getJsonExpression(200, AppConfigurationHelper.getGson().toJson(arrBeans));
+                CargoDao oCargoDao = new CargoDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
+                List<CargoBean> arrCargo = oCargoDao.getPage(intRegsPerPag, intPage, alFilter, hmOrder, AppConfigurationHelper.getJsonMsgDepth());
+                data = JsonMessage.getJsonExpression(200, AppConfigurationHelper.getGson().toJson(arrCargo));
             } catch (Exception ex) {
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
                 throw new Exception();
@@ -202,8 +202,8 @@ public class AnticoagulanteService implements TableServiceInterface, ViewService
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
                 oConnection.setAutoCommit(false);
-                AnticoagulanteDao oAnticoagulanteDao = new AnticoagulanteDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
-                data = JsonMessage.getJsonExpression(200, (String) oAnticoagulanteDao.remove(id).toString());
+                CargoDao oCargoDao = new CargoDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
+                data = JsonMessage.getJsonExpression(200, (String) oCargoDao.remove(id).toString());
                 oConnection.commit();
             } catch (Exception ex) {
                 if (oConnection != null) {
@@ -236,11 +236,11 @@ public class AnticoagulanteService implements TableServiceInterface, ViewService
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
                 oConnection.setAutoCommit(false);
-                AnticoagulanteDao oAnticoagulanteDao = new AnticoagulanteDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
-                AnticoagulanteBean oAnticoagulanteBean = new AnticoagulanteBean();
-                oAnticoagulanteBean = AppConfigurationHelper.getGson().fromJson(jason, oAnticoagulanteBean.getClass());
-                if (oAnticoagulanteBean != null) {
-                    Integer iResult = oAnticoagulanteDao.set(oAnticoagulanteBean);
+                CargoDao oCargoDao = new CargoDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
+                CargoBean oCargoBean = new CargoBean();
+                oCargoBean = AppConfigurationHelper.getGson().fromJson(jason, oCargoBean.getClass());
+                if (oCargoBean != null) {
+                    Integer iResult = oCargoDao.set(oCargoBean);
                     if (iResult >= 1) {
                         oReplyBean.setCode(200);
                         oReplyBean.setJson(JsonMessage.getJsonExpression(200, iResult.toString()));

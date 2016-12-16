@@ -16,7 +16,7 @@ import net.daw.dao.implementation.ImportanciaDao;
 import net.daw.dao.implementation.MedicoDao;
 import net.daw.dao.implementation.PacienteDao;
 import net.daw.dao.implementation.ServicioDao;
-//import net.daw.dao.implementation.PrioridadDao;
+import net.daw.dao.implementation.PrioridadDao;
 import net.daw.dao.implementation.TipoDao;
 import net.daw.helper.statics.EncodingUtilHelper;
 
@@ -35,33 +35,33 @@ public class EpisodioBean implements GenericBean {
     @Expose
     private float importe;
     @Expose(serialize = false)
-    private int id_importancia;
+    private Integer id_importancia;
     @Expose(deserialize = false)
     private ImportanciaBean obj_importancia;
     @Expose(serialize = false)
-    private int id_servicio;
+    private Integer id_servicio;
     @Expose(deserialize = false)
     private ServicioBean obj_servicio;
     @Expose(serialize = false)
-    private int id_tipo;
+    private Integer id_tipo;
     @Expose(deserialize = false)
     private TipoBean obj_tipo;
     @Expose(serialize = false)
-    private int id_paciente;
+    private Integer id_paciente;
     @Expose(deserialize = false)
     private PacienteBean obj_paciente;
     @Expose(serialize = false)
-    private int id_medico;
+    private Integer id_medico;
     @Expose(deserialize = false)
     private MedicoBean obj_medico;
     @Expose(serialize = false)
-    private int id_episodio;
+    private Integer id_episodio;
     @Expose(deserialize = false)
     private EpisodioBean obj_episodio;
     @Expose(serialize = false)
-    private int id_prioridad;
-//    @Expose(deserialize = false)
-//    private PrioridadBean obj_prioridad;
+    private Integer id_prioridad;
+    @Expose(deserialize = false)
+    private PrioridadBean obj_prioridad;
 
     public EpisodioBean(int id) {
         this.id = id;
@@ -205,13 +205,13 @@ public class EpisodioBean implements GenericBean {
         this.id_prioridad = id_prioridad;
     }
 
-//    public PrioridadBean getObj_prioridad() {
-//        return obj_prioridad;
-//    }
-//
-//    public void setObj_prioridad(PrioridadBean obj_prioridad) {
-//        this.obj_prioridad = obj_prioridad;
-//    }
+    public PrioridadBean getObj_prioridad() {
+        return obj_prioridad;
+    }
+
+    public void setObj_prioridad(PrioridadBean obj_prioridad) {
+        this.obj_prioridad = obj_prioridad;
+    }
     @Override
     public String getColumns() {
         return "id,fecha,informe,id_importancia,id_servicio,id_tipo,importe,id_paciente,id_medico,id_episodio,id_prioridad";
@@ -229,7 +229,7 @@ public class EpisodioBean implements GenericBean {
         values += importe + ",";
         values += id_paciente + ",";
         values += id_medico + ",";
-        values += id_episodio;
+        values += id_episodio + ",";
         values += id_prioridad;
         return values;
     }
@@ -246,7 +246,7 @@ public class EpisodioBean implements GenericBean {
         pairs += "importe = " + importe + ",";
         pairs += "id_paciente = " + id_paciente + ",";
         pairs += "id_medico = " + id_medico + ",";
-        pairs += "id_episodio = " + id_episodio;
+        pairs += "id_episodio = " + id_episodio + ",";
         pairs += "id_prioridad = " + id_prioridad;
         return pairs;
     }
@@ -272,7 +272,7 @@ public class EpisodioBean implements GenericBean {
             this.obj_paciente = new PacienteDao(pooledConnection,oPuserBean_security).get(new PacienteBean(this.id_paciente), expand - 1);
             this.obj_medico = new MedicoDao(pooledConnection,oPuserBean_security).get(new MedicoBean(this.id_medico), expand - 1);
             this.obj_episodio = new EpisodioDao(pooledConnection,oPuserBean_security).get(new EpisodioBean(this.id_episodio), expand - 1);
-//            this.obj_prioridad = new PrioridadDao(pooledConnection,oPuserBean_security).get(new PrioridadBean(this.id_prioridad), expand - 1);
+            this.obj_prioridad = new PrioridadDao(pooledConnection,oPuserBean_security).get(new PrioridadBean(this.id_prioridad), expand - 1);
         }
         return this;
     }
