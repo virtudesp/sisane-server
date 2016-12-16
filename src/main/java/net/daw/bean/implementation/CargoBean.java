@@ -118,18 +118,24 @@ public class CargoBean implements GenericBean {
         this.setId(oResultSet.getInt("id"));
         this.setFecha(oResultSet.getDate("date"));
 
-        if(expand > 0){
-            EpisodioDao eDao = new EpisodioDao(pooledConnection,oPusuarioBean_security);
-            EpisodioBean eBean = new EpisodioBean();
-            eBean.setId(this.id_episodio);
-            this.id_episodio = oResultSet.getInt("id_episodio");
-            this.obj_episodio = eDao.get(eBean,expand - 1);
-
-            DocumentoDao tDao = new DocumentoDao(pooledConnection,oPusuarioBean_security);
-            DocumentoBean tBean = new DocumentoBean();
-            tBean.setId(this.id_documento);
-            this.id_documento = oResultSet.getInt("id_documento");
-            this.obj_documento = tDao.get(tBean,expand - 1);
+        if (expand > 0) {
+            DocumentoBean oDocumentoBean = new DocumentoBean();
+            DocumentoDao oDocumentoDao = new DocumentoDao(pooledConnection, oPusuarioBean_security);
+            oDocumentoBean.setId(oResultSet.getInt("id_documento"));
+            oDocumentoBean = oDocumentoDao.get(oDocumentoBean, expand - 1);
+            this.setObj_documento(oDocumentoBean);
+        } else {
+            this.setId_documento(oResultSet.getInt("id_documento"));
+        }
+        
+        if (expand > 0) {
+            EpisodioBean oEpisodioBean = new EpisodioBean();
+            EpisodioDao oEpisodioDao = new EpisodioDao(pooledConnection, oPusuarioBean_security);
+            oEpisodioBean.setId(oResultSet.getInt("id_episodio"));
+            oEpisodioBean = oEpisodioDao.get(oEpisodioBean, expand - 1);
+            this.setObj_episodio(oEpisodioBean);
+        } else {
+            this.setId_documento(oResultSet.getInt("id_episodio"));
         }
         return this;
     }
