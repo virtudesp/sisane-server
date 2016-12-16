@@ -202,7 +202,7 @@ public class AnaliticaBean implements GenericBean {
         strColumns += id + ",";
         strColumns += EncodingUtilHelper.quotate(getInforme()) + ",";
         strColumns += EncodingUtilHelper.stringifyAndQuotate(fecha_peticion) + ",";
-        strColumns += getImporte();
+        strColumns += getImporte() + ",";
         strColumns += getId_tipomuestra() + ",";
         strColumns += getId_anticoagulante() + ",";
         strColumns += getId_prioridad();
@@ -239,26 +239,6 @@ public class AnaliticaBean implements GenericBean {
             this.setId_tipomuestra(oResultSet.getInt("id_tipomuestra"));
         }    
 
-        if (expand > 0) {
-            AnticoagulanteBean oAnticoagulanteBean = new AnticoagulanteBean();
-            AnticoagulanteDao oAnticoagulanteDao = new AnticoagulanteDao(pooledConnection, oPuserBean_security);
-            oAnticoagulanteBean.setId(oResultSet.getInt("id_anticoagulante"));
-            oAnticoagulanteBean = oAnticoagulanteDao.get(oAnticoagulanteBean, expand - 1);
-            this.setObj_anticoagulante(oAnticoagulanteBean);
-        } else {
-            this.setId_anticoagulante(oResultSet.getInt("id_anticoagulante"));
-        }
-
-     if (expand > 0) {
-            TipomuestraBean oTipomuestraBean = new TipomuestraBean();
-            TipomuestraDao oTipomuestraDao = new TipomuestraDao(pooledConnection, oPuserBean_security);
-            oTipomuestraBean.setId(oResultSet.getInt("id_tipomuestra"));
-            oTipomuestraBean = oTipomuestraDao.get(oTipomuestraBean, expand - 1);
-            this.setObj_tipomuestra(oTipomuestraBean);
-        } else {
-            this.setId_tipomuestra(oResultSet.getInt("id_tipomuestra"));
-        }
-     
         if (expand > 0) {
             AnticoagulanteBean oAnticoagulanteBean = new AnticoagulanteBean();
             AnticoagulanteDao oAnticoagulanteDao = new AnticoagulanteDao(pooledConnection, oPuserBean_security);
