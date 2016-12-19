@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.util.Date;
 import net.daw.bean.publicinterface.GenericBean;
 import net.daw.dao.implementation.DocumentoDao;
-import net.daw.dao.implementation.EpisodioDao;
 import net.daw.helper.statics.EncodingUtilHelper;
 
 public class CargoBean implements GenericBean {
@@ -18,17 +17,14 @@ public class CargoBean implements GenericBean {
     @Expose
     private Date date;
     
-    @Expose(serialize = false)
-    private int id_episodio;
+
     
     @Expose(serialize = false)
     private int id_documento;
     
     @Expose(deserialize = false)
     private DocumentoBean obj_documento;
-    
-    @Expose(deserialize = false)
-    private EpisodioBean obj_episodio;
+  
 
     public CargoBean(int id) {
         this.id = id;
@@ -54,13 +50,7 @@ public class CargoBean implements GenericBean {
         this.date = date;
     }
 
-    public int getId_episodio() {
-        return id_episodio;
-    }
-
-    public void setId_episodio(int id_episodio) {
-        this.id_episodio = id_episodio;
-    }
+   
     
     public int getId_documento() {
         return id_documento;
@@ -78,13 +68,7 @@ public class CargoBean implements GenericBean {
         this.obj_documento = obj_documento;
     }
     
-    public EpisodioBean getObj_episodio() {
-        return obj_episodio;
-    }
-
-    public void setObj_episodio(EpisodioBean obj_episodio) {
-        this.obj_episodio = obj_episodio;
-    }
+   
     
     @Override
     public String getColumns() {
@@ -96,7 +80,6 @@ public class CargoBean implements GenericBean {
         String values = "";
         values += id + ",";
         values += EncodingUtilHelper.stringifyAndQuotate(date) + ",";
-        values += id_episodio + ",";
         values += id_documento;
 
         return values;
@@ -107,7 +90,6 @@ public class CargoBean implements GenericBean {
         String pairs;
         pairs = "id = " + id + ",";
         pairs += "date = " + EncodingUtilHelper.stringifyAndQuotate(date) + ",";
-        pairs += "id_episodio = " + id_episodio + ",";
         pairs += "id_documento = " + id_documento;
 
         return pairs;
@@ -128,15 +110,7 @@ public class CargoBean implements GenericBean {
             this.setId_documento(oResultSet.getInt("id_documento"));
         }
         
-        if (expand > 0) {
-            EpisodioBean oEpisodioBean = new EpisodioBean();
-            EpisodioDao oEpisodioDao = new EpisodioDao(pooledConnection, oPusuarioBean_security);
-            oEpisodioBean.setId(oResultSet.getInt("id_episodio"));
-            oEpisodioBean = oEpisodioDao.get(oEpisodioBean, expand - 1);
-            this.setObj_episodio(oEpisodioBean);
-        } else {
-            this.setId_documento(oResultSet.getInt("id_episodio"));
-        }
+      
         return this;
     }
 

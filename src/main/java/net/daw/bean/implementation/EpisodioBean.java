@@ -11,11 +11,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
 import net.daw.bean.publicinterface.GenericBean;
+import net.daw.dao.implementation.CargoDao;
 import net.daw.dao.implementation.EpisodioDao;
 import net.daw.dao.implementation.ImportanciaDao;
 import net.daw.dao.implementation.MedicoDao;
 import net.daw.dao.implementation.PacienteDao;
-import net.daw.dao.implementation.PrioridadDao;
 import net.daw.dao.implementation.ServicioDao;
 import net.daw.dao.implementation.TipoDao;
 import net.daw.helper.statics.EncodingUtilHelper;
@@ -58,10 +58,11 @@ public class EpisodioBean implements GenericBean {
     private Integer id_episodio;
     @Expose(deserialize = false)
     private EpisodioBean obj_episodio;
+
     @Expose(serialize = false)
-    private Integer id_prioridad;
+    private Integer id_cargo;
     @Expose(deserialize = false)
-    private PrioridadBean obj_prioridad;
+    private CargoBean obj_cargo;
 
     public EpisodioBean(int id) {
         this.id = id;
@@ -199,25 +200,25 @@ public class EpisodioBean implements GenericBean {
         this.obj_episodio = obj_episodio;
     }
 
-    public int getId_prioridad() {
-        return id_prioridad;
+    public Integer getId_cargo() {
+        return id_cargo;
     }
 
-    public void setId_prioridad(int id_prioridad) {
-        this.id_prioridad = id_prioridad;
+    public void setId_cargo(Integer id_cargo) {
+        this.id_cargo = id_cargo;
     }
 
-    public PrioridadBean getObj_prioridad() {
-        return obj_prioridad;
+    public CargoBean getObj_cargo() {
+        return obj_cargo;
     }
 
-    public void setObj_prioridad(PrioridadBean obj_prioridad) {
-        this.obj_prioridad = obj_prioridad;
+    public void setObj_cargo(CargoBean obj_cargo) {
+        this.obj_cargo = obj_cargo;
     }
 
     @Override
     public String getColumns() {
-        return "id,fecha,informe,id_importancia,id_servicio,id_tipo,importe,id_paciente,id_medico,id_episodio,id_prioridad";
+        return "id,fecha,informe,id_importancia,id_servicio,id_tipo,importe,id_paciente,id_medico,id_episodio,id_cargo";
     }
 
     @Override
@@ -233,7 +234,7 @@ public class EpisodioBean implements GenericBean {
         values += id_paciente + ",";
         values += id_medico + ",";
         values += id_episodio + ",";
-        values += id_prioridad;
+        values += id_cargo;
         return values;
     }
 
@@ -250,7 +251,7 @@ public class EpisodioBean implements GenericBean {
         pairs += "id_paciente = " + id_paciente + ",";
         pairs += "id_medico = " + id_medico + ",";
         pairs += "id_episodio = " + id_episodio + ",";
-        pairs += "id_prioridad = " + id_prioridad;
+        pairs += "id_cargo = " + id_cargo;
         return pairs;
     }
 
@@ -266,7 +267,7 @@ public class EpisodioBean implements GenericBean {
         this.id_paciente = oResultSet.getInt("id_paciente");
         this.id_medico = oResultSet.getInt("id_medico");
         this.id_episodio = oResultSet.getInt("id_episodio");
-        this.id_prioridad = oResultSet.getInt("id_prioridad");
+        this.id_cargo = oResultSet.getInt("id_cargo");
 
         if (expand > 0) {
             this.obj_importancia = new ImportanciaDao(pooledConnection, oPuserBean_security).get(new ImportanciaBean(this.id_importancia), expand - 1);
@@ -275,7 +276,7 @@ public class EpisodioBean implements GenericBean {
             this.obj_paciente = new PacienteDao(pooledConnection, oPuserBean_security).get(new PacienteBean(this.id_paciente), expand - 1);
             this.obj_medico = new MedicoDao(pooledConnection, oPuserBean_security).get(new MedicoBean(this.id_medico), expand - 1);
             this.obj_episodio = new EpisodioDao(pooledConnection, oPuserBean_security).get(new EpisodioBean(this.id_episodio), expand - 1);
-            this.obj_prioridad = new PrioridadDao(pooledConnection, oPuserBean_security).get(new PrioridadBean(this.id_prioridad), expand - 1);
+            this.obj_cargo = new CargoDao(pooledConnection, oPuserBean_security).get(new CargoBean(this.id_cargo), expand - 1);
         }
         return this;
     }

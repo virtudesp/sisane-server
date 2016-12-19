@@ -34,6 +34,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
 import net.daw.bean.publicinterface.GenericBean;
+import net.daw.dao.implementation.PruebaDao;
 import net.daw.dao.implementation.TecnicaDao;
 import net.daw.helper.statics.EncodingUtilHelper;
 
@@ -47,10 +48,16 @@ public class ImagenBean implements GenericBean {
     private Date fecha;
     @Expose
     private String ubicacion;
+
     @Expose(serialize = false)
     private Integer id_tecnica = 0;
     @Expose(deserialize = false)
     private TecnicaBean obj_tecnica;
+
+    @Expose(serialize = false)
+    private Integer id_prueba = 0;
+    @Expose(deserialize = false)
+    private PruebaBean obj_prueba;
 
     public ImagenBean() {
     }
@@ -107,6 +114,22 @@ public class ImagenBean implements GenericBean {
         this.obj_tecnica = obj_tecnica;
     }
 
+    public Integer getId_prueba() {
+        return id_prueba;
+    }
+
+    public void setId_prueba(Integer id_prueba) {
+        this.id_prueba = id_prueba;
+    }
+
+    public PruebaBean getObj_prueba() {
+        return obj_prueba;
+    }
+
+    public void setObj_prueba(PruebaBean obj_prueba) {
+        this.obj_prueba = obj_prueba;
+    }
+
     @Override
     public String getColumns() {
         String strColumns = "";
@@ -114,7 +137,8 @@ public class ImagenBean implements GenericBean {
         strColumns += "descripcion,";
         strColumns += "fecha,";
         strColumns += "ubicacion,";
-        strColumns += "id_tecnica";
+        strColumns += "id_tecnica,";
+        strColumns += "id_prueba";
         return strColumns;
     }
 
@@ -125,7 +149,8 @@ public class ImagenBean implements GenericBean {
         strColumns += EncodingUtilHelper.quotate(descripcion) + ",";
         strColumns += EncodingUtilHelper.stringifyAndQuotate(fecha) + ",";
         strColumns += EncodingUtilHelper.quotate(ubicacion) + ",";
-        strColumns += id_tecnica;
+        strColumns += id_tecnica + ",";
+        strColumns += id_prueba;
         return strColumns;
     }
 
@@ -136,7 +161,8 @@ public class ImagenBean implements GenericBean {
         strColumns += "descripcion=" + EncodingUtilHelper.quotate(descripcion) + ",";
         strColumns += "fecha=" + EncodingUtilHelper.stringifyAndQuotate(fecha) + ",";
         strColumns += "ubicacion=" + EncodingUtilHelper.quotate(ubicacion) + ",";
-        strColumns += "id_tecnica=" + id_tecnica;
+        strColumns += "id_tecnica=" + id_tecnica + ",";
+        strColumns += "id_prueba=" + id_prueba;
         return strColumns;
     }
 
@@ -155,6 +181,16 @@ public class ImagenBean implements GenericBean {
             this.setObj_tecnica(oTecnicaBean);
         } else {
             this.setId_tecnica(oResultSet.getInt("id_tecnica"));
+        }
+
+        if (expand > 0) {
+            PruebaBean oPruebaBean = new PruebaBean();
+            PruebaDao oPruebaDao = new PruebaDao(pooledConnection, oPuserBean_security);
+            oPruebaBean.setId(oResultSet.getInt("id_tecnica"));
+            oPruebaBean = oPruebaDao.get(oPruebaBean, expand - 1);
+            this.setObj_prueba(oPruebaBean);
+        } else {
+            this.setId_prueba(oResultSet.getInt("id_tecnica"));
         }
 
         return this;

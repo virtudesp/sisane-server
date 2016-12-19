@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import java.util.Date;
 import net.daw.bean.publicinterface.GenericBean;
 import net.daw.dao.implementation.AnticoagulanteDao;
+import net.daw.dao.implementation.EpisodioDao;
 import net.daw.dao.implementation.PrioridadDao;
 import net.daw.dao.implementation.TipomuestraDao;
 import net.daw.helper.statics.EncodingUtilHelper;
@@ -31,16 +32,21 @@ public class AnaliticaBean implements GenericBean {
     private Integer id_tipomuestra = 0;
     @Expose(deserialize = false)
     private TipomuestraBean obj_tipomuestra = null;
-    
+
     @Expose(serialize = false)
     private Integer id_anticoagulante = 0;
     @Expose(deserialize = false)
     private AnticoagulanteBean obj_anticoagulante = null;
-    
+
     @Expose(serialize = false)
     private Integer id_prioridad = 0;
     @Expose(deserialize = false)
     private PrioridadBean obj_prioridad = null;
+
+    @Expose(serialize = false)
+    private Integer id_episodio = 0;
+    @Expose(deserialize = false)
+    private EpisodioBean obj_episodio = null;
 
     public AnaliticaBean() {
     }
@@ -56,7 +62,7 @@ public class AnaliticaBean implements GenericBean {
     public void setId(Integer id) {
         this.id = id;
     }
-    
+
     /**
      * @return the informe
      */
@@ -183,6 +189,22 @@ public class AnaliticaBean implements GenericBean {
         this.obj_prioridad = obj_prioridad;
     }
 
+    public Integer getId_episodio() {
+        return id_episodio;
+    }
+
+    public void setId_episodio(Integer id_episodio) {
+        this.id_episodio = id_episodio;
+    }
+
+    public EpisodioBean getObj_episodio() {
+        return obj_episodio;
+    }
+
+    public void setObj_episodio(EpisodioBean obj_episodio) {
+        this.obj_episodio = obj_episodio;
+    }
+
     @Override
     public String getColumns() {
         String strColumns = "";
@@ -192,7 +214,8 @@ public class AnaliticaBean implements GenericBean {
         strColumns += "importe,";
         strColumns += "id_tipomuestra,";
         strColumns += "id_anticoagulante,";
-        strColumns += "id_prioridad";
+        strColumns += "id_prioridad,";
+        strColumns += "id_episodio";
         return strColumns;
     }
 
@@ -205,7 +228,8 @@ public class AnaliticaBean implements GenericBean {
         strColumns += getImporte() + ",";
         strColumns += getId_tipomuestra() + ",";
         strColumns += getId_anticoagulante() + ",";
-        strColumns += getId_prioridad();
+        strColumns += getId_prioridad() + ",";
+        strColumns += getId_episodio();
         return strColumns;
     }
 
@@ -217,7 +241,8 @@ public class AnaliticaBean implements GenericBean {
         strPairs += "importe=" + getImporte() + ",";
         strPairs += "id_tipomuestra=" + getId_tipomuestra() + ",";
         strPairs += "id_anticoagulante=" + getId_anticoagulante() + ",";
-        strPairs += "id_prioridad=" + getId_prioridad();
+        strPairs += "id_prioridad=" + getId_prioridad() + ",";
+        strPairs += "id_episodio=" + getId_episodio();
         return strPairs;
     }
 
@@ -227,7 +252,6 @@ public class AnaliticaBean implements GenericBean {
         this.setInforme(oResultSet.getString("informe"));
         this.setFecha_peticion(oResultSet.getDate("fecha_peticion"));
         this.setImporte(oResultSet.getDouble("importe"));
-        
 
         if (expand > 0) {
             TipomuestraBean oTipomuestraBean = new TipomuestraBean();
@@ -237,7 +261,7 @@ public class AnaliticaBean implements GenericBean {
             this.setObj_tipomuestra(oTipomuestraBean);
         } else {
             this.setId_tipomuestra(oResultSet.getInt("id_tipomuestra"));
-        }    
+        }
 
         if (expand > 0) {
             AnticoagulanteBean oAnticoagulanteBean = new AnticoagulanteBean();
@@ -248,7 +272,7 @@ public class AnaliticaBean implements GenericBean {
         } else {
             this.setId_anticoagulante(oResultSet.getInt("id_anticoagulante"));
         }
-        
+
         if (expand > 0) {
             PrioridadBean oPrioridadBean = new PrioridadBean();
             PrioridadDao oPrioridadDao = new PrioridadDao(pooledConnection, oPuserBean_security);
@@ -259,8 +283,17 @@ public class AnaliticaBean implements GenericBean {
             this.setId_prioridad(oResultSet.getInt("id_prioridad"));
         }
 
+        if (expand > 0) {
+            EpisodioBean oEpisodioBean = new EpisodioBean();
+            EpisodioDao oEpisodioDao = new EpisodioDao(pooledConnection, oPuserBean_security);
+            oEpisodioBean.setId(oResultSet.getInt("id_prioridad"));
+            oEpisodioBean = oEpisodioDao.get(oEpisodioBean, expand - 1);
+            this.setObj_episodio(oEpisodioBean);
+        } else {
+            this.setId_episodio(oResultSet.getInt("id_prioridad"));
+        }
+
         return this;
     }
 
 }
-

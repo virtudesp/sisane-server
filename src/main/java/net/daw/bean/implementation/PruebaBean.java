@@ -11,9 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
 import net.daw.bean.publicinterface.GenericBean;
-import net.daw.dao.implementation.AnaliticaDao;
 import net.daw.dao.implementation.EpisodioDao;
-import net.daw.dao.implementation.ImagenDao;
 import net.daw.helper.statics.EncodingUtilHelper;
 
 /**
@@ -35,14 +33,7 @@ public class PruebaBean implements GenericBean {
     private Integer id_episodio = 0;
     @Expose(deserialize = false)
     private EpisodioBean obj_episodio = null;
-    @Expose(serialize = false)
-    private Integer id_imagen = 0;
-    @Expose(deserialize = false)
-    private ImagenBean obj_imagen = null;
-    @Expose(serialize = false)
-    private Integer id_analitica = 0;
-    @Expose(deserialize = false)
-    private AnaliticaBean obj_analitica = null;
+
 
     public Integer getId() {
         return id;
@@ -90,39 +81,7 @@ public class PruebaBean implements GenericBean {
 
     public void setObj_episodio(EpisodioBean obj_episodio) {
         this.obj_episodio = obj_episodio;
-    }
-
-    public Integer getId_imagen() {
-        return id_imagen;
-    }
-
-    public void setId_imagen(Integer id_imagen) {
-        this.id_imagen = id_imagen;
-    }
-
-    public ImagenBean getObj_imagen() {
-        return obj_imagen;
-    }
-
-    public void setObj_imagen(ImagenBean obj_imagen) {
-        this.obj_imagen = obj_imagen;
-    }
-
-    public Integer getId_analitica() {
-        return id_analitica;
-    }
-
-    public void setId_analitica(Integer id_analitica) {
-        this.id_analitica = id_analitica;
-    }
-
-    public AnaliticaBean getObj_analitica() {
-        return obj_analitica;
-    }
-
-    public void setObj_analitica(AnaliticaBean obj_analitica) {
-        this.obj_analitica = obj_analitica;
-    }
+    }   
 
     public PruebaBean() {
     }
@@ -138,9 +97,7 @@ public class PruebaBean implements GenericBean {
         strColumns += "informe,";
         strColumns += "fecha_peticion,";
         strColumns += "id_episodio,";
-        strColumns += "importe,";
-        strColumns += "id_imagen,";
-        strColumns += "id_analitica";
+        strColumns += "importe";
         return strColumns;
     }
 
@@ -151,9 +108,7 @@ public class PruebaBean implements GenericBean {
         strColumns += EncodingUtilHelper.quotate(informe) + ",";
         strColumns += EncodingUtilHelper.stringifyAndQuotate(fecha_peticion) + ",";
         strColumns += id_episodio + ",";
-        strColumns += importe + ",";
-        strColumns += id_imagen + ",";
-        strColumns += id_analitica;
+        strColumns += importe;
         return strColumns;
     }
 
@@ -164,9 +119,7 @@ public class PruebaBean implements GenericBean {
         strPairs += "informe=" + EncodingUtilHelper.quotate(informe) + ",";
         strPairs += "fecha_peticion=" + EncodingUtilHelper.stringifyAndQuotate(fecha_peticion) + ",";
         strPairs += "id_episodio=" + id_episodio + ",";
-        strPairs += "importe=" + importe + ",";
-        strPairs += "id_imagen=" + id_imagen + ",";
-        strPairs += "id_analitica=" + id_analitica;
+        strPairs += "importe=" + importe;
         return strPairs;
     }
 
@@ -185,26 +138,6 @@ public class PruebaBean implements GenericBean {
             this.setObj_episodio(oEpisodioBean);
         } else {
             this.setId_episodio(oResultSet.getInt("id_episodio"));
-        }
-
-        if (expand > 0) {
-            ImagenBean oImagenBean = new ImagenBean();
-            ImagenDao oImagenDao = new ImagenDao(pooledConnection, oPusuarioBean_security);
-            oImagenBean.setId(oResultSet.getInt("id_imagen"));
-            oImagenBean = oImagenDao.get(oImagenBean, expand - 1);
-            this.setObj_imagen(oImagenBean);
-        } else {
-            this.setId_imagen(oResultSet.getInt("id_imagen"));
-        }
-
-        if (expand > 0) {
-            AnaliticaBean oAnaliticaBean = new AnaliticaBean();
-            AnaliticaDao oAnaliticaDao = new AnaliticaDao(pooledConnection, oPusuarioBean_security);
-            oAnaliticaBean.setId(oResultSet.getInt("id_analitica"));
-            oAnaliticaBean = oAnaliticaDao.get(oAnaliticaBean, expand - 1);
-            this.setObj_analitica(oAnaliticaBean);
-        } else {
-            this.setId_analitica(oResultSet.getInt("id_analitica"));
         }
 
         return this;
