@@ -244,7 +244,7 @@ public class TratamientoBean implements GenericBean {
 
         if (expand > 0) {
             MedicamentoBean oMedicamentoBean = new MedicamentoBean();
-            MedicamentoDao oMedicamentoDao = new MedicamentoDao(pooledConnection, oPuserBean_security);
+            MedicamentoDao oMedicamentoDao = new MedicamentoDao(pooledConnection, oPuserBean_security, null);
             oMedicamentoBean.setId(oResultSet.getInt("id_medicamento"));
             oMedicamentoBean = oMedicamentoDao.get(oMedicamentoBean, expand - 1);
             this.setObj_medicamento(oMedicamentoBean);
@@ -254,7 +254,7 @@ public class TratamientoBean implements GenericBean {
 
         if (expand > 0) {
             ViaBean oViaBean = new ViaBean();
-            ViaDao oViaDao = new ViaDao(pooledConnection, oPuserBean_security);
+            ViaDao oViaDao = new ViaDao(pooledConnection, oPuserBean_security, null);
             oViaBean.setId(oResultSet.getInt("id_via"));
             oViaBean = oViaDao.get(oViaBean, expand - 1);
             this.setObj_via(oViaBean);
@@ -263,7 +263,7 @@ public class TratamientoBean implements GenericBean {
         }
         if (expand > 0) {
             PosologiaBean oPosologiaBean = new PosologiaBean();
-            PosologiaDao oPosologiaDao = new PosologiaDao(pooledConnection, oPuserBean_security);
+            PosologiaDao oPosologiaDao = new PosologiaDao(pooledConnection, oPuserBean_security, null);
             oPosologiaBean.setId(oResultSet.getInt("id_posologia"));
             oPosologiaBean = oPosologiaDao.get(oPosologiaBean, expand - 1);
             this.setObj_posologia(oPosologiaBean);
@@ -273,7 +273,7 @@ public class TratamientoBean implements GenericBean {
 
         if (expand > 0) {
             DiagnosticoBean oDiagnosticoBean = new DiagnosticoBean();
-            DiagnosticoDao oDiagnosticoDao = new DiagnosticoDao(pooledConnection, oPuserBean_security);
+            DiagnosticoDao oDiagnosticoDao = new DiagnosticoDao(pooledConnection, oPuserBean_security, null);
             oDiagnosticoBean.setId(oResultSet.getInt("id_diagnostico"));
             oDiagnosticoBean = oDiagnosticoDao.get(oDiagnosticoBean, expand - 1);
             this.setObj_diagnostico(oDiagnosticoBean);

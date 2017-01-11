@@ -76,7 +76,7 @@ public class ImagenService implements TableServiceInterface, ViewServiceInterfac
             try {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
-                ImagenDao oImagenDao = new ImagenDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
+                ImagenDao oImagenDao = new ImagenDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"), null);
                 data = JsonMessage.getJsonExpression(200, Long.toString(oImagenDao.getCount(alFilter)));
             } catch (Exception ex) {
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
@@ -105,7 +105,7 @@ public class ImagenService implements TableServiceInterface, ViewServiceInterfac
             try {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
-                ImagenDao oImagenDao = new ImagenDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
+                ImagenDao oImagenDao = new ImagenDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"), null);
                 ImagenBean oImagenBean = new ImagenBean(id);
                 oImagenBean = oImagenDao.get(oImagenBean, AppConfigurationHelper.getJsonMsgDepth());
                 Gson gson = AppConfigurationHelper.getGson();
@@ -138,7 +138,7 @@ public class ImagenService implements TableServiceInterface, ViewServiceInterfac
             try {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
-                ImagenDao oImagenDao = new ImagenDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
+                ImagenDao oImagenDao = new ImagenDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"), null);
                 ArrayList<ImagenBean> arrBeans = oImagenDao.getAll(alFilter, hmOrder, AppConfigurationHelper.getJsonMsgDepth());
                 data = JsonMessage.getJsonExpression(200, AppConfigurationHelper.getGson().toJson(arrBeans));
             } catch (Exception ex) {
@@ -171,7 +171,7 @@ public class ImagenService implements TableServiceInterface, ViewServiceInterfac
             try {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
-                ImagenDao oImagenDao = new ImagenDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
+                ImagenDao oImagenDao = new ImagenDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"), null);
                 List<ImagenBean> arrBeans = oImagenDao.getPage(intRegsPerPag, intPage, alFilter, hmOrder, AppConfigurationHelper.getJsonMsgDepth());
                 data = JsonMessage.getJsonExpression(200, AppConfigurationHelper.getGson().toJson(arrBeans));
             } catch (Exception ex) {
@@ -202,7 +202,7 @@ public class ImagenService implements TableServiceInterface, ViewServiceInterfac
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
                 oConnection.setAutoCommit(false);
-                ImagenDao oImagenDao = new ImagenDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
+                ImagenDao oImagenDao = new ImagenDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"), null);
                 data = JsonMessage.getJsonExpression(200, (String) oImagenDao.remove(id).toString());
                 oConnection.commit();
             } catch (Exception ex) {
@@ -236,7 +236,7 @@ public class ImagenService implements TableServiceInterface, ViewServiceInterfac
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
                 oConnection.setAutoCommit(false);
-                ImagenDao oImagenDao = new ImagenDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
+                ImagenDao oImagenDao = new ImagenDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"), null);
                 ImagenBean oImagenBean = new ImagenBean();
                 oImagenBean = AppConfigurationHelper.getGson().fromJson(jason, oImagenBean.getClass());
                 if (oImagenBean != null) {

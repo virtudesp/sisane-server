@@ -54,7 +54,7 @@ public class ViaService implements TableServiceInterface, ViewServiceInterface{
             try {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
-                ViaDao oViaDao = new ViaDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
+                ViaDao oViaDao = new ViaDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"), null);
                 data = JsonMessage.getJsonExpression(200, Long.toString(oViaDao.getCount(alFilter)));
             } catch (Exception ex) {
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
@@ -83,7 +83,7 @@ public class ViaService implements TableServiceInterface, ViewServiceInterface{
             try {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
-                ViaDao oViaDao = new ViaDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
+                ViaDao oViaDao = new ViaDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"), null);
                 ViaBean oViaBean = new ViaBean(id);
                 oViaBean = oViaDao.get(oViaBean, AppConfigurationHelper.getJsonMsgDepth());
                 Gson gson = AppConfigurationHelper.getGson();
@@ -116,7 +116,7 @@ public class ViaService implements TableServiceInterface, ViewServiceInterface{
             try {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
-                ViaDao oViaDao = new ViaDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
+                ViaDao oViaDao = new ViaDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"), null);
                 ArrayList<ViaBean> arrBeans = oViaDao.getAll(alFilter, hmOrder, AppConfigurationHelper.getJsonMsgDepth());
                 data = JsonMessage.getJsonExpression(200, AppConfigurationHelper.getGson().toJson(arrBeans));
             } catch (Exception ex) {
@@ -149,7 +149,7 @@ public class ViaService implements TableServiceInterface, ViewServiceInterface{
             try {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
-                ViaDao oViaDao = new ViaDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
+                ViaDao oViaDao = new ViaDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"), null);
                 List<ViaBean> arrBeans = oViaDao.getPage(intRegsPerPag, intPage, alFilter, hmOrder, AppConfigurationHelper.getJsonMsgDepth());
                 data = JsonMessage.getJsonExpression(200, AppConfigurationHelper.getGson().toJson(arrBeans));
             } catch (Exception ex) {
@@ -180,7 +180,7 @@ public class ViaService implements TableServiceInterface, ViewServiceInterface{
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
                 oConnection.setAutoCommit(false);
-                ViaDao oViaDao = new ViaDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
+                ViaDao oViaDao = new ViaDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"), null);
                 data = JsonMessage.getJsonExpression(200, (String) oViaDao.remove(id).toString());
                 oConnection.commit();
             } catch (Exception ex) {
@@ -214,7 +214,7 @@ public class ViaService implements TableServiceInterface, ViewServiceInterface{
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
                 oConnection.setAutoCommit(false);
-                ViaDao oViaDao = new ViaDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
+                ViaDao oViaDao = new ViaDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"), null);
                 ViaBean oViaBean = new ViaBean();
                 oViaBean = AppConfigurationHelper.getGson().fromJson(jason, oViaBean.getClass());
                 if (oViaBean != null) {

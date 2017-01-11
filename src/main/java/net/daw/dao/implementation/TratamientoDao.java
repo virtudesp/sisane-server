@@ -49,11 +49,14 @@ public class TratamientoDao implements ViewDaoInterface<TratamientoBean>, TableD
     private Connection oConnection = null;
     private PusuarioBean oPuserSecurity = null;
 
-    public TratamientoDao(Connection oPooledConnection, PusuarioBean oPusuarioBean_security) throws Exception {
+    public TratamientoDao(Connection oPooledConnection, PusuarioBean oPusuarioBean_security, String strWhere) throws Exception {
         try {
             oConnection = oPooledConnection;
             oMysql = new MysqlData(oConnection);
             oPuserSecurity = oPusuarioBean_security;
+            if (strWhere != null) {
+                strSQL += strWhere;
+            }
         } catch (Exception ex) {
             Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
             throw new Exception();

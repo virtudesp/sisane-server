@@ -312,7 +312,7 @@ public class PusuarioBean implements GenericBean {
 
         if (expand > 0) {
             TipousuarioBean oTipousuarioBean = new TipousuarioBean();
-            TipousuarioDao oTipousuarioDao = new TipousuarioDao(pooledConnection, oPusuarioBean_security);
+            TipousuarioDao oTipousuarioDao = new TipousuarioDao(pooledConnection, oPusuarioBean_security, null);
             oTipousuarioBean.setId(oResultSet.getInt("id_tipousuario"));
             oTipousuarioBean = oTipousuarioDao.get(oTipousuarioBean, expand - 1);
             this.setObj_tipousuario(oTipousuarioBean);
@@ -322,7 +322,7 @@ public class PusuarioBean implements GenericBean {
 
         /*if (expand > 0) {
             MedicoBean oMedicoBean = new MedicoBean();
-            MedicoDao oMedicoDao = new MedicoDao(pooledConnection, oPusuarioBean_security);
+            MedicoDao oMedicoDao = new MedicoDao(pooledConnection, oPusuarioBean_security, null);
             oMedicoBean.setId(oResultSet.getInt("id_medico"));
             oMedicoBean = oMedicoDao.get(oMedicoBean, expand - 1);
             this.setObj_medico(oMedicoBean);

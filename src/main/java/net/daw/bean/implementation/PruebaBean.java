@@ -132,7 +132,7 @@ public class PruebaBean implements GenericBean {
 
         if (expand > 0) {
             EpisodioBean oEpisodioBean = new EpisodioBean();
-            EpisodioDao oEpisodioDao = new EpisodioDao(pooledConnection, oPusuarioBean_security);
+            EpisodioDao oEpisodioDao = new EpisodioDao(pooledConnection, oPusuarioBean_security, null);
             oEpisodioBean.setId(oResultSet.getInt("id_episodio"));
             oEpisodioBean = oEpisodioDao.get(oEpisodioBean, expand - 1);
             this.setObj_episodio(oEpisodioBean);

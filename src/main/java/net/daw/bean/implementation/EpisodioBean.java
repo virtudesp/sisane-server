@@ -270,13 +270,13 @@ public class EpisodioBean implements GenericBean {
         this.id_cargo = oResultSet.getInt("id_cargo");
 
         if (expand > 0) {
-            this.obj_importancia = new ImportanciaDao(pooledConnection, oPuserBean_security).get(new ImportanciaBean(this.id_importancia), expand - 1);
-            this.obj_servicio = new ServicioDao(pooledConnection, oPuserBean_security).get(new ServicioBean(this.id_servicio), expand - 1);
-            this.obj_tipo = new TipoDao(pooledConnection, oPuserBean_security).get(new TipoBean(this.id_tipo), expand - 1);
-            this.obj_paciente = new PacienteDao(pooledConnection, oPuserBean_security).get(new PacienteBean(this.id_paciente), expand - 1);
-            this.obj_medico = new MedicoDao(pooledConnection, oPuserBean_security).get(new MedicoBean(this.id_medico), expand - 1);
-            this.obj_episodio = new EpisodioDao(pooledConnection, oPuserBean_security).get(new EpisodioBean(this.id_episodio), expand - 1);
-            this.obj_cargo = new CargoDao(pooledConnection, oPuserBean_security).get(new CargoBean(this.id_cargo), expand - 1);
+            this.obj_importancia = new ImportanciaDao(pooledConnection, oPuserBean_security, null).get(new ImportanciaBean(this.id_importancia), expand - 1);
+            this.obj_servicio = new ServicioDao(pooledConnection, oPuserBean_security, null).get(new ServicioBean(this.id_servicio), expand - 1);
+            this.obj_tipo = new TipoDao(pooledConnection, oPuserBean_security, null).get(new TipoBean(this.id_tipo), expand - 1);
+            this.obj_paciente = new PacienteDao(pooledConnection, oPuserBean_security, null).get(new PacienteBean(this.id_paciente), expand - 1);
+            this.obj_medico = new MedicoDao(pooledConnection, oPuserBean_security, null).get(new MedicoBean(this.id_medico), expand - 1);
+            this.obj_episodio = new EpisodioDao(pooledConnection, oPuserBean_security, null).get(new EpisodioBean(this.id_episodio), expand - 1);
+            this.obj_cargo = new CargoDao(pooledConnection, oPuserBean_security, null).get(new CargoBean(this.id_cargo), expand - 1);
         }
         return this;
     }

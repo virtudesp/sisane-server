@@ -51,11 +51,14 @@ public class UsuarioDao implements ViewDaoInterface<UsuarioBean>, TableDaoInterf
     private Connection oConnection = null;
     private PusuarioBean oPuserSecurity = null;
 
-    public UsuarioDao(Connection oPooledConnection, PusuarioBean oPuserBean_security) throws Exception {
+    public UsuarioDao(Connection oPooledConnection, PusuarioBean oPuserBean_security, String strWhere) throws Exception {
         try {
             oConnection = oPooledConnection;
             oMysql = new MysqlData(oConnection);
             oPuserSecurity = oPuserBean_security;
+            if (strWhere != null) {
+                strSQL += strWhere;
+            }
         } catch (Exception ex) {
             Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
             throw new Exception();

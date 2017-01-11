@@ -102,7 +102,7 @@ public class CargoBean implements GenericBean {
 
         if (expand > 0) {
             DocumentoBean oDocumentoBean = new DocumentoBean();
-            DocumentoDao oDocumentoDao = new DocumentoDao(pooledConnection, oPusuarioBean_security);
+            DocumentoDao oDocumentoDao = new DocumentoDao(pooledConnection, oPusuarioBean_security, null);
             oDocumentoBean.setId(oResultSet.getInt("id_documento"));
             oDocumentoBean = oDocumentoDao.get(oDocumentoBean, expand - 1);
             this.setObj_documento(oDocumentoBean);

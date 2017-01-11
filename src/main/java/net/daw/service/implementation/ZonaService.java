@@ -78,7 +78,7 @@ public class ZonaService implements TableServiceInterface, ViewServiceInterface 
 
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
-                ZonaDao oZonaDao = new ZonaDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
+                ZonaDao oZonaDao = new ZonaDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"), null);
                 data = JsonMessage.getJsonExpression(200, Long.toString(oZonaDao.getCount(alFilter)));
             } catch (Exception ex) {
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
@@ -107,7 +107,7 @@ public class ZonaService implements TableServiceInterface, ViewServiceInterface 
             try {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
-                ZonaDao oZonaDao = new ZonaDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
+                ZonaDao oZonaDao = new ZonaDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"), null);
                 ZonaBean oZonaBean = new ZonaBean(id);
                 oZonaBean = oZonaDao.get(oZonaBean, AppConfigurationHelper.getJsonMsgDepth());
                 Gson gson = AppConfigurationHelper.getGson();
@@ -140,7 +140,7 @@ public class ZonaService implements TableServiceInterface, ViewServiceInterface 
             try {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
-                ZonaDao oZonaDao = new ZonaDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
+                ZonaDao oZonaDao = new ZonaDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"), null);
                 ArrayList<ZonaBean> arrBeans = oZonaDao.getAll(alFilter, hmOrder, AppConfigurationHelper.getJsonMsgDepth());
                 data = JsonMessage.getJsonExpression(200, AppConfigurationHelper.getGson().toJson(arrBeans));
             } catch (Exception ex) {
@@ -173,7 +173,7 @@ public class ZonaService implements TableServiceInterface, ViewServiceInterface 
             try {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
-                ZonaDao oZonaDao = new ZonaDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
+                ZonaDao oZonaDao = new ZonaDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"), null);
                 List<ZonaBean> arrBeans = oZonaDao.getPage(intRegsPerPag, intPage, alFilter, hmOrder, AppConfigurationHelper.getJsonMsgDepth());
                 data = JsonMessage.getJsonExpression(200, AppConfigurationHelper.getGson().toJson(arrBeans));
             } catch (Exception ex) {
@@ -204,7 +204,7 @@ public class ZonaService implements TableServiceInterface, ViewServiceInterface 
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
                 oConnection.setAutoCommit(false);
-                ZonaDao oZonaDao = new ZonaDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
+                ZonaDao oZonaDao = new ZonaDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"), null);
                 data = JsonMessage.getJsonExpression(200, (String) oZonaDao.remove(id).toString());
                 oConnection.commit();
             } catch (Exception ex) {
@@ -238,7 +238,7 @@ public class ZonaService implements TableServiceInterface, ViewServiceInterface 
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
                 oConnection.setAutoCommit(false);
-                ZonaDao oZonaDao = new ZonaDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
+                ZonaDao oZonaDao = new ZonaDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"), null);
                 ZonaBean oZonaBean = new ZonaBean();
                 oZonaBean = AppConfigurationHelper.getGson().fromJson(jason, oZonaBean.getClass());
                 if (oZonaBean != null) {

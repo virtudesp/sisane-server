@@ -42,8 +42,8 @@ public class ZonaimagenBean implements GenericBean {
     private Integer id = 0;
     @Expose(serialize = false)
     private Integer id_zona = 0;
-   @Expose(deserialize = false)
-   private ZonaBean obj_zona;
+    @Expose(deserialize = false)
+    private ZonaBean obj_zona;
     @Expose(serialize = false)
     private Integer id_imagen = 0;
     @Expose(deserialize = false)
@@ -100,7 +100,7 @@ public class ZonaimagenBean implements GenericBean {
     public String getColumns() {
         String strColumns = "";
         strColumns += "id" + ",";
-       strColumns += "id_zona,";
+        strColumns += "id_zona,";
         strColumns += "id_imagen";
         return strColumns;
     }
@@ -128,7 +128,7 @@ public class ZonaimagenBean implements GenericBean {
         this.setId(oResultSet.getInt("id"));
         if (expand > 0) {
             ZonaBean oZonaBean = new ZonaBean();
-            ZonaDao oZonaDao = new ZonaDao(pooledConnection, oUsuarioBean_security);
+            ZonaDao oZonaDao = new ZonaDao(pooledConnection, oUsuarioBean_security,null);
             oZonaBean.setId(oResultSet.getInt("id_zona"));
             oZonaBean = oZonaDao.get(oZonaBean, expand - 1);
             this.setObj_zona(oZonaBean);
@@ -137,7 +137,7 @@ public class ZonaimagenBean implements GenericBean {
         }
         if (expand > 0) {
             ImagenBean oImagenBean = new ImagenBean();
-            ImagenDao oImagenDao = new ImagenDao(pooledConnection, oUsuarioBean_security);
+            ImagenDao oImagenDao = new ImagenDao(pooledConnection, oUsuarioBean_security,null);
             oImagenBean.setId(oResultSet.getInt("id_imagen"));
             oImagenBean = oImagenDao.get(oImagenBean, expand - 1);
             this.setObj_imagen(oImagenBean);
