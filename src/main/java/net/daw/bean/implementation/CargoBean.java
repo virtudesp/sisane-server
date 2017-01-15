@@ -72,7 +72,7 @@ public class CargoBean implements GenericBean {
     
     @Override
     public String getColumns() {
-        return "id,date,id_episodio,id_documento";
+        return "id,date,id_documento";
     }
 
     @Override
