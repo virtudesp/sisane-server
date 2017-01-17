@@ -64,6 +64,9 @@ public class EpisodioBean implements GenericBean {
     @Expose(deserialize = false)
     private CargoBean obj_cargo;
 
+    @Expose
+    private Boolean archivado;
+
     public EpisodioBean(int id) {
         this.id = id;
     }
@@ -216,9 +219,17 @@ public class EpisodioBean implements GenericBean {
         this.obj_cargo = obj_cargo;
     }
 
+    public Boolean getArchivado() {
+        return archivado;
+    }
+
+    public void setArchivado(Boolean archivado) {
+        this.archivado = archivado;
+    }
+
     @Override
     public String getColumns() {
-        return "id,fecha,informe,id_importancia,id_servicio,id_tipo,importe,id_paciente,id_medico,id_episodio,id_cargo";
+        return "id,fecha,informe,id_importancia,id_servicio,id_tipo,importe,id_paciente,id_medico,id_episodio,id_cargo,archivado";
     }
 
     @Override
@@ -234,7 +245,8 @@ public class EpisodioBean implements GenericBean {
         values += id_paciente + ",";
         values += id_medico + ",";
         values += id_episodio + ",";
-        values += id_cargo;
+        values += id_cargo + ",";
+        values += archivado;
         return values;
     }
 
@@ -251,7 +263,8 @@ public class EpisodioBean implements GenericBean {
         pairs += "id_paciente = " + id_paciente + ",";
         pairs += "id_medico = " + id_medico + ",";
         pairs += "id_episodio = " + id_episodio + ",";
-        pairs += "id_cargo = " + id_cargo;
+        pairs += "id_cargo = " + id_cargo + ",";
+        pairs += "archivado = " + archivado;
         return pairs;
     }
 
@@ -268,6 +281,7 @@ public class EpisodioBean implements GenericBean {
         this.id_medico = oResultSet.getInt("id_medico");
         this.id_episodio = oResultSet.getInt("id_episodio");
         this.id_cargo = oResultSet.getInt("id_cargo");
+        this.archivado = oResultSet.getBoolean("archivado");
 
         if (expand > 0) {
             this.obj_importancia = new ImportanciaDao(pooledConnection, oPuserBean_security, null).get(new ImportanciaBean(this.id_importancia), expand - 1);
