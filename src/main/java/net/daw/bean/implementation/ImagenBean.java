@@ -170,7 +170,7 @@ public class ImagenBean implements GenericBean {
     public ImagenBean fill(ResultSet oResultSet, Connection pooledConnection, PusuarioBean oPuserBean_security, Integer expand) throws SQLException, Exception {
         this.setId(oResultSet.getInt("id"));
         this.setDescripcion(oResultSet.getString("descripcion"));
-        this.setFecha(oResultSet.getDate("fecha"));
+        this.setFecha(oResultSet.getTimestamp("fecha"));
         this.setUbicacion(oResultSet.getString("ubicacion"));
 
         if (expand > 0) {

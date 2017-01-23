@@ -131,7 +131,7 @@ public class DiagnosticoBean implements GenericBean {
     public DiagnosticoBean fill(ResultSet oResultSet, Connection pooledConnection, PusuarioBean oPusuarioBean_security, Integer expand) throws SQLException, Exception {
         this.id = oResultSet.getInt("id");
         this.informe = oResultSet.getString("informe");
-        this.fecha = oResultSet.getDate("fecha");
+        this.fecha = oResultSet.getTimestamp("fecha");
         this.id_episodio = oResultSet.getInt("id_episodio");
         this.id_tipodiagnostico = oResultSet.getInt("id_tipodiagnostico");
 

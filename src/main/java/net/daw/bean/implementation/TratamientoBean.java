@@ -237,8 +237,8 @@ public class TratamientoBean implements GenericBean {
     @Override
     public TratamientoBean fill(ResultSet oResultSet, Connection pooledConnection, PusuarioBean oPuserBean_security, Integer expand) throws SQLException, Exception {
         this.setId(oResultSet.getInt("id"));
-        this.setFecha_inicio(oResultSet.getDate("fecha_inicio"));
-        this.setFecha_fin(oResultSet.getDate("fecha_fin"));
+        this.setFecha_inicio(oResultSet.getTimestamp("fecha_inicio"));
+        this.setFecha_fin(oResultSet.getTimestamp("fecha_fin"));
         this.setCuidados(oResultSet.getString("cuidados"));
         this.setImporte(oResultSet.getDouble("importe"));
 

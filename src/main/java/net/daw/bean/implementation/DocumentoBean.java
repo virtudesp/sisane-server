@@ -113,7 +113,7 @@ public class DocumentoBean implements GenericBean {
     public GenericBean fill(ResultSet oResultSet, Connection pooledConnection, PusuarioBean oPusuarioBean_security, Integer expand) throws SQLException, Exception {
         this.setId(oResultSet.getInt("id"));
         this.setDescripcion(oResultSet.getString("descripcion"));
-        this.setFecha(oResultSet.getDate("fecha"));
+        this.setFecha(oResultSet.getTimestamp("fecha"));
 
         if (expand > 0) {
             TipodocumentoBean oTipodocumentoBean = new TipodocumentoBean();
