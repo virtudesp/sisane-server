@@ -50,11 +50,14 @@ public class MedicoDao implements ViewDaoInterface<MedicoBean>, TableDaoInterfac
     private Connection oConnection = null;
     private PusuarioBean oPusuarioSecurity = null;
 
-    public MedicoDao(Connection oPooledConnection, PusuarioBean oUserBean_security) throws Exception {
+    public MedicoDao(Connection oPooledConnection, PusuarioBean oUserBean_security, String strWhere) throws Exception {
         try {
             oConnection = oPooledConnection;
             oMysql = new MysqlData(oConnection);
             oPusuarioSecurity = oUserBean_security;
+            if (strWhere != null) {
+                strSQL += strWhere;
+            }
         } catch (Exception ex) {
             Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
             throw new Exception();

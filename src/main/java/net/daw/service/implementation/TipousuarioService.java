@@ -76,7 +76,7 @@ public class TipousuarioService implements TableServiceInterface, ViewServiceInt
             try {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
-                TipousuarioDao oUsertypeDao = new TipousuarioDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
+                TipousuarioDao oUsertypeDao = new TipousuarioDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"), null);
                 data = JsonMessage.getJsonExpression(200, Long.toString(oUsertypeDao.getCount(alFilter)));
             } catch (Exception ex) {
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
@@ -105,7 +105,7 @@ public class TipousuarioService implements TableServiceInterface, ViewServiceInt
             try {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
-                TipousuarioDao oUsertypeDao = new TipousuarioDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
+                TipousuarioDao oUsertypeDao = new TipousuarioDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"), null);
                 TipousuarioBean oUsertypeBean = new TipousuarioBean(id);
                 oUsertypeBean = oUsertypeDao.get(oUsertypeBean, AppConfigurationHelper.getJsonMsgDepth());
                 Gson gson = AppConfigurationHelper.getGson();
@@ -138,7 +138,7 @@ public class TipousuarioService implements TableServiceInterface, ViewServiceInt
             try {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
-                TipousuarioDao oUsertypeDao = new TipousuarioDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
+                TipousuarioDao oUsertypeDao = new TipousuarioDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"), null);
                 ArrayList<TipousuarioBean> arrBeans = oUsertypeDao.getAll(alFilter, hmOrder, AppConfigurationHelper.getJsonMsgDepth());
                 data = JsonMessage.getJsonExpression(200, AppConfigurationHelper.getGson().toJson(arrBeans));
             } catch (Exception ex) {
@@ -171,7 +171,7 @@ public class TipousuarioService implements TableServiceInterface, ViewServiceInt
             try {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
-                TipousuarioDao oUsertypeDao = new TipousuarioDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
+                TipousuarioDao oUsertypeDao = new TipousuarioDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"), null);
                 List<TipousuarioBean> arrBeans = oUsertypeDao.getPage(intRegsPerPag, intPage, alFilter, hmOrder, AppConfigurationHelper.getJsonMsgDepth());
                 data = JsonMessage.getJsonExpression(200, AppConfigurationHelper.getGson().toJson(arrBeans));
             } catch (Exception ex) {
@@ -202,7 +202,7 @@ public class TipousuarioService implements TableServiceInterface, ViewServiceInt
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
                 oConnection.setAutoCommit(false);
-                TipousuarioDao oUsertypeDao = new TipousuarioDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
+                TipousuarioDao oUsertypeDao = new TipousuarioDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"), null);
                 data = JsonMessage.getJsonExpression(200, (String) oUsertypeDao.remove(id).toString());
                 oConnection.commit();
             } catch (Exception ex) {
@@ -236,7 +236,7 @@ public class TipousuarioService implements TableServiceInterface, ViewServiceInt
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
                 oConnection.setAutoCommit(false);
-                TipousuarioDao oUsertypeDao = new TipousuarioDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
+                TipousuarioDao oUsertypeDao = new TipousuarioDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"), null);
                 TipousuarioBean oUsertypeBean = new TipousuarioBean();
                 oUsertypeBean = AppConfigurationHelper.getGson().fromJson(jason, oUsertypeBean.getClass());
                 if (oUsertypeBean != null) {

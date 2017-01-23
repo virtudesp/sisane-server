@@ -131,7 +131,7 @@ public class MedicoBean implements GenericBean {
         this.setId(oResultSet.getInt("id"));
         if (expand > 0) {
             ServicioBean oServicioBean = new ServicioBean();
-            ServicioDao oServicioDao = new ServicioDao(pooledConnection, oPusuarioBean_security);
+            ServicioDao oServicioDao = new ServicioDao(pooledConnection, oPusuarioBean_security, null);
             oServicioBean.setId(oResultSet.getInt("id_servicio"));
             oServicioBean = oServicioDao.get(oServicioBean, expand - 1);
             this.setObj_servicio(oServicioBean);
@@ -141,7 +141,7 @@ public class MedicoBean implements GenericBean {
         
         if (expand > 0) {
             EspecialidadBean oEspecialidadBean = new EspecialidadBean();
-            EspecialidadDao oEspecialidadDao = new EspecialidadDao(pooledConnection, oPusuarioBean_security);
+            EspecialidadDao oEspecialidadDao = new EspecialidadDao(pooledConnection, oPusuarioBean_security, null);
             oEspecialidadBean.setId(oResultSet.getInt("id_especialidad"));
             oEspecialidadBean = oEspecialidadDao.get(oEspecialidadBean, expand - 1);
             this.setObj_especialidad(oEspecialidadBean);

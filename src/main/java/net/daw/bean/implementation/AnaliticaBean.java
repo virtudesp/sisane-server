@@ -255,7 +255,7 @@ public class AnaliticaBean implements GenericBean {
 
         if (expand > 0) {
             TipomuestraBean oTipomuestraBean = new TipomuestraBean();
-            TipomuestraDao oTipomuestraDao = new TipomuestraDao(pooledConnection, oPuserBean_security);
+            TipomuestraDao oTipomuestraDao = new TipomuestraDao(pooledConnection, oPuserBean_security, null);
             oTipomuestraBean.setId(oResultSet.getInt("id_tipomuestra"));
             oTipomuestraBean = oTipomuestraDao.get(oTipomuestraBean, expand - 1);
             this.setObj_tipomuestra(oTipomuestraBean);
@@ -265,7 +265,7 @@ public class AnaliticaBean implements GenericBean {
 
         if (expand > 0) {
             AnticoagulanteBean oAnticoagulanteBean = new AnticoagulanteBean();
-            AnticoagulanteDao oAnticoagulanteDao = new AnticoagulanteDao(pooledConnection, oPuserBean_security);
+            AnticoagulanteDao oAnticoagulanteDao = new AnticoagulanteDao(pooledConnection, oPuserBean_security, null);
             oAnticoagulanteBean.setId(oResultSet.getInt("id_anticoagulante"));
             oAnticoagulanteBean = oAnticoagulanteDao.get(oAnticoagulanteBean, expand - 1);
             this.setObj_anticoagulante(oAnticoagulanteBean);
@@ -275,7 +275,7 @@ public class AnaliticaBean implements GenericBean {
 
         if (expand > 0) {
             PrioridadBean oPrioridadBean = new PrioridadBean();
-            PrioridadDao oPrioridadDao = new PrioridadDao(pooledConnection, oPuserBean_security);
+            PrioridadDao oPrioridadDao = new PrioridadDao(pooledConnection, oPuserBean_security, null);
             oPrioridadBean.setId(oResultSet.getInt("id_prioridad"));
             oPrioridadBean = oPrioridadDao.get(oPrioridadBean, expand - 1);
             this.setObj_prioridad(oPrioridadBean);
@@ -285,7 +285,7 @@ public class AnaliticaBean implements GenericBean {
 
         if (expand > 0) {
             EpisodioBean oEpisodioBean = new EpisodioBean();
-            EpisodioDao oEpisodioDao = new EpisodioDao(pooledConnection, oPuserBean_security);
+            EpisodioDao oEpisodioDao = new EpisodioDao(pooledConnection, oPuserBean_security, null);
             oEpisodioBean.setId(oResultSet.getInt("id_prioridad"));
             oEpisodioBean = oEpisodioDao.get(oEpisodioBean, expand - 1);
             this.setObj_episodio(oEpisodioBean);

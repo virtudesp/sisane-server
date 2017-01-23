@@ -175,7 +175,7 @@ public class ImagenBean implements GenericBean {
 
         if (expand > 0) {
             TecnicaBean oTecnicaBean = new TecnicaBean();
-            TecnicaDao oTecnicaDao = new TecnicaDao(pooledConnection, oPuserBean_security);
+            TecnicaDao oTecnicaDao = new TecnicaDao(pooledConnection, oPuserBean_security, null);
             oTecnicaBean.setId(oResultSet.getInt("id_tecnica"));
             oTecnicaBean = oTecnicaDao.get(oTecnicaBean, expand - 1);
             this.setObj_tecnica(oTecnicaBean);
@@ -185,7 +185,7 @@ public class ImagenBean implements GenericBean {
 
         if (expand > 0) {
             PruebaBean oPruebaBean = new PruebaBean();
-            PruebaDao oPruebaDao = new PruebaDao(pooledConnection, oPuserBean_security);
+            PruebaDao oPruebaDao = new PruebaDao(pooledConnection, oPuserBean_security, null);
             oPruebaBean.setId(oResultSet.getInt("id_tecnica"));
             oPruebaBean = oPruebaDao.get(oPruebaBean, expand - 1);
             this.setObj_prueba(oPruebaBean);

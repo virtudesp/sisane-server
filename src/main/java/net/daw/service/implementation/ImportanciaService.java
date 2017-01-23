@@ -56,7 +56,7 @@ public class ImportanciaService implements TableServiceInterface, ViewServiceInt
             try {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
-                ImportanciaDao oImportanciaDao = new ImportanciaDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("usuarioBean"));
+                ImportanciaDao oImportanciaDao = new ImportanciaDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"), null);
                 ImportanciaBean oImportanciaBean = new ImportanciaBean(id);
                 oImportanciaBean = oImportanciaDao.get(oImportanciaBean, AppConfigurationHelper.getJsonMsgDepth());
                 Gson gson = AppConfigurationHelper.getGson();
@@ -89,7 +89,7 @@ public class ImportanciaService implements TableServiceInterface, ViewServiceInt
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
                 oConnection.setAutoCommit(false);
-                ImportanciaDao oImportanciaDao = new ImportanciaDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("usuarioBean"));
+                ImportanciaDao oImportanciaDao = new ImportanciaDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"), null);
                 data = JsonMessage.getJsonExpression(200, (String) oImportanciaDao.remove(id).toString());
                 oConnection.commit();
             } catch (Exception ex) {
@@ -123,7 +123,7 @@ public class ImportanciaService implements TableServiceInterface, ViewServiceInt
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
                 oConnection.setAutoCommit(false);
-                ImportanciaDao oImportanciaDao = new ImportanciaDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("usuarioBean"));
+                ImportanciaDao oImportanciaDao = new ImportanciaDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"), null);
                 ImportanciaBean oImportanciaBean = new ImportanciaBean();
                 oImportanciaBean = AppConfigurationHelper.getGson().fromJson(jason, oImportanciaBean.getClass());
                 if (oImportanciaBean != null) {
@@ -171,7 +171,7 @@ public class ImportanciaService implements TableServiceInterface, ViewServiceInt
             try {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
-                ImportanciaDao oImportanciaDao = new ImportanciaDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("usuarioBean"));
+                ImportanciaDao oImportanciaDao = new ImportanciaDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"), null);
                 ArrayList<ImportanciaBean> arrBeans = oImportanciaDao.getAll(alFilter, hmOrder, AppConfigurationHelper.getJsonMsgDepth());
                 data = JsonMessage.getJsonExpression(200, AppConfigurationHelper.getGson().toJson(arrBeans));
             } catch (Exception ex) {
@@ -204,7 +204,7 @@ public class ImportanciaService implements TableServiceInterface, ViewServiceInt
             try {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
-                ImportanciaDao oImportanciaDao = new ImportanciaDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("usuarioBean"));
+                ImportanciaDao oImportanciaDao = new ImportanciaDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"), null);
                 List<ImportanciaBean> arrBeans = oImportanciaDao.getPage(intRegsPerPag, intPage, alFilter, hmOrder, AppConfigurationHelper.getJsonMsgDepth());
                 data = JsonMessage.getJsonExpression(200, AppConfigurationHelper.getGson().toJson(arrBeans));
             } catch (Exception ex) {
@@ -234,7 +234,7 @@ public class ImportanciaService implements TableServiceInterface, ViewServiceInt
             try {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
-                ImportanciaDao oImportanciaDao = new ImportanciaDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("usuarioBean"));
+                ImportanciaDao oImportanciaDao = new ImportanciaDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"), null);
                 data = JsonMessage.getJsonExpression(200, Long.toString(oImportanciaDao.getCount(alFilter)));
             } catch (Exception ex) {
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);

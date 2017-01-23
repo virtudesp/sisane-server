@@ -117,7 +117,7 @@ public class DocumentoBean implements GenericBean {
 
         if (expand > 0) {
             TipodocumentoBean oTipodocumentoBean = new TipodocumentoBean();
-            TipodocumentoDao ooTipodocumentoDao = new TipodocumentoDao(pooledConnection, oPusuarioBean_security);
+            TipodocumentoDao ooTipodocumentoDao = new TipodocumentoDao(pooledConnection, oPusuarioBean_security, null);
             oTipodocumentoBean.setId(oResultSet.getInt("id_tipodocumento"));
             oTipodocumentoBean = ooTipodocumentoDao.get(oTipodocumentoBean, expand - 1);
             this.setObj_tipodocumento(oTipodocumentoBean);

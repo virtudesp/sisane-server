@@ -75,7 +75,7 @@ public class ZonaimagenService implements TableServiceInterface, ViewServiceInte
             try {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
-                ZonaimagenDao oZonaimagenDao = new ZonaimagenDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
+                ZonaimagenDao oZonaimagenDao = new ZonaimagenDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"), null);
                 data = JsonMessage.getJsonExpression(200, Long.toString(oZonaimagenDao.getCount(alFilter)));
             } catch (Exception ex) {
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
@@ -104,7 +104,7 @@ public class ZonaimagenService implements TableServiceInterface, ViewServiceInte
             try {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
-                ZonaimagenDao oZonaimagenDao = new ZonaimagenDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
+                ZonaimagenDao oZonaimagenDao = new ZonaimagenDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"), null);
                 ZonaimagenBean oZonaimagenBean = new ZonaimagenBean(id);
                 oZonaimagenBean = oZonaimagenDao.get(oZonaimagenBean, AppConfigurationHelper.getJsonMsgDepth());
                 Gson gson = AppConfigurationHelper.getGson();
@@ -137,7 +137,7 @@ public class ZonaimagenService implements TableServiceInterface, ViewServiceInte
             try {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
-                ZonaimagenDao oZonaimagenDao = new ZonaimagenDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
+                ZonaimagenDao oZonaimagenDao = new ZonaimagenDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"), null);
                 ArrayList<ZonaimagenBean> arrBeans = oZonaimagenDao.getAll(alFilter, hmOrder, AppConfigurationHelper.getJsonMsgDepth());
                 data = JsonMessage.getJsonExpression(200, AppConfigurationHelper.getGson().toJson(arrBeans));
             } catch (Exception ex) {
@@ -170,7 +170,7 @@ public class ZonaimagenService implements TableServiceInterface, ViewServiceInte
             try {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
-                ZonaimagenDao oZonaimagenDao = new ZonaimagenDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
+                ZonaimagenDao oZonaimagenDao = new ZonaimagenDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"), null);
                 List<ZonaimagenBean> arrBeans = oZonaimagenDao.getPage(intRegsPerPag, intPage, alFilter, hmOrder, AppConfigurationHelper.getJsonMsgDepth());
                 data = JsonMessage.getJsonExpression(200, AppConfigurationHelper.getGson().toJson(arrBeans));
             } catch (Exception ex) {
@@ -201,7 +201,7 @@ public class ZonaimagenService implements TableServiceInterface, ViewServiceInte
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
                 oConnection.setAutoCommit(false);
-                ZonaimagenDao oZonaimagenDao = new ZonaimagenDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
+                ZonaimagenDao oZonaimagenDao = new ZonaimagenDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"), null);
                 data = JsonMessage.getJsonExpression(200, (String) oZonaimagenDao.remove(id).toString());
                 oConnection.commit();
             } catch (Exception ex) {
@@ -235,7 +235,7 @@ public class ZonaimagenService implements TableServiceInterface, ViewServiceInte
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
                 oConnection.setAutoCommit(false);
-                ZonaimagenDao oZonaimagenDao = new ZonaimagenDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"));
+                ZonaimagenDao oZonaimagenDao = new ZonaimagenDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"), null);
                 ZonaimagenBean oZonaimagenBean = new ZonaimagenBean();
                 oZonaimagenBean = AppConfigurationHelper.getGson().fromJson(jason, oZonaimagenBean.getClass());
                 if (oZonaimagenBean != null) {

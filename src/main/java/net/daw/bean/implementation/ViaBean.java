@@ -106,7 +106,7 @@ public class ViaBean implements GenericBean{
         this.setDescripcion(oResultSet.getString("descripcion"));
         if (expand > 0) {
             MedicamentoBean oMedicamentoBean = new MedicamentoBean();
-            MedicamentoDao oMedicamentoDao = new MedicamentoDao(pooledConnection, oPusuarioBean_security);
+            MedicamentoDao oMedicamentoDao = new MedicamentoDao(pooledConnection, oPusuarioBean_security, null);
             oMedicamentoBean.setId(oResultSet.getInt("id_medicamento"));
             oMedicamentoBean = oMedicamentoDao.get(oMedicamentoBean, expand - 1);
             this.setObj_medicamento(oMedicamentoBean);

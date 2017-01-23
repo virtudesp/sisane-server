@@ -396,7 +396,7 @@ public class PacienteBean implements GenericBean {
 
         if (expand > 0) {
             ServicioBean oServicioBean = new ServicioBean();
-            ServicioDao oServicioDao = new ServicioDao(pooledConnection, oPuserBean_security);
+            ServicioDao oServicioDao = new ServicioDao(pooledConnection, oPuserBean_security, null);
             oServicioBean.setId(oResultSet.getInt("id_servicio"));
             oServicioBean = oServicioDao.get(oServicioBean, expand - 1);
             this.setObj_servicio(oServicioBean);

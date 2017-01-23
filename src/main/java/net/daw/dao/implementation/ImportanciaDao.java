@@ -30,11 +30,14 @@ public class ImportanciaDao implements ViewDaoInterface<ImportanciaBean>, TableD
     private Connection oConnection = null;
     private PusuarioBean oPusuarioSecurity = null;
     
-    public ImportanciaDao(Connection oPooledConnection, PusuarioBean oPusuarioBean_security) throws Exception {
+    public ImportanciaDao(Connection oPooledConnection, PusuarioBean oPusuarioBean_security, String strWhere) throws Exception {
         try {
             oConnection = oPooledConnection;
             oMysql = new MysqlData(oConnection);
             oPusuarioSecurity = oPusuarioBean_security;
+            if (strWhere != null) {
+                strSQL += strWhere;
+            }
         } catch (Exception ex) {
             Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
             throw new Exception();

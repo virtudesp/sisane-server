@@ -56,7 +56,7 @@ public class TipodocumentoService implements TableServiceInterface, ViewServiceI
             try {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
-                TipodocumentoDao oTipodocumentoDao = new TipodocumentoDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("usuarioBean"));
+                TipodocumentoDao oTipodocumentoDao = new TipodocumentoDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"), null);
                 TipodocumentoBean oTipodocumentoBean = new TipodocumentoBean(id);
                 oTipodocumentoBean = oTipodocumentoDao.get(oTipodocumentoBean, AppConfigurationHelper.getJsonMsgDepth());
                 Gson gson = AppConfigurationHelper.getGson();
@@ -89,7 +89,7 @@ public class TipodocumentoService implements TableServiceInterface, ViewServiceI
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
                 oConnection.setAutoCommit(false);
-                TipodocumentoDao oTipodocumentoDao = new TipodocumentoDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("usuarioBean"));
+                TipodocumentoDao oTipodocumentoDao = new TipodocumentoDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"), null);
                 data = JsonMessage.getJsonExpression(200, (String) oTipodocumentoDao.remove(id).toString());
                 oConnection.commit();
             } catch (Exception ex) {
@@ -123,7 +123,7 @@ public class TipodocumentoService implements TableServiceInterface, ViewServiceI
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
                 oConnection.setAutoCommit(false);
-                TipodocumentoDao oTipodocumentoDao = new TipodocumentoDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("usuarioBean"));
+                TipodocumentoDao oTipodocumentoDao = new TipodocumentoDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"), null);
                 TipodocumentoBean oTipodocumentoBean = new TipodocumentoBean();
                 oTipodocumentoBean = AppConfigurationHelper.getGson().fromJson(jason, oTipodocumentoBean.getClass());
                 if (oTipodocumentoBean != null) {
@@ -171,7 +171,7 @@ public class TipodocumentoService implements TableServiceInterface, ViewServiceI
             try {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
-                TipodocumentoDao oTipodocumentoDao = new TipodocumentoDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("usuarioBean"));
+                TipodocumentoDao oTipodocumentoDao = new TipodocumentoDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"), null);
                 ArrayList<TipodocumentoBean> arrBeans = oTipodocumentoDao.getAll(alFilter, hmOrder, AppConfigurationHelper.getJsonMsgDepth());
                 data = JsonMessage.getJsonExpression(200, AppConfigurationHelper.getGson().toJson(arrBeans));
             } catch (Exception ex) {
@@ -204,7 +204,7 @@ public class TipodocumentoService implements TableServiceInterface, ViewServiceI
             try {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
-                TipodocumentoDao oTipodocumentoDao = new TipodocumentoDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("usuarioBean"));
+                TipodocumentoDao oTipodocumentoDao = new TipodocumentoDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"), null);
                 List<TipodocumentoBean> arrBeans = oTipodocumentoDao.getPage(intRegsPerPag, intPage, alFilter, hmOrder, AppConfigurationHelper.getJsonMsgDepth());
                 data = JsonMessage.getJsonExpression(200, AppConfigurationHelper.getGson().toJson(arrBeans));
             } catch (Exception ex) {
@@ -234,7 +234,7 @@ public class TipodocumentoService implements TableServiceInterface, ViewServiceI
             try {
                 oDataConnectionSource = getSourceConnection();
                 oConnection = oDataConnectionSource.newConnection();
-                TipodocumentoDao oTipodocumentoDao = new TipodocumentoDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("usuarioBean"));
+                TipodocumentoDao oTipodocumentoDao = new TipodocumentoDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"), null);
                 data = JsonMessage.getJsonExpression(200, Long.toString(oTipodocumentoDao.getCount(alFilter)));
             } catch (Exception ex) {
                 Log4j.errorLog(this.getClass().getName() + ":" + (ex.getStackTrace()[0]).getMethodName(), ex);
