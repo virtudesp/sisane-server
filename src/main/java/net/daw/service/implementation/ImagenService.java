@@ -238,6 +238,9 @@ public class ImagenService implements TableServiceInterface, ViewServiceInterfac
                 oConnection.setAutoCommit(false);
                 ImagenDao oImagenDao = new ImagenDao(oConnection, (PusuarioBean) oRequest.getSession().getAttribute("userBean"), null);
                 ImagenBean oImagenBean = new ImagenBean();
+                
+                
+                
                 oImagenBean = AppConfigurationHelper.getGson().fromJson(jason, oImagenBean.getClass());
                 if (oImagenBean != null) {
                     Integer iResult = oImagenDao.set(oImagenBean);

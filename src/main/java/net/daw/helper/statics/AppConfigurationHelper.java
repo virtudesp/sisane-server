@@ -50,7 +50,7 @@ public class AppConfigurationHelper {
 
     public static Gson getGson() throws Exception {
         GsonBuilder gsonBuilder = new GsonBuilder();
-        gsonBuilder.setDateFormat("dd/MM/yyyy");
+        gsonBuilder.setDateFormat("dd/MM/yyyy HH:mm");
         Gson oGson = gsonBuilder.excludeFieldsWithoutExposeAnnotation().create();
         return oGson;
     }

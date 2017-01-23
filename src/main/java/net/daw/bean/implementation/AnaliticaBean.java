@@ -250,7 +250,7 @@ public class AnaliticaBean implements GenericBean {
     public AnaliticaBean fill(ResultSet oResultSet, Connection pooledConnection, PusuarioBean oPuserBean_security, Integer expand) throws SQLException, Exception {
         this.setId(oResultSet.getInt("id"));
         this.setInforme(oResultSet.getString("informe"));
-        this.setFecha_peticion(oResultSet.getDate("fecha_peticion"));
+        this.setFecha_peticion(oResultSet.getTimestamp("fecha_peticion"));
         this.setImporte(oResultSet.getDouble("importe"));
 
         if (expand > 0) {

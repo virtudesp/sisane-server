@@ -127,7 +127,7 @@ public class PruebaBean implements GenericBean {
     public GenericBean fill(ResultSet oResultSet, Connection pooledConnection, PusuarioBean oPusuarioBean_security, Integer expand) throws SQLException, Exception {
         this.setId(oResultSet.getInt("id"));
         this.setInforme(oResultSet.getString("informe"));
-        this.setFechaPeticion(oResultSet.getDate("fecha_peticion"));
+        this.setFechaPeticion(oResultSet.getTimestamp("fecha_peticion"));
         this.setImporte(oResultSet.getDouble("importe"));
 
         if (expand > 0) {

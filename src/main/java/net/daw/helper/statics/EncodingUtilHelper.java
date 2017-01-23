@@ -100,7 +100,7 @@ public class EncodingUtilHelper {
     }
 
     public static String stringifyAndQuotate(Date s) {
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         String value = format.format(s);
         return "\"" + value + "\"";
     }
