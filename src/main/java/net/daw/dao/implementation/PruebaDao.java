@@ -16,7 +16,7 @@ import net.daw.helper.statics.SqlBuilder;
 public class PruebaDao implements ViewDaoInterface<PruebaBean>, TableDaoInterface<PruebaBean> {
 
     private String strTable = "prueba";
-    private String strSQL = "select * from prueba where 1=1";
+    private String strSQL = "select * from prueba where 1=1 ";
     private MysqlData oMysql = null;
     private Connection oConnection = null;
     private PusuarioBean oPuserSecurity = null;
